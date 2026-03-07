@@ -289,6 +289,36 @@
         return date.toLocaleDateString("fr-FR", { year: "numeric", month: "short" });
       }
 
+      function formatValue(value, unit) {
+        if (value == null || Number.isNaN(value)) {
+          return "—";
+        }
+
+        if (unit === "%") {
+          return `${value.toFixed(2)} %`;
+        }
+
+        if (unit === "k") {
+          return `${value.toLocaleString("fr-FR", {
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0,
+          })} k`;
+        }
+
+        if (Math.abs(value) >= 1_000_000) {
+          return `${(value / 1_000_000).toFixed(1)}M`;
+        }
+
+        if (Math.abs(value) >= 1_000) {
+          return `${(value / 1_000).toFixed(1)}k`;
+        }
+
+        return value.toLocaleString("fr-FR", {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 2,
+        });
+      }
+
       function toMonthKey(dateStr) {
         return dateStr.slice(0, 7);
       }
@@ -354,7 +384,7 @@
           for (const metric of SERIES) {
             const value = allSeries[metric.key].get(month);
             const td = document.createElement("td");
-            td.textContent = value == null ? "—" : value.toFixed(2);
+            td.textContent = formatValue(value, metric.unit);
             tr.appendChild(td);
           }
 
