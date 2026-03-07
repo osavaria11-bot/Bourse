@@ -70,6 +70,12 @@
         color: var(--sub);
       }
 
+      .current-value {
+        margin: 0 0 0.6rem;
+        font-size: 0.95rem;
+        color: #ffd67a;
+      }
+
       .chart-img {
         width: 100%;
         height: 250px;
@@ -144,11 +150,31 @@
         return `https://fred.stlouisfed.org/series/${seriesId}?${params.toString()}`;
       }
 
-      function buildCards() {
+      async function fetchLatestValue(seriesId) {
+        const response = await fetch(`https://fred.stlouisfed.org/graph/fredgraph.csv?id=${encodeURIComponent(seriesId)}`);
+
+        if (!response.ok) {
+          throw new Error(`Erreur de chargement (${response.status})`);
+        }
+
+        const csv = await response.text();
+        const rows = csv.trim().split("\n").slice(1).filter(Boolean);
+
+        for (let i = rows.length - 1; i >= 0; i -= 1) {
+          const [date, rawValue] = rows[i].split(",");
+          if (rawValue && rawValue !== ".") {
+            return { date, value: Number(rawValue) };
+          }
+        }
+
+        throw new Error("Aucune valeur disponible");
+      }
+
+      async function buildCards() {
         const { start, end } = tenYearWindow();
         const grid = document.querySelector("#grid");
 
-        SERIES.forEach((series) => {
+        const cards = SERIES.map(async (series) => {
           const card = document.createElement("article");
           card.className = "card";
 
@@ -158,6 +184,10 @@
           const meta = document.createElement("p");
           meta.className = "meta";
           meta.innerHTML = `Série FRED: <strong>${series.id}</strong> · Période: ${start} → ${end}`;
+
+          const currentValue = document.createElement("p");
+          currentValue.className = "current-value";
+          currentValue.textContent = "Valeur actuelle : chargement...";
 
           const img = document.createElement("img");
           img.className = "chart-img";
@@ -180,9 +210,21 @@
             }
           };
 
-          card.append(title, meta, img, link);
+          try {
+            const latest = await fetchLatestValue(series.id);
+            const valueText = Number.isFinite(latest.value)
+              ? latest.value.toLocaleString("fr-FR", { maximumFractionDigits: 2 })
+              : latest.value;
+            currentValue.textContent = `Valeur actuelle : ${valueText} (au ${latest.date})`;
+          } catch (error) {
+            currentValue.textContent = "Valeur actuelle : indisponible";
+          }
+
+          card.append(title, meta, currentValue, img, link);
           grid.appendChild(card);
         });
+
+        await Promise.all(cards);
 
         document.querySelector("#updated").textContent = `Fenêtre 10 ans générée le ${new Date().toLocaleString("fr-FR")}`;
       }
