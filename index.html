@@ -263,16 +263,33 @@
           }
         }
 
-        throw new Error(`Impossible de charger les données (${failures.join(" | ")})`);
+        throw new Error(
+          [
+            "Impossible de charger les données.",
+            "Vérifiez le réseau/CORS ou configurez un proxy autorisé par votre entreprise.",
+            `Sources testées: ${failures.join(" | ")}`,
+          ].join(" "),
+        );
+      }
+
+      function buildFallbackUrls(fredCsvUrl) {
+        const encoded = encodeURIComponent(fredCsvUrl);
+
+        return [
+          // Direct source (works when CORS/network policy allows it).
+          fredCsvUrl,
+          // Public CORS relays: availability changes over time, so we keep several options.
+          `https://api.allorigins.win/raw?url=${encoded}`,
+          `https://corsproxy.io/?${encoded}`,
+          `https://proxy.cors.sh/${fredCsvUrl}`,
+          `https://cors.isomorphic-git.org/${fredCsvUrl}`,
+          `https://thingproxy.freeboard.io/fetch/${fredCsvUrl}`,
+        ];
       }
 
       async function fetchSeries(seriesId) {
         const fredCsvUrl = `https://fred.stlouisfed.org/graph/fredgraph.csv?id=${seriesId}`;
-        const fallbackUrls = [
-          fredCsvUrl,
-          `https://api.allorigins.win/raw?url=${encodeURIComponent(fredCsvUrl)}`,
-          `https://cors.isomorphic-git.org/${fredCsvUrl}`,
-        ];
+        const fallbackUrls = buildFallbackUrls(fredCsvUrl);
 
         const csv = await fetchTextWithFallbacks(fallbackUrls);
         const [header, ...lines] = csv.trim().split("\n");
