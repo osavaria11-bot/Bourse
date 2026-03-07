@@ -3,18 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>10 graphiques macro US - FRED</title>
+    <title>Captures FRED — 10 ans</title>
     <style>
       :root {
         color-scheme: dark;
-        --bg: #0b1220;
-        --card: #111b2e;
-        --text: #ecf3ff;
+        --bg: #0a1120;
+        --card: #131f35;
+        --text: #e9f1ff;
         --sub: #9fb4d9;
-        --accent: #62a2ff;
-        --accent2: #87e2bc;
-        --accent3: #ffb66e;
-        --border: #223454;
+        --border: #263a60;
       }
 
       * {
@@ -24,464 +21,173 @@
 
       body {
         margin: 0;
-        background: linear-gradient(165deg, #09101d 0%, #0e1b2f 100%);
+        background: radial-gradient(circle at top, #0f1f3b 0%, var(--bg) 60%);
         color: var(--text);
       }
 
       .container {
-        width: min(1450px, 96vw);
-        margin: 1rem auto 1.5rem;
+        width: min(1500px, 96vw);
+        margin: 1.2rem auto 2rem;
       }
 
       h1 {
         margin: 0;
-        font-size: clamp(1.4rem, 1rem + 1.8vw, 2.4rem);
+        font-size: clamp(1.5rem, 1.1rem + 1.8vw, 2.5rem);
       }
 
       .subtitle,
       .updated {
-        margin-top: 0.6rem;
         color: var(--sub);
+        margin-top: 0.6rem;
       }
 
       .updated {
-        color: #87e2bc;
+        color: #89e6be;
       }
 
-      .panel {
-        background: rgba(17, 27, 46, 0.95);
-        border: 1px solid var(--border);
-        border-radius: 14px;
-        padding: 0.85rem;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+      .grid {
         margin-top: 1rem;
-      }
-
-      .panel h2 {
-        margin: 0 0 0.6rem;
-        font-size: 1.05rem;
-      }
-
-      .chart-meta {
-        color: var(--sub);
-        font-size: 0.82rem;
-        margin: 0.2rem 0 0.5rem;
-      }
-
-      svg {
-        width: 100%;
-        height: 280px;
-        background: rgba(8, 15, 26, 0.7);
-        border: 1px solid rgba(120, 145, 190, 0.28);
-        border-radius: 10px;
-      }
-
-      .chart-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 0.9rem;
+        grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+        gap: 1rem;
       }
 
-      .chart-card {
-        background: rgba(10, 18, 31, 0.8);
-        border: 1px solid rgba(120, 145, 190, 0.2);
+      .card {
+        background: color-mix(in srgb, var(--card) 92%, black 8%);
+        border: 1px solid var(--border);
         border-radius: 12px;
-        padding: 0.55rem;
+        padding: 0.8rem;
       }
 
-      .chart-card h3 {
+      .card h2 {
         margin: 0;
-        font-size: 0.95rem;
+        font-size: 1.02rem;
       }
 
-      .chart-card p {
-        margin: 0.25rem 0 0.45rem;
-        color: var(--sub);
-        font-size: 0.78rem;
-      }
-
-      .mini-chart {
-        height: 180px;
-      }
-
-      .axis,
-      .grid-line {
-        stroke: rgba(120, 145, 190, 0.45);
-        stroke-width: 1;
-      }
-
-      .grid-line {
-        stroke-dasharray: 4 4;
-        opacity: 0.5;
-      }
-
-      .line {
-        fill: none;
-        stroke-width: 2;
-      }
-
-      .legend {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.8rem;
+      .meta {
+        margin: 0.35rem 0 0.65rem;
         font-size: 0.82rem;
         color: var(--sub);
       }
 
-      .dot {
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        display: inline-block;
-        margin-right: 0.35rem;
+      .chart-img {
+        width: 100%;
+        height: 250px;
+        border: 1px solid #1f3152;
+        border-radius: 8px;
+        background: #0b1324;
+        object-fit: cover;
       }
 
       .error {
-        color: #ff9090;
-        margin-top: 0.5rem;
+        color: #ff9a9a;
+      }
+
+      a {
+        color: #89b9ff;
       }
     </style>
   </head>
   <body>
     <main class="container">
-      <h1>États-Unis — 10 graphiques mensuels (10 ans)</h1>
+      <h1>États-Unis — captures FRED sur 10 ans</h1>
       <p class="subtitle">
-        Données FRED converties sur une base mensuelle sur les 10 dernières années, sans tableau.
+        Série d'images (captures de graphiques FRED St. Louis) sur une fenêtre glissante de 10 ans.
       </p>
-      <p id="updated" class="updated">Chargement des séries...</p>
-
-      <section class="panel">
-        <h2>10 graphiques économiques (SVG)</h2>
-        <p class="chart-meta">
-          Chaque indicateur est affiché sur son propre graphique pour éviter les erreurs d'échelle.
-        </p>
-        <div id="chart-grid" class="chart-grid"></div>
-      </section>
+      <p id="updated" class="updated">Préparation des captures...</p>
+      <section id="grid" class="grid"></section>
     </main>
 
     <script>
       const SERIES = [
-        { key: "gdpReal", title: "PIB réel (YoY)", id: "GDPC1", unit: "%", transform: toYearOverYear },
-        { key: "cpi", title: "CPI / IPC (YoY)", id: "CPIAUCSL", unit: "%", transform: toYearOverYear },
-        { key: "coreInflation", title: "Core inflation (YoY)", id: "CPILFESL", unit: "%", transform: toYearOverYear },
-        { key: "unemployment", title: "Taux de chômage", id: "UNRATE", unit: "%", transform: (rows) => rows },
-        { key: "jobCreation", title: "Création d'emplois (m/m)", id: "PAYEMS", unit: "k", transform: toFirstDifference },
-        { key: "wageGrowth", title: "Croissance salaires (YoY)", id: "CES0500000003", unit: "%", transform: toYearOverYear },
-        { key: "policyRate", title: "Taux directeur", id: "DFF", unit: "%", transform: (rows) => rows },
-        { key: "tenYearYield", title: "10 ans gouvernemental", id: "GS10", unit: "%", transform: (rows) => rows },
-        { key: "spread", title: "Spread 10 ans – 2 ans", id: "T10Y2Y", unit: "%", transform: (rows) => rows },
-        { key: "retailSales", title: "Ventes au détail / consommation (YoY)", id: "RRSFS", unit: "%", transform: toYearOverYear },
+        { title: "PIB réel", id: "GDPC1" },
+        { title: "CPI / IPC", id: "CPIAUCSL" },
+        { title: "Core inflation", id: "CPILFESL" },
+        { title: "Taux de chômage", id: "UNRATE" },
+        { title: "Création d’emplois", id: "PAYEMS" },
+        { title: "Croissance des salaires", id: "CES0500000003" },
+        { title: "Taux directeur", id: "FEDFUNDS" },
+        { title: "10 ans gouvernemental", id: "GS10" },
+        { title: "Spread 10 ans – 2 ans", id: "T10Y2Y" },
+        { title: "Ventes au détail / consommation", id: "RRSFS" },
       ];
 
-      const FETCH_TIMEOUT_MS = 12000;
-
-      function withTimeout(url, timeoutMs = FETCH_TIMEOUT_MS) {
-        const controller = new AbortController();
-        const timeout = setTimeout(() => controller.abort(), timeoutMs);
-        return {
-          signal: controller.signal,
-          clear: () => clearTimeout(timeout),
-          url,
-        };
+      function isoDate(d) {
+        return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
       }
 
-      async function fetchTextWithFallbacks(urls) {
-        const failures = [];
-
-        for (const url of urls) {
-          const req = withTimeout(url);
-          try {
-            const response = await fetch(req.url, {
-              signal: req.signal,
-              cache: "no-store",
-            });
-
-            if (!response.ok) {
-              throw new Error(`HTTP ${response.status}`);
-            }
-
-            return await response.text();
-          } catch (error) {
-            failures.push(`${url} (${error.message})`);
-          } finally {
-            req.clear();
-          }
-        }
-
-        throw new Error(
-          [
-            "Impossible de charger les données.",
-            "Vérifiez le réseau/CORS ou configurez un proxy autorisé par votre entreprise.",
-            `Sources testées: ${failures.join(" | ")}`,
-          ].join(" "),
-        );
+      function tenYearWindow() {
+        const end = new Date();
+        const start = new Date(end);
+        start.setFullYear(end.getFullYear() - 10);
+        return { start: isoDate(start), end: isoDate(end) };
       }
 
-      function buildFallbackUrls(fredCsvUrl) {
-        const encoded = encodeURIComponent(fredCsvUrl);
-
-        return [
-          // Direct source (works when CORS/network policy allows it).
-          fredCsvUrl,
-          // Public CORS relays: availability changes over time, so we keep several options.
-          `https://api.allorigins.win/raw?url=${encoded}`,
-          `https://corsproxy.io/?${encoded}`,
-          `https://proxy.cors.sh/${fredCsvUrl}`,
-          `https://cors.isomorphic-git.org/${fredCsvUrl}`,
-          `https://thingproxy.freeboard.io/fetch/${fredCsvUrl}`,
-        ];
-      }
-
-      async function fetchSeries(seriesId) {
-        const fredCsvUrl = `https://fred.stlouisfed.org/graph/fredgraph.csv?id=${seriesId}`;
-        const fallbackUrls = buildFallbackUrls(fredCsvUrl);
-
-        const csv = await fetchTextWithFallbacks(fallbackUrls);
-        const [header, ...lines] = csv.trim().split("\n");
-
-        if (!header) {
-          return [];
-        }
-
-        return lines
-          .map((line) => {
-            const [date, value] = line.split(",");
-            if (!value || value === ".") return null;
-            const num = Number(value);
-            if (Number.isNaN(num)) return null;
-            return { date, value: num };
-          })
-          .filter(Boolean);
-      }
-
-      function toYearOverYear(rows) {
-        const out = [];
-        for (let i = 12; i < rows.length; i++) {
-          const prev = rows[i - 12].value;
-          if (prev === 0) continue;
-          const yoy = ((rows[i].value / prev) - 1) * 100;
-          out.push({ date: rows[i].date, value: yoy });
-        }
-        return out;
-      }
-
-      function toFirstDifference(rows) {
-        const out = [];
-        for (let i = 1; i < rows.length; i++) {
-          out.push({ date: rows[i].date, value: rows[i].value - rows[i - 1].value });
-        }
-        return out;
-      }
-
-      function formatValue(value, unit) {
-        if (value == null || Number.isNaN(value)) {
-          return "—";
-        }
-
-        if (unit === "%") {
-          return `${value.toFixed(2)} %`;
-        }
-
-        if (unit === "k") {
-          return `${value.toLocaleString("fr-FR", {
-            minimumFractionDigits: 0,
-            maximumFractionDigits: 0,
-          })} k`;
-        }
-
-        if (Math.abs(value) >= 1_000_000) {
-          return `${(value / 1_000_000).toFixed(1)}M`;
-        }
-
-        if (Math.abs(value) >= 1_000) {
-          return `${(value / 1_000).toFixed(1)}k`;
-        }
-
-        return value.toLocaleString("fr-FR", {
-          minimumFractionDigits: 0,
-          maximumFractionDigits: 2,
+      function fredImageUrl(seriesId, start, end) {
+        const params = new URLSearchParams({
+          id: seriesId,
+          cosd: start,
+          coed: end,
         });
+
+        return `https://fred.stlouisfed.org/graph/fredgraph.png?${params.toString()}`;
       }
 
-      function toMonthKey(dateStr) {
-        return dateStr.slice(0, 7);
+      function fredGraphUrl(seriesId, start, end) {
+        const params = new URLSearchParams({
+          g: "",
+          id: seriesId,
+          cosd: start,
+          coed: end,
+        });
+
+        return `https://fred.stlouisfed.org/series/${seriesId}?${params.toString()}`;
       }
 
-      function monthListLastTenYears() {
-        const today = new Date();
-        const end = new Date(today.getFullYear(), today.getMonth(), 1);
-        const start = new Date(end.getFullYear(), end.getMonth() - 119, 1);
-        const months = [];
+      function buildCards() {
+        const { start, end } = tenYearWindow();
+        const grid = document.querySelector("#grid");
 
-        for (let d = new Date(start); d <= end; d.setMonth(d.getMonth() + 1)) {
-          const month = String(d.getMonth() + 1).padStart(2, "0");
-          months.push(`${d.getFullYear()}-${month}`);
-        }
-
-        return months;
-      }
-
-      function forwardFillByMonth(rows, months) {
-        const byMonth = new Map();
-        for (const row of rows) {
-          byMonth.set(toMonthKey(row.date), row.value);
-        }
-
-        const out = new Map();
-        let carry = null;
-
-        for (const month of months) {
-          if (byMonth.has(month)) {
-            carry = byMonth.get(month);
-          }
-          out.set(month, carry);
-        }
-
-        return out;
-      }
-
-      function chunkSegments(values) {
-        const segments = [];
-        let current = [];
-
-        for (let i = 0; i < values.length; i++) {
-          const item = values[i];
-          if (item.value == null) {
-            if (current.length > 1) segments.push(current);
-            current = [];
-            continue;
-          }
-          current.push(item);
-        }
-
-        if (current.length > 1) {
-          segments.push(current);
-        }
-
-        return segments;
-      }
-
-      function drawMiniChart(svg, months, values, color, unit) {
-        svg.innerHTML = "";
-        const width = 900;
-        const height = 180;
-        const padding = { top: 14, right: 18, bottom: 24, left: 46 };
-        const innerW = width - padding.left - padding.right;
-        const innerH = height - padding.top - padding.bottom;
-
-        const valid = values.filter((v) => v != null);
-        if (!valid.length) return;
-
-        const min = Math.min(...valid);
-        const max = Math.max(...valid);
-        const span = Math.max(1, max - min);
-        const pad = span * 0.12;
-        const minY = min - pad;
-        const maxY = max + pad;
-
-        const x = (i) => padding.left + (i / Math.max(1, months.length - 1)) * innerW;
-        const y = (v) => padding.top + ((maxY - v) / Math.max(1e-9, maxY - minY)) * innerH;
-
-        for (let i = 0; i <= 4; i++) {
-          const ratio = i / 4;
-          const yPos = padding.top + ratio * innerH;
-          const yVal = maxY - ratio * (maxY - minY);
-
-          const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-          line.setAttribute("x1", String(padding.left));
-          line.setAttribute("y1", String(yPos));
-          line.setAttribute("x2", String(width - padding.right));
-          line.setAttribute("y2", String(yPos));
-          line.setAttribute("class", "grid-line");
-          svg.appendChild(line);
-
-          const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
-          label.setAttribute("x", String(padding.left - 6));
-          label.setAttribute("y", String(yPos + 4));
-          label.setAttribute("text-anchor", "end");
-          label.setAttribute("font-size", "10");
-          label.setAttribute("fill", "#9fb4d9");
-          label.textContent = formatValue(yVal, unit).replace(" %", "");
-          svg.appendChild(label);
-        }
-
-        const pointsByMonth = months.map((month, index) => ({ index, value: values[index] }));
-        const segments = chunkSegments(pointsByMonth);
-
-        for (const segment of segments) {
-          const points = segment.map((p) => `${x(p.index)},${y(p.value)}`).join(" ");
-          const line = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
-          line.setAttribute("points", points);
-          line.setAttribute("class", "line");
-          line.setAttribute("stroke", color);
-          svg.appendChild(line);
-        }
-
-        const lastIndex = values.findLastIndex((v) => v != null);
-        if (lastIndex >= 0) {
-          const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-          circle.setAttribute("cx", String(x(lastIndex)));
-          circle.setAttribute("cy", String(y(values[lastIndex])));
-          circle.setAttribute("r", "3");
-          circle.setAttribute("fill", color);
-          svg.appendChild(circle);
-        }
-      }
-
-      function drawEconomicCharts(months, allSeries) {
-        const container = document.querySelector("#chart-grid");
-        container.innerHTML = "";
-
-        const colors = ["#62a2ff", "#87e2bc", "#ffb66e", "#f886ff", "#93c5fd", "#fca5a5"];
-
-        SERIES.forEach((metric, index) => {
-          const values = months.map((m) => allSeries[metric.key].get(m));
+        SERIES.forEach((series) => {
           const card = document.createElement("article");
-          card.className = "chart-card";
+          card.className = "card";
 
-          const title = document.createElement("h3");
-          title.textContent = metric.title;
+          const title = document.createElement("h2");
+          title.textContent = series.title;
 
-          const detail = document.createElement("p");
-          const lastValue = [...values].reverse().find((v) => v != null);
-          detail.textContent = `Dernière valeur: ${formatValue(lastValue, metric.unit)} · Série: ${metric.id}`;
+          const meta = document.createElement("p");
+          meta.className = "meta";
+          meta.innerHTML = `Série FRED: <strong>${series.id}</strong> · Période: ${start} → ${end}`;
 
-          const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-          svg.classList.add("mini-chart");
-          svg.setAttribute("viewBox", "0 0 900 180");
-          svg.setAttribute("preserveAspectRatio", "none");
+          const img = document.createElement("img");
+          img.className = "chart-img";
+          img.alt = `Capture FRED pour ${series.title}`;
+          img.loading = "lazy";
+          img.src = fredImageUrl(series.id, start, end);
 
-          drawMiniChart(svg, months, values, colors[index % colors.length], metric.unit);
+          const link = document.createElement("a");
+          link.href = fredGraphUrl(series.id, start, end);
+          link.target = "_blank";
+          link.rel = "noreferrer noopener";
+          link.textContent = "Ouvrir la série sur FRED";
 
-          card.appendChild(title);
-          card.appendChild(detail);
-          card.appendChild(svg);
-          container.appendChild(card);
+          img.onerror = () => {
+            const error = document.createElement("p");
+            error.className = "error";
+            error.textContent = "Impossible de charger cette image FRED (réseau/CORS).";
+            if (!card.querySelector(".error")) {
+              card.appendChild(error);
+            }
+          };
+
+          card.append(title, meta, img, link);
+          grid.appendChild(card);
         });
+
+        document.querySelector("#updated").textContent = `Fenêtre 10 ans générée le ${new Date().toLocaleString("fr-FR")}`;
       }
 
-      async function buildDashboard() {
-        const updatedEl = document.querySelector("#updated");
-        const months = monthListLastTenYears();
-        const allSeries = {};
-
-        try {
-          for (const metric of SERIES) {
-            const raw = await fetchSeries(metric.id);
-            const transformed = metric.transform(raw);
-            allSeries[metric.key] = forwardFillByMonth(transformed, months);
-          }
-
-          drawEconomicCharts(months, allSeries);
-          updatedEl.textContent = `Dernière mise à jour: ${new Date().toLocaleString("fr-CA")}`;
-        } catch (error) {
-          updatedEl.textContent = "Erreur lors du chargement des séries.";
-          const container = document.querySelector("#chart-grid");
-          container.innerHTML = `<p class="error">${error.message}</p>`;
-        }
-      }
-
-      buildDashboard();
+      buildCards();
     </script>
   </body>
 </html>
