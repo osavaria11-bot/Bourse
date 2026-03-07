@@ -144,9 +144,9 @@
   </head>
   <body>
     <main class="container">
-      <h1>États-Unis — 10 graphiques mensuels (5 ans)</h1>
+      <h1>États-Unis — 10 graphiques mensuels (10 ans)</h1>
       <p class="subtitle">
-        Données FRED converties sur une base mensuelle sur les 5 dernières années, sans tableau.
+        Données FRED converties sur une base mensuelle sur les 10 dernières années, sans tableau.
       </p>
       <p id="updated" class="updated">Chargement des séries...</p>
 
@@ -162,15 +162,15 @@
     <script>
       const SERIES = [
         { key: "gdpReal", title: "PIB réel (YoY)", id: "GDPC1", unit: "%", transform: toYearOverYear },
-        { key: "cpi", title: "Inflation CPI (YoY)", id: "CPIAUCSL", unit: "%", transform: toYearOverYear },
+        { key: "cpi", title: "CPI / IPC (YoY)", id: "CPIAUCSL", unit: "%", transform: toYearOverYear },
         { key: "coreInflation", title: "Core inflation (YoY)", id: "CPILFESL", unit: "%", transform: toYearOverYear },
         { key: "unemployment", title: "Taux de chômage", id: "UNRATE", unit: "%", transform: (rows) => rows },
         { key: "jobCreation", title: "Création d'emplois (m/m)", id: "PAYEMS", unit: "k", transform: toFirstDifference },
         { key: "wageGrowth", title: "Croissance salaires (YoY)", id: "CES0500000003", unit: "%", transform: toYearOverYear },
-        { key: "policyRate", title: "Fed funds", id: "DFF", unit: "%", transform: (rows) => rows },
-        { key: "tenYearYield", title: "Taux 10 ans", id: "GS10", unit: "%", transform: (rows) => rows },
-        { key: "spread", title: "Spread 10-2 ans", id: "T10Y2Y", unit: "%", transform: (rows) => rows },
-        { key: "retailSales", title: "Ventes au détail (YoY)", id: "RRSFS", unit: "%", transform: toYearOverYear },
+        { key: "policyRate", title: "Taux directeur", id: "DFF", unit: "%", transform: (rows) => rows },
+        { key: "tenYearYield", title: "10 ans gouvernemental", id: "GS10", unit: "%", transform: (rows) => rows },
+        { key: "spread", title: "Spread 10 ans – 2 ans", id: "T10Y2Y", unit: "%", transform: (rows) => rows },
+        { key: "retailSales", title: "Ventes au détail / consommation (YoY)", id: "RRSFS", unit: "%", transform: toYearOverYear },
       ];
 
       const FETCH_TIMEOUT_MS = 12000;
@@ -307,10 +307,10 @@
         return dateStr.slice(0, 7);
       }
 
-      function monthListLastFiveYears() {
+      function monthListLastTenYears() {
         const today = new Date();
         const end = new Date(today.getFullYear(), today.getMonth(), 1);
-        const start = new Date(end.getFullYear(), end.getMonth() - 59, 1);
+        const start = new Date(end.getFullYear(), end.getMonth() - 119, 1);
         const months = [];
 
         for (let d = new Date(start); d <= end; d.setMonth(d.getMonth() + 1)) {
@@ -462,7 +462,7 @@
 
       async function buildDashboard() {
         const updatedEl = document.querySelector("#updated");
-        const months = monthListLastFiveYears();
+        const months = monthListLastTenYears();
         const allSeries = {};
 
         try {
