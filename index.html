@@ -179,14 +179,53 @@
         return new Date(dateStr + "T00:00:00").toLocaleDateString("fr-CA");
       }
 
-      async function fetchSeries(seriesId) {
-        const url = `https://fred.stlouisfed.org/graph/fredgraph.csv?id=${seriesId}`;
-        const response = await fetch(url);
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}`);
+      const FETCH_TIMEOUT_MS = 12000;
+
+      function withTimeout(url, timeoutMs = FETCH_TIMEOUT_MS) {
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), timeoutMs);
+        return {
+          signal: controller.signal,
+          clear: () => clearTimeout(timeout),
+          url,
+        };
+      }
+
+      async function fetchTextWithFallbacks(urls) {
+        const failures = [];
+
+        for (const url of urls) {
+          const req = withTimeout(url);
+          try {
+            const response = await fetch(req.url, {
+              signal: req.signal,
+              cache: "no-store",
+            });
+
+            if (!response.ok) {
+              throw new Error(`HTTP ${response.status}`);
+            }
+
+            return await response.text();
+          } catch (error) {
+            failures.push(`${url} (${error.message})`);
+          } finally {
+            req.clear();
+          }
         }
 
-        const csv = await response.text();
+        throw new Error(`Impossible de charger les données (${failures.join(" | ")})`);
+      }
+
+      async function fetchSeries(seriesId) {
+        const fredCsvUrl = `https://fred.stlouisfed.org/graph/fredgraph.csv?id=${seriesId}`;
+        const fallbackUrls = [
+          fredCsvUrl,
+          `https://api.allorigins.win/raw?url=${encodeURIComponent(fredCsvUrl)}`,
+          `https://cors.isomorphic-git.org/${fredCsvUrl}`,
+        ];
+
+        const csv = await fetchTextWithFallbacks(fallbackUrls);
         const [header, ...lines] = csv.trim().split("\n");
         const [dateCol, valueCol] = header.split(",");
 

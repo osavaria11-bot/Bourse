@@ -6,6 +6,8 @@ Dashboard macro USA connecté aux séries FRED (St. Louis Fed) avec:
 - historique 10 ans affiché en graphique;
 - indicateurs demandés: PIB réel, CPI, inflation core, chômage, emplois, salaires, taux directeur, 10 ans, spread 10-2, ventes au détail.
 
+Le chargement des séries tente plusieurs URLs (FRED direct + proxys CORS) pour réduire les erreurs `Failed to fetch` selon le réseau/navigateur.
+
 ## Lancer localement
 
 ```bash
