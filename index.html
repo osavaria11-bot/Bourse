@@ -3,8 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard macro US - FRED</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <title>Tableau mensuel macro US - FRED</title>
     <style>
       :root {
         color-scheme: dark;
@@ -13,6 +12,8 @@
         --text: #ecf3ff;
         --sub: #9fb4d9;
         --accent: #62a2ff;
+        --accent2: #87e2bc;
+        --accent3: #ffb66e;
         --border: #223454;
       }
 
@@ -37,162 +38,167 @@
         font-size: clamp(1.4rem, 1rem + 1.8vw, 2.4rem);
       }
 
-      .subtitle {
+      .subtitle,
+      .updated {
         margin-top: 0.6rem;
         color: var(--sub);
       }
 
       .updated {
-        margin-top: 0.6rem;
         color: #87e2bc;
       }
 
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-        gap: 0.75rem;
-        margin-top: 1rem;
-      }
-
-      .card {
+      .panel {
         background: rgba(17, 27, 46, 0.95);
         border: 1px solid var(--border);
         border-radius: 14px;
-        padding: 0.75rem;
+        padding: 0.85rem;
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-        min-height: 230px;
+        margin-top: 1rem;
       }
 
-      .card h2 {
-        margin: 0;
+      .panel h2 {
+        margin: 0 0 0.6rem;
         font-size: 1.05rem;
       }
 
-      .meta {
-        color: var(--sub);
-        font-size: 0.82rem;
-        margin-top: 0.3rem;
+      .table-wrap {
+        overflow: auto;
+        max-height: 58vh;
       }
 
-      .value {
-        margin-top: 0.45rem;
-        font-size: 1rem;
-        color: #b9d7ff;
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 1000px;
+      }
+
+      th,
+      td {
+        border: 1px solid rgba(120, 145, 190, 0.22);
+        padding: 0.45rem 0.55rem;
+        text-align: right;
+        font-size: 0.82rem;
+        white-space: nowrap;
+      }
+
+      th {
+        position: sticky;
+        top: 0;
+        background: #14233d;
+        color: #cfe2ff;
+        z-index: 1;
+      }
+
+      td:first-child,
+      th:first-child {
+        text-align: left;
+        position: sticky;
+        left: 0;
+        z-index: 2;
+        background: #14233d;
+      }
+
+      th:first-child {
+        z-index: 3;
+      }
+
+      .chart-meta {
+        color: var(--sub);
+        font-size: 0.82rem;
+        margin: 0.2rem 0 0.5rem;
+      }
+
+      svg {
+        width: 100%;
+        height: 280px;
+        background: rgba(8, 15, 26, 0.7);
+        border: 1px solid rgba(120, 145, 190, 0.28);
+        border-radius: 10px;
+      }
+
+      .axis,
+      .grid-line {
+        stroke: rgba(120, 145, 190, 0.45);
+        stroke-width: 1;
+      }
+
+      .grid-line {
+        stroke-dasharray: 4 4;
+        opacity: 0.5;
+      }
+
+      .line {
+        fill: none;
+        stroke-width: 2;
+      }
+
+      .legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.8rem;
+        font-size: 0.82rem;
+        color: var(--sub);
+      }
+
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 0.35rem;
       }
 
       .error {
         color: #ff9090;
         margin-top: 0.5rem;
       }
-
-      canvas {
-        margin-top: 0.5rem;
-        width: 100%;
-        height: 135px;
-      }
-
-      @media (min-width: 1250px) {
-        .grid {
-          grid-template-columns: repeat(3, minmax(0, 1fr));
-        }
-
-        .card {
-          min-height: 210px;
-        }
-
-        canvas {
-          height: 115px;
-        }
-      }
     </style>
   </head>
   <body>
     <main class="container">
-      <h1>États-Unis — Indicateurs macro (FRED)</h1>
+      <h1>États-Unis — Tableau mensuel (5 ans)</h1>
       <p class="subtitle">
-        Mise à jour à chaque chargement avec les dernières données FRED disponibles.
+        Données FRED converties sur une base mensuelle sur les 5 dernières années.
       </p>
       <p id="updated" class="updated">Chargement des séries...</p>
-      <section id="cards" class="grid"></section>
+
+      <section class="panel">
+        <h2>Tableau mensuel sur 5 ans</h2>
+        <div id="table-status"></div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr id="table-head"></tr>
+            </thead>
+            <tbody id="table-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Graphique fait à la main (SVG)</h2>
+        <p class="chart-meta">
+          Trois séries en base 100 au début de la période pour comparer les tendances.
+        </p>
+        <svg id="manual-chart" viewBox="0 0 900 280" preserveAspectRatio="none"></svg>
+        <div id="legend" class="legend"></div>
+      </section>
     </main>
 
     <script>
       const SERIES = [
-        {
-          key: "gdpReal",
-          title: "PIB réel (croissance annuelle)",
-          id: "GDPC1",
-          unit: "%",
-          transform: (rows) => toYearOverYear(rows),
-        },
-        {
-          key: "cpi",
-          title: "CPI / IPC (inflation annuelle)",
-          id: "CPIAUCSL",
-          unit: "%",
-          transform: (rows) => toYearOverYear(rows),
-        },
-        {
-          key: "coreInflation",
-          title: "Core inflation (inflation annuelle)",
-          id: "CPILFESL",
-          unit: "%",
-          transform: (rows) => toYearOverYear(rows),
-        },
-        {
-          key: "unemployment",
-          title: "Taux de chômage",
-          id: "UNRATE",
-          unit: "%",
-          transform: (rows) => rows,
-        },
-        {
-          key: "jobCreation",
-          title: "Création d'emplois (variation mensuelle)",
-          id: "PAYEMS",
-          unit: "milliers",
-          transform: (rows) => toFirstDifference(rows),
-        },
-        {
-          key: "wageGrowth",
-          title: "Croissance des salaires (annuelle)",
-          id: "CES0500000003",
-          unit: "%",
-          transform: (rows) => toYearOverYear(rows),
-        },
-        {
-          key: "policyRate",
-          title: "Taux directeur (Fed funds effectif)",
-          id: "DFF",
-          unit: "%",
-          transform: (rows) => rows,
-        },
-        {
-          key: "tenYearYield",
-          title: "10 ans gouvernemental",
-          id: "GS10",
-          unit: "%",
-          transform: (rows) => rows,
-        },
-        {
-          key: "spread",
-          title: "Spread 10 ans - 2 ans",
-          id: "T10Y2Y",
-          unit: "%",
-          transform: (rows) => rows,
-        },
-        {
-          key: "retailSales",
-          title: "Ventes au détail / consommation (annuelle)",
-          id: "RRSFS",
-          unit: "%",
-          transform: (rows) => toYearOverYear(rows),
-        },
+        { key: "gdpReal", title: "PIB réel (YoY)", id: "GDPC1", unit: "%", transform: toYearOverYear },
+        { key: "cpi", title: "Inflation CPI (YoY)", id: "CPIAUCSL", unit: "%", transform: toYearOverYear },
+        { key: "coreInflation", title: "Core inflation (YoY)", id: "CPILFESL", unit: "%", transform: toYearOverYear },
+        { key: "unemployment", title: "Taux de chômage", id: "UNRATE", unit: "%", transform: (rows) => rows },
+        { key: "jobCreation", title: "Création d'emplois (m/m)", id: "PAYEMS", unit: "k", transform: toFirstDifference },
+        { key: "wageGrowth", title: "Croissance salaires (YoY)", id: "CES0500000003", unit: "%", transform: toYearOverYear },
+        { key: "policyRate", title: "Fed funds", id: "DFF", unit: "%", transform: (rows) => rows },
+        { key: "tenYearYield", title: "Taux 10 ans", id: "GS10", unit: "%", transform: (rows) => rows },
+        { key: "spread", title: "Spread 10-2 ans", id: "T10Y2Y", unit: "%", transform: (rows) => rows },
+        { key: "retailSales", title: "Ventes au détail (YoY)", id: "RRSFS", unit: "%", transform: toYearOverYear },
       ];
-
-      function formatDate(dateStr) {
-        return new Date(dateStr + "T00:00:00").toLocaleDateString("fr-CA");
-      }
 
       const FETCH_TIMEOUT_MS = 12000;
 
@@ -242,7 +248,10 @@
 
         const csv = await fetchTextWithFallbacks(fallbackUrls);
         const [header, ...lines] = csv.trim().split("\n");
-        const [dateCol, valueCol] = header.split(",");
+
+        if (!header) {
+          return [];
+        }
 
         return lines
           .map((line) => {
@@ -274,96 +283,186 @@
         return out;
       }
 
-      function latestTenYears(rows) {
-        const cutoff = new Date();
-        cutoff.setFullYear(cutoff.getFullYear() - 10);
-        return rows.filter((r) => new Date(r.date + "T00:00:00") >= cutoff);
+      function formatMonth(dateStr) {
+        const date = new Date(`${dateStr}T00:00:00`);
+        return date.toLocaleDateString("fr-FR", { year: "numeric", month: "short" });
       }
 
-      function makeCard(metric, rows) {
-        const card = document.createElement("article");
-        card.className = "card";
-        card.innerHTML = `
-          <h2>${metric.title}</h2>
-          <p class="meta">Série FRED: ${metric.id}</p>
-          <p class="value" id="value-${metric.key}">--</p>
-          <canvas id="chart-${metric.key}"></canvas>
-        `;
-        document.querySelector("#cards").appendChild(card);
+      function toMonthKey(dateStr) {
+        return dateStr.slice(0, 7);
+      }
 
-        const current = rows[rows.length - 1];
-        card.querySelector(`#value-${metric.key}`).textContent =
-          `Dernière donnée (${formatDate(current.date)}): ${current.value.toFixed(2)} ${metric.unit}`;
+      function monthListLastFiveYears() {
+        const today = new Date();
+        const end = new Date(today.getFullYear(), today.getMonth(), 1);
+        const start = new Date(end.getFullYear(), end.getMonth() - 59, 1);
+        const months = [];
 
-        new Chart(card.querySelector(`#chart-${metric.key}`), {
-          type: "line",
-          data: {
-            labels: rows.map((r) => r.date),
-            datasets: [
-              {
-                label: metric.title,
-                data: rows.map((r) => r.value),
-                borderColor: "#62a2ff",
-                borderWidth: 2,
-                pointRadius: 0,
-                tension: 0.2,
-              },
-            ],
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-              legend: { display: false },
-              tooltip: {
-                callbacks: {
-                  label: (ctx) => `${ctx.parsed.y.toFixed(2)} ${metric.unit}`,
-                },
-              },
-            },
-            scales: {
-              x: {
-                ticks: {
-                  maxTicksLimit: 6,
-                  color: "#9fb4d9",
-                },
-                grid: { color: "rgba(120,145,190,0.12)" },
-              },
-              y: {
-                ticks: {
-                  color: "#9fb4d9",
-                  callback: (v) => `${Number(v).toFixed(1)} ${metric.unit}`,
-                },
-                grid: { color: "rgba(120,145,190,0.15)" },
-              },
-            },
-          },
+        for (let d = new Date(start); d <= end; d.setMonth(d.getMonth() + 1)) {
+          const month = String(d.getMonth() + 1).padStart(2, "0");
+          months.push(`${d.getFullYear()}-${month}`);
+        }
+
+        return months;
+      }
+
+      function forwardFillByMonth(rows, months) {
+        const byMonth = new Map();
+        for (const row of rows) {
+          byMonth.set(toMonthKey(row.date), row.value);
+        }
+
+        const out = new Map();
+        let carry = null;
+
+        for (const month of months) {
+          if (byMonth.has(month)) {
+            carry = byMonth.get(month);
+          }
+          out.set(month, carry);
+        }
+
+        return out;
+      }
+
+      function buildMonthlyTable(months, allSeries) {
+        const head = document.querySelector("#table-head");
+        const body = document.querySelector("#table-body");
+        const status = document.querySelector("#table-status");
+
+        head.innerHTML = "";
+        body.innerHTML = "";
+
+        const monthHead = document.createElement("th");
+        monthHead.textContent = "Mois";
+        head.appendChild(monthHead);
+
+        for (const metric of SERIES) {
+          const th = document.createElement("th");
+          th.textContent = metric.title;
+          head.appendChild(th);
+        }
+
+        for (const month of months) {
+          const tr = document.createElement("tr");
+
+          const monthCell = document.createElement("td");
+          monthCell.textContent = formatMonth(`${month}-01`);
+          tr.appendChild(monthCell);
+
+          for (const metric of SERIES) {
+            const value = allSeries[metric.key].get(month);
+            const td = document.createElement("td");
+            td.textContent = value == null ? "—" : value.toFixed(2);
+            tr.appendChild(td);
+          }
+
+          body.appendChild(tr);
+        }
+
+        status.innerHTML = `<p class="updated">${months.length} mois affichés · ${SERIES.length} indicateurs.</p>`;
+      }
+
+      function drawManualChart(months, allSeries) {
+        const svg = document.querySelector("#manual-chart");
+        const legend = document.querySelector("#legend");
+        svg.innerHTML = "";
+        legend.innerHTML = "";
+
+        const chosen = [
+          { key: "cpi", label: "Inflation CPI", color: "var(--accent)" },
+          { key: "unemployment", label: "Chômage", color: "var(--accent2)" },
+          { key: "policyRate", label: "Fed funds", color: "var(--accent3)" },
+        ];
+
+        const padding = { top: 16, right: 20, bottom: 24, left: 40 };
+        const width = 900;
+        const height = 280;
+        const innerW = width - padding.left - padding.right;
+        const innerH = height - padding.top - padding.bottom;
+
+        const normalized = chosen.map((serie) => {
+          const values = months.map((m) => allSeries[serie.key].get(m));
+          const base = values.find((v) => v != null) ?? 1;
+          return {
+            ...serie,
+            values: values.map((v) => (v == null ? null : (v / base) * 100)),
+          };
         });
+
+        const yValues = normalized.flatMap((s) => s.values.filter((v) => v != null));
+        const minY = Math.min(...yValues);
+        const maxY = Math.max(...yValues);
+        const spanY = Math.max(1, maxY - minY);
+
+        const x = (i) => padding.left + (i / (months.length - 1)) * innerW;
+        const y = (v) => padding.top + ((maxY - v) / spanY) * innerH;
+
+        for (let i = 0; i <= 4; i++) {
+          const gy = padding.top + (i / 4) * innerH;
+          const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+          line.setAttribute("x1", String(padding.left));
+          line.setAttribute("y1", String(gy));
+          line.setAttribute("x2", String(width - padding.right));
+          line.setAttribute("y2", String(gy));
+          line.setAttribute("class", "grid-line");
+          svg.appendChild(line);
+        }
+
+        const axisX = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        axisX.setAttribute("x1", String(padding.left));
+        axisX.setAttribute("y1", String(height - padding.bottom));
+        axisX.setAttribute("x2", String(width - padding.right));
+        axisX.setAttribute("y2", String(height - padding.bottom));
+        axisX.setAttribute("class", "axis");
+        svg.appendChild(axisX);
+
+        const axisY = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        axisY.setAttribute("x1", String(padding.left));
+        axisY.setAttribute("y1", String(padding.top));
+        axisY.setAttribute("x2", String(padding.left));
+        axisY.setAttribute("y2", String(height - padding.bottom));
+        axisY.setAttribute("class", "axis");
+        svg.appendChild(axisY);
+
+        for (const serie of normalized) {
+          const points = serie.values
+            .map((v, i) => (v == null ? null : `${x(i)},${y(v)}`))
+            .filter(Boolean)
+            .join(" ");
+
+          const polyline = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
+          polyline.setAttribute("points", points);
+          polyline.setAttribute("class", "line");
+          polyline.setAttribute("stroke", serie.color);
+          svg.appendChild(polyline);
+
+          const legendItem = document.createElement("span");
+          legendItem.innerHTML = `<span class="dot" style="background:${serie.color}"></span>${serie.label}`;
+          legend.appendChild(legendItem);
+        }
       }
 
       async function buildDashboard() {
         const updatedEl = document.querySelector("#updated");
+        const months = monthListLastFiveYears();
+        const allSeries = {};
 
-        for (const metric of SERIES) {
-          try {
+        try {
+          for (const metric of SERIES) {
             const raw = await fetchSeries(metric.id);
             const transformed = metric.transform(raw);
-            const tenYears = latestTenYears(transformed);
-
-            if (!tenYears.length) {
-              throw new Error("pas de données sur 10 ans");
-            }
-
-            makeCard(metric, tenYears);
-          } catch (error) {
-            const card = document.createElement("article");
-            card.className = "card";
-            card.innerHTML = `<h2>${metric.title}</h2><p class="meta">Série FRED: ${metric.id}</p><p class="error">Erreur: ${error.message}</p>`;
-            document.querySelector("#cards").appendChild(card);
+            allSeries[metric.key] = forwardFillByMonth(transformed, months);
           }
-        }
 
-        updatedEl.textContent = `Dernière mise à jour de la page: ${new Date().toLocaleString("fr-CA")}`;
+          buildMonthlyTable(months, allSeries);
+          drawManualChart(months, allSeries);
+          updatedEl.textContent = `Dernière mise à jour: ${new Date().toLocaleString("fr-CA")}`;
+        } catch (error) {
+          updatedEl.textContent = "Erreur lors du chargement des séries.";
+          const status = document.querySelector("#table-status");
+          status.innerHTML = `<p class="error">${error.message}</p>`;
+        }
       }
 
       buildDashboard();
