@@ -118,6 +118,16 @@
         { title: "Ventes au détail / consommation", id: "RRSFS" },
       ];
 
+      const IMAGE_BASE_URLS = [
+        "https://fred.stlouisfed.org/graph/fredgraph.png",
+        "https://r.jina.ai/http://fred.stlouisfed.org/graph/fredgraph.png",
+      ];
+
+      const CSV_BASE_URLS = [
+        "https://fred.stlouisfed.org/graph/fredgraph.csv",
+        "https://r.jina.ai/http://fred.stlouisfed.org/graph/fredgraph.csv",
+      ];
+
       function isoDate(d) {
         return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
       }
@@ -129,14 +139,14 @@
         return { start: isoDate(start), end: isoDate(end) };
       }
 
-      function fredImageUrl(seriesId, start, end) {
+      function fredImageUrls(seriesId, start, end) {
         const params = new URLSearchParams({
           id: seriesId,
           cosd: start,
           coed: end,
         });
 
-        return `https://fred.stlouisfed.org/graph/fredgraph.png?${params.toString()}`;
+        return IMAGE_BASE_URLS.map((baseUrl) => `${baseUrl}?${params.toString()}`);
       }
 
       function fredGraphUrl(seriesId, start, end) {
@@ -151,23 +161,48 @@
       }
 
       async function fetchLatestValue(seriesId) {
-        const response = await fetch(`https://fred.stlouisfed.org/graph/fredgraph.csv?id=${encodeURIComponent(seriesId)}`);
+        const csvUrls = CSV_BASE_URLS.map((baseUrl) => `${baseUrl}?id=${encodeURIComponent(seriesId)}`);
 
-        if (!response.ok) {
-          throw new Error(`Erreur de chargement (${response.status})`);
-        }
+        for (const url of csvUrls) {
+          try {
+            const response = await fetch(url);
 
-        const csv = await response.text();
-        const rows = csv.trim().split("\n").slice(1).filter(Boolean);
+            if (!response.ok) {
+              continue;
+            }
 
-        for (let i = rows.length - 1; i >= 0; i -= 1) {
-          const [date, rawValue] = rows[i].split(",");
-          if (rawValue && rawValue !== ".") {
-            return { date, value: Number(rawValue) };
+            const csv = await response.text();
+            const rows = csv.trim().split("\n").slice(1).filter(Boolean);
+
+            for (let i = rows.length - 1; i >= 0; i -= 1) {
+              const [date, rawValue] = rows[i].split(",");
+              if (rawValue && rawValue !== ".") {
+                return { date, value: Number(rawValue) };
+              }
+            }
+          } catch (error) {
+            // Essai d'une URL suivante.
           }
         }
 
         throw new Error("Aucune valeur disponible");
+      }
+
+      function assignImageWithFallback(img, urls) {
+        let index = 0;
+
+        const tryNext = () => {
+          if (index >= urls.length) {
+            img.dispatchEvent(new Event("allSourcesFailed"));
+            return;
+          }
+
+          img.src = urls[index];
+          index += 1;
+        };
+
+        img.onerror = tryNext;
+        tryNext();
       }
 
       async function buildCards() {
@@ -193,7 +228,7 @@
           img.className = "chart-img";
           img.alt = `Capture FRED pour ${series.title}`;
           img.loading = "lazy";
-          img.src = fredImageUrl(series.id, start, end);
+          const chartUrls = fredImageUrls(series.id, start, end);
 
           const link = document.createElement("a");
           link.href = fredGraphUrl(series.id, start, end);
@@ -201,14 +236,16 @@
           link.rel = "noreferrer noopener";
           link.textContent = "Ouvrir la série sur FRED";
 
-          img.onerror = () => {
+          img.addEventListener("allSourcesFailed", () => {
             const error = document.createElement("p");
             error.className = "error";
-            error.textContent = "Impossible de charger cette image FRED (réseau/CORS).";
+            error.textContent = "Impossible de charger cette image FRED (toutes les sources ont échoué).";
             if (!card.querySelector(".error")) {
               card.appendChild(error);
             }
-          };
+          });
+
+          assignImageWithFallback(img, chartUrls);
 
           try {
             const latest = await fetchLatestValue(series.id);
