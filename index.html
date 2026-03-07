@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tableau mensuel macro US - FRED</title>
+    <title>10 graphiques macro US - FRED</title>
     <style>
       :root {
         color-scheme: dark;
@@ -60,48 +60,6 @@
       .panel h2 {
         margin: 0 0 0.6rem;
         font-size: 1.05rem;
-      }
-
-      .table-wrap {
-        overflow: auto;
-        height: min(58vh, 640px);
-        min-height: 260px;
-      }
-
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        min-width: 1000px;
-      }
-
-      th,
-      td {
-        border: 1px solid rgba(120, 145, 190, 0.22);
-        padding: 0.45rem 0.55rem;
-        text-align: right;
-        font-size: 0.82rem;
-        white-space: nowrap;
-      }
-
-      th {
-        position: sticky;
-        top: 0;
-        background: #14233d;
-        color: #cfe2ff;
-        z-index: 1;
-      }
-
-      td:first-child,
-      th:first-child {
-        text-align: left;
-        position: sticky;
-        left: 0;
-        z-index: 2;
-        background: #14233d;
-      }
-
-      th:first-child {
-        z-index: 3;
       }
 
       .chart-meta {
@@ -186,27 +144,14 @@
   </head>
   <body>
     <main class="container">
-      <h1>États-Unis — Tableau mensuel (5 ans)</h1>
+      <h1>États-Unis — 10 graphiques mensuels (5 ans)</h1>
       <p class="subtitle">
-        Données FRED converties sur une base mensuelle sur les 5 dernières années.
+        Données FRED converties sur une base mensuelle sur les 5 dernières années, sans tableau.
       </p>
       <p id="updated" class="updated">Chargement des séries...</p>
 
       <section class="panel">
-        <h2>Tableau mensuel sur 5 ans</h2>
-        <div id="table-status"></div>
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr id="table-head"></tr>
-            </thead>
-            <tbody id="table-body"></tbody>
-          </table>
-        </div>
-      </section>
-
-      <section class="panel">
-        <h2>Graphiques économiques (SVG)</h2>
+        <h2>10 graphiques économiques (SVG)</h2>
         <p class="chart-meta">
           Chaque indicateur est affiché sur son propre graphique pour éviter les erreurs d'échelle.
         </p>
@@ -328,11 +273,6 @@
         return out;
       }
 
-      function formatMonth(dateStr) {
-        const date = new Date(`${dateStr}T00:00:00`);
-        return date.toLocaleDateString("fr-FR", { year: "numeric", month: "short" });
-      }
-
       function formatValue(value, unit) {
         if (value == null || Number.isNaN(value)) {
           return "—";
@@ -398,44 +338,6 @@
         }
 
         return out;
-      }
-
-      function buildMonthlyTable(months, allSeries) {
-        const head = document.querySelector("#table-head");
-        const body = document.querySelector("#table-body");
-        const status = document.querySelector("#table-status");
-
-        head.innerHTML = "";
-        body.innerHTML = "";
-
-        const monthHead = document.createElement("th");
-        monthHead.textContent = "Mois";
-        head.appendChild(monthHead);
-
-        for (const metric of SERIES) {
-          const th = document.createElement("th");
-          th.textContent = metric.title;
-          head.appendChild(th);
-        }
-
-        for (const month of months) {
-          const tr = document.createElement("tr");
-
-          const monthCell = document.createElement("td");
-          monthCell.textContent = formatMonth(`${month}-01`);
-          tr.appendChild(monthCell);
-
-          for (const metric of SERIES) {
-            const value = allSeries[metric.key].get(month);
-            const td = document.createElement("td");
-            td.textContent = formatValue(value, metric.unit);
-            tr.appendChild(td);
-          }
-
-          body.appendChild(tr);
-        }
-
-        status.innerHTML = `<p class="updated">${months.length} mois affichés · ${SERIES.length} indicateurs.</p>`;
       }
 
       function chunkSegments(values) {
@@ -570,13 +472,12 @@
             allSeries[metric.key] = forwardFillByMonth(transformed, months);
           }
 
-          buildMonthlyTable(months, allSeries);
           drawEconomicCharts(months, allSeries);
           updatedEl.textContent = `Dernière mise à jour: ${new Date().toLocaleString("fr-CA")}`;
         } catch (error) {
           updatedEl.textContent = "Erreur lors du chargement des séries.";
-          const status = document.querySelector("#table-status");
-          status.innerHTML = `<p class="error">${error.message}</p>`;
+          const container = document.querySelector("#chart-grid");
+          container.innerHTML = `<p class="error">${error.message}</p>`;
         }
       }
 
