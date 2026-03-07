@@ -118,6 +118,34 @@
         border-radius: 10px;
       }
 
+      .chart-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 0.9rem;
+      }
+
+      .chart-card {
+        background: rgba(10, 18, 31, 0.8);
+        border: 1px solid rgba(120, 145, 190, 0.2);
+        border-radius: 12px;
+        padding: 0.55rem;
+      }
+
+      .chart-card h3 {
+        margin: 0;
+        font-size: 0.95rem;
+      }
+
+      .chart-card p {
+        margin: 0.25rem 0 0.45rem;
+        color: var(--sub);
+        font-size: 0.78rem;
+      }
+
+      .mini-chart {
+        height: 180px;
+      }
+
       .axis,
       .grid-line {
         stroke: rgba(120, 145, 190, 0.45);
@@ -178,12 +206,11 @@
       </section>
 
       <section class="panel">
-        <h2>Graphique fait à la main (SVG)</h2>
+        <h2>Graphiques économiques (SVG)</h2>
         <p class="chart-meta">
-          Trois séries en base 100 au début de la période pour comparer les tendances.
+          Chaque indicateur est affiché sur son propre graphique pour éviter les erreurs d'échelle.
         </p>
-        <svg id="manual-chart" viewBox="0 0 900 280" preserveAspectRatio="none"></svg>
-        <div id="legend" class="legend"></div>
+        <div id="chart-grid" class="chart-grid"></div>
       </section>
     </main>
 
@@ -394,84 +421,124 @@
         status.innerHTML = `<p class="updated">${months.length} mois affichés · ${SERIES.length} indicateurs.</p>`;
       }
 
-      function drawManualChart(months, allSeries) {
-        const svg = document.querySelector("#manual-chart");
-        const legend = document.querySelector("#legend");
+      function chunkSegments(values) {
+        const segments = [];
+        let current = [];
+
+        for (let i = 0; i < values.length; i++) {
+          const item = values[i];
+          if (item.value == null) {
+            if (current.length > 1) segments.push(current);
+            current = [];
+            continue;
+          }
+          current.push(item);
+        }
+
+        if (current.length > 1) {
+          segments.push(current);
+        }
+
+        return segments;
+      }
+
+      function drawMiniChart(svg, months, values, color, unit) {
         svg.innerHTML = "";
-        legend.innerHTML = "";
-
-        const chosen = [
-          { key: "cpi", label: "Inflation CPI", color: "var(--accent)" },
-          { key: "unemployment", label: "Chômage", color: "var(--accent2)" },
-          { key: "policyRate", label: "Fed funds", color: "var(--accent3)" },
-        ];
-
-        const padding = { top: 16, right: 20, bottom: 24, left: 40 };
         const width = 900;
-        const height = 280;
+        const height = 180;
+        const padding = { top: 14, right: 18, bottom: 24, left: 46 };
         const innerW = width - padding.left - padding.right;
         const innerH = height - padding.top - padding.bottom;
 
-        const normalized = chosen.map((serie) => {
-          const values = months.map((m) => allSeries[serie.key].get(m));
-          const base = values.find((v) => v != null) ?? 1;
-          return {
-            ...serie,
-            values: values.map((v) => (v == null ? null : (v / base) * 100)),
-          };
-        });
+        const valid = values.filter((v) => v != null);
+        if (!valid.length) return;
 
-        const yValues = normalized.flatMap((s) => s.values.filter((v) => v != null));
-        const minY = Math.min(...yValues);
-        const maxY = Math.max(...yValues);
-        const spanY = Math.max(1, maxY - minY);
+        const min = Math.min(...valid);
+        const max = Math.max(...valid);
+        const span = Math.max(1, max - min);
+        const pad = span * 0.12;
+        const minY = min - pad;
+        const maxY = max + pad;
 
-        const x = (i) => padding.left + (i / (months.length - 1)) * innerW;
-        const y = (v) => padding.top + ((maxY - v) / spanY) * innerH;
+        const x = (i) => padding.left + (i / Math.max(1, months.length - 1)) * innerW;
+        const y = (v) => padding.top + ((maxY - v) / Math.max(1e-9, maxY - minY)) * innerH;
 
         for (let i = 0; i <= 4; i++) {
-          const gy = padding.top + (i / 4) * innerH;
+          const ratio = i / 4;
+          const yPos = padding.top + ratio * innerH;
+          const yVal = maxY - ratio * (maxY - minY);
+
           const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
           line.setAttribute("x1", String(padding.left));
-          line.setAttribute("y1", String(gy));
+          line.setAttribute("y1", String(yPos));
           line.setAttribute("x2", String(width - padding.right));
-          line.setAttribute("y2", String(gy));
+          line.setAttribute("y2", String(yPos));
           line.setAttribute("class", "grid-line");
+          svg.appendChild(line);
+
+          const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+          label.setAttribute("x", String(padding.left - 6));
+          label.setAttribute("y", String(yPos + 4));
+          label.setAttribute("text-anchor", "end");
+          label.setAttribute("font-size", "10");
+          label.setAttribute("fill", "#9fb4d9");
+          label.textContent = formatValue(yVal, unit).replace(" %", "");
+          svg.appendChild(label);
+        }
+
+        const pointsByMonth = months.map((month, index) => ({ index, value: values[index] }));
+        const segments = chunkSegments(pointsByMonth);
+
+        for (const segment of segments) {
+          const points = segment.map((p) => `${x(p.index)},${y(p.value)}`).join(" ");
+          const line = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
+          line.setAttribute("points", points);
+          line.setAttribute("class", "line");
+          line.setAttribute("stroke", color);
           svg.appendChild(line);
         }
 
-        const axisX = document.createElementNS("http://www.w3.org/2000/svg", "line");
-        axisX.setAttribute("x1", String(padding.left));
-        axisX.setAttribute("y1", String(height - padding.bottom));
-        axisX.setAttribute("x2", String(width - padding.right));
-        axisX.setAttribute("y2", String(height - padding.bottom));
-        axisX.setAttribute("class", "axis");
-        svg.appendChild(axisX);
-
-        const axisY = document.createElementNS("http://www.w3.org/2000/svg", "line");
-        axisY.setAttribute("x1", String(padding.left));
-        axisY.setAttribute("y1", String(padding.top));
-        axisY.setAttribute("x2", String(padding.left));
-        axisY.setAttribute("y2", String(height - padding.bottom));
-        axisY.setAttribute("class", "axis");
-        svg.appendChild(axisY);
-
-        for (const serie of normalized) {
-          const points = serie.values
-            .map((v, i) => (v == null ? null : `${x(i)},${y(v)}`))
-            .filter(Boolean)
-            .join(" ");
-
-          const polyline = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
-          polyline.setAttribute("points", points);
-          polyline.setAttribute("class", "line");
-          polyline.setAttribute("stroke", serie.color);
-          svg.appendChild(polyline);
-
-          const legendItem = document.createElement("span");
-          legendItem.innerHTML = `<span class="dot" style="background:${serie.color}"></span>${serie.label}`;
-          legend.appendChild(legendItem);
+        const lastIndex = values.findLastIndex((v) => v != null);
+        if (lastIndex >= 0) {
+          const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+          circle.setAttribute("cx", String(x(lastIndex)));
+          circle.setAttribute("cy", String(y(values[lastIndex])));
+          circle.setAttribute("r", "3");
+          circle.setAttribute("fill", color);
+          svg.appendChild(circle);
         }
+      }
+
+      function drawEconomicCharts(months, allSeries) {
+        const container = document.querySelector("#chart-grid");
+        container.innerHTML = "";
+
+        const colors = ["#62a2ff", "#87e2bc", "#ffb66e", "#f886ff", "#93c5fd", "#fca5a5"];
+
+        SERIES.forEach((metric, index) => {
+          const values = months.map((m) => allSeries[metric.key].get(m));
+          const card = document.createElement("article");
+          card.className = "chart-card";
+
+          const title = document.createElement("h3");
+          title.textContent = metric.title;
+
+          const detail = document.createElement("p");
+          const lastValue = [...values].reverse().find((v) => v != null);
+          detail.textContent = `Dernière valeur: ${formatValue(lastValue, metric.unit)} · Série: ${metric.id}`;
+
+          const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+          svg.classList.add("mini-chart");
+          svg.setAttribute("viewBox", "0 0 900 180");
+          svg.setAttribute("preserveAspectRatio", "none");
+
+          drawMiniChart(svg, months, values, colors[index % colors.length], metric.unit);
+
+          card.appendChild(title);
+          card.appendChild(detail);
+          card.appendChild(svg);
+          container.appendChild(card);
+        });
       }
 
       async function buildDashboard() {
@@ -487,7 +554,7 @@
           }
 
           buildMonthlyTable(months, allSeries);
-          drawManualChart(months, allSeries);
+          drawEconomicCharts(months, allSeries);
           updatedEl.textContent = `Dernière mise à jour: ${new Date().toLocaleString("fr-CA")}`;
         } catch (error) {
           updatedEl.textContent = "Erreur lors du chargement des séries.";
