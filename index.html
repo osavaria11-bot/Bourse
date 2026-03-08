@@ -199,8 +199,8 @@
         { title: "National Financial Conditions Index (NFCI)", id: "NFCI" },
         {
           title: "ISM Manufacturing PMI",
-          source: "investing",
-          url: "https://www.investing.com/economic-calendar/ism-manufacturing-pmi-173",
+          source: "tradingeconomics",
+          url: "https://tradingeconomics.com/united-states/business-confidence",
         },
         { title: "Taux de chômage (UNRATE)", id: "UNRATE" },
         { title: "Épargne personnelle (PSAVE)", id: "PSAVE" },
@@ -431,9 +431,9 @@
           currentValue.className = "current-value";
           currentValue.textContent = "Valeur actuelle : chargement...";
 
-          if (series.source === "investing") {
-            meta.textContent = "Source: Investing.com";
-            currentValue.textContent = "Valeur actuelle : à consulter dans le graphique Investing.com";
+          if (series.source === "tradingeconomics") {
+            meta.textContent = "Source: TradingEconomics";
+            currentValue.textContent = "Valeur actuelle : à consulter dans le graphique TradingEconomics";
 
             const iframe = document.createElement("iframe");
             iframe.className = "chart-frame";
@@ -444,18 +444,18 @@
 
             const screenshotNote = document.createElement("p");
             screenshotNote.className = "meta";
-            screenshotNote.textContent = "Capture Investing.com : possible vérification Cloudflare avant l'affichage du graphique.";
+            screenshotNote.textContent = "Capture TradingEconomics : le site peut appliquer des restrictions d'intégration selon le navigateur.";
 
             const link = document.createElement("a");
             link.href = series.url;
             link.target = "_blank";
             link.rel = "noreferrer noopener";
-            link.textContent = "Ouvrir le graphique sur Investing.com";
+            link.textContent = "Ouvrir le graphique sur TradingEconomics";
 
             iframe.addEventListener("error", () => {
               const error = document.createElement("p");
               error.className = "error";
-              error.textContent = "L'intégration du graphique Investing.com a échoué. Utilisez le lien ci-dessous.";
+              error.textContent = "L'intégration du graphique TradingEconomics a échoué. Utilisez le lien ci-dessous.";
               if (!card.querySelector(".error")) {
                 card.appendChild(error);
               }
