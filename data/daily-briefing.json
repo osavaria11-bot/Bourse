@@ -1,8 +1,36 @@
 {
-  "generated_at": "2026-03-08 16:49:43 UTC",
+  "generated_at": "2026-03-08 17:05:19 UTC",
   "last_successful_update": "2026-03-08 16:15:02 UTC",
   "briefing_paragraph": "Les marchés abordent la séance avec une dynamique globalement prudente, portée par l’arbitrage entre trajectoire des taux, résilience de la croissance américaine et évolution des devises, ce qui maintient un biais sélectif sur les actifs risqués tout en favorisant une lecture disciplinée du couple rendement/volatilité.",
   "series_snapshot": [],
   "data_provider": "FRED (Federal Reserve Bank of St. Louis)",
-  "update_status": "stale_data_kept: <urlopen error Tunnel connection failed: 403 Forbidden>"
+  "update_status": "stale_data_kept: <urlopen error Tunnel connection failed: 403 Forbidden>",
+  "news_digest_note": "Liens de veille à consulter chaque jour dans le dashboard.",
+  "news_sources": [
+    {
+      "label": "Reuters — Econ World",
+      "url": "https://www.reuters.com/markets/econ-world/",
+      "description": "Actualités macro mondiales (croissance, inflation, banques centrales)."
+    },
+    {
+      "label": "Reuters — U.S. Markets",
+      "url": "https://www.reuters.com/markets/us/",
+      "description": "Un focus sur les marchés américains (indices, actions, Fed)."
+    },
+    {
+      "label": "Bank of Canada — Daily Digest",
+      "url": "https://www.bankofcanada.ca/rates/daily-digest/",
+      "description": "Point quotidien officiel de la Banque du Canada."
+    },
+    {
+      "label": "Reuters — Global Markets",
+      "url": "https://www.reuters.com/markets/",
+      "description": "Vue globale actions, obligations, devises et matières premières."
+    },
+    {
+      "label": "Reuters — Business",
+      "url": "https://www.reuters.com/business/",
+      "description": "Actualité entreprises, secteurs et réglementation."
+    }
+  ]
 }

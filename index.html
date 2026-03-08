@@ -73,6 +73,21 @@
         color: #dbe7ff;
       }
 
+      .briefing-note {
+        margin: 0.8rem 0 0;
+        color: #b9cbed;
+        font-size: 0.88rem;
+      }
+
+      .briefing-links {
+        margin: 0.55rem 0 0;
+        padding-left: 1.1rem;
+      }
+
+      .briefing-links li {
+        margin-bottom: 0.25rem;
+      }
+
       .bottom-links {
         margin: 0.4rem 0 0;
         padding-left: 1.1rem;
@@ -184,6 +199,8 @@
         <h2>Briefing du jour</h2>
         <p id="briefingDate" class="meta">Dernière mise à jour réussie: en attente du fichier généré.</p>
         <p id="briefingParagraph" class="briefing-text">Le briefing quotidien sera affiché ici dès la première génération GitHub Actions.</p>
+        <p id="briefingNote" class="briefing-note"></p>
+        <ul id="briefingLinks" class="briefing-links"></ul>
       </section>
       <section id="grid" class="grid"></section>
       <section class="bottom-section">
@@ -555,6 +572,31 @@
       async function loadDailyBriefing() {
         const briefingDate = document.querySelector("#briefingDate");
         const briefingParagraph = document.querySelector("#briefingParagraph");
+        const briefingNote = document.querySelector("#briefingNote");
+        const briefingLinks = document.querySelector("#briefingLinks");
+
+        const renderNewsSources = (sources) => {
+          briefingLinks.innerHTML = "";
+
+          if (!Array.isArray(sources) || sources.length === 0) {
+            return;
+          }
+
+          sources.forEach((source) => {
+            const item = document.createElement("li");
+            const link = document.createElement("a");
+            link.href = source.url;
+            link.target = "_blank";
+            link.rel = "noreferrer noopener";
+            link.textContent = source.label;
+
+            const details = document.createElement("span");
+            details.textContent = source.description ? ` — ${source.description}` : "";
+
+            item.append(link, details);
+            briefingLinks.appendChild(item);
+          });
+        };
 
         try {
           const response = await fetch(`data/daily-briefing.json?ts=${Date.now()}`);
@@ -565,8 +607,12 @@
           const briefing = await response.json();
           briefingDate.textContent = `Dernière mise à jour réussie: ${briefing.last_successful_update ?? briefing.generated_at ?? "inconnue"}`;
           briefingParagraph.textContent = briefing.briefing_paragraph ?? "Le résumé quotidien sera mis à jour automatiquement chaque matin.";
+          briefingNote.textContent = briefing.news_digest_note ?? "";
+          renderNewsSources(briefing.news_sources);
         } catch (error) {
           briefingParagraph.textContent = "Le résumé quotidien sera affiché ici après la première exécution réussie du workflow automatique.";
+          briefingNote.textContent = "";
+          briefingLinks.innerHTML = "";
         }
       }
 

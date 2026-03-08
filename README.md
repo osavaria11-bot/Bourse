@@ -18,6 +18,8 @@ Puis ouvrir: `http://localhost:8000`.
 
 Le briefing est généré **hors navigateur** par GitHub Actions puis servi comme fichier statique `data/daily-briefing.json`.
 
+Le JSON inclut aussi une section `news_sources` (Reuters + Banque du Canada) affichée dans le dashboard pour avoir une veille quotidienne directement cliquable.
+
 ### Workflow GitHub Actions
 
 - Fichier: `.github/workflows/daily-briefing.yml`
