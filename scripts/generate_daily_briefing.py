@@ -27,6 +27,34 @@ FRED_SERIES = {
     "DTWEXBGS": "indice large du dollar",
 }
 
+NEWS_SOURCES = [
+    {
+        "label": "Reuters — Econ World",
+        "url": "https://www.reuters.com/markets/econ-world/",
+        "description": "Actualités macro mondiales (croissance, inflation, banques centrales).",
+    },
+    {
+        "label": "Reuters — U.S. Markets",
+        "url": "https://www.reuters.com/markets/us/",
+        "description": "Un focus sur les marchés américains (indices, actions, Fed).",
+    },
+    {
+        "label": "Bank of Canada — Daily Digest",
+        "url": "https://www.bankofcanada.ca/rates/daily-digest/",
+        "description": "Point quotidien officiel de la Banque du Canada.",
+    },
+    {
+        "label": "Reuters — Global Markets",
+        "url": "https://www.reuters.com/markets/",
+        "description": "Vue globale actions, obligations, devises et matières premières.",
+    },
+    {
+        "label": "Reuters — Business",
+        "url": "https://www.reuters.com/business/",
+        "description": "Actualité entreprises, secteurs et réglementation.",
+    },
+]
+
 
 class SourceError(RuntimeError):
     """Raised when a source cannot be fetched or parsed."""
@@ -117,6 +145,11 @@ def main() -> None:
                 **previous_payload,
                 "generated_at": generated_at,
                 "update_status": f"stale_data_kept: {exc}",
+                "news_digest_note": previous_payload.get(
+                    "news_digest_note",
+                    "Liens de veille à consulter chaque jour dans le dashboard.",
+                ),
+                "news_sources": previous_payload.get("news_sources", NEWS_SOURCES),
             }
             OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
             OUTPUT_PATH.write_text(
@@ -131,6 +164,8 @@ def main() -> None:
         "generated_at": generated_at,
         "last_successful_update": generated_at,
         "briefing_paragraph": paragraph,
+        "news_digest_note": "Liens de veille à consulter chaque jour dans le dashboard.",
+        "news_sources": NEWS_SOURCES,
         "series_snapshot": snapshot,
         "data_provider": "FRED (Federal Reserve Bank of St. Louis)",
         "update_status": "fresh_data",
