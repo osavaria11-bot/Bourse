@@ -18,14 +18,10 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
       - name: Generate daily briefing
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          OPENAI_MODEL: gpt-5-mini
-        run: |
-          python scripts/generate_daily_briefing.py
+        run: python scripts/generate_daily_briefing.py
 
       - name: Commit updated briefing
         run: |

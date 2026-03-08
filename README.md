@@ -48,33 +48,30 @@ Fichiers générés:
 
 ## Résumé du jour automatique (quotidien)
 
-Le projet inclut maintenant un briefing quotidien affiché en haut de page depuis `data/daily-briefing.json`.
+Le briefing du jour est **pré-généré par GitHub Actions** puis servi en tant que fichier statique `data/daily-briefing.json`.
+Le navigateur ne lit plus de sources live pour ce bloc.
 
 ### Fonctionnement
 
-1. Le script `scripts/generate_daily_briefing.py` récupère des séries FRED clés.
-2. Il génère un résumé de secours (sans IA) ou un résumé enrichi si `OPENAI_API_KEY` est disponible.
-3. Le workflow GitHub `.github/workflows/daily-briefing.yml` l'exécute chaque jour et commit le JSON mis à jour.
-4. `index.html` charge automatiquement ce JSON et affiche le briefing du jour.
+1. Le workflow `.github/workflows/daily-briefing.yml` s’exécute chaque matin (cron) et peut aussi être lancé manuellement via **Run workflow**.
+2. Le script `scripts/generate_daily_briefing.py` collecte côté CI:
+   - macro (FRED),
+   - marché USA (FRED),
+   - marché CAD (FRED),
+   - marché international (FRED),
+   - nouvelle principale (flux RSS public).
+3. Le script génère `data/daily-briefing.json` prêt à afficher.
+4. Si une source échoue pendant l’exécution, le script **conserve la dernière version valide** du fichier (pas de remplacement par un briefing vide).
+5. `index.html` affiche ce fichier et la mention **Dernière mise à jour réussie**.
 
-### Configuration GitHub (important)
+### Fiabilité et sécurité
 
-Dans le dépôt GitHub, ajoutez un secret:
-
-- `OPENAI_API_KEY` (Repository Settings → Secrets and variables → Actions)
-
-Optionnel:
-
-- `OPENAI_MODEL` (sinon `gpt-5-mini` est utilisé dans le workflow)
+- Pas de backend externe.
+- Pas d’appel direct à des API sensibles depuis le front-end.
+- Aucune clé API n’est exposée dans le navigateur.
 
 ### Lancer manuellement en local
 
 ```bash
 python scripts/generate_daily_briefing.py
-```
-
-Puis ouvrir la page locale:
-
-```bash
-python3 -m http.server 8000
 ```

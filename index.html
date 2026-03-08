@@ -601,7 +601,7 @@
           }
 
           const briefing = await response.json();
-          briefingDate.textContent = `Mise à jour: ${briefing.generated_at ?? "inconnue"}`;
+          briefingDate.textContent = `Dernière mise à jour réussie: ${briefing.last_successful_update ?? briefing.generated_at ?? "inconnue"}`;
 
           const sections = briefing.sections ?? {};
           briefingMacro.innerHTML = `<strong>Macro:</strong> ${sections.macro ?? briefing.summary ?? "Résumé indisponible."}`;
@@ -612,11 +612,11 @@
 
           const status = briefing.snapshot_status ?? {};
           if (status.using_cached_snapshot) {
-            briefingStatus.textContent = `⚠️ Mode secours: snapshot valide du ${status.cached_snapshot_generated_at ?? "jour inconnu"}.`;
+            briefingStatus.textContent = `⚠️ Affichage de la dernière version valide (${status.cached_snapshot_generated_at ?? "date inconnue"}).`;
           } else if ((status.live_points ?? 0) > 0) {
             briefingStatus.textContent = `✅ Données live récupérées: ${status.live_points}/${status.series_count ?? "?"} séries.`;
           } else {
-            briefingStatus.textContent = "⚠️ Aucune donnée live récupérée dans ce run.";
+            briefingStatus.textContent = "✅ Briefing statique chargé depuis le fichier généré par GitHub Actions.";
           }
 
           briefingFallbackLinks.innerHTML = "";
@@ -631,14 +631,14 @@
             briefingFallbackLinks.appendChild(li);
           });
         } catch (error) {
-          briefingDate.textContent = "Mise à jour: indisponible";
+          briefingDate.textContent = "Dernière mise à jour réussie: indisponible";
           briefingMacro.innerHTML =
-            "<strong>Macro:</strong> Le briefing quotidien n'est pas encore généré. Lancez le script d'automatisation pour créer data/daily-briefing.json.";
+            "<strong>Macro:</strong> Le briefing quotidien n'est pas encore généré. Lancez le workflow GitHub Actions 'Daily briefing' pour créer data/daily-briefing.json.";
           briefingUsa.innerHTML = "<strong>Marché USA:</strong> Indisponible.";
           briefingCad.innerHTML = "<strong>Marché CAD:</strong> Indisponible.";
           briefingInternational.innerHTML = "<strong>Marché international:</strong> Indisponible.";
           briefingTopNews.innerHTML = "<strong>Nouvelle du jour:</strong> Indisponible.";
-          briefingStatus.textContent = "⚠️ Le fichier daily-briefing.json est introuvable.";
+          briefingStatus.textContent = "⚠️ Fichier briefing introuvable: le site affichera la dernière version disponible dès le prochain run GitHub Actions.";
           briefingFallbackLinks.innerHTML = "";
         }
       }
