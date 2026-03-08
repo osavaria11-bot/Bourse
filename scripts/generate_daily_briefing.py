@@ -1,284 +1,161 @@
 #!/usr/bin/env python3
-"""Generate a daily market briefing JSON consumed by index.html.
+"""Generate a static daily briefing JSON for GitHub Pages.
 
-- Pulls latest values from selected FRED series.
-- Builds a deterministic 5-paragraph briefing fallback.
-- If OPENAI_API_KEY is available, asks OpenAI for a richer French briefing.
+Design goals:
+- No API key required.
+- Collect data server-side in GitHub Actions (never from browser).
+- Keep last valid briefing file if any source fails during a run.
 """
 
 from __future__ import annotations
 
 import json
-import os
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
-from urllib.error import URLError
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
-
-SERIES = [
-    ("UNRATE", "Chômage US"),
-    ("DFF", "Fed Funds"),
-    ("DGS10", "Taux US 10 ans"),
-    ("BAMLH0A0HYM2", "Spread High Yield"),
-    ("VIXCLS", "VIX"),
-    ("T10Y2Y", "Spread 10Y-2Y"),
-]
+import xml.etree.ElementTree as ET
 
 OUTPUT_PATH = Path("data/daily-briefing.json")
-CACHE_PATH = Path("data/last-valid-snapshot.json")
-MODEL = os.getenv("OPENAI_MODEL", "gpt-5-mini")
+TIMEOUT_SECONDS = 30
+
+FRED_SERIES = {
+    "UNRATE": "Chômage US",
+    "DFF": "Fed Funds",
+    "DGS10": "Taux US 10 ans",
+    "SP500": "S&P 500",
+    "VIXCLS": "VIX",
+    "DEXCAUS": "CAD/USD",
+    "IR3TIB01CAM156N": "Taux court terme Canada",
+    "DTWEXBGS": "Indice dollar (broad)",
+}
+
 FALLBACK_SOURCES = [
-    {
-        "label": "FRED (tableau de bord macro)",
-        "url": "https://fred.stlouisfed.org/graph/?g=1Ng5J",
-    },
-    {
-        "label": "Investing.com — Indices US en direct",
-        "url": "https://www.investing.com/indices/usa-indices",
-    },
-    {
-        "label": "Yahoo Finance — Marchés US",
-        "url": "https://finance.yahoo.com/markets/",
-    },
-    {
-        "label": "Bank of Canada — indicateurs et taux",
-        "url": "https://www.bankofcanada.ca/core-functions/monetary-policy/key-interest-rate/",
-    },
+    {"label": "FRED — indicateurs macro & marchés", "url": "https://fred.stlouisfed.org/"},
+    {"label": "Bank of Canada — taux directeur", "url": "https://www.bankofcanada.ca/core-functions/monetary-policy/key-interest-rate/"},
+    {"label": "Reuters Markets News", "url": "https://www.reuters.com/markets/"},
 ]
 
 
-def fetch_csv(series_id: str) -> str:
-    url = f"https://fred.stlouisfed.org/graph/fredgraph.csv?{urlencode({'id': series_id})}"
-    req = Request(url, headers={"User-Agent": "BourseBriefing/1.0"})
-    with urlopen(req, timeout=30) as response:  # noqa: S310
+class SourceError(RuntimeError):
+    """Raised when a source cannot be fetched or parsed."""
+
+
+def fetch_text(url: str) -> str:
+    req = Request(url, headers={"User-Agent": "BourseBriefingBot/1.0"})
+    with urlopen(req, timeout=TIMEOUT_SECONDS) as response:  # noqa: S310
         return response.read().decode("utf-8", errors="replace")
 
 
-def parse_latest_and_previous(csv_text: str) -> tuple[str, float, float | None]:
-    lines = [line.strip() for line in csv_text.strip().splitlines() if line.strip()]
+def fetch_fred_latest(series_id: str) -> dict:
+    url = f"https://fred.stlouisfed.org/graph/fredgraph.csv?{urlencode({'id': series_id})}"
+    csv_text = fetch_text(url)
+    lines = [line.strip() for line in csv_text.splitlines() if line.strip()]
+    if len(lines) < 2:
+        raise SourceError(f"FRED {series_id}: CSV vide")
+
     rows = [line.split(",", 1) for line in lines[1:]]
-    valid = [(d, v) for d, v in rows if v not in {".", "", None}]
+    valid = [(d, v) for d, v in rows if v and v != "."]
     if not valid:
-        raise ValueError("No valid points")
+        raise SourceError(f"FRED {series_id}: aucune valeur valide")
 
     date, value = valid[-1]
     prev_value = float(valid[-2][1]) if len(valid) > 1 else None
-    return date, float(value), prev_value
-
-
-def load_cached_snapshot() -> tuple[list[dict], str | None]:
-    if not CACHE_PATH.exists():
-        return [], None
-
-    try:
-        payload = json.loads(CACHE_PATH.read_text(encoding="utf-8"))
-    except json.JSONDecodeError:
-        return [], None
-
-    snapshot = payload.get("series_snapshot")
-    generated_at = payload.get("generated_at")
-    if not isinstance(snapshot, list):
-        return [], None
-
-    valid_snapshot = [item for item in snapshot if isinstance(item.get("value"), (int, float))]
-    return valid_snapshot, generated_at if isinstance(generated_at, str) else None
-
-
-def deterministic_briefing(snapshot: list[dict], *, stale_since: str | None = None) -> dict[str, str]:
-    if not snapshot:
-        unavailable = "Données live indisponibles pendant cette exécution."
-        next_steps = "Consulte les liens de secours ci-dessous pour suivre macro, actions et taux en temps réel."
-        return {
-            "macro": f"{unavailable} {next_steps}",
-            "us_market": f"{unavailable} Priorité: futures US, VIX et taux 10 ans.",
-            "cad_market": f"{unavailable} Priorité: taux directeur BoC, pétrole et CAD/USD.",
-            "international_market": f"{unavailable} Priorité: dollar, taux US et indices globaux.",
-            "top_news": "Aucune nouvelle prioritaire qualifiable automatiquement sans flux fiable aujourd'hui.",
-        }
-
-    details: list[str] = []
-    for item in snapshot[:4]:
-        value = item["value"]
-        prev = item.get("previous_value")
-        if prev is None:
-            change_txt = "pas de comparaison disponible"
-        else:
-            delta = value - prev
-            direction = "hausse" if delta > 0 else "baisse" if delta < 0 else "stable"
-            change_txt = f"{direction} ({delta:+.2f})"
-        details.append(f"{item['label']}: {value:.2f}, {change_txt}")
-
-    macro = (
-        "Sur le plan macro, les dernières impressions FRED donnent un régime de croissance "
-        "encore résilient mais sensible aux conditions financières, avec "
-        + "; ".join(details)
-        + "."
-    )
-    us_market = (
-        "Pour le marché USA, la combinaison taux-risque reste le facteur directeur: l'évolution "
-        "du 10 ans, du spread High Yield et du VIX suggère une lecture sélective du risque "
-        "et un biais prudent sur les actifs les plus sensibles au coût du capital."
-    )
-    cad_market = (
-        "Pour le marché canadien, en l'absence de séries domestiques directes dans ce run, la "
-        "transmission principale vient des conditions US (taux et prime de risque), ce qui milite "
-        "pour surveiller surtout les secteurs cycliques et financiers."
-    )
-    international_market = (
-        "À l'international, le signal dominant reste la direction des taux américains et de la "
-        "volatilité implicite, qui continue d'orienter l'appétit global pour le risque, avec une "
-        "dispersion attendue entre régions selon leur sensibilité au dollar et à l'énergie."
-    )
-    top_news = (
-        "La nouvelle la plus structurante de la journée reste l'état du couple inflation-taux US: "
-        "toute surprise sur ce front peut rapidement re-pricer les actions, le crédit et les devises "
-        "à l'échelle mondiale."
-    )
-
-    if stale_since:
-        stale_note = (
-            f" Note: chiffres de la dernière exécution valide ({stale_since}); confirme les mouvements "
-            "intraday via les liens de secours."
-        )
-        macro += stale_note
-        us_market += stale_note
-        cad_market += stale_note
-        international_market += stale_note
-        top_news += stale_note
-
+    current = float(value)
     return {
-        "macro": macro,
-        "us_market": us_market,
-        "cad_market": cad_market,
-        "international_market": international_market,
-        "top_news": top_news,
+        "id": series_id,
+        "label": FRED_SERIES[series_id],
+        "date": date,
+        "value": current,
+        "previous_value": prev_value,
     }
 
 
-def ai_briefing(snapshot: list[dict]) -> dict[str, str] | None:
-    api_key = os.getenv("OPENAI_API_KEY")
-    if not api_key:
-        return None
+def build_change_text(point: dict) -> str:
+    value = point["value"]
+    previous = point.get("previous_value")
+    if previous is None:
+        return f"{value:.2f} (pas de comparaison disponible)"
+    delta = value - previous
+    direction = "en hausse" if delta > 0 else "en baisse" if delta < 0 else "stable"
+    return f"{value:.2f} ({direction}, {delta:+.2f})"
 
-    prompt = {
-        "generated_at": datetime.utcnow().isoformat(timespec="seconds") + "Z",
-        "snapshot": snapshot,
-        "instruction": (
-            "Rédige un briefing marché en français, ton professionnel. "
-            "Retourne uniquement un objet JSON avec exactement ces clés: "
-            "macro, us_market, cad_market, international_market, top_news. "
-            "Chaque valeur doit être un paragraphe court. "
-            "N'invente pas de données au-delà du snapshot; explicite les limites si nécessaire."
+
+def fetch_top_news() -> dict:
+    # RSS public sans clé API.
+    xml_text = fetch_text("https://feeds.marketwatch.com/marketwatch/topstories/")
+    try:
+        root = ET.fromstring(xml_text)
+    except ET.ParseError as exc:
+        raise SourceError("Flux news invalide") from exc
+
+    item = root.find("./channel/item")
+    if item is None:
+        raise SourceError("Aucune news dans le flux")
+
+    title = (item.findtext("title") or "").strip()
+    link = (item.findtext("link") or "").strip()
+    pub_date = (item.findtext("pubDate") or "").strip()
+    if not title or not link:
+        raise SourceError("News incomplète")
+
+    return {"title": title, "url": link, "published_at": pub_date}
+
+
+def collect_all_sources() -> tuple[dict, list[dict], dict]:
+    points = {series_id: fetch_fred_latest(series_id) for series_id in FRED_SERIES}
+    news = fetch_top_news()
+
+    sections = {
+        "macro": (
+            "Macro: "
+            f"chômage US {build_change_text(points['UNRATE'])}; "
+            f"Fed Funds {build_change_text(points['DFF'])}; "
+            f"taux US 10 ans {build_change_text(points['DGS10'])}."
         ),
+        "us_market": (
+            "Marché USA: "
+            f"S&P 500 {build_change_text(points['SP500'])}; "
+            f"VIX {build_change_text(points['VIXCLS'])}."
+        ),
+        "cad_market": (
+            "Marché CAD: "
+            f"CAD/USD {build_change_text(points['DEXCAUS'])}; "
+            f"taux court terme Canada {build_change_text(points['IR3TIB01CAM156N'])}."
+        ),
+        "international_market": (
+            "Marché international: "
+            f"indice dollar broad {build_change_text(points['DTWEXBGS'])}; "
+            "surveillez l'impact FX/taux sur les actifs hors USA."
+        ),
+        "top_news": f"Nouvelle clé: {news['title']} ({news['url']}).",
     }
 
-    body = {
-        "model": MODEL,
-        "input": [
-            {
-                "role": "user",
-                "content": [{"type": "input_text", "text": json.dumps(prompt, ensure_ascii=False)}],
-            }
-        ],
-    }
-
-    req = Request(
-        "https://api.openai.com/v1/responses",
-        data=json.dumps(body).encode("utf-8"),
-        headers={
-            "Authorization": f"Bearer {api_key}",
-            "Content-Type": "application/json",
-        },
-        method="POST",
-    )
-
-    try:
-        with urlopen(req, timeout=60) as response:  # noqa: S310
-            payload = json.loads(response.read().decode("utf-8"))
-    except URLError:
-        return None
-
-    text = payload.get("output_text", "").strip()
-    if not text:
-        return None
-
-    start = text.find("{")
-    end = text.rfind("}")
-    if start == -1 or end == -1 or end <= start:
-        return None
-
-    try:
-        candidate = json.loads(text[start : end + 1])
-    except json.JSONDecodeError:
-        return None
-
-    keys = ["macro", "us_market", "cad_market", "international_market", "top_news"]
-    if not all(isinstance(candidate.get(key), str) and candidate.get(key).strip() for key in keys):
-        return None
-
-    return {key: candidate[key].strip() for key in keys}
+    ordered_snapshot = [points[sid] for sid in FRED_SERIES]
+    return sections, ordered_snapshot, news
 
 
 def main() -> None:
-    snapshot: list[dict] = []
-
-    for series_id, label in SERIES:
+    previous_payload = None
+    if OUTPUT_PATH.exists():
         try:
-            csv_text = fetch_csv(series_id)
-            date, value, prev = parse_latest_and_previous(csv_text)
-            snapshot.append(
-                {
-                    "id": series_id,
-                    "label": label,
-                    "date": date,
-                    "value": value,
-                    "previous_value": prev,
-                }
-            )
-        except Exception:
-            snapshot.append(
-                {
-                    "id": series_id,
-                    "label": label,
-                    "date": None,
-                    "value": None,
-                    "previous_value": None,
-                }
-            )
+            previous_payload = json.loads(OUTPUT_PATH.read_text(encoding="utf-8"))
+        except json.JSONDecodeError:
+            previous_payload = None
 
-    valid_snapshot = [item for item in snapshot if isinstance(item.get("value"), (int, float))]
-    used_snapshot = valid_snapshot
-    stale_since = None
+    try:
+        sections, snapshot, news = collect_all_sources()
+    except Exception as exc:  # Keep last valid file untouched.
+        print(f"Source collection failed: {exc}")
+        if previous_payload:
+            print("Keeping existing data/daily-briefing.json (last valid version).")
+            return
+        raise
 
-    if not used_snapshot:
-        cached_snapshot, cached_timestamp = load_cached_snapshot()
-        if cached_snapshot:
-            used_snapshot = cached_snapshot
-            stale_since = cached_timestamp
-
-    sections = deterministic_briefing(used_snapshot, stale_since=stale_since)
-    ai_output = ai_briefing(used_snapshot)
-    if ai_output:
-        sections = ai_output
-
-    if valid_snapshot:
-        CACHE_PATH.parent.mkdir(parents=True, exist_ok=True)
-        CACHE_PATH.write_text(
-            json.dumps(
-                {
-                    "generated_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                    "series_snapshot": valid_snapshot,
-                },
-                ensure_ascii=False,
-                indent=2,
-            )
-            + "\n",
-            encoding="utf-8",
-        )
-
-    data = {
-        "generated_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+    generated_at = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
+    payload = {
+        "generated_at": generated_at,
+        "last_successful_update": generated_at,
         "summary": sections["macro"],
         "highlights": [
             sections["us_market"],
@@ -288,17 +165,18 @@ def main() -> None:
         ],
         "sections": sections,
         "series_snapshot": snapshot,
+        "top_news": news,
         "fallback_sources": FALLBACK_SOURCES,
         "snapshot_status": {
-            "live_points": len(valid_snapshot),
-            "series_count": len(SERIES),
-            "using_cached_snapshot": bool(stale_since),
-            "cached_snapshot_generated_at": stale_since,
+            "live_points": len(snapshot),
+            "series_count": len(snapshot),
+            "using_cached_snapshot": False,
+            "cached_snapshot_generated_at": None,
         },
     }
 
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
-    OUTPUT_PATH.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    OUTPUT_PATH.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"Wrote {OUTPUT_PATH}")
 
 
