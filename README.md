@@ -55,7 +55,3 @@ Le débriefing est maintenant généré **directement dans le navigateur** à pa
 - pas de dépendance à un JSON pré-généré qui peut échouer;
 - pas de backend requis pour afficher le briefing;
 - le résumé se met à jour à chaque ouverture/rechargement de la page.
-
-### Option automatique GitHub
-
-Le workflow `.github/workflows/daily-briefing.yml` et le script `scripts/generate_daily_briefing.py` restent disponibles si vous souhaitez aussi publier un briefing figé quotidien via fichier JSON.
