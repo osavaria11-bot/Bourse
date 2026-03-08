@@ -370,12 +370,12 @@
     </div>
 
     <script>
-      const QUICK_READ = [
-        { label: "Macro", status: "neutre", tone: "neutral" },
-        { label: "Marché USA", status: "risk-on", tone: "risk-on" },
-        { label: "Taux", status: "neutre", tone: "neutral" },
-        { label: "Énergie", status: "négatif", tone: "negative" },
-        { label: "Dollar US", status: "neutre", tone: "neutral" },
+      const QUICK_READ_DEFAULT = [
+        { label: "Macro", status: "à confirmer", tone: "neutral" },
+        { label: "Marché USA", status: "à confirmer", tone: "neutral" },
+        { label: "Taux", status: "à confirmer", tone: "neutral" },
+        { label: "Énergie", status: "à confirmer", tone: "neutral" },
+        { label: "Dollar US", status: "à confirmer", tone: "neutral" },
       ];
 
       const MARKET_DRIVERS = [
@@ -636,13 +636,11 @@
         return `status-badge status-${tone}`;
       }
 
-      function renderStaticSections() {
+      function renderQuickRead(lines = QUICK_READ_DEFAULT) {
         const quickReadGrid = document.querySelector("#quickReadGrid");
-        const driversGrid = document.querySelector("#driversGrid");
-        const watchGrid = document.querySelector("#watchGrid");
-        const canadaGrid = document.querySelector("#canadaGrid");
+        quickReadGrid.innerHTML = "";
 
-        QUICK_READ.forEach((line) => {
+        lines.forEach((line) => {
           const item = document.createElement("div");
           item.className = "quick-line";
 
@@ -650,12 +648,18 @@
           label.textContent = line.label;
 
           const status = document.createElement("span");
-          status.className = toneClass(line.tone);
+          status.className = toneClass(line.tone ?? "neutral");
           status.textContent = line.status;
 
           item.append(label, status);
           quickReadGrid.appendChild(item);
         });
+      }
+
+      function renderStaticSections() {
+        const driversGrid = document.querySelector("#driversGrid");
+        const watchGrid = document.querySelector("#watchGrid");
+        const canadaGrid = document.querySelector("#canadaGrid");
 
         MARKET_DRIVERS.forEach((driver) => {
           const item = document.createElement("article");
@@ -874,12 +878,16 @@
           const briefing = await response.json();
           briefingDate.textContent = `Dernière mise à jour réussie: ${briefing.last_successful_update ?? briefing.generated_at ?? "inconnue"}`;
           briefingParagraph.textContent = briefing.briefing_paragraph ?? "Le résumé quotidien sera mis à jour automatiquement chaque matin.";
-          briefingNote.textContent = briefing.news_digest_note ?? "";
+          briefingNote.textContent = briefing.update_status?.startsWith("stale_data_kept")
+            ? "Données conservées depuis la dernière exécution valide: lecture prudente recommandée."
+            : briefing.news_digest_note ?? "";
+          renderQuickRead(Array.isArray(briefing.quick_read) && briefing.quick_read.length ? briefing.quick_read : QUICK_READ_DEFAULT);
           renderNewsSources(briefing.news_sources);
         } catch (error) {
           briefingParagraph.textContent = "Le résumé quotidien sera affiché ici après la première exécution réussie du workflow automatique.";
           briefingNote.textContent = "";
           briefingLinks.innerHTML = "";
+          renderQuickRead(QUICK_READ_DEFAULT);
         }
       }
 
@@ -890,6 +898,7 @@
         const lightbox = setupLightbox();
 
         renderStaticSections();
+        renderQuickRead(QUICK_READ_DEFAULT);
 
         CUSTOM_IMAGES.forEach((item) => {
           const card = document.createElement("article");

@@ -32,5 +32,32 @@
       "url": "https://www.reuters.com/business/",
       "description": "Actualité entreprises, secteurs et réglementation."
     }
+  ],
+  "quick_read": [
+    {
+      "label": "Macro",
+      "status": "neutre",
+      "tone": "neutral"
+    },
+    {
+      "label": "Marché USA",
+      "status": "neutre",
+      "tone": "neutral"
+    },
+    {
+      "label": "Taux",
+      "status": "neutre",
+      "tone": "neutral"
+    },
+    {
+      "label": "Énergie",
+      "status": "neutre",
+      "tone": "neutral"
+    },
+    {
+      "label": "Dollar US",
+      "status": "neutre",
+      "tone": "neutral"
+    }
   ]
 }
