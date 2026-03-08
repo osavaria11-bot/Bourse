@@ -29,6 +29,11 @@ FRED_SERIES = {
 
 NEWS_SOURCES = [
     {
+        "label": "Perplexity — Finance",
+        "url": "https://www.perplexity.ai/finance?utm_source=chatgpt.com",
+        "description": "Veille financière quotidienne assistée par IA.",
+    },
+    {
         "label": "Reuters — Econ World",
         "url": "https://www.reuters.com/markets/econ-world/",
         "description": "Actualités macro mondiales (croissance, inflation, banques centrales).",
