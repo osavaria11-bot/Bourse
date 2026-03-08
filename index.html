@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Captures FRED — 10 ans</title>
+    <title>Captures FRED — 5 ans</title>
     <style>
       :root {
         color-scheme: dark;
@@ -307,12 +307,6 @@
             "Mesure le taux de chômage aux États-Unis. Bon : bas et stable. Neutre : légère hausse. Mauvais : hausse rapide.",
         },
         {
-          title: "PSAVE",
-          id: "PSAVE",
-          description:
-            "Mesure l’épargne personnelle des ménages. Bon : niveau sain et stable. Neutre : légère baisse. Mauvais : trop faible ou en chute.",
-        },
-        {
           title: "TB10 / DGS10",
           id: "DGS10",
           description:
@@ -377,6 +371,12 @@
           id: "VIXCLS",
           description:
             "Mesure la volatilité anticipée du marché boursier. Bon : bas. Neutre : moyen. Mauvais : élevé. Repères : bon < 15, neutre 15-20, mauvais > 20.",
+        },
+        {
+          title: "NASDAQ Gold Ratio",
+          id: "NASDAQXAU",
+          description:
+            "Mesure la performance relative du Nasdaq par rapport à l'or (XAU). Bon : hausse graduelle. Neutre : stable. Mauvais : baisse marquée.",
         },
         {
           title: "Median Consumer Price Index",
@@ -470,10 +470,10 @@
         return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
       }
 
-      function tenYearWindow() {
+      function fiveYearWindow() {
         const end = new Date();
         const start = new Date(end);
-        start.setFullYear(end.getFullYear() - 10);
+        start.setFullYear(end.getFullYear() - 5);
         return { start: isoDate(start), end: isoDate(end) };
       }
 
@@ -657,7 +657,7 @@
       }
 
       async function buildCards() {
-        const { start, end } = tenYearWindow();
+        const { start, end } = fiveYearWindow();
         const grid = document.querySelector("#grid");
         const customImages = document.querySelector("#customImages");
         const lightbox = setupLightbox();
@@ -787,7 +787,7 @@
 
         await Promise.all(cards);
 
-        document.querySelector("#updated").textContent = `Fenêtre 10 ans générée le ${new Date().toLocaleString("fr-FR")}`;
+        document.querySelector("#updated").textContent = `Fenêtre 5 ans générée le ${new Date().toLocaleString("fr-FR")}`;
       }
 
       loadDailyBriefing();
