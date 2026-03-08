@@ -82,6 +82,21 @@
         color: #9cc0ff;
       }
 
+      .briefing-status {
+        margin: 0.65rem 0 0;
+        font-size: 0.82rem;
+        color: #89e6be;
+      }
+
+      .briefing-fallback-links {
+        margin: 0.35rem 0 0;
+        padding-left: 1.1rem;
+      }
+
+      .briefing-fallback-links li {
+        margin-bottom: 0.2rem;
+      }
+
       .bottom-links {
         margin: 0.4rem 0 0;
         padding-left: 1.1rem;
@@ -199,6 +214,8 @@
           <p id="briefingInternational" class="briefing-block"><strong>Marché international:</strong> Chargement...</p>
           <p id="briefingTopNews" class="briefing-block"><strong>Nouvelle du jour:</strong> Chargement...</p>
         </div>
+        <p id="briefingStatus" class="briefing-status"></p>
+        <ul id="briefingFallbackLinks" class="briefing-fallback-links"></ul>
       </section>
       <section id="grid" class="grid"></section>
       <section class="bottom-section">
@@ -574,6 +591,8 @@
         const briefingCad = document.querySelector("#briefingCad");
         const briefingInternational = document.querySelector("#briefingInternational");
         const briefingTopNews = document.querySelector("#briefingTopNews");
+        const briefingStatus = document.querySelector("#briefingStatus");
+        const briefingFallbackLinks = document.querySelector("#briefingFallbackLinks");
 
         try {
           const response = await fetch(`data/daily-briefing.json?ts=${Date.now()}`);
@@ -590,6 +609,27 @@
           briefingCad.innerHTML = `<strong>Marché CAD:</strong> ${sections.cad_market ?? briefing.highlights?.[1] ?? "Indisponible."}`;
           briefingInternational.innerHTML = `<strong>Marché international:</strong> ${sections.international_market ?? briefing.highlights?.[2] ?? "Indisponible."}`;
           briefingTopNews.innerHTML = `<strong>Nouvelle du jour:</strong> ${sections.top_news ?? briefing.highlights?.[3] ?? "Indisponible."}`;
+
+          const status = briefing.snapshot_status ?? {};
+          if (status.using_cached_snapshot) {
+            briefingStatus.textContent = `⚠️ Mode secours: snapshot valide du ${status.cached_snapshot_generated_at ?? "jour inconnu"}.`;
+          } else if ((status.live_points ?? 0) > 0) {
+            briefingStatus.textContent = `✅ Données live récupérées: ${status.live_points}/${status.series_count ?? "?"} séries.`;
+          } else {
+            briefingStatus.textContent = "⚠️ Aucune donnée live récupérée dans ce run.";
+          }
+
+          briefingFallbackLinks.innerHTML = "";
+          (briefing.fallback_sources ?? []).forEach((source) => {
+            const li = document.createElement("li");
+            const a = document.createElement("a");
+            a.href = source.url;
+            a.target = "_blank";
+            a.rel = "noreferrer";
+            a.textContent = source.label;
+            li.appendChild(a);
+            briefingFallbackLinks.appendChild(li);
+          });
         } catch (error) {
           briefingDate.textContent = "Mise à jour: indisponible";
           briefingMacro.innerHTML =
@@ -598,6 +638,8 @@
           briefingCad.innerHTML = "<strong>Marché CAD:</strong> Indisponible.";
           briefingInternational.innerHTML = "<strong>Marché international:</strong> Indisponible.";
           briefingTopNews.innerHTML = "<strong>Nouvelle du jour:</strong> Indisponible.";
+          briefingStatus.textContent = "⚠️ Le fichier daily-briefing.json est introuvable.";
+          briefingFallbackLinks.innerHTML = "";
         }
       }
 
