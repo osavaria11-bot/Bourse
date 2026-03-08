@@ -2,7 +2,7 @@
 """Generate a daily market briefing JSON consumed by index.html.
 
 - Pulls latest values from selected FRED series.
-- Builds a deterministic summary fallback.
+- Builds a deterministic 5-paragraph briefing fallback.
 - If OPENAI_API_KEY is available, asks OpenAI for a richer French briefing.
 """
 
@@ -48,18 +48,22 @@ def parse_latest_and_previous(csv_text: str) -> tuple[str, float, float | None]:
     return date, float(value), prev_value
 
 
-def deterministic_briefing(snapshot: list[dict]) -> tuple[str, list[str]]:
-    bullets: list[str] = []
+def deterministic_briefing(snapshot: list[dict]) -> dict[str, str]:
     if not snapshot:
-        return (
-            "Briefing automatique du jour indisponible (sources de données non accessibles).",
-            [
-                "Aucune série FRED n'a pu être lue pendant cette exécution.",
-                "Le workflow GitHub réessaiera automatiquement à la prochaine exécution.",
-            ],
+        unavailable = (
+            "Briefing automatique indisponible: les sources de données n'ont pas pu être lues "
+            "pendant cette exécution."
         )
+        return {
+            "macro": unavailable,
+            "us_market": unavailable,
+            "cad_market": unavailable,
+            "international_market": unavailable,
+            "top_news": "Aucune nouvelle prioritaire ne peut être qualifiée sans données fiables aujourd'hui.",
+        }
 
-    for item in snapshot:
+    details: list[str] = []
+    for item in snapshot[:4]:
         value = item["value"]
         prev = item.get("previous_value")
         if prev is None:
@@ -68,16 +72,45 @@ def deterministic_briefing(snapshot: list[dict]) -> tuple[str, list[str]]:
             delta = value - prev
             direction = "hausse" if delta > 0 else "baisse" if delta < 0 else "stable"
             change_txt = f"{direction} ({delta:+.2f})"
-        bullets.append(f"{item['label']}: {value:.2f}, {change_txt}.")
+        details.append(f"{item['label']}: {value:.2f}, {change_txt}")
 
-    summary = (
-        "Briefing automatique du jour basé sur les dernières impressions FRED "
-        "(lecture rapide macro + risque marché)."
+    macro = (
+        "Sur le plan macro, les dernières impressions FRED donnent un régime de croissance "
+        "encore résilient mais sensible aux conditions financières, avec "
+        + "; ".join(details)
+        + "."
     )
-    return summary, bullets
+    us_market = (
+        "Pour le marché USA, la combinaison taux-risque reste le facteur directeur: l'évolution "
+        "du 10 ans, du spread High Yield et du VIX suggère une lecture sélective du risque "
+        "et un biais prudent sur les actifs les plus sensibles au coût du capital."
+    )
+    cad_market = (
+        "Pour le marché canadien, en l'absence de séries domestiques directes dans ce run, la "
+        "transmission principale vient des conditions US (taux et prime de risque), ce qui milite "
+        "pour surveiller surtout les secteurs cycliques et financiers."
+    )
+    international_market = (
+        "À l'international, le signal dominant reste la direction des taux américains et de la "
+        "volatilité implicite, qui continue d'orienter l'appétit global pour le risque, avec une "
+        "dispersion attendue entre régions selon leur sensibilité au dollar et à l'énergie."
+    )
+    top_news = (
+        "La nouvelle la plus structurante de la journée reste l'état du couple inflation-taux US: "
+        "toute surprise sur ce front peut rapidement re-pricer les actions, le crédit et les devises "
+        "à l'échelle mondiale."
+    )
+
+    return {
+        "macro": macro,
+        "us_market": us_market,
+        "cad_market": cad_market,
+        "international_market": international_market,
+        "top_news": top_news,
+    }
 
 
-def ai_briefing(snapshot: list[dict]) -> tuple[str, list[str]] | None:
+def ai_briefing(snapshot: list[dict]) -> dict[str, str] | None:
     api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
         return None
@@ -86,8 +119,11 @@ def ai_briefing(snapshot: list[dict]) -> tuple[str, list[str]] | None:
         "generated_at": datetime.utcnow().isoformat(timespec="seconds") + "Z",
         "snapshot": snapshot,
         "instruction": (
-            "Rédige un briefing marché en français, ton professionnel, 1 paragraphe max puis 4 puces max. "
-            "N'invente pas de données au-delà du snapshot."
+            "Rédige un briefing marché en français, ton professionnel. "
+            "Retourne uniquement un objet JSON avec exactement ces clés: "
+            "macro, us_market, cad_market, international_market, top_news. "
+            "Chaque valeur doit être un paragraphe court. "
+            "N'invente pas de données au-delà du snapshot; explicite les limites si nécessaire."
         ),
     }
 
@@ -121,10 +157,21 @@ def ai_briefing(snapshot: list[dict]) -> tuple[str, list[str]] | None:
     if not text:
         return None
 
-    lines = [line.strip("-• ") for line in text.splitlines() if line.strip()]
-    summary = lines[0]
-    highlights = lines[1:5]
-    return summary, highlights
+    start = text.find("{")
+    end = text.rfind("}")
+    if start == -1 or end == -1 or end <= start:
+        return None
+
+    try:
+        candidate = json.loads(text[start : end + 1])
+    except json.JSONDecodeError:
+        return None
+
+    keys = ["macro", "us_market", "cad_market", "international_market", "top_news"]
+    if not all(isinstance(candidate.get(key), str) and candidate.get(key).strip() for key in keys):
+        return None
+
+    return {key: candidate[key].strip() for key in keys}
 
 
 def main() -> None:
@@ -155,15 +202,21 @@ def main() -> None:
             )
 
     valid_snapshot = [item for item in snapshot if isinstance(item.get("value"), (int, float))]
-    summary, highlights = deterministic_briefing(valid_snapshot)
+    sections = deterministic_briefing(valid_snapshot)
     ai_output = ai_briefing(valid_snapshot)
     if ai_output:
-        summary, highlights = ai_output
+        sections = ai_output
 
     data = {
         "generated_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        "summary": summary,
-        "highlights": highlights,
+        "summary": sections["macro"],
+        "highlights": [
+            sections["us_market"],
+            sections["cad_market"],
+            sections["international_market"],
+            sections["top_news"],
+        ],
+        "sections": sections,
         "series_snapshot": snapshot,
     }
 

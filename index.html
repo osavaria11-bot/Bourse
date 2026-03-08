@@ -67,19 +67,19 @@
         margin-top: 1rem;
       }
 
-      .briefing-text {
-        margin: 0.35rem 0;
+      .briefing-blocks {
+        display: grid;
+        gap: 0.65rem;
+      }
+
+      .briefing-block {
+        margin: 0;
         line-height: 1.5;
+        color: #dbe7ff;
       }
 
-      .briefing-points {
-        margin: 0.5rem 0 0;
-        padding-left: 1.1rem;
-        color: #d6e5ff;
-      }
-
-      .briefing-points li {
-        margin-bottom: 0.35rem;
+      .briefing-block strong {
+        color: #9cc0ff;
       }
 
       .bottom-links {
@@ -192,8 +192,13 @@
       <section class="briefing-section card" id="briefingCard">
         <h2>Briefing du jour</h2>
         <p id="briefingDate" class="meta">Chargement du résumé quotidien...</p>
-        <p id="briefingText" class="briefing-text">Le briefing sera disponible ici.</p>
-        <ul id="briefingPoints" class="briefing-points"></ul>
+        <div id="briefingBlocks" class="briefing-blocks">
+          <p id="briefingMacro" class="briefing-block"><strong>Macro:</strong> Le briefing sera disponible ici.</p>
+          <p id="briefingUsa" class="briefing-block"><strong>Marché USA:</strong> Chargement...</p>
+          <p id="briefingCad" class="briefing-block"><strong>Marché CAD:</strong> Chargement...</p>
+          <p id="briefingInternational" class="briefing-block"><strong>Marché international:</strong> Chargement...</p>
+          <p id="briefingTopNews" class="briefing-block"><strong>Nouvelle du jour:</strong> Chargement...</p>
+        </div>
       </section>
       <section id="grid" class="grid"></section>
       <section class="bottom-section">
@@ -564,8 +569,11 @@
 
       async function loadDailyBriefing() {
         const briefingDate = document.querySelector("#briefingDate");
-        const briefingText = document.querySelector("#briefingText");
-        const briefingPoints = document.querySelector("#briefingPoints");
+        const briefingMacro = document.querySelector("#briefingMacro");
+        const briefingUsa = document.querySelector("#briefingUsa");
+        const briefingCad = document.querySelector("#briefingCad");
+        const briefingInternational = document.querySelector("#briefingInternational");
+        const briefingTopNews = document.querySelector("#briefingTopNews");
 
         try {
           const response = await fetch(`data/daily-briefing.json?ts=${Date.now()}`);
@@ -575,19 +583,21 @@
 
           const briefing = await response.json();
           briefingDate.textContent = `Mise à jour: ${briefing.generated_at ?? "inconnue"}`;
-          briefingText.textContent = briefing.summary ?? "Résumé indisponible.";
 
-          briefingPoints.replaceChildren();
-          (briefing.highlights ?? []).forEach((point) => {
-            const li = document.createElement("li");
-            li.textContent = point;
-            briefingPoints.appendChild(li);
-          });
+          const sections = briefing.sections ?? {};
+          briefingMacro.innerHTML = `<strong>Macro:</strong> ${sections.macro ?? briefing.summary ?? "Résumé indisponible."}`;
+          briefingUsa.innerHTML = `<strong>Marché USA:</strong> ${sections.us_market ?? briefing.highlights?.[0] ?? "Indisponible."}`;
+          briefingCad.innerHTML = `<strong>Marché CAD:</strong> ${sections.cad_market ?? briefing.highlights?.[1] ?? "Indisponible."}`;
+          briefingInternational.innerHTML = `<strong>Marché international:</strong> ${sections.international_market ?? briefing.highlights?.[2] ?? "Indisponible."}`;
+          briefingTopNews.innerHTML = `<strong>Nouvelle du jour:</strong> ${sections.top_news ?? briefing.highlights?.[3] ?? "Indisponible."}`;
         } catch (error) {
           briefingDate.textContent = "Mise à jour: indisponible";
-          briefingText.textContent =
-            "Le briefing quotidien n'est pas encore généré. Lancez le script d'automatisation pour créer data/daily-briefing.json.";
-          briefingPoints.replaceChildren();
+          briefingMacro.innerHTML =
+            "<strong>Macro:</strong> Le briefing quotidien n'est pas encore généré. Lancez le script d'automatisation pour créer data/daily-briefing.json.";
+          briefingUsa.innerHTML = "<strong>Marché USA:</strong> Indisponible.";
+          briefingCad.innerHTML = "<strong>Marché CAD:</strong> Indisponible.";
+          briefingInternational.innerHTML = "<strong>Marché international:</strong> Indisponible.";
+          briefingTopNews.innerHTML = "<strong>Nouvelle du jour:</strong> Indisponible.";
         }
       }
 
