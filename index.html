@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Captures FRED — 5 ans</title>
+    <title>Captures FRED — 10 ans</title>
     <style>
       :root {
         color-scheme: dark;
@@ -385,6 +385,12 @@
             "Mesure l'inflation médiane des prix à la consommation. Bon : modérée et en baisse. Neutre : stable. Mauvais : en accélération.",
         },
         {
+          title: "A072RC1Q156SBEA",
+          id: "A072RC1Q156SBEA",
+          description:
+            "Mesure les profits des entreprises domestiques. Bon : progression régulière. Neutre : stagnation. Mauvais : baisse prolongée.",
+        },
+        {
           title: "WTI",
           id: "DCOILWTICO",
           description:
@@ -470,10 +476,10 @@
         return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
       }
 
-      function fiveYearWindow() {
+      function tenYearWindow() {
         const end = new Date();
         const start = new Date(end);
-        start.setFullYear(end.getFullYear() - 5);
+        start.setFullYear(end.getFullYear() - 10);
         return { start: isoDate(start), end: isoDate(end) };
       }
 
@@ -657,7 +663,7 @@
       }
 
       async function buildCards() {
-        const { start, end } = fiveYearWindow();
+        const { start, end } = tenYearWindow();
         const grid = document.querySelector("#grid");
         const customImages = document.querySelector("#customImages");
         const lightbox = setupLightbox();
@@ -787,7 +793,7 @@
 
         await Promise.all(cards);
 
-        document.querySelector("#updated").textContent = `Fenêtre 5 ans générée le ${new Date().toLocaleString("fr-FR")}`;
+        document.querySelector("#updated").textContent = `Fenêtre 10 ans générée le ${new Date().toLocaleString("fr-FR")}`;
       }
 
       loadDailyBriefing();
