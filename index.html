@@ -67,6 +67,94 @@
         margin-top: 1rem;
       }
 
+      .quick-read-grid,
+      .drivers-grid,
+      .watch-grid,
+      .canada-grid {
+        margin-top: 0.8rem;
+        display: grid;
+        gap: 0.75rem;
+      }
+
+      .quick-read-grid {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      }
+
+      .drivers-grid {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      }
+
+      .watch-grid,
+      .canada-grid {
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      }
+
+      .quick-line,
+      .driver-item,
+      .watch-item,
+      .canada-item {
+        background: color-mix(in srgb, var(--card) 90%, black 10%);
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 0.7rem;
+      }
+
+      .quick-line {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.5rem;
+      }
+
+      .quick-line strong {
+        font-size: 0.92rem;
+      }
+
+      .status-badge {
+        border-radius: 999px;
+        padding: 0.2rem 0.55rem;
+        font-size: 0.76rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.01em;
+      }
+
+      .status-positive,
+      .status-risk-on {
+        background: rgba(56, 216, 141, 0.18);
+        border: 1px solid rgba(89, 232, 164, 0.45);
+        color: #93f2c4;
+      }
+
+      .status-neutral {
+        background: rgba(168, 186, 216, 0.15);
+        border: 1px solid rgba(187, 200, 222, 0.45);
+        color: #d2def4;
+      }
+
+      .status-negative,
+      .status-risk-off {
+        background: rgba(255, 117, 117, 0.15);
+        border: 1px solid rgba(255, 148, 148, 0.45);
+        color: #ffbbbb;
+      }
+
+      .driver-item h3,
+      .watch-item h3,
+      .canada-item h3 {
+        margin: 0;
+        font-size: 0.95rem;
+      }
+
+      .driver-item p,
+      .watch-item p,
+      .canada-item p {
+        margin: 0.35rem 0 0;
+        font-size: 0.86rem;
+        color: #cad8f5;
+        line-height: 1.45;
+      }
+
       .briefing-text {
         margin: 0;
         line-height: 1.5;
@@ -126,6 +214,18 @@
         font-size: 0.86rem;
         line-height: 1.45;
         color: #c9d9f6;
+      }
+
+      .interpretation {
+        margin-top: 0.7rem;
+        border-top: 1px dashed #2f4a79;
+        padding-top: 0.65rem;
+      }
+
+      .interpretation p {
+        margin: 0.25rem 0;
+        font-size: 0.82rem;
+        color: #c3d5f8;
       }
 
       .chart-img {
@@ -190,11 +290,34 @@
   </head>
   <body>
     <main class="container">
-      <h1>États-Unis — captures FRED sur 10 ans</h1>
+      <h1>Tableau de bord marché — lecture en 15 secondes</h1>
       <p class="subtitle">
-        Série d'images (captures de graphiques FRED St. Louis) sur une fenêtre glissante de 10 ans.
+        Vue rapide investisseur (macro, taux, énergie, volatilité, dollar) + graphiques FRED sur 10 ans.
       </p>
       <p id="updated" class="updated">Préparation des captures...</p>
+
+      <section class="briefing-section card" id="quickReadCard">
+        <h2>Lecture rapide du matin</h2>
+        <p class="meta" id="quickReadMeta">5 lignes de synthèse pour cadrer rapidement le régime de marché (données FRED automatiques).</p>
+        <div id="quickReadGrid" class="quick-read-grid"></div>
+      </section>
+
+      <section class="briefing-section card" id="driversCard">
+        <h2>Ce qui drive le marché aujourd’hui</h2>
+        <div id="driversGrid" class="drivers-grid"></div>
+      </section>
+
+      <section class="briefing-section card" id="watchWeekCard">
+        <h2>À surveiller cette semaine</h2>
+        <div id="watchGrid" class="watch-grid"></div>
+      </section>
+
+      <section class="briefing-section card" id="canadaCard">
+        <h2>Canada — lecture rapide</h2>
+        <p class="meta">Pour garder une vue équilibrée et éviter un biais 100 % États-Unis.</p>
+        <div id="canadaGrid" class="canada-grid"></div>
+      </section>
+
       <section class="briefing-section card" id="briefingCard">
         <h2>Briefing du jour</h2>
         <p id="briefingDate" class="meta">Dernière mise à jour réussie: en attente du fichier généré.</p>
@@ -247,6 +370,123 @@
     </div>
 
     <script>
+      const QUICK_READ_CONFIG = [
+        {
+          label: "Macro",
+          seriesId: "NFCI",
+          evaluate: (value) => {
+            if (value <= -0.25) return { text: "positif", tone: "positive" };
+            if (value <= 0.25) return { text: "neutre", tone: "neutral" };
+            return { text: "négatif", tone: "negative" };
+          },
+        },
+        {
+          label: "Marché USA",
+          seriesId: "VIXCLS",
+          evaluate: (value) => {
+            if (value < 15) return { text: "risk-on", tone: "risk-on" };
+            if (value <= 20) return { text: "neutre", tone: "neutral" };
+            return { text: "risk-off", tone: "risk-off" };
+          },
+        },
+        {
+          label: "Taux",
+          seriesId: "DGS10",
+          evaluate: (value) => {
+            if (value < 4) return { text: "positif", tone: "positive" };
+            if (value <= 4.6) return { text: "neutre", tone: "neutral" };
+            return { text: "négatif", tone: "negative" };
+          },
+        },
+        {
+          label: "Énergie",
+          seriesId: "DCOILWTICO",
+          evaluate: (value) => {
+            if (value >= 60 && value <= 85) return { text: "neutre", tone: "neutral" };
+            if (value < 60) return { text: "positif", tone: "positive" };
+            return { text: "négatif", tone: "negative" };
+          },
+        },
+        {
+          label: "Dollar US",
+          seriesId: "DTWEXBGS",
+          evaluate: (value) => {
+            if (value < 119) return { text: "positif", tone: "positive" };
+            if (value <= 126) return { text: "neutre", tone: "neutral" };
+            return { text: "négatif", tone: "negative" };
+          },
+        },
+      ];
+
+      const MARKET_DRIVERS = [
+        {
+          key: "tenYear",
+          title: "Taux 10 ans US",
+          seriesId: "DGS10",
+          reason:
+            "Le 10 ans est le taux d’actualisation de référence: s’il monte vite, la valorisation des actions est sous pression.",
+        },
+        {
+          key: "oil",
+          title: "Pétrole (WTI)",
+          seriesId: "DCOILWTICO",
+          reason:
+            "Le pétrole influence directement les anticipations d’inflation et les marges des entreprises consommatrices d’énergie.",
+        },
+        {
+          key: "vix",
+          title: "VIX",
+          seriesId: "VIXCLS",
+          reason:
+            "Le VIX capte le stress de marché à court terme: sa hausse signale souvent un régime plus défensif (risk-off).",
+        },
+        {
+          key: "dollar",
+          title: "Dollar US (DXY proxy FRED)",
+          seriesId: "DTWEXBGS",
+          reason:
+            "Un dollar fort tend à resserrer les conditions financières mondiales et pèse souvent sur les actifs risqués hors USA.",
+        },
+      ];
+
+      const WATCH_THIS_WEEK = [
+        {
+          title: "Inflation (CPI / PCE)",
+          note: "Si les surprises sont haussières, les taux longs peuvent remonter et peser sur les multiples actions.",
+        },
+        {
+          title: "Emploi US",
+          note: "Un marché du travail trop chaud maintient la pression sur la Fed; trop faible ravive les craintes de ralentissement.",
+        },
+        {
+          title: "Communication des banques centrales",
+          note: "Le ton (hawkish vs dovish) peut provoquer des mouvements rapides sur taux, dollar et actions.",
+        },
+        {
+          title: "Résultats d’entreprises",
+          note: "La direction des bénéfices et des marges reste le moteur principal de la performance des indices.",
+        },
+      ];
+
+      const CANADA_FOCUS = [
+        {
+          title: "Banque du Canada",
+          note: "Le rythme des baisses/hausses influence fortement les financières, l’immobilier et la consommation domestique.",
+        },
+        {
+          title: "Pétrole & matières premières",
+          note: "Le TSX est plus sensible à l’énergie et aux métaux: surveiller le cycle commodités est essentiel.",
+        },
+        {
+          title: "USD/CAD",
+          note: "Le change impacte les exportateurs, les importations et la dynamique inflationniste au Canada.",
+        },
+        {
+          title: "Immobilier résidentiel",
+          note: "Un indicateur clé de la demande interne et de la sensibilité des ménages au niveau des taux.",
+        },
+      ];
+
       const SERIES = [
         {
           title: "T10Y2Y",
@@ -427,6 +667,124 @@
         (targetUrl) => `https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}`,
         (targetUrl) => `https://cors.isomorphic-git.org/${targetUrl}`,
       ];
+
+      const SERIES_RELEVANCE = {
+        T10Y2Y: "La pente de courbe renseigne sur le cycle: inversion durable = signal de ralentissement futur.",
+        T10Y3M: "L’écart 10 ans / 3 mois est un indicateur avancé classique des phases de cycle économique.",
+        DFF: "Le taux directeur conditionne le coût du capital pour les ménages, les entreprises et les marchés.",
+        BAMLH0A0HYM2: "Le spread HY reflète l’appétit pour le risque de crédit et la santé financière des entreprises.",
+        NFCI: "Des conditions financières trop restrictives freinent croissance, crédit et valorisations boursières.",
+        STLFSI4: "Le stress financier monte souvent avant les épisodes de correction des actifs risqués.",
+        DGS10: "Le 10 ans US sert de référence aux valorisations actions, au crédit et à l’immobilier.",
+        VIXCLS: "Le VIX est le baromètre de la peur de marché à court terme et du régime risk-on/risk-off.",
+        DCOILWTICO: "Le pétrole influence inflation, marges, attentes de banques centrales et confiance des ménages.",
+      };
+
+      function toneClass(tone) {
+        return `status-badge status-${tone}`;
+      }
+
+      function formatNumber(value) {
+        return Number.isFinite(value)
+          ? value.toLocaleString("fr-FR", { maximumFractionDigits: 2 })
+          : "n/d";
+      }
+
+      async function fetchSeriesMap(seriesIds) {
+        const entries = await Promise.all(
+          seriesIds.map(async (seriesId) => {
+            try {
+              const latest = await fetchLatestValue(seriesId);
+              return [seriesId, latest];
+            } catch (error) {
+              return [seriesId, null];
+            }
+          })
+        );
+
+        return Object.fromEntries(entries);
+      }
+
+      async function renderStaticSections() {
+        const quickReadGrid = document.querySelector("#quickReadGrid");
+        const quickReadMeta = document.querySelector("#quickReadMeta");
+        const driversGrid = document.querySelector("#driversGrid");
+        const watchGrid = document.querySelector("#watchGrid");
+        const canadaGrid = document.querySelector("#canadaGrid");
+
+        const sourceSeries = [
+          ...new Set([...QUICK_READ_CONFIG.map((line) => line.seriesId), ...MARKET_DRIVERS.map((driver) => driver.seriesId)]),
+        ];
+        const seriesMap = await fetchSeriesMap(sourceSeries);
+
+        QUICK_READ_CONFIG.forEach((line) => {
+          const latest = seriesMap[line.seriesId];
+          const item = document.createElement("div");
+          item.className = "quick-line";
+
+          const label = document.createElement("strong");
+          label.textContent = line.label;
+
+          const status = document.createElement("span");
+
+          if (latest && Number.isFinite(latest.value)) {
+            const result = line.evaluate(latest.value);
+            status.className = toneClass(result.tone);
+            status.textContent = result.text;
+          } else {
+            status.className = toneClass("neutral");
+            status.textContent = "neutre";
+          }
+
+          item.append(label, status);
+          quickReadGrid.appendChild(item);
+        });
+
+        quickReadMeta.textContent =
+          "5 lignes de synthèse calculées automatiquement depuis les dernières valeurs FRED (fallback neutre si donnée indisponible).";
+
+        MARKET_DRIVERS.forEach((driver) => {
+          const latest = seriesMap[driver.seriesId];
+          const valueLine = latest
+            ? `Dernière valeur (${driver.seriesId}) : ${formatNumber(latest.value)} · ${latest.date}`
+            : `Dernière valeur (${driver.seriesId}) : indisponible`;
+
+          const item = document.createElement("article");
+          item.className = "driver-item";
+          item.innerHTML = `<h3>${driver.title}</h3><p class="meta">${valueLine}</p><p>${driver.reason}</p>`;
+          driversGrid.appendChild(item);
+        });
+
+        WATCH_THIS_WEEK.forEach((point) => {
+          const item = document.createElement("article");
+          item.className = "watch-item";
+          item.innerHTML = `<h3>${point.title}</h3><p>${point.note}</p>`;
+          watchGrid.appendChild(item);
+        });
+
+        CANADA_FOCUS.forEach((point) => {
+          const item = document.createElement("article");
+          item.className = "canada-item";
+          item.innerHTML = `<h3>${point.title}</h3><p>${point.note}</p>`;
+          canadaGrid.appendChild(item);
+        });
+      }
+
+      function buildInterpretation(series) {
+        const relevance =
+          SERIES_RELEVANCE[series.id] ??
+          "Cet indicateur aide à situer le cycle macro-financier et le niveau de risque pris par le marché.";
+
+        const wrap = document.createElement("div");
+        wrap.className = "interpretation";
+        wrap.innerHTML = `
+          <p><strong>Mesure :</strong> ${series.description.split("Bon :")[0].trim()}</p>
+          <p><strong>Lecture standard :</strong> Bon = favorable aux actifs risqués · Neutre = transition/attente · Mauvais = prudence et volatilité plus probables.</p>
+          <p><strong>Pourquoi c'est pertinent :</strong> ${relevance}</p>
+        `;
+
+        return wrap;
+      }
 
       function isoDate(d) {
         return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
@@ -622,6 +980,8 @@
         const customImages = document.querySelector("#customImages");
         const lightbox = setupLightbox();
 
+        await renderStaticSections();
+
         CUSTOM_IMAGES.forEach((item) => {
           const card = document.createElement("article");
           card.className = "card";
@@ -713,6 +1073,8 @@
           description.className = "series-description";
           description.textContent = series.description;
 
+          const interpretation = buildInterpretation(series);
+
           img.addEventListener("allSourcesFailed", () => {
             const error = document.createElement("p");
             error.className = "error";
@@ -739,7 +1101,7 @@
             currentValue.textContent = "Valeur actuelle : indisponible";
           }
 
-          card.append(title, meta, currentValue, img, description, link);
+          card.append(title, meta, currentValue, img, description, interpretation, link);
           grid.appendChild(card);
         });
 
