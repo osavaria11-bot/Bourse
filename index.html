@@ -63,6 +63,25 @@
         margin-top: 1.5rem;
       }
 
+      .briefing-section {
+        margin-top: 1rem;
+      }
+
+      .briefing-text {
+        margin: 0.35rem 0;
+        line-height: 1.5;
+      }
+
+      .briefing-points {
+        margin: 0.5rem 0 0;
+        padding-left: 1.1rem;
+        color: #d6e5ff;
+      }
+
+      .briefing-points li {
+        margin-bottom: 0.35rem;
+      }
+
       .bottom-links {
         margin: 0.4rem 0 0;
         padding-left: 1.1rem;
@@ -170,6 +189,12 @@
         Série d'images (captures de graphiques FRED St. Louis) sur une fenêtre glissante de 10 ans.
       </p>
       <p id="updated" class="updated">Préparation des captures...</p>
+      <section class="briefing-section card" id="briefingCard">
+        <h2>Briefing du jour</h2>
+        <p id="briefingDate" class="meta">Chargement du résumé quotidien...</p>
+        <p id="briefingText" class="briefing-text">Le briefing sera disponible ici.</p>
+        <ul id="briefingPoints" class="briefing-points"></ul>
+      </section>
       <section id="grid" class="grid"></section>
       <section class="bottom-section">
         <h2>Ressources et images complémentaires</h2>
@@ -193,6 +218,16 @@
               target="_blank"
               rel="noreferrer"
               >Trading Economics — US Business Confidence</a
+            >
+          </li>
+          <li>
+            <a href="https://fred.stlouisfed.org/graph/?g=1Ng5J" target="_blank" rel="noreferrer"
+              >FRED Graph — g=1Ng5J</a
+            >
+          </li>
+          <li>
+            <a href="https://polymarket.com/fr/finance" target="_blank" rel="noreferrer"
+              >Polymarket — Finance</a
             >
           </li>
         </ul>
@@ -363,6 +398,16 @@
           path: "2121.png",
           description: "Capture ajoutée localement.",
         },
+        {
+          title: "FRED — Graphique partagé (g=1Ng5J)",
+          path: "https://fred.stlouisfed.org/graph/fredgraph.png?g=1Ng5J",
+          description: "Image du graphique partagé demandée.",
+        },
+        {
+          title: "Polymarket Finance — top trades (capture)",
+          path: "https://image.thum.io/get/width/1600/https://polymarket.com/fr/finance",
+          description: "Capture de la page Finance pour visualiser les marchés populaires.",
+        },
       ];
 
       const IMAGE_BASE_URLS = [
@@ -516,6 +561,85 @@
         };
       }
 
+
+      function renderLiveBriefing(latestById) {
+        const briefingDate = document.querySelector("#briefingDate");
+        const briefingText = document.querySelector("#briefingText");
+        const briefingPoints = document.querySelector("#briefingPoints");
+
+        briefingDate.textContent = `Mise à jour: ${new Date().toLocaleString("fr-FR")}`;
+        briefingPoints.replaceChildren();
+
+        const metric = (id) => latestById.get(id);
+        const unrate = metric("UNRATE");
+        const dff = metric("DFF");
+        const vix = metric("VIXCLS");
+        const t10y2y = metric("T10Y2Y");
+
+        const available = [unrate, dff, vix, t10y2y].filter(Boolean).length;
+        if (!available) {
+          briefingText.textContent =
+            "Résumé indisponible pour le moment (données FRED temporairement inaccessibles).";
+          return;
+        }
+
+        const regimeText = [];
+        if (unrate?.value !== undefined) {
+          if (unrate.value <= 4.5) {
+            regimeText.push("marché de l'emploi encore solide");
+          } else {
+            regimeText.push("emploi à surveiller avec un chômage plus élevé");
+          }
+        }
+
+        if (dff?.value !== undefined) {
+          if (dff.value >= 4.5) {
+            regimeText.push("politique monétaire toujours restrictive");
+          } else {
+            regimeText.push("politique monétaire moins restrictive");
+          }
+        }
+
+        if (vix?.value !== undefined) {
+          if (vix.value > 20) {
+            regimeText.push("volatilité de marché élevée");
+          } else {
+            regimeText.push("volatilité contenue");
+          }
+        }
+
+        briefingText.textContent = `Lecture rapide du jour : ${regimeText.join(", ")}.`;
+
+        const bulletLines = [
+          ["UNRATE", "Chômage US", "plus bas est généralement meilleur"],
+          ["DFF", "Fed Funds", "niveau directeur de la Fed"],
+          ["DGS10", "Taux 10 ans US", "coût du capital long terme"],
+          ["VIXCLS", "VIX", "stress implicite actions"],
+          ["T10Y2Y", "Spread 10Y-2Y", "pente de courbe des taux"],
+        ];
+
+        bulletLines.forEach(([id, label, hint]) => {
+          const item = metric(id);
+          if (!item || item.value === undefined) {
+            return;
+          }
+
+          const valueText = Number(item.value).toLocaleString("fr-FR", { maximumFractionDigits: 2 });
+          const li = document.createElement("li");
+          li.textContent = `${label}: ${valueText} (${hint}) — date ${item.date}`;
+          briefingPoints.appendChild(li);
+        });
+
+        if (t10y2y?.value !== undefined) {
+          const li = document.createElement("li");
+          li.textContent =
+            t10y2y.value < 0
+              ? "Signal courbe des taux: inversion (risque macro à surveiller)."
+              : "Signal courbe des taux: pente positive (régime macro plus normal).";
+          briefingPoints.appendChild(li);
+        }
+      }
+
       async function buildCards() {
         const { start, end } = tenYearWindow();
         const grid = document.querySelector("#grid");
@@ -546,6 +670,8 @@
           card.append(title, meta, img);
           customImages.appendChild(card);
         });
+
+        const latestById = new Map();
 
         const cards = SERIES.map(async (series) => {
           const card = document.createElement("article");
@@ -635,6 +761,7 @@
               ? latest.value.toLocaleString("fr-FR", { maximumFractionDigits: 2 })
               : latest.value;
             currentValue.textContent = `Valeur actuelle : ${valueText} (au ${latest.date})`;
+            latestById.set(series.id, latest);
           } catch (error) {
             currentValue.textContent = "Valeur actuelle : indisponible";
           }
@@ -645,6 +772,7 @@
 
         await Promise.all(cards);
 
+        renderLiveBriefing(latestById);
         document.querySelector("#updated").textContent = `Fenêtre 10 ans générée le ${new Date().toLocaleString("fr-FR")}`;
       }
 

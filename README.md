@@ -45,3 +45,17 @@ Fichiers générés:
 - `screenshots/08_taux_10_ans.png`
 - `screenshots/09_spread_10_2.png`
 - `screenshots/10_ventes_detail.png`
+
+## Résumé du jour (nouvelle approche fiable)
+
+Le débriefing est maintenant généré **directement dans le navigateur** à partir des dernières valeurs FRED déjà chargées par la page (UNRATE, DFF, DGS10, VIX, T10Y2Y).
+
+### Pourquoi cette approche
+
+- pas de dépendance à un JSON pré-généré qui peut échouer;
+- pas de backend requis pour afficher le briefing;
+- le résumé se met à jour à chaque ouverture/rechargement de la page.
+
+### Option automatique GitHub
+
+Le workflow `.github/workflows/daily-briefing.yml` et le script `scripts/generate_daily_briefing.py` restent disponibles si vous souhaitez aussi publier un briefing figé quotidien via fichier JSON.
