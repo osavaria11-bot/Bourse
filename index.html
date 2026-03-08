@@ -153,9 +153,10 @@
         "https://r.jina.ai/http://fred.stlouisfed.org/graph/fredgraph.png",
       ];
 
-      const CSV_BASE_URLS = [
-        "https://fred.stlouisfed.org/graph/fredgraph.csv",
-        "https://r.jina.ai/http://fred.stlouisfed.org/graph/fredgraph.csv",
+      const CSV_PROXY_BUILDERS = [
+        (targetUrl) => targetUrl,
+        (targetUrl) => `https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}`,
+        (targetUrl) => `https://cors.isomorphic-git.org/${targetUrl}`,
       ];
 
       function isoDate(d) {
@@ -190,8 +191,40 @@
         return `https://fred.stlouisfed.org/series/${seriesId}?${params.toString()}`;
       }
 
+      function parseCsvLine(line) {
+        const cells = [];
+        let current = "";
+        let inQuotes = false;
+
+        for (let i = 0; i < line.length; i += 1) {
+          const char = line[i];
+
+          if (char === '"') {
+            if (inQuotes && line[i + 1] === '"') {
+              current += '"';
+              i += 1;
+            } else {
+              inQuotes = !inQuotes;
+            }
+            continue;
+          }
+
+          if (char === "," && !inQuotes) {
+            cells.push(current);
+            current = "";
+            continue;
+          }
+
+          current += char;
+        }
+
+        cells.push(current);
+        return cells;
+      }
+
       async function fetchLatestValue(seriesId) {
-        const csvUrls = CSV_BASE_URLS.map((baseUrl) => `${baseUrl}?id=${encodeURIComponent(seriesId)}`);
+        const fredCsvUrl = `https://fred.stlouisfed.org/graph/fredgraph.csv?id=${encodeURIComponent(seriesId)}`;
+        const csvUrls = CSV_PROXY_BUILDERS.map((buildUrl) => buildUrl(fredCsvUrl));
 
         for (const url of csvUrls) {
           try {
@@ -202,10 +235,14 @@
             }
 
             const csv = await response.text();
-            const rows = csv.trim().split("\n").slice(1).filter(Boolean);
+            const rows = csv
+              .trim()
+              .split(/\r?\n/)
+              .slice(1)
+              .filter(Boolean);
 
             for (let i = rows.length - 1; i >= 0; i -= 1) {
-              const [date, rawValue] = rows[i].split(",");
+              const [date, rawValue] = parseCsvLine(rows[i]);
               if (rawValue && rawValue !== ".") {
                 return { date, value: Number(rawValue) };
               }
