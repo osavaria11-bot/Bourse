@@ -67,34 +67,10 @@
         margin-top: 1rem;
       }
 
-      .briefing-blocks {
-        display: grid;
-        gap: 0.65rem;
-      }
-
-      .briefing-block {
+      .briefing-text {
         margin: 0;
         line-height: 1.5;
         color: #dbe7ff;
-      }
-
-      .briefing-block strong {
-        color: #9cc0ff;
-      }
-
-      .briefing-status {
-        margin: 0.65rem 0 0;
-        font-size: 0.82rem;
-        color: #89e6be;
-      }
-
-      .briefing-fallback-links {
-        margin: 0.35rem 0 0;
-        padding-left: 1.1rem;
-      }
-
-      .briefing-fallback-links li {
-        margin-bottom: 0.2rem;
       }
 
       .bottom-links {
@@ -206,16 +182,8 @@
       <p id="updated" class="updated">Préparation des captures...</p>
       <section class="briefing-section card" id="briefingCard">
         <h2>Briefing du jour</h2>
-        <p id="briefingDate" class="meta">Chargement du résumé quotidien...</p>
-        <div id="briefingBlocks" class="briefing-blocks">
-          <p id="briefingMacro" class="briefing-block"><strong>Macro:</strong> Le briefing sera disponible ici.</p>
-          <p id="briefingUsa" class="briefing-block"><strong>Marché USA:</strong> Chargement...</p>
-          <p id="briefingCad" class="briefing-block"><strong>Marché CAD:</strong> Chargement...</p>
-          <p id="briefingInternational" class="briefing-block"><strong>Marché international:</strong> Chargement...</p>
-          <p id="briefingTopNews" class="briefing-block"><strong>Nouvelle du jour:</strong> Chargement...</p>
-        </div>
-        <p id="briefingStatus" class="briefing-status"></p>
-        <ul id="briefingFallbackLinks" class="briefing-fallback-links"></ul>
+        <p id="briefingDate" class="meta">Dernière mise à jour réussie: en attente du fichier généré.</p>
+        <p id="briefingParagraph" class="briefing-text">Le briefing quotidien sera affiché ici dès la première génération GitHub Actions.</p>
       </section>
       <section id="grid" class="grid"></section>
       <section class="bottom-section">
@@ -586,13 +554,7 @@
 
       async function loadDailyBriefing() {
         const briefingDate = document.querySelector("#briefingDate");
-        const briefingMacro = document.querySelector("#briefingMacro");
-        const briefingUsa = document.querySelector("#briefingUsa");
-        const briefingCad = document.querySelector("#briefingCad");
-        const briefingInternational = document.querySelector("#briefingInternational");
-        const briefingTopNews = document.querySelector("#briefingTopNews");
-        const briefingStatus = document.querySelector("#briefingStatus");
-        const briefingFallbackLinks = document.querySelector("#briefingFallbackLinks");
+        const briefingParagraph = document.querySelector("#briefingParagraph");
 
         try {
           const response = await fetch(`data/daily-briefing.json?ts=${Date.now()}`);
@@ -602,44 +564,9 @@
 
           const briefing = await response.json();
           briefingDate.textContent = `Dernière mise à jour réussie: ${briefing.last_successful_update ?? briefing.generated_at ?? "inconnue"}`;
-
-          const sections = briefing.sections ?? {};
-          briefingMacro.innerHTML = `<strong>Macro:</strong> ${sections.macro ?? briefing.summary ?? "Résumé indisponible."}`;
-          briefingUsa.innerHTML = `<strong>Marché USA:</strong> ${sections.us_market ?? briefing.highlights?.[0] ?? "Indisponible."}`;
-          briefingCad.innerHTML = `<strong>Marché CAD:</strong> ${sections.cad_market ?? briefing.highlights?.[1] ?? "Indisponible."}`;
-          briefingInternational.innerHTML = `<strong>Marché international:</strong> ${sections.international_market ?? briefing.highlights?.[2] ?? "Indisponible."}`;
-          briefingTopNews.innerHTML = `<strong>Nouvelle du jour:</strong> ${sections.top_news ?? briefing.highlights?.[3] ?? "Indisponible."}`;
-
-          const status = briefing.snapshot_status ?? {};
-          if (status.using_cached_snapshot) {
-            briefingStatus.textContent = `⚠️ Affichage de la dernière version valide (${status.cached_snapshot_generated_at ?? "date inconnue"}).`;
-          } else if ((status.live_points ?? 0) > 0) {
-            briefingStatus.textContent = `✅ Données live récupérées: ${status.live_points}/${status.series_count ?? "?"} séries.`;
-          } else {
-            briefingStatus.textContent = "✅ Briefing statique chargé depuis le fichier généré par GitHub Actions.";
-          }
-
-          briefingFallbackLinks.innerHTML = "";
-          (briefing.fallback_sources ?? []).forEach((source) => {
-            const li = document.createElement("li");
-            const a = document.createElement("a");
-            a.href = source.url;
-            a.target = "_blank";
-            a.rel = "noreferrer";
-            a.textContent = source.label;
-            li.appendChild(a);
-            briefingFallbackLinks.appendChild(li);
-          });
+          briefingParagraph.textContent = briefing.briefing_paragraph ?? "Le résumé quotidien sera mis à jour automatiquement chaque matin.";
         } catch (error) {
-          briefingDate.textContent = "Dernière mise à jour réussie: indisponible";
-          briefingMacro.innerHTML =
-            "<strong>Macro:</strong> Le briefing quotidien n'est pas encore généré. Lancez le workflow GitHub Actions 'Daily briefing' pour créer data/daily-briefing.json.";
-          briefingUsa.innerHTML = "<strong>Marché USA:</strong> Indisponible.";
-          briefingCad.innerHTML = "<strong>Marché CAD:</strong> Indisponible.";
-          briefingInternational.innerHTML = "<strong>Marché international:</strong> Indisponible.";
-          briefingTopNews.innerHTML = "<strong>Nouvelle du jour:</strong> Indisponible.";
-          briefingStatus.textContent = "⚠️ Fichier briefing introuvable: le site affichera la dernière version disponible dès le prochain run GitHub Actions.";
-          briefingFallbackLinks.innerHTML = "";
+          briefingParagraph.textContent = "Le résumé quotidien sera affiché ici après la première exécution réussie du workflow automatique.";
         }
       }
 
