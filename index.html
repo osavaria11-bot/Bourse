@@ -290,9 +290,9 @@
   </head>
   <body>
     <main class="container">
-      <h1>Tableau de bord marché — lecture en 15 secondes</h1>
+      <h1>États-Unis — captures FRED sur 10 ans</h1>
       <p class="subtitle">
-        Vue rapide investisseur (macro, taux, énergie, volatilité, dollar) + graphiques FRED sur 10 ans.
+        Série d'images (captures de graphiques FRED St. Louis) sur une fenêtre glissante de 10 ans.
       </p>
       <p id="updated" class="updated">Préparation des captures...</p>
 
@@ -305,17 +305,6 @@
       <section class="briefing-section card" id="driversCard">
         <h2>Ce qui drive le marché aujourd’hui</h2>
         <div id="driversGrid" class="drivers-grid"></div>
-      </section>
-
-      <section class="briefing-section card" id="watchWeekCard">
-        <h2>À surveiller cette semaine</h2>
-        <div id="watchGrid" class="watch-grid"></div>
-      </section>
-
-      <section class="briefing-section card" id="canadaCard">
-        <h2>Canada — lecture rapide</h2>
-        <p class="meta">Pour garder une vue équilibrée et éviter un biais 100 % États-Unis.</p>
-        <div id="canadaGrid" class="canada-grid"></div>
       </section>
 
       <section class="briefing-section card" id="briefingCard">
@@ -398,44 +387,6 @@
           title: "Dollar US (DXY)",
           reason:
             "Un dollar fort tend à resserrer les conditions financières mondiales et pèse souvent sur les actifs risqués hors USA.",
-        },
-      ];
-
-      const WATCH_THIS_WEEK = [
-        {
-          title: "Inflation (CPI / PCE)",
-          note: "Si les surprises sont haussières, les taux longs peuvent remonter et peser sur les multiples actions.",
-        },
-        {
-          title: "Emploi US",
-          note: "Un marché du travail trop chaud maintient la pression sur la Fed; trop faible ravive les craintes de ralentissement.",
-        },
-        {
-          title: "Communication des banques centrales",
-          note: "Le ton (hawkish vs dovish) peut provoquer des mouvements rapides sur taux, dollar et actions.",
-        },
-        {
-          title: "Résultats d’entreprises",
-          note: "La direction des bénéfices et des marges reste le moteur principal de la performance des indices.",
-        },
-      ];
-
-      const CANADA_FOCUS = [
-        {
-          title: "Banque du Canada",
-          note: "Le rythme des baisses/hausses influence fortement les financières, l’immobilier et la consommation domestique.",
-        },
-        {
-          title: "Pétrole & matières premières",
-          note: "Le TSX est plus sensible à l’énergie et aux métaux: surveiller le cycle commodités est essentiel.",
-        },
-        {
-          title: "USD/CAD",
-          note: "Le change impacte les exportateurs, les importations et la dynamique inflationniste au Canada.",
-        },
-        {
-          title: "Immobilier résidentiel",
-          note: "Un indicateur clé de la demande interne et de la sensibilité des ménages au niveau des taux.",
         },
       ];
 
@@ -658,28 +609,12 @@
 
       function renderStaticSections() {
         const driversGrid = document.querySelector("#driversGrid");
-        const watchGrid = document.querySelector("#watchGrid");
-        const canadaGrid = document.querySelector("#canadaGrid");
 
         MARKET_DRIVERS.forEach((driver) => {
           const item = document.createElement("article");
           item.className = "driver-item";
           item.innerHTML = `<h3>${driver.title}</h3><p>${driver.reason}</p>`;
           driversGrid.appendChild(item);
-        });
-
-        WATCH_THIS_WEEK.forEach((point) => {
-          const item = document.createElement("article");
-          item.className = "watch-item";
-          item.innerHTML = `<h3>${point.title}</h3><p>${point.note}</p>`;
-          watchGrid.appendChild(item);
-        });
-
-        CANADA_FOCUS.forEach((point) => {
-          const item = document.createElement("article");
-          item.className = "canada-item";
-          item.innerHTML = `<h3>${point.title}</h3><p>${point.note}</p>`;
-          canadaGrid.appendChild(item);
         });
       }
 
