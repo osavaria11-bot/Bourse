@@ -411,6 +411,10 @@
             iframe.loading = "lazy";
             iframe.referrerPolicy = "no-referrer-when-downgrade";
 
+            const screenshotNote = document.createElement("p");
+            screenshotNote.className = "meta";
+            screenshotNote.textContent = "Capture Investing.com : possible vérification Cloudflare avant l'affichage du graphique.";
+
             const link = document.createElement("a");
             link.href = series.url;
             link.target = "_blank";
@@ -426,7 +430,7 @@
               }
             });
 
-            card.append(title, meta, currentValue, iframe, link);
+            card.append(title, meta, currentValue, screenshotNote, iframe, link);
             grid.appendChild(card);
             return;
           }
