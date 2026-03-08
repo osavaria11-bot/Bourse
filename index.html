@@ -216,8 +216,9 @@
         { title: "Indice de volatilité VIX (VIXCLS)", id: "VIXCLS" },
         {
           title: "ISM Manufacturing PMI",
-          source: "tradingeconomics",
-          url: "https://tradingeconomics.com/united-states/business-confidence",
+          source: "external-chart",
+          provider: "MacroMicro",
+          url: "https://en.macromicro.me/charts/54/ism?utm_source=chatgpt.com",
         },
       ];
 
@@ -431,9 +432,9 @@
           currentValue.className = "current-value";
           currentValue.textContent = "Valeur actuelle : chargement...";
 
-          if (series.source === "tradingeconomics") {
-            meta.textContent = "Source: TradingEconomics";
-            currentValue.textContent = "Valeur actuelle : à consulter dans le graphique TradingEconomics";
+          if (series.source === "external-chart") {
+            meta.textContent = `Source: ${series.provider}`;
+            currentValue.textContent = `Valeur actuelle : à consulter dans le graphique ${series.provider}`;
 
             const iframe = document.createElement("iframe");
             iframe.className = "chart-frame";
@@ -444,18 +445,18 @@
 
             const screenshotNote = document.createElement("p");
             screenshotNote.className = "meta";
-            screenshotNote.textContent = "Capture TradingEconomics : le site peut appliquer des restrictions d'intégration selon le navigateur.";
+            screenshotNote.textContent = `${series.provider} : le site peut appliquer des restrictions d'intégration selon le navigateur.`;
 
             const link = document.createElement("a");
             link.href = series.url;
             link.target = "_blank";
             link.rel = "noreferrer noopener";
-            link.textContent = "Ouvrir le graphique sur TradingEconomics";
+            link.textContent = `Ouvrir le graphique sur ${series.provider}`;
 
             iframe.addEventListener("error", () => {
               const error = document.createElement("p");
               error.className = "error";
-              error.textContent = "L'intégration du graphique TradingEconomics a échoué. Utilisez le lien ci-dessous.";
+              error.textContent = `L'intégration du graphique ${series.provider} a échoué. Utilisez le lien ci-dessous.`;
               if (!card.querySelector(".error")) {
                 card.appendChild(error);
               }
