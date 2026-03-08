@@ -83,6 +83,31 @@
         border-radius: 8px;
         background: #0b1324;
         object-fit: cover;
+        cursor: zoom-in;
+      }
+
+      .lightbox {
+        position: fixed;
+        inset: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem;
+        background: rgba(0, 0, 0, 0.78);
+        z-index: 999;
+      }
+
+      .lightbox.open {
+        display: flex;
+      }
+
+      .lightbox img {
+        max-width: min(1400px, 95vw);
+        max-height: 90vh;
+        border-radius: 10px;
+        border: 1px solid #3a5488;
+        background: #0b1324;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
       }
 
       .error {
@@ -103,6 +128,10 @@
       <p id="updated" class="updated">Préparation des captures...</p>
       <section id="grid" class="grid"></section>
     </main>
+
+    <div id="lightbox" class="lightbox" aria-hidden="true">
+      <img id="lightboxImage" alt="Aperçu agrandi du graphique" />
+    </div>
 
     <script>
       const SERIES = [
@@ -205,9 +234,37 @@
         tryNext();
       }
 
+      function setupLightbox() {
+        const lightbox = document.querySelector("#lightbox");
+        const lightboxImage = document.querySelector("#lightboxImage");
+
+        const close = () => {
+          lightbox.classList.remove("open");
+          lightbox.setAttribute("aria-hidden", "true");
+          lightboxImage.removeAttribute("src");
+        };
+
+        lightbox.addEventListener("click", close);
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape" && lightbox.classList.contains("open")) {
+            close();
+          }
+        });
+
+        return {
+          open: (src, alt) => {
+            lightboxImage.src = src;
+            lightboxImage.alt = alt;
+            lightbox.classList.add("open");
+            lightbox.setAttribute("aria-hidden", "false");
+          },
+        };
+      }
+
       async function buildCards() {
         const { start, end } = tenYearWindow();
         const grid = document.querySelector("#grid");
+        const lightbox = setupLightbox();
 
         const cards = SERIES.map(async (series) => {
           const card = document.createElement("article");
@@ -246,6 +303,11 @@
           });
 
           assignImageWithFallback(img, chartUrls);
+          img.addEventListener("click", () => {
+            if (img.currentSrc || img.src) {
+              lightbox.open(img.currentSrc || img.src, img.alt);
+            }
+          });
 
           try {
             const latest = await fetchLatestValue(series.id);
