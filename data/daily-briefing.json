@@ -1,18 +1,18 @@
 {
-  "generated_at": "2026-03-08 16:06:01",
-  "summary": "Briefing automatique indisponible: les sources de données n'ont pas pu être lues pendant cette exécution.",
+  "generated_at": "2026-03-08 16:15:02",
+  "summary": "Données live indisponibles pendant cette exécution. Consulte les liens de secours ci-dessous pour suivre macro, actions et taux en temps réel.",
   "highlights": [
-    "Briefing automatique indisponible: les sources de données n'ont pas pu être lues pendant cette exécution.",
-    "Briefing automatique indisponible: les sources de données n'ont pas pu être lues pendant cette exécution.",
-    "Briefing automatique indisponible: les sources de données n'ont pas pu être lues pendant cette exécution.",
-    "Aucune nouvelle prioritaire ne peut être qualifiée sans données fiables aujourd'hui."
+    "Données live indisponibles pendant cette exécution. Priorité: futures US, VIX et taux 10 ans.",
+    "Données live indisponibles pendant cette exécution. Priorité: taux directeur BoC, pétrole et CAD/USD.",
+    "Données live indisponibles pendant cette exécution. Priorité: dollar, taux US et indices globaux.",
+    "Aucune nouvelle prioritaire qualifiable automatiquement sans flux fiable aujourd'hui."
   ],
   "sections": {
-    "macro": "Briefing automatique indisponible: les sources de données n'ont pas pu être lues pendant cette exécution.",
-    "us_market": "Briefing automatique indisponible: les sources de données n'ont pas pu être lues pendant cette exécution.",
-    "cad_market": "Briefing automatique indisponible: les sources de données n'ont pas pu être lues pendant cette exécution.",
-    "international_market": "Briefing automatique indisponible: les sources de données n'ont pas pu être lues pendant cette exécution.",
-    "top_news": "Aucune nouvelle prioritaire ne peut être qualifiée sans données fiables aujourd'hui."
+    "macro": "Données live indisponibles pendant cette exécution. Consulte les liens de secours ci-dessous pour suivre macro, actions et taux en temps réel.",
+    "us_market": "Données live indisponibles pendant cette exécution. Priorité: futures US, VIX et taux 10 ans.",
+    "cad_market": "Données live indisponibles pendant cette exécution. Priorité: taux directeur BoC, pétrole et CAD/USD.",
+    "international_market": "Données live indisponibles pendant cette exécution. Priorité: dollar, taux US et indices globaux.",
+    "top_news": "Aucune nouvelle prioritaire qualifiable automatiquement sans flux fiable aujourd'hui."
   },
   "series_snapshot": [
     {
@@ -57,5 +57,29 @@
       "value": null,
       "previous_value": null
     }
-  ]
+  ],
+  "fallback_sources": [
+    {
+      "label": "FRED (tableau de bord macro)",
+      "url": "https://fred.stlouisfed.org/graph/?g=1Ng5J"
+    },
+    {
+      "label": "Investing.com — Indices US en direct",
+      "url": "https://www.investing.com/indices/usa-indices"
+    },
+    {
+      "label": "Yahoo Finance — Marchés US",
+      "url": "https://finance.yahoo.com/markets/"
+    },
+    {
+      "label": "Bank of Canada — indicateurs et taux",
+      "url": "https://www.bankofcanada.ca/core-functions/monetary-policy/key-interest-rate/"
+    }
+  ],
+  "snapshot_status": {
+    "live_points": 0,
+    "series_count": 6,
+    "using_cached_snapshot": false,
+    "cached_snapshot_generated_at": null
+  }
 }

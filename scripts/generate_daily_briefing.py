@@ -26,7 +26,26 @@ SERIES = [
 ]
 
 OUTPUT_PATH = Path("data/daily-briefing.json")
+CACHE_PATH = Path("data/last-valid-snapshot.json")
 MODEL = os.getenv("OPENAI_MODEL", "gpt-5-mini")
+FALLBACK_SOURCES = [
+    {
+        "label": "FRED (tableau de bord macro)",
+        "url": "https://fred.stlouisfed.org/graph/?g=1Ng5J",
+    },
+    {
+        "label": "Investing.com — Indices US en direct",
+        "url": "https://www.investing.com/indices/usa-indices",
+    },
+    {
+        "label": "Yahoo Finance — Marchés US",
+        "url": "https://finance.yahoo.com/markets/",
+    },
+    {
+        "label": "Bank of Canada — indicateurs et taux",
+        "url": "https://www.bankofcanada.ca/core-functions/monetary-policy/key-interest-rate/",
+    },
+]
 
 
 def fetch_csv(series_id: str) -> str:
@@ -48,18 +67,34 @@ def parse_latest_and_previous(csv_text: str) -> tuple[str, float, float | None]:
     return date, float(value), prev_value
 
 
-def deterministic_briefing(snapshot: list[dict]) -> dict[str, str]:
+def load_cached_snapshot() -> tuple[list[dict], str | None]:
+    if not CACHE_PATH.exists():
+        return [], None
+
+    try:
+        payload = json.loads(CACHE_PATH.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return [], None
+
+    snapshot = payload.get("series_snapshot")
+    generated_at = payload.get("generated_at")
+    if not isinstance(snapshot, list):
+        return [], None
+
+    valid_snapshot = [item for item in snapshot if isinstance(item.get("value"), (int, float))]
+    return valid_snapshot, generated_at if isinstance(generated_at, str) else None
+
+
+def deterministic_briefing(snapshot: list[dict], *, stale_since: str | None = None) -> dict[str, str]:
     if not snapshot:
-        unavailable = (
-            "Briefing automatique indisponible: les sources de données n'ont pas pu être lues "
-            "pendant cette exécution."
-        )
+        unavailable = "Données live indisponibles pendant cette exécution."
+        next_steps = "Consulte les liens de secours ci-dessous pour suivre macro, actions et taux en temps réel."
         return {
-            "macro": unavailable,
-            "us_market": unavailable,
-            "cad_market": unavailable,
-            "international_market": unavailable,
-            "top_news": "Aucune nouvelle prioritaire ne peut être qualifiée sans données fiables aujourd'hui.",
+            "macro": f"{unavailable} {next_steps}",
+            "us_market": f"{unavailable} Priorité: futures US, VIX et taux 10 ans.",
+            "cad_market": f"{unavailable} Priorité: taux directeur BoC, pétrole et CAD/USD.",
+            "international_market": f"{unavailable} Priorité: dollar, taux US et indices globaux.",
+            "top_news": "Aucune nouvelle prioritaire qualifiable automatiquement sans flux fiable aujourd'hui.",
         }
 
     details: list[str] = []
@@ -100,6 +135,17 @@ def deterministic_briefing(snapshot: list[dict]) -> dict[str, str]:
         "toute surprise sur ce front peut rapidement re-pricer les actions, le crédit et les devises "
         "à l'échelle mondiale."
     )
+
+    if stale_since:
+        stale_note = (
+            f" Note: chiffres de la dernière exécution valide ({stale_since}); confirme les mouvements "
+            "intraday via les liens de secours."
+        )
+        macro += stale_note
+        us_market += stale_note
+        cad_market += stale_note
+        international_market += stale_note
+        top_news += stale_note
 
     return {
         "macro": macro,
@@ -202,10 +248,34 @@ def main() -> None:
             )
 
     valid_snapshot = [item for item in snapshot if isinstance(item.get("value"), (int, float))]
-    sections = deterministic_briefing(valid_snapshot)
-    ai_output = ai_briefing(valid_snapshot)
+    used_snapshot = valid_snapshot
+    stale_since = None
+
+    if not used_snapshot:
+        cached_snapshot, cached_timestamp = load_cached_snapshot()
+        if cached_snapshot:
+            used_snapshot = cached_snapshot
+            stale_since = cached_timestamp
+
+    sections = deterministic_briefing(used_snapshot, stale_since=stale_since)
+    ai_output = ai_briefing(used_snapshot)
     if ai_output:
         sections = ai_output
+
+    if valid_snapshot:
+        CACHE_PATH.parent.mkdir(parents=True, exist_ok=True)
+        CACHE_PATH.write_text(
+            json.dumps(
+                {
+                    "generated_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                    "series_snapshot": valid_snapshot,
+                },
+                ensure_ascii=False,
+                indent=2,
+            )
+            + "\n",
+            encoding="utf-8",
+        )
 
     data = {
         "generated_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
@@ -218,6 +288,13 @@ def main() -> None:
         ],
         "sections": sections,
         "series_snapshot": snapshot,
+        "fallback_sources": FALLBACK_SOURCES,
+        "snapshot_status": {
+            "live_points": len(valid_snapshot),
+            "series_count": len(SERIES),
+            "using_cached_snapshot": bool(stale_since),
+            "cached_snapshot_generated_at": stale_since,
+        },
     }
 
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
