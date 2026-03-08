@@ -1,10 +1,19 @@
 {
-  "generated_at": "2026-03-08 15:33:04",
-  "summary": "Briefing automatique du jour indisponible (sources de données non accessibles).",
+  "generated_at": "2026-03-08 16:06:01",
+  "summary": "Briefing automatique indisponible: les sources de données n'ont pas pu être lues pendant cette exécution.",
   "highlights": [
-    "Aucune série FRED n'a pu être lue pendant cette exécution.",
-    "Le workflow GitHub réessaiera automatiquement à la prochaine exécution."
+    "Briefing automatique indisponible: les sources de données n'ont pas pu être lues pendant cette exécution.",
+    "Briefing automatique indisponible: les sources de données n'ont pas pu être lues pendant cette exécution.",
+    "Briefing automatique indisponible: les sources de données n'ont pas pu être lues pendant cette exécution.",
+    "Aucune nouvelle prioritaire ne peut être qualifiée sans données fiables aujourd'hui."
   ],
+  "sections": {
+    "macro": "Briefing automatique indisponible: les sources de données n'ont pas pu être lues pendant cette exécution.",
+    "us_market": "Briefing automatique indisponible: les sources de données n'ont pas pu être lues pendant cette exécution.",
+    "cad_market": "Briefing automatique indisponible: les sources de données n'ont pas pu être lues pendant cette exécution.",
+    "international_market": "Briefing automatique indisponible: les sources de données n'ont pas pu être lues pendant cette exécution.",
+    "top_news": "Aucune nouvelle prioritaire ne peut être qualifiée sans données fiables aujourd'hui."
+  },
   "series_snapshot": [
     {
       "id": "UNRATE",
