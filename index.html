@@ -87,6 +87,14 @@
         cursor: zoom-in;
       }
 
+      .chart-frame {
+        width: 100%;
+        height: clamp(320px, 42vh, 520px);
+        border: 1px solid #1f3152;
+        border-radius: 8px;
+        background: #0b1324;
+      }
+
       .lightbox {
         position: fixed;
         inset: 0;
@@ -142,7 +150,11 @@
         { title: "Sentiment consommateur Michigan (UMCSENT)", id: "UMCSENT" },
         { title: "High Yield Spread (BAMLH0A0HYM2)", id: "BAMLH0A0HYM2" },
         { title: "National Financial Conditions Index (NFCI)", id: "NFCI" },
-        { title: "ISM Manufacturing PMI (NAPM)", id: "NAPM" },
+        {
+          title: "ISM Manufacturing PMI",
+          source: "investing",
+          url: "https://www.investing.com/economic-calendar/ism-manufacturing-pmi-173",
+        },
         { title: "Taux de chômage (UNRATE)", id: "UNRATE" },
         { title: "Épargne personnelle (PSAVE)", id: "PSAVE" },
         { title: "Taux Treasury 10 ans (DGS10)", id: "DGS10" },
@@ -332,6 +344,37 @@
           const currentValue = document.createElement("p");
           currentValue.className = "current-value";
           currentValue.textContent = "Valeur actuelle : chargement...";
+
+          if (series.source === "investing") {
+            meta.textContent = "Source: Investing.com";
+            currentValue.textContent = "Valeur actuelle : à consulter dans le graphique Investing.com";
+
+            const iframe = document.createElement("iframe");
+            iframe.className = "chart-frame";
+            iframe.src = series.url;
+            iframe.title = `Graphique ${series.title}`;
+            iframe.loading = "lazy";
+            iframe.referrerPolicy = "no-referrer-when-downgrade";
+
+            const link = document.createElement("a");
+            link.href = series.url;
+            link.target = "_blank";
+            link.rel = "noreferrer noopener";
+            link.textContent = "Ouvrir le graphique sur Investing.com";
+
+            iframe.addEventListener("error", () => {
+              const error = document.createElement("p");
+              error.className = "error";
+              error.textContent = "L'intégration du graphique Investing.com a échoué. Utilisez le lien ci-dessous.";
+              if (!card.querySelector(".error")) {
+                card.appendChild(error);
+              }
+            });
+
+            card.append(title, meta, currentValue, iframe, link);
+            grid.appendChild(card);
+            return;
+          }
 
           const img = document.createElement("img");
           img.className = "chart-img";
