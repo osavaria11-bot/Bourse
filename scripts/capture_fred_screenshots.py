@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Capture 10 FRED chart screenshots with the observation block visible.
+"""Capture 9 FRED chart screenshots with the observation block visible.
 
 Output files are saved to ./screenshots by default.
 """
@@ -17,12 +17,11 @@ SERIES = [
     ("CPIAUCSL", "02_cpi"),
     ("CPILFESL", "03_core_inflation"),
     ("UNRATE", "04_chomage"),
-    ("PAYEMS", "05_emplois"),
-    ("CES0500000003", "06_salaires"),
-    ("FEDFUNDS", "07_taux_directeur"),
-    ("GS10", "08_taux_10_ans"),
-    ("T10Y2Y", "09_spread_10_2"),
-    ("RRSFS", "10_ventes_detail"),
+    ("CES0500000003", "05_salaires"),
+    ("FEDFUNDS", "06_taux_directeur"),
+    ("GS10", "07_taux_10_ans"),
+    ("T10Y2Y", "08_spread_10_2"),
+    ("RRSFS", "09_ventes_detail"),
 ]
 
 
