@@ -67,94 +67,6 @@
         margin-top: 1rem;
       }
 
-      .quick-read-grid,
-      .drivers-grid,
-      .watch-grid,
-      .canada-grid {
-        margin-top: 0.8rem;
-        display: grid;
-        gap: 0.75rem;
-      }
-
-      .quick-read-grid {
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      }
-
-      .drivers-grid {
-        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      }
-
-      .watch-grid,
-      .canada-grid {
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      }
-
-      .quick-line,
-      .driver-item,
-      .watch-item,
-      .canada-item {
-        background: color-mix(in srgb, var(--card) 90%, black 10%);
-        border: 1px solid var(--border);
-        border-radius: 10px;
-        padding: 0.7rem;
-      }
-
-      .quick-line {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 0.5rem;
-      }
-
-      .quick-line strong {
-        font-size: 0.92rem;
-      }
-
-      .status-badge {
-        border-radius: 999px;
-        padding: 0.2rem 0.55rem;
-        font-size: 0.76rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.01em;
-      }
-
-      .status-positive,
-      .status-risk-on {
-        background: rgba(56, 216, 141, 0.18);
-        border: 1px solid rgba(89, 232, 164, 0.45);
-        color: #93f2c4;
-      }
-
-      .status-neutral {
-        background: rgba(168, 186, 216, 0.15);
-        border: 1px solid rgba(187, 200, 222, 0.45);
-        color: #d2def4;
-      }
-
-      .status-negative,
-      .status-risk-off {
-        background: rgba(255, 117, 117, 0.15);
-        border: 1px solid rgba(255, 148, 148, 0.45);
-        color: #ffbbbb;
-      }
-
-      .driver-item h3,
-      .watch-item h3,
-      .canada-item h3 {
-        margin: 0;
-        font-size: 0.95rem;
-      }
-
-      .driver-item p,
-      .watch-item p,
-      .canada-item p {
-        margin: 0.35rem 0 0;
-        font-size: 0.86rem;
-        color: #cad8f5;
-        line-height: 1.45;
-      }
-
       .briefing-text {
         margin: 0;
         line-height: 1.5;
@@ -296,17 +208,6 @@
       </p>
       <p id="updated" class="updated">Préparation des captures...</p>
 
-      <section class="briefing-section card" id="quickReadCard">
-        <h2>Lecture rapide du matin</h2>
-        <p class="meta">5 lignes de synthèse pour cadrer rapidement le régime de marché.</p>
-        <div id="quickReadGrid" class="quick-read-grid"></div>
-      </section>
-
-      <section class="briefing-section card" id="driversCard">
-        <h2>Ce qui drive le marché aujourd’hui</h2>
-        <div id="driversGrid" class="drivers-grid"></div>
-      </section>
-
       <section class="briefing-section card" id="briefingCard">
         <h2>Briefing du jour</h2>
         <p id="briefingDate" class="meta">Dernière mise à jour réussie: en attente du fichier généré.</p>
@@ -359,37 +260,6 @@
     </div>
 
     <script>
-      const QUICK_READ_DEFAULT = [
-        { label: "Macro", status: "à confirmer", tone: "neutral" },
-        { label: "Marché USA", status: "à confirmer", tone: "neutral" },
-        { label: "Taux", status: "à confirmer", tone: "neutral" },
-        { label: "Énergie", status: "à confirmer", tone: "neutral" },
-        { label: "Dollar US", status: "à confirmer", tone: "neutral" },
-      ];
-
-      const MARKET_DRIVERS = [
-        {
-          title: "Taux 10 ans US",
-          reason:
-            "Le 10 ans est le taux d’actualisation de référence: s’il monte vite, la valorisation des actions est sous pression.",
-        },
-        {
-          title: "Pétrole (WTI)",
-          reason:
-            "Le pétrole influence directement les anticipations d’inflation et les marges des entreprises consommatrices d’énergie.",
-        },
-        {
-          title: "VIX",
-          reason:
-            "Le VIX capte le stress de marché à court terme: sa hausse signale souvent un régime plus défensif (risk-off).",
-        },
-        {
-          title: "Dollar US (DXY)",
-          reason:
-            "Un dollar fort tend à resserrer les conditions financières mondiales et pèse souvent sur les actifs risqués hors USA.",
-        },
-      ];
-
       const SERIES = [
         {
           title: "T10Y2Y",
@@ -582,41 +452,6 @@
         VIXCLS: "Le VIX est le baromètre de la peur de marché à court terme et du régime risk-on/risk-off.",
         DCOILWTICO: "Le pétrole influence inflation, marges, attentes de banques centrales et confiance des ménages.",
       };
-
-      function toneClass(tone) {
-        return `status-badge status-${tone}`;
-      }
-
-      function renderQuickRead(lines = QUICK_READ_DEFAULT) {
-        const quickReadGrid = document.querySelector("#quickReadGrid");
-        quickReadGrid.innerHTML = "";
-
-        lines.forEach((line) => {
-          const item = document.createElement("div");
-          item.className = "quick-line";
-
-          const label = document.createElement("strong");
-          label.textContent = line.label;
-
-          const status = document.createElement("span");
-          status.className = toneClass(line.tone ?? "neutral");
-          status.textContent = line.status;
-
-          item.append(label, status);
-          quickReadGrid.appendChild(item);
-        });
-      }
-
-      function renderStaticSections() {
-        const driversGrid = document.querySelector("#driversGrid");
-
-        MARKET_DRIVERS.forEach((driver) => {
-          const item = document.createElement("article");
-          item.className = "driver-item";
-          item.innerHTML = `<h3>${driver.title}</h3><p>${driver.reason}</p>`;
-          driversGrid.appendChild(item);
-        });
-      }
 
       function buildInterpretation(series) {
         const relevance =
@@ -816,13 +651,11 @@
           briefingNote.textContent = briefing.update_status?.startsWith("stale_data_kept")
             ? "Données conservées depuis la dernière exécution valide: lecture prudente recommandée."
             : briefing.news_digest_note ?? "";
-          renderQuickRead(Array.isArray(briefing.quick_read) && briefing.quick_read.length ? briefing.quick_read : QUICK_READ_DEFAULT);
           renderNewsSources(briefing.news_sources);
         } catch (error) {
           briefingParagraph.textContent = "Le résumé quotidien sera affiché ici après la première exécution réussie du workflow automatique.";
           briefingNote.textContent = "";
           briefingLinks.innerHTML = "";
-          renderQuickRead(QUICK_READ_DEFAULT);
         }
       }
 
@@ -831,9 +664,6 @@
         const grid = document.querySelector("#grid");
         const customImages = document.querySelector("#customImages");
         const lightbox = setupLightbox();
-
-        renderStaticSections();
-        renderQuickRead(QUICK_READ_DEFAULT);
 
         CUSTOM_IMAGES.forEach((item) => {
           const card = document.createElement("article");
