@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
-"""Generate a static daily briefing JSON for GitHub Pages.
+"""Generate a static market briefing JSON for GitHub Pages.
 
-Design goals:
-- No API key required.
-- Collect data server-side in GitHub Actions (never from browser).
-- Keep last valid briefing file if any source fails during a run.
+The briefing is generated server-side by GitHub Actions and committed as
+`data/daily-briefing.json` so the front-end only reads a static file.
 """
 
 from __future__ import annotations
@@ -14,27 +12,20 @@ from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
-import xml.etree.ElementTree as ET
 
 OUTPUT_PATH = Path("data/daily-briefing.json")
 TIMEOUT_SECONDS = 30
 
 FRED_SERIES = {
-    "UNRATE": "Chômage US",
-    "DFF": "Fed Funds",
-    "DGS10": "Taux US 10 ans",
+    "UNRATE": "chômage américain",
+    "DFF": "taux directeur de la Fed",
+    "DGS10": "taux américain à 10 ans",
     "SP500": "S&P 500",
     "VIXCLS": "VIX",
     "DEXCAUS": "CAD/USD",
-    "IR3TIB01CAM156N": "Taux court terme Canada",
-    "DTWEXBGS": "Indice dollar (broad)",
+    "IR3TIB01CAM156N": "taux court canadien",
+    "DTWEXBGS": "indice large du dollar",
 }
-
-FALLBACK_SOURCES = [
-    {"label": "FRED — indicateurs macro & marchés", "url": "https://fred.stlouisfed.org/"},
-    {"label": "Bank of Canada — taux directeur", "url": "https://www.bankofcanada.ca/core-functions/monetary-policy/key-interest-rate/"},
-    {"label": "Reuters Markets News", "url": "https://www.reuters.com/markets/"},
-]
 
 
 class SourceError(RuntimeError):
@@ -42,7 +33,7 @@ class SourceError(RuntimeError):
 
 
 def fetch_text(url: str) -> str:
-    req = Request(url, headers={"User-Agent": "BourseBriefingBot/1.0"})
+    req = Request(url, headers={"User-Agent": "BourseBriefingBot/2.0"})
     with urlopen(req, timeout=TIMEOUT_SECONDS) as response:  # noqa: S310
         return response.read().decode("utf-8", errors="replace")
 
@@ -60,79 +51,52 @@ def fetch_fred_latest(series_id: str) -> dict:
         raise SourceError(f"FRED {series_id}: aucune valeur valide")
 
     date, value = valid[-1]
-    prev_value = float(valid[-2][1]) if len(valid) > 1 else None
     current = float(value)
+    previous = float(valid[-2][1]) if len(valid) > 1 else None
     return {
         "id": series_id,
         "label": FRED_SERIES[series_id],
         "date": date,
         "value": current,
-        "previous_value": prev_value,
+        "previous_value": previous,
     }
 
 
-def build_change_text(point: dict) -> str:
-    value = point["value"]
-    previous = point.get("previous_value")
+def describe_change(current: float, previous: float | None, unit: str = "") -> str:
+    suffix = f" {unit}" if unit else ""
     if previous is None:
-        return f"{value:.2f} (pas de comparaison disponible)"
-    delta = value - previous
-    direction = "en hausse" if delta > 0 else "en baisse" if delta < 0 else "stable"
-    return f"{value:.2f} ({direction}, {delta:+.2f})"
+        return f"{current:.2f}{suffix}"
+
+    delta = current - previous
+    if abs(delta) < 1e-9:
+        trend = "stable"
+    elif delta > 0:
+        trend = "en hausse"
+    else:
+        trend = "en baisse"
+    return f"{current:.2f}{suffix} ({trend} de {abs(delta):.2f}{suffix})"
 
 
-def fetch_top_news() -> dict:
-    # RSS public sans clé API.
-    xml_text = fetch_text("https://feeds.marketwatch.com/marketwatch/topstories/")
-    try:
-        root = ET.fromstring(xml_text)
-    except ET.ParseError as exc:
-        raise SourceError("Flux news invalide") from exc
-
-    item = root.find("./channel/item")
-    if item is None:
-        raise SourceError("Aucune news dans le flux")
-
-    title = (item.findtext("title") or "").strip()
-    link = (item.findtext("link") or "").strip()
-    pub_date = (item.findtext("pubDate") or "").strip()
-    if not title or not link:
-        raise SourceError("News incomplète")
-
-    return {"title": title, "url": link, "published_at": pub_date}
+def build_paragraph(points: dict[str, dict]) -> str:
+    return (
+        "Ce matin, le tableau macro-financier reste partagé : "
+        f"le chômage américain ressort à {describe_change(points['UNRATE']['value'], points['UNRATE']['previous_value'], 'pts')}, "
+        f"le taux directeur de la Fed à {describe_change(points['DFF']['value'], points['DFF']['previous_value'], 'pts')} "
+        f"et le 10 ans américain à {describe_change(points['DGS10']['value'], points['DGS10']['previous_value'], 'pts')}; "
+        f"côté actifs, le S&P 500 évolue à {describe_change(points['SP500']['value'], points['SP500']['previous_value'])} "
+        f"avec un VIX à {describe_change(points['VIXCLS']['value'], points['VIXCLS']['previous_value'])}, "
+        f"tandis que le CAD/USD se situe à {describe_change(points['DEXCAUS']['value'], points['DEXCAUS']['previous_value'])} "
+        f"et le taux court canadien à {describe_change(points['IR3TIB01CAM156N']['value'], points['IR3TIB01CAM156N']['previous_value'], 'pts')}; "
+        f"en toile de fond, l'indice large du dollar est à {describe_change(points['DTWEXBGS']['value'], points['DTWEXBGS']['previous_value'])}, "
+        "ce qui confirme un marché encore guidé par la sensibilité aux taux et aux devises."
+    )
 
 
-def collect_all_sources() -> tuple[dict, list[dict], dict]:
+def collect_sources() -> tuple[str, list[dict]]:
     points = {series_id: fetch_fred_latest(series_id) for series_id in FRED_SERIES}
-    news = fetch_top_news()
-
-    sections = {
-        "macro": (
-            "Macro: "
-            f"chômage US {build_change_text(points['UNRATE'])}; "
-            f"Fed Funds {build_change_text(points['DFF'])}; "
-            f"taux US 10 ans {build_change_text(points['DGS10'])}."
-        ),
-        "us_market": (
-            "Marché USA: "
-            f"S&P 500 {build_change_text(points['SP500'])}; "
-            f"VIX {build_change_text(points['VIXCLS'])}."
-        ),
-        "cad_market": (
-            "Marché CAD: "
-            f"CAD/USD {build_change_text(points['DEXCAUS'])}; "
-            f"taux court terme Canada {build_change_text(points['IR3TIB01CAM156N'])}."
-        ),
-        "international_market": (
-            "Marché international: "
-            f"indice dollar broad {build_change_text(points['DTWEXBGS'])}; "
-            "surveillez l'impact FX/taux sur les actifs hors USA."
-        ),
-        "top_news": f"Nouvelle clé: {news['title']} ({news['url']}).",
-    }
-
-    ordered_snapshot = [points[sid] for sid in FRED_SERIES]
-    return sections, ordered_snapshot, news
+    paragraph = build_paragraph(points)
+    snapshot = [points[sid] for sid in FRED_SERIES]
+    return paragraph, snapshot
 
 
 def main() -> None:
@@ -144,8 +108,8 @@ def main() -> None:
             previous_payload = None
 
     try:
-        sections, snapshot, news = collect_all_sources()
-    except Exception as exc:  # Keep last valid file untouched.
+        paragraph, snapshot = collect_sources()
+    except Exception as exc:
         print(f"Source collection failed: {exc}")
         if previous_payload:
             print("Keeping existing data/daily-briefing.json (last valid version).")
@@ -156,23 +120,9 @@ def main() -> None:
     payload = {
         "generated_at": generated_at,
         "last_successful_update": generated_at,
-        "summary": sections["macro"],
-        "highlights": [
-            sections["us_market"],
-            sections["cad_market"],
-            sections["international_market"],
-            sections["top_news"],
-        ],
-        "sections": sections,
+        "briefing_paragraph": paragraph,
         "series_snapshot": snapshot,
-        "top_news": news,
-        "fallback_sources": FALLBACK_SOURCES,
-        "snapshot_status": {
-            "live_points": len(snapshot),
-            "series_count": len(snapshot),
-            "using_cached_snapshot": False,
-            "cached_snapshot_generated_at": None,
-        },
+        "data_provider": "FRED (Federal Reserve Bank of St. Louis)",
     }
 
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
