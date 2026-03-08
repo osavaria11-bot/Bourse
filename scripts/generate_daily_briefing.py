@@ -107,22 +107,33 @@ def main() -> None:
         except json.JSONDecodeError:
             previous_payload = None
 
+    generated_at = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
     try:
         paragraph, snapshot = collect_sources()
     except Exception as exc:
         print(f"Source collection failed: {exc}")
         if previous_payload:
-            print("Keeping existing data/daily-briefing.json (last valid version).")
+            fallback_payload = {
+                **previous_payload,
+                "generated_at": generated_at,
+                "update_status": f"stale_data_kept: {exc}",
+            }
+            OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
+            OUTPUT_PATH.write_text(
+                json.dumps(fallback_payload, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
+            print("Wrote fallback payload with previous valid data.")
             return
         raise
 
-    generated_at = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
     payload = {
         "generated_at": generated_at,
         "last_successful_update": generated_at,
         "briefing_paragraph": paragraph,
         "series_snapshot": snapshot,
         "data_provider": "FRED (Federal Reserve Bank of St. Louis)",
+        "update_status": "fresh_data",
     }
 
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
