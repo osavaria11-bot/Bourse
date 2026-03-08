@@ -96,6 +96,13 @@
         color: #ffd67a;
       }
 
+      .series-description {
+        margin: 0.7rem 0 0;
+        font-size: 0.86rem;
+        line-height: 1.45;
+        color: #c9d9f6;
+      }
+
       .chart-img {
         width: 100%;
         height: clamp(320px, 42vh, 520px);
@@ -199,29 +206,126 @@
 
     <script>
       const SERIES = [
-        { title: "Spread 10 ans – 2 ans (T10Y2Y)", id: "T10Y2Y" },
-        { title: "Spread 10 ans – 3 mois (T10Y3M)", id: "T10Y3M" },
-        { title: "Taux effectif Fed Funds (DFF)", id: "DFF" },
-        { title: "Sentiment consommateur Michigan (UMCSENT)", id: "UMCSENT" },
-        { title: "High Yield Spread (BAMLH0A0HYM2)", id: "BAMLH0A0HYM2" },
-        { title: "National Financial Conditions Index (NFCI)", id: "NFCI" },
-        { title: "Taux de chômage (UNRATE)", id: "UNRATE" },
-        { title: "Épargne personnelle (PSAVE)", id: "PSAVE" },
-        { title: "Taux Treasury 10 ans (DGS10)", id: "DGS10" },
-        { title: "Emplois non agricoles (PAYEMS)", id: "PAYEMS" },
-        { title: "Heures hebdo manufacturier (AWHMAN)", id: "AWHMAN" },
-        { title: "Real Retail & Food Services Sales (RRSFS)", id: "RRSFS" },
-        { title: "Housing Starts (HOUST)", id: "HOUST" },
-        { title: "Permis de construction (PERMIT)", id: "PERMIT" },
-        { title: "Indice CPI core (CPILFESL)", id: "CPILFESL" },
-        { title: "Masse monétaire M2 (M2SL)", id: "M2SL" },
-        { title: "Production industrielle (INDPRO)", id: "INDPRO" },
-        { title: "Commandes de biens durables (DGORDER)", id: "DGORDER" },
         {
-          title: "Taux de défaut cartes de crédit (DRCCLACBS)",
-          id: "DRCCLACBS",
+          title: "T10Y2Y",
+          id: "T10Y2Y",
+          description:
+            "Mesure la pente de la courbe des taux entre le 10 ans et le 2 ans. Bon : positif. Neutre : proche de 0. Mauvais : négatif.",
         },
-        { title: "Indice de volatilité VIX (VIXCLS)", id: "VIXCLS" },
+        {
+          title: "T10Y3M",
+          id: "T10Y3M",
+          description:
+            "Mesure la pente de la courbe des taux entre le 10 ans et le 3 mois. Bon : positif. Neutre : proche de 0. Mauvais : négatif prolongé.",
+        },
+        {
+          title: "Intérêt / DFF",
+          id: "DFF",
+          description:
+            "Mesure le taux directeur effectif de la Fed. Bon : modéré et stable. Neutre : élevé mais en baisse. Mauvais : trop élevé ou en forte hausse.",
+        },
+        {
+          title: "Michigan Sentiment",
+          id: "UMCSENT",
+          description:
+            "Mesure la confiance des consommateurs américains. Bon : élevé ou en hausse. Neutre : stable. Mauvais : faible ou en baisse rapide.",
+        },
+        {
+          title: "HYSPREAD",
+          id: "BAMLH0A0HYM2",
+          description:
+            "Mesure l’écart entre les obligations à haut rendement et les obligations gouvernementales. Bon : faible. Neutre : moyen. Mauvais : élevé ou en forte hausse.",
+        },
+        {
+          title: "NFCI",
+          id: "NFCI",
+          description:
+            "Mesure si les conditions financières sont accommodantes ou restrictives. Bon : sous 0. Neutre : autour de 0. Mauvais : au-dessus de 0.",
+        },
+        {
+          title: "PMI manufacturier",
+          id: "NAPM",
+          description:
+            "Mesure l’activité du secteur manufacturier américain. Bon : au-dessus de 50. Neutre : autour de 50. Mauvais : sous 50.",
+        },
+        {
+          title: "UNRATE",
+          id: "UNRATE",
+          description:
+            "Mesure le taux de chômage aux États-Unis. Bon : bas et stable. Neutre : légère hausse. Mauvais : hausse rapide.",
+        },
+        {
+          title: "PSAVE",
+          id: "PSAVE",
+          description:
+            "Mesure l’épargne personnelle des ménages. Bon : niveau sain et stable. Neutre : légère baisse. Mauvais : trop faible ou en chute.",
+        },
+        {
+          title: "TB10 / DGS10",
+          id: "DGS10",
+          description:
+            "Mesure le rendement de l’obligation américaine 10 ans. Bon : modéré et stable. Neutre : hausse graduelle. Mauvais : hausse rapide ou niveau trop élevé.",
+        },
+        {
+          title: "PAYEMS",
+          id: "PAYEMS",
+          description:
+            "Mesure le nombre total d’emplois non agricoles. Bon : hausse régulière. Neutre : ralentissement modéré. Mauvais : stagnation ou baisse.",
+        },
+        {
+          title: "AWHMAN",
+          id: "AWHMAN",
+          description:
+            "Mesure les heures moyennes travaillées en manufacturier. Bon : stable ou en hausse. Neutre : légère baisse. Mauvais : baisse persistante.",
+        },
+        {
+          title: "RRSFS",
+          id: "RRSFS",
+          description:
+            "Mesure les ventes au détail réelles, donc ajustées pour l’inflation. Bon : en hausse. Neutre : stable. Mauvais : en baisse.",
+        },
+        {
+          title: "HOUST",
+          id: "HOUST",
+          description:
+            "Mesure le nombre de nouvelles mises en chantier. Bon : en hausse. Neutre : stable. Mauvais : en baisse.",
+        },
+        {
+          title: "PERMIT",
+          id: "PERMIT",
+          description:
+            "Mesure les permis de construire, donc l’activité future en immobilier. Bon : en hausse. Neutre : stable. Mauvais : en baisse.",
+        },
+        {
+          title: "M2SL",
+          id: "M2SL",
+          description:
+            "Mesure la masse monétaire en circulation. Bon : croissance modérée. Neutre : stable. Mauvais : contraction forte ou hausse excessive.",
+        },
+        {
+          title: "INDPRO",
+          id: "INDPRO",
+          description:
+            "Mesure la production industrielle totale. Bon : en hausse. Neutre : stable. Mauvais : en baisse.",
+        },
+        {
+          title: "DGORDER",
+          id: "DGORDER",
+          description:
+            "Mesure les nouvelles commandes de biens durables. Bon : en hausse. Neutre : stable ou volatile. Mauvais : tendance baissière.",
+        },
+        {
+          title: "VIX",
+          id: "VIXCLS",
+          description:
+            "Mesure la volatilité anticipée du marché boursier. Bon : bas. Neutre : moyen. Mauvais : élevé. Repères : bon < 15, neutre 15-20, mauvais > 20.",
+        },
+        {
+          title: "CPIAUCSL",
+          id: "CPIAUCSL",
+          description:
+            "Mesure l’évolution générale des prix à la consommation. Bon : inflation modérée et en baisse. Neutre : stable. Mauvais : inflation élevée ou en réaccélération.",
+        },
       ];
 
       const CUSTOM_IMAGES = [
@@ -481,6 +585,10 @@
           link.rel = "noreferrer noopener";
           link.textContent = "Ouvrir la série sur FRED";
 
+          const description = document.createElement("p");
+          description.className = "series-description";
+          description.textContent = series.description;
+
           img.addEventListener("allSourcesFailed", () => {
             const error = document.createElement("p");
             error.className = "error";
@@ -507,7 +615,7 @@
             currentValue.textContent = "Valeur actuelle : indisponible";
           }
 
-          card.append(title, meta, currentValue, img, link);
+          card.append(title, meta, currentValue, img, description, link);
           grid.appendChild(card);
         });
 
