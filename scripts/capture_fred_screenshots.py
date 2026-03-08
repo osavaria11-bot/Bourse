@@ -26,18 +26,30 @@ SERIES = [
 ]
 
 
-async def capture(output_dir: Path) -> None:
+async def capture(output_dir: Path, zoom: float) -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
 
     async with async_playwright() as p:
         browser = await p.firefox.launch()
-        context = await browser.new_context(viewport={"width": 1440, "height": 1800})
+        context = await browser.new_context(
+            viewport={"width": 1920, "height": 1350},
+            device_scale_factor=2,
+        )
         page = await context.new_page()
 
         for series_id, filename in SERIES:
             url = f"https://fred.stlouisfed.org/series/{series_id}"
             await page.goto(url, wait_until="domcontentloaded", timeout=120_000)
             await page.wait_for_timeout(4_000)
+            await page.evaluate(
+                """
+                value => {
+                    document.documentElement.style.zoom = String(value);
+                }
+                """,
+                zoom,
+            )
+            await page.wait_for_timeout(750)
 
             container = page.locator("#content-container").first
             try:
@@ -56,12 +68,18 @@ def parse_args() -> argparse.Namespace:
         default="screenshots",
         help="Output directory for PNG files (default: screenshots)",
     )
+    parser.add_argument(
+        "--zoom",
+        type=float,
+        default=1.2,
+        help="Page zoom factor before capture (default: 1.2)",
+    )
     return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
-    asyncio.run(capture(Path(args.output_dir)))
+    asyncio.run(capture(Path(args.output_dir), args.zoom))
 
 
 if __name__ == "__main__":
