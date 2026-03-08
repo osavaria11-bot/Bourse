@@ -1,0 +1,52 @@
+{
+  "generated_at": "2026-03-08 15:33:04",
+  "summary": "Briefing automatique du jour indisponible (sources de données non accessibles).",
+  "highlights": [
+    "Aucune série FRED n'a pu être lue pendant cette exécution.",
+    "Le workflow GitHub réessaiera automatiquement à la prochaine exécution."
+  ],
+  "series_snapshot": [
+    {
+      "id": "UNRATE",
+      "label": "Chômage US",
+      "date": null,
+      "value": null,
+      "previous_value": null
+    },
+    {
+      "id": "DFF",
+      "label": "Fed Funds",
+      "date": null,
+      "value": null,
+      "previous_value": null
+    },
+    {
+      "id": "DGS10",
+      "label": "Taux US 10 ans",
+      "date": null,
+      "value": null,
+      "previous_value": null
+    },
+    {
+      "id": "BAMLH0A0HYM2",
+      "label": "Spread High Yield",
+      "date": null,
+      "value": null,
+      "previous_value": null
+    },
+    {
+      "id": "VIXCLS",
+      "label": "VIX",
+      "date": null,
+      "value": null,
+      "previous_value": null
+    },
+    {
+      "id": "T10Y2Y",
+      "label": "Spread 10Y-2Y",
+      "date": null,
+      "value": null,
+      "previous_value": null
+    }
+  ]
+}

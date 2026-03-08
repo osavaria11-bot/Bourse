@@ -45,3 +45,36 @@ Fichiers générés:
 - `screenshots/08_taux_10_ans.png`
 - `screenshots/09_spread_10_2.png`
 - `screenshots/10_ventes_detail.png`
+
+## Résumé du jour automatique (quotidien)
+
+Le projet inclut maintenant un briefing quotidien affiché en haut de page depuis `data/daily-briefing.json`.
+
+### Fonctionnement
+
+1. Le script `scripts/generate_daily_briefing.py` récupère des séries FRED clés.
+2. Il génère un résumé de secours (sans IA) ou un résumé enrichi si `OPENAI_API_KEY` est disponible.
+3. Le workflow GitHub `.github/workflows/daily-briefing.yml` l'exécute chaque jour et commit le JSON mis à jour.
+4. `index.html` charge automatiquement ce JSON et affiche le briefing du jour.
+
+### Configuration GitHub (important)
+
+Dans le dépôt GitHub, ajoutez un secret:
+
+- `OPENAI_API_KEY` (Repository Settings → Secrets and variables → Actions)
+
+Optionnel:
+
+- `OPENAI_MODEL` (sinon `gpt-5-mini` est utilisé dans le workflow)
+
+### Lancer manuellement en local
+
+```bash
+python scripts/generate_daily_briefing.py
+```
+
+Puis ouvrir la page locale:
+
+```bash
+python3 -m http.server 8000
+```

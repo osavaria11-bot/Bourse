@@ -63,6 +63,25 @@
         margin-top: 1.5rem;
       }
 
+      .briefing-section {
+        margin-top: 1rem;
+      }
+
+      .briefing-text {
+        margin: 0.35rem 0;
+        line-height: 1.5;
+      }
+
+      .briefing-points {
+        margin: 0.5rem 0 0;
+        padding-left: 1.1rem;
+        color: #d6e5ff;
+      }
+
+      .briefing-points li {
+        margin-bottom: 0.35rem;
+      }
+
       .bottom-links {
         margin: 0.4rem 0 0;
         padding-left: 1.1rem;
@@ -170,6 +189,12 @@
         Série d'images (captures de graphiques FRED St. Louis) sur une fenêtre glissante de 10 ans.
       </p>
       <p id="updated" class="updated">Préparation des captures...</p>
+      <section class="briefing-section card" id="briefingCard">
+        <h2>Briefing du jour</h2>
+        <p id="briefingDate" class="meta">Chargement du résumé quotidien...</p>
+        <p id="briefingText" class="briefing-text">Le briefing sera disponible ici.</p>
+        <ul id="briefingPoints" class="briefing-points"></ul>
+      </section>
       <section id="grid" class="grid"></section>
       <section class="bottom-section">
         <h2>Ressources et images complémentaires</h2>
@@ -193,6 +218,16 @@
               target="_blank"
               rel="noreferrer"
               >Trading Economics — US Business Confidence</a
+            >
+          </li>
+          <li>
+            <a href="https://fred.stlouisfed.org/graph/?g=1Ng5J" target="_blank" rel="noreferrer"
+              >FRED Graph — g=1Ng5J</a
+            >
+          </li>
+          <li>
+            <a href="https://polymarket.com/fr/finance" target="_blank" rel="noreferrer"
+              >Polymarket — Finance</a
             >
           </li>
         </ul>
@@ -363,6 +398,16 @@
           path: "2121.png",
           description: "Capture ajoutée localement.",
         },
+        {
+          title: "FRED — Graphique partagé (g=1Ng5J)",
+          path: "https://fred.stlouisfed.org/graph/fredgraph.png?g=1Ng5J",
+          description: "Image du graphique partagé demandée.",
+        },
+        {
+          title: "Polymarket Finance — top trades (capture)",
+          path: "https://image.thum.io/get/width/1600/https://polymarket.com/fr/finance",
+          description: "Capture de la page Finance pour visualiser les marchés populaires.",
+        },
       ];
 
       const IMAGE_BASE_URLS = [
@@ -516,6 +561,36 @@
         };
       }
 
+
+      async function loadDailyBriefing() {
+        const briefingDate = document.querySelector("#briefingDate");
+        const briefingText = document.querySelector("#briefingText");
+        const briefingPoints = document.querySelector("#briefingPoints");
+
+        try {
+          const response = await fetch(`data/daily-briefing.json?ts=${Date.now()}`);
+          if (!response.ok) {
+            throw new Error("Briefing indisponible");
+          }
+
+          const briefing = await response.json();
+          briefingDate.textContent = `Mise à jour: ${briefing.generated_at ?? "inconnue"}`;
+          briefingText.textContent = briefing.summary ?? "Résumé indisponible.";
+
+          briefingPoints.replaceChildren();
+          (briefing.highlights ?? []).forEach((point) => {
+            const li = document.createElement("li");
+            li.textContent = point;
+            briefingPoints.appendChild(li);
+          });
+        } catch (error) {
+          briefingDate.textContent = "Mise à jour: indisponible";
+          briefingText.textContent =
+            "Le briefing quotidien n'est pas encore généré. Lancez le script d'automatisation pour créer data/daily-briefing.json.";
+          briefingPoints.replaceChildren();
+        }
+      }
+
       async function buildCards() {
         const { start, end } = tenYearWindow();
         const grid = document.querySelector("#grid");
@@ -648,6 +723,7 @@
         document.querySelector("#updated").textContent = `Fenêtre 10 ans générée le ${new Date().toLocaleString("fr-FR")}`;
       }
 
+      loadDailyBriefing();
       buildCards();
     </script>
   </body>
