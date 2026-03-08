@@ -59,6 +59,19 @@
         gap: 1rem;
       }
 
+      .bottom-section {
+        margin-top: 1.5rem;
+      }
+
+      .bottom-links {
+        margin: 0.4rem 0 0;
+        padding-left: 1.1rem;
+      }
+
+      .bottom-links li {
+        margin-bottom: 0.25rem;
+      }
+
       .card {
         background: color-mix(in srgb, var(--card) 92%, black 8%);
         border: 1px solid var(--border);
@@ -150,8 +163,26 @@
         Série d'images (captures de graphiques FRED St. Louis) sur une fenêtre glissante de 10 ans.
       </p>
       <p id="updated" class="updated">Préparation des captures...</p>
-      <section id="customImages" class="image-grid"></section>
       <section id="grid" class="grid"></section>
+      <section class="bottom-section">
+        <h2>Ressources et images complémentaires</h2>
+        <ul class="bottom-links">
+          <li>
+            <a
+              href="https://www.ssga.com/us/en/intermediary/insights/state-street-etfs-chart-pack?"
+              target="_blank"
+              rel="noreferrer"
+              >State Street ETFs Chart Pack</a
+            >
+          </li>
+          <li>
+            <a href="https://yardeni.com/our-charts/" target="_blank" rel="noreferrer"
+              >Yardeni Research — Our Charts</a
+            >
+          </li>
+        </ul>
+        <section id="customImages" class="image-grid"></section>
+      </section>
     </main>
 
     <div id="lightbox" class="lightbox" aria-hidden="true">
