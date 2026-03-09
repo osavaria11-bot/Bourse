@@ -422,9 +422,11 @@
           description: "Image du graphique partagé demandée.",
         },
         {
-          title: "Polymarket Finance — top trades (capture)",
-          path: "https://image.thum.io/get/width/1600/https://polymarket.com/fr/finance",
-          description: "Capture de la page Finance pour visualiser les marchés populaires.",
+          title: "Polymarket Finance — live",
+          provider: "Polymarket",
+          description: "Vue live via iframe (avec lien direct si l'intégration est bloquée).",
+          source: "external-chart",
+          url: "https://polymarket.com/fr/finance",
         },
       ];
 
@@ -673,6 +675,38 @@
           const meta = document.createElement("p");
           meta.className = "meta";
           meta.textContent = item.description;
+
+          if (item.source === "external-chart") {
+            const screenshotNote = document.createElement("p");
+            screenshotNote.className = "meta";
+            screenshotNote.textContent = `${item.provider} : le site peut appliquer des restrictions d'intégration selon le navigateur.`;
+
+            const iframe = document.createElement("iframe");
+            iframe.className = "chart-frame";
+            iframe.src = item.url;
+            iframe.title = `Graphique ${item.title}`;
+            iframe.loading = "lazy";
+            iframe.referrerPolicy = "no-referrer-when-downgrade";
+
+            const link = document.createElement("a");
+            link.href = item.url;
+            link.target = "_blank";
+            link.rel = "noreferrer noopener";
+            link.textContent = `Ouvrir le graphique sur ${item.provider}`;
+
+            iframe.addEventListener("error", () => {
+              const error = document.createElement("p");
+              error.className = "error";
+              error.textContent = `L'intégration du graphique ${item.provider} a échoué. Utilisez le lien ci-dessous.`;
+              if (!card.querySelector(".error")) {
+                card.appendChild(error);
+              }
+            });
+
+            card.append(title, meta, screenshotNote, iframe, link);
+            customImages.appendChild(card);
+            return;
+          }
 
           const img = document.createElement("img");
           img.className = "custom-img";
