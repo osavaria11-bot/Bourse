@@ -424,9 +424,11 @@
         {
           title: "Polymarket Finance — live",
           provider: "Polymarket",
-          description: "Vue live via iframe (avec lien direct si l'intégration est bloquée).",
-          source: "external-chart",
+          description: "Capture d'écran auto actualisée à chaque ouverture de la page.",
+          source: "auto-screenshot",
           url: "https://polymarket.com/fr/finance",
+          screenshotUrl:
+            "https://image.thum.io/get/width/1600/crop/900/noanimate/https://polymarket.com/fr/finance",
         },
       ];
 
@@ -704,6 +706,42 @@
             });
 
             card.append(title, meta, screenshotNote, iframe, link);
+            customImages.appendChild(card);
+            return;
+          }
+
+          if (item.source === "auto-screenshot") {
+            const screenshotNote = document.createElement("p");
+            screenshotNote.className = "meta";
+            screenshotNote.textContent = `${item.provider} : nouvelle capture demandée à chaque ouverture (cache busting).`;
+
+            const img = document.createElement("img");
+            img.className = "custom-img";
+            img.src = `${item.screenshotUrl}?ts=${Date.now()}`;
+            img.alt = `${item.title} (capture)`;
+            img.loading = "lazy";
+            img.referrerPolicy = "no-referrer";
+
+            const link = document.createElement("a");
+            link.href = item.url;
+            link.target = "_blank";
+            link.rel = "noreferrer noopener";
+            link.textContent = `Ouvrir ${item.provider} en direct`;
+
+            img.addEventListener("click", () => {
+              lightbox.open(img.currentSrc || img.src, img.alt);
+            });
+
+            img.addEventListener("error", () => {
+              const error = document.createElement("p");
+              error.className = "error";
+              error.textContent = `La capture ${item.provider} n'a pas pu être chargée. Utilisez le lien direct.`;
+              if (!card.querySelector(".error")) {
+                card.appendChild(error);
+              }
+            });
+
+            card.append(title, meta, screenshotNote, img, link);
             customImages.appendChild(card);
             return;
           }
