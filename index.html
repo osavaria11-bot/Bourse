@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Captures FRED — 10 ans</title>
+    <title>Captures FRED — fenêtre personnalisée</title>
     <style>
       :root {
         color-scheme: dark;
@@ -337,12 +337,6 @@
             "Mesure le nombre de nouvelles mises en chantier. Bon : en hausse. Neutre : stable. Mauvais : en baisse.",
         },
         {
-          title: "PERMIT",
-          id: "PERMIT",
-          description:
-            "Mesure les permis de construire, donc l’activité future en immobilier. Bon : en hausse. Neutre : stable. Mauvais : en baisse.",
-        },
-        {
           title: "Delinquency Rate on Credit Card Loans, All Commercial Banks",
           id: "DRCCLACBS",
           description:
@@ -375,6 +369,7 @@
         {
           title: "NASDAQ Gold Ratio",
           id: "NASDAQXAU",
+          years: 5,
           description:
             "Mesure la performance relative du Nasdaq par rapport à l'or (XAU). Bon : hausse graduelle. Neutre : stable. Mauvais : baisse marquée.",
         },
@@ -476,11 +471,12 @@
         return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
       }
 
-      function tenYearWindow() {
+      function windowForSeries(series) {
+        const years = Number.isFinite(series?.years) ? series.years : 10;
         const end = new Date();
         const start = new Date(end);
-        start.setFullYear(end.getFullYear() - 10);
-        return { start: isoDate(start), end: isoDate(end) };
+        start.setFullYear(end.getFullYear() - years);
+        return { start: isoDate(start), end: isoDate(end), years };
       }
 
       function fredImageUrls(seriesId, start, end) {
@@ -663,7 +659,6 @@
       }
 
       async function buildCards() {
-        const { start, end } = tenYearWindow();
         const grid = document.querySelector("#grid");
         const customImages = document.querySelector("#customImages");
         const lightbox = setupLightbox();
@@ -702,7 +697,8 @@
 
           const meta = document.createElement("p");
           meta.className = "meta";
-          meta.innerHTML = `Série FRED: <strong>${series.id}</strong> · Période: ${start} → ${end}`;
+          const { start, end, years } = windowForSeries(series);
+          meta.innerHTML = `Série FRED: <strong>${series.id}</strong> · Période (${years} ans): ${start} → ${end}`;
 
           const currentValue = document.createElement("p");
           currentValue.className = "current-value";
@@ -793,7 +789,7 @@
 
         await Promise.all(cards);
 
-        document.querySelector("#updated").textContent = `Fenêtre 10 ans générée le ${new Date().toLocaleString("fr-FR")}`;
+        document.querySelector("#updated").textContent = `Fenêtre par défaut 10 ans (NASDAQXAU en 5 ans) générée le ${new Date().toLocaleString("fr-FR")}`;
       }
 
       loadDailyBriefing();
