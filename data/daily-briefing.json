@@ -1,10 +1,7 @@
 {
-  "generated_at": "2026-03-08 17:05:19 UTC",
-  "last_successful_update": "2026-03-08 16:15:02 UTC",
-  "briefing_paragraph": "",
-  "series_snapshot": [],
-  "data_provider": "FRED (Federal Reserve Bank of St. Louis)",
-  "update_status": "stale_data_kept: <urlopen error Tunnel connection failed: 403 Forbidden>",
+  "generated_at": "2026-03-09 12:02:37 UTC",
+  "last_successful_update": "2026-03-09 12:02:37 UTC",
+  "briefing_paragraph": "Ce matin, le tableau macro-financier reste partagé : le chômage américain ressort à 4.40 pts (en hausse de 0.10 pts), le taux directeur de la Fed à 3.64 pts (stable de 0.00 pts) et le 10 ans américain à 4.13 pts (en hausse de 0.04 pts); côté actifs, le S&P 500 évolue à 6740.02 (en baisse de 90.69) avec un VIX à 23.75 (en hausse de 2.60), tandis que le CAD/USD se situe à 1.36 (en baisse de 0.01) et le taux court canadien à 2.19 pts (en hausse de 0.03 pts); en toile de fond, l'indice large du dollar est à 117.82 (en baisse de 0.08), ce qui confirme un marché encore guidé par la sensibilité aux taux et aux devises.",
   "news_digest_note": "Liens de veille à consulter chaque jour dans le dashboard.",
   "news_sources": [
     {
@@ -38,31 +35,64 @@
       "description": "Actualité entreprises, secteurs et réglementation."
     }
   ],
-  "quick_read": [
+  "series_snapshot": [
     {
-      "label": "Macro",
-      "status": "neutre",
-      "tone": "neutral"
+      "id": "UNRATE",
+      "label": "chômage américain",
+      "date": "2026-02-01",
+      "value": 4.4,
+      "previous_value": 4.3
     },
     {
-      "label": "Marché USA",
-      "status": "neutre",
-      "tone": "neutral"
+      "id": "DFF",
+      "label": "taux directeur de la Fed",
+      "date": "2026-03-05",
+      "value": 3.64,
+      "previous_value": 3.64
     },
     {
-      "label": "Taux",
-      "status": "neutre",
-      "tone": "neutral"
+      "id": "DGS10",
+      "label": "taux américain à 10 ans",
+      "date": "2026-03-05",
+      "value": 4.13,
+      "previous_value": 4.09
     },
     {
-      "label": "Énergie",
-      "status": "neutre",
-      "tone": "neutral"
+      "id": "SP500",
+      "label": "S&P 500",
+      "date": "2026-03-06",
+      "value": 6740.02,
+      "previous_value": 6830.71
     },
     {
-      "label": "Dollar US",
-      "status": "neutre",
-      "tone": "neutral"
+      "id": "VIXCLS",
+      "label": "VIX",
+      "date": "2026-03-05",
+      "value": 23.75,
+      "previous_value": 21.15
+    },
+    {
+      "id": "DEXCAUS",
+      "label": "CAD/USD",
+      "date": "2026-02-27",
+      "value": 1.3632,
+      "previous_value": 1.3683
+    },
+    {
+      "id": "IR3TIB01CAM156N",
+      "label": "taux court canadien",
+      "date": "2026-01-01",
+      "value": 2.19,
+      "previous_value": 2.164
+    },
+    {
+      "id": "DTWEXBGS",
+      "label": "indice large du dollar",
+      "date": "2026-02-27",
+      "value": 117.8223,
+      "previous_value": 117.9042
     }
-  ]
+  ],
+  "data_provider": "FRED (Federal Reserve Bank of St. Louis)",
+  "update_status": "fresh_data"
 }
