@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-03-10 12:02:12 UTC",
-  "last_successful_update": "2026-03-10 12:02:12 UTC",
-  "briefing_paragraph": "Ce matin, le tableau macro-financier reste partagé : le chômage américain ressort à 4.40 pts (en hausse de 0.10 pts), le taux directeur de la Fed à 3.64 pts (stable de 0.00 pts) et le 10 ans américain à 4.15 pts (en hausse de 0.02 pts); côté actifs, le S&P 500 évolue à 6795.99 (en hausse de 55.97) avec un VIX à 29.49 (en hausse de 5.74), tandis que le CAD/USD se situe à 1.36 (en baisse de 0.01) et le taux court canadien à 2.19 pts (en hausse de 0.03 pts); en toile de fond, l'indice large du dollar est à 119.49 (en baisse de 0.08), ce qui confirme un marché encore guidé par la sensibilité aux taux et aux devises.",
+  "generated_at": "2026-03-11 12:02:14 UTC",
+  "last_successful_update": "2026-03-11 12:02:14 UTC",
+  "briefing_paragraph": "Ce matin, le tableau macro-financier reste partagé : le chômage américain ressort à 4.40 pts (en hausse de 0.10 pts), le taux directeur de la Fed à 3.64 pts (stable de 0.00 pts) et le 10 ans américain à 4.12 pts (en baisse de 0.03 pts); côté actifs, le S&P 500 évolue à 6781.48 (en baisse de 14.51) avec un VIX à 25.50 (en baisse de 3.99), tandis que le CAD/USD se situe à 1.36 (en baisse de 0.01) et le taux court canadien à 2.19 pts (en hausse de 0.03 pts); en toile de fond, l'indice large du dollar est à 119.49 (en baisse de 0.08), ce qui confirme un marché encore guidé par la sensibilité aux taux et aux devises.",
   "news_digest_note": "Liens de veille à consulter chaque jour dans le dashboard.",
   "news_sources": [
     {
@@ -46,30 +46,30 @@
     {
       "id": "DFF",
       "label": "taux directeur de la Fed",
-      "date": "2026-03-06",
+      "date": "2026-03-09",
       "value": 3.64,
       "previous_value": 3.64
     },
     {
       "id": "DGS10",
       "label": "taux américain à 10 ans",
-      "date": "2026-03-06",
-      "value": 4.15,
-      "previous_value": 4.13
+      "date": "2026-03-09",
+      "value": 4.12,
+      "previous_value": 4.15
     },
     {
       "id": "SP500",
       "label": "S&P 500",
-      "date": "2026-03-09",
-      "value": 6795.99,
-      "previous_value": 6740.02
+      "date": "2026-03-10",
+      "value": 6781.48,
+      "previous_value": 6795.99
     },
     {
       "id": "VIXCLS",
       "label": "VIX",
-      "date": "2026-03-06",
-      "value": 29.49,
-      "previous_value": 23.75
+      "date": "2026-03-09",
+      "value": 25.5,
+      "previous_value": 29.49
     },
     {
       "id": "DEXCAUS",
