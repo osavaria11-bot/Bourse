@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-04-01 15:56:31 UTC",
+  "generated_at": "2026-04-02 11:59:00 UTC",
   "last_successful_update": "2026-04-01 15:56:31 UTC",
   "briefing_paragraph": "Ce matin, le tableau macro-financier reste partagé : le chômage américain ressort à 4.40 pts (en hausse de 0.10 pts), le taux directeur de la Fed à 3.64 pts (stable de 0.00 pts) et le 10 ans américain à 4.35 pts (en baisse de 0.09 pts); côté actifs, le S&P 500 évolue à 6528.52 (en hausse de 184.80) avec un VIX à 25.25 (en baisse de 5.36), tandis que le CAD/USD se situe à 1.39 (en hausse de 0.00) et le taux court canadien à 2.18 pts (en baisse de 0.01 pts); en toile de fond, l'indice large du dollar est à 120.89 (en hausse de 0.50), ce qui confirme un marché encore guidé par la sensibilité aux taux et aux devises.",
   "news_digest_note": "Liens de veille à consulter chaque jour dans le dashboard.",
@@ -94,5 +94,5 @@
     }
   ],
   "data_provider": "FRED (Federal Reserve Bank of St. Louis)",
-  "update_status": "fresh_data"
+  "update_status": "stale_data_kept: The read operation timed out"
 }
