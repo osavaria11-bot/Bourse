@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-04-06 11:59:11 UTC",
-  "last_successful_update": "2026-04-06 11:59:11 UTC",
-  "briefing_paragraph": "Ce matin, le tableau macro-financier reste partagé : le chômage américain ressort à 4.30 pts (en baisse de 0.10 pts), le taux directeur de la Fed à 3.64 pts (stable de 0.00 pts) et le 10 ans américain à 4.31 pts (en baisse de 0.02 pts); côté actifs, le S&P 500 évolue à 6582.69 (en hausse de 7.37) avec un VIX à 24.54 (en baisse de 0.71), tandis que le CAD/USD se situe à 1.39 (en hausse de 0.00) et le taux court canadien à 2.18 pts (en baisse de 0.01 pts); en toile de fond, l'indice large du dollar est à 120.89 (en hausse de 0.50), ce qui confirme un marché encore guidé par la sensibilité aux taux et aux devises.",
+  "generated_at": "2026-04-07 12:03:15 UTC",
+  "last_successful_update": "2026-04-07 12:03:15 UTC",
+  "briefing_paragraph": "Ce matin, le tableau macro-financier reste partagé : le chômage américain ressort à 4.30 pts (en baisse de 0.10 pts), le taux directeur de la Fed à 3.64 pts (stable de 0.00 pts) et le 10 ans américain à 4.35 pts (en hausse de 0.04 pts); côté actifs, le S&P 500 évolue à 6611.83 (en hausse de 29.14) avec un VIX à 23.87 (en baisse de 0.67), tandis que le CAD/USD se situe à 1.39 (en hausse de 0.00) et le taux court canadien à 2.18 pts (en baisse de 0.01 pts); en toile de fond, l'indice large du dollar est à 120.66 (en hausse de 0.15), ce qui confirme un marché encore guidé par la sensibilité aux taux et aux devises.",
   "news_digest_note": "Liens de veille à consulter chaque jour dans le dashboard.",
   "news_sources": [
     {
@@ -46,37 +46,37 @@
     {
       "id": "DFF",
       "label": "taux directeur de la Fed",
-      "date": "2026-04-02",
+      "date": "2026-04-03",
       "value": 3.64,
       "previous_value": 3.64
     },
     {
       "id": "DGS10",
       "label": "taux américain à 10 ans",
-      "date": "2026-04-02",
-      "value": 4.31,
-      "previous_value": 4.33
+      "date": "2026-04-03",
+      "value": 4.35,
+      "previous_value": 4.31
     },
     {
       "id": "SP500",
       "label": "S&P 500",
-      "date": "2026-04-02",
-      "value": 6582.69,
-      "previous_value": 6575.32
+      "date": "2026-04-06",
+      "value": 6611.83,
+      "previous_value": 6582.69
     },
     {
       "id": "VIXCLS",
       "label": "VIX",
-      "date": "2026-04-01",
-      "value": 24.54,
-      "previous_value": 25.25
+      "date": "2026-04-02",
+      "value": 23.87,
+      "previous_value": 24.54
     },
     {
       "id": "DEXCAUS",
       "label": "CAD/USD",
-      "date": "2026-03-27",
-      "value": 1.388,
-      "previous_value": 1.3849
+      "date": "2026-04-03",
+      "value": 1.3942,
+      "previous_value": 1.3917
     },
     {
       "id": "IR3TIB01CAM156N",
@@ -88,9 +88,9 @@
     {
       "id": "DTWEXBGS",
       "label": "indice large du dollar",
-      "date": "2026-03-27",
-      "value": 120.8851,
-      "previous_value": 120.389
+      "date": "2026-04-03",
+      "value": 120.6565,
+      "previous_value": 120.503
     }
   ],
   "data_provider": "FRED (Federal Reserve Bank of St. Louis)",
