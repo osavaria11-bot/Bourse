@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-07-05 12:41:45 UTC",
-  "last_successful_update": "2026-07-05 12:41:45 UTC",
-  "briefing_paragraph": "Ce matin, le tableau macro-financier reste partagé : le chômage américain ressort à 4.20 pts (en baisse de 0.10 pts), le taux directeur de la Fed à 3.63 pts (stable de 0.00 pts) et le 10 ans américain à 4.48 pts (en hausse de 0.04 pts); côté actifs, le S&P 500 évolue à 7483.24 (en hausse de 0.01) avec un VIX à 16.59 (en hausse de 0.14), tandis que le CAD/USD se situe à 1.42 (en baisse de 0.00) et le taux court canadien à 2.29 pts (en hausse de 0.02 pts); en toile de fond, l'indice large du dollar est à 120.89 (en baisse de 0.17), ce qui confirme un marché encore guidé par la sensibilité aux taux et aux devises.",
+  "generated_at": "2026-07-06 14:37:00 UTC",
+  "last_successful_update": "2026-07-06 14:37:00 UTC",
+  "briefing_paragraph": "Ce matin, le tableau macro-financier reste partagé : le chômage américain ressort à 4.20 pts (en baisse de 0.10 pts), le taux directeur de la Fed à 3.63 pts (stable de 0.00 pts) et le 10 ans américain à 4.48 pts (en hausse de 0.04 pts); côté actifs, le S&P 500 évolue à 7483.24 (en hausse de 0.01) avec un VIX à 15.81 (en baisse de 0.34), tandis que le CAD/USD se situe à 1.42 (en baisse de 0.00) et le taux court canadien à 2.29 pts (en hausse de 0.02 pts); en toile de fond, l'indice large du dollar est à 120.89 (en baisse de 0.17), ce qui confirme un marché encore guidé par la sensibilité aux taux et aux devises.",
   "news_digest_note": "Liens de veille à consulter chaque jour dans le dashboard.",
   "news_sources": [
     {
@@ -67,9 +67,9 @@
     {
       "id": "VIXCLS",
       "label": "VIX",
-      "date": "2026-07-01",
-      "value": 16.59,
-      "previous_value": 16.45
+      "date": "2026-07-03",
+      "value": 15.81,
+      "previous_value": 16.15
     },
     {
       "id": "DEXCAUS",
