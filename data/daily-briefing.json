@@ -1,7 +1,7 @@
 {
-  "generated_at": "2026-07-16 12:51:51 UTC",
-  "last_successful_update": "2026-07-16 12:51:51 UTC",
-  "briefing_paragraph": "Ce matin, le tableau macro-financier reste partagé : le chômage américain ressort à 4.20 pts (en baisse de 0.10 pts), le taux directeur de la Fed à 3.63 pts (en hausse de 0.01 pts) et le 10 ans américain à 4.58 pts (en baisse de 0.04 pts); côté actifs, le S&P 500 évolue à 7572.40 (en hausse de 28.81) avec un VIX à 16.50 (en baisse de 0.66), tandis que le CAD/USD se situe à 1.41 (en baisse de 0.00) et le taux court canadien à 2.29 pts (en hausse de 0.02 pts); en toile de fond, l'indice large du dollar est à 120.50 (en baisse de 0.25), ce qui confirme un marché encore guidé par la sensibilité aux taux et aux devises.",
+  "generated_at": "2026-07-17 12:36:24 UTC",
+  "last_successful_update": "2026-07-17 12:36:24 UTC",
+  "briefing_paragraph": "Ce matin, le tableau macro-financier reste partagé : le chômage américain ressort à 4.20 pts (en baisse de 0.10 pts), le taux directeur de la Fed à 3.63 pts (stable de 0.00 pts) et le 10 ans américain à 4.55 pts (en baisse de 0.03 pts); côté actifs, le S&P 500 évolue à 7533.77 (en baisse de 38.63) avec un VIX à 15.67 (en baisse de 0.83), tandis que le CAD/USD se situe à 1.41 (en baisse de 0.00) et le taux court canadien à 2.27 pts (en baisse de 0.02 pts); en toile de fond, l'indice large du dollar est à 120.50 (en baisse de 0.25), ce qui confirme un marché encore guidé par la sensibilité aux taux et aux devises.",
   "news_digest_note": "Liens de veille à consulter chaque jour dans le dashboard.",
   "news_sources": [
     {
@@ -46,30 +46,30 @@
     {
       "id": "DFF",
       "label": "taux directeur de la Fed",
-      "date": "2026-07-14",
+      "date": "2026-07-15",
       "value": 3.63,
-      "previous_value": 3.62
+      "previous_value": 3.63
     },
     {
       "id": "DGS10",
       "label": "taux américain à 10 ans",
-      "date": "2026-07-14",
-      "value": 4.58,
-      "previous_value": 4.62
+      "date": "2026-07-15",
+      "value": 4.55,
+      "previous_value": 4.58
     },
     {
       "id": "SP500",
       "label": "S&P 500",
-      "date": "2026-07-15",
-      "value": 7572.4,
-      "previous_value": 7543.59
+      "date": "2026-07-16",
+      "value": 7533.77,
+      "previous_value": 7572.4
     },
     {
       "id": "VIXCLS",
       "label": "VIX",
-      "date": "2026-07-14",
-      "value": 16.5,
-      "previous_value": 17.16
+      "date": "2026-07-15",
+      "value": 15.67,
+      "previous_value": 16.5
     },
     {
       "id": "DEXCAUS",
@@ -81,9 +81,9 @@
     {
       "id": "IR3TIB01CAM156N",
       "label": "taux court canadien",
-      "date": "2026-05-01",
-      "value": 2.2925,
-      "previous_value": 2.272
+      "date": "2026-06-01",
+      "value": 2.27,
+      "previous_value": 2.2925
     },
     {
       "id": "DTWEXBGS",
