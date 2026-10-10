@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-10-10T18:04:25.769627+00:00",
-  "last_successful_update": "2026-10-10T18:04:25.769627+00:00",
+  "generated_at": "2026-10-10T18:47:58.212348+00:00",
+  "last_successful_update": "2026-10-10T18:47:58.212348+00:00",
   "update_status": "fresh_data",
   "coverage": {
     "total": 32,
@@ -99,8 +99,8 @@
       "id": "PAYEMS",
       "title": "Créations nettes d’emplois · mensuelles",
       "date": "2026-09-01",
-      "value": 29,
-      "previous_value": 133,
+      "value": 29.0,
+      "previous_value": 133.0,
       "previous_date": "2026-08-01",
       "unit": "milliers",
       "fetch_status": "fresh"
