@@ -1,8 +1,11 @@
 (() => {
   "use strict";
-  const P = window.PortfolioUtils, U = window.MacroUtils, $ = selector => document.querySelector(selector);
+  const P = window.PortfolioUtils, U = window.MacroUtils, A = window.PortfolioProfileUtils, $ = selector => document.querySelector(selector);
   const HOLDINGS_KEY = "savy:private-holdings:v1", PRICE_KEY = "savy:security-prices:v1", POSITIONS_VISIBLE_KEY = "savy:portfolio-positions-visible:v1";
+  const PROFILE_STATE_KEY = "savy:portfolio-profile-state:v1", PROFILE_CACHE_KEY = "savy:portfolio-profile-cache:v1";
   let catalog = null, prices = null, cached = false, range = "YTD", moversRange = "1M", positions = [], history = [], imported = false;
+  let profileState = stored(PROFILE_STATE_KEY, null), profileInitialized = false, holdingsAvailable = false, manifestURL = null;
+  const personalKey = new URLSearchParams(location.hash.slice(1)).get("portfolio-key") || profileState?.key;
   let positionsVisible = stored(POSITIONS_VISIBLE_KEY, false) === true, sortKey = null, sortDescending = true;
   const importFragment = new URLSearchParams(location.hash.slice(1)).get("positions");
   function stored(key, fallback) {try {return JSON.parse(localStorage.getItem(key)) ?? fallback;} catch {return fallback;}}
@@ -19,13 +22,15 @@
   function applyPositions(input) {
     const next = P.normalizePositions(input, catalog);
     positions = next;
+    holdingsAvailable = true;
     $("#portfolioMessage").textContent = save(HOLDINGS_KEY, {schema_version: 1, base_currency: "CAD", positions}) ?
       positions.length + " positions enregistrées uniquement dans ce navigateur." : "Positions disponibles pour cette session. Exporte une sauvegarde pour les conserver.";
     history = prices ? P.historyFor(positions, prices) : [];
     render();
   }
   function setupPositions() {
-    try {positions = P.normalizePositions(stored(HOLDINGS_KEY, {positions: []}), catalog);} catch {positions = [];}
+    const saved = stored(HOLDINGS_KEY, null);
+    try {positions = P.normalizePositions(saved || {positions: []}, catalog); holdingsAvailable = saved !== null;} catch {positions = []; holdingsAvailable = false;}
     const options = document.createDocumentFragment();
     for (const security of catalog.series) {const option = el("option", "", security.id + " · " + security.title + " · " + security.currency); option.value = security.id; options.append(option);}
     $("#positionTicker").replaceChildren(options);
@@ -41,6 +46,35 @@
       window.history.replaceState(null, "", location.pathname + location.search + "#portfolio");
       requestAnimationFrame(() => $("#portfolio").scrollIntoView());
     }
+  }
+  function configurePersonalLink() {
+    const url = A.personalURL(location.href, personalKey);
+    const anchor = $("#portfolioPersonalLink"); anchor.href = url; anchor.hidden = false;
+    // Keep the personal fragment so a new Home Screen storage context can open it.
+    window.history.replaceState(null, "", url);
+    if (!manifestURL) {
+      manifestURL = URL.createObjectURL(new Blob([JSON.stringify(A.homeManifest(url, personalKey))], {type: "application/manifest+json"}));
+      const manifest = el("link"); manifest.rel = "manifest"; manifest.id = "savyPersonalManifest"; manifest.href = manifestURL;
+      document.head.append(manifest);
+    }
+  }
+  async function refreshPersonalProfile() {
+    if (!personalKey || importFragment) return;
+    try {
+      if (!A.validKey(personalKey)) throw new Error("Lien personnel invalide");
+      let profile;
+      try {profile = await fetchJSON("data/personal-portfolio.json");}
+      catch {profile = stored(PROFILE_CACHE_KEY, null);}
+      // Authentication also binds the revision; unverified data never replaces holdings.
+      const loaded = P.normalizePositions(await A.unlock(profile, personalKey), catalog);
+      if (!holdingsAvailable || profileState?.key !== personalKey || profileState?.revision !== profile.revision) {
+        applyPositions(loaded);
+        $("#portfolioMessage").textContent = loaded.length + " positions chargées automatiquement. Ton lien personnel fonctionne aussi depuis l’écran d’accueil.";
+      }
+      profileState = {key: personalKey, revision: profile.revision};
+      save(PROFILE_STATE_KEY, profileState); save(PROFILE_CACHE_KEY, profile);
+      profileInitialized = true; configurePersonalLink();
+    } catch (error) {$("#portfolioMessage").textContent = "Lien personnel indisponible : " + error.message + ". Les positions déjà enregistrées sont conservées.";}
   }
   function renderPositionsVisibility() {
     $("#portfolioPositions").hidden = !positionsVisible;
@@ -160,7 +194,8 @@
   async function refresh() {
     try {
       catalog = await fetchJSON("data/securities.json");
-      if (!imported) setupPositions();
+      if (!imported && !profileInitialized) setupPositions();
+      await refreshPersonalProfile();
       try {prices = P.normalizePrices(await fetchJSON("data/security-prices.json"), catalog); cached = false; save(PRICE_KEY, prices);}
       catch {prices = P.normalizePrices(stored(PRICE_KEY, null), catalog); cached = true;}
       history = P.historyFor(positions, prices); render();
@@ -170,6 +205,12 @@
   $("#positionForm").addEventListener("submit", event => {event.preventDefault(); if (!catalog) return; try {const ticker = $("#positionTicker").value; const existing = positions.find(p => p.ticker === ticker); const quantity = Number($("#positionQuantity").value.trim().replace(",", ".")); const costText = $("#positionAverageCost").value.trim(); const average_cost = costText ? Number(costText.replace(",", ".")) : existing?.average_cost; const next = {ticker, quantity, ...(average_cost !== undefined ? {average_cost} : {})}; applyPositions(existing ? positions.map(p => p.ticker === ticker ? next : p) : [...positions, next]); $("#positionQuantity").value = ""; $("#positionAverageCost").value = "";} catch (error) {$("#portfolioMessage").textContent = error.message;}});
   $("#portfolioExport").addEventListener("click", () => {const blob = new Blob([JSON.stringify({schema_version: 1, base_currency: "CAD", positions}, null, 2) + "\n"], {type: "application/json"}); const url = URL.createObjectURL(blob), anchor = el("a"); anchor.href = url; anchor.download = "portefeuille-savy.json"; anchor.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);});
   $("#portfolioPositionsToggle").addEventListener("click", () => {positionsVisible = !positionsVisible; save(POSITIONS_VISIBLE_KEY, positionsVisible); renderPositionsVisibility();});
+  document.addEventListener("click", event => {
+    if (!profileInitialized) return;
+    const anchor = event.target.closest?.("a[href^='#']"), hash = anchor?.getAttribute("href");
+    if (!["#portfolio", "#indicators"].includes(hash)) return;
+    event.preventDefault(); $(hash)?.scrollIntoView({behavior: "smooth"});
+  });
   for (const item of P.RANGES) {
     const button = el("button", "", item.label); button.type = "button";
     button.setAttribute("aria-pressed", String(item.key === moversRange));

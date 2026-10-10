@@ -50,6 +50,7 @@ jobs:
           node --check js/dashboard.js
           node --check js/macro-utils.js
           node --check js/portfolio-utils.js
+          node --check js/portfolio-profile-utils.js
           node --check js/portfolio.js
           npm test
       - name: Install browser test dependency

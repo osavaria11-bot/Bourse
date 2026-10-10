@@ -4,6 +4,7 @@ const assert = require("node:assert/strict"), fs = require("node:fs"), path = re
 const {chromium} = require(process.env.PLAYWRIGHT_MODULE_PATH || "playwright");
 const P = require("../js/portfolio-utils.js");
 const U = require("../js/macro-utils.js");
+const A = require("../js/portfolio-profile-utils.js"), crypto = require("node:crypto");
 const root = path.resolve(__dirname, "..");
 const catalog = JSON.parse(fs.readFileSync(path.join(root, "data/securities.json"), "utf8"));
 const rawPrices = JSON.parse(fs.readFileSync(path.join(root, "data/security-prices.json"), "utf8"));
@@ -12,11 +13,25 @@ const sample = catalog.series.filter(d => ["SHOP", "CLS", "V", "VFV", "MSFT", "X
 const syntheticPositions = sample.map(d => ({ticker: d.id, quantity: d.id === "V" ? 1.5 : 2, currency: d.currency, average_cost: d.id === "CLS" ? 500 : d.id === "SHOP" ? 200 : d.id === "V" ? 350 : 50}));
 const fragment = Buffer.from(JSON.stringify(syntheticPositions.map(p => [p.ticker, p.quantity, p.currency, p.average_cost]))).toString("base64url");
 let offline = false, missingFX = false, missingBaseline = false;
+let profileOffline = false;
+const personalKey = crypto.randomBytes(32).toString("base64url");
+function sealFixture(positions, revision) {
+  const profile = {schema_version: 1, kind: "encrypted_portfolio", algorithm: "AES-GCM", revision};
+  const iv = crypto.randomBytes(12), cipher = crypto.createCipheriv("aes-256-gcm", Buffer.from(personalKey, "base64url"), iv);
+  cipher.setAAD(A.associatedData(profile));
+  const ciphertext = Buffer.concat([cipher.update(JSON.stringify({positions})), cipher.final(), cipher.getAuthTag()]);
+  return {...profile, iv: iv.toString("base64url"), ciphertext: ciphertext.toString("base64url")};
+}
+let profileFixture = sealFixture(syntheticPositions, "synthetic-v1");
 const requestPaths = [];
 const mime = {".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".json": "application/json", ".png": "image/png"};
 const server = http.createServer((request, response) => {
   requestPaths.push(request.url);
   const pathname = new URL(request.url, "http://localhost").pathname;
+  if (pathname === "/data/personal-portfolio.json") {
+    response.writeHead(profileOffline ? 503 : 200, {"Content-Type": "application/json"});
+    response.end(profileOffline ? "{}" : JSON.stringify(profileFixture)); return;
+  }
   if (pathname === "/data/security-prices.json") {
     const data = structuredClone(rawPrices);
     if (missingFX) Object.assign(data.series.find(p => p.id === "USDCAD"), {history: [], date: null, value: null, fetch_status: "unavailable"});
@@ -204,6 +219,61 @@ async function main() {
     assert.equal(await blank.locator('#portfolioRows tr[data-ticker="SNDKUS"] td').nth(7).innerText(), (usQuote.value > usPosition.average_cost ? "+" : "") + new Intl.NumberFormat("fr-CA", {style: "currency", currency: "CAD", maximumFractionDigits: 2}).format((usQuote.value - usPosition.average_cost) * usPosition.quantity * fx));
     assert.doesNotMatch(await blank.locator("#portfolioMissing").innerText(), /Période incomplète|base de comparaison manquante/);
     await blankContext.close();
+    // A new Home Screen context gets access from the start URL, without file imports.
+    offline = false; missingFX = false; missingBaseline = false;
+    const directContext = await browser.newContext({viewport: {width: 375, height: 950}});
+    const direct = await directContext.newPage();
+    direct.on("pageerror", error => errors.push(error.message)); await direct.route("https://**", route => route.abort());
+    const personalURL = A.personalURL(url + "/?v=synthetic-direct", personalKey);
+    await direct.goto(personalURL);
+    await direct.waitForFunction(() => document.querySelectorAll("#portfolioRows tr").length === 6);
+    assert.deepEqual(await direct.evaluate(() => JSON.parse(localStorage.getItem("savy:private-holdings:v1")).positions), syntheticPositions);
+    assert.equal(direct.url(), personalURL);
+    assert.match(await direct.locator("#portfolioMessage").innerText(), /chargées automatiquement/);
+    assert.equal(await direct.locator("#portfolioPersonalLink").getAttribute("href"), personalURL);
+    const manifest = await direct.evaluate(async () => (await fetch(document.querySelector("#savyPersonalManifest").href)).json());
+    assert.equal(manifest.start_url, personalURL); assert.equal(manifest.display, "standalone");
+    const cdp = await directContext.newCDPSession(direct), parsedManifest = await cdp.send("Page.getAppManifest");
+    assert.deepEqual(parsedManifest.errors, []); assert.equal(JSON.parse(parsedManifest.data).start_url, personalURL);
+    await cdp.detach();
+    assert.equal(requestPaths.some(p => p.includes(personalKey)), false);
+    await direct.locator("#portfolioPositionsToggle").click();
+    await direct.locator('input[aria-label="Quantité SHOP"]').fill("3");
+    await direct.locator('input[aria-label="Quantité SHOP"]').press("Tab");
+    await direct.locator("#refreshButton").click();
+    await direct.waitForFunction(() => !document.querySelector("#refreshButton").disabled);
+    await direct.reload(); await direct.waitForFunction(() => document.querySelectorAll("#portfolioRows tr").length === 6);
+    assert.equal(await direct.locator('input[aria-label="Quantité SHOP"]').inputValue(), "3");
+    await direct.locator('a[href="#portfolio"]').click(); assert.equal(direct.url(), personalURL);
+    assert.ok(await direct.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+    // Only an authenticated new published revision replaces the initial profile.
+    const revised = syntheticPositions.map(p => p.ticker === "SHOP" ? {...p, quantity: 4} : p);
+    profileFixture = sealFixture(revised, "synthetic-v2");
+    await direct.locator("#refreshButton").click();
+    await direct.waitForFunction(() => document.querySelector('input[aria-label="Quantité SHOP"]').value === "4");
+    profileOffline = true; await direct.reload();
+    await direct.waitForFunction(() => document.querySelectorAll("#portfolioRows tr").length === 6);
+    assert.equal(await direct.locator('input[aria-label="Quantité SHOP"]').inputValue(), "4");
+    profileOffline = false;
+    const homeContext = await browser.newContext({viewport: {width: 320, height: 900}}), home = await homeContext.newPage();
+    home.on("pageerror", error => errors.push(error.message));
+    await home.route("https://**", route => route.abort()); await home.goto(manifest.start_url);
+    await home.waitForFunction(() => document.querySelectorAll("#portfolioRows tr").length === 6);
+    assert.deepEqual(await home.evaluate(() => JSON.parse(localStorage.getItem("savy:private-holdings:v1")).positions), revised);
+    await home.evaluate(() => localStorage.clear()); await home.reload();
+    await home.waitForFunction(() => document.querySelectorAll("#portfolioRows tr").length === 6);
+    assert.ok(await home.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+    await homeContext.close();
+    const invalidContext = await browser.newContext(), invalid = await invalidContext.newPage();
+    invalid.on("pageerror", error => errors.push(error.message));
+    await invalid.route("https://**", route => route.abort());
+    await invalid.goto(A.personalURL(url + "/", crypto.randomBytes(32).toString("base64url")));
+    await invalid.waitForFunction(() => document.querySelector("#portfolioMessage").textContent.includes("Lien personnel indisponible"));
+    assert.equal(await invalid.locator("#portfolioContent").isVisible(), false);
+    assert.equal(await invalid.evaluate(() => localStorage.getItem("savy:private-holdings:v1")), null);
+    assert.deepEqual(errors, []);
+    await invalidContext.close(); await directContext.close();
+    console.log("Direct access checks passed: automatic synthetic holdings in a fresh mobile context, personal manifest start URL, local edits preserved, authenticated revision updates, offline fallback, restore after cleared storage, invalid key rejected, no key sent to the server.");
     console.log("Portfolio checks passed: 6 private synthetic positions, exact CAD/USD listings including the Sandisk CDR in CAD and fractional US Sandisk in USD, CAD valuation, all six periods, monthly top/bottom 3, both directions of three numeric gain sorts, persistent collapsed/expanded positions, hover and keyboard date/value/percent, edits/import/export, offline cache, missing-baseline/FX protection, empty public view and 320px mobile.");
   } finally {await browser.close();}
 }

@@ -54,6 +54,11 @@ Le survol et les flèches du clavier donnent la date, la valorisation en CAD et 
 
 L’historique est une **reconstitution avec les quantités actuelles constantes**, cours de clôture hors dividendes et taux USD/CAD disponible à chaque date. Il ne reproduit pas les dépôts, retraits, achats, ventes, espèces ou frais du compte. Un historique réel exige les transactions et mouvements d’argent. YTD compare la dernière date à la dernière clôture de l’année précédente; les périodes de six, trois et un mois partent de la dernière séance disponible à la date de référence; une semaine et trois jours correspondent à cinq et trois séances. Une base de comparaison manquante n’est jamais remplacée par un rendement fictif.
 
+
+Le **lien personnel** ouvre automatiquement un portefeuille intégré, sans fichier à télécharger ou importer. Les positions intégrées sont publiées uniquement sous forme chiffrée (AES-GCM); la clé reste dans le fragment du lien et sur l’appareil. Le manifeste généré dans le navigateur garde ce lien comme adresse de démarrage pour un nouveau raccourci d’écran d’accueil. Les simples actualisations et réouvertures conservent les modifications locales. Une nouvelle révision authentifiée des positions intégrées remplace la base précédente; une panne ou un lien invalide conserve les positions existantes. Sans lien personnel ni positions enregistrées, le site reste vide.
+
+Pour mettre à jour la base intégrée, exécuter `node scripts/seal_personal_portfolio.cjs PRIVATE_INPUT data/personal-portfolio.json` avec la sauvegarde privée placée hors du dépôt. Le script conserve le lien dans le champ privé `savy_access`, réutilise sa clé, change le nonce et la révision, puis écrit uniquement le profil chiffré dans le dépôt. La sauvegarde et son lien restent hors du dépôt et des journaux publics.
+
 ## Indicateurs et transformations
 
 La configuration se trouve dans `data/series.json`. Les fichiers publiés sont :
