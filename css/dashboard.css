@@ -82,7 +82,7 @@ details[open]>summary:after {content:"−"}
 .portfolio-actions {display:flex;flex-wrap:wrap;gap:8px}
 .portfolio-overview {display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-top:22px}
 .portfolio-value {font-size:38px;font-weight:650;letter-spacing:-.04em;margin:6px 0;font-variant-numeric:tabular-nums}
-.portfolio-change {font-size:17px;margin-bottom:5px}
+.portfolio .portfolio-change {font-size:17px;margin-bottom:5px;white-space:normal}
 .portfolio-period-controls {max-width:100%;text-align:right}
 .portfolio-period-controls .segmented {flex-wrap:wrap;justify-content:flex-end}
 .portfolio-period-controls .meta {margin-top:8px}
@@ -100,7 +100,7 @@ details[open]>summary:after {content:"−"}
 .position-form select {max-width:100%;width:310px}
 .position-form input {width:110px;border:1px solid var(--border);border-radius:7px;background:var(--bg);color:var(--text);padding:8px}
 .portfolio-method {margin-top:18px!important}
-.portfolio-unrealized {font-size:13px;white-space:normal;margin-top:5px}
+.portfolio .portfolio-unrealized {font-size:13px;white-space:normal;margin-top:5px}
 .portfolio .meta {margin-top:6px}
 @media(max-width:700px) {.portfolio {padding:16px}.portfolio .section-heading,.portfolio-overview {align-items:flex-start;flex-direction:column}.portfolio-period-controls {text-align:left}.portfolio-period-controls .segmented {justify-content:flex-start}.portfolio-value {font-size:30px}.position-form label:first-child {width:100%}.position-form select {width:100%}}
 .section-heading {display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:16px}

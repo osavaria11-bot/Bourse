@@ -74,7 +74,9 @@ async function main() {
     if (process.env.SCREENSHOT_LOGS) console.log("SCREENSHOT_PORTFOLIO_DESKTOP " + (await page.locator("#portfolio").screenshot()).toString("base64"));
     for (const width of [375, 320]) {
       await page.setViewportSize({width, height: 1000});
-      const size = await page.evaluate(() => ({width: innerWidth, scroll: document.documentElement.scrollWidth}));
+      const size = await page.evaluate(() => ({width: innerWidth, scroll: document.documentElement.scrollWidth,
+        gainWhiteSpace: getComputedStyle(document.querySelector("#portfolioUnrealized")).whiteSpace}));
+      assert.equal(size.gainWhiteSpace, "normal");
       assert.ok(size.scroll <= size.width, "Portfolio overflows at " + width + ": " + JSON.stringify(size));
       assert.ok(await page.locator(".portfolio-table").evaluate(node => node.scrollWidth > node.clientWidth));
     }
