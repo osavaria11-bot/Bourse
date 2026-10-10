@@ -20,7 +20,7 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: "3.13"
-      - name: Collect and verify all five actual indices
+      - name: Collect and verify the four indices and EEM
         run: |
           python scripts/collect_market_indices.py
           python - <<'PY'
