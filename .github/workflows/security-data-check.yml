@@ -23,6 +23,18 @@ jobs:
           python-version: "3.13"
       - name: Collect and verify all prices and their currencies
         run: |
+          python - <<'PYMETA'
+          import json
+          from urllib.request import Request,urlopen
+          from datetime import datetime,timezone
+          from zoneinfo import ZoneInfo
+          for symbol in ('FEQT.NE','MAXQ.NE','CAD=X'):
+              request=Request('https://query1.finance.yahoo.com/v8/finance/chart/'+symbol+'?range=1mo&interval=1d',headers={'User-Agent':'Mozilla/5.0 SAVY/3.0'})
+              with urlopen(request,timeout=20) as r: data=json.load(r)['chart']['result'][0]
+              print('DATE_META',symbol,data['meta']['exchangeTimezoneName'],data['meta'].get('regularMarketTime'),data['meta'].get('regularMarketPrice'))
+              for stamp,value in list(zip(data['timestamp'],data['indicators']['quote'][0]['close']))[-3:]:
+                  print('DATE_BAR',symbol,datetime.fromtimestamp(stamp,timezone.utc).isoformat(),datetime.fromtimestamp(stamp,ZoneInfo(data['meta']['exchangeTimezoneName'])).isoformat(),value)
+          PYMETA
           python scripts/collect_security_prices.py
           python - <<'PY'
           import json
