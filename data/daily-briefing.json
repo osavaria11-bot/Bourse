@@ -1,98 +1,154 @@
 {
-  "generated_at": "2026-10-10 16:14:22 UTC",
-  "last_successful_update": "2026-10-10 16:14:22 UTC",
-  "briefing_paragraph": "Ce matin, le tableau macro-financier reste partagé : le chômage américain ressort à 4.20 pts (en hausse de 0.10 pts), le taux directeur de la Fed à 3.88 pts (stable de 0.00 pts) et le 10 ans américain à 5.22 pts (en baisse de 0.06 pts); côté actifs, le S&P 500 évolue à 7811.54 (en hausse de 46.18) avec un VIX à 15.41 (en hausse de 0.33), tandis que le CAD/USD se situe à 1.43 (stable de 0.00) et le taux court canadien à 2.28 pts (en hausse de 0.02 pts); en toile de fond, l'indice large du dollar est à 121.38 (en baisse de 0.40), ce qui confirme un marché encore guidé par la sensibilité aux taux et aux devises.",
-  "news_digest_note": "Liens de veille à consulter chaque jour dans le dashboard.",
+  "schema_version": 2,
+  "generated_at": "2026-10-10T16:57:26.023414+00:00",
+  "last_successful_update": "2026-10-10T16:57:26.023414+00:00",
+  "update_status": "fresh_data",
+  "coverage": {
+    "total": 33,
+    "fresh": 33,
+    "cached": 0,
+    "unavailable": 0
+  },
+  "data_provider": "FRED — Federal Reserve Bank of St. Louis",
+  "briefing_paragraph": "Dernières observations publiées — Inflation CPI · annuelle : 3,35 % (période : 2026-08-01); Inflation PCE sous-jacente · annuelle : 3,01 % (période : 2026-08-01); Taux de chômage américain : 4,20 % (période : 2026-09-01); Créations nettes d’emplois · mensuelles : 29 milliers (période : 2026-09-01); Croissance du PIB réel · trimestre annualisé : 2,22 % (période : 2026-04-01); Taux effectif de la Fed : 3,88 % (période : 2026-10-08); Trésor américain · 10 ans : 5,22 % (période : 2026-10-08); Courbe des taux · 10 ans – 2 ans : 0,44 pt (période : 2026-10-09); S&P 500 : 7811,54 points (période : 2026-10-09); Volatilité anticipée · VIX : 15,41 points (période : 2026-10-08); USD/CAD · dollars canadiens pour 1 $ US : 1,4253 $ CA/$ US (période : 2026-10-02).",
+  "news_digest_note": "Veille complémentaire. Les données suivent le calendrier de publication de chaque source.",
   "news_sources": [
     {
-      "label": "Perplexity — Finance",
-      "url": "https://www.perplexity.ai/finance?utm_source=chatgpt.com",
-      "description": "Veille financière quotidienne assistée par IA."
-    },
-    {
-      "label": "Reuters — Econ World",
-      "url": "https://www.reuters.com/markets/econ-world/",
-      "description": "Actualités macro mondiales (croissance, inflation, banques centrales)."
-    },
-    {
-      "label": "Reuters — U.S. Markets",
-      "url": "https://www.reuters.com/markets/us/",
-      "description": "Un focus sur les marchés américains (indices, actions, Fed)."
-    },
-    {
-      "label": "Bank of Canada — Daily Digest",
-      "url": "https://www.bankofcanada.ca/rates/daily-digest/",
-      "description": "Point quotidien officiel de la Banque du Canada."
-    },
-    {
-      "label": "Reuters — Global Markets",
+      "label": "Reuters — Marchés",
       "url": "https://www.reuters.com/markets/",
-      "description": "Vue globale actions, obligations, devises et matières premières."
+      "description": "Actions, taux, devises et matières premières."
     },
     {
-      "label": "Reuters — Business",
-      "url": "https://www.reuters.com/business/",
-      "description": "Actualité entreprises, secteurs et réglementation."
+      "label": "Reuters — Économie",
+      "url": "https://www.reuters.com/markets/econ-world/",
+      "description": "Croissance, inflation et banques centrales."
+    },
+    {
+      "label": "Banque du Canada — Sommaire quotidien",
+      "url": "https://www.bankofcanada.ca/rates/daily-digest/",
+      "description": "Taux et devises publiés par la Banque du Canada."
+    },
+    {
+      "label": "FRED — Calendrier des publications",
+      "url": "https://fred.stlouisfed.org/releases/calendar",
+      "description": "Prochaines mises à jour des statistiques."
+    },
+    {
+      "label": "Perplexity — Finance",
+      "url": "https://www.perplexity.ai/finance",
+      "description": "Veille financière complémentaire."
     }
   ],
   "series_snapshot": [
     {
-      "id": "UNRATE",
-      "label": "chômage américain",
-      "date": "2026-09-01",
-      "value": 4.2,
-      "previous_value": 4.1
+      "id": "T10Y2Y",
+      "title": "Courbe des taux · 10 ans – 2 ans",
+      "date": "2026-10-09",
+      "value": 0.44,
+      "previous_value": 0.47,
+      "previous_date": "2026-10-08",
+      "unit": "pt",
+      "fetch_status": "fresh"
     },
     {
       "id": "DFF",
-      "label": "taux directeur de la Fed",
+      "title": "Taux effectif de la Fed",
       "date": "2026-10-08",
       "value": 3.88,
-      "previous_value": 3.88
+      "previous_value": 3.88,
+      "previous_date": "2026-10-07",
+      "unit": "%",
+      "fetch_status": "fresh"
     },
     {
       "id": "DGS10",
-      "label": "taux américain à 10 ans",
+      "title": "Trésor américain · 10 ans",
       "date": "2026-10-08",
       "value": 5.22,
-      "previous_value": 5.28
+      "previous_value": 5.28,
+      "previous_date": "2026-10-07",
+      "unit": "%",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "CPIAUCSL",
+      "title": "Inflation CPI · annuelle",
+      "date": "2026-08-01",
+      "value": 3.353016,
+      "previous_value": 3.303856,
+      "previous_date": "2026-07-01",
+      "unit": "%",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "PCEPILFE",
+      "title": "Inflation PCE sous-jacente · annuelle",
+      "date": "2026-08-01",
+      "value": 3.007596,
+      "previous_value": 2.983468,
+      "previous_date": "2026-07-01",
+      "unit": "%",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "UNRATE",
+      "title": "Taux de chômage américain",
+      "date": "2026-09-01",
+      "value": 4.2,
+      "previous_value": 4.1,
+      "previous_date": "2026-08-01",
+      "unit": "%",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "PAYEMS",
+      "title": "Créations nettes d’emplois · mensuelles",
+      "date": "2026-09-01",
+      "value": 29.0,
+      "previous_value": 133.0,
+      "previous_date": "2026-08-01",
+      "unit": "milliers",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "GDPC1",
+      "title": "Croissance du PIB réel · trimestre annualisé",
+      "date": "2026-04-01",
+      "value": 2.220208,
+      "previous_value": 2.491776,
+      "previous_date": "2026-01-01",
+      "unit": "%",
+      "fetch_status": "fresh"
     },
     {
       "id": "SP500",
-      "label": "S&P 500",
+      "title": "S&P 500",
       "date": "2026-10-09",
       "value": 7811.54,
-      "previous_value": 7765.36
+      "previous_value": 7765.36,
+      "previous_date": "2026-10-08",
+      "unit": "points",
+      "fetch_status": "fresh"
     },
     {
       "id": "VIXCLS",
-      "label": "VIX",
+      "title": "Volatilité anticipée · VIX",
       "date": "2026-10-08",
       "value": 15.41,
-      "previous_value": 15.08
+      "previous_value": 15.08,
+      "previous_date": "2026-10-07",
+      "unit": "points",
+      "fetch_status": "fresh"
     },
     {
       "id": "DEXCAUS",
-      "label": "CAD/USD",
+      "title": "USD/CAD · dollars canadiens pour 1 $ US",
       "date": "2026-10-02",
       "value": 1.4253,
-      "previous_value": 1.4253
-    },
-    {
-      "id": "IR3TIB01CAM156N",
-      "label": "taux court canadien",
-      "date": "2026-08-01",
-      "value": 2.28,
-      "previous_value": 2.258
-    },
-    {
-      "id": "DTWEXBGS",
-      "label": "indice large du dollar",
-      "date": "2026-10-02",
-      "value": 121.3848,
-      "previous_value": 121.7882
+      "previous_value": 1.4253,
+      "previous_date": "2026-10-01",
+      "unit": "$ CA/$ US",
+      "fetch_status": "fresh"
     }
-  ],
-  "data_provider": "FRED (Federal Reserve Bank of St. Louis)",
-  "update_status": "fresh_data"
+  ]
 }
