@@ -83,6 +83,8 @@ class MarketHistoryTests(unittest.TestCase):
         self.assertEqual(result["coverage"], {"total": 5, "fresh": 4, "cached": 1, "unavailable": 0})
         cached = next(p for p in result["series"] if p["id"] == "EEM")
         self.assertEqual((cached["value"], cached["date"], cached["fetch_status"]), (61.0, "2026-10-09", "cached"))
+        self.assertEqual(cached["source_url"], next(d for d in definitions if d["id"] == "EEM")["source_url"])
+        self.assertEqual(cached["source_label"], "Yahoo Finance")
 
     def test_total_failure_without_cache_does_not_replace_the_file(self):
         with tempfile.TemporaryDirectory() as temporary:

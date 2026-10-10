@@ -132,6 +132,8 @@ def parse_bank_observations(text: str, series_id: str, today: date) -> list[list
 def source_metadata(definition: dict) -> dict:
     if definition.get("provider") == "bank_of_canada":
         return {"source_url": BANK_POLICY_URL, "source_label": "Banque du Canada"}
+    if "quote_symbol" in definition and "source_url" in definition:
+        return {"source_url": definition["source_url"], "source_label": "Yahoo Finance"}
     return {"source_url": f"https://fred.stlouisfed.org/series/{definition['id']}", "source_label": "FRED"}
 
 def transform_observations(observations: list[list], transform: str) -> list[list]:
