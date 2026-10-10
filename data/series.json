@@ -278,18 +278,6 @@
       "change_unit": "G$ réels"
     },
     {
-      "id": "SP500",
-      "title": "S&P 500",
-      "category": "Marchés",
-      "frequency": "daily",
-      "unit": "points",
-      "decimals": 2,
-      "transform": "none",
-      "max_age_days": 10,
-      "description": "Indice de prix des grandes capitalisations américaines. L’historique présenté exclut les dividendes et ne constitue pas un rendement total.",
-      "change_unit": "points"
-    },
-    {
       "id": "VIXCLS",
       "title": "Volatilité anticipée · VIX",
       "category": "Marchés",

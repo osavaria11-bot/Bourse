@@ -158,7 +158,7 @@ class ConfigurationTests(unittest.TestCase):
         config = generator.read_json(generator.ROOT / "data/series.json")
         ids = [item["id"] for item in config["series"]]
         self.assertEqual(len(ids), len(set(ids)))
-        self.assertEqual(len(ids), 33)
+        self.assertEqual(len(ids), 32)
         for item in config["series"]:
             self.assertIn(item["frequency"], ("daily", "weekly", "monthly", "quarterly"))
             self.assertIn(item["transform"], ("none", "yoy", "mom_change", "qoq_annualized"))

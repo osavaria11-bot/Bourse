@@ -80,7 +80,7 @@ async function run() {
     const errors = [];
     page.on("pageerror", error => errors.push(error.message));
     await page.route("https://**", route => route.abort());
-    await page.goto(url); await waitCount(page, 33);
+    await page.goto(url); await waitCount(page, 32);
     await page.waitForSelector(".news-section");
     assert.equal(await page.locator(".news-section").count(), 4);
     assert.match(await page.locator("#briefingDate").innerText(), new RegExp(edition + ".*500 mots"));
@@ -103,18 +103,19 @@ async function run() {
     assert.match(await page.locator("#marketGrid .chart-tooltip").first().innerText(), /points/);
     assert.equal(await page.locator("#marketGrid path").evaluateAll(nodes => nodes.some(node => /NaN|Infinity/.test(node.getAttribute("d")))), false);
     await page.waitForSelector("#grid svg");
-    assert.match(await page.locator("#updated").innerText(), /33\/33/);
+    assert.match(await page.locator("#updated").innerText(), /32\/32/);
+    assert.equal(await page.locator('.indicator-card[data-id="SP500"]').count(), 0);
     assert.ok(await page.locator("#grid svg").count() > 0);
     assert.equal(await page.locator("#grid path").evaluateAll(nodes => nodes.some(node => /NaN|Infinity/.test(node.getAttribute("d")))), false);
     await page.locator("#searchInput").fill("epargne"); await waitCount(page, 1);
     assert.equal(await page.locator(".indicator-card").getAttribute("data-id"), "A072RC1Q156SBEA");
-    await page.locator("#searchInput").fill(""); await waitCount(page, 33);
+    await page.locator("#searchInput").fill(""); await waitCount(page, 32);
     await page.locator("#categoryFilters button").filter({ hasText: /^Canada$/ }).click(); await waitCount(page, 2);
-    await page.locator("#categoryFilters button").filter({ hasText: /^Tous$/ }).click(); await waitCount(page, 33);
+    await page.locator("#categoryFilters button").filter({ hasText: /^Tous$/ }).click(); await waitCount(page, 32);
     await page.locator(".favorite-button").first().click();
     await page.locator("#favoritesOnly").click(); await waitCount(page, 1);
-    await page.locator("#favoritesOnly").click(); await waitCount(page, 33);
-    await page.reload(); await waitCount(page, 33);
+    await page.locator("#favoritesOnly").click(); await waitCount(page, 32);
+    await page.reload(); await waitCount(page, 32);
     assert.equal(await page.locator(".favorite-button").first().getAttribute("aria-pressed"), "true");
     await page.locator("#rangeControls button[data-range='3M']").click();
     assert.equal(await page.locator("#rangeControls button[data-range='3M']").getAttribute("aria-pressed"), "true");
@@ -137,7 +138,7 @@ async function run() {
     assert.match(csv, /Série FRED/); assert.match(csv, /DEXCAUS/);
     await page.locator("#themeToggle").click();
     assert.equal(await page.locator("html").getAttribute("data-theme"), "light");
-    await page.reload(); await waitCount(page, 33);
+    await page.reload(); await waitCount(page, 32);
     assert.equal(await page.locator("html").getAttribute("data-theme"), "light");
     for (const width of [375, 320]) {
       await page.setViewportSize({ width, height: 900 });
@@ -154,7 +155,12 @@ async function run() {
       await page.screenshot({ path: path.join(process.env.QA_SCREENSHOTS_DIR, "savy-mobile.png") });
     }
     offline = true;
-    await page.reload(); await waitCount(page, 33);
+    await page.evaluate(point => {
+      const key = "savy:macro-data:v2", previous = JSON.parse(localStorage.getItem(key));
+      previous.series.push({...point, id: "SP500", title: "Removed cached S&P 500"});
+      localStorage.setItem(key, JSON.stringify(previous));
+    }, series[0]);
+    await page.reload(); await waitCount(page, 32);
     assert.match(await page.locator("#updated").innerText(), /Copie conservée/);
     assert.equal(await page.locator("#refreshButton").isEnabled(), true);
     invalidNews = true;
@@ -189,7 +195,7 @@ async function run() {
     await empty.waitForFunction(() => document.querySelector("#briefingDate").textContent === "Édition indisponible");
     assert.equal(await empty.locator("#refreshButton").isEnabled(), true);
     assert.deepEqual(errors, []);
-    console.log("Browser checks passed: 33 macro cards, 5 world market charts with EEM clearly labeled, date/range controls, offline and invalid-data preservation, filters, persistence, CSV, 320px mobile, independent sourced 500-word briefing.");
+    console.log("Browser checks passed: 32 macro cards, 5 world market charts with EEM clearly labeled, date/range controls, offline and invalid-data preservation, filters, persistence, CSV, 320px mobile, independent sourced 500-word briefing.");
     await freshContext.close(); await context.close();
   } finally { await browser.close(); }
 }

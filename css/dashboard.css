@@ -78,6 +78,31 @@ details[open]>summary:after {content:"−"}
 @media(max-width:1100px) {.market-grid {grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:650px) {.market-grid {grid-template-columns:1fr}.market-heading .segmented {max-width:100%;flex-wrap:wrap}}
 .workspace {margin-top:34px;scroll-margin-top:10px}
+.portfolio {margin-top:24px;padding:22px;scroll-margin-top:16px}
+.portfolio-actions {display:flex;flex-wrap:wrap;gap:8px}
+.portfolio-overview {display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-top:22px}
+.portfolio-value {font-size:38px;font-weight:650;letter-spacing:-.04em;margin:6px 0;font-variant-numeric:tabular-nums}
+.portfolio-change {font-size:17px;margin-bottom:5px}
+.portfolio-period-controls {max-width:100%;text-align:right}
+.portfolio-period-controls .segmented {flex-wrap:wrap;justify-content:flex-end}
+.portfolio-period-controls .meta {margin-top:8px}
+.portfolio-chart {max-width:100%;margin:18px 0}
+.portfolio-empty {padding:20px 0;font-size:14px;color:var(--muted)}
+.portfolio-table {margin-top:18px}
+.portfolio-table table {min-width:1180px;font-size:12px}
+.portfolio-table caption {text-align:left;color:var(--muted);font-size:11px;padding:0 0 10px}
+.portfolio-table td:first-child {min-width:180px}
+.portfolio-ticker {display:block;font-size:10px;font-weight:400;color:var(--muted);margin-top:3px;white-space:nowrap}
+.quantity-input {width:78px;max-width:100%;padding:7px;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--text);font-size:12px}
+.remove-position {margin-left:12px;padding:4px 8px;color:var(--muted);border:1px solid var(--border);border-radius:6px;background:transparent}
+.position-form {display:flex;align-items:flex-end;flex-wrap:wrap;gap:12px;padding-top:20px}
+.position-form label {display:flex;flex-direction:column;gap:5px;font-size:11px;color:var(--muted);min-width:0}
+.position-form select {max-width:100%;width:310px}
+.position-form input {width:110px;border:1px solid var(--border);border-radius:7px;background:var(--bg);color:var(--text);padding:8px}
+.portfolio-method {margin-top:18px!important}
+.portfolio-unrealized {font-size:13px;white-space:normal;margin-top:5px}
+.portfolio .meta {margin-top:6px}
+@media(max-width:700px) {.portfolio {padding:16px}.portfolio .section-heading,.portfolio-overview {align-items:flex-start;flex-direction:column}.portfolio-period-controls {text-align:left}.portfolio-period-controls .segmented {justify-content:flex-start}.portfolio-value {font-size:30px}.position-form label:first-child {width:100%}.position-form select {width:100%}}
 .section-heading {display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:16px}
 .section-heading .eyebrow {margin-bottom:5px}
 .toolbar {background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:18px}
@@ -156,7 +181,7 @@ th:last-child,td:last-child {text-align:right}
 @media(max-width:1100px) {.grid {grid-template-columns:repeat(2,minmax(0,1fr))}.kpi-grid {grid-template-columns:repeat(3,minmax(0,1fr))}.intro-line {align-items:flex-start;flex-direction:column;gap:3px}}
 @media(max-width:650px) {
   .container {width:calc(100% - 28px)}
-  .page-header {padding-top:20px;gap:12px;align-items:flex-start}
+  .page-header {padding-top:20px;gap:12px;align-items:flex-start;flex-wrap:wrap}
   .brand h1 {font-size:27px}.brand-mark {width:36px;height:36px;font-size:22px}
   .brand .eyebrow,.source-label {display:none}
   .header-actions {gap:6px;justify-content:flex-end}.header-actions .button {font-size:11px;padding:7px 9px}

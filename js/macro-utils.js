@@ -99,7 +99,7 @@
   }
   function rangeStart(anchor, range) {
     if (!isDate(anchor)) return null;
-    const months = { "1M": 1, "3M": 3, "1Y": 12, "5Y": 60, "10Y": 120 }[range] || 120;
+    const months = { "1M": 1, "3M": 3, "6M": 6, "1Y": 12, "5Y": 60, "10Y": 120 }[range] || 120;
     const date = new Date(anchor + "T00:00:00Z");
     const day = date.getUTCDate();
     date.setUTCDate(1);

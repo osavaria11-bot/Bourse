@@ -49,13 +49,17 @@ jobs:
         run: |
           node --check js/dashboard.js
           node --check js/macro-utils.js
-          node --test tests/macro-utils.test.cjs
+          node --check js/portfolio-utils.js
+          node --check js/portfolio.js
+          npm test
       - name: Install browser test dependency
         run: npm ci --ignore-scripts --no-audit --no-fund
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
       - name: Browser interaction and mobile checks
         run: npm run test:browser
+        env:
+          SCREENSHOT_LOGS: ${{ startsWith(github.ref, 'refs/heads/codex/portefeuille-') && '1' || '' }}
       - name: Verify the actual published briefing and world market histories
         run: node tests/published-dashboard.cjs
         if: hashFiles('data/market-indices.json') != ''
@@ -86,6 +90,18 @@ jobs:
           assert data['coverage']['fresh'] == 5, data['errors']
           assert all(len(p['history']) > 200 for p in data['series'])
           print('World markets verified:', data['coverage'])
+          PY
+      - name: Verify security prices and currency sources on the portfolio branch
+        if: startsWith(github.ref, 'refs/heads/codex/portefeuille-')
+        run: |
+          python scripts/collect_security_prices.py --output-dir "$RUNNER_TEMP/securities-check"
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          data = json.loads((Path(os.environ["RUNNER_TEMP"]) / "securities-check/security-prices.json").read_text())
+          assert data['coverage']['fresh'] == 101, data['errors']
+          assert all(len(p['history']) > 200 for p in data['series'])
+          print('Security histories and USD/CAD verified:', data['coverage'])
           PY
 
   deploy:

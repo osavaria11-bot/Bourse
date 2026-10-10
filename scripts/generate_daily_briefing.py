@@ -24,7 +24,7 @@ ROOT = Path(__file__).resolve().parents[1]
 TIMEOUT_SECONDS = 20
 RETRY_ATTEMPTS = 3
 HISTORY_YEARS = 10
-BRIEFING_IDS = ["CPIAUCSL", "PCEPILFE", "UNRATE", "PAYEMS", "GDPC1", "DFF", "DGS10", "T10Y2Y", "SP500", "VIXCLS", "DEXCAUS"]
+BRIEFING_IDS = ["CPIAUCSL", "PCEPILFE", "UNRATE", "PAYEMS", "GDPC1", "DFF", "DGS10", "T10Y2Y", "VIXCLS", "DEXCAUS"]
 NEWS_SOURCES = [
     {"label": "Reuters — Marchés", "url": "https://www.reuters.com/markets/", "description": "Actions, taux, devises et matières premières."},
     {"label": "Reuters — Économie", "url": "https://www.reuters.com/markets/econ-world/", "description": "Croissance, inflation et banques centrales."},
@@ -161,6 +161,8 @@ def fetch_series(definition: dict, now: datetime) -> dict:
 
 def usable_previous(point: dict | None, definition: dict, today: date) -> bool:
     if not isinstance(point, dict) or point.get("transform", "none") != definition.get("transform", "none"):
+        return False
+    if any(point.get(key) != definition[key] for key in ("quote_symbol", "currency") if key in definition):
         return False
     value = point.get("value")
     if not isinstance(value, (int, float)) or isinstance(value, bool) or not math.isfinite(value):
