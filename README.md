@@ -21,7 +21,7 @@ Les périodes de graphique se terminent à la dernière observation de chaque s�
 
 ## Mise à jour et fiabilité
 
-GitHub Actions collecte les observations FRED, les cours des cinq marchés et ceux du catalogue public de 100 titres avec le taux USD/CAD **à 6 h 47 chaque jour**, puis à **13 h 17 et 19 h 17 du lundi au vendredi**, à l’heure de Montréal. La collecte du matin prépare les données du briefing de 7 h. Les horaires utilisent `America/Toronto` et suivent les changements d’heure; GitHub peut retarder une exécution en cas de charge.
+GitHub Actions collecte les observations FRED, les cours des cinq marchés et ceux du catalogue public de 101 titres avec le taux USD/CAD **à 6 h 47 chaque jour**, puis à **13 h 17 et 19 h 17 du lundi au vendredi**, à l’heure de Montréal. La collecte du matin prépare les données du briefing de 7 h. Les horaires utilisent `America/Toronto` et suivent les changements d’heure; GitHub peut retarder une exécution en cas de charge.
 
 Le **briefing d’actualité** est préparé et publié par une tâche ChatGPT quotidienne programmée à **7 h, heure de Montréal**, fins de semaine comprises, à partir du 11 octobre 2026. Sa mise à jour est indépendante de celle des observations. Il résume Reuters Marchés, Reuters Économie, la Banque du Canada et les **indicateurs de ton tableau FRED à surveiller**, pour **500 mots au total**, hors titres, liens et graphiques. La partie FRED examine les 32 séries du tableau et classe les signaux les plus importants selon leurs niveaux et leurs tendances, avec valeurs, comparaisons, périodes et explications. Une baisse n’est pas systématiquement mauvaise : le sens économique propre à chaque indicateur compte. Un signal isolé n’est pas présenté comme une certitude. Chaque section cite les publications consultées et leurs dates. Une source inaccessible est signalée sans inventer son contenu; une journée sans nouvelle importante reprend uniquement des points récents en précisant leur date.
 
@@ -42,7 +42,7 @@ Les observations suivent le calendrier de leurs sources. Par exemple, une statis
 
 Ouvrir **Mon portefeuille**, puis importer le fichier JSON personnel ou ajouter les positions. Les quantités peuvent être modifiées dans la table. Elles sont enregistrées uniquement dans `localStorage` sur cet appareil; le dépôt public et les collecteurs ne contiennent aucune quantité personnelle. Le lien personnel d’import utilise un fragment d’URL, non envoyé au serveur, et retire les quantités de l’adresse après import. L’export JSON permet de retrouver ses positions sur un autre appareil.
 
-Les titres CAD gardent leur cotation canadienne, notamment Shopify. Celestica garde sa cotation US. Les ETF Fidelity FEQT et Maritime Launch MAXQ utilisent Cboe Canada (`.NE`). Les clôtures et observations quotidiennes USD/CAD sont vérifiées par symbole et devise. Une cotation plus ancienne est affichée avec sa vraie date; elle peut être reprise pendant au plus sept jours. Les cotations manquantes et le change indisponible rendent la valeur partielle et bloquent la variation totale. Les quotes FX du week-end sont exclues des observations quotidiennes.
+Les titres CAD gardent leur cotation canadienne, notamment Shopify. Celestica garde sa cotation US. Le Sandisk CDR couvert en CAD utilise `SNDK.TO`, distinct de l’action américaine, et sa valorisation ne reçoit pas de conversion USD/CAD supplémentaire. Son historique disponible commence en mai 2026 : une reconstitution incluant ce CDR signale les bases manquantes pour YTD et six mois. Les ETF Fidelity FEQT et Maritime Launch MAXQ utilisent Cboe Canada (`.NE`). Les clôtures et observations quotidiennes USD/CAD sont vérifiées par symbole et devise. Une cotation plus ancienne est affichée avec sa vraie date; elle peut être reprise pendant au plus sept jours. Les cotations manquantes et le change indisponible rendent la valeur partielle et bloquent la variation totale. Les quotes FX du week-end sont exclues des observations quotidiennes.
 
 Les prix moyens d’achat sont également privés, modifiables et exportés. Le gain latent de chaque titre est calculé dans sa devise d’achat. Le coût global et le gain latent en CAD utilisent le taux USD/CAD actuel; ils excluent l’effet du change depuis les achats, dont les dates et taux ne sont pas connus.
 
@@ -61,7 +61,7 @@ La configuration se trouve dans `data/series.json`. Les fichiers publiés sont :
 - `data/macro-data.json` : valeurs, dates, variation, statut de collecte et historiques.
 - `data/daily-briefing.json` : édition d’actualité en français, 500 mots, quatre sections et publications citées (schéma 3).
 - `data/market-indices.json` : historiques de clôture, dates et statut de collecte des quatre indices et de l’ETF EEM (schéma 2, `kind: market_indices`).
-- `data/securities.json` : catalogue public de 100 cotations, sans quantités personnelles.
+- `data/securities.json` : catalogue public de 101 cotations, sans quantités personnelles.
 - `data/security-prices.json` : historiques des titres et USD/CAD, symboles et devises vérifiés (schéma 2, `kind: security_prices`).
 - `data/macro-briefing.json` : instantané statistique de secours généré avec les observations (schéma 2).
 

@@ -150,11 +150,21 @@ async function main() {
     assert.deepEqual(errors, []);
     await context.close(); missingFX = false;
     const blankContext = await browser.newContext(), blank = await blankContext.newPage(); await blank.route("https://**", route => route.abort());
-    await blank.goto(url); await blank.waitForFunction(() => document.querySelector("#positionTicker").options.length === 100);
+    await blank.goto(url); await blank.waitForFunction(expected => document.querySelector("#positionTicker").options.length === expected, catalog.series.length);
     assert.equal(await blank.locator("#portfolioContent").isVisible(), false);
     assert.equal(await blank.locator("#portfolioExport").isDisabled(), true);
+    await blank.locator("#positionTicker").selectOption("SNDK");
+    await blank.locator("#positionQuantity").fill("2"); await blank.locator("#positionAverageCost").fill("30");
+    await blank.locator("#positionForm").getByRole("button", {name: "Ajouter / modifier"}).click();
+    await blank.waitForFunction(() => document.querySelectorAll("#portfolioRows tr").length === 1);
+    const cdr = await blank.evaluate(() => JSON.parse(localStorage.getItem("savy:private-holdings:v1")).positions[0]);
+    assert.deepEqual(cdr, {ticker: "SNDK", quantity: 2, currency: "CAD", average_cost: 30});
+    assert.equal(await blank.locator('#portfolioRows tr[data-ticker="SNDK"] a').getAttribute("href"), "https://finance.yahoo.com/quote/SNDK.TO/");
+    const cdrQuote = prices.series.find(row => row.id === "SNDK");
+    assert.equal(await blank.locator("#portfolioValue").innerText(), new Intl.NumberFormat("fr-CA", {style: "currency", currency: "CAD", maximumFractionDigits: 2}).format(cdrQuote.value * 2));
+    assert.equal(await blank.locator("#portfolioPositions").isVisible(), false);
     await blankContext.close();
-    console.log("Portfolio checks passed: 6 private synthetic positions, exact CAD/USD listings, CAD valuation, all six periods, monthly top/bottom 3, both directions of three numeric gain sorts, persistent collapsed/expanded positions, hover and keyboard date/value/percent, edits/import/export, offline cache, missing-baseline/FX protection, empty public view and 320px mobile.");
+    console.log("Portfolio checks passed: 6 private synthetic positions, exact CAD/USD listings including the Sandisk CDR in CAD, CAD valuation, all six periods, monthly top/bottom 3, both directions of three numeric gain sorts, persistent collapsed/expanded positions, hover and keyboard date/value/percent, edits/import/export, offline cache, missing-baseline/FX protection, empty public view and 320px mobile.");
   } finally {await browser.close();}
 }
 main().catch(error => {console.error(error); process.exitCode = 1;}).finally(() => server.close());

@@ -99,8 +99,12 @@ jobs:
           import json, os
           from pathlib import Path
           data = json.loads((Path(os.environ["RUNNER_TEMP"]) / "securities-check/security-prices.json").read_text())
-          assert data['coverage']['fresh'] == 101, data['errors']
-          assert all(len(p['history']) > 200 for p in data['series'])
+          catalogue = json.loads(Path('data/securities.json').read_text())
+          assert data['coverage']['fresh'] == len(catalogue['series']) + 1, data['errors']
+          assert all(len(p['history']) > 200 for p in data['series'] if p['id'] != 'SNDK')
+          sandisk = next(p for p in data['series'] if p['id'] == 'SNDK')
+          assert sandisk['quote_symbol'] == 'SNDK.TO' and sandisk['currency'] == 'CAD'
+          assert len(sandisk['history']) >= 2  # This CDR was listed in May 2026.
           print('Security histories and USD/CAD verified:', data['coverage'])
           PY
 

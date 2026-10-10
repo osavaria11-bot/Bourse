@@ -5,14 +5,16 @@ from scripts import collect_security_prices as securities
 from scripts import generate_daily_briefing as macro
 
 class SecurityTests(unittest.TestCase):
-    def test_catalogue_has_100_public_listings_and_fx_without_personal_quantities(self):
+    def test_public_catalogue_and_fx_keep_exact_listings_without_personal_quantities(self):
         definitions = securities.definitions()
-        self.assertEqual(len(definitions), 101)
+        catalogue = macro.read_json(securities.ROOT / 'data/securities.json')
+        self.assertEqual(len(definitions), len(catalogue['series']) + 1)
         points = {p['id']: p for p in definitions}
         self.assertEqual((points['SHOP']['quote_symbol'], points['SHOP']['currency']), ('SHOP.TO', 'CAD'))
         self.assertEqual((points['CLS']['quote_symbol'], points['CLS']['currency']), ('CLS', 'USD'))
         self.assertEqual(points['FEQT']['quote_symbol'], 'FEQT.NE')
         self.assertEqual(points['MAXQ']['quote_symbol'], 'MAXQ.NE')
+        self.assertEqual((points['SNDK']['quote_symbol'], points['SNDK']['currency']), ('SNDK.TO', 'CAD'))
         self.assertEqual(points['USDCAD']['quote_symbol'], 'CAD=X')
         self.assertTrue(all('quantity' not in p and 'positions' not in p for p in definitions))
 

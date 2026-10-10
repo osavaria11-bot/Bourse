@@ -899,6 +899,19 @@
       "source_url": "https://finance.yahoo.com/quote/SLF.TO/"
     },
     {
+      "id": "SNDK",
+      "title": "Sandisk CDR (couvert en CAD)",
+      "currency": "CAD",
+      "quote_symbol": "SNDK.TO",
+      "unit": "CAD",
+      "decimals": 2,
+      "frequency": "daily",
+      "transform": "none",
+      "max_age_days": 7,
+      "history_range": "2y",
+      "source_url": "https://finance.yahoo.com/quote/SNDK.TO/"
+    },
+    {
       "id": "SU",
       "title": "Suncor Energy",
       "currency": "CAD",
