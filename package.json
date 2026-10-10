@@ -1,0 +1,16 @@
+{
+  "name": "savy-macro-dashboard",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Static FRED macroeconomic dashboard",
+  "scripts": {
+    "test": "node --test tests/macro-utils.test.cjs",
+    "test:browser": "node tests/browser-smoke.cjs"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

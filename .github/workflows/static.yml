@@ -1,43 +1,103 @@
-# Simple workflow for deploying static content to GitHub Pages
 name: Deploy static content to Pages
 
 on:
-  # Runs on pushes targeting the default branch
   push:
+    branches: ["main", "codex/**"]
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["Daily briefing"]
+    types: [completed]
     branches: ["main"]
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
-  group: "pages"
+  group: pages-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
-  # Single deploy job since we're just deploying
+  validate:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    outputs:
+      source_sha: ${{ steps.source.outputs.sha }}
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event_name == 'workflow_run' && 'main' || github.sha }}
+          persist-credentials: false
+      - name: Record tested commit
+        id: source
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+          cache: npm
+      - name: Collector regression tests
+        run: python -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Dashboard regression tests
+        run: |
+          node --check js/dashboard.js
+          node --check js/macro-utils.js
+          node --test tests/macro-utils.test.cjs
+      - name: Install browser test dependency
+        run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Browser interaction and mobile checks
+        run: npm run test:browser
+      - name: Verify real FRED exports on the improvement branch
+        if: startsWith(github.ref, 'refs/heads/codex/')
+        run: |
+          python scripts/generate_daily_briefing.py --output-dir "$RUNNER_TEMP/fred-check"
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          data = json.loads((Path(os.environ["RUNNER_TEMP"]) / "fred-check/macro-data.json").read_text())
+          print("Provider coverage:", data["coverage"])
+          points = {p["id"]: p for p in data["series"]}
+          for sid in ("DFF", "CPIAUCSL", "PCEPILFE", "GDPC1", "PAYEMS"):
+              assert points[sid]["fetch_status"] == "fresh", f"Provider integration failed for {sid}"
+              print(sid, points[sid]["date"], points[sid]["value"], points[sid]["unit"])
+          PY
+
   deploy:
+    needs: validate
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Checkout tested source
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.validate.outputs.source_sha }}
+          persist-credentials: false
       - name: Setup Pages
         uses: actions/configure-pages@v5
-      - name: Upload artifact
+      - name: Prepare static site
+        run: |
+          mkdir -p _site
+          cp index.html 221.png 2121.png _site/
+          cp -R css js data _site/
+      - name: Upload site
         uses: actions/upload-pages-artifact@v3
         with:
-          # Upload entire repository
-          path: '.'
-      - name: Deploy to GitHub Pages
+          path: _site
+      - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
+

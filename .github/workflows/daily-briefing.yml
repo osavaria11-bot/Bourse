@@ -2,31 +2,53 @@ name: Daily briefing
 
 on:
   schedule:
-    - cron: "15 11 * * *"
+    - cron: "17 11,17,23 * * 1-5"
+    - cron: "17 12 * * 0,6"
   workflow_dispatch:
+  push:
+    branches: ["main"]
+    paths:
+      - "data/series.json"
+      - "scripts/generate_daily_briefing.py"
+      - "tests/test_generate_daily_briefing.py"
+      - ".github/workflows/daily-briefing.yml"
 
 permissions:
   contents: write
 
+concurrency:
+  group: macro-data-refresh
+  cancel-in-progress: false
+
 jobs:
   generate:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Python
-        uses: actions/setup-python@v5
+      - name: Checkout main
+        uses: actions/checkout@v6
         with:
-          python-version: "3.11"
-
-      - name: Generate daily briefing
+          ref: main
+          fetch-depth: 0
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Verify collector
+        run: python -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Collect observations and generate briefing
         run: python scripts/generate_daily_briefing.py
-
-      - name: Commit updated briefing
+      - name: Commit published data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/daily-briefing.json
-          git diff --cached --quiet || git commit -m "chore: update daily briefing"
-          git push
+          git add data/macro-data.json data/daily-briefing.json
+          if git diff --cached --quiet; then
+            echo "No data changes to commit."
+            exit 0
+          fi
+          git commit -m "chore: update macro observations and briefing"
+          git pull --rebase origin main
+          git push origin HEAD:main
+
