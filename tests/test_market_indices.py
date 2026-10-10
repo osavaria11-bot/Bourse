@@ -29,6 +29,20 @@ class MarketHistoryTests(unittest.TestCase):
         with self.assertRaises(markets.macro.SourceError):
             markets.parse_history(payload(), "^GSPC", NOW)
 
+    def test_wrong_currency_rejected(self):
+        data = payload()
+        data["chart"]["result"][0]["meta"]["currency"] = "USD"
+        with self.assertRaises(markets.macro.SourceError):
+            markets.parse_history(data, "EEM", NOW, "CAD")
+
+    def test_weekend_live_fx_quote_is_not_a_daily_session(self):
+        data = payload()
+        result = data["chart"]["result"][0]
+        result["meta"].update(symbol="CAD=X", exchangeTimezoneName="Europe/London", currency="CAD")
+        result["timestamp"] = [int(datetime(2026, 10, day, tzinfo=timezone.utc).timestamp()) for day in (8, 9, 10)]
+        result["indicators"]["quote"][0]["close"] = [1.42, 1.43, 1.99]
+        self.assertEqual(markets.parse_history(data, "CAD=X", NOW, "CAD"), [["2026-10-08", 1.42], ["2026-10-09", 1.43]])
+
     def test_intraday_quote_is_not_published_as_a_close(self):
         data = payload()
         result = data["chart"]["result"][0]

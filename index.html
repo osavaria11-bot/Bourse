@@ -8,6 +8,8 @@
   <title>SAVY — Tableau macroéconomique</title>
   <link rel="stylesheet" href="css/dashboard.css" />
   <script src="js/macro-utils.js" defer></script>
+  <script src="js/portfolio-utils.js" defer></script>
+  <script src="js/portfolio.js" defer></script>
   <script src="js/dashboard.js" defer></script>
 </head>
 <body>
@@ -15,7 +17,7 @@
   <main class="container">
     <header class="page-header">
       <div class="brand"><span class="brand-mark" aria-hidden="true">S</span><div><h1>SAVY<span class="brand-dot">.</span></h1><p class="eyebrow">Le cycle, en perspective.</p></div></div>
-      <div class="header-actions"><span class="source-label">MACRO · FRED</span><button id="themeToggle" class="button quiet" type="button" aria-label="Activer le mode clair">Mode clair</button><button id="refreshButton" class="button" type="button">Actualiser</button></div>
+      <div class="header-actions"><a class="button quiet" href="#portfolio">Mon portefeuille ↓</a><button id="themeToggle" class="button quiet" type="button" aria-label="Activer le mode clair">Mode clair</button><button id="refreshButton" class="button" type="button">Actualiser</button></div>
     </header>
     <div class="intro-line"><p>États-Unis & Canada <span class="muted">/ dernières observations publiées</span></p><p class="muted">3 collectes par jour en semaine · dates propres à chaque série</p></div>
     <p id="updated" class="update-status" role="status" aria-live="polite">Chargement des données publiées…</p>
@@ -33,6 +35,21 @@
         <p class="meta">Clôtures quotidiennes de Yahoo Finance. Indices en points; marchés émergents représentés par <a href="https://www.ishares.com/us/products/239637/ishares-msci-emerging-markets-etf" target="_blank" rel="noopener noreferrer">l’ETF EEM suivant le MSCI Emerging Markets</a>, en dollars US. Chaque graphique possède sa propre échelle; les courbes excluent les dividendes.</p>
       </section>
     </details>
+    <section id="portfolio" class="portfolio card" aria-labelledby="portfolioTitle">
+      <div class="section-heading"><div><p class="eyebrow">MES INVESTISSEMENTS</p><h2 id="portfolioTitle">Mon portefeuille</h2></div><div class="portfolio-actions"><label class="button quiet" for="portfolioImport">Importer mes positions<input id="portfolioImport" class="sr-only" type="file" accept=".json,application/json" /></label><button id="portfolioExport" class="button quiet" type="button" disabled>Exporter mes positions</button></div></div>
+      <p id="portfolioStatus" class="meta" role="status">Chargement des cotations…</p>
+      <p id="portfolioMessage" class="meta" role="status"></p>
+      <p id="portfolioEmpty" class="portfolio-empty">Importe ton fichier personnel pour ouvrir ton portefeuille, ou ajoute les titres ci-dessous. Les quantités sont conservées sur ton appareil.</p>
+      <div id="portfolioContent" hidden>
+        <div class="portfolio-overview"><div><p id="portfolioValueLabel" class="eyebrow">VALEUR DES TITRES · CAD</p><p id="portfolioValue" class="portfolio-value">—</p><p id="portfolioChange" class="portfolio-change">—</p><p id="portfolioCurrencies" class="meta"></p><p id="portfolioFX" class="meta"></p><p id="portfolioCost" class="meta"></p><p id="portfolioUnrealized" class="portfolio-unrealized"></p></div><div class="portfolio-period-controls"><div id="portfolioRanges" class="segmented" role="group" aria-label="Période du portefeuille"></div><p id="portfolioPeriod" class="meta"></p></div></div>
+        <p id="portfolioMissing" class="meta warning"></p>
+        <div id="portfolioChart" class="chart-host portfolio-chart"></div>
+        <div class="table-wrap portfolio-table"><table><caption>Positions privées · les variations correspondent à la période sélectionnée</caption><thead><tr><th scope="col">Titre</th><th scope="col">Quantité</th><th scope="col">Prix moyen</th><th scope="col">Cours et date</th><th scope="col">Valeur CAD</th><th scope="col">Poids</th><th scope="col">Gain latent</th><th scope="col">Variation CAD</th><th scope="col">Source</th></tr></thead><tbody id="portfolioRows"></tbody></table></div>
+      </div>
+      <form id="positionForm" class="position-form"><label>Titre<select id="positionTicker" aria-label="Titre à ajouter"></select></label><label>Quantité<input id="positionQuantity" type="text" inputmode="decimal" placeholder="Ex. 2,5" required /></label><label>Prix moyen<input id="positionAverageCost" type="text" inputmode="decimal" placeholder="Facultatif" /></label><button class="button" type="submit">Ajouter / modifier</button></form>
+      <p class="meta portfolio-method">Historique reconstitué avec les quantités actuelles, les cours de clôture et le taux USD/CAD de chaque date, hors transactions, dividendes, frais et espèces. YTD part de la dernière clôture de l’année précédente; 1 semaine et 3 jours couvrent 5 et 3 séances. Pour reproduire l’évolution réelle du compte avant aujourd’hui, il faut les achats, ventes et mouvements d’argent.</p>
+      <p class="meta">Le gain latent par titre compare le cours au prix moyen dans sa devise. Le total des gains et le coût en CAD sont convertis au taux actuel : ils excluent l’effet du change depuis les achats. Les cours se mettent à jour avec le site. Les quantités sont modifiables ici et restent dans ce navigateur; importe ou exporte ton fichier pour utiliser un autre appareil.</p>
+    </section>
     <section class="workspace" id="indicators" aria-labelledby="indicatorsTitle">
       <div class="section-heading"><div><p class="eyebrow">TABLEAU DE BORD</p><h2 id="indicatorsTitle">Tes indicateurs macro</h2></div><button id="exportButton" class="button quiet" type="button" disabled>Exporter la sélection · CSV</button></div>
       <div class="toolbar">

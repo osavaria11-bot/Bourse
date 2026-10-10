@@ -4,7 +4,7 @@ Un tableau de bord en français pour suivre le cycle économique aux États-Unis
 
 ## Fonctions
 
-- **33 indicateurs** : taux, inflation, emploi, activité, crédit, marchés, immobilier, Canada et matières premières.
+- **32 indicateurs** : taux, inflation, emploi, activité, crédit, marchés, immobilier, Canada et matières premières.
 - **Graphiques interactifs** avec périodes de 1 mois, 3 mois, 1 an, 5 ans et 10 ans; valeurs au survol et navigation avec les flèches du clavier.
 - **Vue détaillée** : explication de l’indicateur, dernières observations, lien vers la source et export de l’historique.
 - **Recherche**, filtres par catégorie, tri par nom ou date, et **favoris** conservés dans le navigateur.
@@ -12,15 +12,16 @@ Un tableau de bord en français pour suivre le cycle économique aux États-Unis
 - **Modes clair et sombre**, disposition adaptée au téléphone et dialogues accessibles au clavier.
 - **Briefing macroéconomique de 500 mots au total** : Reuters, Banque du Canada et analyse des indicateurs FRED préoccupants, classés par priorité.
 - **Cinq graphiques de marchés mondiaux** : S&P 500, Nasdaq Composite, S&P/TSX Composite, STOXX Europe 600 et ETF EEM suivant le MSCI Emerging Markets. Clôtures quotidiennes, périodes de 1 mois à 10 ans et sources accessibles.
+- **Portefeuille privé** : quantités conservées dans le navigateur, valorisation en CAD, prix moyens, gains latents, pondérations et variations par titre, import/export JSON et graphique YTD, 6 mois, 3 mois, 1 mois, 1 semaine et 3 jours.
 - Arbres de décision NFCI et TEV/EBITDA et ressources complémentaires conservés.
 
 Les périodes de graphique se terminent à la dernière observation de chaque série. Une flèche indique le sens de variation depuis l’observation précédente, dont la date est disponible au survol. Les périodes mensuelles et trimestrielles sont affichées comme telles.
 
 ## Mise à jour et fiabilité
 
-GitHub Actions collecte les observations FRED et les cours des cinq marchés **à 6 h 47 chaque jour**, puis à **13 h 17 et 19 h 17 du lundi au vendredi**, à l’heure de Montréal. La collecte du matin prépare les données du briefing de 7 h. Les horaires utilisent `America/Toronto` et suivent les changements d’heure; GitHub peut retarder une exécution en cas de charge.
+GitHub Actions collecte les observations FRED, les cours des cinq marchés et ceux du catalogue public de 100 titres avec le taux USD/CAD **à 6 h 47 chaque jour**, puis à **13 h 17 et 19 h 17 du lundi au vendredi**, à l’heure de Montréal. La collecte du matin prépare les données du briefing de 7 h. Les horaires utilisent `America/Toronto` et suivent les changements d’heure; GitHub peut retarder une exécution en cas de charge.
 
-Le **briefing d’actualité** est préparé et publié par une tâche ChatGPT quotidienne programmée à **7 h, heure de Montréal**, fins de semaine comprises, à partir du 11 octobre 2026. Sa mise à jour est indépendante de celle des observations. Il résume Reuters Marchés, Reuters Économie, la Banque du Canada et les **indicateurs de ton tableau FRED à surveiller**, pour **500 mots au total**, hors titres, liens et graphiques. La partie FRED examine les 33 séries du tableau et classe les signaux les plus importants selon leurs niveaux et leurs tendances, avec valeurs, comparaisons, périodes et explications. Une baisse n’est pas systématiquement mauvaise : le sens économique propre à chaque indicateur compte. Un signal isolé n’est pas présenté comme une certitude. Chaque section cite les publications consultées et leurs dates. Une source inaccessible est signalée sans inventer son contenu; une journée sans nouvelle importante reprend uniquement des points récents en précisant leur date.
+Le **briefing d’actualité** est préparé et publié par une tâche ChatGPT quotidienne programmée à **7 h, heure de Montréal**, fins de semaine comprises, à partir du 11 octobre 2026. Sa mise à jour est indépendante de celle des observations. Il résume Reuters Marchés, Reuters Économie, la Banque du Canada et les **indicateurs de ton tableau FRED à surveiller**, pour **500 mots au total**, hors titres, liens et graphiques. La partie FRED examine les 32 séries du tableau et classe les signaux les plus importants selon leurs niveaux et leurs tendances, avec valeurs, comparaisons, périodes et explications. Une baisse n’est pas systématiquement mauvaise : le sens économique propre à chaque indicateur compte. Un signal isolé n’est pas présenté comme une certitude. Chaque section cite les publications consultées et leurs dates. Une source inaccessible est signalée sans inventer son contenu; une journée sans nouvelle importante reprend uniquement des points récents en précisant leur date.
 
 La tâche de rédaction actualise `data/daily-briefing.json` dans ce dépôt. La collecte FRED ne modifie jamais ce fichier. La date d’édition des nouvelles est indépendante de celle des graphiques. En cas de panne, le navigateur peut conserver la dernière édition vérifiée, avec sa date et un avertissement visible. Si la préparation quotidienne échoue, l’édition précédente reste affichée et n’est pas présentée comme nouvelle.
 
@@ -35,6 +36,16 @@ Les observations suivent le calendrier de leurs sources. Par exemple, une statis
 - Après une collecte, le déploiement Pages est déclenché par `workflow_run`, car un commit effectué avec `GITHUB_TOKEN` ne déclenche pas un autre workflow `push`.
 - Les tests doivent réussir avant le déploiement; celui-ci utilise le commit exact qui a été testé.
 
+## Portefeuille privé
+
+Ouvrir **Mon portefeuille**, puis importer le fichier JSON personnel ou ajouter les positions. Les quantités peuvent être modifiées dans la table. Elles sont enregistrées uniquement dans `localStorage` sur cet appareil; le dépôt public et les collecteurs ne contiennent aucune quantité personnelle. Le lien personnel d’import utilise un fragment d’URL, non envoyé au serveur, et retire les quantités de l’adresse après import. L’export JSON permet de retrouver ses positions sur un autre appareil.
+
+Les titres CAD gardent leur cotation canadienne, notamment Shopify. Celestica garde sa cotation US. Les ETF Fidelity FEQT et Maritime Launch MAXQ utilisent Cboe Canada (`.NE`). Les clôtures et observations quotidiennes USD/CAD sont vérifiées par symbole et devise. Une cotation plus ancienne est affichée avec sa vraie date; elle peut être reprise pendant au plus sept jours. Les cotations manquantes et le change indisponible rendent la valeur partielle et bloquent la variation totale. Les quotes FX du week-end sont exclues des observations quotidiennes.
+
+Les prix moyens d’achat sont également privés, modifiables et exportés. Le gain latent de chaque titre est calculé dans sa devise d’achat. Le coût global et le gain latent en CAD utilisent le taux USD/CAD actuel; ils excluent l’effet du change depuis les achats, dont les dates et taux ne sont pas connus.
+
+L’historique est une **reconstitution avec les quantités actuelles constantes**, cours de clôture hors dividendes et taux USD/CAD disponible à chaque date. Il ne reproduit pas les dépôts, retraits, achats, ventes, espèces ou frais du compte. Un historique réel exige les transactions et mouvements d’argent. YTD compare la dernière date à la dernière clôture de l’année précédente; les périodes de six, trois et un mois partent de la dernière séance disponible à la date de référence; une semaine et trois jours correspondent à cinq et trois séances. Une base de comparaison manquante n’est jamais remplacée par un rendement fictif.
+
 ## Indicateurs et transformations
 
 La configuration se trouve dans `data/series.json`. Les fichiers publiés sont :
@@ -42,6 +53,8 @@ La configuration se trouve dans `data/series.json`. Les fichiers publiés sont :
 - `data/macro-data.json` : valeurs, dates, variation, statut de collecte et historiques.
 - `data/daily-briefing.json` : édition d’actualité en français, 500 mots, quatre sections et publications citées (schéma 3).
 - `data/market-indices.json` : historiques de clôture, dates et statut de collecte des quatre indices et de l’ETF EEM (schéma 2, `kind: market_indices`).
+- `data/securities.json` : catalogue public de 100 cotations, sans quantités personnelles.
+- `data/security-prices.json` : historiques des titres et USD/CAD, symboles et devises vérifiés (schéma 2, `kind: security_prices`).
 - `data/macro-briefing.json` : instantané statistique de secours généré avec les observations (schéma 2).
 
 Avant de publier une nouvelle édition :
@@ -83,6 +96,7 @@ Ouvrir ensuite **http://localhost:8000**. La première collecte peut être lanc�
 ```bash
 python3 scripts/generate_daily_briefing.py
 python3 scripts/collect_market_indices.py
+python3 scripts/collect_security_prices.py
 ```
 
 Le site utilise du HTML, CSS, JavaScript et SVG, sans dépendance de production à un CDN. Le collecteur utilise la bibliothèque standard de Python.
@@ -99,7 +113,7 @@ npx playwright install chromium
 npm run test:browser
 ```
 
-Les tests de navigateur utilisent des données synthétiques en mémoire; celles-ci ne sont jamais enregistrées dans les fichiers du site. Ils couvrent recherche, catégories, favoris, thèmes, graphiques, clavier, téléchargements CSV, affichage à 320/375 pixels et repli hors connexion.
+Les tests de navigateur utilisent des positions synthétiques et les historiques publics, ainsi que des données macro synthétiques en mémoire; celles-ci ne sont jamais enregistrées dans les fichiers du site. Ils couvrent recherche, catégories, favoris, thèmes, graphiques, clavier, téléchargements CSV, affichage à 320/375 pixels et repli hors connexion. Ils vérifient aussi les six périodes du portefeuille, la conversion CAD, les quantités fractionnaires, les cotations SHOP en CAD et CLS en USD, la persistance locale, les imports/exports et la protection en cas de change manquant.
 
 Les branches `codex/**` vérifient également les exports réels FRED dans un répertoire temporaire. Les workflows sont dans `.github/workflows/`.
 

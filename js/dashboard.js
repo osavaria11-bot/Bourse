@@ -84,7 +84,7 @@
   }
   function renderKpis() {
     const definitions = [
-      ["SP500", "S&P 500"], ["DFF", "Fed · taux effectif"], ["CPIAUCSL", "Inflation CPI · 12 mois"],
+      ["VIXCLS", "VIX · volatilité"], ["DFF", "Fed · taux effectif"], ["CPIAUCSL", "Inflation CPI · 12 mois"],
       ["DGS10", "Trésor US · 10 ans"], ["DEXCAUS", "USD/CAD"],
     ];
     const fragment = document.createDocumentFragment();
@@ -463,6 +463,7 @@
         try { dataset = U.normalizeDataset(readStored(CACHE_KEY, null)); origin = "browser-cache"; }
         catch { dataset = await loadLegacySnapshot(); origin = "legacy"; }
       }
+      dataset.series = dataset.series.filter(point => point.id !== "SP500");
       state.dataset = dataset; state.origin = origin;
       state.seriesById = new Map(dataset.series.map(point => [point.id, point]));
       if (origin === "published") writeStored(CACHE_KEY, dataset);
@@ -477,7 +478,7 @@
         $("#updated").classList.add("warning");
       }
     } finally {
-      await Promise.all([loadBriefing(), loadMarkets()]);
+      await Promise.all([loadBriefing(), loadMarkets(), window.SavyPortfolio?.refresh()]);
       state.loading = false; $("#refreshButton").disabled = false; $("#refreshButton").textContent = "Actualiser";
     }
   }

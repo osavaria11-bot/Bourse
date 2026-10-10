@@ -13,6 +13,8 @@ on:
       - "data/series.json"
       - "scripts/generate_daily_briefing.py"
       - "scripts/collect_market_indices.py"
+      - "scripts/collect_security_prices.py"
+      - "data/securities.json"
       - "tests/test_generate_daily_briefing.py"
       - "tests/test_market_indices.py"
       - ".github/workflows/daily-briefing.yml"
@@ -45,16 +47,18 @@ jobs:
         run: python scripts/generate_daily_briefing.py
       - name: Refresh world equity charts
         run: python scripts/collect_market_indices.py
+      - name: Refresh security prices and USD/CAD
+        run: python scripts/collect_security_prices.py
       - name: Commit published data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/macro-data.json data/macro-briefing.json data/market-indices.json
+          git add data/macro-data.json data/macro-briefing.json data/market-indices.json data/security-prices.json
           if git diff --cached --quiet; then
             echo "No data changes to commit."
             exit 0
           fi
-          git commit -m "chore: update macro observations"
+          git commit -m "chore: update macro observations and market prices"
           git pull --rebase origin main
           git push origin HEAD:main
 

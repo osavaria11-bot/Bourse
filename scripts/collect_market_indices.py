@@ -32,7 +32,7 @@ def definitions() -> list[dict]:
              "max_age_days": 7, "source_url": f"https://finance.yahoo.com/quote/{quote(symbol, safe='')}/"}
             for sid, title, region, symbol in MARKETS]
 
-def parse_history(payload: dict, symbol: str, now: datetime) -> list[list]:
+def parse_history(payload: dict, symbol: str, now: datetime, currency: str | None = None) -> list[list]:
     try:
         chart = payload["chart"]
         if chart.get("error"):
@@ -41,6 +41,8 @@ def parse_history(payload: dict, symbol: str, now: datetime) -> list[list]:
         meta = result["meta"]
         if meta.get("symbol") != symbol:
             raise ValueError("Symbole différent de l’indice demandé")
+        if currency and meta.get("currency") != currency:
+            raise ValueError("Devise différente de la cotation demandée")
         exchange_timezone = ZoneInfo(meta["exchangeTimezoneName"])
         timestamps = result["timestamp"]
         closes = result["indicators"]["quote"][0]["close"]
@@ -58,6 +60,11 @@ def parse_history(payload: dict, symbol: str, now: datetime) -> list[list]:
             day = datetime.fromtimestamp(stamp, exchange_timezone).date()
         except (ValueError, OverflowError, OSError):
             continue
+        # Yahoo may append a live FX quote dated Saturday. It is not a
+        # completed daily business-day observation and must not become
+        # an extra portfolio session or silently replace Friday's rate.
+        if symbol.endswith("=X") and day.weekday() >= 5:
+            continue
         # Keep only completed sessions, not an intraday quote presented as a close.
         if day > today or (day == today and isinstance(close_time, (int, float)) and now.timestamp() < close_time):
             continue
@@ -72,7 +79,7 @@ def parse_history(payload: dict, symbol: str, now: datetime) -> list[list]:
 
 def fetch_index(definition: dict, now: datetime) -> dict:
     symbol = definition["quote_symbol"]
-    params = urlencode({"range": "10y", "interval": "1d"})
+    params = urlencode({"range": definition.get("history_range", "10y"), "interval": "1d"})
     last_error = None
     for host in ("query1.finance.yahoo.com", "query2.finance.yahoo.com"):
         try:
@@ -80,7 +87,7 @@ def fetch_index(definition: dict, now: datetime) -> dict:
                               headers={"User-Agent": "Mozilla/5.0 SAVY/3.0", "Accept": "application/json"})
             with urlopen(request, timeout=20) as response:
                 payload = json.load(response)
-            history = parse_history(payload, symbol, now)
+            history = parse_history(payload, symbol, now, definition.get("currency"))
             return {**macro.summarize(definition, history, now), "source_url": definition["source_url"]}
         except (OSError, ValueError, macro.SourceError) as error:
             last_error = error
