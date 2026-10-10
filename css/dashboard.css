@@ -90,6 +90,9 @@ details[open]>summary:after {content:"−"}
 .portfolio-empty {padding:20px 0;font-size:14px;color:var(--muted)}
 .portfolio-movers {border-top:1px solid var(--border);padding-top:18px;margin-top:18px}
 .portfolio-movers h3 {font-size:16px;font-weight:600;margin-top:4px}
+.portfolio-movers-heading {display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.portfolio-movers-heading > div:first-child {flex:1 1 280px;min-width:0}
+.portfolio-movers-heading .segmented {max-width:100%;flex-wrap:wrap}
 .portfolio-movers-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}
 .portfolio-movers-card {min-width:0;padding:14px;border:1px solid var(--border);border-radius:10px;background:var(--bg)}
 .portfolio-movers-card h4 {font-size:12px;font-weight:600;margin:0 0 10px;color:var(--muted)}

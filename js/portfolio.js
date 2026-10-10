@@ -2,7 +2,7 @@
   "use strict";
   const P = window.PortfolioUtils, U = window.MacroUtils, $ = selector => document.querySelector(selector);
   const HOLDINGS_KEY = "savy:private-holdings:v1", PRICE_KEY = "savy:security-prices:v1", POSITIONS_VISIBLE_KEY = "savy:portfolio-positions-visible:v1";
-  let catalog = null, prices = null, cached = false, range = "YTD", positions = [], history = [], imported = false;
+  let catalog = null, prices = null, cached = false, range = "YTD", moversRange = "1M", positions = [], history = [], imported = false;
   let positionsVisible = stored(POSITIONS_VISIBLE_KEY, false) === true, sortKey = null, sortDescending = true;
   const importFragment = new URLSearchParams(location.hash.slice(1)).get("positions");
   function stored(key, fallback) {try {return JSON.parse(localStorage.getItem(key)) ?? fallback;} catch {return fallback;}}
@@ -48,10 +48,11 @@
     $("#portfolioPositionsToggle").textContent = (positionsVisible ? "Masquer" : "Afficher") + " mes positions (" + positions.length + ")";
   }
   function renderMovers(day) {
-    const month = P.monthlyPerformance(positions, prices, day);
-    $("#portfolioMoversPeriod").textContent = "Du " + month.start + " au " + month.end + " · 1 mois glissant · rendement en CAD, change inclus";
-    const best = month.rows.slice(0, 3), bestTickers = new Set(best.map(row => row.ticker));
-    const worst = month.rows.filter(row => !bestTickers.has(row.ticker)).slice(-3).reverse();
+    const performance = P.performanceFor(positions, prices, day, moversRange);
+    const periodLabel = {YTD: "YTD", "6M": "6 mois glissants", "3M": "3 mois glissants", "1M": "1 mois glissant", "1W": "5 séances", "3D": "3 séances"}[moversRange];
+    $("#portfolioMoversPeriod").textContent = (performance.start ? "Du " + performance.start + " au " + performance.end : "Base de comparaison indisponible") + " · " + periodLabel + " · rendement en CAD, change inclus";
+    const best = performance.rows.slice(0, 3), bestTickers = new Set(best.map(row => row.ticker));
+    const worst = performance.rows.filter(row => !bestTickers.has(row.ticker)).slice(-3).reverse();
     for (const [selector, entries] of [["#portfolioBest", best], ["#portfolioWorst", worst]]) {
       const list = document.createDocumentFragment();
       for (const row of entries) {
@@ -61,11 +62,11 @@
         item.title = "Clôtures du " + row.start_price_date + " et du " + row.price_date + " · variation de la position : " + delta(row.change_cad);
         item.append(name, value); list.append(item);
       }
-      if (!entries.length) list.append(el("li", "meta", month.rows.length ? "Pas assez de titres pour compléter les deux listes." : "Historique mensuel indisponible."));
+      if (!entries.length) list.append(el("li", "meta", performance.rows.length ? "Pas assez de titres pour compléter les deux listes." : "Historique indisponible pour cette période."));
       $(selector).replaceChildren(list);
     }
-    $("#portfolioMoversNote").textContent = "Recalculé à chaque mise à jour quotidienne des cours, indépendamment de la période du graphique · " + month.rows.length + "/" + positions.length + " titres comparables · hors dividendes" +
-      (month.missing.length ? " · historique ou change manquant : " + month.missing.join(", ") : "");
+    $("#portfolioMoversNote").textContent = "Recalculé à chaque mise à jour quotidienne des cours, indépendamment de la période du graphique · " + performance.rows.length + "/" + positions.length + " titres comparables · hors dividendes" +
+      (performance.missing.length ? " · historique ou change manquant : " + performance.missing.join(", ") : "");
   }
   function render() {
     $("#portfolioEmpty").hidden = positions.length > 0;
@@ -169,6 +170,18 @@
   $("#positionForm").addEventListener("submit", event => {event.preventDefault(); if (!catalog) return; try {const ticker = $("#positionTicker").value; const existing = positions.find(p => p.ticker === ticker); const quantity = Number($("#positionQuantity").value.trim().replace(",", ".")); const costText = $("#positionAverageCost").value.trim(); const average_cost = costText ? Number(costText.replace(",", ".")) : existing?.average_cost; const next = {ticker, quantity, ...(average_cost !== undefined ? {average_cost} : {})}; applyPositions(existing ? positions.map(p => p.ticker === ticker ? next : p) : [...positions, next]); $("#positionQuantity").value = ""; $("#positionAverageCost").value = "";} catch (error) {$("#portfolioMessage").textContent = error.message;}});
   $("#portfolioExport").addEventListener("click", () => {const blob = new Blob([JSON.stringify({schema_version: 1, base_currency: "CAD", positions}, null, 2) + "\n"], {type: "application/json"}); const url = URL.createObjectURL(blob), anchor = el("a"); anchor.href = url; anchor.download = "portefeuille-savy.json"; anchor.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);});
   $("#portfolioPositionsToggle").addEventListener("click", () => {positionsVisible = !positionsVisible; save(POSITIONS_VISIBLE_KEY, positionsVisible); renderPositionsVisibility();});
+  for (const item of P.RANGES) {
+    const button = el("button", "", item.label); button.type = "button";
+    button.setAttribute("aria-pressed", String(item.key === moversRange));
+    button.addEventListener("click", () => {
+      moversRange = item.key;
+      for (const other of $("#portfolioMoversRanges").querySelectorAll("button")) other.setAttribute("aria-pressed", String(other === button));
+      const label = {YTD: "depuis le début de l’année", "6M": "sur six mois", "3M": "sur trois mois", "1M": "sur un mois", "1W": "sur une semaine", "3D": "sur trois jours"}[moversRange];
+      $("#portfolioMoversTitle").textContent = "Les meilleures et les pires performances " + label;
+      if (prices && history.length) renderMovers(history.at(-1)[0]);
+    });
+    $("#portfolioMoversRanges").append(button);
+  }
   for (const button of document.querySelectorAll("[data-portfolio-sort]")) button.addEventListener("click", () => {const key = button.dataset.portfolioSort; sortDescending = key === sortKey ? !sortDescending : true; sortKey = key; render();});
   window.SavyPortfolio = {refresh};
 })();

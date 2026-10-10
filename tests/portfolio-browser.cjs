@@ -61,6 +61,27 @@ async function main() {
       assert.deepEqual(displayed, ranked.map(row => (row.percent > 0 ? "+" : "") + U.formatNumber(row.percent, 2) + " %"));
     }
     assert.match(await page.locator("#portfolioMoversPeriod").innerText(), new RegExp(month.start + ".*" + month.end + ".*1 mois glissant.*CAD"));
+    const moverControls = page.getByRole("group", {name: "Période du classement des positions", exact: true});
+    assert.equal(await moverControls.getByRole("button").count(), 6);
+    assert.equal(await moverControls.getByRole("button", {name: "1 mois", exact: true}).getAttribute("aria-pressed"), "true");
+    const initialChartPeriod = await page.locator("#portfolioPeriod").innerText();
+    for (const range of P.RANGES) {
+      const button = moverControls.getByRole("button", {name: range.label, exact: true});
+      await button.click();
+      assert.equal(await button.getAttribute("aria-pressed"), "true");
+      assert.equal(await moverControls.locator('[aria-pressed="true"]').count(), 1);
+      assert.equal(await button.evaluate(node => node === document.activeElement), true);
+      const ranked = P.performanceFor(syntheticPositions, prices, history.at(-1)[0], range.key);
+      const top = ranked.rows.slice(0, 3), bottom = ranked.rows.slice(-3).reverse();
+      assert.deepEqual(await page.locator("#portfolioBest li").evaluateAll(nodes => nodes.map(n => n.dataset.ticker)), top.map(row => row.ticker));
+      assert.deepEqual(await page.locator("#portfolioWorst li").evaluateAll(nodes => nodes.map(n => n.dataset.ticker)), bottom.map(row => row.ticker));
+      for (const [selector, rows] of [["#portfolioBest", top], ["#portfolioWorst", bottom]])
+        assert.deepEqual(await page.locator(selector + " .change").allTextContents(), rows.map(row => (row.percent > 0 ? "+" : "") + U.formatNumber(row.percent, 2) + " %"));
+      assert.match(await page.locator("#portfolioMoversPeriod").innerText(), new RegExp(ranked.start + ".*" + ranked.end));
+      assert.equal(await page.locator("#portfolioPeriod").innerText(), initialChartPeriod);
+    }
+    await moverControls.getByRole("button", {name: "1 mois", exact: true}).click();
+    assert.match(await page.locator("#portfolioMoversTitle").innerText(), /sur un mois$/);
     await toggle.click(); assert.equal(await toggle.getAttribute("aria-expanded"), "true");
     assert.equal(await page.locator("#portfolioPositions").isVisible(), true);
     const period = P.period(history, "YTD"), previous = P.valuationAt(syntheticPositions, prices, period.start);
@@ -126,6 +147,11 @@ async function main() {
         gainWhiteSpace: getComputedStyle(document.querySelector("#portfolioUnrealized")).whiteSpace}));
       assert.equal(size.gainWhiteSpace, "normal");
       assert.ok(size.scroll <= size.width, "Portfolio overflows at " + width + ": " + JSON.stringify(size));
+      await moverControls.getByRole("button", {name: "3 jours", exact: true}).click();
+      assert.equal(await moverControls.getByRole("button", {name: "3 jours", exact: true}).getAttribute("aria-pressed"), "true");
+      assert.match(await page.locator("#portfolioMoversTitle").innerText(), /sur trois jours$/);
+      assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+      await moverControls.getByRole("button", {name: "1 mois", exact: true}).click();
       assert.equal(await page.locator("#portfolioPositions").isVisible(), false);
       await toggle.click();
       assert.ok(await page.locator(".portfolio-table").evaluate(node => node.scrollWidth > node.clientWidth));
@@ -146,6 +172,9 @@ async function main() {
     assert.equal(await page.locator("#portfolioChange").innerText(), "— · —");
     assert.match(await page.locator("#portfolioMissing").innerText(), /cours ou change manquant/);
     assert.equal(await page.locator("#portfolioChart svg").count(), 0);
+    assert.match(await page.locator("#portfolioMoversNote").innerText(), /historique ou change manquant/);
+    await moverControls.getByRole("button", {name: "YTD", exact: true}).click();
+    assert.equal(await page.locator("#portfolioBest li[data-ticker]").count(), 3);
     assert.match(await page.locator("#portfolioMoversNote").innerText(), /historique ou change manquant/);
     assert.deepEqual(errors, []);
     await context.close(); missingFX = false;

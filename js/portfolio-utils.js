@@ -115,9 +115,18 @@
       return a.ticker.localeCompare(b.ticker, "en");
     });
   }
-  function monthlyPerformance(positions, data, day) {
-    const start = U.rangeStart(day, "1M");
-    if (!start) return {start: null, end: null, rows: [], missing: positions.map(p => p.ticker)};
+  function performanceFor(positions, data, day, range = "1M") {
+    let start = null;
+    if (U.isDate(day) && RANGES.some(item => item.key === range)) {
+      if (range === "1W" || range === "3D") {
+        const held = new Set(positions.map(p => p.ticker)), days = new Set();
+        for (const security of data.series) if (held.has(security.id)) for (const row of security.history)
+          if (row[0] <= day && U.validNumber(row[1])) days.add(row[0]);
+        const sessions = range === "1W" ? 5 : 3, dates = [...days].sort();
+        start = dates.length > sessions ? dates[dates.length - sessions - 1] : null;
+      } else start = range === "YTD" ? (Number(day.slice(0, 4)) - 1) + "-12-31" : U.rangeStart(day, range);
+    }
+    if (!start) return {start: null, end: U.isDate(day) ? day : null, rows: [], missing: positions.map(p => p.ticker)};
     const current = valuationAt(positions, data, day), baseline = valuationAt(positions, data, start);
     const previous = new Map(baseline.rows.map(row => [row.ticker, row])), missing = [], rows = [];
     for (const row of current.rows) {
@@ -128,5 +137,6 @@
     }
     return {start, end: day, rows: sortRows(rows, "percent"), missing};
   }
-  return {RANGES, normalizePrices, normalizePositions, observationAt, valuationAt, historyFor, period, sortRows, monthlyPerformance};
+  function monthlyPerformance(positions, data, day) {return performanceFor(positions, data, day, "1M");}
+  return {RANGES, normalizePrices, normalizePositions, observationAt, valuationAt, historyFor, period, sortRows, performanceFor, monthlyPerformance};
 });

@@ -145,3 +145,35 @@ test("gain sorts compare numeric percentages and CAD dollars in both directions,
   assert.deepEqual(P.sortRows(rows, "unrealized_cad", false).map(row => row.ticker), ["B", "C", "A", "D"]);
   assert.deepEqual(rows.map(row => row.ticker), ["A", "B", "C", "D"]);
 });
+test("position rankings use each selected period's baseline and historical FX, without requiring every holding to have that baseline", () => {
+  const prices = P.normalizePrices(dataset(), catalog), positions = P.normalizePositions([["SHOP", 2], ["CLS", 3]], catalog);
+  const baselines = [["YTD", "2025-12-31", 100, 1.25], ["6M", "2026-04-09", 110, 1.5],
+    ["3M", "2026-07-09", 120, 1.5], ["1M", "2026-09-09", 130, 1.5],
+    ["1W", "2026-10-02", 140, 1.5], ["3D", "2026-10-06", 160, 1.5]];
+  for (const [range, start, price, fx] of baselines) {
+    const ranked = P.performanceFor(positions, prices, "2026-10-09", range);
+    assert.equal(ranked.start, start, range);
+    assert.equal(ranked.rows.length, 2, range);
+    assert.ok(Math.abs(ranked.rows.find(p => p.ticker === "SHOP").percent - (200 / price - 1) * 100) < 1e-10, range);
+    assert.ok(Math.abs(ranked.rows.find(p => p.ticker === "CLS").percent - (200 * 1.5 / (price * fx) - 1) * 100) < 1e-10, range);
+  }
+  prices.series.find(p => p.id === "CLS").history = prices.series.find(p => p.id === "CLS").history.filter(row => row[0] >= "2026-07-09");
+  assert.deepEqual(P.performanceFor(positions, prices, "2026-10-09", "YTD").missing, ["CLS"]);
+  assert.deepEqual(P.performanceFor(positions, prices, "2026-10-09", "YTD").rows.map(p => p.ticker), ["SHOP"]);
+  assert.equal(P.performanceFor(positions, prices, "2026-10-09", "3M").rows.length, 2);
+});
+test("short-period rankings count held equity sessions, ignore FX-only and future dates, and reject insufficient history", () => {
+  const prices = P.normalizePrices(dataset(), catalog), positions = P.normalizePositions([["SHOP", 2]], catalog);
+  prices.series.find(p => p.id === "USDCAD").history.push(["2026-10-03", 1.7], ["2026-10-10", 1.6]);
+  prices.series.find(p => p.id === "USDCAD").history.sort((a, b) => a[0].localeCompare(b[0]));
+  prices.series.push({id: "UNHELD", history: [["2026-10-03", 100], ["2026-10-04", 100]]});
+  prices.series.find(p => p.id === "SHOP").history.push(["2026-10-12", 900]);
+  assert.equal(P.performanceFor(positions, prices, "2026-10-09", "1W").start, "2026-10-02");
+  const short = P.performanceFor(positions, prices, "2026-10-09", "3D");
+  assert.equal(short.start, "2026-10-06"); assert.equal(short.rows[0].percent, 25);
+  prices.series.find(p => p.id === "SHOP").history = [["2026-10-07", 170], ["2026-10-08", 180], ["2026-10-09", 200]];
+  for (const range of ["3D", "1W", "invalid-range"]) {
+    const unavailable = P.performanceFor(positions, prices, "2026-10-09", range);
+    assert.equal(unavailable.start, null); assert.equal(unavailable.rows.length, 0); assert.deepEqual(unavailable.missing, ["SHOP"]);
+  }
+});

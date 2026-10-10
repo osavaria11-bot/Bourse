@@ -6,10 +6,10 @@
   <meta name="description" content="SAVY — Indicateurs macroéconomiques, historiques interactifs et dernières observations FRED." />
   <meta name="color-scheme" content="dark light" />
   <title>SAVY — Tableau macroéconomique</title>
-  <link rel="stylesheet" href="css/dashboard.css" />
+  <link rel="stylesheet" href="css/dashboard.css?v=20261010-classement" />
   <script src="js/macro-utils.js" defer></script>
-  <script src="js/portfolio-utils.js" defer></script>
-  <script src="js/portfolio.js" defer></script>
+  <script src="js/portfolio-utils.js?v=20261010-classement" defer></script>
+  <script src="js/portfolio.js?v=20261010-classement" defer></script>
   <script src="js/dashboard.js" defer></script>
 </head>
 <body>
@@ -45,7 +45,7 @@
         <p id="portfolioMissing" class="meta warning"></p>
         <div id="portfolioChart" class="chart-host portfolio-chart"></div>
         <section class="portfolio-movers" aria-labelledby="portfolioMoversTitle">
-          <div><p class="eyebrow">LE POINT QUOTIDIEN</p><h3 id="portfolioMoversTitle">Les meilleures et les pires performances sur un mois</h3></div>
+          <div class="portfolio-movers-heading"><div><p class="eyebrow">LE POINT QUOTIDIEN</p><h3 id="portfolioMoversTitle">Les meilleures et les pires performances sur un mois</h3></div><div id="portfolioMoversRanges" class="segmented" role="group" aria-label="Période du classement des positions"></div></div>
           <p id="portfolioMoversPeriod" class="meta"></p>
           <div class="portfolio-movers-grid"><div class="portfolio-movers-card"><h4>3 meilleures performances</h4><ol id="portfolioBest" class="portfolio-movers-list"></ol></div><div class="portfolio-movers-card"><h4>3 moins bonnes performances</h4><ol id="portfolioWorst" class="portfolio-movers-list"></ol></div></div>
           <p id="portfolioMoversNote" class="meta" role="status"></p>
