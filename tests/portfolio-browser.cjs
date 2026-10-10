@@ -163,8 +163,19 @@ async function main() {
     const cdrQuote = prices.series.find(row => row.id === "SNDK");
     assert.equal(await blank.locator("#portfolioValue").innerText(), new Intl.NumberFormat("fr-CA", {style: "currency", currency: "CAD", maximumFractionDigits: 2}).format(cdrQuote.value * 2));
     assert.equal(await blank.locator("#portfolioPositions").isVisible(), false);
+    const usPosition = {ticker: "SNDKUS", quantity: 0.25, currency: "USD", average_cost: 400};
+    await blank.locator("#portfolioImport").setInputFiles({name: "synthetic-sandisk-us.json", mimeType: "application/json", buffer: Buffer.from(JSON.stringify({positions: [usPosition]}))});
+    await blank.waitForFunction(() => document.querySelector('#portfolioRows tr[data-ticker="SNDKUS"]'));
+    assert.deepEqual(await blank.evaluate(() => JSON.parse(localStorage.getItem("savy:private-holdings:v1")).positions), [usPosition]);
+    assert.equal(await blank.locator("#portfolioRows tr").count(), 1);
+    assert.equal(await blank.locator('#portfolioRows tr[data-ticker="SNDKUS"] a').getAttribute("href"), "https://finance.yahoo.com/quote/SNDK/");
+    const usQuote = prices.series.find(row => row.id === "SNDKUS"), fxQuote = prices.series.find(row => row.id === "USDCAD");
+    const fx = P.observationAt(fxQuote.history, usQuote.date)[1];
+    assert.equal(await blank.locator("#portfolioValue").innerText(), new Intl.NumberFormat("fr-CA", {style: "currency", currency: "CAD", maximumFractionDigits: 2}).format(usQuote.value * usPosition.quantity * fx));
+    assert.equal(await blank.locator('#portfolioRows tr[data-ticker="SNDKUS"] td').nth(7).innerText(), (usQuote.value > usPosition.average_cost ? "+" : "") + new Intl.NumberFormat("fr-CA", {style: "currency", currency: "CAD", maximumFractionDigits: 2}).format((usQuote.value - usPosition.average_cost) * usPosition.quantity * fx));
+    assert.doesNotMatch(await blank.locator("#portfolioMissing").innerText(), /Période incomplète|base de comparaison manquante/);
     await blankContext.close();
-    console.log("Portfolio checks passed: 6 private synthetic positions, exact CAD/USD listings including the Sandisk CDR in CAD, CAD valuation, all six periods, monthly top/bottom 3, both directions of three numeric gain sorts, persistent collapsed/expanded positions, hover and keyboard date/value/percent, edits/import/export, offline cache, missing-baseline/FX protection, empty public view and 320px mobile.");
+    console.log("Portfolio checks passed: 6 private synthetic positions, exact CAD/USD listings including the Sandisk CDR in CAD and fractional US Sandisk in USD, CAD valuation, all six periods, monthly top/bottom 3, both directions of three numeric gain sorts, persistent collapsed/expanded positions, hover and keyboard date/value/percent, edits/import/export, offline cache, missing-baseline/FX protection, empty public view and 320px mobile.");
   } finally {await browser.close();}
 }
 main().catch(error => {console.error(error); process.exitCode = 1;}).finally(() => server.close());

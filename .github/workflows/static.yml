@@ -105,6 +105,8 @@ jobs:
           sandisk = next(p for p in data['series'] if p['id'] == 'SNDK')
           assert sandisk['quote_symbol'] == 'SNDK.TO' and sandisk['currency'] == 'CAD'
           assert len(sandisk['history']) >= 2  # This CDR was listed in May 2026.
+          sandisk_us = next(p for p in data['series'] if p['id'] == 'SNDKUS')
+          assert sandisk_us['quote_symbol'] == 'SNDK' and sandisk_us['currency'] == 'USD'
           print('Security histories and USD/CAD verified:', data['coverage'])
           PY
 

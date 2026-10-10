@@ -15,6 +15,7 @@ class SecurityTests(unittest.TestCase):
         self.assertEqual(points['FEQT']['quote_symbol'], 'FEQT.NE')
         self.assertEqual(points['MAXQ']['quote_symbol'], 'MAXQ.NE')
         self.assertEqual((points['SNDK']['quote_symbol'], points['SNDK']['currency']), ('SNDK.TO', 'CAD'))
+        self.assertEqual((points['SNDKUS']['quote_symbol'], points['SNDKUS']['currency']), ('SNDK', 'USD'))
         self.assertEqual(points['USDCAD']['quote_symbol'], 'CAD=X')
         self.assertTrue(all('quantity' not in p and 'positions' not in p for p in definitions))
 

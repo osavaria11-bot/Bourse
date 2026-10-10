@@ -912,6 +912,19 @@
       "source_url": "https://finance.yahoo.com/quote/SNDK.TO/"
     },
     {
+      "id": "SNDKUS",
+      "title": "Sandisk (action américaine)",
+      "currency": "USD",
+      "quote_symbol": "SNDK",
+      "unit": "USD",
+      "decimals": 2,
+      "frequency": "daily",
+      "transform": "none",
+      "max_age_days": 7,
+      "history_range": "2y",
+      "source_url": "https://finance.yahoo.com/quote/SNDK/"
+    },
+    {
       "id": "SU",
       "title": "Suncor Energy",
       "currency": "CAD",
