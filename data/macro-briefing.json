@@ -1,16 +1,16 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-10-10T19:44:36.948696+00:00",
-  "last_successful_update": "2026-10-10T19:44:36.948696+00:00",
+  "generated_at": "2026-10-10T20:40:21.170816+00:00",
+  "last_successful_update": "2026-10-10T20:40:21.170816+00:00",
   "update_status": "fresh_data",
   "coverage": {
-    "total": 32,
-    "fresh": 32,
+    "total": 33,
+    "fresh": 33,
     "cached": 0,
     "unavailable": 0
   },
-  "data_provider": "FRED — Federal Reserve Bank of St. Louis",
-  "briefing_paragraph": "Dernières observations publiées — Inflation CPI · annuelle : 3,35 % (période : 2026-08-01); Inflation PCE sous-jacente · annuelle : 3,01 % (période : 2026-08-01); Taux de chômage américain : 4,20 % (période : 2026-09-01); Créations nettes d’emplois · mensuelles : 29 milliers (période : 2026-09-01); Croissance du PIB réel · trimestre annualisé : 2,22 % (période : 2026-04-01); Taux effectif de la Fed : 3,88 % (période : 2026-10-08); Trésor américain · 10 ans : 5,22 % (période : 2026-10-08); Courbe des taux · 10 ans – 2 ans : 0,44 pt (période : 2026-10-09); Volatilité anticipée · VIX : 15,41 points (période : 2026-10-08); USD/CAD · dollars canadiens pour 1 $ US : 1,4253 $ CA/$ US (période : 2026-10-02).",
+  "data_provider": "FRED / Banque du Canada",
+  "briefing_paragraph": "Dernières observations publiées — Inflation CPI · annuelle : 3,35 % (période : 2026-08-01); Inflation PCE sous-jacente · annuelle : 3,01 % (période : 2026-08-01); Taux de chômage américain : 4,20 % (période : 2026-09-01); Créations nettes d’emplois · mensuelles : 29 milliers (période : 2026-09-01); Croissance du PIB réel · trimestre annualisé : 2,22 % (période : 2026-04-01); Taux effectif de la Fed : 3,88 % (période : 2026-10-08); Trésor américain · 10 ans : 5,22 % (période : 2026-10-08); Courbe des taux · 10 ans – 2 ans : 0,44 pt (période : 2026-10-09); Volatilité anticipée · VIX : 15,41 points (période : 2026-10-08); USD/CAD · dollars canadiens pour 1 $ US : 1,4253 $ CA/$ US (période : 2026-10-02); Taux directeur canadien : 2,25 % (période : 2026-10-08).",
   "news_digest_note": "Veille complémentaire. Les données suivent le calendrier de publication de chaque source.",
   "news_sources": [
     {
@@ -133,6 +133,16 @@
       "previous_value": 1.4253,
       "previous_date": "2026-10-01",
       "unit": "$ CA/$ US",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "V39079",
+      "title": "Taux directeur canadien",
+      "date": "2026-10-08",
+      "value": 2.25,
+      "previous_value": 2.25,
+      "previous_date": "2026-10-07",
+      "unit": "%",
       "fetch_status": "fresh"
     }
   ]
