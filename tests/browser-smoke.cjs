@@ -102,6 +102,7 @@ async function run() {
     await marketChart.focus(); await marketChart.press("ArrowLeft");
     assert.match(await page.locator("#marketGrid .chart-tooltip").first().innerText(), /points/);
     assert.equal(await page.locator("#marketGrid path").evaluateAll(nodes => nodes.some(node => /NaN|Infinity/.test(node.getAttribute("d")))), false);
+    await page.locator(".indicator-card").first().scrollIntoViewIfNeeded();
     await page.waitForSelector("#grid svg");
     assert.match(await page.locator("#updated").innerText(), /32\/32/);
     assert.equal(await page.locator('.indicator-card[data-id="SP500"]').count(), 0);
