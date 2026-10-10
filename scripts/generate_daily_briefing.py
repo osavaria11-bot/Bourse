@@ -171,12 +171,12 @@ def usable_previous(point: dict | None, definition: dict, today: date) -> bool:
     except (ValueError, TypeError):
         return False
 
-def collect_sources(definitions: list[dict], previous: dict | None, now: datetime) -> dict:
+def collect_sources(definitions: list[dict], previous: dict | None, now: datetime, *, fetcher=None) -> dict:
     previous_points = {point["id"]: point for point in (previous or {}).get("series", [])}
     results = {}
     errors = []
     with ThreadPoolExecutor(max_workers=5) as executor:
-        jobs = {executor.submit(fetch_series, definition, now): definition for definition in definitions}
+        jobs = {executor.submit(fetcher or fetch_series, definition, now): definition for definition in definitions}
         for job in as_completed(jobs):
             definition = jobs[job]
             series_id = definition["id"]
