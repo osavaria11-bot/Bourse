@@ -107,5 +107,26 @@
       change: validComparison ? last[1] - first[1] : null,
       percent: validComparison ? (last[1] / first[1] - 1) * 100 : null};
   }
-  return {RANGES, normalizePrices, normalizePositions, observationAt, valuationAt, historyFor, period};
+  function sortRows(rows, key, descending = true) {
+    return [...rows].sort((a, b) => {
+      const first = U.validNumber(a[key]), second = U.validNumber(b[key]);
+      if (first !== second) return first ? -1 : 1;
+      if (first && a[key] !== b[key]) return (a[key] - b[key]) * (descending ? -1 : 1);
+      return a.ticker.localeCompare(b.ticker, "en");
+    });
+  }
+  function monthlyPerformance(positions, data, day) {
+    const start = U.rangeStart(day, "1M");
+    if (!start) return {start: null, end: null, rows: [], missing: positions.map(p => p.ticker)};
+    const current = valuationAt(positions, data, day), baseline = valuationAt(positions, data, start);
+    const previous = new Map(baseline.rows.map(row => [row.ticker, row])), missing = [], rows = [];
+    for (const row of current.rows) {
+      const old = previous.get(row.ticker);
+      if (!U.validNumber(row.value_cad) || !U.validNumber(old?.value_cad) || old.value_cad <= 0) {missing.push(row.ticker); continue;}
+      rows.push({...row, start_price_date: old.price_date, change_cad: row.value_cad - old.value_cad,
+        percent: (row.value_cad / old.value_cad - 1) * 100});
+    }
+    return {start, end: day, rows: sortRows(rows, "percent"), missing};
+  }
+  return {RANGES, normalizePrices, normalizePositions, observationAt, valuationAt, historyFor, period, sortRows, monthlyPerformance};
 });

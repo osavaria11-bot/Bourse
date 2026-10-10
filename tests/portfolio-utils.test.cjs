@@ -100,3 +100,48 @@ test("average acquisition prices preserve fractional shares and calculate native
   const absent = P.valuationAt(P.normalizePositions([["SHOP", 2], ["CLS", 1.5, "USD", 100]], catalog), P.normalizePrices(dataset(), catalog), "2026-10-09");
   assert.equal(absent.unrealized_cad, null); assert.equal(absent.costs_available, 1);
 });
+test("monthly rankings use percentages rather than position size, include FX and pick the prior close at a month-end weekend", () => {
+  const data = {series: [
+    {id: "SHOP", title: "Shopify", history: [["2026-02-27", 100], ["2026-03-02", 900], ["2026-03-31", 110]]},
+    {id: "CLS", title: "Celestica", history: [["2026-02-27", 100], ["2026-03-02", 900], ["2026-03-31", 105]]},
+    {id: "USDCAD", history: [["2026-02-27", 1.25], ["2026-03-31", 1.5]]},
+  ]};
+  const positions = P.normalizePositions([["SHOP", 1000], ["CLS", 0.5]], catalog);
+  const month = P.monthlyPerformance(positions, data, "2026-03-31");
+  assert.equal(month.start, "2026-02-28");
+  assert.deepEqual(month.rows.map(row => row.ticker), ["CLS", "SHOP"]);
+  assert.equal(month.rows[0].start_price_date, "2026-02-27");
+  assert.ok(Math.abs(month.rows[0].percent - 26) < 1e-10);
+  assert.ok(Math.abs(month.rows[1].percent - 10) < 1e-10);
+  assert.ok(month.rows[0].change_cad < month.rows[1].change_cad);
+  const differentSize = P.monthlyPerformance(P.normalizePositions([["SHOP", 1], ["CLS", 500]], catalog), data, "2026-03-31");
+  assert.deepEqual(differentSize.rows.map(row => row.percent), month.rows.map(row => row.percent));
+  assert.deepEqual(month.missing, []);
+});
+test("monthly rankings exclude missing baselines, stale observations and unavailable FX rather than inventing returns", () => {
+  const positions = P.normalizePositions([["SHOP", 2], ["CLS", 3]], catalog);
+  const prices = P.normalizePrices(dataset(), catalog);
+  prices.series.find(row => row.id === "CLS").history = [["2026-10-09", 200]];
+  const partial = P.monthlyPerformance(positions, prices, "2026-10-09");
+  assert.deepEqual(partial.rows.map(row => row.ticker), ["SHOP"]);
+  assert.deepEqual(partial.missing, ["CLS"]);
+  prices.series.find(row => row.id === "SHOP").history = [["2026-08-01", 100], ["2026-10-09", 200]];
+  assert.equal(P.monthlyPerformance(positions, prices, "2026-10-09").rows.length, 0);
+  const withoutFX = P.normalizePrices(dataset(), catalog);
+  withoutFX.series.find(row => row.id === "USDCAD").history = [];
+  assert.deepEqual(P.monthlyPerformance(positions, withoutFX, "2026-10-09").missing, ["CLS"]);
+  assert.equal(P.monthlyPerformance(positions, prices, "invalid-date").rows.length, 0);
+});
+test("gain sorts compare numeric percentages and CAD dollars in both directions, keeping unavailable values last", () => {
+  const rows = [
+    {ticker: "A", unrealized_percent: 5, unrealized_cad: 100},
+    {ticker: "B", unrealized_percent: -10, unrealized_cad: -200},
+    {ticker: "C", unrealized_percent: 50, unrealized_cad: 10},
+    {ticker: "D", unrealized_percent: null, unrealized_cad: null},
+  ];
+  assert.deepEqual(P.sortRows(rows, "unrealized_percent").map(row => row.ticker), ["C", "A", "B", "D"]);
+  assert.deepEqual(P.sortRows(rows, "unrealized_percent", false).map(row => row.ticker), ["B", "A", "C", "D"]);
+  assert.deepEqual(P.sortRows(rows, "unrealized_cad").map(row => row.ticker), ["A", "C", "B", "D"]);
+  assert.deepEqual(P.sortRows(rows, "unrealized_cad", false).map(row => row.ticker), ["B", "C", "A", "D"]);
+  assert.deepEqual(rows.map(row => row.ticker), ["A", "B", "C", "D"]);
+});

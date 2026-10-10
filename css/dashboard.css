@@ -88,8 +88,25 @@ details[open]>summary:after {content:"−"}
 .portfolio-period-controls .meta {margin-top:8px}
 .portfolio-chart {max-width:100%;margin:18px 0}
 .portfolio-empty {padding:20px 0;font-size:14px;color:var(--muted)}
+.portfolio-movers {border-top:1px solid var(--border);padding-top:18px;margin-top:18px}
+.portfolio-movers h3 {font-size:16px;font-weight:600;margin-top:4px}
+.portfolio-movers-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}
+.portfolio-movers-card {min-width:0;padding:14px;border:1px solid var(--border);border-radius:10px;background:var(--bg)}
+.portfolio-movers-card h4 {font-size:12px;font-weight:600;margin:0 0 10px;color:var(--muted)}
+.portfolio-movers-list {list-style:none;padding:0;margin:0}
+.portfolio-movers-list li {display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 0}
+.portfolio-movers-list li + li {border-top:1px solid var(--border)}
+.portfolio-mover-name {min-width:0;font-size:12px;overflow-wrap:anywhere}
+.portfolio-mover-name strong {display:block;font-weight:550}
+.portfolio-movers-list .change {font-size:15px}
+.portfolio-positions-heading {display:flex;align-items:center;flex-wrap:wrap;gap:8px 14px;margin-top:20px}
+.portfolio-positions-heading .meta {flex:1 1 250px}
+.portfolio-sort {border:0;background:transparent;color:inherit;font-weight:600;padding:5px 0;text-align:left;white-space:nowrap;min-height:36px}
+.portfolio-sort span {display:inline-block;min-width:12px;color:var(--muted)}
+th[aria-sort="ascending"] .portfolio-sort,th[aria-sort="descending"] .portfolio-sort {color:var(--accent)}
+.portfolio .chart-tooltip {font-size:12px;text-align:left;min-height:20px;overflow-wrap:anywhere}
 .portfolio-table {margin-top:18px}
-.portfolio-table table {min-width:1180px;font-size:12px}
+.portfolio-table table {min-width:1290px;font-size:12px}
 .portfolio-table caption {text-align:left;color:var(--muted);font-size:11px;padding:0 0 10px}
 .portfolio-table td:first-child {min-width:180px}
 .portfolio-ticker {display:block;font-size:10px;font-weight:400;color:var(--muted);margin-top:3px;white-space:nowrap}
@@ -103,6 +120,7 @@ details[open]>summary:after {content:"−"}
 .portfolio .portfolio-unrealized {font-size:13px;white-space:normal;margin-top:5px}
 .portfolio .meta {margin-top:6px}
 @media(max-width:700px) {.portfolio {padding:16px}.portfolio .section-heading,.portfolio-overview {align-items:flex-start;flex-direction:column}.portfolio-period-controls {text-align:left}.portfolio-period-controls .segmented {justify-content:flex-start}.portfolio-value {font-size:30px}.position-form label:first-child {width:100%}.position-form select {width:100%}}
+@media(max-width:600px) {.portfolio-movers-grid {grid-template-columns:1fr}}
 .section-heading {display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:16px}
 .section-heading .eyebrow {margin-bottom:5px}
 .toolbar {background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:18px}
