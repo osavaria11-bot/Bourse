@@ -60,6 +60,11 @@ def parse_history(payload: dict, symbol: str, now: datetime, currency: str | Non
             day = datetime.fromtimestamp(stamp, exchange_timezone).date()
         except (ValueError, OverflowError, OSError):
             continue
+        # Yahoo may append a live FX quote dated Saturday. It is not a
+        # completed daily business-day observation and must not become
+        # an extra portfolio session or silently replace Friday's rate.
+        if symbol.endswith("=X") and day.weekday() >= 5:
+            continue
         # Keep only completed sessions, not an intraday quote presented as a close.
         if day > today or (day == today and isinstance(close_time, (int, float)) and now.timestamp() < close_time):
             continue

@@ -1,4 +1,4 @@
-name: Verify security price sources
+name: Verify public quote catalogue
 on:
   push:
     branches: ["codex/portefeuille-**"]
@@ -12,7 +12,7 @@ permissions:
 jobs:
   collect:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 8
     steps:
       - uses: actions/checkout@v6
         with:
@@ -21,33 +21,21 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: "3.13"
-      - name: Collect and verify all prices and their currencies
+      - name: Collect generic Canada and US quote catalogue
         run: |
-          python - <<'PYMETA'
-          import json
-          from urllib.request import Request,urlopen
-          from datetime import datetime,timezone
-          from zoneinfo import ZoneInfo
-          for symbol in ('FEQT.NE','MAXQ.NE','CAD=X'):
-              request=Request('https://query1.finance.yahoo.com/v8/finance/chart/'+symbol+'?range=1mo&interval=1d',headers={'User-Agent':'Mozilla/5.0 SAVY/3.0'})
-              with urlopen(request,timeout=20) as r: data=json.load(r)['chart']['result'][0]
-              print('DATE_META',symbol,data['meta']['exchangeTimezoneName'],data['meta'].get('regularMarketTime'),data['meta'].get('regularMarketPrice'))
-              for stamp,value in list(zip(data['timestamp'],data['indicators']['quote'][0]['close']))[-3:]:
-                  print('DATE_BAR',symbol,datetime.fromtimestamp(stamp,timezone.utc).isoformat(),datetime.fromtimestamp(stamp,ZoneInfo(data['meta']['exchangeTimezoneName'])).isoformat(),value)
-          PYMETA
           python scripts/collect_security_prices.py
           python - <<'PY'
           import json
           data = json.load(open('data/security-prices.json'))
-          assert data['coverage']['fresh'] == 34, data['errors']
+          assert data['coverage']['fresh'] == 101, data['errors']
           assert all(len(p['history']) > 200 for p in data['series'])
           PY
-      - name: Save verified public prices on the improvement branch
+      - name: Save public quote histories
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add data/security-prices.json
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m "chore: seed public equity and FX price histories"
+          git commit -m "chore: seed generic Canada and US quote histories"
           git pull --rebase origin "${GITHUB_REF_NAME}"
           git push origin "HEAD:${GITHUB_REF_NAME}"
