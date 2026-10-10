@@ -10,7 +10,7 @@ Un tableau de bord en français pour suivre le cycle économique aux États-Unis
 - **Recherche**, filtres par catégorie, tri par nom ou date, et **favoris** conservés dans le navigateur.
 - **Export CSV** de la sélection, compatible avec Excel et protégé contre les formules dans les champs texte.
 - **Modes clair et sombre**, disposition adaptée au téléphone et dialogues accessibles au clavier.
-- **Briefing macro**, dates d’observation et liens de veille.
+- **Briefing macroéconomique de 500 mots au total** : points importants par source et liens vers les publications.
 - Arbres de décision NFCI et TEV/EBITDA et ressources complémentaires conservés.
 
 Les périodes de graphique se terminent à la dernière observation de chaque série. Une flèche indique le sens de variation depuis l’observation précédente, dont la date est disponible au survol. Les périodes mensuelles et trimestrielles sont affichées comme telles.
@@ -18,6 +18,10 @@ Les périodes de graphique se terminent à la dernière observation de chaque s�
 ## Mise à jour et fiabilité
 
 GitHub Actions collecte les données **trois fois par jour du lundi au vendredi**, à 11 h 17, 17 h 17 et 23 h 17 UTC, et une fois par jour la fin de semaine à 12 h 17 UTC. Les horaires affichés dans le tableau sont convertis à l’heure de Montréal.
+
+Le **briefing d’actualité** est préparé séparément par une tâche ChatGPT quotidienne, vers **8 h, heure de Montréal**, fins de semaine comprises. Il résume Reuters Marchés, Reuters Économie, la Banque du Canada, le calendrier FRED et Perplexity Finance, pour **500 mots au total**, hors titres et liens. Chaque section cite les publications consultées et leurs dates. Une source inaccessible est signalée sans inventer son contenu; une journée sans nouvelle importante reprend uniquement des points récents en précisant leur date.
+
+La tâche actualise `data/daily-briefing.json` dans ce dépôt. La collecte FRED ne modifie jamais ce fichier. La date d’édition des nouvelles est indépendante de celle des graphiques. En cas de panne, le navigateur peut conserver la dernière édition vérifiée, avec sa date et un avertissement visible. Si la préparation quotidienne échoue, l’édition précédente reste affichée et n’est pas présentée comme nouvelle.
 
 Les observations suivent le calendrier de leurs sources. Par exemple, une statistique mensuelle conserve sa période de référence entre deux publications; la date de collecte ne devient jamais sa date d’observation.
 
@@ -34,7 +38,16 @@ Les observations suivent le calendrier de leurs sources. Par exemple, une statis
 La configuration se trouve dans `data/series.json`. Les fichiers publiés sont :
 
 - `data/macro-data.json` : valeurs, dates, variation, statut de collecte et historiques.
-- `data/daily-briefing.json` : briefing et liens de veille.
+- `data/daily-briefing.json` : édition d’actualité en français, 500 mots, cinq sections et publications citées (schéma 3).
+- `data/macro-briefing.json` : instantané statistique de secours généré avec les observations (schéma 2).
+
+Avant de publier une nouvelle édition :
+
+```bash
+python3 scripts/validate_news_briefing.py
+```
+
+Le validateur vérifie les cinq sources, les dates, les liens HTTPS et le total de 500 mots (somme des mots séparés par des espaces dans les champs `summary`). Le déploiement Pages exécute cette vérification avant publication.
 
 Les nouvelles mesures sont calculées à partir des niveaux publiés :
 

@@ -37,18 +37,18 @@ jobs:
           python-version: "3.13"
       - name: Verify collector
         run: python -m unittest discover -s tests -p 'test_*.py' -v
-      - name: Collect observations and generate briefing
+      - name: Collect observations and generate statistical snapshot
         run: python scripts/generate_daily_briefing.py
       - name: Commit published data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/macro-data.json data/daily-briefing.json
+          git add data/macro-data.json data/macro-briefing.json
           if git diff --cached --quiet; then
             echo "No data changes to commit."
             exit 0
           fi
-          git commit -m "chore: update macro observations and briefing"
+          git commit -m "chore: update macro observations"
           git pull --rebase origin main
           git push origin HEAD:main
 

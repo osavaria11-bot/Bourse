@@ -3,6 +3,7 @@
   const U = window.MacroUtils;
   const $ = selector => document.querySelector(selector);
   const CACHE_KEY = "savy:macro-data:v2";
+  const NEWS_CACHE_KEY = "savy:news-digest:v3";
   const PREFS_KEY = "savy:preferences:v2";
   function readStored(key, fallback) {
     try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; }
@@ -45,7 +46,7 @@
     } finally { clearTimeout(timeout); }
   }
   async function loadLegacySnapshot() {
-    const [config, briefing] = await Promise.all([fetchJSON("data/series.json"), fetchJSON("data/daily-briefing.json")]);
+    const [config, briefing] = await Promise.all([fetchJSON("data/series.json"), fetchJSON("data/macro-briefing.json")]);
     const snapshots = new Map((briefing.series_snapshot || []).map(point => [point.id, point]));
     const series = config.series.map(definition => {
       const point = snapshots.get(definition.id);
@@ -303,30 +304,77 @@
     document.body.append(anchor); anchor.click(); anchor.remove();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
-  function fallbackBriefing() {
-    return ["CPIAUCSL", "PCEPILFE", "UNRATE", "GDPC1", "T10Y2Y", "SP500", "DEXCAUS"]
-      .map(id => state.seriesById.get(id)).filter(point => point && point.value !== null)
-      .map(point => point.title + " : " + U.formatNumber(point.value, point.decimals) + " " + point.unit + " (" + U.observationLabel(point.date, point.frequency) + ")").join("; ") + ".";
+  function newsURL(value) {
+    try {
+      const url = new URL(value);
+      return url.protocol === "https:" && !url.username && !url.password;
+    } catch { return false; }
+  }
+  function validateBriefing(briefing) {
+    const ids = ["reuters-markets", "reuters-economy", "bank-of-canada", "fred-calendar", "perplexity-finance"];
+    const stamp = U.parseTimestamp(briefing?.generated_at);
+    if (!briefing || briefing.schema_version !== 3 || briefing.kind !== "news_digest" ||
+        briefing.language !== "fr" || briefing.timezone !== "America/Toronto" || !U.isDate(briefing.edition_date) ||
+        !Number.isFinite(stamp) || stamp > Date.now() + 300000 || !Array.isArray(briefing.sources) || briefing.sources.length !== ids.length) throw new Error("Briefing invalide");
+    if (new Intl.DateTimeFormat("en-CA", {timeZone: "America/Toronto"}).format(new Date(stamp)) !== briefing.edition_date) throw new Error("Date d’édition incohérente");
+    const seen = new Set();
+    let words = 0;
+    for (const source of briefing.sources) {
+      if (!source || !ids.includes(source.id) || seen.has(source.id) || !newsURL(source.url) ||
+          typeof source.label !== "string" || !source.label.trim() || typeof source.summary !== "string" || !source.summary.trim() ||
+          !["available", "partial", "unavailable"].includes(source.status) || !Array.isArray(source.articles) ||
+          (source.status !== "unavailable" && source.articles.length === 0)) throw new Error("Source du briefing invalide");
+      seen.add(source.id); words += source.summary.trim().split(/\s+/u).length;
+      for (const article of source.articles) {
+        if (!article || !newsURL(article.url) || typeof article.title !== "string" || !article.title.trim() ||
+            !U.isDate(article.published_date) || article.published_date > briefing.edition_date) throw new Error("Publication invalide");
+      }
+    }
+    if (words !== 500 || briefing.word_count !== words) throw new Error("Le briefing doit contenir 500 mots");
+    return briefing;
+  }
+  function newsLink(label, url) {
+    const link = el("a", "", label);
+    link.href = url; link.target = "_blank"; link.rel = "noopener noreferrer";
+    return link;
   }
   async function loadBriefing() {
-    let briefing = null;
-    try { briefing = await fetchJSON("data/daily-briefing.json"); } catch { /* The dataset also contains verified observations. */ }
-    if (!state.dataset) return;
-    const matches = briefing && briefing.schema_version === 2 && U.parseTimestamp(briefing.generated_at) === U.parseTimestamp(state.dataset.generated_at);
-    $("#briefingDate").textContent = "Collecte : " + U.timestampLabel(state.dataset.generated_at) + ". Chaque période est précisée ci-dessous.";
-    $("#briefingParagraph").textContent = matches ? briefing.briefing_paragraph : fallbackBriefing();
-    const cached = state.dataset.series.filter(point => point.fetch_status === "cached").length;
-    $("#briefingNote").textContent = (cached ? cached + " série(s) utilisent une valeur conservée. " : "") +
-      "Les liens de veille complètent les statistiques; ils ne constituent pas un résumé automatique de l’actualité.";
-    const fragment = document.createDocumentFragment();
-    for (const source of briefing?.news_sources || []) {
-      if (!source || typeof source.url !== "string" || !source.url.startsWith("https://")) continue;
-      const li = el("li"), link = el("a", "", source.label || "Source");
-      link.href = source.url; link.target = "_blank"; link.rel = "noopener noreferrer";
-      if (source.description) link.title = source.description;
-      li.append(link); fragment.append(li);
+    let briefing, cached = false;
+    try {
+      briefing = validateBriefing(await fetchJSON("data/daily-briefing.json"));
+      writeStored(NEWS_CACHE_KEY, briefing);
+    } catch {
+      try { briefing = validateBriefing(readStored(NEWS_CACHE_KEY, null)); cached = true; }
+      catch {
+        $("#briefingDate").textContent = "Édition indisponible";
+        $("#briefingParagraph").textContent = "Le briefing d’actualité n’a pas pu être chargé. Réessaie avec « Actualiser ».";
+        $("#briefingNote").textContent = "Aucun résumé d’actualité vérifié n’est disponible dans ce navigateur.";
+        $("#briefingLinks").replaceChildren(); return;
+      }
     }
-    $("#briefingLinks").replaceChildren(fragment);
+    const today = new Intl.DateTimeFormat("en-CA", {timeZone: "America/Toronto"}).format(new Date());
+    const old = briefing.edition_date < today;
+    $("#briefingDate").textContent = (cached ? "Copie conservée · " : "") + "Édition du " + briefing.edition_date + " · " + briefing.word_count +
+      " mots · Publié le " + U.timestampLabel(briefing.generated_at) + (old ? " · nouvelle édition en attente" : "");
+    $("#briefingDate").classList.toggle("warning", cached || old);
+    const fragment = document.createDocumentFragment(), links = document.createDocumentFragment();
+    for (const source of briefing.sources) {
+      const section = el("section", "news-section" + (source.status === "unavailable" ? " news-unavailable" : ""));
+      section.append(el("h3", "", source.label + (source.status === "unavailable" ? " · accès indisponible" : source.status === "partial" ? " · lecture partielle" : "")), el("p", "", source.summary));
+      const articles = el("ul", "news-links");
+      for (const article of source.articles) {
+        const li = el("li");
+        li.append(newsLink(article.title, article.url), el("span", "muted", " · " + article.published_date));
+        articles.append(li);
+      }
+      section.append(articles); fragment.append(section);
+      const li = el("li"); li.append(newsLink(source.label, source.url)); links.append(li);
+    }
+    $("#briefingParagraph").replaceChildren(fragment);
+    $("#briefingLinks").replaceChildren(links);
+    const unavailable = briefing.sources.filter(source => source.status === "unavailable").length;
+    $("#briefingNote").textContent = (cached ? "Actualisation indisponible : dernière édition vérifiée conservée. " : "") +
+      (unavailable ? unavailable + " source(s) inaccessible(s), indiquée(s) ci-dessus. " : "") + (briefing.editorial_note || "");
   }
   async function loadDataset() {
     if (state.loading) return;
@@ -343,7 +391,6 @@
       if (origin === "published") writeStored(CACHE_KEY, dataset);
       renderStatus(); renderKpis(); renderCategories(); renderCards();
       if ($("#detailDialog").open) updateDetail();
-      await loadBriefing();
     } catch {
       if (state.dataset) {
         $("#updated").textContent = "Actualisation indisponible · les dernières données affichées sont conservées.";
@@ -351,9 +398,9 @@
       } else {
         $("#updated").textContent = "Les fichiers de données ne sont pas disponibles. Réessaie avec « Actualiser ».";
         $("#updated").classList.add("warning");
-        $("#briefingParagraph").textContent = "Le briefing apparaîtra après une collecte réussie.";
       }
     } finally {
+      await loadBriefing();
       state.loading = false; $("#refreshButton").disabled = false; $("#refreshButton").textContent = "Actualiser";
     }
   }

@@ -43,6 +43,8 @@ jobs:
           cache: npm
       - name: Collector regression tests
         run: python -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Validate sourced news edition
+        run: python scripts/validate_news_briefing.py
       - name: Dashboard regression tests
         run: |
           node --check js/dashboard.js

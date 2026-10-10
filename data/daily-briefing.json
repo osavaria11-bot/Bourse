@@ -1,154 +1,96 @@
 {
-  "schema_version": 2,
-  "generated_at": "2026-10-10T16:57:26.023414+00:00",
-  "last_successful_update": "2026-10-10T16:57:26.023414+00:00",
-  "update_status": "fresh_data",
-  "coverage": {
-    "total": 33,
-    "fresh": 33,
-    "cached": 0,
-    "unavailable": 0
-  },
-  "data_provider": "FRED — Federal Reserve Bank of St. Louis",
-  "briefing_paragraph": "Dernières observations publiées — Inflation CPI · annuelle : 3,35 % (période : 2026-08-01); Inflation PCE sous-jacente · annuelle : 3,01 % (période : 2026-08-01); Taux de chômage américain : 4,20 % (période : 2026-09-01); Créations nettes d’emplois · mensuelles : 29 milliers (période : 2026-09-01); Croissance du PIB réel · trimestre annualisé : 2,22 % (période : 2026-04-01); Taux effectif de la Fed : 3,88 % (période : 2026-10-08); Trésor américain · 10 ans : 5,22 % (période : 2026-10-08); Courbe des taux · 10 ans – 2 ans : 0,44 pt (période : 2026-10-09); S&P 500 : 7811,54 points (période : 2026-10-09); Volatilité anticipée · VIX : 15,41 points (période : 2026-10-08); USD/CAD · dollars canadiens pour 1 $ US : 1,4253 $ CA/$ US (période : 2026-10-02).",
-  "news_digest_note": "Veille complémentaire. Les données suivent le calendrier de publication de chaque source.",
-  "news_sources": [
+  "schema_version": 3,
+  "kind": "news_digest",
+  "language": "fr",
+  "timezone": "America/Toronto",
+  "edition_date": "2026-10-10",
+  "generated_at": "2026-10-10T17:20:52.956Z",
+  "word_count": 500,
+  "editorial_note": "Synthèse de 500 mots au total, hors titres et liens. Les points à surveiller sont une lecture des publications. Les sources inaccessibles sont signalées.",
+  "sources": [
     {
+      "id": "reuters-markets",
       "label": "Reuters — Marchés",
       "url": "https://www.reuters.com/markets/",
-      "description": "Actions, taux, devises et matières premières."
+      "status": "available",
+      "summary": "Wall Street a terminé la séance du 9 octobre en hausse : le S&P 500 a gagné 0,59 %, le Nasdaq 0,64 % et le Dow Jones 0,83 %. Les trois indices progressent aussi sur la semaine, tandis que les petites capitalisations du Russell 2000 restent en retrait. Les marchés surveillent les discussions avec l’Iran et le pétrole; malgré un recul initial, les bruts WTI et Brent ont clôturé légèrement plus haut. Les télécommunications ont fortement baissé après une annonce de SpaceX sur les fréquences mobiles. La semaine prochaine concentre deux catalyseurs : résultats bancaires et inflation américaine. Selon Reuters, les bénéfices trimestriels du S&P 500 devraient augmenter de plus de 30 %, une estimation qui reste à confirmer. Les taux obligataires élevés constituent cependant un frein aux valorisations. À surveiller : qualité du crédit, étendue réelle du rebond, consommation, marges bancaires et inflation des services, pour juger si les profits peuvent continuer à soutenir les actions.",
+      "articles": [
+        {
+          "title": "Clôture de Wall Street et mouvements sectoriels",
+          "url": "https://www.reuters.com/business/wall-st-futures-gain-oil-slips-telecoms-pressured-by-spacex-spectrum-deal-2026-10-09/",
+          "published_date": "2026-10-09"
+        },
+        {
+          "title": "Résultats bancaires et inflation : la semaine à venir",
+          "url": "https://www.reuters.com/business/wall-st-week-ahead-bank-earnings-cpi-headline-busy-markets-week-sp-500-hovers-2026-10-09/",
+          "published_date": "2026-10-09"
+        }
+      ]
     },
     {
+      "id": "reuters-economy",
       "label": "Reuters — Économie",
       "url": "https://www.reuters.com/markets/econ-world/",
-      "description": "Croissance, inflation et banques centrales."
+      "status": "available",
+      "summary": "Au Canada, l’emploi a reculé de 68 300 postes en septembre après une baisse en août; le chômage atteint 6,5 %. Les pertes touchent notamment les services publics et les jeunes. La croissance salariale des employés permanents remonte à 2,3 %, ce qui complique l’équilibre entre ralentissement économique et inflation. Après la publication, le dollar canadien et les rendements obligataires à deux ans ont diminué. Aux États-Unis, la confiance des consommateurs de l’Université du Michigan descend à 46,3 en octobre, contre 48,1 en septembre. Les ménages moins aisés souffrent davantage, alors que les revenus élevés soutiennent encore les dépenses. Les attentes d’inflation à un an passent à 4,7 %. Lecture : une confiance faible signale des tensions, mais ne démontre pas, à elle seule, une contraction de la consommation.",
+      "articles": [
+        {
+          "title": "Recul de l’emploi canadien en septembre",
+          "url": "https://www.reuters.com/world/americas/canadas-employment-surprisingly-shrinks-september-jobless-rate-inches-up-2026-10-09/",
+          "published_date": "2026-10-09"
+        },
+        {
+          "title": "Détérioration de la confiance des consommateurs américains",
+          "url": "https://www.reuters.com/business/us-consumer-sentiment-deteriorates-further-october-2026-10-09/",
+          "published_date": "2026-10-09"
+        }
+      ]
     },
     {
-      "label": "Banque du Canada — Sommaire quotidien",
+      "id": "bank-of-canada",
+      "label": "Banque du Canada",
       "url": "https://www.bankofcanada.ca/rates/daily-digest/",
-      "description": "Taux et devises publiés par la Banque du Canada."
+      "status": "available",
+      "summary": "Le sommaire quotidien indique 1,4271 dollar canadien pour un dollar américain le 9 octobre, contre 1,4240 la veille. Le taux directeur affiché pour le 8 octobre demeure à 2,25 %. L’inflation globale d’août est de 3,0 %, tandis que les mesures tronquée et médiane sont respectivement à 1,9 % et 2,0 %. Ces données portent sur des périodes différentes : elles ne décrivent pas toutes la même journée. Dans une analyse publiée le 8 octobre, la Banque souligne aussi que le vieillissement et la baisse de l’immigration freinent la croissance de la population active. Une demande résidentielle moins forte pourrait atténuer certaines pressions sur le logement, mais une main-d’œuvre réduite limiterait la production et pourrait accentuer des pénuries sectorielles.",
+      "articles": [
+        {
+          "title": "Sommaire quotidien : devises, taux et inflation",
+          "url": "https://www.bankofcanada.ca/rates/daily-digest/",
+          "published_date": "2026-10-09"
+        },
+        {
+          "title": "Les changements démographiques et l’économie canadienne",
+          "url": "https://www.bankofcanada.ca/2026/10/demographic-changes-are-reshaping-the-canadian-economy/",
+          "published_date": "2026-10-08"
+        }
+      ]
     },
     {
-      "label": "FRED — Calendrier des publications",
+      "id": "fred-calendar",
+      "label": "FRED — Calendrier",
       "url": "https://fred.stlouisfed.org/releases/calendar",
-      "description": "Prochaines mises à jour des statistiques."
+      "status": "available",
+      "summary": "Le calendrier FRED du samedi 10 octobre présente notamment les séries de cryptomonnaies Coinbase; une entrée de calendrier ne signifie pas une nouvelle décision monétaire. Pour la semaine suivante, le calendrier officiel du BLS confirme l’IPC américain de septembre le 14 octobre, les prix à la production le 15 et les prix d’importation et d’exportation le 16, à 8 h 30, heure de Montréal. Ces publications permettront de vérifier la persistance des pressions inflationnistes.",
+      "articles": [
+        {
+          "title": "Calendrier des publications FRED",
+          "url": "https://fred.stlouisfed.org/releases/calendar",
+          "published_date": "2026-10-10"
+        },
+        {
+          "title": "Calendrier officiel du BLS pour octobre",
+          "url": "https://www.bls.gov/schedule/2026/10_sched.htm",
+          "published_date": "2026-02-18"
+        }
+      ]
     },
     {
+      "id": "perplexity-finance",
       "label": "Perplexity — Finance",
       "url": "https://www.perplexity.ai/finance",
-      "description": "Veille financière complémentaire."
-    }
-  ],
-  "series_snapshot": [
-    {
-      "id": "T10Y2Y",
-      "title": "Courbe des taux · 10 ans – 2 ans",
-      "date": "2026-10-09",
-      "value": 0.44,
-      "previous_value": 0.47,
-      "previous_date": "2026-10-08",
-      "unit": "pt",
-      "fetch_status": "fresh"
-    },
-    {
-      "id": "DFF",
-      "title": "Taux effectif de la Fed",
-      "date": "2026-10-08",
-      "value": 3.88,
-      "previous_value": 3.88,
-      "previous_date": "2026-10-07",
-      "unit": "%",
-      "fetch_status": "fresh"
-    },
-    {
-      "id": "DGS10",
-      "title": "Trésor américain · 10 ans",
-      "date": "2026-10-08",
-      "value": 5.22,
-      "previous_value": 5.28,
-      "previous_date": "2026-10-07",
-      "unit": "%",
-      "fetch_status": "fresh"
-    },
-    {
-      "id": "CPIAUCSL",
-      "title": "Inflation CPI · annuelle",
-      "date": "2026-08-01",
-      "value": 3.353016,
-      "previous_value": 3.303856,
-      "previous_date": "2026-07-01",
-      "unit": "%",
-      "fetch_status": "fresh"
-    },
-    {
-      "id": "PCEPILFE",
-      "title": "Inflation PCE sous-jacente · annuelle",
-      "date": "2026-08-01",
-      "value": 3.007596,
-      "previous_value": 2.983468,
-      "previous_date": "2026-07-01",
-      "unit": "%",
-      "fetch_status": "fresh"
-    },
-    {
-      "id": "UNRATE",
-      "title": "Taux de chômage américain",
-      "date": "2026-09-01",
-      "value": 4.2,
-      "previous_value": 4.1,
-      "previous_date": "2026-08-01",
-      "unit": "%",
-      "fetch_status": "fresh"
-    },
-    {
-      "id": "PAYEMS",
-      "title": "Créations nettes d’emplois · mensuelles",
-      "date": "2026-09-01",
-      "value": 29.0,
-      "previous_value": 133.0,
-      "previous_date": "2026-08-01",
-      "unit": "milliers",
-      "fetch_status": "fresh"
-    },
-    {
-      "id": "GDPC1",
-      "title": "Croissance du PIB réel · trimestre annualisé",
-      "date": "2026-04-01",
-      "value": 2.220208,
-      "previous_value": 2.491776,
-      "previous_date": "2026-01-01",
-      "unit": "%",
-      "fetch_status": "fresh"
-    },
-    {
-      "id": "SP500",
-      "title": "S&P 500",
-      "date": "2026-10-09",
-      "value": 7811.54,
-      "previous_value": 7765.36,
-      "previous_date": "2026-10-08",
-      "unit": "points",
-      "fetch_status": "fresh"
-    },
-    {
-      "id": "VIXCLS",
-      "title": "Volatilité anticipée · VIX",
-      "date": "2026-10-08",
-      "value": 15.41,
-      "previous_value": 15.08,
-      "previous_date": "2026-10-07",
-      "unit": "points",
-      "fetch_status": "fresh"
-    },
-    {
-      "id": "DEXCAUS",
-      "title": "USD/CAD · dollars canadiens pour 1 $ US",
-      "date": "2026-10-02",
-      "value": 1.4253,
-      "previous_value": 1.4253,
-      "previous_date": "2026-10-01",
-      "unit": "$ CA/$ US",
-      "fetch_status": "fresh"
+      "status": "unavailable",
+      "summary": "Le contenu de Perplexity Finance n’était pas accessible à la vérification. Aucun point d’actualité ne lui est attribué dans cette édition.",
+      "articles": []
     }
   ]
 }

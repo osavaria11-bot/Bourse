@@ -67,6 +67,20 @@ class TransformationTests(unittest.TestCase):
         self.assertEqual((result["date"], result["previous_date"], result["change"]), ("2026-09-04", "2026-09-01", 1))
 
 class ResilienceTests(unittest.TestCase):
+    def test_macro_refresh_never_overwrites_the_news_edition(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "data").mkdir()
+            (root / "data/series.json").write_text(json.dumps({"series": [definition()]}))
+            news = root / "data/daily-briefing.json"
+            news.write_text('{"edition": "verified news, independent of macro collection"}\n')
+            original = news.read_bytes()
+            with patch.object(generator, "ROOT", root), patch("sys.argv", ["collector"]), patch.object(generator, "fetch_series", return_value=point()):
+                generator.main()
+            self.assertEqual(news.read_bytes(), original)
+            self.assertTrue((root / "data/macro-data.json").is_file())
+            self.assertTrue((root / "data/macro-briefing.json").is_file())
+
     def test_partial_failure_keeps_independent_successes_and_cached_dates(self):
         old = point("B")
         old["last_successful_fetch"] = "2026-10-08T12:00:00+00:00"

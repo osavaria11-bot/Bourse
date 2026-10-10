@@ -56,6 +56,12 @@ details[open]>summary:after {content:"−"}
 .details-label {margin-left:auto;font-size:11px;color:var(--muted)}
 .briefing .meta {margin-top:9px}
 .briefing-text {font-size:13px;line-height:1.8;margin-top:12px}
+.news-section + .news-section {border-top:1px solid var(--border);margin-top:16px;padding-top:16px}
+.news-section h3 {font-size:13px;font-weight:600;margin:0 0 6px}
+.news-section p {margin:0}
+.news-section .news-links {margin-top:7px;font-size:11px}
+.news-section a {overflow-wrap:anywhere}
+.news-unavailable h3 {color:var(--muted)}
 .news-links {display:flex;flex-wrap:wrap;gap:10px 20px;list-style:none;padding:0;margin:14px 0 0;font-size:12px}
 .workspace {margin-top:34px;scroll-margin-top:10px}
 .section-heading {display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:16px}

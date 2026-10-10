@@ -28,9 +28,17 @@ const series = definitions.map((definition, index) => {
 });
 const dataset = { schema_version: 2, generated_at: now.toISOString(), last_successful_update: now.toISOString(),
   update_status: "fresh_data", data_provider: "SYNTHETIC TEST FIXTURE", series };
-const briefing = { ...dataset, series: undefined, briefing_paragraph: "Fixture de test — aucune donnée de marché réelle.",
-  news_sources: [], series_snapshot: series };
-let offline = false, failAllData = false;
+const newsTime = new Date(now.getTime() - 86400000);
+const edition = new Intl.DateTimeFormat("en-CA", {timeZone: "America/Toronto"}).format(newsTime);
+const newsIds = ["reuters-markets", "reuters-economy", "bank-of-canada", "fred-calendar", "perplexity-finance"];
+const briefing = {schema_version: 3, kind: "news_digest", language: "fr", timezone: "America/Toronto",
+  generated_at: newsTime.toISOString(), edition_date: edition, word_count: 500,
+  editorial_note: "Fixture de test — aucune donnée de marché réelle.",
+  sources: newsIds.map((id, index) => ({id, label: "Source synthétique " + index,
+    url: "https://example.test/" + id, status: index === 4 ? "unavailable" : "available",
+    summary: ["<script>fixture</script>", ...Array(99).fill("synthétique")].join(" "),
+    articles: index === 4 ? [] : [{title: "Publication synthétique", url: "https://example.test/article/" + id, published_date: edition}]}))};
+let offline = false, failAllData = false, failNews = false, invalidNews = false;
 const contentTypes = { ".html": "text/html", ".css": "text/css", ".js": "text/javascript", ".json": "application/json", ".png": "image/png" };
 const server = http.createServer((request, response) => {
   const pathname = new URL(request.url, "http://localhost").pathname;
@@ -39,8 +47,11 @@ const server = http.createServer((request, response) => {
     response.end(offline ? "{}" : JSON.stringify(dataset)); return;
   }
   if (pathname === "/data/daily-briefing.json") {
-    response.writeHead(failAllData ? 503 : 200, { "Content-Type": "application/json" });
-    response.end(failAllData ? "{}" : JSON.stringify(briefing)); return;
+    response.writeHead(failNews ? 503 : 200, { "Content-Type": "application/json" });
+    response.end(failNews ? "{}" : JSON.stringify(invalidNews ? {...briefing, word_count: 499} : briefing)); return;
+  }
+  if (pathname === "/data/macro-briefing.json" && failAllData) {
+    response.writeHead(503); response.end("{}"); return;
   }
   const filename = path.resolve(root, "." + (pathname === "/" ? "/index.html" : decodeURIComponent(pathname)));
   if (!filename.startsWith(root + path.sep) || !fs.existsSync(filename) || !fs.statSync(filename).isFile()) {
@@ -63,6 +74,13 @@ async function run() {
     page.on("pageerror", error => errors.push(error.message));
     await page.route("https://**", route => route.abort());
     await page.goto(url); await waitCount(page, 33);
+    await page.waitForSelector(".news-section");
+    assert.equal(await page.locator(".news-section").count(), 5);
+    assert.match(await page.locator("#briefingDate").innerText(), new RegExp(edition + ".*500 mots"));
+    assert.match(await page.locator("#briefingDate").innerText(), /nouvelle édition en attente/);
+    assert.match(await page.locator(".news-unavailable h3").innerText(), /accès indisponible/);
+    assert.equal(await page.locator("#briefingParagraph script").count(), 0);
+    assert.equal(await page.locator(".news-section a").first().getAttribute("rel"), "noopener noreferrer");
     await page.waitForSelector("#grid svg");
     assert.match(await page.locator("#updated").innerText(), /33\/33/);
     assert.ok(await page.locator("#grid svg").count() > 0);
@@ -118,15 +136,31 @@ async function run() {
     await page.reload(); await waitCount(page, 33);
     assert.match(await page.locator("#updated").innerText(), /Copie conservée/);
     assert.equal(await page.locator("#refreshButton").isEnabled(), true);
+    invalidNews = true;
+    await page.reload(); await page.waitForFunction(() => document.querySelector("#briefingDate").textContent.includes("Copie conservée"));
+    assert.equal(await page.locator(".news-section").count(), 5);
+    assert.match(await page.locator("#briefingDate").innerText(), new RegExp(edition));
+    invalidNews = false; failNews = true;
+    await page.reload(); await page.waitForFunction(() => document.querySelector("#briefingDate").textContent.includes("Copie conservée"));
+    assert.equal(await page.locator(".news-section").count(), 5);
     failAllData = true;
+    failNews = false;
+    const newsContext = await browser.newContext();
+    const newsOnly = await newsContext.newPage();
+    await newsOnly.goto(url);
+    await newsOnly.waitForFunction(() => document.querySelector("#updated").textContent.includes("ne sont pas disponibles"));
+    await newsOnly.waitForSelector(".news-section");
+    assert.equal(await newsOnly.locator(".news-section").count(), 5, "News must load even when macro data is unavailable");
+    await newsContext.close(); failNews = true;
     const freshContext = await browser.newContext();
     const empty = await freshContext.newPage();
     await empty.route("https://**", route => route.abort());
     await empty.goto(url);
     await empty.waitForFunction(() => document.querySelector("#updated").textContent.includes("ne sont pas disponibles"));
+    await empty.waitForFunction(() => document.querySelector("#briefingDate").textContent === "Édition indisponible");
     assert.equal(await empty.locator("#refreshButton").isEnabled(), true);
     assert.deepEqual(errors, []);
-    console.log("Browser checks passed: 33 cards, search, categories, persistent favorites/theme, charts/keyboard, CSV downloads, 320/375px layouts, offline fallback.");
+    console.log("Browser checks passed: 33 cards, filters, persistence, charts, CSV, mobile, independent news timestamps, sourced 500-word edition, invalid/offline news fallback, news without macro data.");
     await freshContext.close(); await context.close();
   } finally { await browser.close(); }
 }

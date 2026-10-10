@@ -256,14 +256,16 @@ def main() -> None:
     definitions = config["series"]
     previous = read_json(args.output_dir / "macro-data.json")
     if previous is None:
-        previous = migrate_previous(definitions, read_json(args.output_dir / "daily-briefing.json"))
+        legacy = read_json(args.output_dir / "macro-briefing.json") or read_json(args.output_dir / "daily-briefing.json")
+        previous = migrate_previous(definitions, legacy)
     dataset = collect_sources(definitions, previous, datetime.now(timezone.utc))
     briefing = build_briefing(dataset)
     # Validate both documents before replacing either previous file.
     json.dumps(dataset, allow_nan=False)
     json.dumps(briefing, allow_nan=False)
     atomic_write_json(args.output_dir / "macro-data.json", dataset, compact=True)
-    atomic_write_json(args.output_dir / "daily-briefing.json", briefing)
+    # News is maintained separately; an observation refresh must never overwrite it.
+    atomic_write_json(args.output_dir / "macro-briefing.json", briefing)
     print(f"Collecte : {dataset['coverage']}; statut : {dataset['update_status']}")
     for error in dataset["errors"]:
         print(f"::warning::{error['id']}: {error['message']}")
