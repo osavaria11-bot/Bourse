@@ -71,9 +71,9 @@ select {background:var(--raised);border:1px solid var(--border);color:var(--text
 .category-filters button {padding:6px 11px;border:1px solid transparent;color:var(--muted);background:var(--raised);border-radius:6px;font-size:11px;min-height:32px}
 .category-filters button[aria-pressed="true"] {color:var(--accent);background:var(--accent-soft);border-color:var(--accent)}
 .toolbar-bottom {display:flex;align-items:center;justify-content:space-between;gap:14px;border-top:1px solid var(--border);padding-top:12px}
-.range-wrap {display:flex;align-items:center;gap:12px}
+.range-wrap {display:flex;align-items:center;gap:8px 12px;flex-wrap:wrap}
 .segmented {display:inline-flex;gap:3px;padding:3px;border:1px solid var(--border);border-radius:8px}
-.segmented button {padding:5px 10px;border:0;background:transparent;font-size:11px;color:var(--muted);border-radius:5px;min-height:28px}
+.segmented button {padding:5px 8px;border:0;background:transparent;font-size:11px;color:var(--muted);border-radius:5px;min-height:28px;white-space:nowrap}
 .segmented button[aria-pressed="true"] {background:var(--accent-soft);color:var(--accent)}
 .grid {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:start}
 .indicator-card {padding:17px 18px;min-width:0}

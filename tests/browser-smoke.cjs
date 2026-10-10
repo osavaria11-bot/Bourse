@@ -102,7 +102,10 @@ async function run() {
     assert.equal(await page.locator("html").getAttribute("data-theme"), "light");
     for (const width of [375, 320]) {
       await page.setViewportSize({ width, height: 900 });
-      assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), true, "Horizontal overflow at " + width);
+      const layout = await page.evaluate(() => ({width: window.innerWidth, scrollWidth: document.documentElement.scrollWidth,
+        overflow: [...document.querySelectorAll("body *")].filter(node => node.getBoundingClientRect().right > window.innerWidth + 1)
+          .slice(0, 10).map(node => ({tag: node.tagName, className: String(node.className), right: node.getBoundingClientRect().right}))}));
+      assert.ok(layout.scrollWidth <= layout.width, "Horizontal overflow at " + width + ": " + JSON.stringify(layout));
     }
     if (process.env.QA_SCREENSHOTS_DIR) {
       fs.mkdirSync(process.env.QA_SCREENSHOTS_DIR, { recursive: true });

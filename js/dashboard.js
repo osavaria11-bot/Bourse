@@ -342,6 +342,7 @@
       state.seriesById = new Map(dataset.series.map(point => [point.id, point]));
       if (origin === "published") writeStored(CACHE_KEY, dataset);
       renderStatus(); renderKpis(); renderCategories(); renderCards();
+      if ($("#detailDialog").open) updateDetail();
       await loadBriefing();
     } catch {
       if (state.dataset) {
@@ -385,11 +386,7 @@
       event.preventDefault(); $("#searchInput").focus();
     }
   });
-  renderRanges($("#rangeControls"), state.range, range => {
-    state.range = range; savePreferences();
-    renderRanges($("#rangeControls"), state.range, selected => setGlobalRange(selected));
-    if (state.dataset) renderCards();
-  });
+  renderRanges($("#rangeControls"), state.range, setGlobalRange);
   function setGlobalRange(range) {
     state.range = range; savePreferences();
     renderRanges($("#rangeControls"), range, setGlobalRange);

@@ -57,7 +57,7 @@
       "unit": "%",
       "decimals": 2,
       "transform": "yoy",
-      "max_age_days": 65,
+      "max_age_days": 80,
       "description": "Variation sur 12 mois de l’indice des prix à la consommation, calculée à partir des niveaux désaisonnalisés. À lire avec l’inflation sous-jacente pour distinguer énergie et tendance.",
       "change_unit": "pt"
     },
@@ -69,7 +69,7 @@
       "unit": "%",
       "decimals": 2,
       "transform": "yoy",
-      "max_age_days": 65,
+      "max_age_days": 80,
       "description": "Variation sur 12 mois du CPI hors alimentation et énergie. Elle aide à suivre la persistance de l’inflation; elle ne correspond pas à l’inflation PCE.",
       "change_unit": "pt"
     },
@@ -81,7 +81,7 @@
       "unit": "%",
       "decimals": 2,
       "transform": "yoy",
-      "max_age_days": 80,
+      "max_age_days": 100,
       "description": "Variation sur 12 mois de l’indice PCE hors alimentation et énergie. Cette mesure complète le CPI et fait partie des indicateurs suivis par la Fed.",
       "change_unit": "pt"
     },
@@ -105,7 +105,7 @@
       "unit": "%",
       "decimals": 2,
       "transform": "none",
-      "max_age_days": 60,
+      "max_age_days": 75,
       "description": "Part des personnes actives au chômage. Le rythme de hausse et la participation au marché du travail apportent du contexte au niveau du taux.",
       "change_unit": "pt"
     },
@@ -117,7 +117,7 @@
       "unit": "milliers",
       "decimals": 0,
       "transform": "mom_change",
-      "max_age_days": 60,
+      "max_age_days": 75,
       "description": "Variation mensuelle des emplois non agricoles, calculée en milliers à partir de PAYEMS. Les dernières observations peuvent être révisées lors des publications suivantes.",
       "change_unit": "milliers"
     },
@@ -141,7 +141,7 @@
       "unit": "heures",
       "decimals": 1,
       "transform": "none",
-      "max_age_days": 60,
+      "max_age_days": 75,
       "description": "Durée hebdomadaire moyenne dans le manufacturier. Les entreprises peuvent réduire les heures avant de réduire leurs effectifs.",
       "change_unit": "heures"
     },
@@ -153,7 +153,7 @@
       "unit": "%",
       "decimals": 2,
       "transform": "qoq_annualized",
-      "max_age_days": 160,
+      "max_age_days": 230,
       "description": "Croissance du PIB réel par rapport au trimestre précédent, annualisée : [(PIB / PIB précédent)^4 − 1] × 100. Ce rythme ne correspond pas à une croissance annuelle réalisée.",
       "change_unit": "pt"
     },
@@ -165,7 +165,7 @@
       "unit": "indice",
       "decimals": 1,
       "transform": "none",
-      "max_age_days": 65,
+      "max_age_days": 80,
       "description": "Indice de confiance des consommateurs de l’Université du Michigan. Il complète les données de consommation mais n’est pas une prévision directe des dépenses.",
       "change_unit": "indice"
     },
@@ -213,7 +213,7 @@
       "unit": "%",
       "decimals": 2,
       "transform": "none",
-      "max_age_days": 160,
+      "max_age_days": 230,
       "description": "Épargne personnelle en pourcentage du revenu disponible, publiée trimestriellement. Cette série mesure l’épargne des ménages et ne représente pas les profits des entreprises.",
       "change_unit": "pt"
     },
@@ -261,7 +261,7 @@
       "unit": "%",
       "decimals": 2,
       "transform": "none",
-      "max_age_days": 200,
+      "max_age_days": 270,
       "description": "Part des prêts sur cartes de crédit en souffrance dans les banques commerciales américaines. Le niveau et la tendance éclairent la situation financière des ménages.",
       "change_unit": "pt"
     },
