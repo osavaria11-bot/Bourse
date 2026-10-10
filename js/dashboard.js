@@ -85,12 +85,13 @@
   function renderKpis() {
     const definitions = [
       ["VIXCLS", "VIX · volatilité"], ["DFF", "Fed · taux effectif"], ["CPIAUCSL", "Inflation CPI · 12 mois"],
-      ["DGS10", "Trésor US · 10 ans"], ["DEXCAUS", "USD/CAD"],
+      ["DGS10", "Trésor US · 10 ans"], ["DEXCAUS", "USD/CAD"], ["V39079", "Canada · taux directeur"],
     ];
     const fragment = document.createDocumentFragment();
     for (const [id, label] of definitions) {
       const point = state.seriesById.get(id);
       const card = el("article", "kpi");
+      card.dataset.id = id;
       card.append(el("p", "eyebrow", label));
       card.append(el("p", "kpi-value", point ? U.formatNumber(point.value, point.decimals) + (point.value !== null && point.unit === "%" ? " %" : "") : "—"));
       card.append(el("p", "meta", point ? U.observationLabel(point.date, point.frequency) : "Période non disponible"));
@@ -165,7 +166,7 @@
     const host = el("div", "chart-host"); host.dataset.id = point.id;
     host.append(el("p", "chart-placeholder", "Chargement du graphique…"));
     const bottom = el("div", "card-bottom");
-    const source = el("a", "", point.id + " · FRED ↗");
+    const source = el("a", "", point.id + " · " + point.source_label + " ↗");
     source.href = point.source_url; source.target = "_blank"; source.rel = "noopener noreferrer";
     const details = el("button", "detail-button", "Explorer le graphique ↗");
     details.type = "button"; details.setAttribute("aria-label", "Explorer : " + point.title);
@@ -291,6 +292,7 @@
     $("#detailValue").textContent = U.formatNumber(point.value, point.decimals) + (point.value !== null ? " " + point.unit : "");
     $("#detailDescription").textContent = point.description;
     $("#detailSource").href = point.source_url;
+    $("#detailSource").textContent = "Voir la série originale · " + point.source_label + " ↗";
     renderRanges($("#detailRanges"), state.detailRange, range => { state.detailRange = range; updateDetail(); });
     drawChart($("#detailChart"), point, state.detailRange);
     const fragment = document.createDocumentFragment();

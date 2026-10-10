@@ -41,7 +41,7 @@ button {color:var(--text)}
 .meta {font-size:12px;line-height:1.6}
 .update-status {font-size:12px;color:var(--accent);margin:8px 0 18px;min-height:19px}
 .update-status.warning {color:var(--gold)}
-.kpi-grid {display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.kpi-grid {display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
 .kpi {padding:16px 18px;background:var(--surface);border:1px solid var(--border);border-radius:12px;min-width:0}
 .kpi .eyebrow {font-size:9px}
 .kpi-value {font-size:25px;font-weight:650;letter-spacing:-.035em;margin:6px 0 4px;font-variant-numeric:tabular-nums}
@@ -206,7 +206,7 @@ th:last-child,td:last-child {text-align:right}
   .brand h1 {font-size:27px}.brand-mark {width:36px;height:36px;font-size:22px}
   .brand .eyebrow,.source-label {display:none}
   .header-actions {gap:6px;justify-content:flex-end}.header-actions .button {font-size:11px;padding:7px 9px}
-  .kpi-grid {grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.kpi {padding:13px}.kpi-value {font-size:22px}.kpi:last-child {grid-column:span 2}
+  .kpi-grid {grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.kpi {padding:13px}.kpi-value {font-size:22px}
   .briefing {padding:16px}.details-label {display:none}.briefing-text {font-size:12px}
   .section-heading {align-items:flex-start;flex-direction:column}h2 {font-size:1.25rem}
   .toolbar {padding:13px}.toolbar-top {gap:10px}.search-label {flex-basis:100%}

@@ -60,6 +60,7 @@ jobs:
         run: npm run test:browser
         env:
           SCREENSHOT_LOGS: ${{ startsWith(github.ref, 'refs/heads/codex/portefeuille-') && '1' || '' }}
+          MACRO_SCREENSHOT_LOGS: ${{ startsWith(github.ref, 'refs/heads/codex/macro-') && '1' || '' }}
       - name: Verify the actual published briefing and world market histories
         run: node tests/published-dashboard.cjs
         if: hashFiles('data/market-indices.json') != ''
@@ -75,9 +76,13 @@ jobs:
           data = json.loads((Path(os.environ["RUNNER_TEMP"]) / "fred-check/macro-data.json").read_text())
           print("Provider coverage:", data["coverage"])
           points = {p["id"]: p for p in data["series"]}
-          for sid in ("DFF", "CPIAUCSL", "PCEPILFE", "GDPC1", "PAYEMS"):
+          for sid in ("DFF", "CPIAUCSL", "DEXCAUS", "V39079", "PCEPILFE", "GDPC1", "PAYEMS"):
               assert points[sid]["fetch_status"] == "fresh", f"Provider integration failed for {sid}"
               print(sid, points[sid]["date"], points[sid]["value"], points[sid]["unit"])
+          policy = points['V39079']
+          assert policy['provider'] == 'bank_of_canada' and policy['unit'] == '%'
+          assert policy['source_url'].startswith('https://www.bankofcanada.ca/')
+          assert len(policy['history']) > 2000
           PY
       - name: Verify world equity data sources on the improvement branch
         if: startsWith(github.ref, 'refs/heads/codex/indices-')

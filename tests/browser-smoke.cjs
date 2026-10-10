@@ -7,6 +7,7 @@ const path = require("node:path");
 const { chromium } = require(process.env.PLAYWRIGHT_MODULE_PATH || "playwright");
 const root = path.resolve(__dirname, "..");
 const definitions = JSON.parse(fs.readFileSync(path.join(root, "data/series.json"), "utf8")).series;
+const indicatorCount = definitions.length;
 const now = new Date();
 const series = definitions.map((definition, index) => {
   const count = definition.frequency === "quarterly" ? 40 : definition.frequency === "monthly" ? 36 : 80;
@@ -80,7 +81,34 @@ async function run() {
     const errors = [];
     page.on("pageerror", error => errors.push(error.message));
     await page.route("https://**", route => route.abort());
-    await page.goto(url); await waitCount(page, 32);
+    await page.goto(url); await waitCount(page, indicatorCount);
+    assert.deepEqual(await page.locator("#kpis .kpi").evaluateAll(nodes => nodes.map(node => node.dataset.id)),
+      ["VIXCLS", "DFF", "CPIAUCSL", "DGS10", "DEXCAUS", "V39079"]);
+    const policyKpi = page.locator('#kpis .kpi[data-id="V39079"]');
+    assert.match(await policyKpi.locator(".kpi-value").innerText(), /%/);
+    const desktopPair = await page.locator('#kpis .kpi[data-id="DEXCAUS"], #kpis .kpi[data-id="V39079"]').evaluateAll(nodes => nodes.map(node => {
+      const rect = node.getBoundingClientRect(); return {top: rect.top, left: rect.left};
+    }));
+    assert.equal(desktopPair[0].top, desktopPair[1].top);
+    assert.ok(desktopPair[1].left > desktopPair[0].left);
+    if (process.env.MACRO_SCREENSHOT_LOGS) {
+      console.log("SCREENSHOT_MACRO_KPIS_DESKTOP " + (await page.locator("#kpis").screenshot()).toString("base64"));
+      await page.setViewportSize({width: 375, height: 900});
+      console.log("SCREENSHOT_MACRO_KPIS_MOBILE " + (await page.locator("#kpis").screenshot()).toString("base64"));
+      await page.setViewportSize({width: 1440, height: 1000});
+    }
+    const policyCard = page.locator('.indicator-card[data-id="V39079"]');
+    const policySource = policyCard.locator(".card-bottom a");
+    assert.match(await policySource.innerText(), /Banque du Canada/);
+    assert.equal(await policySource.getAttribute("href"), "https://www.bankofcanada.ca/core-functions/monetary-policy/key-interest-rate/");
+    await policyCard.locator(".detail-button").click();
+    await page.waitForFunction(() => document.querySelector("#detailDialog").open);
+    assert.match(await page.locator("#detailSource").innerText(), /Banque du Canada/);
+    assert.equal(await page.locator("#detailSource").getAttribute("href"), await policySource.getAttribute("href"));
+    const policyChart = page.locator("#detailChart svg");
+    await policyChart.focus(); await policyChart.press("ArrowLeft");
+    assert.match(await page.locator("#detailChart .chart-tooltip").innerText(), /%/);
+    await page.keyboard.press("Escape");
     await page.waitForSelector(".news-section");
     assert.equal(await page.locator(".news-section").count(), 4);
     assert.match(await page.locator("#briefingDate").innerText(), new RegExp(edition + ".*500 mots"));
@@ -104,19 +132,19 @@ async function run() {
     assert.equal(await page.locator("#marketGrid path").evaluateAll(nodes => nodes.some(node => /NaN|Infinity/.test(node.getAttribute("d")))), false);
     await page.locator(".indicator-card").first().scrollIntoViewIfNeeded();
     await page.waitForSelector("#grid svg");
-    assert.match(await page.locator("#updated").innerText(), /32\/32/);
+    assert.ok((await page.locator("#updated").innerText()).includes(indicatorCount + "/" + indicatorCount));
     assert.equal(await page.locator('.indicator-card[data-id="SP500"]').count(), 0);
     assert.ok(await page.locator("#grid svg").count() > 0);
     assert.equal(await page.locator("#grid path").evaluateAll(nodes => nodes.some(node => /NaN|Infinity/.test(node.getAttribute("d")))), false);
     await page.locator("#searchInput").fill("epargne"); await waitCount(page, 1);
     assert.equal(await page.locator(".indicator-card").getAttribute("data-id"), "A072RC1Q156SBEA");
-    await page.locator("#searchInput").fill(""); await waitCount(page, 32);
-    await page.locator("#categoryFilters button").filter({ hasText: /^Canada$/ }).click(); await waitCount(page, 2);
-    await page.locator("#categoryFilters button").filter({ hasText: /^Tous$/ }).click(); await waitCount(page, 32);
+    await page.locator("#searchInput").fill(""); await waitCount(page, indicatorCount);
+    await page.locator("#categoryFilters button").filter({ hasText: /^Canada$/ }).click(); await waitCount(page, 3);
+    await page.locator("#categoryFilters button").filter({ hasText: /^Tous$/ }).click(); await waitCount(page, indicatorCount);
     await page.locator(".favorite-button").first().click();
     await page.locator("#favoritesOnly").click(); await waitCount(page, 1);
-    await page.locator("#favoritesOnly").click(); await waitCount(page, 32);
-    await page.reload(); await waitCount(page, 32);
+    await page.locator("#favoritesOnly").click(); await waitCount(page, indicatorCount);
+    await page.reload(); await waitCount(page, indicatorCount);
     assert.equal(await page.locator(".favorite-button").first().getAttribute("aria-pressed"), "true");
     await page.locator("#rangeControls button[data-range='3M']").click();
     assert.equal(await page.locator("#rangeControls button[data-range='3M']").getAttribute("aria-pressed"), "true");
@@ -136,17 +164,22 @@ async function run() {
     const snapshotDownload = page.waitForEvent("download"); await page.locator("#exportButton").click();
     const snapshot = await snapshotDownload;
     const csv = fs.readFileSync(await snapshot.path(), "utf8");
-    assert.match(csv, /Série FRED/); assert.match(csv, /DEXCAUS/);
+    assert.match(csv, /Code de série/); assert.match(csv, /DEXCAUS/); assert.match(csv, /V39079/); assert.match(csv, /bankofcanada\.ca/);
     await page.locator("#themeToggle").click();
     assert.equal(await page.locator("html").getAttribute("data-theme"), "light");
-    await page.reload(); await waitCount(page, 32);
+    await page.reload(); await waitCount(page, indicatorCount);
     assert.equal(await page.locator("html").getAttribute("data-theme"), "light");
-    for (const width of [375, 320]) {
+    for (const width of [1100, 375, 320]) {
       await page.setViewportSize({ width, height: 900 });
       const layout = await page.evaluate(() => ({width: window.innerWidth, scrollWidth: document.documentElement.scrollWidth,
         overflow: [...document.querySelectorAll("body *")].filter(node => node.getBoundingClientRect().right > window.innerWidth + 1)
           .slice(0, 10).map(node => ({tag: node.tagName, className: String(node.className), right: node.getBoundingClientRect().right}))}));
       assert.ok(layout.scrollWidth <= layout.width, "Horizontal overflow at " + width + ": " + JSON.stringify(layout));
+      const adjacent = await page.locator('#kpis .kpi[data-id="DEXCAUS"], #kpis .kpi[data-id="V39079"]').evaluateAll(nodes => nodes.map(node => {
+        const rect = node.getBoundingClientRect(); return {top: rect.top, left: rect.left};
+      }));
+      assert.equal(adjacent[0].top, adjacent[1].top, "USD/CAD and Canadian policy rate share a row at " + width);
+      assert.ok(adjacent[1].left > adjacent[0].left);
     }
     if (process.env.QA_SCREENSHOTS_DIR) {
       fs.mkdirSync(process.env.QA_SCREENSHOTS_DIR, { recursive: true });
@@ -161,7 +194,7 @@ async function run() {
       previous.series.push({...point, id: "SP500", title: "Removed cached S&P 500"});
       localStorage.setItem(key, JSON.stringify(previous));
     }, series[0]);
-    await page.reload(); await waitCount(page, 32);
+    await page.reload(); await waitCount(page, indicatorCount);
     assert.match(await page.locator("#updated").innerText(), /Copie conservée/);
     assert.equal(await page.locator("#refreshButton").isEnabled(), true);
     invalidNews = true;
@@ -196,7 +229,7 @@ async function run() {
     await empty.waitForFunction(() => document.querySelector("#briefingDate").textContent === "Édition indisponible");
     assert.equal(await empty.locator("#refreshButton").isEnabled(), true);
     assert.deepEqual(errors, []);
-    console.log("Browser checks passed: 32 macro cards, 5 world market charts with EEM clearly labeled, date/range controls, offline and invalid-data preservation, filters, persistence, CSV, 320px mobile, independent sourced 500-word briefing.");
+    console.log("Browser checks passed: " + indicatorCount + " macro cards, Canadian policy rate beside USD/CAD, official source and historical tooltip, 5 world market charts, offline preservation, CSV, 320px mobile, sourced 500-word briefing.");
     await freshContext.close(); await context.close();
   } finally { await browser.close(); }
 }

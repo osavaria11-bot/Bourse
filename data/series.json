@@ -338,6 +338,19 @@
       "change_unit": "$ CA/$ US"
     },
     {
+      "id": "V39079",
+      "title": "Taux directeur canadien",
+      "category": "Canada",
+      "frequency": "daily",
+      "unit": "%",
+      "decimals": 2,
+      "transform": "none",
+      "max_age_days": 10,
+      "provider": "bank_of_canada",
+      "description": "Cible du taux du financement à un jour, aussi appelée taux directeur de la Banque du Canada. Observations quotidiennes des jours ouvrables publiées directement par la Banque du Canada; la date correspond au taux en vigueur, et non à la date de l’annonce.",
+      "change_unit": "pt"
+    },
+    {
       "id": "IR3TIB01CAM156N",
       "title": "Taux interbancaire canadien · 3 mois",
       "category": "Canada",

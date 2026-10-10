@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Collect FRED observations for a static dashboard, with per-series fallback.
+"""Collect FRED and Bank of Canada observations, with per-series fallback.
 
 Only the Python standard library is required. No credentials or browser proxies.
 """
@@ -24,7 +24,8 @@ ROOT = Path(__file__).resolve().parents[1]
 TIMEOUT_SECONDS = 20
 RETRY_ATTEMPTS = 3
 HISTORY_YEARS = 10
-BRIEFING_IDS = ["CPIAUCSL", "PCEPILFE", "UNRATE", "PAYEMS", "GDPC1", "DFF", "DGS10", "T10Y2Y", "VIXCLS", "DEXCAUS"]
+BRIEFING_IDS = ["CPIAUCSL", "PCEPILFE", "UNRATE", "PAYEMS", "GDPC1", "DFF", "DGS10", "T10Y2Y", "VIXCLS", "DEXCAUS", "V39079"]
+BANK_POLICY_URL = "https://www.bankofcanada.ca/core-functions/monetary-policy/key-interest-rate/"
 NEWS_SOURCES = [
     {"label": "Reuters — Marchés", "url": "https://www.reuters.com/markets/", "description": "Actions, taux, devises et matières premières."},
     {"label": "Reuters — Économie", "url": "https://www.reuters.com/markets/econ-world/", "description": "Croissance, inflation et banques centrales."},
@@ -60,7 +61,7 @@ def atomic_write_json(path: Path, payload: dict, *, compact: bool = False) -> No
             temporary.unlink(missing_ok=True)
 
 def fetch_text(url: str) -> str:
-    request = Request(url, headers={"User-Agent": "SavyMacroDashboard/3.0", "Accept": "text/csv"})
+    request = Request(url, headers={"User-Agent": "SavyMacroDashboard/3.0", "Accept": "text/csv, application/json"})
     for attempt in range(RETRY_ATTEMPTS):
         try:
             with urlopen(request, timeout=TIMEOUT_SECONDS) as response:
@@ -109,6 +110,30 @@ def months_before(day: date, count: int) -> date:
     month_index = day.year * 12 + day.month - 1 - count
     return date(month_index // 12, month_index % 12 + 1, 1)
 
+def parse_bank_observations(text: str, series_id: str, today: date) -> list[list]:
+    try:
+        payload = json.loads(text)
+    except ValueError as exc:
+        raise SourceError(f"{series_id}: réponse JSON non reconnue") from exc
+    if (not isinstance(payload, dict) or not isinstance(payload.get("seriesDetail"), dict)
+            or series_id not in payload["seriesDetail"] or not isinstance(payload.get("observations"), list)):
+        raise SourceError(f"{series_id}: série Banque du Canada absente")
+    # Reuse the CSV validation for ordering, gaps, nonfinite and future values.
+    output = io.StringIO()
+    writer = csv.writer(output)
+    writer.writerow(["date", series_id])
+    for row in payload["observations"]:
+        if not isinstance(row, dict):
+            continue
+        quote = row.get(series_id)
+        writer.writerow([row.get("d", ""), quote.get("v", "") if isinstance(quote, dict) else ""])
+    return parse_observations(output.getvalue(), series_id, today)
+
+def source_metadata(definition: dict) -> dict:
+    if definition.get("provider") == "bank_of_canada":
+        return {"source_url": BANK_POLICY_URL, "source_label": "Banque du Canada"}
+    return {"source_url": f"https://fred.stlouisfed.org/series/{definition['id']}", "source_label": "FRED"}
+
 def transform_observations(observations: list[list], transform: str) -> list[list]:
     if transform == "none":
         return observations
@@ -137,7 +162,7 @@ def summarize(definition: dict, history: list[list], now: datetime) -> dict:
     previous_day, previous_value = valid[-2] if len(valid) > 1 else (None, None)
     return {
         **definition,
-        "source_url": f"https://fred.stlouisfed.org/series/{definition['id']}",
+        **source_metadata(definition),
         "date": day,
         "value": value,
         "previous_date": previous_day,
@@ -152,15 +177,26 @@ def fetch_series(definition: dict, now: datetime) -> dict:
     today = now.date()
     # An extra year is required for year-over-year transformations at the start.
     start = date(today.year - HISTORY_YEARS - 1, 1, 1)
-    params = urlencode({"id": definition["id"], "cosd": start.isoformat(), "coed": today.isoformat()})
-    text = fetch_text(f"https://fred.stlouisfed.org/graph/fredgraph.csv?{params}")
-    observations = parse_observations(text, definition["id"], today)
+    if definition.get("provider", "fred") == "bank_of_canada":
+        if definition["id"] != "V39079":
+            raise SourceError("Série Banque du Canada non prise en charge")
+        params = urlencode({"start_date": start.isoformat(), "end_date": today.isoformat()})
+        text = fetch_text(f"https://www.bankofcanada.ca/valet/observations/{definition['id']}/json?{params}")
+        observations = parse_bank_observations(text, definition["id"], today)
+    elif definition.get("provider", "fred") == "fred":
+        params = urlencode({"id": definition["id"], "cosd": start.isoformat(), "coed": today.isoformat()})
+        text = fetch_text(f"https://fred.stlouisfed.org/graph/fredgraph.csv?{params}")
+        observations = parse_observations(text, definition["id"], today)
+    else:
+        raise SourceError("Fournisseur non pris en charge")
     history = transform_observations(observations, definition.get("transform", "none"))
     cutoff = months_before(today.replace(day=1), HISTORY_YEARS * 12).isoformat()
     return summarize(definition, [point for point in history if point[0] >= cutoff], now)
 
 def usable_previous(point: dict | None, definition: dict, today: date) -> bool:
     if not isinstance(point, dict) or point.get("transform", "none") != definition.get("transform", "none"):
+        return False
+    if point.get("provider", "fred") != definition.get("provider", "fred"):
         return False
     if any(point.get(key) != definition[key] for key in ("quote_symbol", "currency") if key in definition):
         return False
@@ -189,9 +225,9 @@ def collect_sources(definitions: list[dict], previous: dict | None, now: datetim
                 errors.append({"id": series_id, "message": message})
                 cached = previous_points.get(series_id)
                 if usable_previous(cached, definition, now.date()):
-                    results[series_id] = {**cached, **definition, "fetch_status": "cached", "error": message}
+                    results[series_id] = {**cached, **definition, **source_metadata(definition), "fetch_status": "cached", "error": message}
                 else:
-                    results[series_id] = {**definition, "source_url": f"https://fred.stlouisfed.org/series/{series_id}",
+                    results[series_id] = {**definition, **source_metadata(definition),
                                           "value": None, "date": None, "previous_value": None, "previous_date": None,
                                           "change": None, "history": [], "fetch_status": "unavailable", "error": message}
     points = [results[definition["id"]] for definition in definitions]
@@ -205,7 +241,7 @@ def collect_sources(definitions: list[dict], previous: dict | None, now: datetim
         "generated_at": now.isoformat(),
         "last_successful_update": now.isoformat() if not errors else (previous or {}).get("last_successful_update"),
         "update_status": status,
-        "data_provider": "FRED — Federal Reserve Bank of St. Louis",
+        "data_provider": "FRED / Banque du Canada" if any(d.get("provider") == "bank_of_canada" for d in definitions) else "FRED — Federal Reserve Bank of St. Louis",
         "coverage": {"total": len(points), "fresh": fresh, "cached": available - fresh, "unavailable": len(points) - available},
         "errors": sorted(errors, key=lambda error: error["id"]),
         "series": points,

@@ -72,3 +72,16 @@ test("CSV escapes quotes, blocks text formulas and preserves negative numeric va
   assert.match(U.historyCSV(sample(), "1M"), /2026-10-09/);
   assert.doesNotMatch(U.historyCSV(sample(), "1M"), /2026-09-01/);
 });
+test("Bank of Canada policy rate keeps its official source across normalization and CSV exports", () => {
+  const input = {schema_version: 2, generated_at: "2026-10-10T16:00:00Z", series: [
+    {...sample(), id: "V39079", provider: "bank_of_canada", source_url: "javascript:bad"},
+    {...sample(), source_url: "https://example.test/false-source"},
+  ]};
+  const [bank, fred] = U.normalizeDataset(input, "2026-10-10").series;
+  assert.equal(bank.source_label, "Banque du Canada");
+  assert.equal(bank.source_url, "https://www.bankofcanada.ca/core-functions/monetary-policy/key-interest-rate/");
+  assert.equal(fred.source_url, "https://fred.stlouisfed.org/series/TEST");
+  assert.match(U.snapshotCSV([bank]), /Code de série.*Source/);
+  assert.match(U.historyCSV(bank, "1M"), /bankofcanada\.ca/);
+  assert.doesNotMatch(U.historyCSV(bank, "1M"), /Série FRED|javascript:bad/);
+});

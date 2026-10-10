@@ -153,12 +153,54 @@ class ResilienceTests(unittest.TestCase):
         self.assertIn("1,4253 $ CA/$ US", result)
         self.assertIn("2026-09-01", result)
 
+class BankOfCanadaTests(unittest.TestCase):
+    def setUp(self):
+        self.definition = {**definition("V39079"), "provider": "bank_of_canada", "frequency": "daily"}
+        self.payload = {"seriesDetail": {"V39079": {"label": "Target for the overnight rate"}}, "observations": [
+            {"d": "2026-10-09", "V39079": {"v": "2.50"}},
+            {"d": "2026-10-08", "V39079": {"v": "2.50"}},
+            {"d": "2026-10-09", "V39079": {"v": "2.25"}},
+            {"d": "2026-10-10", "V39079": {"v": "NA"}},
+            {"d": "2026-10-11", "V39079": {"v": "99"}},
+            {"d": "2026-10-07", "V39079": {"v": "NaN"}},
+            {"d": "2026-10-06", "V39079": {"v": True}},
+            {"d": "bad", "V39079": {"v": "3"}},
+        ]}
+
+    def test_official_json_orders_effective_dates_and_rejects_invalid_values(self):
+        self.assertEqual(generator.parse_bank_observations(json.dumps(self.payload), "V39079", NOW.date()),
+                         [["2026-10-08", 2.5], ["2026-10-09", 2.25], ["2026-10-10", None]])
+
+    def test_wrong_series_and_invalid_json_are_rejected(self):
+        for payload in ("<html>unavailable</html>", "[]", json.dumps({**self.payload, "seriesDetail": {"WRONG": {}}})):
+            with self.subTest(payload=payload), self.assertRaises(generator.SourceError):
+                generator.parse_bank_observations(payload, "V39079", NOW.date())
+
+    def test_fetch_uses_valet_and_preserves_the_official_source(self):
+        with patch.object(generator, "fetch_text", return_value=json.dumps(self.payload)) as fetch:
+            result = generator.fetch_series(self.definition, NOW)
+        self.assertIn("bankofcanada.ca/valet/observations/V39079/json?start_date=2015-01-01&end_date=2026-10-10", fetch.call_args.args[0])
+        self.assertEqual((result["date"], result["value"], result["change"]), ("2026-10-09", 2.25, -0.25))
+        self.assertEqual(result["source_url"], generator.BANK_POLICY_URL)
+        self.assertEqual(result["source_label"], "Banque du Canada")
+
+    def test_outage_keeps_bank_dates_and_does_not_reuse_another_provider(self):
+        cached = generator.summarize(self.definition, [["2026-10-08", 2.25]], NOW)
+        with patch.object(generator, "fetch_series", side_effect=generator.SourceError("outage")):
+            result = generator.collect_sources([self.definition], {"series": [cached]}, NOW)
+        self.assertEqual(result["series"][0]["fetch_status"], "cached")
+        self.assertEqual(result["series"][0]["date"], "2026-10-08")
+        self.assertEqual(result["series"][0]["source_url"], generator.BANK_POLICY_URL)
+        self.assertFalse(generator.usable_previous({**cached, "provider": "fred"}, self.definition, NOW.date()))
+
 class ConfigurationTests(unittest.TestCase):
     def test_unique_complete_indicator_definitions(self):
         config = generator.read_json(generator.ROOT / "data/series.json")
         ids = [item["id"] for item in config["series"]]
         self.assertEqual(len(ids), len(set(ids)))
-        self.assertEqual(len(ids), 32)
+        self.assertEqual(len(ids), 33)
+        self.assertEqual(config["series"][ids.index("V39079")]["provider"], "bank_of_canada")
+        self.assertEqual(ids[ids.index("DEXCAUS") + 1], "V39079")
         for item in config["series"]:
             self.assertIn(item["frequency"], ("daily", "weekly", "monthly", "quarterly"))
             self.assertIn(item["transform"], ("none", "yoy", "mom_change", "qoq_annualized"))

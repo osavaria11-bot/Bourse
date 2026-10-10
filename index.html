@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="SAVY — Indicateurs macroéconomiques, historiques interactifs et dernières observations FRED." />
+  <meta name="description" content="SAVY — Indicateurs macroéconomiques, historiques interactifs et observations FRED et Banque du Canada." />
   <meta name="color-scheme" content="dark light" />
   <title>SAVY — Tableau macroéconomique</title>
-  <link rel="stylesheet" href="css/dashboard.css?v=20261010-classement" />
-  <script src="js/macro-utils.js" defer></script>
+  <link rel="stylesheet" href="css/dashboard.css?v=20261010-taux-canadien" />
+  <script src="js/macro-utils.js?v=20261010-taux-canadien" defer></script>
   <script src="js/portfolio-utils.js?v=20261010-classement" defer></script>
   <script src="js/portfolio.js?v=20261010-classement" defer></script>
-  <script src="js/dashboard.js" defer></script>
+  <script src="js/dashboard.js?v=20261010-taux-canadien" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#indicators">Aller aux indicateurs</a>
@@ -86,7 +86,7 @@
         <figure><button class="image-open" type="button" data-image="https://fred.stlouisfed.org/graph/fredgraph.png?g=1Ng5J" data-title="Graphique FRED partagé"><img src="https://fred.stlouisfed.org/graph/fredgraph.png?g=1Ng5J" alt="Graphique FRED partagé" loading="lazy" /></button><figcaption>Graphique FRED partagé</figcaption></figure>
       </div>
     </details>
-    <footer><p>SAVY · Macroéconomie</p><p>Source : <a href="https://fred.stlouisfed.org/" target="_blank" rel="noopener noreferrer">FRED / St. Louis Fed</a>. Statistiques révisables. Les flèches indiquent le sens de variation.</p></footer>
+    <footer><p>SAVY · Macroéconomie</p><p>Sources : <a href="https://fred.stlouisfed.org/" target="_blank" rel="noopener noreferrer">FRED / St. Louis Fed</a> et <a href="https://www.bankofcanada.ca/core-functions/monetary-policy/key-interest-rate/" target="_blank" rel="noopener noreferrer">Banque du Canada</a>. Statistiques révisables. Les flèches indiquent le sens de variation.</p></footer>
   </main>
   <dialog id="detailDialog" aria-labelledby="detailTitle">
     <div class="dialog-header"><div><p class="eyebrow" id="detailCategory"></p><h2 id="detailTitle"></h2></div><button id="closeDialog" class="button quiet" type="button" aria-label="Fermer le détail">Fermer ×</button></div>

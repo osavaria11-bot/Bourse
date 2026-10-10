@@ -35,6 +35,7 @@
       }
       const history = [...byDate].sort((a, b) => a[0].localeCompare(b[0]));
       const fetchStatus = value === null ? "unavailable" : point.fetch_status === "fresh" ? "fresh" : "cached";
+      const bankPolicy = point.provider === "bank_of_canada" && point.id === "V39079";
       series.push({
         ...point, date: day, value, history, fetch_status: fetchStatus,
         title: typeof point.title === "string" ? point.title : point.id,
@@ -44,7 +45,8 @@
         description: typeof point.description === "string" ? point.description : "",
         change: validNumber(point.change) ? point.change : null,
         previous_date: isDate(point.previous_date) && point.previous_date <= today ? point.previous_date : null,
-        source_url: "https://fred.stlouisfed.org/series/" + point.id,
+        source_url: bankPolicy ? "https://www.bankofcanada.ca/core-functions/monetary-policy/key-interest-rate/" : "https://fred.stlouisfed.org/series/" + point.id,
+        source_label: bankPolicy ? "Banque du Canada" : "FRED",
       });
     }
     if (!series.length) throw new Error("Aucun indicateur valide");
@@ -143,13 +145,13 @@
   }
   function snapshotCSV(series) {
     return toCSV([
-      ["Indicateur", "Série FRED", "Catégorie", "Valeur", "Unité", "Période", "Valeur précédente", "Période précédente", "Variation", "Statut de collecte", "Dernière collecte réussie", "Source"],
+      ["Indicateur", "Code de série", "Catégorie", "Valeur", "Unité", "Période", "Valeur précédente", "Période précédente", "Variation", "Statut de collecte", "Dernière collecte réussie", "Source"],
       ...series.map(point => [point.title, point.id, point.category, point.value, point.unit, point.date, point.previous_value, point.previous_date, point.change, point.fetch_status, point.last_successful_fetch, point.source_url]),
     ]);
   }
   function historyCSV(point, range) {
     return toCSV([
-      ["Série FRED", "Indicateur", "Transformation", "Période", "Valeur", "Unité", "Source"],
+      ["Code de série", "Indicateur", "Transformation", "Période", "Valeur", "Unité", "Source"],
       ...visibleHistory(point, range).map(row => [point.id, point.title, point.transform, row[0], row[1], point.unit, point.source_url]),
     ]);
   }
