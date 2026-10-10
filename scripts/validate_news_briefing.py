@@ -10,7 +10,7 @@ from urllib.parse import urlsplit
 from zoneinfo import ZoneInfo
 
 ROOT = Path(__file__).resolve().parents[1]
-SOURCE_IDS = {"reuters-markets", "reuters-economy", "bank-of-canada", "fred-calendar", "perplexity-finance"}
+SOURCE_IDS = {"reuters-markets", "reuters-economy", "bank-of-canada", "fred-indicators"}
 
 def https_url(value: object) -> bool:
     if not isinstance(value, str):
@@ -37,7 +37,7 @@ def validate(payload: dict, now: datetime | None = None) -> int:
         raise ValueError("Une édition future ne peut pas être publiée")
     sources = payload.get("sources")
     if not isinstance(sources, list) or len(sources) != len(SOURCE_IDS):
-        raise ValueError("Les cinq sources de veille doivent être présentes")
+        raise ValueError("Les quatre sources du briefing doivent être présentes")
     seen = set()
     words = 0
     available = 0

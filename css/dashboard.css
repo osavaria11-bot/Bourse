@@ -63,6 +63,20 @@ details[open]>summary:after {content:"−"}
 .news-section a {overflow-wrap:anywhere}
 .news-unavailable h3 {color:var(--muted)}
 .news-links {display:flex;flex-wrap:wrap;gap:10px 20px;list-style:none;padding:0;margin:14px 0 0;font-size:12px}
+.market-section {border-top:1px solid var(--border);margin-top:24px;padding-top:20px}
+.market-heading {display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.market-heading h3 {font-size:16px;margin-top:4px}
+.market-grid {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:14px}
+.market-card {min-width:0;padding:15px;border:1px solid var(--border);border-radius:10px;background:var(--bg)}
+.market-card h4 {font-size:14px;font-weight:600;margin:4px 0}
+.market-card .market-value {font-size:24px;font-weight:650;font-variant-numeric:tabular-nums;margin-top:8px}
+.market-card .meta {font-size:10px;margin-top:5px}
+.market-card .chart-host {margin-top:12px}
+.market-card .chart-tooltip {font-size:10px;min-height:30px}
+.market-card a {font-size:11px}
+.meta.warning {color:var(--gold)}
+@media(max-width:1100px) {.market-grid {grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:650px) {.market-grid {grid-template-columns:1fr}.market-heading .segmented {max-width:100%;flex-wrap:wrap}}
 .workspace {margin-top:34px;scroll-margin-top:10px}
 .section-heading {display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:16px}
 .section-heading .eyebrow {margin-bottom:5px}

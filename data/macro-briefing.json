@@ -32,11 +32,6 @@
       "label": "FRED — Calendrier des publications",
       "url": "https://fred.stlouisfed.org/releases/calendar",
       "description": "Prochaines mises à jour des statistiques."
-    },
-    {
-      "label": "Perplexity — Finance",
-      "url": "https://www.perplexity.ai/finance",
-      "description": "Veille financière complémentaire."
     }
   ],
   "series_snapshot": [

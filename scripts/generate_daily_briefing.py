@@ -29,8 +29,7 @@ NEWS_SOURCES = [
     {"label": "Reuters — Marchés", "url": "https://www.reuters.com/markets/", "description": "Actions, taux, devises et matières premières."},
     {"label": "Reuters — Économie", "url": "https://www.reuters.com/markets/econ-world/", "description": "Croissance, inflation et banques centrales."},
     {"label": "Banque du Canada — Sommaire quotidien", "url": "https://www.bankofcanada.ca/rates/daily-digest/", "description": "Taux et devises publiés par la Banque du Canada."},
-    {"label": "FRED — Calendrier des publications", "url": "https://fred.stlouisfed.org/releases/calendar", "description": "Prochaines mises à jour des statistiques."},
-    {"label": "Perplexity — Finance", "url": "https://www.perplexity.ai/finance", "description": "Veille financière complémentaire."},
+    {"label": "FRED — Indicateurs du tableau", "url": "https://fred.stlouisfed.org/", "description": "Indicateurs macroéconomiques et tendances à surveiller."},
 ]
 
 class SourceError(RuntimeError):

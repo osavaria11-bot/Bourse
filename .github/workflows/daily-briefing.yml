@@ -2,15 +2,19 @@ name: Daily briefing
 
 on:
   schedule:
-    - cron: "17 11,17,23 * * 1-5"
-    - cron: "17 12 * * 0,6"
+    - cron: "47 6 * * *"
+      timezone: "America/Toronto"
+    - cron: "17 13,19 * * 1-5"
+      timezone: "America/Toronto"
   workflow_dispatch:
   push:
     branches: ["main"]
     paths:
       - "data/series.json"
       - "scripts/generate_daily_briefing.py"
+      - "scripts/collect_market_indices.py"
       - "tests/test_generate_daily_briefing.py"
+      - "tests/test_market_indices.py"
       - ".github/workflows/daily-briefing.yml"
 
 permissions:
@@ -39,11 +43,13 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_*.py' -v
       - name: Collect observations and generate statistical snapshot
         run: python scripts/generate_daily_briefing.py
+      - name: Refresh world equity charts
+        run: python scripts/collect_market_indices.py
       - name: Commit published data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/macro-data.json data/macro-briefing.json
+          git add data/macro-data.json data/macro-briefing.json data/market-indices.json
           if git diff --cached --quiet; then
             echo "No data changes to commit."
             exit 0

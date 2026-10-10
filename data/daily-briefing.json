@@ -4,16 +4,16 @@
   "language": "fr",
   "timezone": "America/Toronto",
   "edition_date": "2026-10-10",
-  "generated_at": "2026-10-10T17:20:52.956Z",
+  "generated_at": "2026-10-10T17:55:24.412775+00:00",
   "word_count": 500,
-  "editorial_note": "Synthèse de 500 mots au total, hors titres et liens. Les points à surveiller sont une lecture des publications. Les sources inaccessibles sont signalées.",
+  "editorial_note": "500 mots au total, hors titres, liens et graphiques. La lecture FRED classe les indicateurs de ton tableau par priorité de surveillance, avec leurs périodes réelles. Les interprétations sont distinguées des chiffres.",
   "sources": [
     {
       "id": "reuters-markets",
       "label": "Reuters — Marchés",
       "url": "https://www.reuters.com/markets/",
       "status": "available",
-      "summary": "Wall Street a terminé la séance du 9 octobre en hausse : le S&P 500 a gagné 0,59 %, le Nasdaq 0,64 % et le Dow Jones 0,83 %. Les trois indices progressent aussi sur la semaine, tandis que les petites capitalisations du Russell 2000 restent en retrait. Les marchés surveillent les discussions avec l’Iran et le pétrole; malgré un recul initial, les bruts WTI et Brent ont clôturé légèrement plus haut. Les télécommunications ont fortement baissé après une annonce de SpaceX sur les fréquences mobiles. La semaine prochaine concentre deux catalyseurs : résultats bancaires et inflation américaine. Selon Reuters, les bénéfices trimestriels du S&P 500 devraient augmenter de plus de 30 %, une estimation qui reste à confirmer. Les taux obligataires élevés constituent cependant un frein aux valorisations. À surveiller : qualité du crédit, étendue réelle du rebond, consommation, marges bancaires et inflation des services, pour juger si les profits peuvent continuer à soutenir les actions.",
+      "summary": "Wall Street a progressé le 9 octobre : S&P 500 +0,59 %, Nasdaq +0,64 % et Dow Jones +0,83 %. Les petites capitalisations restent en retrait sur la semaine. Les télécommunications ont fortement baissé après une annonce de SpaceX concernant les fréquences mobiles. Le pétrole demeure sensible aux discussions avec l’Iran. La semaine prochaine, résultats bancaires et inflation américaine seront déterminants. Reuters rapporte une croissance attendue des bénéfices trimestriels du S&P 500 supérieure à 30 %, encore à confirmer. À surveiller : qualité du crédit, marges bancaires et participation des secteurs au rebond; des taux obligataires élevés peuvent freiner les valorisations.",
       "articles": [
         {
           "title": "Clôture de Wall Street et mouvements sectoriels",
@@ -32,7 +32,7 @@
       "label": "Reuters — Économie",
       "url": "https://www.reuters.com/markets/econ-world/",
       "status": "available",
-      "summary": "Au Canada, l’emploi a reculé de 68 300 postes en septembre après une baisse en août; le chômage atteint 6,5 %. Les pertes touchent notamment les services publics et les jeunes. La croissance salariale des employés permanents remonte à 2,3 %, ce qui complique l’équilibre entre ralentissement économique et inflation. Après la publication, le dollar canadien et les rendements obligataires à deux ans ont diminué. Aux États-Unis, la confiance des consommateurs de l’Université du Michigan descend à 46,3 en octobre, contre 48,1 en septembre. Les ménages moins aisés souffrent davantage, alors que les revenus élevés soutiennent encore les dépenses. Les attentes d’inflation à un an passent à 4,7 %. Lecture : une confiance faible signale des tensions, mais ne démontre pas, à elle seule, une contraction de la consommation.",
+      "summary": "Au Canada, l’emploi a diminué de 68 300 postes en septembre; le chômage atteint 6,5 %. Les jeunes et les services publics sont particulièrement touchés. Les salaires des employés permanents augmentent de 2,3 %, compliquant l’équilibre entre activité et inflation. Aux États-Unis, la confiance Michigan préliminaire descend à 46,3 en octobre, contre 48,1 en septembre. Les ménages moins aisés subissent davantage de pression, tandis que les revenus élevés soutiennent les dépenses. Les attentes d’inflation à un an atteignent 4,7 %. Cette enquête récente complète la série Michigan de FRED, publiée avec retard; les périodes ne doivent pas être confondues.",
       "articles": [
         {
           "title": "Recul de l’emploi canadien en septembre",
@@ -51,7 +51,7 @@
       "label": "Banque du Canada",
       "url": "https://www.bankofcanada.ca/rates/daily-digest/",
       "status": "available",
-      "summary": "Le sommaire quotidien indique 1,4271 dollar canadien pour un dollar américain le 9 octobre, contre 1,4240 la veille. Le taux directeur affiché pour le 8 octobre demeure à 2,25 %. L’inflation globale d’août est de 3,0 %, tandis que les mesures tronquée et médiane sont respectivement à 1,9 % et 2,0 %. Ces données portent sur des périodes différentes : elles ne décrivent pas toutes la même journée. Dans une analyse publiée le 8 octobre, la Banque souligne aussi que le vieillissement et la baisse de l’immigration freinent la croissance de la population active. Une demande résidentielle moins forte pourrait atténuer certaines pressions sur le logement, mais une main-d’œuvre réduite limiterait la production et pourrait accentuer des pénuries sectorielles.",
+      "summary": "Le 9 octobre, un dollar américain vaut 1,4271 dollar canadien, contre 1,4240 la veille. Le taux directeur affiché pour le 8 octobre reste à 2,25 %. L’inflation globale canadienne d’août atteint 3,0 %; les mesures tronquée et médiane sont à 1,9 % et 2,0 %. Ces chiffres couvrent des périodes différentes. Dans son analyse du 8 octobre, la Banque souligne que vieillissement et baisse de l’immigration freinent la population active. Une demande résidentielle moins forte peut soulager le logement, mais une main-d’œuvre réduite limite la production et risque d’aggraver les pénuries sectorielles.",
       "articles": [
         {
           "title": "Sommaire quotidien : devises, taux et inflation",
@@ -66,31 +66,53 @@
       ]
     },
     {
-      "id": "fred-calendar",
-      "label": "FRED — Calendrier",
-      "url": "https://fred.stlouisfed.org/releases/calendar",
+      "id": "fred-indicators",
+      "label": "FRED — Tes indicateurs à surveiller",
+      "url": "https://fred.stlouisfed.org/",
       "status": "available",
-      "summary": "Le calendrier FRED du samedi 10 octobre présente notamment les séries de cryptomonnaies Coinbase; une entrée de calendrier ne signifie pas une nouvelle décision monétaire. Pour la semaine suivante, le calendrier officiel du BLS confirme l’IPC américain de septembre le 14 octobre, les prix à la production le 15 et les prix d’importation et d’exportation le 16, à 8 h 30, heure de Montréal. Ces publications permettront de vérifier la persistance des pressions inflationnistes.",
+      "summary": "Parmi tes 33 indicateurs, priorité à l’emploi américain : seulement 29 000 créations en septembre, contre 133 000 en août; le chômage remonte de 4,1 % à 4,2 %. Les offres JOLTS reculent aussi de 7,335 à 7,079 millions en août. Leur convergence indique un ralentissement des embauches, sans suffire à annoncer une récession. Deuxième priorité : l’inflation. Le PCE sous-jacent annuel atteint 3,01 % en août, contre 2,98 % en juillet, et le CPI global 3,35 %, contre 3,30 %. Cette légère remontée mérite confirmation dans les prochaines publications. Troisième priorité : la confiance Michigan tombe à 51,7 en août, contre 55,2 en juillet. FRED diffuse cette série avec un mois de retard : garde la période affichée. Quatrième priorité : le stress financier remonte à −0,4681 au 2 octobre, contre −0,8091 la semaine précédente. La tendance se dégrade, mais son niveau reste inférieur à la moyenne historique de zéro. Le Trésor à dix ans demeure élevé à 5,22 % au 8 octobre, malgré un recul quotidien. À vérifier d’abord : emploi et inflation; ensuite confiance et financement. Les dernières valeurs disponibles sont utilisées, avec leurs dates réelles et les comparaisons précédentes. Surveille si cette détérioration persiste sur plusieurs publications, plutôt que d’interpréter une variation quotidienne isolée.",
       "articles": [
         {
-          "title": "Calendrier des publications FRED",
-          "url": "https://fred.stlouisfed.org/releases/calendar",
-          "published_date": "2026-10-10"
+          "title": "Emplois non agricoles",
+          "url": "https://fred.stlouisfed.org/series/PAYEMS",
+          "published_date": "2026-10-02"
         },
         {
-          "title": "Calendrier officiel du BLS pour octobre",
-          "url": "https://www.bls.gov/schedule/2026/10_sched.htm",
-          "published_date": "2026-02-18"
+          "title": "Chômage américain",
+          "url": "https://fred.stlouisfed.org/series/UNRATE",
+          "published_date": "2026-10-02"
+        },
+        {
+          "title": "Offres d’emploi JOLTS",
+          "url": "https://fred.stlouisfed.org/series/JTSJOL",
+          "published_date": "2026-09-29"
+        },
+        {
+          "title": "PCE sous-jacent",
+          "url": "https://fred.stlouisfed.org/series/PCEPILFE",
+          "published_date": "2026-09-30"
+        },
+        {
+          "title": "Inflation CPI",
+          "url": "https://fred.stlouisfed.org/series/CPIAUCSL",
+          "published_date": "2026-09-11"
+        },
+        {
+          "title": "Confiance Michigan : diffusion avec retard",
+          "url": "https://fred.stlouisfed.org/series/UMCSENT",
+          "published_date": "2026-09-25"
+        },
+        {
+          "title": "Stress financier : niveau et tendance",
+          "url": "https://fred.stlouisfed.org/series/STLFSI4",
+          "published_date": "2026-10-07"
+        },
+        {
+          "title": "Taux du Trésor à dix ans",
+          "url": "https://fred.stlouisfed.org/series/DGS10",
+          "published_date": "2026-10-09"
         }
       ]
-    },
-    {
-      "id": "perplexity-finance",
-      "label": "Perplexity — Finance",
-      "url": "https://www.perplexity.ai/finance",
-      "status": "unavailable",
-      "summary": "Le contenu de Perplexity Finance n’était pas accessible à la vérification. Aucun point d’actualité ne lui est attribué dans cette édition.",
-      "articles": []
     }
   ]
 }

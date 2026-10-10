@@ -10,22 +10,24 @@ Un tableau de bord en français pour suivre le cycle économique aux États-Unis
 - **Recherche**, filtres par catégorie, tri par nom ou date, et **favoris** conservés dans le navigateur.
 - **Export CSV** de la sélection, compatible avec Excel et protégé contre les formules dans les champs texte.
 - **Modes clair et sombre**, disposition adaptée au téléphone et dialogues accessibles au clavier.
-- **Briefing macroéconomique de 500 mots au total** : points importants par source et liens vers les publications.
+- **Briefing macroéconomique de 500 mots au total** : Reuters, Banque du Canada et analyse des indicateurs FRED préoccupants, classés par priorité.
+- **Cinq graphiques de marchés mondiaux** : S&P 500, Nasdaq Composite, S&P/TSX Composite, STOXX Europe 600 et ETF EEM suivant le MSCI Emerging Markets. Clôtures quotidiennes, périodes de 1 mois à 10 ans et sources accessibles.
 - Arbres de décision NFCI et TEV/EBITDA et ressources complémentaires conservés.
 
 Les périodes de graphique se terminent à la dernière observation de chaque série. Une flèche indique le sens de variation depuis l’observation précédente, dont la date est disponible au survol. Les périodes mensuelles et trimestrielles sont affichées comme telles.
 
 ## Mise à jour et fiabilité
 
-GitHub Actions collecte les données **trois fois par jour du lundi au vendredi**, à 11 h 17, 17 h 17 et 23 h 17 UTC, et une fois par jour la fin de semaine à 12 h 17 UTC. Les horaires affichés dans le tableau sont convertis à l’heure de Montréal.
+GitHub Actions collecte les observations FRED et les cours des cinq marchés **à 6 h 47 chaque jour**, puis à **13 h 17 et 19 h 17 du lundi au vendredi**, à l’heure de Montréal. La collecte du matin prépare les données du briefing de 7 h. Les horaires utilisent `America/Toronto` et suivent les changements d’heure; GitHub peut retarder une exécution en cas de charge.
 
-Le **briefing d’actualité** est préparé et publié par une tâche ChatGPT quotidienne programmée à **7 h, heure de Montréal**, fins de semaine comprises, à partir du 11 octobre 2026. Sa mise à jour est indépendante de celle des observations. Il résume Reuters Marchés, Reuters Économie, la Banque du Canada, le calendrier FRED et Perplexity Finance, pour **500 mots au total**, hors titres et liens. Chaque section cite les publications consultées et leurs dates. Une source inaccessible est signalée sans inventer son contenu; une journée sans nouvelle importante reprend uniquement des points récents en précisant leur date.
+Le **briefing d’actualité** est préparé et publié par une tâche ChatGPT quotidienne programmée à **7 h, heure de Montréal**, fins de semaine comprises, à partir du 11 octobre 2026. Sa mise à jour est indépendante de celle des observations. Il résume Reuters Marchés, Reuters Économie, la Banque du Canada et les **indicateurs de ton tableau FRED à surveiller**, pour **500 mots au total**, hors titres, liens et graphiques. La partie FRED examine les 33 séries du tableau et classe les signaux les plus importants selon leurs niveaux et leurs tendances, avec valeurs, comparaisons, périodes et explications. Une baisse n’est pas systématiquement mauvaise : le sens économique propre à chaque indicateur compte. Un signal isolé n’est pas présenté comme une certitude. Chaque section cite les publications consultées et leurs dates. Une source inaccessible est signalée sans inventer son contenu; une journée sans nouvelle importante reprend uniquement des points récents en précisant leur date.
 
 La tâche de rédaction actualise `data/daily-briefing.json` dans ce dépôt. La collecte FRED ne modifie jamais ce fichier. La date d’édition des nouvelles est indépendante de celle des graphiques. En cas de panne, le navigateur peut conserver la dernière édition vérifiée, avec sa date et un avertissement visible. Si la préparation quotidienne échoue, l’édition précédente reste affichée et n’est pas présentée comme nouvelle.
 
 Les observations suivent le calendrier de leurs sources. Par exemple, une statistique mensuelle conserve sa période de référence entre deux publications; la date de collecte ne devient jamais sa date d’observation.
 
 - Les CSV sont lus directement sur FRED par le collecteur Python, avec délais limites et nouvelles tentatives bornées.
+- Les quatre indices et l’ETF EEM sont collectés sur Yahoo Finance. EEM est affiché comme ETF en dollars US, les indices en points. Les graphiques montrent les cours de clôture, hors dividendes, et ne mélangent pas leurs échelles. Chaque source est vérifiée avec son symbole et la date de séance de sa place boursière; une séance en cours est exclue.
 - Chaque série dispose de son propre repli : une panne conserve sa dernière observation valide et son horodatage, tout en actualisant les autres séries.
 - Les données manquantes restent des trous dans les graphiques.
 - Les fichiers JSON sont remplacés de façon atomique. Si toutes les sources échouent sans valeur valide conservée, les fichiers existants restent en place et le workflow échoue.
@@ -38,7 +40,8 @@ Les observations suivent le calendrier de leurs sources. Par exemple, une statis
 La configuration se trouve dans `data/series.json`. Les fichiers publiés sont :
 
 - `data/macro-data.json` : valeurs, dates, variation, statut de collecte et historiques.
-- `data/daily-briefing.json` : édition d’actualité en français, 500 mots, cinq sections et publications citées (schéma 3).
+- `data/daily-briefing.json` : édition d’actualité en français, 500 mots, quatre sections et publications citées (schéma 3).
+- `data/market-indices.json` : historiques de clôture, dates et statut de collecte des quatre indices et de l’ETF EEM (schéma 2, `kind: market_indices`).
 - `data/macro-briefing.json` : instantané statistique de secours généré avec les observations (schéma 2).
 
 Avant de publier une nouvelle édition :
@@ -47,7 +50,7 @@ Avant de publier une nouvelle édition :
 python3 scripts/validate_news_briefing.py
 ```
 
-Le validateur vérifie les cinq sources, les dates, les liens HTTPS et le total de 500 mots (somme des mots séparés par des espaces dans les champs `summary`). Le déploiement Pages exécute cette vérification avant publication.
+Le validateur vérifie les quatre sources, les dates, les liens HTTPS et le total de 500 mots (somme des mots séparés par des espaces dans les champs `summary`). Le déploiement Pages exécute cette vérification avant publication.
 
 Les nouvelles mesures sont calculées à partir des niveaux publiés :
 
@@ -79,6 +82,7 @@ Ouvrir ensuite **http://localhost:8000**. La première collecte peut être lanc�
 
 ```bash
 python3 scripts/generate_daily_briefing.py
+python3 scripts/collect_market_indices.py
 ```
 
 Le site utilise du HTML, CSS, JavaScript et SVG, sans dépendance de production à un CDN. Le collecteur utilise la bibliothèque standard de Python.

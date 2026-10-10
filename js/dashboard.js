@@ -3,7 +3,15 @@
   const U = window.MacroUtils;
   const $ = selector => document.querySelector(selector);
   const CACHE_KEY = "savy:macro-data:v2";
-  const NEWS_CACHE_KEY = "savy:news-digest:v3";
+  const NEWS_CACHE_KEY = "savy:news-digest:v4";
+  const MARKET_CACHE_KEY = "savy:market-indices:v1";
+  const MARKET_DEFINITIONS = [
+    ["SPX", "S&P 500", "États-Unis", "^GSPC"],
+    ["IXIC", "Nasdaq Composite", "États-Unis", "^IXIC"],
+    ["TSX", "S&P/TSX Composite", "Canada", "^GSPTSE"],
+    ["STOXX600", "STOXX Europe 600", "Europe", "^STOXX"],
+    ["EEM", "MSCI émergents · ETF EEM", "Marchés émergents", "EEM"],
+  ];
   const PREFS_KEY = "savy:preferences:v2";
   function readStored(key, fallback) {
     try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; }
@@ -20,6 +28,7 @@
     favorites: new Set(Array.isArray(prefs.favorites) ? prefs.favorites.filter(id => typeof id === "string" && /^[A-Z0-9]+$/.test(id)) : []),
     favoritesOnly: false, theme: prefs.theme === "light" ? "light" : "dark",
     detailId: null, detailRange: "10Y", loading: false,
+    marketDataset: null, marketRange: "1Y", marketCached: false,
   };
   function el(tag, className, text) {
     const node = document.createElement(tag);
@@ -311,7 +320,7 @@
     } catch { return false; }
   }
   function validateBriefing(briefing) {
-    const ids = ["reuters-markets", "reuters-economy", "bank-of-canada", "fred-calendar", "perplexity-finance"];
+    const ids = ["reuters-markets", "reuters-economy", "bank-of-canada", "fred-indicators"];
     const stamp = U.parseTimestamp(briefing?.generated_at);
     if (!briefing || briefing.schema_version !== 3 || briefing.kind !== "news_digest" ||
         briefing.language !== "fr" || briefing.timezone !== "America/Toronto" || !U.isDate(briefing.edition_date) ||
@@ -376,6 +385,74 @@
     $("#briefingNote").textContent = (cached ? "Actualisation indisponible : dernière édition vérifiée conservée. " : "") +
       (unavailable ? unavailable + " source(s) inaccessible(s), indiquée(s) ci-dessus. " : "") + (briefing.editorial_note || "");
   }
+
+  function normalizeMarkets(payload) {
+    if (payload?.kind !== "market_indices" || U.parseTimestamp(payload.generated_at) > Date.now() + 300000 ||
+        !Array.isArray(payload.series) || payload.series.length !== MARKET_DEFINITIONS.length) throw new Error("Indices invalides");
+    const data = U.normalizeDataset(payload);
+    const byId = new Map(data.series.map(point => [point.id, point]));
+    data.series = MARKET_DEFINITIONS.map(([id, title, category, symbol]) => {
+      const point = byId.get(id);
+      if (!point || point.quote_symbol !== symbol) throw new Error("Indice attendu absent");
+      const valid = point.history.filter(row => U.validNumber(row[1]));
+      if (point.value !== null && (valid.length < 2 || valid.at(-1)[0] !== point.date || valid.at(-1)[1] !== point.value || point.value <= 0)) throw new Error("Clôture incohérente");
+      return {...point, title, category, frequency: "daily", unit: id === "EEM" ? "$ US" : "points", decimals: 2,
+        source_url: "https://finance.yahoo.com/quote/" + encodeURIComponent(symbol) + "/"};
+    });
+    if (!data.series.some(point => point.value !== null)) throw new Error("Aucun indice vérifié");
+    return data;
+  }
+  function renderMarkets() {
+    const ranges = document.createDocumentFragment();
+    for (const range of U.RANGES) {
+      const button = el("button", "", range.label);
+      button.type = "button"; button.setAttribute("aria-pressed", String(range.key === state.marketRange));
+      button.addEventListener("click", () => {state.marketRange = range.key; renderMarkets();});
+      ranges.append(button);
+    }
+    $("#marketRanges").replaceChildren(ranges);
+    const data = state.marketDataset;
+    const available = data?.series.filter(point => point.value !== null).length || 0;
+    $("#marketStatus").textContent = data ? (state.marketCached ? "Copie conservée · " : "") +
+      "Collecte du " + U.timestampLabel(data.generated_at) + " · " + available + "/5 marchés disponibles" : "Cotations indisponibles. Réessaie avec « Actualiser » ou consulte les sources ci-dessous.";
+    const oldCollection = data && Date.now() - U.parseTimestamp(data.generated_at) > 36 * 3600000;
+    if (oldCollection) $("#marketStatus").textContent += " · collecte ancienne";
+    $("#marketStatus").classList.toggle("warning", !data || state.marketCached || available !== 5 || oldCollection);
+    const fragment = document.createDocumentFragment();
+    for (const [id, title, category, symbol] of MARKET_DEFINITIONS) {
+      const point = data?.series.find(item => item.id === id);
+      const card = el("article", "market-card"); card.dataset.id = id;
+      card.append(el("p", "eyebrow", category), el("h4", "", title));
+      card.append(el("p", "market-value", point ? U.formatNumber(point.value, 2) + (point.value !== null && id === "EEM" ? " $ US" : "") : "—"));
+      const old = point?.date && Date.now() - Date.parse(point.date) > 7 * 86400000;
+      card.append(el("p", "meta" + (old || point?.fetch_status === "cached" ? " warning" : ""),
+        point?.date ? "Clôture du " + point.date + (old ? " · observation ancienne" : "") + (point.fetch_status === "cached" ? " · dernière valeur conservée" : "") : "Clôture indisponible"));
+      if (point && U.validNumber(point.change) && U.validNumber(point.previous_value) && point.previous_value > 0) {
+        const change = el("p", "change " + (point.change > 0 ? "up" : point.change < 0 ? "down" : "flat"),
+          (point.change > 0 ? "+" : "") + U.formatNumber(point.change / point.previous_value * 100, 2) + " % · " +
+          (point.change > 0 ? "+" : "") + U.formatNumber(point.change, 2) + (id === "EEM" ? " $ US" : " pts"));
+        change.title = "Par rapport à la clôture du " + point.previous_date; card.append(change);
+      }
+      const host = el("div", "chart-host");
+      if (point) drawChart(host, point, state.marketRange);
+      else host.append(el("p", "chart-placeholder", "Historique indisponible pour cette collecte."));
+      const link = el("a", "", "Voir " + (id === "EEM" ? "l’ETF" : "cet indice") + " sur Yahoo Finance ↗");
+      link.href = "https://finance.yahoo.com/quote/" + encodeURIComponent(symbol) + "/";
+      link.target = "_blank"; link.rel = "noopener noreferrer";
+      card.append(host, link); fragment.append(card);
+    }
+    $("#marketGrid").replaceChildren(fragment);
+  }
+  async function loadMarkets() {
+    try {
+      state.marketDataset = normalizeMarkets(await fetchJSON("data/market-indices.json"));
+      state.marketCached = false; writeStored(MARKET_CACHE_KEY, state.marketDataset);
+    } catch {
+      try {state.marketDataset = normalizeMarkets(readStored(MARKET_CACHE_KEY, null)); state.marketCached = true;}
+      catch {state.marketDataset = null; state.marketCached = false;}
+    }
+    renderMarkets();
+  }
   async function loadDataset() {
     if (state.loading) return;
     state.loading = true; $("#refreshButton").disabled = true; $("#refreshButton").textContent = "Actualisation…";
@@ -400,7 +477,7 @@
         $("#updated").classList.add("warning");
       }
     } finally {
-      await loadBriefing();
+      await Promise.all([loadBriefing(), loadMarkets()]);
       state.loading = false; $("#refreshButton").disabled = false; $("#refreshButton").textContent = "Actualiser";
     }
   }
