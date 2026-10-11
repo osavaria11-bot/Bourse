@@ -15,14 +15,15 @@ on:
       - "scripts/collect_market_indices.py"
       - "scripts/collect_security_prices.py"
       - "scripts/collect_portfolio_exposures.py"
-      - "scripts/collect_portfolio_news.py"
+      - "scripts/collect_portfolio_earnings.py"
       - "scripts/collect_rate_odds.py"
       - "data/securities.json"
       - "data/portfolio-exposures.json"
+      - "data/earnings-highlights.json"
       - "tests/test_generate_daily_briefing.py"
       - "tests/test_market_indices.py"
       - "tests/test_portfolio_exposures.py"
-      - "tests/test_portfolio_news.py"
+      - "tests/test_portfolio_earnings.py"
       - "tests/test_rate_odds.py"
       - ".github/workflows/daily-briefing.yml"
 
@@ -58,15 +59,15 @@ jobs:
         run: python scripts/collect_security_prices.py
       - name: Refresh public portfolio exposures when due
         run: python scripts/collect_portfolio_exposures.py
-      - name: Refresh dated company news for the public catalogue
-        run: python scripts/collect_portfolio_news.py
+      - name: Refresh weekly earnings for the public catalogue
+        run: python scripts/collect_portfolio_earnings.py
       - name: Refresh next-decision market odds
         run: python scripts/collect_rate_odds.py
       - name: Commit published data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/macro-data.json data/macro-briefing.json data/market-indices.json data/security-prices.json data/portfolio-exposures.json data/portfolio-news.json data/rate-odds.json
+          git add data/macro-data.json data/macro-briefing.json data/market-indices.json data/security-prices.json data/portfolio-exposures.json data/portfolio-earnings.json data/rate-odds.json
           if git diff --cached --quiet; then
             echo "No data changes to commit."
             exit 0

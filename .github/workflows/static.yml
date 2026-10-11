@@ -56,6 +56,15 @@ jobs:
           node --check js/portfolio-profile-utils.js
           node --check js/portfolio.js
           npm test
+      - name: Validate dated earnings data and reviewed messages
+        run: |
+          node - <<'JS'
+          const fs = require('node:fs'), F = require('./js/portfolio-analytics-utils.js');
+          const catalog = JSON.parse(fs.readFileSync('data/securities.json', 'utf8'));
+          const data = F.normalizeEarnings(JSON.parse(fs.readFileSync('data/portfolio-earnings.json', 'utf8')), catalog);
+          if (Object.keys(data.instruments).length !== catalog.series.length) throw new Error('Incomplete earnings catalogue');
+          console.log('Validated earnings catalogue:', data.coverage);
+          JS
       - name: Install browser test dependency
         run: npm ci --ignore-scripts --no-audit --no-fund
       - name: Install Chromium

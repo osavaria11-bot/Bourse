@@ -4,10 +4,10 @@
   const HOLDINGS_KEY = "savy:private-holdings:v1", PRICE_KEY = "savy:security-prices:v1", POSITIONS_VISIBLE_KEY = "savy:portfolio-positions-visible:v1";
   const PROFILE_STATE_KEY = "savy:portfolio-profile-state:v1", PROFILE_CACHE_KEY = "savy:portfolio-profile-cache:v1";
   const EXPOSURE_KEY = "savy:portfolio-exposures:v1", EXPOSURE_VIEWS_KEY = "savy:portfolio-exposure-views:v1";
-  const NEWS_KEY = "savy:portfolio-news:v1";
+  const EARNINGS_KEY = "savy:portfolio-earnings:v1";
   let catalog = null, prices = null, cached = false, range = "YTD", moversRange = "1M", positions = [], history = [], imported = false;
   let exposures = null, exposureCached = false;
-  let news = null, newsCached = false, newsTicker = "", newsEvent = "all";
+  let earnings = null, earningsCached = false, earningsTicker = "", earningsWeek = F.weekFor().start, earningsSelection = null;
   const exposureViewState = stored(EXPOSURE_VIEWS_KEY, {});
   const exposureViews = {Sectors: exposureViewState?.Sectors === true, Geography: exposureViewState?.Geography === true};
   let profileState = stored(PROFILE_STATE_KEY, null), profileInitialized = false, holdingsAvailable = false, manifestURL = null;
@@ -215,33 +215,137 @@
     } else notes.push("Choisis une période plus longue si l’échantillon est trop court; aucune estimation ne remplace une donnée manquante.");
     $("#portfolioRiskNote").textContent = notes.join(" ");
   }
-  function renderNews(current) {
+  function earningsAmount(value, currency, revenue = false) {
+    if (!U.validNumber(value)) return "N/D";
+    if (revenue) {
+      const scale = Math.abs(value) >= 1e9 ? 1e9 : Math.abs(value) >= 1e6 ? 1e6 : 1;
+      return U.formatNumber(value / scale, 2) + (scale === 1e9 ? " G" : scale === 1e6 ? " M" : " ") + (currency === "USD" ? "$ US" : currency === "CAD" ? "$ CA" : " · devise N/D");
+    }
+    return currency ? money(value, currency) : U.formatNumber(value, 2) + " · devise N/D";
+  }
+  function earningsWeekLabel(week) {return U.dateLabel(week.start) + " – " + U.dateLabel(week.end);}
+  function earningsDateLabel(event) {
+    return event.report_at ? U.timestampLabel(event.report_at) + " · horaire du calendrier" : U.dateLabel(event.report_date) + " · heure N/D";
+  }
+  function earningsPendingLabel(event) {return event.report_date < F.localDay() ? "Publication à confirmer" : "À venir";}
+  function renderEarnings(current) {
     const valuation = current || {complete: false, total: 0, rows: positions.map(row => ({...row, title: catalog?.series.find(definition => definition.id === row.ticker)?.title || row.ticker}))};
-    if (!positions.some(row => row.ticker === newsTicker)) newsTicker = "";
+    if (!positions.some(row => row.ticker === earningsTicker)) earningsTicker = "";
     const options = document.createDocumentFragment(), all = el("option", "", "Tous mes titres"); all.value = ""; options.append(all);
-    for (const row of [...valuation.rows].sort((a, b) => (b.value_cad || 0) - (a.value_cad || 0) || a.ticker.localeCompare(b.ticker))) {
+    for (const row of [...valuation.rows].sort((a, b) => a.ticker.localeCompare(b.ticker))) {
       const option = el("option", "", row.ticker + " · " + row.title); option.value = row.ticker; options.append(option);
     }
-    $("#portfolioNewsTicker").replaceChildren(options); $("#portfolioNewsTicker").value = newsTicker;
-    const result = F.selectNews(valuation, news, {ticker: newsTicker, event: newsEvent}), content = document.createDocumentFragment();
-    $("#portfolioNewsStatus").textContent = news ? "Veille publiée le " + U.timestampLabel(news.generated_at) + " · " + result.rows.length + " / " + result.total + " publications récentes affichées · " + result.covered + " position" + (result.covered > 1 ? "s" : "") + " couverte" + (result.covered > 1 ? "s" : "") +
-      (newsCached || result.cached.length ? " · certains flux sont conservés; les dates des articles restent affichées" : "") +
-      (result.unavailable.length ? " · flux indisponibles : " + result.unavailable.join(", ") : "") + (!valuation.complete ? " · poids indisponibles, priorité selon événement et récence" : "") :
-      "Les actualités n’ont pas pu être chargées. Utilise « Actualiser ».";
-    $("#portfolioNewsStatus").classList.toggle("warning", !news || newsCached || result.cached.length > 0 || result.unavailable.length > 0 || (news && Date.now() - U.parseTimestamp(news.generated_at) > 36 * 3600000));
-    for (const article of result.rows) {
-      const card = el("article", "portfolio-news-card"), meta = el("div", "portfolio-news-meta"); card.dataset.newsId = article.id;
-      const time = el("time", "", U.timestampLabel(article.published_at)); time.dateTime = article.published_at;
-      meta.append(el("span", "portfolio-news-event", F.EVENTS[article.event].label), el("span", "", article.publisher), time);
-      const title = el("h4"), link = el("a", "", article.title + " ↗"); link.href = article.source_url; link.target = "_blank"; link.rel = "noopener noreferrer"; title.append(link);
-      const holdings = article.holdings.map(row => row.ticker + (U.validNumber(row.weight) ? " · " + U.formatNumber(row.weight, 2) + " % du portefeuille" : ""));
-      card.append(meta, title, el("p", "portfolio-news-holdings", holdings.join(" / ")),
-        el("p", "portfolio-news-reason", F.EVENTS[article.event].reason)); content.append(card);
+    $("#portfolioEarningsTicker").replaceChildren(options); $("#portfolioEarningsTicker").value = earningsTicker;
+    const thisWeek = F.weekFor(), weeks = document.createDocumentFragment();
+    for (let offset = 5; offset >= -12; offset--) {
+      const week = F.weekFor(F.shiftDay(thisWeek.start, offset * 7));
+      const prefix = offset === 0 ? "Cette semaine · " : offset === 1 ? "Semaine prochaine · " : offset === -1 ? "Semaine dernière · " : "";
+      const option = el("option", "", prefix + earningsWeekLabel(week)); option.value = week.start; weeks.append(option);
     }
-    if (!result.rows.length) content.append(el("p", "portfolio-news-empty", news ? "Aucune publication des sources retenues dans les 7 derniers jours pour cette sélection." : "La veille sera disponible lorsque les sources auront pu être chargées."));
-    $("#portfolioNewsItems").replaceChildren(content);
+    $("#portfolioEarningsWeek").replaceChildren(weeks);
+    if (![...$("#portfolioEarningsWeek").options].some(option => option.value === earningsWeek)) earningsWeek = thisWeek.start;
+    $("#portfolioEarningsWeek").value = earningsWeek;
+    const result = F.selectEarnings(valuation, earnings, {ticker: earningsTicker, week: F.weekFor(earningsWeek)});
+    earningsSelection = result;
+    const warning = !earnings || earningsCached || result.cached.length > 0 || result.unavailable.length > 0 || !result.inWindow;
+    $("#portfolioEarningsStatus").textContent = earnings ? earningsWeekLabel(result.week) + " · " + result.reported + " résultat" + (result.reported > 1 ? "s" : "") + " publié" + (result.reported > 1 ? "s" : "") + " · " + result.pending + " à venir · collecte du " + U.timestampLabel(earnings.generated_at) +
+      (earningsCached || result.cached.length ? " · copie conservée; dates de collecte originales" : "") +
+      (result.unavailable.length ? " · calendriers indisponibles : " + result.unavailable.join(", ") : "") +
+      (!result.inWindow ? " · semaine hors de la fenêtre collectée; actualisation nécessaire" : "") : "Les résultats n’ont pas pu être chargés. Utilise « Actualiser ».";
+    $("#portfolioEarningsStatus").classList.toggle("warning", warning);
+    const calendar = document.createDocumentFragment();
+    for (const day of result.week.days) {
+      const reports = result.rows.filter(row => row.report_date === day), weekday = new Date(day + "T12:00:00Z").getUTCDay();
+      if ((weekday === 0 || weekday === 6) && !reports.length) continue;
+      const column = el("div", "portfolio-earnings-day"), label = el("time", "portfolio-earnings-day-label", new Intl.DateTimeFormat("fr-CA", {weekday: "short", day: "numeric", timeZone: "UTC"}).format(new Date(day + "T12:00:00Z")));
+      label.dateTime = day; column.append(label);
+      for (const report of reports) {
+        const badge = el("button", "portfolio-earnings-badge", report.holdings.map(row => row.ticker).join(" / "));
+        badge.type = "button"; badge.dataset.earningsId = report.id;
+        const outcome = report.date_status === "reported" ? F.earningsOutcome(report.eps) : {status: "pending"};
+        badge.classList.add("earnings-" + outcome.status); badge.setAttribute("aria-label", "Voir les résultats de " + badge.textContent + " du " + U.dateLabel(day));
+        badge.append(el("small", "", report.date_status === "reported" ? outcome.status === "beat" ? "BPA battu" : outcome.status === "miss" ? "BPA raté" : outcome.status === "inline" ? "BPA conforme" : "Publié" : earningsPendingLabel(report)));
+        badge.addEventListener("click", () => {const card = document.querySelector('#portfolioEarningsItems [data-earnings-id="' + report.id + '"]'); card?.scrollIntoView({behavior: "smooth", block: "center"}); card?.focus({preventScroll: true});});
+        column.append(badge);
+      }
+      if (!reports.length) column.append(el("span", "portfolio-earnings-none", "—"));
+      calendar.append(column);
+    }
+    $("#portfolioEarningsCalendar").replaceChildren(calendar); $("#portfolioEarningsCalendar").hidden = !earnings;
+    const content = document.createDocumentFragment();
+    for (const report of result.rows) {
+      const card = el("article", "portfolio-earnings-card"), heading = el("div", "portfolio-earnings-card-heading"); card.dataset.earningsId = report.id; card.tabIndex = -1;
+      const title = el("div"); title.append(el("p", "eyebrow", report.holdings.map(row => row.ticker).join(" / ")), el("h4", "", report.holdings[0].title));
+      heading.append(title, el("span", "portfolio-earnings-state", report.date_status === "reported" ? "PUBLIÉ" : earningsPendingLabel(report)));
+      const time = el("time", "meta", earningsDateLabel(report)); time.dateTime = report.report_at || report.report_date;
+      card.append(heading, time, el("p", "meta", (report.quarter ? report.quarter + " · " : "") + (report.date_status === "estimated" ? "Date estimée" : report.date_status === "calendar" ? "Date du calendrier · à vérifier auprès de l’émetteur" : "Résultats publiés")));
+      if (report.cached) card.append(el("p", "meta warning", "Copie de la collecte du " + U.timestampLabel(report.fetched_at)));
+      const table = el("table", "portfolio-earnings-table"), caption = el("caption", "sr-only", "Montants publiés et consensus pour " + report.holdings[0].title);
+      const head = el("thead"), headRow = el("tr"); for (const label of ["", "Publié", "Attendu"]) {const cell = el("th", "", label); cell.scope = "col"; headRow.append(cell);} head.append(headRow);
+      const body = el("tbody");
+      for (const [key, label] of [["eps", "BPA"], ["revenue", "Revenus"]]) {
+        const metric = report[key], row = el("tr"), name = el("th", "", label); name.scope = "row"; row.append(name, el("td", "", earningsAmount(metric.actual, metric.currency, key === "revenue")), el("td", "", earningsAmount(metric.estimate, metric.currency, key === "revenue")));
+        body.append(row);
+        const outcome = F.earningsOutcome(metric), status = el("tr"), cell = el("td", "earnings-outcome earnings-" + outcome.status, report.date_status !== "reported" ? earningsPendingLabel(report) : outcome.status === "pending" ? "Montant publié N/D" : outcome.label + (U.validNumber(outcome.percent) ? " · " + delta(outcome.percent, true) : "")); cell.colSpan = 3; cell.dataset.metric = key; status.append(cell); body.append(status);
+      }
+      table.append(caption, head, body); card.append(table);
+      if (report.messages.length) {
+        card.append(el("h5", "", "Messages clés")); const list = el("ul", "portfolio-earnings-messages");
+        for (const message of report.messages) {const item = el("li", "", message.text); if (message.language === "en") {item.lang = "en"; item.append(el("small", "meta", " · thème cité en anglais"));} else if (message.kind === "calculated") item.append(el("small", "meta", " · comparaison calculée")); list.append(item);}
+        card.append(list);
+      } else card.append(el("p", "meta", report.date_status === "reported" ? "Messages de la conférence non disponibles dans les sources collectées." : "Messages et surprises à afficher après publication."));
+      const links = el("div", "portfolio-earnings-sources");
+      const sources = [...report.sources]; if (report.report_url) sources.push({label: "Compte rendu de la conférence", url: report.report_url});
+      for (const source of sources) {const link = el("a", "", source.label + " ↗"); link.href = source.url; link.target = "_blank"; link.rel = "noopener noreferrer"; links.append(link);}
+      card.append(links);
+      if (report.holdings.some(row => row.listing_note)) card.append(el("p", "meta", "Résultats de l’entreprise sous-jacente; la devise du rapport peut différer de ta cotation."));
+      content.append(card);
+    }
+    if (!result.rows.length) {
+      const empty = el("div", "portfolio-earnings-empty"); empty.append(el("p", "", !earnings ? "Le calendrier apparaîtra lorsque les sources auront pu être chargées." : !result.inWindow ? "Aucune donnée collectée pour cette semaine." : result.unavailable.length ? "Aucun résultat repéré dans les calendriers disponibles. Certains titres n’ont pas pu être vérifiés." : "Aucun résultat prévu ou publié cette semaine pour tes titres. Change de semaine pour voir les dernières ou prochaines publications."));
+      const latest = valuation.rows.filter(row => !earningsTicker || row.ticker === earningsTicker).flatMap(row => earnings?.instruments[row.ticker]?.events || []).filter(event => event.date_status === "reported").sort((a, b) => b.report_date.localeCompare(a.report_date))[0];
+      if (latest && F.weekFor(latest.report_date).start !== earningsWeek) {const button = el("button", "button quiet", "Voir ma dernière semaine de résultats"); button.type = "button"; button.addEventListener("click", () => {earningsWeek = F.weekFor(latest.report_date).start; renderEarnings(current);}); empty.append(button);}
+      content.append(empty);
+    }
+    $("#portfolioEarningsItems").replaceChildren(content); $("#portfolioEarningsImage").disabled = !earnings || !result.inWindow;
   }
-  function renderAnalysis(selected, current) {renderContributions(selected); renderRisk(selected); renderNews(current);}
+  function saveEarningsImage() {
+    const result = earningsSelection; if (!result?.inWindow || !earnings) return;
+    const canvas = document.createElement("canvas"), width = 1200, cardWidth = 544, cardHeight = 460, rows = Math.max(1, Math.ceil(result.rows.length / 2));
+    canvas.width = width; canvas.height = 160 + rows * (cardHeight + 20) + 70;
+    const ctx = canvas.getContext("2d"), ink = "#e8e9ed", muted = "#a5adb8";
+    ctx.fillStyle = "#0c1119"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#d4b06a"; ctx.font = "600 18px Arial"; ctx.fillText("SAVY · RÉSULTATS DE MES TITRES", 46, 44);
+    ctx.fillStyle = ink; ctx.font = "600 30px Arial"; ctx.fillText(earningsWeekLabel(result.week), 46, 90);
+    ctx.fillStyle = muted; ctx.font = "17px Arial"; ctx.fillText(result.reported + " publiés · " + result.pending + " en attente · " + result.unavailable.length + " calendriers N/D · Sources : voir SAVY", 46, 122);
+    function wrapped(text, x, y, maxWidth, lineHeight, maxLines = 3) {
+      let line = "", lines = 0; const words = text.split(/\s+/);
+      for (let i = 0; i < words.length; i++) {
+        const next = line ? line + " " + words[i] : words[i];
+        if (ctx.measureText(next).width > maxWidth && line) {ctx.fillText(line, x, y); y += lineHeight; lines++; line = words[i]; if (lines === maxLines - 1) {const rest = words.slice(i).join(" "); if (ctx.measureText(rest).width > maxWidth) {let clipped = rest; while (ctx.measureText(clipped + "…").width > maxWidth && clipped.length) clipped = clipped.slice(0, -1); ctx.fillText(clipped + "…", x, y); return;} }} else line = next;
+      }
+      if (line) ctx.fillText(line, x, y);
+    }
+    result.rows.forEach((report, index) => {
+      const x = 46 + index % 2 * (cardWidth + 20), y = 160 + Math.floor(index / 2) * (cardHeight + 20);
+      ctx.fillStyle = "#151e2a"; ctx.fillRect(x, y, cardWidth, cardHeight); ctx.fillStyle = "#d4b06a"; ctx.font = "600 18px Arial"; ctx.fillText(report.holdings.map(row => row.ticker).join(" / "), x + 20, y + 32);
+      ctx.fillStyle = ink; ctx.font = "600 21px Arial"; wrapped(report.holdings[0].title, x + 20, y + 62, cardWidth - 40, 23, 1);
+      ctx.fillStyle = muted; ctx.font = "15px Arial"; ctx.fillText(U.dateLabel(report.report_date) + (report.quarter ? " · " + report.quarter : "") + (report.date_status === "estimated" ? " · Date estimée" : ""), x + 20, y + 90);
+      let lineY = y + 130;
+      for (const [key, label] of [["eps", "BPA"], ["revenue", "Revenus"]]) {
+        const metric = report[key], outcome = F.earningsOutcome(metric);
+        ctx.fillStyle = ink; ctx.font = "17px Arial"; ctx.fillText(label + " : " + earningsAmount(metric.actual, metric.currency, key === "revenue") + " / attendu " + earningsAmount(metric.estimate, metric.currency, key === "revenue"), x + 20, lineY);
+        ctx.fillStyle = outcome.status === "beat" ? "#7bd7b5" : outcome.status === "miss" ? "#ef9b9b" : muted; ctx.font = "14px Arial"; ctx.fillText(report.date_status !== "reported" ? earningsPendingLabel(report) : outcome.status === "pending" ? "Montant publié N/D" : outcome.label, x + 20, lineY + 23); lineY += 59;
+      }
+      ctx.fillStyle = muted; ctx.font = "15px Arial";
+      for (const message of report.messages) {wrapped("• " + message.text, x + 20, lineY, cardWidth - 40, 19, 3); lineY += 60;}
+      if (!report.messages.length) wrapped(report.date_status === "reported" ? "Messages de la conférence non disponibles." : "Messages et surprises après publication.", x + 20, lineY, cardWidth - 40, 19, 2);
+    });
+    if (!result.rows.length) {ctx.fillStyle = muted; ctx.font = "23px Arial"; wrapped("Aucun résultat repéré pour mes titres cette semaine." + (result.unavailable.length ? " Calendriers indisponibles : " + result.unavailable.join(", ") : ""), 46, 215, width - 92, 32);}
+    ctx.fillStyle = muted; ctx.font = "13px Arial"; ctx.fillText("Collecte : " + U.timestampLabel(earnings.generated_at) + (earningsCached || result.cached.length ? " · COPIE CONSERVÉE" : "") + " · Attentes absentes = N/D · BPA et consensus du même fournisseur", 46, canvas.height - 33);
+    canvas.toBlob(blob => {if (!blob) return; const url = URL.createObjectURL(blob), link = el("a"); link.href = url; link.download = "savy-resultats-" + result.week.start + ".png"; document.body.append(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(url), 30000);}, "image/png");
+  }
+  function renderAnalysis(selected, current) {renderContributions(selected); renderRisk(selected); renderEarnings(current);}
   function render() {
     $("#portfolioEmpty").hidden = positions.length > 0;
     $("#portfolioContent").hidden = positions.length === 0;
@@ -352,7 +456,7 @@
       await Promise.all([
         (async () => {try {prices = P.normalizePrices(await fetchJSON("data/security-prices.json"), catalog); cached = false; save(PRICE_KEY, prices);} catch {prices = P.normalizePrices(stored(PRICE_KEY, null), catalog); cached = true;}})(),
         (async () => {try {exposures = E.normalize(await fetchJSON("data/portfolio-exposures.json")); exposureCached = false; save(EXPOSURE_KEY, exposures);} catch {try {exposures = E.normalize(stored(EXPOSURE_KEY, null)); exposureCached = true;} catch {exposures = null;}}})(),
-        (async () => {try {news = F.normalizeNews(await fetchJSON("data/portfolio-news.json"), catalog); newsCached = false; save(NEWS_KEY, news);} catch {try {news = F.normalizeNews(stored(NEWS_KEY, null), catalog); newsCached = true;} catch {news = null;}}})(),
+        (async () => {try {earnings = F.normalizeEarnings(await fetchJSON("data/portfolio-earnings.json"), catalog); earningsCached = false; save(EARNINGS_KEY, earnings);} catch {try {earnings = F.normalizeEarnings(stored(EARNINGS_KEY, null), catalog); earningsCached = true;} catch {earnings = null;}}})(),
       ]);
       history = P.historyFor(positions, prices); render();
     } catch {$("#portfolioStatus").textContent = "Cotations indisponibles. Les positions enregistrées sur cet appareil sont conservées.";}
@@ -362,8 +466,10 @@
   $("#portfolioExport").addEventListener("click", () => {const blob = new Blob([JSON.stringify({schema_version: 1, base_currency: "CAD", positions}, null, 2) + "\n"], {type: "application/json"}); const url = URL.createObjectURL(blob), anchor = el("a"); anchor.href = url; anchor.download = "portefeuille-savy.json"; anchor.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);});
   $("#portfolioPositionsToggle").addEventListener("click", () => {positionsVisible = !positionsVisible; save(POSITIONS_VISIBLE_KEY, positionsVisible); renderPositionsVisibility();});
   for (const view of ["Sectors", "Geography"]) $("#portfolio" + view + "Toggle").addEventListener("click", () => {exposureViews[view] = exposureViews[view] !== true; save(EXPOSURE_VIEWS_KEY, exposureViews); renderExposureVisibility();});
-  $("#portfolioNewsTicker").addEventListener("change", event => {newsTicker = event.target.value; renderNews(prices && history.length ? P.valuationAt(positions, prices, history.at(-1)[0], window.SavyLiveFX?.current()) : null);});
-  $("#portfolioNewsEvent").addEventListener("change", event => {newsEvent = event.target.value; renderNews(prices && history.length ? P.valuationAt(positions, prices, history.at(-1)[0], window.SavyLiveFX?.current()) : null);});
+  function currentEarningsValuation() {return prices && history.length ? P.valuationAt(positions, prices, history.at(-1)[0], window.SavyLiveFX?.current()) : null;}
+  $("#portfolioEarningsTicker").addEventListener("change", event => {earningsTicker = event.target.value; renderEarnings(currentEarningsValuation());});
+  $("#portfolioEarningsWeek").addEventListener("change", event => {earningsWeek = event.target.value; renderEarnings(currentEarningsValuation());});
+  $("#portfolioEarningsImage").addEventListener("click", saveEarningsImage);
   document.addEventListener("click", event => {
     if (!profileInitialized) return;
     const anchor = event.target.closest?.("a[href^='#']"), hash = anchor?.getAttribute("href");

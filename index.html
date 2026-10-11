@@ -8,14 +8,14 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-title" content="SAVY" />
   <title>SAVY — Tableau macroéconomique</title>
-  <link rel="stylesheet" href="css/dashboard.css?v=20261011-portfolio-analytics" />
+  <link rel="stylesheet" href="css/dashboard.css?v=20261011-portfolio-earnings" />
   <script src="js/macro-utils.js?v=20261011-index-day-ytd" defer></script>
   <script src="js/live-fx.js?v=20261011-rates-news" defer></script>
   <script src="js/portfolio-utils.js?v=20261011-portfolio-feqt" defer></script>
   <script src="js/portfolio-exposure-utils.js?v=20261011-portfolio-feqt" defer></script>
-  <script src="js/portfolio-analytics-utils.js?v=20261011-portfolio-analytics" defer></script>
+  <script src="js/portfolio-analytics-utils.js?v=20261011-portfolio-earnings" defer></script>
   <script src="js/portfolio-profile-utils.js?v=20261010-portefeuille-direct" defer></script>
-  <script src="js/portfolio.js?v=20261011-portfolio-analytics" defer></script>
+  <script src="js/portfolio.js?v=20261011-portfolio-earnings" defer></script>
   <script src="js/dashboard.js?v=20261011-feqt" defer></script>
 </head>
 <body>
@@ -74,11 +74,12 @@
           <p id="portfolioRiskNote" class="meta"></p>
           <details class="portfolio-analysis-method"><summary>Comprendre les mesures</summary><p>Volatilité annualisée : écart-type des rendements de séances communes × √252, avec au moins 20 rendements. Baisse maximale : plus forte baisse entre un sommet et un creux dans cette période, calculée aux clôtures. Bêta relatif à FEQT : covariance des rendements ÷ variance des rendements de FEQT, avec au moins 30 rendements; FEQT vaut 1 par définition lorsque la mesure est disponible.</p><p>Un bêta supérieur à 1 indique une sensibilité historique plus élevée aux mouvements de FEQT. Il dépend de la référence et de la période; il ne représente pas une cible de rendement. <a href="https://rpc.cfainstitute.org/sites/default/files/-/media/documents/code/gips/measures-risk-adjusted-return.pdf" target="_blank" rel="noopener noreferrer">Méthode du bêta · CFA Institute ↗</a></p><p>Positions actuelles reconstituées, change historique, hors dividendes. Les séances sans clôture commune sont exclues, sans reprise de cours antérieurs. Une période trop courte ou un historique incomplet ne produit pas d’estimation fictive.</p></details>
         </section>
-        <section id="portfolioNews" class="portfolio-analysis" aria-labelledby="portfolioNewsTitle">
-          <div class="portfolio-analysis-heading"><div><p class="eyebrow">LES ÉVÉNEMENTS À SURVEILLER</p><h3 id="portfolioNewsTitle">Actualités de mes positions</h3></div><div class="portfolio-news-filters"><label class="sr-only" for="portfolioNewsTicker">Filtrer les actualités par position</label><select id="portfolioNewsTicker"><option value="">Tous mes titres</option></select><label class="sr-only" for="portfolioNewsEvent">Filtrer le type d’actualité</label><select id="portfolioNewsEvent"><option value="all">Tous les événements</option><option value="results">Résultats / prévisions</option></select></div></div>
-          <p id="portfolioNewsStatus" class="meta" role="status"></p>
-          <div id="portfolioNewsItems" class="portfolio-news-grid"></div>
-          <p class="meta">Publications des 7 derniers jours, priorisées selon l’événement, la récence et le poids des positions directement détenues. Titres originaux des sources; « à surveiller » indique la pertinence de l’événement, sans présumer son effet sur le cours. Sélection dans ce navigateur à partir d’une veille du catalogue public.</p>
+        <section id="portfolioEarnings" class="portfolio-analysis" aria-labelledby="portfolioEarningsTitle">
+          <div class="portfolio-analysis-heading"><div><p class="eyebrow">LA SEMAINE DE MES TITRES</p><h3 id="portfolioEarningsTitle">Résultats trimestriels</h3></div><div class="portfolio-earnings-filters"><label class="sr-only" for="portfolioEarningsWeek">Semaine des résultats</label><select id="portfolioEarningsWeek"></select><label class="sr-only" for="portfolioEarningsTicker">Filtrer les résultats par position</label><select id="portfolioEarningsTicker"><option value="">Tous mes titres</option></select><button id="portfolioEarningsImage" class="button quiet" type="button" disabled>Image de la semaine</button></div></div>
+          <p id="portfolioEarningsStatus" class="meta" role="status"></p>
+          <div id="portfolioEarningsCalendar" class="portfolio-earnings-calendar" aria-label="Calendrier des résultats de mes titres"></div>
+          <div id="portfolioEarningsItems" class="portfolio-earnings-grid"></div>
+          <p class="meta portfolio-analysis-footnote">BPA = bénéfice par action; la mesure comparée au consensus du fournisseur est souvent ajustée. Chaque comparaison utilise le montant publié et le consensus d’un même fournisseur, dans la devise indiquée. Une attente manquante reste N/D. Les dates futures du calendrier peuvent changer; aucune surprise n’est calculée avant publication. Les FNB n’ont pas de résultats trimestriels d’entreprise. Les messages sont tirés du compte rendu daté ou des chiffres publiés.</p>
         </section>
         <section class="portfolio-movers" aria-labelledby="portfolioMoversTitle">
           <div class="portfolio-movers-heading"><div><p class="eyebrow">LE POINT QUOTIDIEN</p><h3 id="portfolioMoversTitle">Les meilleures et les pires performances sur un mois</h3></div><div id="portfolioMoversRanges" class="segmented" role="group" aria-label="Période du classement des positions"></div></div>

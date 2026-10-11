@@ -1,0 +1,216 @@
+{
+  "schema_version": 1,
+  "kind": "reviewed_earnings_highlights",
+  "reviewed_at": "2026-10-11T20:32:43.933424+00:00",
+  "reports": {
+    "AAPL:2026-07-30": {
+      "source_url": "https://www.marketbeat.com/earnings/reports/2026-7-30-apple-inc-stock/",
+      "messages": [
+        "Revenus trimestriels en hausse de 16 %, avec une progression de 22 % pour l’iPhone et de 29 % pour le Mac.",
+        "La base installée dépasse 2,5 milliards d’appareils actifs; les abonnements payants franchissent 1,5 milliard.",
+        "Apple prévoit une croissance de 9 à 11 % au trimestre suivant, freinée par le change et les contraintes de composants."
+      ]
+    },
+    "ADBE:2026-09-10": {
+      "source_url": "https://www.marketbeat.com/earnings/reports/2026-9-10-adobe-inc-stock/",
+      "messages": [
+        "Adobe relève ses objectifs annuels après une croissance trimestrielle des revenus de 13 % et du BPA ajusté de 15 %.",
+        "Le revenu récurrent annuel des produits centrés sur l’IA dépasse 650 M$ US, en hausse de plus de 150 %.",
+        "L’expansion des offres gratuites freine la monétisation immédiate : le nouvel ARR net baisse de 36 à 37 %."
+      ]
+    },
+    "AMD:2026-08-04": {
+      "source_url": "https://www.marketbeat.com/earnings/reports/2026-8-4-advanced-micro-devices-inc-stock/",
+      "messages": [
+        "Les revenus trimestriels augmentent de 50 %; les centres de données représentent 58 % des ventes.",
+        "AMD relève ses attentes de croissance pour les processeurs de serveurs et prévoit de doubler les revenus des centres de données en 2027.",
+        "La direction anticipe un marché des PC plus faible; les ventes de jeux reculent de 31 % et l’approvisionnement reste tendu."
+      ]
+    },
+    "AMZN:2026-07-30": {
+      "source_url": "https://www.marketbeat.com/earnings/reports/2026-7-30-amazoncom-inc-stock/",
+      "messages": [
+        "Les revenus progressent de 20 % et le bénéfice d’exploitation de 43 % au deuxième trimestre.",
+        "AWS accélère à 36,7 % de croissance, porté par l’IA et les charges de travail infonuagiques.",
+        "Les dépenses d’investissement prévues passent à environ 220 G$ US, avec une pression attendue sur les flux de trésorerie à court terme."
+      ]
+    },
+    "AVGO:2026-09-02": {
+      "source_url": "https://www.marketbeat.com/earnings/reports/2026-9-2-broadcom-inc-stock/",
+      "messages": [
+        "Broadcom annonce une croissance trimestrielle des revenus de 86 % et prévoit 34,8 G$ US de ventes au trimestre suivant.",
+        "Les ventes de semi-conducteurs liés à l’IA augmentent de 221 %; la direction relève ses prévisions annuelles pour ce segment.",
+        "Les contraintes de capacités et le coût des mémoires risquent de retarder les déploiements et de peser sur la marge brute."
+      ]
+    },
+    "BAC:2026-07-14": {
+      "source_url": "https://www.marketbeat.com/earnings/reports/2026-7-14-bank-of-america-co-stock/",
+      "messages": [
+        "Les revenus augmentent de 15 % et le bénéfice net de 27 %; le rendement des capitaux propres tangibles atteint 17 %.",
+        "La banque vise le haut de sa fourchette de croissance annuelle de 6 à 8 % pour le revenu net d’intérêts.",
+        "La qualité du crédit reste stable; les prêts et les dépôts continuent de croître."
+      ]
+    },
+    "CLS:2026-07-27": {
+      "source_url": "https://www.marketbeat.com/earnings/reports/2026-7-27-celestica-inc-stock/",
+      "messages": [
+        "Les revenus augmentent de 62 % et le BPA ajusté de 83 %, avec une marge d’exploitation ajustée record de 8,2 %.",
+        "Celestica relève ses objectifs annuels à 20,5 G$ US de revenus, 11,30 $ US de BPA ajusté et 600 M$ US de flux disponibles.",
+        "La disponibilité des composants limite la croissance; certains délais dépassent 52 semaines et les stocks atteignent 3,4 G$ US."
+      ]
+    },
+    "COST:2026-09-24": {
+      "source_url": "https://www.marketbeat.com/earnings/reports/2026-9-24-costco-wholesale-co-stock/",
+      "messages": [
+        "Les ventes nettes augmentent de 11,2 %; les ventes comparables hors essence et change progressent de 6,7 %.",
+        "Costco prévoit 33 ouvertures d’entrepôts pour l’exercice suivant; les ventes numériques gagnent plus de 20 %.",
+        "Les remboursements de tarifs sont non récurrents et les coûts liés à l’inflation continuent de peser sur les marges."
+      ]
+    },
+    "GS:2026-07-14": {
+      "source_url": "https://www.marketbeat.com/earnings/reports/2026-7-14-the-goldman-sachs-group-inc-stock/",
+      "messages": [
+        "Goldman Sachs affiche un trimestre record avec un BPA de 20,98 $ US et un rendement des capitaux propres de 23,5 %.",
+        "Les revenus de conseil progressent de 17 %; le carnet de mandats atteint son plus haut niveau en cinq ans.",
+        "La volatilité et l’activité des clients soutiennent les revenus des actions et des produits à revenu fixe."
+      ]
+    },
+    "JPM:2026-07-14": {
+      "source_url": "https://www.marketbeat.com/earnings/reports/2026-7-14-jpmorgan-chase-co-stock/",
+      "messages": [
+        "Le bénéfice net atteint 16,9 G$ US; les revenus hors éléments importants augmentent de 15 %.",
+        "Les revenus des marchés d’actions bondissent de 86 % et les commissions de banque d’investissement de 30 %.",
+        "La banque relève ses prévisions de revenu net d’intérêts, ainsi que ses dépenses ajustées, en raison d’une activité plus soutenue."
+      ]
+    },
+    "META:2026-07-29": {
+      "source_url": "https://www.marketbeat.com/earnings/reports/2026-7-29-facebook-inc-stock/",
+      "messages": [
+        "Les revenus augmentent de 28 %, soutenus par davantage d’impressions publicitaires et des prix moyens en hausse.",
+        "La direction attribue une partie des gains de conversion publicitaire et d’engagement à l’amélioration des produits par l’IA.",
+        "Les dépenses augmentent de 55 %; Meta relève ses investissements prévus à 130–145 G$ US, ce qui pèse sur les profits et la trésorerie."
+      ]
+    },
+    "MSFT:2026-07-29": {
+      "source_url": "https://www.marketbeat.com/earnings/reports/2026-7-29-microsoft-co-stock/",
+      "messages": [
+        "Microsoft Cloud dépasse 214 G$ US de revenus annuels; Azure franchit 100 G$ US.",
+        "Azure et les autres services infonuagiques progressent de 43 %; la demande demeure supérieure à la capacité disponible.",
+        "Les investissements trimestriels atteignent 41 G$ US et devraient dépasser 50 G$ US au trimestre suivant."
+      ]
+    },
+    "MU:2026-09-30": {
+      "source_url": "https://www.marketbeat.com/earnings/reports/2026-9-30-micron-technology-inc-stock/",
+      "messages": [
+        "Micron annonce un trimestre record : revenus de 54,2 G$ US, marge brute de 87 % et BPA non GAAP de 33,42 $ US.",
+        "La direction prévoit un exercice 2027 plus fort, soutenu par l’IA et des contraintes d’offre prolongées.",
+        "Les dépenses d’investissement et d’exploitation devraient augmenter; des coûts de démarrage pèseront sur la marge du prochain trimestre."
+      ]
+    },
+    "NFLX:2026-07-16": {
+      "source_url": "https://www.marketbeat.com/earnings/reports/2026-7-16-netflix-inc-stock/",
+      "messages": [
+        "Netflix maintient une prévision de croissance annuelle des revenus de 13 à 14 %, soutenue par les abonnements, les prix et la publicité.",
+        "La direction privilégie la qualité de l’engagement, avec une hausse de 2 % des heures regardées au premier semestre.",
+        "Les dépenses de contenu devraient croître d’environ 10 %, avec une attention maintenue à la discipline budgétaire."
+      ]
+    },
+    "NVDA:2026-08-26": {
+      "source_url": "https://www.marketbeat.com/earnings/reports/2026-8-26-nvidia-co-stock/",
+      "messages": [
+        "Les revenus trimestriels atteignent 96 G$ US; Nvidia prévoit 108 G$ US au trimestre suivant, avec une demande supérieure aux capacités.",
+        "Les ventes des centres de données progressent de 18 % par rapport au trimestre précédent; la demande s’élargit au-delà des grands fournisseurs infonuagiques.",
+        "La hausse du coût des mémoires devrait réduire les marges; les prévisions excluent les revenus de calcul des centres de données en Chine."
+      ]
+    },
+    "SNDK:2026-08-05": {
+      "source_url": "https://www.marketbeat.com/earnings/reports/2026-8-5-4285541-stock/",
+      "messages": [
+        "Sandisk dépasse ses prévisions et vise 10,3–10,8 G$ US de revenus, ainsi que 44–46 $ US de BPA ajusté au trimestre suivant.",
+        "L’inférence en IA accélère la demande de stockage; les revenus des centres de données augmentent de 103 % par rapport au trimestre précédent.",
+        "Les revenus grand public baissent de 32 % sur le trimestre; la demande des PC et téléphones demeure faible."
+      ]
+    },
+    "TSM:2026-07-16": {
+      "source_url": "https://www.marketbeat.com/earnings/reports/2026-7-16-taiwan-semiconductor-manufacturing-company-limited-stock/",
+      "messages": [
+        "TSMC annonce une marge brute de 67,7 %, soutenue par la demande pour les procédés de fabrication avancés.",
+        "La direction relève sa prévision de croissance annuelle des revenus à un peu plus de 40 % en dollars américains, portée par l’IA.",
+        "La montée en production du 2 nm et les usines à l’étranger devraient freiner les marges au second semestre."
+      ]
+    },
+    "V:2026-07-28": {
+      "source_url": "https://www.marketbeat.com/earnings/reports/2026-7-28-visa-inc-stock/",
+      "messages": [
+        "Les revenus nets augmentent de 14 %; les volumes de paiements et les transactions traitées progressent chacun de 10 %.",
+        "Les services à valeur ajoutée augmentent de 34 % à change constant et les transactions Visa Direct de 21 %.",
+        "Visa comptabilise 563 M$ US de coûts de licenciement; les économies doivent être réinvesties dans l’efficacité opérationnelle."
+      ]
+    },
+    "WFC:2026-07-14": {
+      "source_url": "https://www.marketbeat.com/earnings/reports/2026-7-14-wells-fargo-company-stock/",
+      "messages": [
+        "Les revenus progressent de 9 % au deuxième trimestre, avec une croissance dans tous les segments d’exploitation.",
+        "Les prêts moyens augmentent de 12 % et les dépôts moyens de 10 %, après la levée du plafond d’actifs.",
+        "La banque maintient ses prévisions annuelles de revenu net d’intérêts et anticipe une légère compression de marge au troisième trimestre."
+      ]
+    },
+    "ATD.TO:2026-09-01": {
+      "source_url": "https://www.marketbeat.com/earnings/reports/2026-9-1-alimentation-couche-tard-inc-stock/",
+      "messages": [
+        "Le BAIIA ajusté augmente de 10,5 % et le BPA ajusté de 15,4 %, soutenus par les marges sur le carburant et les acquisitions.",
+        "La direction prévoit de conclure l’acquisition d’une participation de contrôle dans Żabka avant la fin de 2026."
+      ]
+    },
+    "CSU.TO:2026-08-11": {
+      "source_url": "https://www.marketbeat.com/earnings/reports/2026-8-11-constellation-software-inc-csuto-stock/",
+      "messages": [
+        "L’IA améliore la productivité du développement, mais la direction ne constate pas encore d’accélération importante de la croissance interne.",
+        "Le pipeline d’acquisitions demeure actif; les seuils de rentabilité exigés et la stratégie de logiciels verticaux sont maintenus.",
+        "La croissance des revenus récurrents subit des comparaisons difficiles, la perte d’un client et des acquisitions récentes moins performantes."
+      ]
+    },
+    "DOL.TO:2026-09-16": {
+      "source_url": "https://www.marketbeat.com/earnings/reports/2026-9-16-dollarama-inc-dolto-stock/",
+      "messages": [
+        "Les ventes augmentent de 17,6 % et le BPA dilué de 11,2 %, avec une bonne performance des magasins canadiens.",
+        "Dollarama relève ses objectifs de croissance des ventes comparables à 4–4,5 % et d’ouvertures nettes à 65–75 magasins.",
+        "La transformation en Australie pèse sur les ventes et les coûts d’intégration; les pertes atteignent environ 25 M$ CA à mi-exercice."
+      ]
+    },
+    "DSGX:2026-09-10": {
+      "source_url": "https://www.marketbeat.com/earnings/reports/2026-9-10-the-descartes-systems-group-inc-stock/",
+      "messages": [
+        "Descartes annonce des revenus en hausse de 12 % et un BAIIA ajusté en croissance de 18 %, avec une marge record de 47 %.",
+        "Les services affichent un peu plus de 9 % de croissance interne, soutenus par les outils de commerce, de douanes et de conformité.",
+        "Les faibles volumes de transport, le carburant, les pénuries de chauffeurs et l’incertitude tarifaire demeurent des freins."
+      ]
+    },
+    "MFC:2026-08-05": {
+      "source_url": "https://www.marketbeat.com/earnings/reports/2026-8-5-manulife-financial-co-stock/",
+      "messages": [
+        "Le BPA de base augmente de 16 %, avec une croissance soutenue par l’Asie et la gestion de patrimoine.",
+        "Une nouvelle opération de réassurance réduit le risque de morbidité de l’assurance soins de longue durée.",
+        "La direction surveille l’incertitude créée par l’application accrue des règles fiscales chinoises aux assurances et placements à l’étranger."
+      ]
+    },
+    "SHOP:2026-08-05": {
+      "report_url": "https://www.marketbeat.com/earnings/reports/2026-8-5-shopify-inc-stock/",
+      "source_url": "https://www.wsj.com/business/earnings/shopify-profit-jumps-as-subscriptions-merchant-services-boost-revenues-73693ff6",
+      "messages": [
+        "Revenus : +34 %; volume brut de marchandises : +32 %.",
+        "Pour le trimestre suivant, Shopify vise une croissance des ventes un peu supérieure à 30 %.",
+        "Le bénéfice brut devrait progresser de plus de 20 %; les dépenses restent à surveiller."
+      ]
+    },
+    "GOOGL:2026-07-22": {
+      "report_url": "https://www.marketbeat.com/earnings/reports/2026-7-22-alphabet-inc-stock-1/",
+      "source_url": "https://www.reuters.com/business/retail-consumer/alphabets-cash-burn-raises-alarm-big-tech-ai-spending-climbs-2026-07-23/",
+      "messages": [
+        "Google Cloud croît de 82 %.",
+        "Les investissements rendent le flux de trésorerie disponible négatif de 5,9 G$ US.",
+        "Alphabet ajoute 15 G$ US de dépenses prévues en 2026 et anticipe une augmentation en 2027."
+      ]
+    }
+  }
+}

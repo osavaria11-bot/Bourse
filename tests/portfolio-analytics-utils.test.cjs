@@ -87,33 +87,54 @@ test("a constant benchmark never produces an infinite beta, and statistical mini
   const month = riskFixture(20), monthRisk = F.riskFor(positions, month, selection(month, positions));
   assert.ok(monthRisk.portfolio.volatility > 0); assert.equal(monthRisk.portfolio.beta, null);
 });
-const newsCatalog = {series: [{id: "BIG"}, {id: "SMALL"}, {id: "EMPTY"}]};
+const earningsCatalog = {series: [{id: "BIG"}, {id: "SMALL"}, {id: "CDR"}, {id: "EMPTY"}, {id: "ETF"}]};
 const now = Date.parse("2026-10-11T20:00:00Z");
-function newsItem(id, event, age = 1) {return {id, title: "Synthetic dated company event", publisher: "Reuters", publisher_url: "https://www.reuters.com/", source_url: "https://www.reuters.com/markets/synthetic-" + id,
-  event, published_at: new Date(now - age * 3600000).toISOString()};}
-function newsFixture() {return {schema_version: 1, kind: "portfolio_news", generated_at: new Date(now).toISOString(), instruments: {
-  BIG: {fetch_status: "fresh", fetched_at: new Date(now).toISOString(), items: [newsItem("aaaaaaaaaaaaaaaa", "earnings"), newsItem("bbbbbbbbbbbbbbbb", "operations", 2)]},
-  SMALL: {fetch_status: "fresh", fetched_at: new Date(now).toISOString(), items: [newsItem("cccccccccccccccc", "earnings"), newsItem("dddddddddddddddd", "guidance", 8 * 24)]},
-  EMPTY: {fetch_status: "unavailable", fetched_at: null, items: []},
-}};}
-test("news ranks held events by weight and recency, excludes old/unheld items, merges duplicates and supports local filters", () => {
-  const payload = newsFixture(); payload.instruments.SMALL.items.push(newsItem("bbbbbbbbbbbbbbbb", "operations", 2));
-  const news = F.normalizeNews(payload, newsCatalog, now);
-  const current = {complete: true, total: 100, rows: [{ticker: "BIG", title: "Big", value_cad: 90}, {ticker: "SMALL", title: "Small", value_cad: 10}]};
-  const selection = F.selectNews(current, news, {now});
-  assert.equal(selection.rows[0].id, "aaaaaaaaaaaaaaaa"); assert.equal(selection.rows.length, 3); assert.equal(selection.covered, 2);
-  const shared = selection.rows.find(row => row.id === "bbbbbbbbbbbbbbbb"); assert.equal(shared.holdings.length, 2); assert.equal(shared.weight, 100);
-  const results = F.selectNews(current, news, {now, event: "results"}); assert.equal(results.rows.length, 2);
-  const small = F.selectNews(current, news, {now, ticker: "SMALL"}); assert.equal(small.rows.length, 2); assert.ok(small.rows.every(row => row.holdings.length === 1 && row.holdings[0].ticker === "SMALL"));
-  const onlyBig = F.selectNews({...current, rows: current.rows.slice(0, 1)}, news, {now}); assert.equal(onlyBig.rows.length, 2);
-  assert.equal(F.selectNews(current, news, {now: now + 8 * 86400000}).rows.length, 0);
+function metric(actual, estimate, currency = "USD") {return {actual, estimate, currency, source_url: "https://example.com/earnings"};}
+function event(id, date, reported = true) {return {id, report_date: date, report_at: null, quarter: "Q3 2026", date_status: reported ? "reported" : "estimated",
+  eps: metric(reported ? 2 : null, 1.5), revenue: metric(reported ? 2e9 : null, 1.9e9), messages: reported ? [{text: "Demand remained strong", language: "en", source_url: "https://example.com/report"}] : [],
+  report_url: "https://example.com/report", sources: [{label: "Source fixture", url: "https://example.com/earnings"}]};}
+function earningsFixture() {
+  const feed = (company, events, fetch_status = "fresh") => ({company_symbol: company, events, fetch_status, fetched_at: fetch_status === "unavailable" ? null : new Date(now).toISOString(), source_url: "https://example.com/earnings"});
+  return {schema_version: 1, kind: "portfolio_earnings", generated_at: new Date(now).toISOString(), timezone: "America/Toronto", window: {start: "2026-09-28", end: "2026-11-01"}, instruments: {
+    BIG: feed("BIG", [event("aaaaaaaaaaaaaaaa", "2026-10-06"), event("bbbbbbbbbbbbbbbb", "2026-10-14", false)]),
+    CDR: feed("BIG", [event("aaaaaaaaaaaaaaaa", "2026-10-06")]),
+    SMALL: feed("SMALL", [event("cccccccccccccccc", "2026-10-08")]), EMPTY: feed("EMPTY", [], "unavailable"), ETF: feed("ETF", [], "not_applicable"),
+  }};
+}
+test("earnings weeks start on Monday in Toronto, including Sunday and UTC midnight boundaries", () => {
+  assert.deepEqual(F.weekFor("2026-10-11").days, ["2026-10-05", "2026-10-06", "2026-10-07", "2026-10-08", "2026-10-09", "2026-10-10", "2026-10-11"]);
+  assert.equal(F.localDay(Date.parse("2026-10-12T02:00:00Z")), "2026-10-11");
+  assert.equal(F.weekFor(F.localDay(Date.parse("2026-10-12T05:00:00Z"))).start, "2026-10-12");
+  assert.throws(() => F.weekFor("2026-02-30"));
 });
-test("news validation rejects future timestamps and unsafe links, while missing valuations never fabricate exposure weights", () => {
-  const payload = newsFixture(); payload.instruments.BIG.items[0].source_url = "javascript:alert(1)";
-  assert.throws(() => F.normalizeNews(payload, newsCatalog, now));
-  const future = newsFixture(); future.instruments.BIG.items[0].published_at = new Date(now + 3600000).toISOString();
-  assert.throws(() => F.normalizeNews(future, newsCatalog, now));
-  const current = {complete: false, total: 0, rows: [{ticker: "BIG", title: "Big", value_cad: null}, {ticker: "EMPTY", title: "Empty", value_cad: null}]};
-  const result = F.selectNews(current, F.normalizeNews(newsFixture(), newsCatalog, now), {now});
-  assert.equal(result.rows[0].weight, null); assert.equal(result.rows[0].holdings[0].weight, null); assert.deepEqual(result.unavailable, ["EMPTY"]);
+test("earnings surprises compare like-for-like numbers, including losses and zero consensus", () => {
+  assert.equal(F.earningsOutcome(metric(-.5, -1)).status, "beat");
+  almost(F.earningsOutcome(metric(-.5, -1)).percent, 50);
+  assert.equal(F.earningsOutcome(metric(-1, -.5)).status, "miss");
+  assert.equal(F.earningsOutcome(metric(2, 2)).status, "inline");
+  assert.equal(F.earningsOutcome(metric(1, 0)).percent, null);
+  assert.equal(F.earningsOutcome(metric(1, null)).status, "unknown");
+  assert.equal(F.earningsOutcome(metric(null, 2)).status, "pending");
+});
+test("weekly earnings are held-only, merge CDR/issuer rows, support local filters and separate missing calendars from ETFs", () => {
+  const earnings = F.normalizeEarnings(earningsFixture(), earningsCatalog, now);
+  const current = {complete: true, total: 100, rows: [{ticker: "BIG", title: "Big", value_cad: 70}, {ticker: "CDR", title: "Big CDR", value_cad: 20}, {ticker: "EMPTY", title: "Empty", value_cad: 10}, {ticker: "ETF", title: "Fund", value_cad: 0}]};
+  const result = F.selectEarnings(current, earnings, {week: F.weekFor("2026-10-11"), now});
+  assert.equal(result.rows.length, 1); assert.equal(result.reported, 1); assert.equal(result.pending, 0); assert.equal(result.rows[0].holdings.length, 2);
+  assert.equal(result.rows[0].holdings[0].weight, 70); assert.deepEqual(result.unavailable, ["EMPTY"]); assert.deepEqual(result.notApplicable, ["ETF"]);
+  assert.equal(F.selectEarnings(current, earnings, {ticker: "CDR", week: result.week, now}).rows[0].holdings.length, 1);
+  const next = F.selectEarnings(current, earnings, {week: F.weekFor("2026-10-14"), now}); assert.equal(next.pending, 1); assert.equal(next.reported, 0);
+  assert.equal(F.selectEarnings(current, earnings, {week: F.weekFor("2026-11-05"), now}).inWindow, false);
+  const missing = F.selectEarnings({...current, complete: false}, earnings, {week: result.week, now}); assert.equal(missing.rows[0].holdings[0].weight, null);
+});
+test("earnings validation rejects false future results, unsafe sources, wrong dates and unpaired types; caches retain their age", () => {
+  const unsafe = earningsFixture(); unsafe.instruments.BIG.events[0].sources[0].url = "javascript:alert(1)"; assert.throws(() => F.normalizeEarnings(unsafe, earningsCatalog, now));
+  const future = earningsFixture(); future.instruments.BIG.events[0].report_date = "2026-10-14"; assert.throws(() => F.normalizeEarnings(future, earningsCatalog, now));
+  const futureTime = earningsFixture(); futureTime.instruments.SMALL.events[0].report_date = "2026-10-11"; futureTime.instruments.SMALL.events[0].report_at = "2026-10-11T23:00:00Z"; assert.throws(() => F.normalizeEarnings(futureTime, earningsCatalog, now));
+  const pending = earningsFixture(); pending.instruments.BIG.events[1].messages.push({text: "Fake result", language: "fr", source_url: "https://example.com/report"}); assert.throws(() => F.normalizeEarnings(pending, earningsCatalog, now));
+  const bad = earningsFixture(); bad.instruments.BIG.events[0].eps.actual = "2"; assert.throws(() => F.normalizeEarnings(bad, earningsCatalog, now));
+  const cached = earningsFixture(); cached.instruments.BIG.fetched_at = "2026-10-01T20:00:00Z";
+  const normalized = F.normalizeEarnings(cached, earningsCatalog, now);
+  const result = F.selectEarnings({rows: [{ticker: "BIG", title: "Big"}]}, normalized, {week: F.weekFor("2026-10-11"), now}); assert.deepEqual(result.cached, ["BIG"]);
+  assert.equal(normalized.instruments.BIG.fetched_at, "2026-10-01T20:00:00Z");
 });

@@ -127,17 +127,37 @@ details[open]>summary:after {content:"−"}
 .portfolio-risk-table td:nth-child(2) {color:var(--accent)}
 .portfolio-risk-table td:nth-child(3) {color:var(--gold)}
 .portfolio-analysis-method p {margin-top:8px;line-height:1.7}
-.portfolio-news-filters {display:flex;flex-wrap:wrap;gap:7px;max-width:100%}
-.portfolio-news-filters select {max-width:100%;font-size:11px;border:1px solid var(--border);border-radius:7px;background:var(--bg);color:var(--text);padding:8px;min-height:36px}
-.portfolio-news-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}
-.portfolio-news-card {min-width:0;padding:15px;border:1px solid var(--border);border-radius:10px;background:var(--bg)}
-.portfolio-news-card h4 {font-size:13px;font-weight:550;line-height:1.55;margin:8px 0;overflow-wrap:anywhere}
-.portfolio-news-meta {display:flex;align-items:center;flex-wrap:wrap;gap:5px 9px;font-size:10px;color:var(--muted)}
-.portfolio-news-event {color:var(--gold)}
-.portfolio-news-holdings {font-size:11px;color:var(--accent);overflow-wrap:anywhere;margin-top:6px}
-.portfolio-news-reason {font-size:11px;color:var(--muted);line-height:1.6;margin-top:9px}
-.portfolio-news-empty {font-size:12px;color:var(--muted);padding:12px 0;grid-column:1/-1}
-@media(max-width:700px) {.portfolio-news-grid {grid-template-columns:minmax(0,1fr)}.portfolio-news-filters {width:100%}.portfolio-news-filters select {min-width:0;flex:1 1 140px}.portfolio-analysis-total {font-size:16px}}
+.portfolio-earnings-filters {display:flex;flex-wrap:wrap;gap:7px;max-width:100%}
+.portfolio-earnings-filters select {max-width:100%;font-size:11px;border:1px solid var(--border);border-radius:7px;background:var(--bg);color:var(--text);padding:8px;min-height:36px}
+.portfolio-earnings-filters .button {font-size:11px}
+.portfolio-earnings-calendar {display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-top:15px}
+.portfolio-earnings-day {min-width:0;border:1px solid var(--border);border-radius:9px;padding:10px;background:var(--bg)}
+.portfolio-earnings-day-label {display:block;color:var(--muted);font-size:11px;margin-bottom:8px;text-transform:uppercase}
+.portfolio-earnings-badge {display:block;text-align:left;width:100%;font-size:12px;overflow-wrap:anywhere;border:1px solid var(--border);border-radius:6px;padding:8px;margin-top:6px;color:var(--text);background:var(--surface);cursor:pointer}
+.portfolio-earnings-badge small {display:block;font-size:9px;margin-top:4px;font-weight:400}
+.portfolio-earnings-none {color:var(--muted);font-size:12px}
+.portfolio-earnings-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:15px}
+.portfolio-earnings-card {min-width:0;padding:17px;border:1px solid var(--border);border-radius:10px;background:var(--bg);scroll-margin:20px}
+.portfolio-earnings-card-heading {display:flex;justify-content:space-between;gap:10px;align-items:start;margin-bottom:7px}
+.portfolio-earnings-card h4 {font-size:15px;font-weight:550;line-height:1.5;overflow-wrap:anywhere;margin:3px 0}
+.portfolio-earnings-card h5 {font-size:11px;margin:16px 0 7px}
+.portfolio-earnings-state {font-size:9px;letter-spacing:.07em;color:var(--gold);white-space:nowrap}
+.portfolio-earnings-table {width:100%;font-size:11px;font-variant-numeric:tabular-nums;margin-top:12px;table-layout:fixed}
+.portfolio-earnings-table th {font-weight:500}
+.portfolio-earnings-table th:first-child {width:18%}
+.portfolio-earnings-table th:not(:first-child),.portfolio-earnings-table td:not(:first-child) {text-align:right}
+.portfolio-earnings-table th,.portfolio-earnings-table td {padding:6px 3px;overflow-wrap:anywhere}
+.portfolio-earnings-table .earnings-outcome {font-size:10px;border:0;padding-top:0;padding-bottom:11px}
+.earnings-beat {color:var(--up)}
+.earnings-miss {color:var(--down)}
+.earnings-inline,.earnings-unknown,.earnings-pending {color:var(--muted)}
+.portfolio-earnings-messages {font-size:11px;line-height:1.6;margin:0;padding-left:17px}
+.portfolio-earnings-messages li+li {margin-top:6px}
+.portfolio-earnings-messages .meta {font-size:9px}
+.portfolio-earnings-sources {display:flex;flex-wrap:wrap;gap:6px 14px;font-size:10px;margin:13px 0 7px}
+.portfolio-earnings-sources a {overflow-wrap:anywhere}
+.portfolio-earnings-empty {font-size:12px;color:var(--muted);padding:12px 0;grid-column:1/-1;line-height:1.7}
+@media(max-width:700px) {.portfolio-earnings-grid {grid-template-columns:minmax(0,1fr)}.portfolio-earnings-calendar {grid-template-columns:repeat(2,minmax(0,1fr))}.portfolio-earnings-filters {width:100%}.portfolio-earnings-filters select {min-width:0;flex:1 1 140px}.portfolio-analysis-total {font-size:16px}}
 .portfolio-benchmark {display:flex;align-items:center;flex-wrap:wrap;gap:10px 24px;margin-top:18px;font-size:13px;font-variant-numeric:tabular-nums}
 .portfolio-benchmark-item {display:inline-flex;align-items:center;gap:7px}
 .portfolio-swatch {display:inline-block;width:22px;height:3px;background:var(--chart)}

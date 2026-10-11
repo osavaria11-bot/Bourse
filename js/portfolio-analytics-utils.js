@@ -4,17 +4,6 @@
 })(typeof globalThis !== "undefined" ? globalThis : this, function (P, U) {
   "use strict";
   const MIN_VOLATILITY_RETURNS = 20, MIN_BETA_RETURNS = 30, SESSIONS_PER_YEAR = 252;
-  const NEWS_DAYS = 7;
-  const EVENTS = {
-    earnings: {label: "Résultats", importance: 5, reason: "À surveiller : bénéfices, marges et réaction du marché aux résultats."},
-    earnings_calendar: {label: "Calendrier des résultats", importance: 3, reason: "À surveiller : date des résultats et prochaine mise à jour des perspectives."},
-    guidance: {label: "Prévisions", importance: 5, reason: "À surveiller : changement des perspectives de revenus ou de bénéfices."},
-    deal: {label: "Transaction / contrat", importance: 4, reason: "À surveiller : effet du contrat ou de la transaction sur la croissance et le financement."},
-    regulatory: {label: "Réglementation", importance: 4, reason: "À surveiller : contraintes réglementaires, coûts et accès aux marchés."},
-    operations: {label: "Activité de l’entreprise", importance: 3, reason: "À surveiller : évolution des ventes, de la production et des investissements."},
-    dividend: {label: "Distribution / rachat", importance: 2, reason: "À surveiller : distributions, rachats d’actions et allocation du capital."},
-    market: {label: "Marché", importance: 1, reason: "À surveiller : mouvement du titre et contexte de marché présenté dans l’article."},
-  };
   function contributionsFor(positions, data, selected) {
     const unavailable = {available: false, start: selected?.start, end: selected?.end, rows: [], total: null, change_cad: null};
     if (!positions?.length || !data || !selected?.start || !selected.end || selected.incomplete) return unavailable;
@@ -94,59 +83,89 @@
   function safeHTTPS(value) {
     try {const url = new URL(value); return url.protocol === "https:" && !!url.hostname && !url.username && !url.password;} catch {return false;}
   }
-  function normalizeNews(payload, catalog, now = Date.now()) {
-    if (payload?.schema_version !== 1 || payload.kind !== "portfolio_news" || !Number.isFinite(U.parseTimestamp(payload.generated_at)) ||
-        U.parseTimestamp(payload.generated_at) > now + 300000 || !payload.instruments || typeof payload.instruments !== "object" || Array.isArray(payload.instruments)) throw new Error("Actualités invalides");
-    const definitions = new Set(catalog.series.map(row => row.id)), instruments = {};
+  function validDay(value) {
+    return typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value) && Number.isFinite(Date.parse(value)) && new Date(value).toISOString().slice(0, 10) === value;
+  }
+  function localDay(now = Date.now()) {
+    const parts = new Intl.DateTimeFormat("en-US", {timeZone: "America/Toronto", year: "numeric", month: "2-digit", day: "2-digit"}).formatToParts(now);
+    const values = Object.fromEntries(parts.map(part => [part.type, part.value]));
+    return values.year + "-" + values.month + "-" + values.day;
+  }
+  function shiftDay(day, count) {return new Date(Date.parse(day) + count * 86400000).toISOString().slice(0, 10);}
+  function weekFor(day = localDay()) {
+    if (!validDay(day)) throw new Error("Date de semaine invalide");
+    const weekday = new Date(day).getUTCDay(), start = shiftDay(day, -(weekday === 0 ? 6 : weekday - 1));
+    return {start, end: shiftDay(start, 6), days: Array.from({length: 7}, (_, i) => shiftDay(start, i))};
+  }
+  function earningsOutcome(metric) {
+    if (!U.validNumber(metric?.actual)) return {status: "pending", label: "À venir", difference: null, percent: null};
+    if (!U.validNumber(metric.estimate)) return {status: "unknown", label: "Consensus N/D", difference: null, percent: null};
+    const difference = metric.actual - metric.estimate, status = Math.abs(difference) < 1e-9 ? "inline" : difference > 0 ? "beat" : "miss";
+    return {status, label: status === "beat" ? "Au-dessus des attentes" : status === "miss" ? "Sous les attentes" : "Conforme aux attentes",
+      difference, percent: metric.estimate !== 0 ? difference / Math.abs(metric.estimate) * 100 : null};
+  }
+  function normalizeEarnings(payload, catalog, now = Date.now()) {
+    if (payload?.schema_version !== 1 || payload.kind !== "portfolio_earnings" || payload.timezone !== "America/Toronto" ||
+        !Number.isFinite(U.parseTimestamp(payload.generated_at)) || U.parseTimestamp(payload.generated_at) > now + 300000 ||
+        !validDay(payload.window?.start) || !validDay(payload.window?.end) || payload.window.end < payload.window.start ||
+        Date.parse(payload.window.end) - Date.parse(payload.window.start) > 150 * 86400000 ||
+        !payload.instruments || typeof payload.instruments !== "object" || Array.isArray(payload.instruments)) throw new Error("Résultats invalides");
+    const definitions = new Set(catalog.series.map(row => row.id)), instruments = {}, today = localDay(now);
     for (const [id, feed] of Object.entries(payload.instruments)) {
-      if (!definitions.has(id) || !["fresh", "cached", "unavailable"].includes(feed?.fetch_status) || !Array.isArray(feed.items) || feed.items.length > 12 ||
-          (feed.fetched_at !== null && (!Number.isFinite(U.parseTimestamp(feed.fetched_at)) || U.parseTimestamp(feed.fetched_at) > now + 300000))) throw new Error("Flux d’actualités invalide");
+      if (!definitions.has(id) || !["fresh", "cached", "unavailable", "not_applicable"].includes(feed?.fetch_status) ||
+          !safeHTTPS(feed.source_url) || !Array.isArray(feed.events) || feed.events.length > 8 ||
+          typeof feed.company_symbol !== "string" || !feed.company_symbol.trim() || feed.company_symbol.length > 30 ||
+          (feed.fetch_status === "not_applicable" && feed.events.length) ||
+          (feed.fetch_status !== "unavailable" && !Number.isFinite(U.parseTimestamp(feed.fetched_at))) ||
+          (feed.fetched_at !== null && (!Number.isFinite(U.parseTimestamp(feed.fetched_at)) || U.parseTimestamp(feed.fetched_at) > now + 300000))) throw new Error("Calendrier de titre invalide");
       const seen = new Set();
-      instruments[id] = {...feed, items: feed.items.map(item => {
-        const published = U.parseTimestamp(item?.published_at);
-        if (!/^[a-f0-9]{16}$/.test(item?.id || "") || seen.has(item.id) || !Number.isFinite(published) || published > now + 300000 ||
-            typeof item.title !== "string" || !item.title.trim() || item.title.length > 350 || typeof item.publisher !== "string" || !item.publisher.trim() || item.publisher.length > 100 ||
-            !safeHTTPS(item.source_url) || !safeHTTPS(item.publisher_url) || !EVENTS[item.event]) throw new Error("Article d’actualités invalide");
-        seen.add(item.id); return {...item};
+      instruments[id] = {...feed, events: feed.events.map(event => {
+        if (!/^[a-f0-9]{16}$/.test(event?.id || "") || seen.has(event.id) || !validDay(event.report_date) ||
+            event.report_date < payload.window.start || event.report_date > payload.window.end ||
+            !["reported", "estimated", "calendar"].includes(event.date_status) ||
+            (event.quarter !== null && !/^Q[1-4] \d{4}$/.test(event.quarter)) ||
+            (event.report_at !== null && (!Number.isFinite(U.parseTimestamp(event.report_at)) || localDay(U.parseTimestamp(event.report_at)) !== event.report_date)) ||
+            (event.report_url !== null && !safeHTTPS(event.report_url)) ||
+            !Array.isArray(event.messages) || event.messages.length > 3 || !Array.isArray(event.sources) || !event.sources.length || event.sources.length > 4) throw new Error("Événement de résultats invalide");
+        for (const key of ["eps", "revenue"]) {
+          const metric = event[key];
+          if (!metric || ![null, "USD", "CAD"].includes(metric.currency) || !safeHTTPS(metric.source_url) ||
+              [metric.actual, metric.estimate].some(value => value !== null && (!U.validNumber(value) || (key === "revenue" && value < 0)))) throw new Error("Comparaison de résultats invalide");
+        }
+        if (event.sources.some(source => typeof source.label !== "string" || !source.label.trim() || source.label.length > 100 || !safeHTTPS(source.url)) ||
+            event.messages.some(message => typeof message.text !== "string" || !message.text.trim() || message.text.length > 300 || !["fr", "en"].includes(message.language) || !safeHTTPS(message.source_url))) throw new Error("Message ou source de résultats invalide");
+        const actual = U.validNumber(event.eps.actual) || U.validNumber(event.revenue.actual);
+        if (event.date_status === "reported" && !actual || event.date_status !== "reported" && (actual || event.messages.length) ||
+            actual && (event.report_date > today || event.report_at && U.parseTimestamp(event.report_at) > now)) throw new Error("Résultats non encore publiés");
+        seen.add(event.id); return {...event, eps: {...event.eps}, revenue: {...event.revenue}, messages: event.messages.map(row => ({...row}))};
       })};
     }
     return {...payload, instruments};
   }
-  function selectNews(current, news, {ticker = "", event = "all", now = Date.now(), limit = 8} = {}) {
-    if (!current?.rows?.length || !news) return {rows: [], covered: 0, unavailable: [], cached: [], total: 0};
-    const rows = new Map(), unavailable = [], cached = [], cutoff = now - NEWS_DAYS * 86400000;
+  function selectEarnings(current, earnings, {ticker = "", week = weekFor(), now = Date.now()} = {}) {
+    const events = new Map(), unavailable = [], cached = [], notApplicable = [];
     let covered = 0;
-    for (const position of current.rows) {
+    for (const position of current?.rows || []) {
       if (ticker && position.ticker !== ticker) continue;
-      const feed = news.instruments[position.ticker];
-      if (!feed || feed.fetch_status === "unavailable") unavailable.push(position.ticker);
-      if (feed?.fetch_status === "cached" || (feed?.fetched_at && now - U.parseTimestamp(feed.fetched_at) > 36 * 3600000)) cached.push(position.ticker);
-      const weight = current.complete && current.total > 0 ? position.value_cad / current.total * 100 : null;
-      let found = false;
-      for (const item of feed?.items || []) {
-        const stamp = U.parseTimestamp(item.published_at);
-        if (stamp < cutoff || stamp > now || (event === "results" && !["earnings", "earnings_calendar", "guidance"].includes(item.event))) continue;
-        found = true;
-        if (!rows.has(item.id)) rows.set(item.id, {...item, holdings: []});
-        rows.get(item.id).holdings.push({ticker: position.ticker, title: position.title, weight});
+      const feed = earnings?.instruments[position.ticker];
+      if (!feed || feed.fetch_status === "unavailable") {unavailable.push(position.ticker); continue;}
+      if (feed.fetch_status === "not_applicable") {notApplicable.push(position.ticker); continue;}
+      covered++;
+      if (feed.fetch_status === "cached" || now - U.parseTimestamp(feed.fetched_at) > 36 * 3600000) cached.push(position.ticker);
+      const weight = current.complete && current.total > 0 && U.validNumber(position.value_cad) ? position.value_cad / current.total * 100 : null;
+      for (const event of feed.events) {
+        if (event.report_date < week.start || event.report_date > week.end) continue;
+        if (!events.has(event.id)) events.set(event.id, {...event, company_symbol: feed.company_symbol, fetched_at: feed.fetched_at, cached: cached.includes(position.ticker), holdings: []});
+        else if (cached.includes(position.ticker)) events.get(event.id).cached = true;
+        events.get(event.id).holdings.push({ticker: position.ticker, title: position.title, weight, listing_note: feed.listing_note});
       }
-      if (found) covered++;
     }
-    const ranked = [...rows.values()].map(item => {
-      const weight = item.holdings.reduce((sum, holding) => sum + (holding.weight || 0), 0);
-      const age = Math.max(0, (now - U.parseTimestamp(item.published_at)) / 3600000);
-      const publisherPriority = /Reuters|Bloomberg|Financial Times|Wall Street Journal|New York Times/.test(item.publisher) ? 1.25 : 1;
-      return {...item, weight: current.complete ? weight : null,
-        score: EVENTS[item.event].importance * publisherPriority * (1 + Math.sqrt(weight)) * Math.exp(-age / 72)};
-    }).sort((a, b) => b.score - a.score || U.parseTimestamp(b.published_at) - U.parseTimestamp(a.published_at) || a.id.localeCompare(b.id));
-    const selected = [], counts = new Map();
-    for (const item of ranked) {
-      if (item.holdings.every(holding => (counts.get(holding.ticker) || 0) >= 2)) continue;
-      selected.push(item);
-      for (const holding of item.holdings) counts.set(holding.ticker, (counts.get(holding.ticker) || 0) + 1);
-      if (selected.length >= limit) break;
-    }
-    return {rows: selected, total: ranked.length, covered, unavailable, cached};
+    const rows = [...events.values()].sort((a, b) => a.report_date.localeCompare(b.report_date) || a.company_symbol.localeCompare(b.company_symbol));
+    return {rows, week, covered, unavailable, cached, notApplicable,
+      reported: rows.filter(row => row.date_status === "reported").length,
+      pending: rows.filter(row => row.date_status !== "reported").length,
+      inWindow: !!earnings && week.start >= earnings.window.start && week.end <= earnings.window.end};
   }
-  return {contributionsFor, riskFor, normalizeNews, selectNews, EVENTS, MIN_VOLATILITY_RETURNS, MIN_BETA_RETURNS, SESSIONS_PER_YEAR, NEWS_DAYS};
+  return {contributionsFor, riskFor, normalizeEarnings, selectEarnings, earningsOutcome, weekFor, localDay, shiftDay,
+    MIN_VOLATILITY_RETURNS, MIN_BETA_RETURNS, SESSIONS_PER_YEAR};
 });

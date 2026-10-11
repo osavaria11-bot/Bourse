@@ -15,15 +15,21 @@ const exposures = E.normalize(JSON.parse(fs.readFileSync(path.join(root, "data/p
 const sample = catalog.series.filter(d => ["SHOP", "CLS", "V", "VFV", "MSFT", "XIU"].includes(d.id));
 const syntheticPositions = sample.map(d => ({ticker: d.id, quantity: d.id === "V" ? 1.5 : 2, currency: d.currency, average_cost: d.id === "CLS" ? 500 : d.id === "SHOP" ? 200 : d.id === "V" ? 350 : 50}));
 const fragment = Buffer.from(JSON.stringify(syntheticPositions.map(p => [p.ticker, p.quantity, p.currency, p.average_cost]))).toString("base64url");
-let offline = false, missingFX = false, missingBaseline = false, newsOffline = false;
-function syntheticStory(id, event, title, hours) {
-  return {id, title, event, publisher: "Reuters", publisher_url: "https://www.reuters.com/", source_url: "https://www.reuters.com/markets/synthetic-" + id,
-    published_at: new Date(Date.now() - hours * 3600000).toISOString()};
+let offline = false, missingFX = false, missingBaseline = false, earningsOffline = false;
+const thisWeek = F.weekFor(), today = F.localDay(), todayOffset = thisWeek.days.indexOf(today);
+function syntheticEarnings(id, offset, pending = false) {
+  const date = thisWeek.days[Math.min(offset, Math.max(0, todayOffset))];
+  const metric = (actual, estimate) => ({actual, estimate, currency: "USD", source_url: "https://example.com/earnings"});
+  return {id, report_date: date, report_at: null, quarter: "Q3 2026", date_status: pending ? "estimated" : "reported",
+    eps: metric(pending ? null : 2.4, 2), revenue: metric(pending ? null : 2.1e9, 2.2e9),
+    messages: pending ? [] : [{text: "Demande en progression; dépenses surveillées.", language: "fr", source_url: "https://example.com/earnings-report", kind: "call_topic"}],
+    report_url: "https://example.com/earnings-report", sources: [{label: "Source synthétique · compte rendu", url: "https://example.com/earnings-report"}]};
 }
-const syntheticNews = {schema_version: 1, kind: "portfolio_news", generated_at: new Date().toISOString(), instruments: Object.fromEntries(catalog.series.map(row => [row.id,
-  {fetch_status: "fresh", fetched_at: new Date().toISOString(), items: row.id === "MSFT" ? [syntheticStory("aaaaaaaaaaaaaaaa", "earnings", "Synthetic Microsoft earnings event", 1),
-    syntheticStory("bbbbbbbbbbbbbbbb", "operations", "Synthetic Microsoft production event", 2)] : row.id === "SHOP" ? [syntheticStory("cccccccccccccccc", "guidance", "Synthetic Shopify outlook event", 1)] :
-    row.id === "CLS" ? [syntheticStory("dddddddddddddddd", "deal", "Synthetic Celestica contract event", 3)] : row.id === "NVDA" ? [syntheticStory("eeeeeeeeeeeeeeee", "earnings", "Unheld synthetic Nvidia event", 1)] : []}]))};
+const nextWeekEvent = {...syntheticEarnings("ffffffffffffffff", 0, true), report_date: F.shiftDay(thisWeek.start, 8)};
+const syntheticEarningsData = {schema_version: 1, kind: "portfolio_earnings", generated_at: new Date().toISOString(), timezone: "America/Toronto", window: {start: F.shiftDay(thisWeek.start, -84), end: F.shiftDay(thisWeek.start, 41)}, instruments: Object.fromEntries(catalog.series.map(row => [row.id,
+  {company_symbol: row.quote_symbol, source_url: "https://example.com/earnings", fetch_status: ["VFV", "XIU"].includes(row.id) ? "not_applicable" : "fresh", fetched_at: new Date().toISOString(), events:
+    row.id === "MSFT" ? [syntheticEarnings("aaaaaaaaaaaaaaaa", 0)] : row.id === "SHOP" ? [syntheticEarnings("bbbbbbbbbbbbbbbb", 1)] : row.id === "CLS" ? [syntheticEarnings("cccccccccccccccc", 2)] :
+    row.id === "V" ? [syntheticEarnings("dddddddddddddddd", 4, true), nextWeekEvent] : row.id === "NVDA" ? [syntheticEarnings("eeeeeeeeeeeeeeee", 1)] : []}]))};
 let profileOffline = false;
 const personalKey = crypto.randomBytes(32).toString("base64url");
 function sealFixture(positions, revision) {
@@ -39,9 +45,9 @@ const mime = {".html": "text/html", ".js": "text/javascript", ".css": "text/css"
 const server = http.createServer((request, response) => {
   requestPaths.push(request.url);
   const pathname = new URL(request.url, "http://localhost").pathname;
-  if (pathname === "/data/portfolio-news.json") {
-    response.writeHead(offline || newsOffline ? 503 : 200, {"Content-Type": "application/json"});
-    response.end(offline || newsOffline ? "{}" : JSON.stringify(syntheticNews)); return;
+  if (pathname === "/data/portfolio-earnings.json") {
+    response.writeHead(offline || earningsOffline ? 503 : 200, {"Content-Type": "application/json"});
+    response.end(offline || earningsOffline ? "{}" : JSON.stringify(syntheticEarningsData)); return;
   }
   if (pathname === "/data/personal-portfolio.json") {
     response.writeHead(profileOffline ? 503 : 200, {"Content-Type": "application/json"});
@@ -90,27 +96,39 @@ async function main() {
     assert.equal(await page.locator("#portfolioValue").innerText(), new Intl.NumberFormat("fr-CA", {style: "currency", currency: "CAD", maximumFractionDigits: 2}).format(current.total));
     assert.match(await page.locator("#portfolioStatus").innerText(), /6\/6/);
     assert.match(await page.locator("#portfolioUnrealized").innerText(), /Gain latent estimé.*change actuel/);
-    await page.waitForFunction(() => document.querySelectorAll("#portfolioNewsItems article").length === 4);
-    assert.equal(await page.locator('#portfolioNewsItems [data-news-id="eeeeeeeeeeeeeeee"]').count(), 0);
-    const publication = await page.locator('#portfolioNewsItems [data-news-id="aaaaaaaaaaaaaaaa"] time').getAttribute("datetime");
-    assert.equal(publication, syntheticNews.instruments.MSFT.items[0].published_at);
-    await page.locator("#portfolioNewsTicker").selectOption("SHOP");
-    assert.equal(await page.locator("#portfolioNewsItems article").count(), 1);
-    assert.match(await page.locator("#portfolioNewsItems").innerText(), /Shopify.*SHOP/s);
-    await page.locator("#portfolioNewsTicker").selectOption(""); await page.locator("#portfolioNewsEvent").selectOption("results");
-    assert.equal(await page.locator("#portfolioNewsItems article").count(), 2);
-    await page.locator("#portfolioNewsEvent").selectOption("all");
-    newsOffline = true;
+    await page.waitForFunction(() => document.querySelectorAll("#portfolioEarningsItems article").length === 4);
+    assert.equal(await page.locator("#portfolioNews").count(), 0);
+    assert.equal(await page.locator('#portfolioEarningsItems [data-earnings-id="eeeeeeeeeeeeeeee"]').count(), 0);
+    const publication = await page.locator('#portfolioEarningsItems [data-earnings-id="aaaaaaaaaaaaaaaa"] time').getAttribute("datetime");
+    assert.equal(publication, syntheticEarningsData.instruments.MSFT.events[0].report_date);
+    assert.match(await page.locator('#portfolioEarningsItems [data-earnings-id="aaaaaaaaaaaaaaaa"] [data-metric="eps"]').innerText(), /Au-dessus.*20,00/);
+    assert.match(await page.locator('#portfolioEarningsItems [data-earnings-id="aaaaaaaaaaaaaaaa"] [data-metric="revenue"]').innerText(), /Sous les attentes/);
+    await page.locator("#portfolioEarningsTicker").selectOption("SHOP");
+    assert.equal(await page.locator("#portfolioEarningsItems article").count(), 1);
+    assert.match(await page.locator("#portfolioEarningsItems").innerText(), /SHOP.*Shopify/s);
+    await page.locator("#portfolioEarningsTicker").selectOption("");
+    await page.locator("#portfolioEarningsWeek").selectOption(F.shiftDay(thisWeek.start, 7));
+    assert.equal(await page.locator("#portfolioEarningsItems article").count(), 1);
+    assert.doesNotMatch(await page.locator("#portfolioEarningsItems").innerText(), /Au-dessus des attentes|Sous les attentes/);
+    assert.match(await page.locator("#portfolioEarningsItems").innerText(), /À venir|À VENIR/);
+    await page.locator("#portfolioEarningsWeek").selectOption(thisWeek.start);
+    const imageDownload = page.waitForEvent("download"); await page.locator("#portfolioEarningsImage").click();
+    const imageFile = await imageDownload, imageBytes = fs.readFileSync(await imageFile.path());
+    assert.equal(imageFile.suggestedFilename(), "savy-resultats-" + thisWeek.start + ".png");
+    assert.equal(imageBytes.subarray(1, 4).toString(), "PNG"); assert.equal(imageBytes.readUInt32BE(16), 1200); assert.ok(imageBytes.readUInt32BE(20) > 800);
+    if (process.env.SCREENSHOT_LOGS) console.log("SCREENSHOT_EARNINGS_IMAGE " + imageBytes.toString("base64"));
+    earningsOffline = true;
     await page.locator("#refreshButton").click(); await page.waitForFunction(() => !document.querySelector("#refreshButton").disabled);
-    assert.equal(await page.locator("#portfolioNewsItems article").count(), 4);
-    assert.match(await page.locator("#portfolioNewsStatus").innerText(), /flux sont conservés/);
-    assert.equal(await page.locator('#portfolioNewsItems [data-news-id="aaaaaaaaaaaaaaaa"] time').getAttribute("datetime"), publication);
-    await page.evaluate(() => localStorage.removeItem("savy:portfolio-news:v1"));
+    assert.equal(await page.locator("#portfolioEarningsItems article").count(), 4);
+    assert.match(await page.locator("#portfolioEarningsStatus").innerText(), /copie conservée/);
+    assert.equal(await page.locator('#portfolioEarningsItems [data-earnings-id="aaaaaaaaaaaaaaaa"] time').getAttribute("datetime"), publication);
+    await page.evaluate(() => localStorage.removeItem("savy:portfolio-earnings:v1"));
     await page.locator("#refreshButton").click(); await page.waitForFunction(() => !document.querySelector("#refreshButton").disabled);
-    assert.equal(await page.locator("#portfolioNewsItems article").count(), 0);
-    assert.match(await page.locator("#portfolioNewsStatus").innerText(), /n’ont pas pu être chargées/);
+    assert.equal(await page.locator("#portfolioEarningsItems article").count(), 0);
+    assert.match(await page.locator("#portfolioEarningsStatus").innerText(), /n’ont pas pu être chargés/);
+    assert.equal(await page.locator("#portfolioEarningsImage").isDisabled(), true);
     assert.equal(await page.locator("#portfolioChart svg").count(), 1);
-    newsOffline = false;
+    earningsOffline = false;
     await page.locator("#refreshButton").click(); await page.waitForFunction(() => !document.querySelector("#refreshButton").disabled);
     for (const [view, axis] of [["Sectors", "sectors"], ["Geography", "geography"]]) {
       const control = page.locator("#portfolio" + view + "Toggle"), panel = page.locator("#portfolio" + view);
@@ -234,7 +252,7 @@ async function main() {
     await controls.getByRole("button", {name: "YTD", exact: true}).click();
     await toggle.click();
     if (process.env.SCREENSHOT_LOGS) console.log("SCREENSHOT_PORTFOLIO_DESKTOP " + (await page.locator("#portfolio").screenshot()).toString("base64"));
-    if (process.env.SCREENSHOT_LOGS) for (const [name, selector] of [["CONTRIBUTIONS", "#portfolioContributions"], ["RISK", "#portfolioRisk"], ["NEWS", "#portfolioNews"]])
+    if (process.env.SCREENSHOT_LOGS) for (const [name, selector] of [["CONTRIBUTIONS", "#portfolioContributions"], ["RISK", "#portfolioRisk"], ["EARNINGS", "#portfolioEarnings"]])
       console.log("SCREENSHOT_ANALYTICS_" + name + " " + (await page.locator(selector).screenshot()).toString("base64"));
     for (const width of [375, 320]) {
       await page.setViewportSize({width, height: 1000});
@@ -253,10 +271,10 @@ async function main() {
       assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), "Contributions table overflows mobile");
       await page.locator("#portfolioContributionsSummary").click();
       assert.ok(await page.evaluate(() => document.querySelector("#portfolioRisk .table-wrap").scrollWidth > document.querySelector("#portfolioRisk .table-wrap").clientWidth));
-      await page.locator("#portfolioNewsTicker").selectOption("MSFT");
-      assert.equal(await page.locator("#portfolioNewsItems article").count(), 2);
-      assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), "News filters overflow mobile");
-      await page.locator("#portfolioNewsTicker").selectOption("");
+      await page.locator("#portfolioEarningsTicker").selectOption("MSFT");
+      assert.equal(await page.locator("#portfolioEarningsItems article").count(), 1);
+      assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), "Earnings filters overflow mobile");
+      await page.locator("#portfolioEarningsTicker").selectOption("");
       assert.ok(await page.locator(".portfolio-table").evaluate(node => node.scrollWidth > node.clientWidth));
       assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
       await toggle.click();
@@ -289,8 +307,8 @@ async function main() {
     assert.equal(await page.locator("#portfolioSectorsRows tr").count(), 0);
     assert.equal(await page.locator("#portfolioGeographyRows tr").count(), 0);
     assert.equal(await page.locator("#portfolioContributionRows tr").count(), 0);
-    assert.equal(await page.locator("#portfolioNewsItems article").count(), 4);
-    assert.doesNotMatch(await page.locator("#portfolioNewsItems").innerText(), /% du portefeuille/);
+    assert.equal(await page.locator("#portfolioEarningsItems article").count(), 4);
+    assert.doesNotMatch(await page.locator("#portfolioEarningsItems").innerText(), /% du portefeuille/);
     assert.match(await page.locator("#portfolioMoversNote").innerText(), /historique ou change manquant/);
     await moverControls.getByRole("button", {name: "YTD", exact: true}).click();
     assert.equal(await page.locator("#portfolioBest li[data-ticker]").count(), 3);
@@ -341,7 +359,7 @@ async function main() {
     assert.deepEqual(parsedManifest.errors, []); assert.equal(JSON.parse(parsedManifest.data).start_url, personalURL);
     await cdp.detach();
     assert.equal(requestPaths.some(p => p.includes(personalKey)), false);
-    assert.equal(requestPaths.filter(p => p.includes("portfolio-news")).some(p => /ticker=|positions=|portfolio-key=/.test(p)), false);
+    assert.equal(requestPaths.filter(p => p.includes("portfolio-earnings")).some(p => /ticker=|positions=|portfolio-key=/.test(p)), false);
     await direct.locator("#portfolioPositionsToggle").click();
     await direct.locator('input[aria-label="Quantité SHOP"]').fill("3");
     await direct.locator('input[aria-label="Quantité SHOP"]').press("Tab");
@@ -380,7 +398,7 @@ async function main() {
     await invalidContext.close(); await directContext.close();
     console.log("Direct access checks passed: automatic synthetic holdings in a fresh mobile context, personal manifest start URL, local edits preserved, authenticated revision updates, offline fallback, restore after cleared storage, invalid key rejected, no key sent to the server.");
     console.log("Portfolio checks passed: 6 private synthetic positions, exact CAD/USD listings including the Sandisk CDR in CAD and fractional US Sandisk in USD, CAD valuation, all six periods, monthly top/bottom 3, both directions of three numeric gain sorts, persistent collapsed/expanded positions, hover and keyboard date/value/percent, edits/import/export, offline cache, missing-baseline/FX protection, empty public view and 320px mobile.");
-    console.log("Portfolio analytics checks passed: per-position contribution in percentage points, paired volatility/drawdown/beta across all periods, short-sample protection, local news filters and exact publication times, independent news outage/cache handling, missing-FX protection and mobile tables/filters.");
+    console.log("Portfolio analytics checks passed: per-position contribution in percentage points, paired volatility/drawdown/beta across all periods, short-sample protection, local weekly earnings filters and paired actual/consensus outcomes, PNG export, independent earnings outage/cache handling, missing-FX protection and mobile tables/filters.");
   } finally {await browser.close();}
 }
 main().catch(error => {console.error(error); process.exitCode = 1;}).finally(() => server.close());
