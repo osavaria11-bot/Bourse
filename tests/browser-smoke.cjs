@@ -34,14 +34,19 @@ const markets = { ...dataset, kind: "market_indices", series: [
 ].map(([id, quote_symbol]) => ({...series[0], id, quote_symbol, title: "Synthetic market " + id, frequency: "daily", unit: id === "EEM" ? "$ US" : "points"})) };
 const newsTime = new Date(now.getTime() - 86400000);
 const edition = new Intl.DateTimeFormat("en-CA", {timeZone: "America/Toronto"}).format(newsTime);
-const newsIds = ["reuters-markets", "reuters-economy", "bank-of-canada", "fred-indicators"];
-const briefing = {schema_version: 3, kind: "news_digest", language: "fr", timezone: "America/Toronto",
-  generated_at: newsTime.toISOString(), edition_date: edition, word_count: 500,
+const briefing = {schema_version: 4, kind: "news_digest", language: "fr", timezone: "America/Toronto",
+  generated_at: newsTime.toISOString(), edition_date: edition,
   editorial_note: "Fixture de test — aucune donnée de marché réelle.",
-  sources: newsIds.map((id, index) => ({id, label: "Source synthétique " + index,
-    url: "https://example.test/" + id, status: index === 3 ? "unavailable" : "available",
-    summary: ["<script>fixture</script>", ...Array(124).fill("synthétique")].join(" "),
-    articles: index === 3 ? [] : [{title: "Publication synthétique", url: "https://example.test/article/" + id, published_date: edition}]}))};
+  stories: [0,1,2].map(index => ({topic: "Marchés", title: "Titre synthétique " + index,
+    summary: "Une publication récente présente un événement financier vérifié avec une date et une source précise pour guider la lecture des marchés.",
+    impact: "Le taux et les bénéfices pourraient réagir selon les nouvelles données.",
+    source_label: "Source synthétique", source_url: "https://example.test/article/" + index, published_date: edition})),
+  fred_watch: ["CPIAUCSL", "PAYEMS", "DGS10"].map(id => ({series_id: id, title: "Série " + id,
+    explanation: "Observation synthétique pour le test du tableau.", observation_date: edition,
+    source_url: "https://fred.stlouisfed.org/series/" + id}))};
+const odds = {schema_version: 1, kind: "rate_odds", generated_at: now.toISOString(), decisions: ["fed", "canada"].map(id => ({
+  id, meeting_date: new Date(now.getTime() + 15 * 86400000).toISOString().slice(0,10), as_of: now.toISOString().slice(0,10),
+  hike: 20, hold: 80, cut: 0, status: "fresh", methodology: "OIS"}))};
 let offline = false, failAllData = false, failNews = false, invalidNews = false, failMarkets = false, invalidMarkets = false;
 const contentTypes = { ".html": "text/html", ".css": "text/css", ".js": "text/javascript", ".json": "application/json", ".png": "image/png" };
 const server = http.createServer((request, response) => {
@@ -56,7 +61,10 @@ const server = http.createServer((request, response) => {
   }
   if (pathname === "/data/daily-briefing.json") {
     response.writeHead(failNews ? 503 : 200, { "Content-Type": "application/json" });
-    response.end(failNews ? "{}" : JSON.stringify(invalidNews ? {...briefing, word_count: 499} : briefing)); return;
+    response.end(failNews ? "{}" : JSON.stringify(invalidNews ? {...briefing, stories: []} : briefing)); return;
+  }
+  if (pathname === "/data/rate-odds.json") {
+    response.writeHead(200, {"Content-Type": "application/json"}); response.end(JSON.stringify(odds)); return;
   }
   if (pathname === "/data/macro-briefing.json" && failAllData) {
     response.writeHead(503); response.end("{}"); return;
@@ -80,10 +88,16 @@ async function run() {
     const page = await context.newPage();
     const errors = [];
     page.on("pageerror", error => errors.push(error.message));
-    await page.route("https://**", route => route.abort());
+    await page.route("https://**", route => route.request().url().startsWith("https://biquote.io/api/USDCAD") ?
+      route.fulfill({status:200, contentType:"application/json", body:JSON.stringify({symbol:"USDCAD",mid:1.4265,timestamp:new Date().toISOString(),marketState:"open"})}) : route.abort());
     await page.goto(url); await waitCount(page, indicatorCount);
     assert.deepEqual(await page.locator("#kpis .kpi").evaluateAll(nodes => nodes.map(node => node.dataset.id)),
-      ["VIXCLS", "DFF", "CPIAUCSL", "DGS10", "DEXCAUS", "V39079"]);
+      ["VIXCLS", "DFEDTARU", "CPIAUCSL", "DGS10", "DEXCAUS", "V39079"]);
+    await page.waitForFunction(() => document.querySelector('#kpis .kpi[data-id="DEXCAUS"] .kpi-value').textContent.includes("1,4265"));
+    assert.match(await page.locator('#kpis .kpi[data-id="DEXCAUS"]').innerText(), /biquote/);
+    assert.match(await page.locator('#kpis .kpi[data-id="DFEDTARU"] .kpi-value').innerText(), /–.*%/);
+    assert.equal(await page.locator(".odds-card").count(), 2);
+    assert.match(await page.locator(".odds-card").first().innerText(), /Hausse.*20 %/s);
     const policyKpi = page.locator('#kpis .kpi[data-id="V39079"]');
     assert.match(await policyKpi.locator(".kpi-value").innerText(), /%/);
     const desktopPair = await page.locator('#kpis .kpi[data-id="DEXCAUS"], #kpis .kpi[data-id="V39079"]').evaluateAll(nodes => nodes.map(node => {
@@ -110,10 +124,14 @@ async function run() {
     assert.match(await page.locator("#detailChart .chart-tooltip").innerText(), /%/);
     await page.keyboard.press("Escape");
     await page.waitForSelector(".news-section");
-    assert.equal(await page.locator(".news-section").count(), 4);
-    assert.match(await page.locator("#briefingDate").innerText(), new RegExp(edition + ".*500 mots"));
+    assert.equal(await page.locator(".news-section").count(), 3);
+    assert.equal(await page.locator("#fredWatchList li").count(), 3);
+    await page.locator("#fredWatchList button").first().click();
+    await page.waitForFunction(() => document.querySelector("#detailDialog").open);
+    assert.match(await page.locator("#detailCategory").innerText(), /CPIAUCSL/);
+    await page.keyboard.press("Escape");
+    assert.match(await page.locator("#briefingDate").innerText(), new RegExp(edition + ".*3 nouvelles"));
     assert.match(await page.locator("#briefingDate").innerText(), /nouvelle édition en attente/);
-    assert.match(await page.locator(".news-unavailable h3").innerText(), /accès indisponible/);
     assert.equal(await page.locator("#briefingParagraph script").count(), 0);
     assert.equal(await page.locator(".news-section a").first().getAttribute("rel"), "noopener noreferrer");
     await page.waitForSelector("#marketGrid svg");
@@ -199,7 +217,7 @@ async function run() {
     assert.equal(await page.locator("#refreshButton").isEnabled(), true);
     invalidNews = true;
     await page.reload(); await page.waitForFunction(() => document.querySelector("#briefingDate").textContent.includes("Copie conservée"));
-    assert.equal(await page.locator(".news-section").count(), 4);
+    assert.equal(await page.locator(".news-section").count(), 3);
     invalidMarkets = true;
     await page.reload(); await page.waitForFunction(() => document.querySelector("#marketStatus").textContent.includes("Copie conservée"));
     assert.equal(await page.locator("#marketGrid svg").count(), 5);
@@ -209,7 +227,7 @@ async function run() {
     assert.match(await page.locator("#briefingDate").innerText(), new RegExp(edition));
     invalidNews = false; failNews = true;
     await page.reload(); await page.waitForFunction(() => document.querySelector("#briefingDate").textContent.includes("Copie conservée"));
-    assert.equal(await page.locator(".news-section").count(), 4);
+    assert.equal(await page.locator(".news-section").count(), 3);
     failAllData = true;
     failNews = false;
     const newsContext = await browser.newContext();
@@ -217,7 +235,7 @@ async function run() {
     await newsOnly.goto(url);
     await newsOnly.waitForFunction(() => document.querySelector("#updated").textContent.includes("ne sont pas disponibles"));
     await newsOnly.waitForSelector(".news-section");
-    assert.equal(await newsOnly.locator(".news-section").count(), 4, "News must load even when macro data is unavailable");
+    assert.equal(await newsOnly.locator(".news-section").count(), 3, "News must load even when macro data is unavailable");
     assert.equal(await newsOnly.locator(".market-card").count(), 5, "Each market must retain a source link when quotes are unavailable");
     assert.equal(await newsOnly.locator("#marketGrid svg").count(), 0);
     await newsContext.close(); failNews = true;
@@ -229,7 +247,7 @@ async function run() {
     await empty.waitForFunction(() => document.querySelector("#briefingDate").textContent === "Édition indisponible");
     assert.equal(await empty.locator("#refreshButton").isEnabled(), true);
     assert.deepEqual(errors, []);
-    console.log("Browser checks passed: " + indicatorCount + " macro cards, Canadian policy rate beside USD/CAD, official source and historical tooltip, 5 world market charts, offline preservation, CSV, 320px mobile, sourced 500-word briefing.");
+    console.log("Browser checks passed: " + indicatorCount + " macro cards, live FX, both policy rates and meeting odds, sourced selective briefing, offline preservation and 320px mobile.");
     await freshContext.close(); await context.close();
   } finally { await browser.close(); }
 }

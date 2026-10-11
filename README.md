@@ -4,13 +4,15 @@ Un tableau de bord en français pour suivre le cycle économique aux États-Unis
 
 ## Fonctions
 
-- **33 indicateurs** : taux, inflation, emploi, activité, crédit, marchés, immobilier, Canada et matières premières.
+- **34 indicateurs** : taux, inflation, emploi, activité, crédit, marchés, immobilier, Canada et matières premières.
 - **Graphiques interactifs** avec périodes de 1 mois, 3 mois, 1 an, 5 ans et 10 ans; valeurs au survol et navigation avec les flèches du clavier.
 - **Vue détaillée** : explication de l’indicateur, dernières observations, lien vers la source et export de l’historique.
 - **Recherche**, filtres par catégorie, tri par nom ou date, et **favoris** conservés dans le navigateur.
 - **Export CSV** de la sélection, compatible avec Excel et protégé contre les formules dans les champs texte.
 - **Modes clair et sombre**, disposition adaptée au téléphone et dialogues accessibles au clavier.
-- **Briefing macroéconomique de 500 mots au total** : Reuters, Banque du Canada et analyse des indicateurs FRED préoccupants, classés par priorité.
+- **Nouvelles sélectionnées pour leur effet sur les marchés** : 1 à 6 sujets récents en français, chacun avec sa publication datée, son lien et la raison de le surveiller. Sous le briefing, 3 à 4 points expliquent les graphiques FRED à surveiller avec leur vraie période d’observation. Aucun quota de mots.
+- **USD/CAD de marché** : cours médian indicatif de biquote demandé au navigateur chaque minute, avec heure et statut du marché; les graphiques et variations historiques du portefeuille restent calculés sur des clôtures quotidiennes Yahoo Finance.
+- **Décisions Fed et Banque du Canada** : fourchette cible américaine officielle et probabilités de hausse, maintien ou baisse à la prochaine réunion, issues des swaps SOFR/CORRA selon BlueGamma et affichées avec leur date.
 - **Cinq graphiques de marchés mondiaux** : S&P 500, Nasdaq Composite, S&P/TSX Composite, STOXX Europe 600 et ETF EEM suivant le MSCI Emerging Markets. Clôtures quotidiennes, périodes de 1 mois à 10 ans et sources accessibles.
 - **Portefeuille privé** : quantités conservées dans le navigateur, valorisation en CAD, prix moyens, gains latents, pondérations et variations par titre, import/export JSON et graphique YTD, 6 mois, 3 mois, 1 mois, 1 semaine et 3 jours.
 - **Vue compacte du portefeuille** : positions repliées par défaut, choix mémorisé sur l’appareil, et tri croissant/décroissant des gains latents en % et en CAD ainsi que des variations en CAD.
@@ -21,15 +23,15 @@ Les périodes de graphique se terminent à la dernière observation de chaque s�
 
 ## Mise à jour et fiabilité
 
-GitHub Actions collecte les observations FRED, le taux directeur canadien officiel, les cours des cinq marchés et ceux du catalogue public de 102 titres avec le taux USD/CAD **à 6 h 47 chaque jour**, puis à **13 h 17 et 19 h 17 du lundi au vendredi**, à l’heure de Montréal. La collecte du matin prépare les données du briefing de 7 h. Les horaires utilisent `America/Toronto` et suivent les changements d’heure; GitHub peut retarder une exécution en cas de charge.
+GitHub Actions collecte les observations FRED, les taux directeurs, les probabilités des prochaines réunions, les cours des cinq marchés et ceux du catalogue public de 102 titres avec le taux USD/CAD quotidien **à 6 h 47 chaque jour**, puis à **13 h 17 et 19 h 17 du lundi au vendredi**, à l’heure de Montréal. Le navigateur demande séparément la cotation de change indicative à biquote à l’ouverture et chaque minute tant que l’onglet est visible. Les horaires suivent les changements d’heure; GitHub peut retarder une exécution en cas de charge.
 
-Le **briefing d’actualité** est préparé et publié par une tâche ChatGPT quotidienne programmée à **7 h, heure de Montréal**, fins de semaine comprises, à partir du 11 octobre 2026. Sa mise à jour est indépendante de celle des observations. Il résume Reuters Marchés, Reuters Économie, la Banque du Canada et les **indicateurs de ton tableau FRED à surveiller**, pour **500 mots au total**, hors titres, liens et graphiques. La partie FRED examine les 32 séries FRED du tableau et classe les signaux les plus importants selon leurs niveaux et leurs tendances, avec valeurs, comparaisons, périodes et explications. Une baisse n’est pas systématiquement mauvaise : le sens économique propre à chaque indicateur compte. Un signal isolé n’est pas présenté comme une certitude. Chaque section cite les publications consultées et leurs dates. Une source inaccessible est signalée sans inventer son contenu; une journée sans nouvelle importante reprend uniquement des points récents en précisant leur date.
+Le **briefing d’actualité** est préparé et publié par la tâche ChatGPT quotidienne à **7 h, heure de Montréal**. Elle choisit les 1 à 6 développements les plus récents et importants pour les marchés, d’après les articles consultés de **Reuters, Financial Times, Wall Street Journal, New York Times et Bloomberg**, d’autres sources fiables et les publications officielles. Elle privilégie les dernières 24 heures, ou les 72 dernières heures en fin de semaine. Elle explique l’effet possible sur les taux, les bénéfices, les devises ou le portefeuille. Les faits, prévisions et interprétations restent distincts; la date de chaque source est visible. La longueur suit l’actualité, sans quota de 500 mots. En l’absence de nouvelle importante, elle publie moins d’articles et date les développements encore pertinents, sans remplir artificiellement le briefing.
 
-La tâche de rédaction actualise `data/daily-briefing.json` dans ce dépôt. La collecte des observations ne modifie jamais ce fichier. La date d’édition des nouvelles est indépendante de celle des graphiques. En cas de panne, le navigateur peut conserver la dernière édition vérifiée, avec sa date et un avertissement visible. Si la préparation quotidienne échoue, l’édition précédente reste affichée et n’est pas présentée comme nouvelle.
+La tâche de rédaction actualise `data/daily-briefing.json` dans ce dépôt, y compris les 3 à 4 explications `fred_watch` (série, observation, explication et lien FRED). Les commentaires sont datés de leur observation et revus à chaque édition, sans transformer la date de collecte en date économique. La collecte des observations ne modifie jamais ce fichier. La date d’édition des nouvelles est indépendante de celle des graphiques. En cas de panne, le navigateur peut conserver la dernière édition vérifiée, avec sa date et un avertissement visible. Si la préparation quotidienne échoue, l’édition précédente reste affichée et n’est pas présentée comme nouvelle.
 
 Les observations suivent le calendrier de leurs sources. Par exemple, une statistique mensuelle conserve sa période de référence entre deux publications; la date de collecte ne devient jamais sa date d’observation.
 
-- Les CSV sont lus directement sur FRED par le collecteur Python, avec délais limites et nouvelles tentatives bornées. Le taux directeur canadien est collecté auprès de la Banque du Canada via son API Valet, série `V39079` (cible du taux du financement à un jour, jours ouvrables). Il apparaît à côté de l’USD/CAD dans les indicateurs clés, avec sa date réelle, et dispose de son propre graphique, de ses favoris et de ses exports CSV.
+- Les CSV sont lus directement sur FRED par le collecteur Python, avec délais limites et nouvelles tentatives bornées. La fourchette cible Fed utilise `DFEDTARL` et `DFEDTARU`, distinctes du taux effectif `DFF`. Le taux directeur canadien est collecté auprès de la Banque du Canada via son API Valet, série `V39079`. Les cotes BlueGamma sont collectées séparément et masquées si leur observation date de plus de cinq jours ou si la réunion est passée.
 - Les quatre indices et l’ETF EEM sont collectés sur Yahoo Finance. EEM est affiché comme ETF en dollars US, les indices en points. Les graphiques montrent les cours de clôture, hors dividendes, et ne mélangent pas leurs échelles. Chaque source est vérifiée avec son symbole et la date de séance de sa place boursière; une séance en cours est exclue.
 - Chaque série dispose de son propre repli : une panne conserve sa dernière observation valide et son horodatage, tout en actualisant les autres séries.
 - Les données manquantes restent des trous dans les graphiques.
@@ -64,7 +66,8 @@ Pour mettre à jour la base intégrée, exécuter `node scripts/seal_personal_po
 La configuration se trouve dans `data/series.json`. Les fichiers publiés sont :
 
 - `data/macro-data.json` : valeurs, dates, variation, statut de collecte et historiques.
-- `data/daily-briefing.json` : édition d’actualité en français, 500 mots, quatre sections et publications citées (schéma 3).
+- `data/daily-briefing.json` : édition d’actualité en français, sujets choisis, publications citées et 3 à 4 graphiques FRED commentés (schéma 4).
+- `data/rate-odds.json` : probabilités Fed/Canada et dates source (schéma 1).
 - `data/market-indices.json` : historiques de clôture, dates et statut de collecte des quatre indices et de l’ETF EEM (schéma 2, `kind: market_indices`).
 - `data/securities.json` : catalogue public de 102 cotations, sans quantités personnelles.
 - `data/security-prices.json` : historiques des titres et USD/CAD, symboles et devises vérifiés (schéma 2, `kind: security_prices`).
@@ -76,7 +79,7 @@ Avant de publier une nouvelle édition :
 python3 scripts/validate_news_briefing.py
 ```
 
-Le validateur vérifie les quatre sources, les dates, les liens HTTPS et le total de 500 mots (somme des mots séparés par des espaces dans les champs `summary`). Le déploiement Pages exécute cette vérification avant publication.
+Le validateur vérifie les liens HTTPS, les dates, le nombre raisonnable de sujets et la concision. Le déploiement Pages exécute cette vérification avant publication.
 
 Les nouvelles mesures sont calculées à partir des niveaux publiés :
 
@@ -95,6 +98,7 @@ Les libellés suivants ont été corrigés d’après les fiches officielles :
 - [NASDAQXAU](https://fred.stlouisfed.org/series/NASDAQXAU) est l’indice **PHLX Gold/Silver Sector**.
 - [MEDCPIM158SFRBCLE](https://fred.stlouisfed.org/series/MEDCPIM158SFRBCLE) est une variation mensuelle **annualisée**.
 - [V39079](https://www.bankofcanada.ca/core-functions/monetary-policy/key-interest-rate/) est le **taux directeur canadien** officiel. Il est distinct de la moyenne du taux interbancaire à trois mois.
+- [DFEDTARL](https://fred.stlouisfed.org/series/DFEDTARL) et [DFEDTARU](https://fred.stlouisfed.org/series/DFEDTARU) forment la **fourchette cible officielle de la Fed**.
 - [IR3TIB01CAM156N](https://fred.stlouisfed.org/series/IR3TIB01CAM156N) est une moyenne mensuelle du **taux interbancaire canadien à 3 mois**.
 
 ## Lancer le site

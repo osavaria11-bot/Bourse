@@ -48,6 +48,7 @@ jobs:
       - name: Dashboard regression tests
         run: |
           node --check js/dashboard.js
+          node --check js/live-fx.js
           node --check js/macro-utils.js
           node --check js/portfolio-utils.js
           node --check js/portfolio-profile-utils.js
@@ -77,7 +78,7 @@ jobs:
           data = json.loads((Path(os.environ["RUNNER_TEMP"]) / "fred-check/macro-data.json").read_text())
           print("Provider coverage:", data["coverage"])
           points = {p["id"]: p for p in data["series"]}
-          for sid in ("DFF", "CPIAUCSL", "DEXCAUS", "V39079", "PCEPILFE", "GDPC1", "PAYEMS"):
+          for sid in ("DFEDTARL", "DFEDTARU", "CPIAUCSL", "DEXCAUS", "V39079", "PCEPILFE", "GDPC1", "PAYEMS"):
               assert points[sid]["fetch_status"] == "fresh", f"Provider integration failed for {sid}"
               print(sid, points[sid]["date"], points[sid]["value"], points[sid]["unit"])
           policy = points['V39079']

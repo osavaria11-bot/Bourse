@@ -117,9 +117,9 @@
     $("#portfolioRanges").replaceChildren(controls);
     if (!positions.length) {$("#portfolioStatus").textContent = "Importe ta sauvegarde ou ajoute tes positions. Les quantités restent sur cet appareil."; return;}
     if (!prices || !history.length) {$("#portfolioStatus").textContent = "Les cours n’ont pas pu être chargés. Tes positions sont conservées; utilise « Actualiser »."; $("#portfolioChart").replaceChildren(); $("#portfolioRows").replaceChildren(); $("#portfolioBest").replaceChildren(); $("#portfolioWorst").replaceChildren(); $("#portfolioMoversPeriod").textContent = ""; $("#portfolioMoversNote").textContent = "Les classements seront disponibles avec les cotations."; return;}
-    const day = history.at(-1)[0], current = P.valuationAt(positions, prices, day), selected = P.period(history, range);
+    const day = history.at(-1)[0], liveFx = window.SavyLiveFX?.current(), current = P.valuationAt(positions, prices, day, liveFx), selected = P.period(history, range);
     const baseline = P.valuationAt(positions, prices, selected.start), old = current.rows.filter(row => row.price_date && row.price_date < day);
-    $("#portfolioStatus").textContent = (cached ? "Copie de cours conservée · " : "") + "Valorisation au " + day + " · " +
+    $("#portfolioStatus").textContent = (cached ? "Copie de cours conservée · " : "") + "Cours des titres au " + day + " · " +
       (positions.length - current.missing.length) + "/" + positions.length + " titres valorisés · collecte du " + U.timestampLabel(prices.generated_at) +
       (old.length ? " · " + old.length + " cours d’une séance antérieure repris" : "");
     $("#portfolioStatus").classList.toggle("warning", cached || !current.complete || old.length > 0 || Date.now() - U.parseTimestamp(prices.generated_at) > 36 * 3600000);
@@ -127,8 +127,9 @@
     $("#portfolioValue").textContent = money(current.total);
     $("#portfolioChange").textContent = delta(selected.change) + " · " + delta(selected.percent, true);
     $("#portfolioChange").className = "portfolio-change change " + direction(selected.change);
-    $("#portfolioPeriod").textContent = "Du " + selected.start + " au " + selected.end + (selected.incomplete ? " · historique incomplet, variation indisponible" : " · variation théorique sur la période");
-    $("#portfolioFX").textContent = current.fx ? "1 $ US = " + U.formatNumber(current.fx, 4) + " $ CA · taux du " + current.fx_date : "Taux USD/CAD indisponible";
+    $("#portfolioPeriod").textContent = "Du " + selected.start + " au " + selected.end + (selected.incomplete ? " · historique incomplet, variation indisponible" : " · variation des clôtures sur la période");
+    $("#portfolioFX").textContent = current.fx ? "1 $ US = " + U.formatNumber(current.fx, 4) + " $ CA · " +
+      (liveFx ? (liveFx.closed ? "dernier cours, marché fermé · " : "cotation indicative · ") + U.timestampLabel(liveFx.timestamp) + " · biquote" : "clôture du " + current.fx_date + " · Yahoo Finance") : "Taux USD/CAD indisponible";
     $("#portfolioCurrencies").textContent = money(current.cad) + " en titres CAD · " + money(current.usd, "USD") + " en titres USD";
     $("#portfolioCost").textContent = "Coût converti au taux actuel : " + money(current.cost_converted);
     $("#portfolioUnrealized").textContent = "Gain latent estimé : " + delta(current.unrealized_cad) + " · " + delta(current.unrealized_percent, true) +
@@ -137,9 +138,11 @@
     $("#portfolioMissing").textContent = current.missing.length ? "Valeur partielle : cours ou change manquant pour " + current.missing.join(", ") + "." : "";
     renderMovers(day);
     const previous = new Map(baseline.rows.map(row => [row.ticker, row]));
+    const closedRows = new Map(P.valuationAt(positions, prices, day).rows.map(row => [row.ticker, row]));
     const comparedRows = current.rows.map(row => {
       const start = previous.get(row.ticker)?.value_cad;
-      return {...row, period_change_cad: !selected.incomplete && U.validNumber(start) && U.validNumber(row.value_cad) ? row.value_cad - start : null};
+      const closeValue = closedRows.get(row.ticker)?.value_cad;
+      return {...row, period_change_cad: !selected.incomplete && U.validNumber(start) && U.validNumber(closeValue) ? closeValue - start : null};
     });
     const rows = document.createDocumentFragment();
     for (const row of sortKey ? P.sortRows(comparedRows, sortKey, sortDescending) : comparedRows) {
@@ -225,4 +228,7 @@
   }
   for (const button of document.querySelectorAll("[data-portfolio-sort]")) button.addEventListener("click", () => {const key = button.dataset.portfolioSort; sortDescending = key === sortKey ? !sortDescending : true; sortKey = key; render();});
   window.SavyPortfolio = {refresh};
+  document.addEventListener("savy:fx", () => {
+    if (prices && history.length && !document.activeElement?.closest("#portfolioRows input")) render();
+  });
 })();

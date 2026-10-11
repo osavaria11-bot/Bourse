@@ -14,9 +14,11 @@ on:
       - "scripts/generate_daily_briefing.py"
       - "scripts/collect_market_indices.py"
       - "scripts/collect_security_prices.py"
+      - "scripts/collect_rate_odds.py"
       - "data/securities.json"
       - "tests/test_generate_daily_briefing.py"
       - "tests/test_market_indices.py"
+      - "tests/test_rate_odds.py"
       - ".github/workflows/daily-briefing.yml"
 
 permissions:
@@ -49,11 +51,13 @@ jobs:
         run: python scripts/collect_market_indices.py
       - name: Refresh security prices and USD/CAD
         run: python scripts/collect_security_prices.py
+      - name: Refresh next-decision market odds
+        run: python scripts/collect_rate_odds.py
       - name: Commit published data
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/macro-data.json data/macro-briefing.json data/market-indices.json data/security-prices.json
+          git add data/macro-data.json data/macro-briefing.json data/market-indices.json data/security-prices.json data/rate-odds.json
           if git diff --cached --quiet; then
             echo "No data changes to commit."
             exit 0

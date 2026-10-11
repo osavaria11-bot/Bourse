@@ -46,6 +46,20 @@ button {color:var(--text)}
 .kpi .eyebrow {font-size:9px}
 .kpi-value {font-size:25px;font-weight:650;letter-spacing:-.035em;margin:6px 0 4px;font-variant-numeric:tabular-nums}
 .kpi .meta {font-size:10px}
+.kpi a.meta {display:inline-block;font-size:10px;margin-top:4px}
+.policy-odds {margin-top:18px}
+.policy-odds-heading {display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.policy-odds-heading h2 {font-size:16px;margin-top:3px}
+.policy-odds-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.odds-card {min-width:0;padding:15px 18px;border:1px solid var(--border);border-radius:12px;background:var(--surface)}
+.odds-card h3 {font-size:14px;margin-bottom:5px}
+.odds-card>a {display:inline-block;margin-top:8px}
+.odds-bars {display:grid;gap:7px;margin:12px 0}
+.odds-line {display:grid;grid-template-columns:65px minmax(0,1fr) 50px;align-items:center;gap:9px;font-size:11px}
+.odds-line strong {text-align:right;font-variant-numeric:tabular-nums}
+.odds-track {height:7px;background:var(--raised);border-radius:20px;overflow:hidden}
+.odds-fill {display:block;height:100%;background:var(--accent);border-radius:20px}
+@media(max-width:650px) {.policy-odds-grid {grid-template-columns:1fr}}
 .card {border:1px solid var(--border);border-radius:12px;background:var(--surface)}
 .briefing {margin-top:18px;padding:18px 22px}
 summary {display:flex;align-items:center;justify-content:space-between;gap:15px;list-style:none}
@@ -59,8 +73,16 @@ details[open]>summary:after {content:"−"}
 .news-section + .news-section {border-top:1px solid var(--border);margin-top:16px;padding-top:16px}
 .news-section h3 {font-size:13px;font-weight:600;margin:0 0 6px}
 .news-section p {margin:0}
+.news-section .eyebrow {display:block;margin-bottom:5px}
+.news-section .news-impact {margin-top:5px;color:var(--accent)}
 .news-section .news-links {margin-top:7px;font-size:11px}
 .news-section a {overflow-wrap:anywhere}
+.fred-watch {border-top:1px solid var(--border);margin-top:20px;padding-top:16px}
+.fred-watch h3 {font-size:14px;margin-bottom:8px}
+.fred-watch ul {margin:0;padding-left:20px;display:grid;gap:8px;font-size:13px}
+.fred-watch li {padding-left:3px}
+.fred-watch a {font-size:12px;white-space:nowrap}
+.fred-watch .text-link {border:0;background:none;padding:0;color:var(--accent);font-size:12px;text-decoration:underline;text-underline-offset:2px}
 .news-unavailable h3 {color:var(--muted)}
 .news-links {display:flex;flex-wrap:wrap;gap:10px 20px;list-style:none;padding:0;margin:14px 0 0;font-size:12px}
 .market-section {border-top:1px solid var(--border);margin-top:24px;padding-top:20px}

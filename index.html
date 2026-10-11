@@ -8,12 +8,13 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-title" content="SAVY" />
   <title>SAVY — Tableau macroéconomique</title>
-  <link rel="stylesheet" href="css/dashboard.css?v=20261010-taux-canadien" />
-  <script src="js/macro-utils.js?v=20261010-taux-canadien" defer></script>
-  <script src="js/portfolio-utils.js?v=20261010-classement" defer></script>
+  <link rel="stylesheet" href="css/dashboard.css?v=20261011-fred-watch" />
+  <script src="js/macro-utils.js?v=20261011-rates-news" defer></script>
+  <script src="js/live-fx.js?v=20261011-rates-news" defer></script>
+  <script src="js/portfolio-utils.js?v=20261011-rates-news" defer></script>
   <script src="js/portfolio-profile-utils.js?v=20261010-portefeuille-direct" defer></script>
-  <script src="js/portfolio.js?v=20261010-portefeuille-direct" defer></script>
-  <script src="js/dashboard.js?v=20261010-taux-canadien" defer></script>
+  <script src="js/portfolio.js?v=20261011-rates-news" defer></script>
+  <script src="js/dashboard.js?v=20261011-fred-watch" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#indicators">Aller aux indicateurs</a>
@@ -25,11 +26,19 @@
     <div class="intro-line"><p>États-Unis & Canada <span class="muted">/ dernières observations publiées</span></p><p class="muted">3 collectes par jour en semaine · dates propres à chaque série</p></div>
     <p id="updated" class="update-status" role="status" aria-live="polite">Chargement des données publiées…</p>
     <section id="kpis" class="kpi-grid" aria-label="Indicateurs clés"></section>
+    <section class="policy-odds" aria-labelledby="oddsTitle">
+      <div class="policy-odds-heading"><div><p class="eyebrow">PROCHAINES DÉCISIONS</p><h2 id="oddsTitle">Ce que le marché anticipe</h2></div><p class="meta">Probabilités implicites des swaps au jour le jour, datées et révisables.</p></div>
+      <div id="rateOdds" class="policy-odds-grid" role="status">Chargement des probabilités…</div>
+    </section>
     <details class="briefing card" id="briefingCard" open>
-      <summary><span><span class="eyebrow">L’ESSENTIEL DU MATIN</span><strong>Briefing macroéconomique</strong></span><span class="details-label">500 mots · actualités & sources</span></summary>
+      <summary><span><span class="eyebrow">L’ESSENTIEL DU MATIN</span><strong>Nouvelles qui comptent</strong></span><span class="details-label">Sélection du jour · sources datées</span></summary>
       <p id="briefingDate" class="meta"></p>
       <div id="briefingParagraph" class="briefing-text" aria-live="polite">Chargement du briefing…</div>
       <p id="briefingNote" class="meta"></p>
+      <section class="fred-watch" aria-labelledby="fredWatchTitle">
+        <h3 id="fredWatchTitle">Graphiques FRED à surveiller</h3>
+        <ul id="fredWatchList"></ul>
+      </section>
       <ul id="briefingLinks" class="news-links"></ul>
       <section class="market-section" aria-labelledby="marketTitle">
         <div class="market-heading"><div><p class="eyebrow">LES GRANDS MARCHÉS</p><h3 id="marketTitle">Indices boursiers mondiaux</h3></div><div id="marketRanges" class="segmented" role="group" aria-label="Période des indices boursiers"></div></div>
@@ -57,7 +66,7 @@
         <div id="portfolioPositions" class="table-wrap portfolio-table" hidden><table><caption>Positions privées · les variations correspondent à la période sélectionnée; gains en CAD au taux actuel</caption><thead><tr><th scope="col">Titre</th><th scope="col">Quantité</th><th scope="col">Prix moyen</th><th scope="col">Cours et date</th><th scope="col">Valeur CAD</th><th scope="col">Poids</th><th scope="col" aria-sort="none"><button class="portfolio-sort" type="button" data-portfolio-sort="unrealized_percent">Gain latent % <span aria-hidden="true">↕</span></button></th><th scope="col" aria-sort="none"><button class="portfolio-sort" type="button" data-portfolio-sort="unrealized_cad">Gain latent CAD <span aria-hidden="true">↕</span></button></th><th scope="col" aria-sort="none"><button class="portfolio-sort" type="button" data-portfolio-sort="period_change_cad">Variation CAD <span aria-hidden="true">↕</span></button></th><th scope="col">Source</th></tr></thead><tbody id="portfolioRows"></tbody></table></div>
       </div>
       <form id="positionForm" class="position-form"><label>Titre<select id="positionTicker" aria-label="Titre à ajouter"></select></label><label>Quantité<input id="positionQuantity" type="text" inputmode="decimal" placeholder="Ex. 2,5" required /></label><label>Prix moyen<input id="positionAverageCost" type="text" inputmode="decimal" placeholder="Facultatif" /></label><button class="button" type="submit">Ajouter / modifier</button></form>
-      <p class="meta portfolio-method">Historique reconstitué avec les quantités actuelles, les cours de clôture et le taux USD/CAD de chaque date, hors transactions, dividendes, frais et espèces. YTD part de la dernière clôture de l’année précédente; 1 semaine et 3 jours couvrent 5 et 3 séances. Pour reproduire l’évolution réelle du compte avant aujourd’hui, il faut les achats, ventes et mouvements d’argent.</p>
+      <p class="meta portfolio-method">Valeur affichée : dernières clôtures des titres, converties au cours indicatif USD/CAD disponible à l’ouverture de la page. Le graphique et les variations utilisent les clôtures historiques et le taux de change de chaque date. Historique reconstitué avec les quantités actuelles, hors transactions, dividendes, frais et espèces. YTD part de la dernière clôture de l’année précédente; 1 semaine et 3 jours couvrent 5 et 3 séances.</p>
       <p class="meta">Le gain latent par titre compare le cours au prix moyen dans sa devise. Le total des gains et le coût en CAD sont convertis au taux actuel : ils excluent l’effet du change depuis les achats. Les cours se mettent à jour avec le site. Le lien personnel ouvre ton portefeuille intégré sur un nouvel appareil, sans fichier à importer. Les modifications faites ici restent dans ce navigateur; l’export permet de les conserver.</p>
     </section>
     <section class="workspace" id="indicators" aria-labelledby="indicatorsTitle">

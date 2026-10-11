@@ -3,7 +3,7 @@
   const U = window.MacroUtils;
   const $ = selector => document.querySelector(selector);
   const CACHE_KEY = "savy:macro-data:v2";
-  const NEWS_CACHE_KEY = "savy:news-digest:v4";
+  const NEWS_CACHE_KEY = "savy:news-digest:v5";
   const MARKET_CACHE_KEY = "savy:market-indices:v1";
   const MARKET_DEFINITIONS = [
     ["SPX", "S&P 500", "États-Unis", "^GSPC"],
@@ -84,7 +84,7 @@
   }
   function renderKpis() {
     const definitions = [
-      ["VIXCLS", "VIX · volatilité"], ["DFF", "Fed · taux effectif"], ["CPIAUCSL", "Inflation CPI · 12 mois"],
+      ["VIXCLS", "VIX · volatilité"], ["DFEDTARU", "Fed · taux directeur"], ["CPIAUCSL", "Inflation CPI · 12 mois"],
       ["DGS10", "Trésor US · 10 ans"], ["DEXCAUS", "USD/CAD"], ["V39079", "Canada · taux directeur"],
     ];
     const fragment = document.createDocumentFragment();
@@ -93,13 +93,55 @@
       const card = el("article", "kpi");
       card.dataset.id = id;
       card.append(el("p", "eyebrow", label));
-      card.append(el("p", "kpi-value", point ? U.formatNumber(point.value, point.decimals) + (point.value !== null && point.unit === "%" ? " %" : "") : "—"));
-      card.append(el("p", "meta", point ? U.observationLabel(point.date, point.frequency) : "Période non disponible"));
+      const live = id === "DEXCAUS" ? window.SavyLiveFX?.current() : null;
+      const lower = id === "DFEDTARU" ? state.seriesById.get("DFEDTARL") : null;
+      const range = point?.value !== null && point?.value !== undefined && lower?.value !== null && lower?.value !== undefined;
+      const valueText = live ? U.formatNumber(live.rate, 4) : range ? U.formatNumber(lower.value, 2) + "–" + U.formatNumber(point.value, 2) + " %" :
+        point ? U.formatNumber(point.value, point.decimals) + (point.value !== null && point.unit === "%" ? " %" : "") : "—";
+      card.append(el("p", "kpi-value", valueText));
+      card.append(el("p", "meta", live ? (live.closed ? "Marché fermé · dernier cours " : "Cotation indicative · ") + U.timestampLabel(live.timestamp) :
+        point ? U.observationLabel(point.date, point.frequency) + (id === "DEXCAUS" ? " · historique FRED" : "") : "Période non disponible"));
       const change = point ? U.changeLabel(point) : { text: "En attente de collecte", direction: "flat" };
-      card.append(el("p", "change " + change.direction, change.text));
+      if (live) {const link = el("a", "meta", "Source : biquote ↗"); link.href = window.SavyLiveFX.source_url; link.target = "_blank"; link.rel = "noopener noreferrer"; card.append(link);}
+      else card.append(el("p", "change " + change.direction, id === "DEXCAUS" ? "Dernière observation FRED · " + change.text : change.text));
       fragment.append(card);
     }
     $("#kpis").replaceChildren(fragment);
+  }
+  function renderOdds(dataset) {
+    const host = $("#rateOdds"), fragment = document.createDocumentFragment();
+    for (const key of ["fed", "canada"]) {
+      const row = dataset?.decisions?.find(item => item.id === key);
+      const card = el("article", "odds-card");
+      card.append(el("h3", "", key === "fed" ? "Réserve fédérale américaine" : "Banque du Canada"));
+      const source = el("a", "meta", "Voir les probabilités chez BlueGamma ↗");
+      source.href = key === "fed" ? "https://www.bluegamma.io/central-banks/central-bank-interest-rate-forecasts/federal-reserve-interest-rate-forecast" : "https://www.bluegamma.io/central-banks/central-bank-interest-rate-forecasts/the-bank-of-canada-interest-rate-forecast";
+      source.target = "_blank"; source.rel = "noopener noreferrer";
+      const age = row?.as_of ? (Date.now() - Date.parse(row.as_of + "T23:59:59Z")) / 86400000 : Infinity;
+      const today = new Intl.DateTimeFormat("en-CA", {timeZone: "America/Toronto"}).format(new Date());
+      const valid = dataset?.kind === "rate_odds" && row && U.isDate(row.as_of) && U.isDate(row.meeting_date) &&
+        Number.isFinite(age) && age >= -1 && age <= 5 && row.as_of < row.meeting_date &&
+        row.as_of <= today && row.meeting_date >= today &&
+        [row.hike, row.hold, row.cut].every(n => Number.isInteger(n) && n >= 0 && n <= 100) &&
+        Math.abs(row.hike + row.hold + row.cut - 100) <= 1;
+      if (valid) {
+        card.append(el("p", "meta" + (age > 2 || row.status !== "fresh" ? " warning" : ""),
+          "Décision : " + row.meeting_date + " · cotes du " + row.as_of + (row.status !== "fresh" ? " · dernière valeur conservée" : "")));
+        const list = el("div", "odds-bars");
+        for (const [label, value] of [["Hausse", row.hike], ["Maintien", row.hold], ["Baisse", row.cut]]) {
+          const line = el("div", "odds-line"), track = el("span", "odds-track"), fill = el("span", "odds-fill");
+          fill.style.width = value + "%"; track.append(fill);
+          line.append(el("span", "", label), track, el("strong", "", value + " %")); list.append(line);
+        }
+        card.append(list, el("p", "meta", "Implicites de " + row.methodology + " · elles peuvent changer avant la réunion."));
+      } else card.append(el("p", "meta warning", "Cotes à jour indisponibles. Consulte la source pour la prochaine décision."));
+      card.append(source); fragment.append(card);
+    }
+    host.replaceChildren(fragment);
+  }
+  async function loadOdds() {
+    try {renderOdds(await fetchJSON("data/rate-odds.json"));}
+    catch {renderOdds(null);}
   }
   function renderCategories() {
     const categories = [...new Set(state.dataset.series.map(point => point.category))];
@@ -322,26 +364,29 @@
     } catch { return false; }
   }
   function validateBriefing(briefing) {
-    const ids = ["reuters-markets", "reuters-economy", "bank-of-canada", "fred-indicators"];
     const stamp = U.parseTimestamp(briefing?.generated_at);
-    if (!briefing || briefing.schema_version !== 3 || briefing.kind !== "news_digest" ||
+    if (!briefing || briefing.schema_version !== 4 || briefing.kind !== "news_digest" ||
         briefing.language !== "fr" || briefing.timezone !== "America/Toronto" || !U.isDate(briefing.edition_date) ||
-        !Number.isFinite(stamp) || stamp > Date.now() + 300000 || !Array.isArray(briefing.sources) || briefing.sources.length !== ids.length) throw new Error("Briefing invalide");
+        !Number.isFinite(stamp) || stamp > Date.now() + 300000 || !Array.isArray(briefing.stories) ||
+        !briefing.stories.length || briefing.stories.length > 6 || !Array.isArray(briefing.fred_watch) ||
+        briefing.fred_watch.length < 3 || briefing.fred_watch.length > 4) throw new Error("Briefing invalide");
     if (new Intl.DateTimeFormat("en-CA", {timeZone: "America/Toronto"}).format(new Date(stamp)) !== briefing.edition_date) throw new Error("Date d’édition incohérente");
     const seen = new Set();
-    let words = 0;
-    for (const source of briefing.sources) {
-      if (!source || !ids.includes(source.id) || seen.has(source.id) || !newsURL(source.url) ||
-          typeof source.label !== "string" || !source.label.trim() || typeof source.summary !== "string" || !source.summary.trim() ||
-          !["available", "partial", "unavailable"].includes(source.status) || !Array.isArray(source.articles) ||
-          (source.status !== "unavailable" && source.articles.length === 0)) throw new Error("Source du briefing invalide");
-      seen.add(source.id); words += source.summary.trim().split(/\s+/u).length;
-      for (const article of source.articles) {
-        if (!article || !newsURL(article.url) || typeof article.title !== "string" || !article.title.trim() ||
-            !U.isDate(article.published_date) || article.published_date > briefing.edition_date) throw new Error("Publication invalide");
-      }
+    for (const story of briefing.stories) {
+      if (!story || !newsURL(story.source_url) || seen.has(story.source_url) ||
+          !["topic", "title", "summary", "impact", "source_label"].every(key => typeof story[key] === "string" && story[key].trim()) ||
+          !U.isDate(story.published_date) || story.published_date > briefing.edition_date ||
+          (Date.parse(briefing.edition_date) - Date.parse(story.published_date)) / 86400000 > 14) throw new Error("Publication invalide");
+      seen.add(story.source_url);
     }
-    if (words !== 500 || briefing.word_count !== words) throw new Error("Le briefing doit contenir 500 mots");
+    const seriesIds = new Set();
+    for (const item of briefing.fred_watch) {
+      if (!item || !/^[A-Z0-9]+$/.test(item.series_id) || seriesIds.has(item.series_id) ||
+          !["title", "explanation"].every(key => typeof item[key] === "string" && item[key].trim()) ||
+          !U.isDate(item.observation_date) || item.observation_date > briefing.edition_date ||
+          item.source_url !== "https://fred.stlouisfed.org/series/" + item.series_id) throw new Error("Graphique FRED invalide");
+      seriesIds.add(item.series_id);
+    }
     return briefing;
   }
   function newsLink(label, url) {
@@ -360,32 +405,40 @@
         $("#briefingDate").textContent = "Édition indisponible";
         $("#briefingParagraph").textContent = "Le briefing d’actualité n’a pas pu être chargé. Réessaie avec « Actualiser ».";
         $("#briefingNote").textContent = "Aucun résumé d’actualité vérifié n’est disponible dans ce navigateur.";
-        $("#briefingLinks").replaceChildren(); return;
+        $("#briefingLinks").replaceChildren(); $("#fredWatchList").replaceChildren(); return;
       }
     }
     const today = new Intl.DateTimeFormat("en-CA", {timeZone: "America/Toronto"}).format(new Date());
     const old = briefing.edition_date < today;
-    $("#briefingDate").textContent = (cached ? "Copie conservée · " : "") + "Édition du " + briefing.edition_date + " · " + briefing.word_count +
-      " mots · Publié le " + U.timestampLabel(briefing.generated_at) + (old ? " · nouvelle édition en attente" : "");
+    $("#briefingDate").textContent = (cached ? "Copie conservée · " : "") + "Édition du " + briefing.edition_date +
+      " · " + briefing.stories.length + " nouvelles · Publié le " + U.timestampLabel(briefing.generated_at) + (old ? " · nouvelle édition en attente" : "");
     $("#briefingDate").classList.toggle("warning", cached || old);
-    const fragment = document.createDocumentFragment(), links = document.createDocumentFragment();
-    for (const source of briefing.sources) {
-      const section = el("section", "news-section" + (source.status === "unavailable" ? " news-unavailable" : ""));
-      section.append(el("h3", "", source.label + (source.status === "unavailable" ? " · accès indisponible" : source.status === "partial" ? " · lecture partielle" : "")), el("p", "", source.summary));
-      const articles = el("ul", "news-links");
-      for (const article of source.articles) {
-        const li = el("li");
-        li.append(newsLink(article.title, article.url), el("span", "muted", " · " + article.published_date));
-        articles.append(li);
-      }
-      section.append(articles); fragment.append(section);
-      const li = el("li"); li.append(newsLink(source.label, source.url)); links.append(li);
+    const fragment = document.createDocumentFragment();
+    for (const story of briefing.stories) {
+      const section = el("section", "news-section");
+      section.append(el("span", "eyebrow", story.topic), el("h3", "", story.title), el("p", "", story.summary),
+        el("p", "news-impact", "Pour les marchés : " + story.impact));
+      const citation = el("p", "meta");
+      citation.append(newsLink(story.source_label + " ↗", story.source_url), el("span", "muted", " · publié le " + story.published_date));
+      section.append(citation); fragment.append(section);
     }
     $("#briefingParagraph").replaceChildren(fragment);
-    $("#briefingLinks").replaceChildren(links);
-    const unavailable = briefing.sources.filter(source => source.status === "unavailable").length;
+    const watch = document.createDocumentFragment();
+    for (const item of briefing.fred_watch) {
+      const row = el("li"), title = el("strong", "", item.title + " — ");
+      row.append(title, document.createTextNode(item.explanation + " (observation : " + item.observation_date + ") "));
+      const button = el("button", "text-link", "Voir le graphique dans SAVY ↗");
+      button.type = "button";
+      button.addEventListener("click", () => {
+        if (state.seriesById.has(item.series_id)) openDetails(item.series_id);
+        else window.open(item.source_url, "_blank", "noopener,noreferrer");
+      });
+      row.append(button); watch.append(row);
+    }
+    $("#fredWatchList").replaceChildren(watch);
+    $("#briefingLinks").replaceChildren();
     $("#briefingNote").textContent = (cached ? "Actualisation indisponible : dernière édition vérifiée conservée. " : "") +
-      (unavailable ? unavailable + " source(s) inaccessible(s), indiquée(s) ci-dessus. " : "") + (briefing.editorial_note || "");
+      (briefing.editorial_note || "");
   }
 
   function normalizeMarkets(payload) {
@@ -480,11 +533,12 @@
         $("#updated").classList.add("warning");
       }
     } finally {
-      await Promise.all([loadBriefing(), loadMarkets(), window.SavyPortfolio?.refresh()]);
+      await Promise.all([loadBriefing(), loadMarkets(), loadOdds(), window.SavyPortfolio?.refresh(), window.SavyLiveFX?.refresh()]);
       state.loading = false; $("#refreshButton").disabled = false; $("#refreshButton").textContent = "Actualiser";
     }
   }
   $("#refreshButton").addEventListener("click", loadDataset);
+  document.addEventListener("savy:fx", () => {if (state.dataset) renderKpis();});
   $("#themeToggle").addEventListener("click", () => { state.theme = state.theme === "dark" ? "light" : "dark"; applyTheme(); savePreferences(); });
   $("#searchInput").addEventListener("input", event => { state.search = event.target.value; if (state.dataset) renderCards(); });
   $("#sortSelect").value = state.sort;

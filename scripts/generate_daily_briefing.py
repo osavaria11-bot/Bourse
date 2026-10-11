@@ -24,7 +24,7 @@ ROOT = Path(__file__).resolve().parents[1]
 TIMEOUT_SECONDS = 20
 RETRY_ATTEMPTS = 3
 HISTORY_YEARS = 10
-BRIEFING_IDS = ["CPIAUCSL", "PCEPILFE", "UNRATE", "PAYEMS", "GDPC1", "DFF", "DGS10", "T10Y2Y", "VIXCLS", "DEXCAUS", "V39079"]
+BRIEFING_IDS = ["CPIAUCSL", "PCEPILFE", "UNRATE", "PAYEMS", "GDPC1", "DFEDTARL", "DFEDTARU", "DGS10", "T10Y2Y", "VIXCLS", "DEXCAUS", "V39079"]
 BANK_POLICY_URL = "https://www.bankofcanada.ca/core-functions/monetary-policy/key-interest-rate/"
 NEWS_SOURCES = [
     {"label": "Reuters — Marchés", "url": "https://www.reuters.com/markets/", "description": "Actions, taux, devises et matières premières."},

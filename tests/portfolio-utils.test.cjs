@@ -46,6 +46,27 @@ test("historical USD/CAD is applied on each valuation date, with no future quote
   assert.equal(P.observationAt(prices.series[0].history, "2026-10-20"), null);
   assert.deepEqual(P.observationAt(prices.series[0].history, "2026-10-04"), ["2026-10-02", 140]);
 });
+test("live FX updates current CAD valuations and gains while preserving historical returns", () => {
+  const prices = P.normalizePrices(dataset(), catalog);
+  const positions = P.normalizePositions([["SHOP", 2, "CAD", 100], ["CLS", 3, "USD", 100]], catalog);
+  const history = P.historyFor(positions, prices);
+  const live = {rate: 1.4, timestamp: new Date().toISOString(), closed: false};
+  const current = P.valuationAt(positions, prices, "2026-10-09", live);
+  assert.equal(current.total, 1240);
+  assert.equal(current.unrealized_cad, 620);
+  assert.equal(current.fx_timestamp, live.timestamp);
+  assert.deepEqual(P.historyFor(positions, prices), history);
+  assert.equal(P.period(history, "YTD").change, 725);
+  for (const invalid of [{...live, rate: 100}, {...live, timestamp: "invalid"},
+    {...live, timestamp: new Date(Date.now() + 3600000).toISOString()},
+    {...live, timestamp: new Date(Date.now() - 86400000).toISOString()}]) {
+    const fallback = P.valuationAt(positions, prices, "2026-10-09", invalid);
+    assert.equal(fallback.total, 1300);
+    assert.equal(fallback.fx_timestamp, null);
+  }
+  const weekend = {...live, closed: true, timestamp: new Date(Date.now() - 2 * 86400000).toISOString()};
+  assert.equal(P.valuationAt(positions, prices, "2026-10-09", weekend).total, 1240);
+});
 test("YTD compares against the prior year close; all requested periods have accurate baselines", () => {
   const prices = P.normalizePrices(dataset(), catalog);
   const history = P.historyFor(P.normalizePositions([["SHOP", 2], ["CLS", 3]], catalog), prices);

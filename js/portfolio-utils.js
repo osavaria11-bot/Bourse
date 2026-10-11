@@ -52,9 +52,12 @@
     if (index < 0 || Date.parse(day) - Date.parse(history[index][0]) > 7 * 86400000) return null;
     return history[index];
   }
-  function valuationAt(positions, data, day) {
+  function valuationAt(positions, data, day, liveFx = null) {
     const prices = new Map(data.series.map(p => [p.id, p])), fxSeries = prices.get("USDCAD");
-    const fx = fxSeries ? observationAt(fxSeries.history, day) : null;
+    const quoteTime = U.parseTimestamp(liveFx?.timestamp), quoteAge = Date.now() - quoteTime;
+    const useLive = liveFx && U.validNumber(liveFx.rate) && liveFx.rate > .5 && liveFx.rate < 3 &&
+      Number.isFinite(quoteTime) && quoteAge >= -300000 && quoteAge <= (liveFx.closed ? 4 * 86400000 : 600000);
+    const fx = useLive ? [liveFx.timestamp.slice(0, 10), liveFx.rate] : fxSeries ? observationAt(fxSeries.history, day) : null;
     let total = 0, cad = 0, usd = 0, cost = 0, unrealized = 0, costsAvailable = 0;
     const missing = [], rows = positions.map(position => {
       const security = prices.get(position.ticker), quote = security ? observationAt(security.history, day) : null;
@@ -74,7 +77,8 @@
         source_url: security?.source_url, decimals: security?.decimals || 2};
     });
     const costComplete = positions.length > 0 && costsAvailable === positions.length;
-    return {date: day, total, cad, usd, fx: fx?.[1] ?? null, fx_date: fx?.[0] || null, rows, missing, complete: positions.length > 0 && missing.length === 0,
+    return {date: day, total, cad, usd, fx: fx?.[1] ?? null, fx_date: fx?.[0] || null, fx_timestamp: useLive ? liveFx.timestamp : null,
+      rows, missing, complete: positions.length > 0 && missing.length === 0,
       cost_converted: costComplete ? cost : null, unrealized_cad: costComplete ? unrealized : null,
       unrealized_percent: costComplete && cost > 0 ? unrealized / cost * 100 : null, costs_available: costsAvailable};
   }

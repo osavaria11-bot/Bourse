@@ -198,7 +198,10 @@ class ConfigurationTests(unittest.TestCase):
         config = generator.read_json(generator.ROOT / "data/series.json")
         ids = [item["id"] for item in config["series"]]
         self.assertEqual(len(ids), len(set(ids)))
-        self.assertEqual(len(ids), 33)
+        self.assertEqual(len(ids), 34)
+        self.assertIn("DFEDTARL", ids)
+        self.assertIn("DFEDTARU", ids)
+        self.assertNotIn("DFF", ids)
         self.assertEqual(config["series"][ids.index("V39079")]["provider"], "bank_of_canada")
         self.assertEqual(ids[ids.index("DEXCAUS") + 1], "V39079")
         for item in config["series"]:

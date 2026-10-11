@@ -1,138 +1,77 @@
 {
-  "schema_version": 3,
+  "schema_version": 4,
   "kind": "news_digest",
   "language": "fr",
   "timezone": "America/Toronto",
   "edition_date": "2026-10-11",
-  "generated_at": "2026-10-11T11:08:50Z",
-  "word_count": 500,
-  "editorial_note": "500 mots par séparation des espaces blancs dans les quatre résumés, hors titres, liens, note et graphiques. Développements des 8 au 11 octobre, avec périodes statistiques explicites. Les lectures sont des interprétations, les anticipations ne sont pas des faits réalisés. Les 32 séries FRED et le taux canadien configurés ont été examinés. Les observations du tableau ont été collectées le 10 octobre; leurs périodes propres sont conservées. CPI et PCE sont déjà des variations annuelles calculées sur les indices désaisonnalisés, PAYEMS des créations mensuelles en milliers. Les dates des liens FRED correspondent à leurs mises à jour vérifiées. Les quatre priorités restent inchangées faute de nouvelle observation.",
-  "sources": [
+  "generated_at": "2026-10-11T14:23:18.774913+00:00",
+  "editorial_note": "Sélection selon la nouveauté et l’effet possible sur les taux, les bénéfices et les marchés. Les chiffres anticipés ne sont pas des publications réalisées.",
+  "stories": [
     {
-      "id": "reuters-markets",
-      "label": "Reuters — Marchés",
-      "url": "https://www.reuters.com/markets/",
-      "status": "available",
-      "summary": "À la clôture du 9 octobre, le S&P 500 gagne 0,59 %, le Nasdaq 0,64 % et le Dow Jones 0,83 %. Les trois indices progressent aussi sur la semaine, contrairement au Russell 2000 : le rebond reste inégal. Le Brent termine autour de 104 dollars américains le baril, en hausse de 0,4 %, malgré les annonces visant à accroître l’approvisionnement en diesel. Le rendement américain à dix ans reste élevé, mais recule de 3,5 points de base sur la semaine. Lecture : actions et obligations envoient des signaux divergents; des coûts énergétiques persistants peuvent comprimer les marges.",
-      "articles": [
-        {
-          "title": "Wall Street : gains hebdomadaires, rebond inégal",
-          "url": "https://www.reuters.com/business/wall-st-futures-gain-oil-slips-telecoms-pressured-by-spacex-spectrum-deal-2026-10-09/",
-          "published_date": "2026-10-09"
-        },
-        {
-          "title": "Actions, taux et pétrole à la clôture du vendredi",
-          "url": "https://www.reuters.com/world/china/global-markets-wrapup-1-2026-10-09/",
-          "published_date": "2026-10-09"
-        }
-      ]
+      "topic": "Risque mondial",
+      "title": "Énergie et dette : la Banque mondiale prépare une aide de crise",
+      "summary": "La Banque mondiale discute avec 30 à 40 pays d’une aide pour absorber la hausse du diesel et des engrais liée au conflit au Moyen-Orient. Elle a déjà ouvert 25 milliards de dollars de fonds de crise, mais la demande initiale était faible; son président s’attend à davantage de demandes si les pressions persistent. Les pays en développement doivent 400 milliards de dollars à leurs créanciers externes en 2026, dont environ un tiers en intérêts.",
+      "impact": "Le risque est une pression simultanée sur l’inflation et le coût du crédit, surtout pour les emprunteurs émergents.",
+      "source_label": "Reuters",
+      "source_url": "https://www.reuters.com/business/finance/world-bank-talks-with-dozens-countries-about-crisis-aid-banga-says-2026-10-11/",
+      "published_date": "2026-10-11"
     },
     {
-      "id": "reuters-economy",
-      "label": "Reuters — Économie",
-      "url": "https://www.reuters.com/markets/econ-world/",
-      "status": "available",
-      "summary": "Publié le 9 octobre, l’emploi canadien de septembre recule de 68 300 postes, après 41 700 pertes en août; le chômage passe de 6,4 % à 6,5 %. Aux États-Unis, Michigan annonce le même jour une confiance préliminaire d’octobre de 46,3 points, contre 48,1 en septembre. Les anticipations d’inflation à un an montent à 4,7 %, sans être une inflation réalisée. Le 11 octobre, Reuters souligne les risques conjoints du pétrole, des engrais et de l’endettement mondial. La Banque mondiale ne réduit pas encore sa prévision globale : les risques croissants ne sont pas une contraction déjà constatée.",
-      "articles": [
-        {
-          "title": "Canada : deuxième mois de pertes d’emplois",
-          "url": "https://www.reuters.com/world/americas/canadas-employment-surprisingly-shrinks-september-jobless-rate-inches-up-2026-10-09/",
-          "published_date": "2026-10-09"
-        },
-        {
-          "title": "Michigan : confiance préliminaire d’octobre et anticipations",
-          "url": "https://www.reuters.com/business/us-consumer-sentiment-deteriorates-further-october-2026-10-09/",
-          "published_date": "2026-10-09"
-        },
-        {
-          "title": "Énergie et dette : risques pour la croissance mondiale",
-          "url": "https://www.reuters.com/world/china/middle-east-war-high-debt-levels-dominate-imf-world-bank-meetings-bangkok-2026-10-11/",
-          "published_date": "2026-10-11"
-        }
-      ]
+      "topic": "États-Unis · semaine à surveiller",
+      "title": "CPI et résultats bancaires pourraient déplacer les taux et les actions",
+      "summary": "Reuters relève que le CPI américain de septembre sera publié mercredi : les économistes interrogés attendent 3,7 % sur un an pour l’indice global et 2,5 % hors alimentation et énergie. Ce sont des prévisions, pas des résultats. JPMorgan, Goldman Sachs et d’autres grandes banques présenteront aussi leurs résultats; les bénéfices de l’ensemble du S&P 500 sont attendus en hausse de plus de 30 % au troisième trimestre selon LSEG IBES.",
+      "impact": "Un CPI plus chaud pourrait relancer les attentes de hausse de taux; les banques donneront des indices sur le crédit et la consommation.",
+      "source_label": "Reuters",
+      "source_url": "https://www.reuters.com/business/wall-st-week-ahead-bank-earnings-cpi-headline-busy-markets-week-sp-500-hovers-2026-10-09/",
+      "published_date": "2026-10-09"
     },
     {
-      "id": "bank-of-canada",
-      "label": "Banque du Canada",
-      "url": "https://www.bankofcanada.ca/rates/daily-digest/",
-      "status": "available",
-      "summary": "Le sommaire du 9 octobre indique 1,4271 dollar canadien pour un dollar américain, contre 1,4240 le 8. La cible du financement à un jour, datée du 8 octobre, demeure à 2,25 %. En août, l’inflation annuelle canadienne reste à 3,0 %, tandis que CPI-trim et CPI-median affichent 1,9 % et 2,0 %. L’analyse publiée le 8 octobre explique que vieillissement et immigration réduite ralentissent la main-d’œuvre. Lecture : une moindre croissance démographique freine la demande, mais aussi la capacité de produire; elle ne garantit donc pas une baisse générale des pressions inflationnistes.",
-      "articles": [
-        {
-          "title": "Sommaire quotidien : change, taux et inflation",
-          "url": "https://www.bankofcanada.ca/rates/daily-digest/",
-          "published_date": "2026-10-09"
-        },
-        {
-          "title": "Démographie : demande, main-d’œuvre et inflation",
-          "url": "https://www.bankofcanada.ca/2026/10/demographic-changes-are-reshaping-the-canadian-economy/",
-          "published_date": "2026-10-08"
-        }
-      ]
+      "topic": "Canada · emploi",
+      "title": "Le marché du travail canadien recule encore en septembre",
+      "summary": "Le Canada a perdu 68 300 emplois en septembre après un recul de 41 700 en août. Le chômage est passé de 6,4 % à 6,5 %, et le taux de participation est tombé à 64,8 %. La faiblesse touche particulièrement les jeunes et le secteur public. Selon Reuters, cette publication a réduit les attentes d’une hausse du taux de la Banque du Canada dès octobre.",
+      "impact": "La faiblesse de l’emploi complique une hausse de taux, même si l’énergie entretient le risque inflationniste.",
+      "source_label": "Reuters",
+      "source_url": "https://www.reuters.com/world/americas/canadas-employment-surprisingly-shrinks-september-jobless-rate-inches-up-2026-10-09/",
+      "published_date": "2026-10-09"
     },
     {
-      "id": "fred-indicators",
-      "label": "FRED — Tes indicateurs à surveiller",
-      "url": "https://fred.stlouisfed.org/",
-      "status": "available",
-      "summary": "Les priorités persistent, sans nouvelle observation depuis l’édition précédente. Premièrement, emploi : créations non agricoles (PAYEMS) de 29 milliers en septembre, contre 133 en août; chômage (UNRATE) de 4,2 %, contre 4,1 %. Les offres JOLTS (JTSJOL) tombent à 7,079 millions en août, contre 7,335 en juillet. Cette convergence fragilise les revenus, sans annoncer une récession certaine. Deuxièmement, financement : le Trésor américain à dix ans (DGS10) atteint 5,22 % le 8 octobre, contre 5,31 % le 5; l’amélioration laisse le capital coûteux. BAMLH0A0HYM2, écart du haut rendement, monte à 3,15 points de pourcentage le 8, contre 2,73 le 23 septembre. Les indices NFCI et STLFSI4 atteignent −0,494 et −0,4681 la semaine du 2 octobre, contre −0,510 et −0,8091 le 25 septembre. Ils remontent mais restent sous zéro : conditions souples et stress inférieur à sa moyenne. Le NFCI remonte depuis cinq semaines; surveille la persistance de ce resserrement. Troisièmement, inflation annuelle : PCE sous-jacent (PCEPILFE) vaut 3,01 % en août, contre 2,98 % en juillet; CPI (CPIAUCSL), 3,35 % contre 3,30 %. Nuance favorable : CPI sous-jacent (CPILFESL) ralentit de 2,47 % à 2,45 %. Quatrièmement, confiance : Michigan (UMCSENT) descend à 51,7 points en août, contre 55,2 en juillet. FRED retarde cette série d’un mois; elle diffère de l’enquête d’octobre.",
-      "articles": [
-        {
-          "title": "Créations d’emplois non agricoles",
-          "url": "https://fred.stlouisfed.org/series/PAYEMS",
-          "published_date": "2026-10-02"
-        },
-        {
-          "title": "Taux de chômage américain",
-          "url": "https://fred.stlouisfed.org/series/UNRATE",
-          "published_date": "2026-10-02"
-        },
-        {
-          "title": "Offres d’emploi JOLTS",
-          "url": "https://fred.stlouisfed.org/series/JTSJOL",
-          "published_date": "2026-09-29"
-        },
-        {
-          "title": "Rendement du Trésor américain à dix ans",
-          "url": "https://fred.stlouisfed.org/series/DGS10",
-          "published_date": "2026-10-09"
-        },
-        {
-          "title": "Écart de crédit des obligations à haut rendement",
-          "url": "https://fred.stlouisfed.org/series/BAMLH0A0HYM2",
-          "published_date": "2026-10-09"
-        },
-        {
-          "title": "Conditions financières : resserrement relatif",
-          "url": "https://fred.stlouisfed.org/series/NFCI",
-          "published_date": "2026-10-07"
-        },
-        {
-          "title": "Stress financier : comparaison à la moyenne",
-          "url": "https://fred.stlouisfed.org/series/STLFSI4",
-          "published_date": "2026-10-07"
-        },
-        {
-          "title": "Inflation PCE sous-jacente",
-          "url": "https://fred.stlouisfed.org/series/PCEPILFE",
-          "published_date": "2026-09-30"
-        },
-        {
-          "title": "Inflation CPI globale",
-          "url": "https://fred.stlouisfed.org/series/CPIAUCSL",
-          "published_date": "2026-09-11"
-        },
-        {
-          "title": "Inflation CPI sous-jacente",
-          "url": "https://fred.stlouisfed.org/series/CPILFESL",
-          "published_date": "2026-09-11"
-        },
-        {
-          "title": "Confiance Michigan : diffusion retardée",
-          "url": "https://fred.stlouisfed.org/series/UMCSENT",
-          "published_date": "2026-09-25"
-        }
-      ]
+      "topic": "États-Unis · ménages",
+      "title": "Confiance Michigan à 46,3 avant les nouvelles données d’inflation",
+      "summary": "La mesure préliminaire de la confiance des consommateurs américains est descendue de 48,1 en septembre à 46,3 en octobre. Les attentes d’inflation à un an ont augmenté de 4,6 % à 4,7 %. La faiblesse de la confiance ne signifie pas à elle seule une baisse immédiate des dépenses : Reuters souligne que les ménages à revenu élevé les soutiennent encore.",
+      "impact": "Le prochain CPI américain aidera à départager le risque d’inflation persistante et celui d’un ralentissement de la demande.",
+      "source_label": "Reuters",
+      "source_url": "https://www.reuters.com/business/us-consumer-sentiment-deteriorates-further-october-2026-10-09/",
+      "published_date": "2026-10-09"
+    }
+  ],
+  "fred_watch": [
+    {
+      "series_id": "CPIAUCSL",
+      "title": "Inflation CPI américaine",
+      "explanation": "Le dernier taux sur 12 mois est de 3,35 % en août, légèrement au-dessus des 3,30 % de juillet. Le chiffre de septembre est encore à venir : compare surtout l'écart entre la prévision et la publication.",
+      "observation_date": "2026-08-01",
+      "source_url": "https://fred.stlouisfed.org/series/CPIAUCSL"
+    },
+    {
+      "series_id": "PCEPILFE",
+      "title": "PCE sous-jacent",
+      "explanation": "À 3,01 % sur 12 mois en août, cette mesure est restée près du niveau de juillet (2,98 %). Elle aide à juger si le choc énergétique se diffuse à l'inflation de fond.",
+      "observation_date": "2026-08-01",
+      "source_url": "https://fred.stlouisfed.org/series/PCEPILFE"
+    },
+    {
+      "series_id": "PAYEMS",
+      "title": "Créations d'emplois américaines",
+      "explanation": "La variation mensuelle des emplois est passée de 133 000 en août à 29 000 en septembre. Ce ralentissement peut tempérer la pression pour relever les taux si les prochaines données le confirment.",
+      "observation_date": "2026-09-01",
+      "source_url": "https://fred.stlouisfed.org/series/PAYEMS"
+    },
+    {
+      "series_id": "DGS10",
+      "title": "Rendement du Trésor américain à 10 ans",
+      "explanation": "La dernière observation disponible dans le tableau est de 5,22 % au 8 octobre. Des rendements élevés augmentent le taux d'actualisation des actions et le coût de financement; surveille la prochaine clôture publiée.",
+      "observation_date": "2026-10-08",
+      "source_url": "https://fred.stlouisfed.org/series/DGS10"
     }
   ]
 }

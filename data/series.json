@@ -26,15 +26,27 @@
       "change_unit": "pt"
     },
     {
-      "id": "DFF",
-      "title": "Taux effectif de la Fed",
+      "id": "DFEDTARU",
+      "title": "Taux directeur américain · borne supérieure",
       "category": "Taux",
       "frequency": "daily",
       "unit": "%",
       "decimals": 2,
       "transform": "none",
       "max_age_days": 10,
-      "description": "Taux effectif des transactions interbancaires au jour le jour, distinct de la fourchette cible de la Fed. Il renseigne sur le coût de financement à court terme.",
+      "description": "Borne supérieure de la fourchette cible des fonds fédéraux décidée par la Fed. La borne inférieure est présentée dans la série voisine. Il s’agit d’une décision de politique monétaire, non du taux effectif des transactions.",
+      "change_unit": "pt"
+    },
+    {
+      "id": "DFEDTARL",
+      "title": "Taux directeur américain · borne inférieure",
+      "category": "Taux",
+      "frequency": "daily",
+      "unit": "%",
+      "decimals": 2,
+      "transform": "none",
+      "max_age_days": 10,
+      "description": "Borne inférieure de la fourchette cible des fonds fédéraux décidée par la Fed. Avec la borne supérieure, elle donne la fourchette officielle en vigueur.",
       "change_unit": "pt"
     },
     {

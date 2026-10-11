@@ -21,12 +21,13 @@ async function main() {
     const errors = []; page.on("pageerror", error => errors.push(error.message));
     await page.route("https://**", route => route.abort());
     await page.goto("http://127.0.0.1:" + server.address().port);
-    await page.waitForFunction(() => document.querySelectorAll("#marketGrid svg").length === 5 && document.querySelectorAll(".news-section").length === 4);
-    const words = await page.locator(".news-section p").evaluateAll(nodes => nodes.reduce((total, node) => total + node.textContent.trim().split(/\s+/u).length, 0));
-    assert.equal(words, 500);
-    assert.match(await page.locator("#briefingParagraph").innerText(), /FRED — Tes indicateurs à surveiller/);
+    await page.waitForFunction(() => document.querySelectorAll("#marketGrid svg").length === 5 && document.querySelectorAll(".news-section").length >= 1);
+    const headlines = await page.locator(".news-section h3").count();
+    assert.ok(headlines <= 6);
+    assert.equal(await page.locator(".news-section .meta a").count(), headlines);
+    assert.equal(await page.locator(".odds-card").count(), 2);
     assert.equal(await page.locator("#marketGrid path").evaluateAll(nodes => nodes.some(node => /NaN|Infinity/.test(node.getAttribute("d")))), false);
-    console.log("Published data verified:", words, "words, 4 sources, 5 actual market histories.");
+    console.log("Published data verified:", headlines, "sourced news stories, 2 policy odds cards, 5 actual market histories.");
     if (process.env.SCREENSHOT_LOGS) {
       console.log("SCREENSHOT_MARKETS_DESKTOP " + (await page.locator(".market-section").screenshot()).toString("base64"));
       await page.setViewportSize({width: 375, height: 1000});
