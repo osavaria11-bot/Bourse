@@ -9,8 +9,9 @@
     { key: "1Y", label: "1 an" }, { key: "5Y", label: "5 ans" }, { key: "10Y", label: "10 ans" },
   ];
   const MARKET_RANGES = [
+    { key: "1D", label: "1 jour" },
     { key: "3D", label: "3 jours" }, { key: "1W", label: "1 semaine" },
-    ...RANGES,
+    ...RANGES.slice(0, 2), { key: "YTD", label: "YTD" }, ...RANGES.slice(2),
   ];
   const DAY = 86400000;
   const validNumber = value => typeof value === "number" && Number.isFinite(value);
@@ -129,13 +130,13 @@
     const last = history.at(-1);
     let baseline, requestedStart, incomplete = !validNumber(point.value) || point.value <= 0 ||
       last[0] !== anchor || last[1] !== point.value;
-    if (range === "1W" || range === "3D") {
-      const sessions = range === "1W" ? 5 : 3;
+    const sessions = {"1D": 1, "3D": 3, "1W": 5}[range];
+    if (sessions) {
       baseline = history.at(-sessions - 1);
       requestedStart = baseline?.[0];
       incomplete ||= !baseline;
     } else {
-      requestedStart = rangeStart(anchor, range);
+      requestedStart = range === "YTD" ? (Number(anchor.slice(0, 4)) - 1) + "-12-31" : rangeStart(anchor, range);
       baseline = history.filter(row => row[0] <= requestedStart).at(-1);
       incomplete ||= !baseline || Date.parse(requestedStart) - Date.parse(baseline[0]) > 7 * DAY;
     }

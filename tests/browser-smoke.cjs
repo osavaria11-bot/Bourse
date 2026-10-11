@@ -146,13 +146,14 @@ async function run() {
     assert.match(await page.locator('.market-card[data-id="EEM"] .market-value').innerText(), /\$ US/);
     assert.match(await page.locator('.market-card[data-id="EEM"] h4').innerText(), /ETF EEM/);
     const marketRange = page.getByRole("group", {name: "Période des indices boursiers"});
-    assert.equal(await marketRange.getByRole("button").count(), 7);
+    assert.equal(await marketRange.getByRole("button").count(), 9);
     const history = markets.series[0].history;
     const oneMonth = new Date(markets.series[0].date + "T00:00:00Z");
     const anchorDay = oneMonth.getUTCDate(); oneMonth.setUTCDate(1); oneMonth.setUTCMonth(oneMonth.getUTCMonth() - 1);
     const lastDay = new Date(Date.UTC(oneMonth.getUTCFullYear(), oneMonth.getUTCMonth() + 1, 0)).getUTCDate();
     oneMonth.setUTCDate(Math.min(anchorDay, lastDay));
     for (const [label, baseline] of [
+      ["1 jour", history.at(-2)],
       ["3 jours", history.at(-4)], ["1 semaine", history.at(-6)],
       ["1 mois", history.filter(row => row[0] <= oneMonth.toISOString().slice(0, 10)).at(-1)],
     ]) {
@@ -173,6 +174,9 @@ async function run() {
     await marketChart.focus(); await marketChart.press("ArrowLeft");
     assert.match(await page.locator("#marketGrid .chart-tooltip").first().innerText(), /points/);
     assert.match(await page.locator("#marketGrid .market-return").first().innerText(), /Rendement indisponible/);
+    await marketRange.getByRole("button", {name: "YTD", exact: true}).click();
+    assert.equal(await marketRange.getByRole("button", {name: "YTD", exact: true}).getAttribute("aria-pressed"), "true");
+    assert.match(await page.locator("#marketGrid .market-return").first().innerText(), / · YTD$/);
     assert.equal(await page.locator("#marketGrid path").evaluateAll(nodes => nodes.some(node => /NaN|Infinity/.test(node.getAttribute("d")))), false);
     await page.locator(".indicator-card").first().scrollIntoViewIfNeeded();
     await page.waitForSelector("#grid svg");

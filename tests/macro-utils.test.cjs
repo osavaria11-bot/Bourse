@@ -22,13 +22,14 @@ test("Ranges are anchored to the observation date and retain missing observation
   assert.deepEqual(U.visibleHistory(sample(), "1M"), [["2026-09-30", null], ["2026-10-09", -0.4]]);
 });
 const marketSample = () => ({date: "2026-10-09", value: 100, history: [
-  ["2016-10-07", 10], ["2021-10-08", 20], ["2025-10-09", 40], ["2026-07-09", 50], ["2026-09-09", 80],
+  ["2016-10-07", 10], ["2021-10-08", 20], ["2025-10-09", 40], ["2025-12-31", 50], ["2026-07-09", 50], ["2026-09-09", 80],
   ["2026-10-02", 90], ["2026-10-05", 92], ["2026-10-06", 94], ["2026-10-07", 96], ["2026-10-08", 98], ["2026-10-09", 100],
 ]});
 test("Every index timeframe returns its full period, including the close before a weekend boundary", () => {
   const expected = [
+    ["1D", "2026-10-08", 100 / 98 * 100 - 100],
     ["3D", "2026-10-06", 100 / 94 * 100 - 100], ["1W", "2026-10-02", 100 / 90 * 100 - 100],
-    ["1M", "2026-09-09", 25], ["3M", "2026-07-09", 100], ["1Y", "2025-10-09", 150],
+    ["1M", "2026-09-09", 25], ["3M", "2026-07-09", 100], ["YTD", "2025-12-31", 100], ["1Y", "2025-10-09", 150],
     ["5Y", "2021-10-08", 400], ["10Y", "2016-10-07", 900],
   ];
   assert.deepEqual(U.MARKET_RANGES.map(item => item.key), expected.map(row => row[0]));
@@ -51,9 +52,17 @@ test("Index returns preserve losses and use completed sessions instead of calend
   assert.equal(period.change, -20);
   assert.ok(Math.abs(period.percent + 10) < 1e-10);
 });
+test("One-day and YTD returns cross the New Year holiday using the previous year's last close", () => {
+  const point = {date: "2023-01-03", value: 105, history: [["2022-12-30", 100], ["2023-01-03", 105]]};
+  for (const range of ["1D", "YTD"]) {
+    const period = U.marketPeriod(point, range);
+    assert.equal(period.start, "2022-12-30");
+    assert.ok(Math.abs(period.percent - 5) < 1e-10);
+  }
+});
 test("Missing index baselines do not silently shorten the selected return", () => {
   const short = {...marketSample(), history: marketSample().history.slice(-3)};
-  for (const range of ["3D", "1W", "10Y"]) {
+  for (const range of ["3D", "1W", "YTD", "10Y"]) {
     assert.equal(U.marketPeriod(short, range).percent, null);
   }
   for (const value of [null, 0, -10]) {

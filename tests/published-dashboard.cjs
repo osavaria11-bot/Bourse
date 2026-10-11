@@ -29,7 +29,7 @@ async function main() {
     assert.equal(await page.locator(".news-section .meta a").count(), headlines);
     assert.equal(await page.locator(".odds-card").count(), 2);
     const marketRanges = page.getByRole("group", {name: "Période des indices boursiers"});
-    assert.equal(await marketRanges.getByRole("button").count(), 7);
+    assert.equal(await marketRanges.getByRole("button").count(), 9);
     for (const range of U.MARKET_RANGES) {
       await marketRanges.getByRole("button", {name: range.label, exact: true}).click();
       assert.equal(await marketRanges.getByRole("button", {name: range.label, exact: true}).getAttribute("aria-pressed"), "true");
@@ -46,14 +46,14 @@ async function main() {
     await page.locator("#marketGrid svg").first().focus();
     assert.match(await page.locator("#marketGrid .chart-tooltip").first().innerText(), /% depuis le/);
     assert.equal(await page.locator("#marketGrid path").evaluateAll(nodes => nodes.some(node => /NaN|Infinity/.test(node.getAttribute("d")))), false);
-    console.log("Published data verified:", headlines, "sourced news stories, 2 policy odds cards, 5 actual market histories and all 7 period returns.");
+    console.log("Published data verified:", headlines, "sourced news stories, 2 policy odds cards, 5 actual market histories and all 9 period returns.");
     if (process.env.SCREENSHOT_LOGS) {
       console.log("SCREENSHOT_MARKETS_DESKTOP " + (await page.locator(".market-section").screenshot()).toString("base64"));
     }
     await page.setViewportSize({width: 375, height: 1000});
     await page.locator("#marketTitle").scrollIntoViewIfNeeded();
-    await marketRanges.getByRole("button", {name: "3 jours", exact: true}).click();
-    assert.equal(await marketRanges.getByRole("button", {name: "3 jours", exact: true}).getAttribute("aria-pressed"), "true");
+    await marketRanges.getByRole("button", {name: "1 jour", exact: true}).click();
+    assert.equal(await marketRanges.getByRole("button", {name: "1 jour", exact: true}).getAttribute("aria-pressed"), "true");
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
     if (process.env.SCREENSHOT_LOGS) console.log("SCREENSHOT_MARKETS_MOBILE " + (await page.screenshot()).toString("base64"));
     assert.deepEqual(errors, []);

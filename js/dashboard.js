@@ -276,7 +276,7 @@
       const tickTime = firstTime + fraction * (lastTime - firstTime);
       const date = new Date(tickTime);
       const label = new Intl.DateTimeFormat("fr-CA", { timeZone: "UTC",
-        ...(range.endsWith("M") || range === "1W" || range === "3D" ? { month: "short", day: "numeric" } : range === "1Y" ? { month: "short", year: "2-digit" } : { year: "numeric" }),
+        ...(range.endsWith("M") || ["1D", "3D", "1W"].includes(range) ? { month: "short", day: "numeric" } : ["1Y", "YTD"].includes(range) ? { month: "short", year: "2-digit" } : { year: "numeric" }),
       }).format(date);
       svg.append(svgEl("text", { x: left + fraction * plotWidth, y: height - 8,
         "text-anchor": tickCount === 1 ? "middle" : i === 0 ? "start" : i === tickCount - 1 ? "end" : "middle", class: "chart-axis" }, label));
