@@ -93,13 +93,11 @@ async function run() {
     await page.goto(url); await waitCount(page, indicatorCount);
     assert.deepEqual(await page.locator("#kpis .kpi").evaluateAll(nodes => nodes.map(node => node.dataset.id)),
       ["VIXCLS", "DFEDTARU", "CPIAUCSL", "DGS10", "DEXCAUS", "V39079"]);
-    try {
-      await page.waitForFunction(() => document.querySelector('#kpis .kpi[data-id="DEXCAUS"] .kpi-value').textContent.includes("1,4265"), undefined, {timeout: 5000});
-    } catch (error) {
-      console.error("FX test state:", await page.evaluate(() => ({quote: window.SavyLiveFX?.current(),
-        value: document.querySelector('#kpis .kpi[data-id="DEXCAUS"] .kpi-value')?.textContent})), errors);
-      throw error;
-    }
+    await page.waitForFunction(() => {
+      const quote = window.SavyLiveFX?.current();
+      const value = document.querySelector('#kpis .kpi[data-id="DEXCAUS"] .kpi-value')?.textContent;
+      return quote && value === new Intl.NumberFormat("fr-CA", {minimumFractionDigits: 4, maximumFractionDigits: 4}).format(quote.rate);
+    });
     assert.match(await page.locator('#kpis .kpi[data-id="DEXCAUS"]').innerText(), /biquote/);
     assert.match(await page.locator('#kpis .kpi[data-id="DFEDTARU"] .kpi-value').innerText(), /–.*%/);
     assert.equal(await page.locator(".odds-card").count(), 2);
