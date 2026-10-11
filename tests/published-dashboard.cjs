@@ -23,7 +23,10 @@ async function main() {
     const errors = []; page.on("pageerror", error => errors.push(error.message));
     await page.route("https://**", route => route.abort());
     await page.goto("http://127.0.0.1:" + server.address().port);
-    await page.waitForFunction(() => document.querySelectorAll("#marketGrid svg").length === 5 && document.querySelectorAll(".news-section").length >= 1);
+    await page.waitForFunction(() => document.querySelectorAll("#marketGrid svg").length === 6 && document.querySelectorAll(".news-section").length >= 1);
+    const feqtCard = page.locator('.market-card[data-id="FEQT"]');
+    assert.match(await feqtCard.locator("h4").innerText(), /FEQT.*Fidelity/);
+    assert.match(await feqtCard.locator(".market-value").innerText(), /\$ CA/);
     const headlines = await page.locator(".news-section h3").count();
     assert.ok(headlines <= 6);
     assert.equal(await page.locator(".news-section .meta a").count(), headlines);
@@ -35,9 +38,10 @@ async function main() {
       assert.equal(await marketRanges.getByRole("button", {name: range.label, exact: true}).getAttribute("aria-pressed"), "true");
       for (const point of markets.series) {
         const period = U.marketPeriod(point, range.key);
-        assert.equal(period.incomplete, false, point.id + " " + range.key + " must have its full starting close");
+        const insufficient = point.id === "FEQT" && ["5Y", "10Y"].includes(range.key) && point.history[0][0] > U.rangeStart(point.date, range.key);
+        assert.equal(period.incomplete, insufficient, point.id + " " + range.key + " must accurately describe its available history");
         const card = page.locator('.market-card[data-id="' + point.id + '"]');
-        const expected = (period.percent > 0 ? "+" : "") + U.formatNumber(period.percent, 2) + " % · " + range.label;
+        const expected = insufficient ? "Rendement indisponible · " + range.label : (period.percent > 0 ? "+" : "") + U.formatNumber(period.percent, 2) + " % · " + range.label;
         assert.equal(await card.locator(".market-return").innerText(), expected, point.id + " " + range.key);
         assert.match(await card.locator(".market-period").innerText(), new RegExp("Du " + period.start + " au " + period.end));
       }
@@ -46,7 +50,7 @@ async function main() {
     await page.locator("#marketGrid svg").first().focus();
     assert.match(await page.locator("#marketGrid .chart-tooltip").first().innerText(), /% depuis le/);
     assert.equal(await page.locator("#marketGrid path").evaluateAll(nodes => nodes.some(node => /NaN|Infinity/.test(node.getAttribute("d")))), false);
-    console.log("Published data verified:", headlines, "sourced news stories, 2 policy odds cards, 5 actual market histories and all 9 period returns.");
+    console.log("Published data verified:", headlines, "sourced news stories, 2 policy odds cards, 6 actual market histories and all 9 period selections.");
     if (process.env.SCREENSHOT_LOGS) {
       console.log("SCREENSHOT_MARKETS_DESKTOP " + (await page.locator(".market-section").screenshot()).toString("base64"));
     }

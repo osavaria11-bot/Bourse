@@ -31,7 +31,9 @@ const dataset = { schema_version: 2, generated_at: now.toISOString(), last_succe
   update_status: "fresh_data", data_provider: "SYNTHETIC TEST FIXTURE", series };
 const markets = { ...dataset, kind: "market_indices", series: [
   ["SPX", "^GSPC"], ["IXIC", "^IXIC"], ["TSX", "^GSPTSE"], ["STOXX600", "^STOXX"], ["EEM", "EEM"],
-].map(([id, quote_symbol]) => ({...series[0], id, quote_symbol, title: "Synthetic market " + id, frequency: "daily", unit: id === "EEM" ? "$ US" : "points"})) };
+  ["FEQT", "FEQT.NE"],
+].map(([id, quote_symbol]) => ({...series[0], id, quote_symbol, title: "Synthetic market " + id, frequency: "daily",
+  unit: id === "EEM" ? "$ US" : id === "FEQT" ? "$ CA" : "points", ...(id === "FEQT" ? {currency: "CAD"} : {})})) };
 const newsTime = new Date(now.getTime() - 86400000);
 const edition = new Intl.DateTimeFormat("en-CA", {timeZone: "America/Toronto"}).format(newsTime);
 const briefing = {schema_version: 4, kind: "news_digest", language: "fr", timezone: "America/Toronto",
@@ -53,7 +55,7 @@ const server = http.createServer((request, response) => {
   const pathname = new URL(request.url, "http://localhost").pathname;
   if (pathname === "/data/market-indices.json") {
     response.writeHead(failMarkets ? 503 : 200, {"Content-Type": "application/json"});
-    response.end(failMarkets ? "{}" : JSON.stringify(invalidMarkets ? {...markets, series: markets.series.slice(0, 4)} : markets)); return;
+    response.end(failMarkets ? "{}" : JSON.stringify(invalidMarkets ? {...markets, series: markets.series.slice(0, -1)} : markets)); return;
   }
   if (pathname === "/data/macro-data.json") {
     response.writeHead(offline ? 503 : 200, { "Content-Type": "application/json" });
@@ -139,12 +141,17 @@ async function run() {
     assert.equal(await page.locator("#briefingParagraph script").count(), 0);
     assert.equal(await page.locator(".news-section a").first().getAttribute("rel"), "noopener noreferrer");
     await page.waitForSelector("#marketGrid svg");
-    assert.equal(await page.locator(".market-card").count(), 5);
-    assert.equal(await page.locator("#marketGrid svg").count(), 5);
-    assert.match(await page.locator("#marketStatus").innerText(), /5\/5 marchés/);
+    assert.equal(await page.locator(".market-card").count(), 6);
+    assert.equal(await page.locator("#marketGrid svg").count(), 6);
+    assert.match(await page.locator("#marketStatus").innerText(), /6\/6 marchés/);
     assert.match(await page.locator('.market-card[data-id="IXIC"] h4').innerText(), /Nasdaq Composite/);
     assert.match(await page.locator('.market-card[data-id="EEM"] .market-value').innerText(), /\$ US/);
     assert.match(await page.locator('.market-card[data-id="EEM"] h4').innerText(), /ETF EEM/);
+    const feqtCard = page.locator('.market-card[data-id="FEQT"]');
+    assert.match(await feqtCard.locator("h4").innerText(), /FEQT.*Fidelity/);
+    assert.match(await feqtCard.locator(".market-value").innerText(), /\$ CA/);
+    assert.match(await feqtCard.locator("a").innerText(), /FNB/);
+    assert.equal(await feqtCard.locator("a").getAttribute("href"), "https://finance.yahoo.com/quote/FEQT.NE/");
     const marketRange = page.getByRole("group", {name: "Période des indices boursiers"});
     assert.equal(await marketRange.getByRole("button").count(), 9);
     const history = markets.series[0].history;
@@ -251,10 +258,10 @@ async function run() {
     assert.equal(await page.locator(".news-section").count(), 3);
     invalidMarkets = true;
     await page.reload(); await page.waitForFunction(() => document.querySelector("#marketStatus").textContent.includes("Copie conservée"));
-    assert.equal(await page.locator("#marketGrid svg").count(), 5);
+    assert.equal(await page.locator("#marketGrid svg").count(), 6);
     invalidMarkets = false; failMarkets = true;
     await page.reload(); await page.waitForFunction(() => document.querySelector("#marketStatus").textContent.includes("Copie conservée"));
-    assert.equal(await page.locator("#marketGrid svg").count(), 5);
+    assert.equal(await page.locator("#marketGrid svg").count(), 6);
     assert.match(await page.locator("#briefingDate").innerText(), new RegExp(edition));
     invalidNews = false; failNews = true;
     await page.reload(); await page.waitForFunction(() => document.querySelector("#briefingDate").textContent.includes("Copie conservée"));
@@ -267,7 +274,7 @@ async function run() {
     await newsOnly.waitForFunction(() => document.querySelector("#updated").textContent.includes("ne sont pas disponibles"));
     await newsOnly.waitForSelector(".news-section");
     assert.equal(await newsOnly.locator(".news-section").count(), 3, "News must load even when macro data is unavailable");
-    assert.equal(await newsOnly.locator(".market-card").count(), 5, "Each market must retain a source link when quotes are unavailable");
+    assert.equal(await newsOnly.locator(".market-card").count(), 6, "Each market must retain a source link when quotes are unavailable");
     assert.equal(await newsOnly.locator("#marketGrid svg").count(), 0);
     await newsContext.close(); failNews = true;
     const freshContext = await browser.newContext();

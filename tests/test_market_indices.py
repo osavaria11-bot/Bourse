@@ -20,6 +20,13 @@ def payload():
         "indicators": {"quote": [{"close": [60.0, 61.0]}]}}]}}
 
 class MarketHistoryTests(unittest.TestCase):
+    def test_feqt_uses_the_canadian_etf_listing(self):
+        definition = next(d for d in markets.definitions() if d["id"] == "FEQT")
+        self.assertEqual(definition["quote_symbol"], "FEQT.NE")
+        self.assertEqual(definition["currency"], "CAD")
+        self.assertEqual(definition["unit"], "$ CA")
+        self.assertEqual(definition["instrument_type"], "etf")
+
     def test_index_request_covers_the_ten_year_starting_close(self):
         definition = next(d for d in markets.definitions() if d["id"] == "EEM")
         with patch.object(markets, "urlopen", return_value=io.StringIO(json.dumps(payload()))) as request:
@@ -102,7 +109,7 @@ class MarketHistoryTests(unittest.TestCase):
                 raise markets.macro.SourceError("Synthetic outage")
             return copy.deepcopy(next(p for p in points if p["id"] == definition["id"]))
         result = markets.macro.collect_sources(definitions, previous, NOW, fetcher=fetch)
-        self.assertEqual(result["coverage"], {"total": 5, "fresh": 4, "cached": 1, "unavailable": 0})
+        self.assertEqual(result["coverage"], {"total": 6, "fresh": 5, "cached": 1, "unavailable": 0})
         cached = next(p for p in result["series"] if p["id"] == "EEM")
         self.assertEqual((cached["value"], cached["date"], cached["fetch_status"]), (61.0, "2026-10-09", "cached"))
         self.assertEqual(cached["source_url"], next(d for d in definitions if d["id"] == "EEM")["source_url"])

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Collect daily index closes and the EEM ETF tracking MSCI emerging markets."""
+"""Collect daily closes for world indices and the EEM and FEQT ETFs."""
 from __future__ import annotations
 
 import argparse
@@ -24,11 +24,14 @@ MARKETS = [
     ("TSX", "S&P/TSX Composite", "Canada", "^GSPTSE"),
     ("STOXX600", "STOXX Europe 600", "Europe", "^STOXX"),
     ("EEM", "MSCI émergents · ETF EEM", "Marchés émergents", "EEM"),
+    ("FEQT", "FEQT · Fidelity All-in-One Equity", "Monde · FNB en CAD", "FEQT.NE"),
 ]
 
 def definitions() -> list[dict]:
     return [{"id": sid, "title": title, "category": region, "quote_symbol": symbol,
-             "unit": "$ US" if sid == "EEM" else "points", "instrument_type": "etf" if sid == "EEM" else "index",
+             "unit": "$ US" if sid == "EEM" else "$ CA" if sid == "FEQT" else "points",
+             "instrument_type": "etf" if sid in ("EEM", "FEQT") else "index",
+             **({"currency": "CAD"} if sid == "FEQT" else {}),
              "decimals": 2, "frequency": "daily", "transform": "none",
              "history_years": 11,
              "max_age_days": 7, "source_url": f"https://finance.yahoo.com/quote/{quote(symbol, safe='')}/"}
@@ -112,7 +115,7 @@ def main(argv=None) -> int:
     try:
         data = macro.collect_sources(definitions(), macro.read_json(output), now, fetcher=fetch_index)
         data["kind"] = "market_indices"
-        data["data_provider"] = "Yahoo Finance — indices boursiers et ETF EEM, clôtures quotidiennes"
+        data["data_provider"] = "Yahoo Finance — indices boursiers et FNB EEM et FEQT, clôtures quotidiennes"
         urls = {p["id"]: p["source_url"] for p in definitions()}
         for point in data["series"]:
             point["source_url"] = urls[point["id"]]

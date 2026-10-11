@@ -11,6 +11,7 @@
     ["TSX", "S&P/TSX Composite", "Canada", "^GSPTSE"],
     ["STOXX600", "STOXX Europe 600", "Europe", "^STOXX"],
     ["EEM", "MSCI émergents · ETF EEM", "Marchés émergents", "EEM"],
+    ["FEQT", "FEQT · Fidelity All-in-One Equity", "Monde · FNB en CAD", "FEQT.NE"],
   ];
   const PREFS_KEY = "savy:preferences:v2";
   function readStored(key, fallback) {
@@ -453,9 +454,10 @@
     data.series = MARKET_DEFINITIONS.map(([id, title, category, symbol]) => {
       const point = byId.get(id);
       if (!point || point.quote_symbol !== symbol) throw new Error("Indice attendu absent");
+      if (id === "FEQT" && point.currency !== "CAD") throw new Error("Devise FEQT incohérente");
       const valid = point.history.filter(row => U.validNumber(row[1]));
       if (point.value !== null && (valid.length < 2 || valid.at(-1)[0] !== point.date || valid.at(-1)[1] !== point.value || point.value <= 0)) throw new Error("Clôture incohérente");
-      return {...point, title, category, frequency: "daily", unit: id === "EEM" ? "$ US" : "points", decimals: 2,
+      return {...point, title, category, frequency: "daily", unit: id === "EEM" ? "$ US" : id === "FEQT" ? "$ CA" : "points", decimals: 2,
         source_url: "https://finance.yahoo.com/quote/" + encodeURIComponent(symbol) + "/"};
     });
     if (!data.series.some(point => point.value !== null)) throw new Error("Aucun indice vérifié");
@@ -473,18 +475,19 @@
     const data = state.marketDataset;
     const available = data?.series.filter(point => point.value !== null).length || 0;
     $("#marketStatus").textContent = data ? (state.marketCached ? "Copie conservée · " : "") +
-      "Collecte du " + U.timestampLabel(data.generated_at) + " · " + available + "/5 marchés disponibles" : "Cotations indisponibles. Réessaie avec « Actualiser » ou consulte les sources ci-dessous.";
+      "Collecte du " + U.timestampLabel(data.generated_at) + " · " + available + "/" + MARKET_DEFINITIONS.length + " marchés disponibles" : "Cotations indisponibles. Réessaie avec « Actualiser » ou consulte les sources ci-dessous.";
     const oldCollection = data && Date.now() - U.parseTimestamp(data.generated_at) > 36 * 3600000;
     if (oldCollection) $("#marketStatus").textContent += " · collecte ancienne";
-    $("#marketStatus").classList.toggle("warning", !data || state.marketCached || available !== 5 || oldCollection);
+    $("#marketStatus").classList.toggle("warning", !data || state.marketCached || available !== MARKET_DEFINITIONS.length || oldCollection);
     const fragment = document.createDocumentFragment();
     const periodLabel = U.MARKET_RANGES.find(item => item.key === state.marketRange).label;
     for (const [id, title, category, symbol] of MARKET_DEFINITIONS) {
       const point = data?.series.find(item => item.id === id);
+      const isETF = id === "EEM" || id === "FEQT";
       const selected = U.marketPeriod(point, state.marketRange);
       const card = el("article", "market-card"); card.dataset.id = id;
       card.append(el("p", "eyebrow", category), el("h4", "", title));
-      card.append(el("p", "market-value", point ? U.formatNumber(point.value, 2) + (point.value !== null && id === "EEM" ? " $ US" : "") : "—"));
+      card.append(el("p", "market-value", point ? U.formatNumber(point.value, 2) + (point.value !== null && isETF ? " " + point.unit : "") : "—"));
       const old = point?.date && Date.now() - Date.parse(point.date) > 7 * 86400000;
       card.append(el("p", "meta" + (old || point?.fetch_status === "cached" ? " warning" : ""),
         point?.date ? "Clôture du " + point.date + (old ? " · observation ancienne" : "") + (point.fetch_status === "cached" ? " · dernière valeur conservée" : "") : "Clôture indisponible"));
@@ -496,7 +499,7 @@
       const host = el("div", "chart-host");
       if (point) drawChart(host, point, state.marketRange, {history: selected.history, showPercent: true, incomplete: selected.incomplete});
       else host.append(el("p", "chart-placeholder", "Historique indisponible pour cette collecte."));
-      const link = el("a", "", "Voir " + (id === "EEM" ? "l’ETF" : "cet indice") + " sur Yahoo Finance ↗");
+      const link = el("a", "", "Voir " + (isETF ? "le FNB" : "cet indice") + " sur Yahoo Finance ↗");
       link.href = "https://finance.yahoo.com/quote/" + encodeURIComponent(symbol) + "/";
       link.target = "_blank"; link.rel = "noopener noreferrer";
       card.append(host, link); fragment.append(card);

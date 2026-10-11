@@ -94,8 +94,10 @@ jobs:
           import json, os
           from pathlib import Path
           data = json.loads((Path(os.environ["RUNNER_TEMP"]) / "market-check/market-indices.json").read_text())
-          assert data['coverage']['fresh'] == 5, data['errors']
+          assert data['coverage']['fresh'] == 6, data['errors']
           assert all(len(p['history']) > 200 for p in data['series'])
+          feqt = next(p for p in data['series'] if p['id'] == 'FEQT')
+          assert feqt['quote_symbol'] == 'FEQT.NE' and feqt['currency'] == 'CAD'
           print('World markets verified:', data['coverage'])
           PY
       - name: Verify security prices and currency sources on the portfolio branch
