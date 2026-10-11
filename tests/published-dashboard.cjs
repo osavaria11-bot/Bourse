@@ -5,6 +5,8 @@ const fs = require("node:fs");
 const path = require("node:path");
 const http = require("node:http");
 const root = path.resolve(__dirname, "..");
+const U = require("../js/macro-utils.js");
+const markets = JSON.parse(fs.readFileSync(path.join(root, "data/market-indices.json"), "utf8"));
 const mime = {".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".json": "application/json", ".png": "image/png"};
 const server = http.createServer((request, response) => {
   const pathname = new URL(request.url, "http://localhost").pathname;
@@ -26,14 +28,34 @@ async function main() {
     assert.ok(headlines <= 6);
     assert.equal(await page.locator(".news-section .meta a").count(), headlines);
     assert.equal(await page.locator(".odds-card").count(), 2);
+    const marketRanges = page.getByRole("group", {name: "Période des indices boursiers"});
+    assert.equal(await marketRanges.getByRole("button").count(), 7);
+    for (const range of U.MARKET_RANGES) {
+      await marketRanges.getByRole("button", {name: range.label, exact: true}).click();
+      assert.equal(await marketRanges.getByRole("button", {name: range.label, exact: true}).getAttribute("aria-pressed"), "true");
+      for (const point of markets.series) {
+        const period = U.marketPeriod(point, range.key);
+        assert.equal(period.incomplete, false, point.id + " " + range.key + " must have its full starting close");
+        const card = page.locator('.market-card[data-id="' + point.id + '"]');
+        const expected = (period.percent > 0 ? "+" : "") + U.formatNumber(period.percent, 2) + " % · " + range.label;
+        assert.equal(await card.locator(".market-return").innerText(), expected, point.id + " " + range.key);
+        assert.match(await card.locator(".market-period").innerText(), new RegExp("Du " + period.start + " au " + period.end));
+      }
+    }
+    await marketRanges.getByRole("button", {name: "1 semaine", exact: true}).click();
+    await page.locator("#marketGrid svg").first().focus();
+    assert.match(await page.locator("#marketGrid .chart-tooltip").first().innerText(), /% depuis le/);
     assert.equal(await page.locator("#marketGrid path").evaluateAll(nodes => nodes.some(node => /NaN|Infinity/.test(node.getAttribute("d")))), false);
-    console.log("Published data verified:", headlines, "sourced news stories, 2 policy odds cards, 5 actual market histories.");
+    console.log("Published data verified:", headlines, "sourced news stories, 2 policy odds cards, 5 actual market histories and all 7 period returns.");
     if (process.env.SCREENSHOT_LOGS) {
       console.log("SCREENSHOT_MARKETS_DESKTOP " + (await page.locator(".market-section").screenshot()).toString("base64"));
-      await page.setViewportSize({width: 375, height: 1000});
-      await page.locator("#marketTitle").scrollIntoViewIfNeeded();
-      console.log("SCREENSHOT_MARKETS_MOBILE " + (await page.screenshot()).toString("base64"));
     }
+    await page.setViewportSize({width: 375, height: 1000});
+    await page.locator("#marketTitle").scrollIntoViewIfNeeded();
+    await marketRanges.getByRole("button", {name: "3 jours", exact: true}).click();
+    assert.equal(await marketRanges.getByRole("button", {name: "3 jours", exact: true}).getAttribute("aria-pressed"), "true");
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
+    if (process.env.SCREENSHOT_LOGS) console.log("SCREENSHOT_MARKETS_MOBILE " + (await page.screenshot()).toString("base64"));
     assert.deepEqual(errors, []);
   } finally {await browser.close();}
 }

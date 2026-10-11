@@ -8,6 +8,10 @@
     { key: "1M", label: "1 mois" }, { key: "3M", label: "3 mois" },
     { key: "1Y", label: "1 an" }, { key: "5Y", label: "5 ans" }, { key: "10Y", label: "10 ans" },
   ];
+  const MARKET_RANGES = [
+    { key: "3D", label: "3 jours" }, { key: "1W", label: "1 semaine" },
+    ...RANGES,
+  ];
   const DAY = 86400000;
   const validNumber = value => typeof value === "number" && Number.isFinite(value);
   function isDate(day) {
@@ -116,6 +120,32 @@
     const start = rangeStart(anchor, range);
     return start ? history.filter(row => row[0] >= start && row[0] <= anchor) : [];
   }
+  function marketPeriod(point, range) {
+    const anchor = point?.date || point?.history?.at(-1)?.[0];
+    const history = (point?.history || []).filter(row => row[0] <= anchor);
+    if (!isDate(anchor) || !history.length || !MARKET_RANGES.some(item => item.key === range)) {
+      return {history: [], start: null, end: null, change: null, percent: null, incomplete: true};
+    }
+    const last = history.at(-1);
+    let baseline, requestedStart, incomplete = !validNumber(point.value) || point.value <= 0 ||
+      last[0] !== anchor || last[1] !== point.value;
+    if (range === "1W" || range === "3D") {
+      const sessions = range === "1W" ? 5 : 3;
+      baseline = history.at(-sessions - 1);
+      requestedStart = baseline?.[0];
+      incomplete ||= !baseline;
+    } else {
+      requestedStart = rangeStart(anchor, range);
+      baseline = history.filter(row => row[0] <= requestedStart).at(-1);
+      incomplete ||= !baseline || Date.parse(requestedStart) - Date.parse(baseline[0]) > 7 * DAY;
+    }
+    baseline ||= history[0];
+    incomplete ||= !validNumber(baseline[1]) || baseline[1] <= 0;
+    const selected = history.filter(row => row[0] >= baseline[0]);
+    return {history: selected, start: baseline[0], end: last[0], requestedStart, incomplete,
+      change: incomplete ? null : last[1] - baseline[1],
+      percent: incomplete ? null : (last[1] / baseline[1] - 1) * 100};
+  }
   function niceExtent(history) {
     const values = history.map(row => row[1]).filter(validNumber);
     if (!values.length) return null;
@@ -158,5 +188,5 @@
   function ageDays(day, now = new Date()) {
     return isDate(day) ? Math.floor((now.getTime() - Date.parse(day + "T00:00:00Z")) / DAY) : null;
   }
-  return { RANGES, isDate, validNumber, parseTimestamp, normalizeDataset, formatNumber, observationLabel, timestampLabel, changeLabel, filterSeries, rangeStart, visibleHistory, niceExtent, nearestPoint, csvCell, toCSV, snapshotCSV, historyCSV, ageDays };
+  return { RANGES, MARKET_RANGES, isDate, validNumber, parseTimestamp, normalizeDataset, formatNumber, observationLabel, timestampLabel, changeLabel, filterSeries, rangeStart, visibleHistory, marketPeriod, niceExtent, nearestPoint, csvCell, toCSV, snapshotCSV, historyCSV, ageDays };
 });

@@ -92,6 +92,7 @@ details[open]>summary:after {content:"−"}
 .market-card {min-width:0;padding:15px;border:1px solid var(--border);border-radius:10px;background:var(--bg)}
 .market-card h4 {font-size:14px;font-weight:600;margin:4px 0}
 .market-card .market-value {font-size:24px;font-weight:650;font-variant-numeric:tabular-nums;margin-top:8px}
+.market-card .market-return {font-size:15px;font-weight:600;white-space:normal;margin-top:7px}
 .market-card .meta {font-size:10px;margin-top:5px}
 .market-card .chart-host {margin-top:12px}
 .market-card .chart-tooltip {font-size:10px;min-height:30px}

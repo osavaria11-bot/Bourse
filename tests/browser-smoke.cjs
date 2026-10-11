@@ -146,11 +146,33 @@ async function run() {
     assert.match(await page.locator('.market-card[data-id="EEM"] .market-value').innerText(), /\$ US/);
     assert.match(await page.locator('.market-card[data-id="EEM"] h4').innerText(), /ETF EEM/);
     const marketRange = page.getByRole("group", {name: "Période des indices boursiers"});
+    assert.equal(await marketRange.getByRole("button").count(), 7);
+    const history = markets.series[0].history;
+    const oneMonth = new Date(markets.series[0].date + "T00:00:00Z");
+    const anchorDay = oneMonth.getUTCDate(); oneMonth.setUTCDate(1); oneMonth.setUTCMonth(oneMonth.getUTCMonth() - 1);
+    const lastDay = new Date(Date.UTC(oneMonth.getUTCFullYear(), oneMonth.getUTCMonth() + 1, 0)).getUTCDate();
+    oneMonth.setUTCDate(Math.min(anchorDay, lastDay));
+    for (const [label, baseline] of [
+      ["3 jours", history.at(-4)], ["1 semaine", history.at(-6)],
+      ["1 mois", history.filter(row => row[0] <= oneMonth.toISOString().slice(0, 10)).at(-1)],
+    ]) {
+      await marketRange.getByRole("button", {name: label, exact: true}).click();
+      assert.equal(await marketRange.getByRole("button", {name: label, exact: true}).getAttribute("aria-pressed"), "true");
+      const percent = (history.at(-1)[1] / baseline[1] - 1) * 100;
+      const expected = (percent > 0 ? "+" : "") + new Intl.NumberFormat("fr-CA", {minimumFractionDigits: 2, maximumFractionDigits: 2}).format(percent) + " % · " + label;
+      for (const card of await page.locator(".market-card").all()) {
+        assert.equal(await card.locator(".market-return").innerText(), expected);
+        assert.match(await card.locator(".market-period").innerText(), new RegExp("Du " + baseline[0] + " au " + history.at(-1)[0]));
+      }
+      const chart = page.locator("#marketGrid svg").first(); await chart.focus();
+      assert.match(await page.locator("#marketGrid .chart-tooltip").first().innerText(), new RegExp("% depuis le " + baseline[0]));
+    }
     await marketRange.getByRole("button", {name: "3 mois", exact: true}).click();
     assert.equal(await marketRange.getByRole("button", {name: "3 mois", exact: true}).getAttribute("aria-pressed"), "true");
     const marketChart = page.locator("#marketGrid svg").first();
     await marketChart.focus(); await marketChart.press("ArrowLeft");
     assert.match(await page.locator("#marketGrid .chart-tooltip").first().innerText(), /points/);
+    assert.match(await page.locator("#marketGrid .market-return").first().innerText(), /Rendement indisponible/);
     assert.equal(await page.locator("#marketGrid path").evaluateAll(nodes => nodes.some(node => /NaN|Infinity/.test(node.getAttribute("d")))), false);
     await page.locator(".indicator-card").first().scrollIntoViewIfNeeded();
     await page.waitForSelector("#grid svg");

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import calendar
 import json
 import math
 from datetime import datetime, timezone
@@ -29,6 +30,7 @@ def definitions() -> list[dict]:
     return [{"id": sid, "title": title, "category": region, "quote_symbol": symbol,
              "unit": "$ US" if sid == "EEM" else "points", "instrument_type": "etf" if sid == "EEM" else "index",
              "decimals": 2, "frequency": "daily", "transform": "none",
+             "history_years": 11,
              "max_age_days": 7, "source_url": f"https://finance.yahoo.com/quote/{quote(symbol, safe='')}/"}
             for sid, title, region, symbol in MARKETS]
 
@@ -79,7 +81,15 @@ def parse_history(payload: dict, symbol: str, now: datetime, currency: str | Non
 
 def fetch_index(definition: dict, now: datetime) -> dict:
     symbol = definition["quote_symbol"]
-    params = urlencode({"range": definition.get("history_range", "10y"), "interval": "1d"})
+    if definition.get("history_years"):
+        year = now.year - definition["history_years"]
+        start = now.replace(year=year, day=min(now.day, calendar.monthrange(year, now.month)[1]))
+        # Include a buffer before the longest chart period so a weekend or
+        # holiday at its start can use the preceding completed session.
+        query = {"period1": int(start.timestamp()), "period2": int(now.timestamp()), "interval": "1d"}
+    else:
+        query = {"range": definition.get("history_range", "10y"), "interval": "1d"}
+    params = urlencode(query)
     last_error = None
     for host in ("query1.finance.yahoo.com", "query2.finance.yahoo.com"):
         try:

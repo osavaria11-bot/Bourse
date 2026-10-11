@@ -247,8 +247,8 @@
     if (text !== undefined) node.textContent = text;
     return node;
   }
-  function drawChart(host, point, range) {
-    const history = U.visibleHistory(point, range);
+  function drawChart(host, point, range, options = {}) {
+    const history = options.history || U.visibleHistory(point, range);
     const valid = history.filter(row => U.validNumber(row[1]));
     if (!valid.length) {
       host.replaceChildren(el("p", "chart-placeholder", point.value === null ? "Historique indisponible pour cette collecte." : "Historique à venir après la prochaine collecte réussie."));
@@ -276,7 +276,7 @@
       const tickTime = firstTime + fraction * (lastTime - firstTime);
       const date = new Date(tickTime);
       const label = new Intl.DateTimeFormat("fr-CA", { timeZone: "UTC",
-        ...(range.endsWith("M") ? { month: "short", day: "numeric" } : range === "1Y" ? { month: "short", year: "2-digit" } : { year: "numeric" }),
+        ...(range.endsWith("M") || range === "1W" || range === "3D" ? { month: "short", day: "numeric" } : range === "1Y" ? { month: "short", year: "2-digit" } : { year: "numeric" }),
       }).format(date);
       svg.append(svgEl("text", { x: left + fraction * plotWidth, y: height - 8,
         "text-anchor": tickCount === 1 ? "middle" : i === 0 ? "start" : i === tickCount - 1 ? "end" : "middle", class: "chart-axis" }, label));
@@ -302,6 +302,10 @@
       guide.setAttribute("x1", x(row[0])); guide.setAttribute("x2", x(row[0])); guide.setAttribute("visibility", "visible");
       selectedDot.setAttribute("cx", x(row[0])); selectedDot.setAttribute("cy", y(row[1])); selectedDot.setAttribute("visibility", "visible");
       tooltip.textContent = U.observationLabel(row[0], point.frequency) + " · " + U.formatNumber(row[1], point.decimals) + " " + point.unit;
+      if (options.showPercent) {
+        const percent = options.incomplete ? null : (row[1] / valid[0][1] - 1) * 100;
+        tooltip.textContent += U.validNumber(percent) ? " · " + (percent > 0 ? "+" : "") + U.formatNumber(percent, 2) + " % depuis le " + valid[0][0] : " · rendement indisponible : base manquante";
+      }
       selected = valid.findIndex(item => item[0] === row[0]);
     }
     svg.addEventListener("pointermove", event => {
@@ -459,7 +463,7 @@
   }
   function renderMarkets() {
     const ranges = document.createDocumentFragment();
-    for (const range of U.RANGES) {
+    for (const range of U.MARKET_RANGES) {
       const button = el("button", "", range.label);
       button.type = "button"; button.setAttribute("aria-pressed", String(range.key === state.marketRange));
       button.addEventListener("click", () => {state.marketRange = range.key; renderMarkets();});
@@ -474,22 +478,23 @@
     if (oldCollection) $("#marketStatus").textContent += " · collecte ancienne";
     $("#marketStatus").classList.toggle("warning", !data || state.marketCached || available !== 5 || oldCollection);
     const fragment = document.createDocumentFragment();
+    const periodLabel = U.MARKET_RANGES.find(item => item.key === state.marketRange).label;
     for (const [id, title, category, symbol] of MARKET_DEFINITIONS) {
       const point = data?.series.find(item => item.id === id);
+      const selected = U.marketPeriod(point, state.marketRange);
       const card = el("article", "market-card"); card.dataset.id = id;
       card.append(el("p", "eyebrow", category), el("h4", "", title));
       card.append(el("p", "market-value", point ? U.formatNumber(point.value, 2) + (point.value !== null && id === "EEM" ? " $ US" : "") : "—"));
       const old = point?.date && Date.now() - Date.parse(point.date) > 7 * 86400000;
       card.append(el("p", "meta" + (old || point?.fetch_status === "cached" ? " warning" : ""),
         point?.date ? "Clôture du " + point.date + (old ? " · observation ancienne" : "") + (point.fetch_status === "cached" ? " · dernière valeur conservée" : "") : "Clôture indisponible"));
-      if (point && U.validNumber(point.change) && U.validNumber(point.previous_value) && point.previous_value > 0) {
-        const change = el("p", "change " + (point.change > 0 ? "up" : point.change < 0 ? "down" : "flat"),
-          (point.change > 0 ? "+" : "") + U.formatNumber(point.change / point.previous_value * 100, 2) + " % · " +
-          (point.change > 0 ? "+" : "") + U.formatNumber(point.change, 2) + (id === "EEM" ? " $ US" : " pts"));
-        change.title = "Par rapport à la clôture du " + point.previous_date; card.append(change);
-      }
+      const change = el("p", "change market-return " + (selected.change > 0 ? "up" : selected.change < 0 ? "down" : "flat"),
+        U.validNumber(selected.percent) ? (selected.percent > 0 ? "+" : "") + U.formatNumber(selected.percent, 2) + " % · " + periodLabel : "Rendement indisponible · " + periodLabel);
+      const dates = selected.start && selected.end ? "Du " + selected.start + " au " + selected.end + (selected.incomplete ? " · historique incomplet" : " · hors dividendes") : "Base de comparaison indisponible";
+      change.title = dates;
+      card.append(change, el("p", "meta market-period", dates));
       const host = el("div", "chart-host");
-      if (point) drawChart(host, point, state.marketRange);
+      if (point) drawChart(host, point, state.marketRange, {history: selected.history, showPercent: true, incomplete: selected.incomplete});
       else host.append(el("p", "chart-placeholder", "Historique indisponible pour cette collecte."));
       const link = el("a", "", "Voir " + (id === "EEM" ? "l’ETF" : "cet indice") + " sur Yahoo Finance ↗");
       link.href = "https://finance.yahoo.com/quote/" + encodeURIComponent(symbol) + "/";

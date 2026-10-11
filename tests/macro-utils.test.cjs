@@ -21,6 +21,52 @@ test("Month and year ranges clamp leap days without spilling into March", () => 
 test("Ranges are anchored to the observation date and retain missing observations", () => {
   assert.deepEqual(U.visibleHistory(sample(), "1M"), [["2026-09-30", null], ["2026-10-09", -0.4]]);
 });
+const marketSample = () => ({date: "2026-10-09", value: 100, history: [
+  ["2016-10-07", 10], ["2021-10-08", 20], ["2025-10-09", 40], ["2026-07-09", 50], ["2026-09-09", 80],
+  ["2026-10-02", 90], ["2026-10-05", 92], ["2026-10-06", 94], ["2026-10-07", 96], ["2026-10-08", 98], ["2026-10-09", 100],
+]});
+test("Every index timeframe returns its full period, including the close before a weekend boundary", () => {
+  const expected = [
+    ["3D", "2026-10-06", 100 / 94 * 100 - 100], ["1W", "2026-10-02", 100 / 90 * 100 - 100],
+    ["1M", "2026-09-09", 25], ["3M", "2026-07-09", 100], ["1Y", "2025-10-09", 150],
+    ["5Y", "2021-10-08", 400], ["10Y", "2016-10-07", 900],
+  ];
+  assert.deepEqual(U.MARKET_RANGES.map(item => item.key), expected.map(row => row[0]));
+  for (const [range, start, percent] of expected) {
+    const period = U.marketPeriod(marketSample(), range);
+    assert.equal(period.incomplete, false, range);
+    assert.equal(period.start, start, range);
+    assert.equal(period.end, "2026-10-09", range);
+    assert.ok(Math.abs(period.percent - percent) < 1e-10, range);
+    assert.equal(period.history[0][0], start, range);
+    assert.equal(period.history.at(-1)[0], period.end, range);
+  }
+});
+test("Index returns preserve losses and use completed sessions instead of calendar days", () => {
+  const point = {date: "2026-10-06", value: 180, history: [
+    ["2026-10-01", 200], ["2026-10-02", 210], ["2026-10-05", 220], ["2026-10-06", 180],
+  ]};
+  const period = U.marketPeriod(point, "3D");
+  assert.equal(period.start, "2026-10-01");
+  assert.equal(period.change, -20);
+  assert.ok(Math.abs(period.percent + 10) < 1e-10);
+});
+test("Missing index baselines do not silently shorten the selected return", () => {
+  const short = {...marketSample(), history: marketSample().history.slice(-3)};
+  for (const range of ["3D", "1W", "10Y"]) {
+    assert.equal(U.marketPeriod(short, range).percent, null);
+  }
+  for (const value of [null, 0, -10]) {
+    const point = marketSample(); point.history.find(row => row[0] === "2026-10-06")[1] = value;
+    const period = U.marketPeriod(point, "3D");
+    assert.equal(period.start, "2026-10-06");
+    assert.equal(period.percent, null);
+    assert.equal(period.incomplete, true);
+  }
+  const stale = {date: "2026-10-09", value: 100, history: [["2026-08-30", 80], ["2026-10-09", 100]]};
+  assert.equal(U.marketPeriod(stale, "1M").percent, null);
+  assert.equal(U.marketPeriod(undefined, "1W").percent, null);
+});
 test("Quarterly period labels do not claim daily observation dates", () => {
   assert.equal(U.observationLabel("2026-04-01", "quarterly"), "T2 2026");
 });

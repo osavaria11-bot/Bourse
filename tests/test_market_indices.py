@@ -1,11 +1,13 @@
 """Synthetic fixtures: calendar dates, provider identity and outage preservation."""
 import copy
+import io
 import json
 import tempfile
 import unittest
 from datetime import datetime, timezone
 from pathlib import Path
 from unittest.mock import patch
+from urllib.parse import parse_qs, urlparse
 
 from scripts import collect_market_indices as markets
 
@@ -18,6 +20,26 @@ def payload():
         "indicators": {"quote": [{"close": [60.0, 61.0]}]}}]}}
 
 class MarketHistoryTests(unittest.TestCase):
+    def test_index_request_covers_the_ten_year_starting_close(self):
+        definition = next(d for d in markets.definitions() if d["id"] == "EEM")
+        with patch.object(markets, "urlopen", return_value=io.StringIO(json.dumps(payload()))) as request:
+            markets.fetch_index(definition, NOW)
+        query = parse_qs(urlparse(request.call_args.args[0].full_url).query)
+        start = datetime.fromtimestamp(int(query["period1"][0]), timezone.utc)
+        self.assertEqual(start, NOW.replace(year=2015))
+        self.assertEqual(int(query["period2"][0]), int(NOW.timestamp()))
+        self.assertEqual(query["interval"], ["1d"])
+        self.assertNotIn("range", query)
+
+    def test_security_request_retains_its_two_year_history(self):
+        definition = next(d for d in markets.definitions() if d["id"] == "EEM")
+        definition.pop("history_years")
+        definition["history_range"] = "2y"
+        with patch.object(markets, "urlopen", return_value=io.StringIO(json.dumps(payload()))) as request:
+            markets.fetch_index(definition, NOW)
+        query = parse_qs(urlparse(request.call_args.args[0].full_url).query)
+        self.assertEqual(query, {"range": ["2y"], "interval": ["1d"]})
+
     def test_close_calendar_uses_the_exchange_timezone(self):
         data = payload()
         # 02:00 UTC belongs to the previous calendar date in New York.
