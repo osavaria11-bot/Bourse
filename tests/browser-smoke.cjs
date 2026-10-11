@@ -218,6 +218,7 @@ async function run() {
     }, series[0]);
     await page.reload(); await waitCount(page, indicatorCount);
     assert.match(await page.locator("#updated").innerText(), /Copie conservée/);
+    await page.waitForFunction(() => !document.querySelector("#refreshButton").disabled);
     assert.equal(await page.locator("#refreshButton").isEnabled(), true);
     invalidNews = true;
     await page.reload(); await page.waitForFunction(() => document.querySelector("#briefingDate").textContent.includes("Copie conservée"));
