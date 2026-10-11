@@ -1,0 +1,4580 @@
+{
+  "schema_version": 1,
+  "kind": "portfolio_exposures",
+  "generated_at": "2026-10-11T17:45:01.563641+00:00",
+  "benchmark": "FEQT",
+  "methodology": "Pondérations par valeur de marché en CAD; FNB décomposés; secteurs GICS; pays de risque ou pays publié par l’émetteur. Aucun calcul selon les devises ou le chiffre d’affaires géographique. Solde non détaillé conservé explicitement. Arrondis de collecte harmonisés à 100 %.",
+  "labels": {
+    "sectors": {
+      "technology": "Technologie",
+      "financials": "Finance",
+      "industrials": "Industrie",
+      "materials": "Matériaux",
+      "energy": "Énergie",
+      "consumer_discretionary": "Consommation discrétionnaire",
+      "consumer_staples": "Consommation de base",
+      "real_estate": "Immobilier",
+      "health_care": "Santé",
+      "utilities": "Services publics",
+      "communication_services": "Communications",
+      "multi_sector": "Multisectoriel",
+      "bonds": "Obligations",
+      "other_assets": "Autres actifs / liquidités",
+      "unclassified": "Non classé"
+    },
+    "geography": {
+      "other_countries": "Autres pays non détaillés",
+      "other_assets": "Liquidités / dérivés sans pays",
+      "unclassified": "Non classé",
+      "united_states": "États-Unis",
+      "canada": "Canada",
+      "japan": "Japon",
+      "united_kingdom": "Royaume-Uni",
+      "switzerland": "Suisse",
+      "france": "France",
+      "germany": "Allemagne",
+      "spain": "Espagne",
+      "south_africa": "Afrique du Sud",
+      "taiwan": "Taïwan",
+      "denmark": "Danemark",
+      "brazil": "Brésil",
+      "china": "Chine",
+      "korea_south": "Corée du Sud",
+      "australia": "Australie",
+      "netherlands": "Pays-Bas",
+      "india": "Inde",
+      "ireland": "Irlande",
+      "italy": "Italie",
+      "sweden": "Suède",
+      "finland": "Finlande",
+      "belgium": "Belgique",
+      "norway": "Norvège",
+      "hong_kong": "Hong Kong",
+      "singapore": "Singapour",
+      "austria": "Autriche",
+      "portugal": "Portugal",
+      "israel": "Israël",
+      "mexico": "Mexique",
+      "indonesia": "Indonésie",
+      "malaysia": "Malaisie",
+      "thailand": "Thaïlande",
+      "philippines": "Philippines",
+      "poland": "Pologne",
+      "turkey": "Turquie",
+      "saudi_arabia": "Arabie saoudite",
+      "united_arab_emirates": "Émirats arabes unis",
+      "chile": "Chili",
+      "new_zealand": "Nouvelle-Zélande",
+      "colombia": "Colombie",
+      "peru": "Pérou",
+      "czech_republic": "Tchéquie",
+      "hungary": "Hongrie",
+      "greece": "Grèce",
+      "qatar": "Qatar",
+      "kuwait": "Koweït",
+      "egypt": "Égypte",
+      "multinational": "Multinational",
+      "russia": "Russie",
+      "luxembourg": "Luxembourg",
+      "bermuda": "Bermudes",
+      "cayman_islands": "Îles Caïmans",
+      "jersey": "Jersey",
+      "guernsey": "Guernesey",
+      "iceland": "Islande",
+      "european_union": "European Union",
+      "supranational": "Supranational",
+      "barbados": "Barbados",
+      "ecuador": "Ecuador",
+      "kazakhstan": "Kazakhstan",
+      "macau": "Macau",
+      "morocco": "Morocco",
+      "oman": "Oman",
+      "panama": "Panama",
+      "pk": "Pk",
+      "ro": "Ro",
+      "xe": "Xe",
+      "bg": "Bg",
+      "ee": "Ee",
+      "hr": "Hr",
+      "im": "Im",
+      "kz": "Kz",
+      "li": "Li",
+      "lr": "Lr",
+      "lt": "Lt",
+      "lv": "Lv",
+      "mult": "Mult",
+      "pa": "Pa",
+      "si": "Si",
+      "sk": "Sk",
+      "snat": "Snat",
+      "uy": "Uy",
+      "vg": "Vg"
+    }
+  },
+  "instruments": [
+    {
+      "id": "AAPL",
+      "title": "Apple",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "technology",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "united_states",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.ishares.com/us/products/239600/ishares-msci-acwi-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "ADBE",
+      "title": "Adobe",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "technology",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "united_states",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.ishares.com/us/products/239600/ishares-msci-acwi-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "AMD",
+      "title": "Advanced Micro Devices",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "technology",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "united_states",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.ishares.com/us/products/239600/ishares-msci-acwi-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "AMZN",
+      "title": "Amazon",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "consumer_discretionary",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "united_states",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.ishares.com/us/products/239600/ishares-msci-acwi-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "APH",
+      "title": "Amphenol",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "technology",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "united_states",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/309480/fund",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "APO",
+      "title": "Apollo Global Management",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "financials",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "united_states",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/309480/fund",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "ATD",
+      "title": "Alimentation Couche-Tard",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "consumer_staples",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "AVGO",
+      "title": "Broadcom",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "technology",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "united_states",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.ishares.com/us/products/239600/ishares-msci-acwi-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "BAC",
+      "title": "Bank of America",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "financials",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "united_states",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/309480/fund",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "BAM",
+      "title": "Brookfield Asset Management",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "financials",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "BCE",
+      "title": "BCE",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "communication_services",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "BMO",
+      "title": "Bank of Montreal",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "financials",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "BN",
+      "title": "Brookfield",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "financials",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "BNS",
+      "title": "Bank of Nova Scotia",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "financials",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "CCO",
+      "title": "Cameco",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "energy",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "CLS",
+      "title": "Celestica",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "technology",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.ishares.com/us/products/239600/ishares-msci-acwi-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "CM",
+      "title": "Canadian Imperial Bank of Commerce",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "financials",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "CNQ",
+      "title": "Canadian Natural Resources",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "energy",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "CNR",
+      "title": "Canadian National Railway",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "industrials",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "COST",
+      "title": "Costco Wholesale",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "consumer_staples",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "united_states",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.ishares.com/us/products/239600/ishares-msci-acwi-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "CP",
+      "title": "Canadian Pacific Kansas City",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "industrials",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "CRM",
+      "title": "Salesforce",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "technology",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "united_states",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/309480/fund",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "CSU",
+      "title": "Constellation Software",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "technology",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "CVE",
+      "title": "Cenovus Energy",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "energy",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "CVX",
+      "title": "Chevron",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "energy",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "united_states",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/309480/fund",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "DOL",
+      "title": "Dollarama",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "consumer_discretionary",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "DSG",
+      "title": "Descartes Systems",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "technology",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "DXCM",
+      "title": "DexCom",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "health_care",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "united_states",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.ishares.com/us/products/239600/ishares-msci-acwi-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "EMA",
+      "title": "Emera",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "utilities",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "ENB",
+      "title": "Enbridge",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "energy",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "EQB",
+      "title": "EQB",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "financials",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "EXE",
+      "title": "Extendicare",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "health_care",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "FCUV",
+      "title": "Fidelity U.S. Value",
+      "as_of": "2026-09-30",
+      "sectors": [
+        {
+          "id": "communication_services",
+          "weight": 2.68656716
+        },
+        {
+          "id": "consumer_discretionary",
+          "weight": 2.28855721
+        },
+        {
+          "id": "energy",
+          "weight": 11.54228856
+        },
+        {
+          "id": "financials",
+          "weight": 18.90547264
+        },
+        {
+          "id": "health_care",
+          "weight": 2.78606965
+        },
+        {
+          "id": "industrials",
+          "weight": 2.78606965
+        },
+        {
+          "id": "materials",
+          "weight": 10.64676617
+        },
+        {
+          "id": "multi_sector",
+          "weight": 0.19900498
+        },
+        {
+          "id": "real_estate",
+          "weight": 8.95522388
+        },
+        {
+          "id": "technology",
+          "weight": 31.74129353
+        },
+        {
+          "id": "utilities",
+          "weight": 7.46268657
+        }
+      ],
+      "geography": [
+        {
+          "id": "south_africa",
+          "weight": 5.18444666
+        },
+        {
+          "id": "united_states",
+          "weight": 94.81555334
+        }
+      ],
+      "source_url": "https://www.fidelity.ca/en/products/etfs/fcuv/",
+      "note": "Répartition publiée par Fidelity; solde hors secteurs et pays non détaillés conservés séparément.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh",
+      "refresh": {
+        "kind": "fidelity"
+      }
+    },
+    {
+      "id": "FEQT",
+      "title": "Fidelity All-in-One Equity",
+      "as_of": "2026-09-30",
+      "sectors": [
+        {
+          "id": "communication_services",
+          "weight": 3.3
+        },
+        {
+          "id": "consumer_discretionary",
+          "weight": 6.5
+        },
+        {
+          "id": "consumer_staples",
+          "weight": 6.9
+        },
+        {
+          "id": "energy",
+          "weight": 8.4
+        },
+        {
+          "id": "financials",
+          "weight": 19.4
+        },
+        {
+          "id": "health_care",
+          "weight": 5.0
+        },
+        {
+          "id": "industrials",
+          "weight": 10.0
+        },
+        {
+          "id": "materials",
+          "weight": 7.8
+        },
+        {
+          "id": "multi_sector",
+          "weight": 0.3
+        },
+        {
+          "id": "other_assets",
+          "weight": 3.2
+        },
+        {
+          "id": "real_estate",
+          "weight": 5.2
+        },
+        {
+          "id": "technology",
+          "weight": 20.3
+        },
+        {
+          "id": "utilities",
+          "weight": 3.7
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 23.2
+        },
+        {
+          "id": "france",
+          "weight": 2.4
+        },
+        {
+          "id": "germany",
+          "weight": 1.5
+        },
+        {
+          "id": "japan",
+          "weight": 6.8
+        },
+        {
+          "id": "multinational",
+          "weight": 3.3
+        },
+        {
+          "id": "other_countries",
+          "weight": 7.4
+        },
+        {
+          "id": "south_africa",
+          "weight": 1.1
+        },
+        {
+          "id": "spain",
+          "weight": 1.4
+        },
+        {
+          "id": "switzerland",
+          "weight": 1.8
+        },
+        {
+          "id": "united_kingdom",
+          "weight": 3.2
+        },
+        {
+          "id": "united_states",
+          "weight": 47.9
+        }
+      ],
+      "source_url": "https://www.fidelity.ca/en/products/etfs/feqt/",
+      "note": "Répartition publiée par Fidelity; solde hors secteurs et pays non détaillés conservés séparément.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh",
+      "refresh": {
+        "kind": "fidelity"
+      }
+    },
+    {
+      "id": "FSLR",
+      "title": "First Solar",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "technology",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "united_states",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.ishares.com/us/products/239600/ishares-msci-acwi-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "FTS",
+      "title": "Fortis",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "utilities",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "GOOGL",
+      "title": "Alphabet",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "communication_services",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "united_states",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.ishares.com/us/products/239600/ishares-msci-acwi-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "GRGD",
+      "title": "Groupe Dynamite",
+      "as_of": "2026-10-11",
+      "sectors": [
+        {
+          "id": "consumer_discretionary",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://investors.groupedynamite.com/2024-11-07-GROUPE-DYNAMITE-FILES-PRELIMINARY-PROSPECTUS-FOR-INITIAL-PUBLIC-OFFERING-OF-SUBORDINATE-VOTING-SHARES",
+      "note": "Classement d’après l’activité et le siège canadien décrits par l’émetteur, vérifiés le 11 octobre 2026.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "GS",
+      "title": "Goldman Sachs",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "financials",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "united_states",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/309480/fund",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "GSY",
+      "title": "goeasy",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "financials",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239852/ishares-sptsx-small-cap-index-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "HBM",
+      "title": "Hudbay Minerals",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "materials",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "HD",
+      "title": "Home Depot",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "consumer_discretionary",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "united_states",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/309480/fund",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "JNJ",
+      "title": "Johnson & Johnson",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "health_care",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "united_states",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/309480/fund",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "JPM",
+      "title": "JPMorgan Chase",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "financials",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "united_states",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/309480/fund",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "L",
+      "title": "Loblaw Companies",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "consumer_staples",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "LULU",
+      "title": "Lululemon Athletica",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "consumer_discretionary",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "united_states",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/309480/fund",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "MAXQ",
+      "title": "Maritime Launch Services",
+      "as_of": "2026-10-11",
+      "sectors": [
+        {
+          "id": "industrials",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://maritimelaunch.com/launch/spaceport-nova-scotia",
+      "note": "Classement d’après l’activité et le siège canadien décrits par l’émetteur, vérifiés le 11 octobre 2026.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "MDA",
+      "title": "MDA",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "industrials",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "META",
+      "title": "Meta Platforms",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "communication_services",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "united_states",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.ishares.com/us/products/239600/ishares-msci-acwi-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "MFC",
+      "title": "Manulife Financial",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "financials",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "MOD",
+      "title": "Modine Manufacturing",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "industrials",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "united_states",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/309480/fund",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "MRK",
+      "title": "Merck & Co",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "health_care",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "united_states",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/309480/fund",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "MSFT",
+      "title": "Microsoft",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "technology",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "united_states",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.ishares.com/us/products/239600/ishares-msci-acwi-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "MU",
+      "title": "Micron",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "technology",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "united_states",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.ishares.com/us/products/239600/ishares-msci-acwi-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "NA",
+      "title": "National Bank of Canada",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "financials",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "NBIX",
+      "title": "Neurocrine",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "health_care",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "united_states",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.ishares.com/us/products/239600/ishares-msci-acwi-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "NFLX",
+      "title": "Netflix",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "communication_services",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "united_states",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.ishares.com/us/products/239600/ishares-msci-acwi-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "NU",
+      "title": "Nu Holdings",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "financials",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "brazil",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/309480/fund",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "NVDA",
+      "title": "NVIDIA",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "technology",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "united_states",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.ishares.com/us/products/239600/ishares-msci-acwi-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "NVO",
+      "title": "Novo Nordisk ADR",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "health_care",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "denmark",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.ishares.com/us/products/239600/ishares-msci-acwi-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "NXE",
+      "title": "NexGen Energy",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "energy",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "PFE",
+      "title": "Pfizer",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "health_care",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "united_states",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/309480/fund",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "POW",
+      "title": "Power Corporation of Canada",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "financials",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "PRL",
+      "title": "Propel Holdings",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "financials",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239852/ishares-sptsx-small-cap-index-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "QCOM",
+      "title": "Qualcomm",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "technology",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "united_states",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.ishares.com/us/products/239600/ishares-msci-acwi-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "QQC",
+      "title": "Invesco NASDAQ 100",
+      "as_of": "2026-08-31",
+      "sectors": [
+        {
+          "id": "communication_services",
+          "weight": 14.62877574
+        },
+        {
+          "id": "consumer_discretionary",
+          "weight": 10.31374559
+        },
+        {
+          "id": "consumer_staples",
+          "weight": 5.68151339
+        },
+        {
+          "id": "energy",
+          "weight": 0.45156841
+        },
+        {
+          "id": "financials",
+          "weight": 0.19477689
+        },
+        {
+          "id": "health_care",
+          "weight": 4.05840879
+        },
+        {
+          "id": "industrials",
+          "weight": 3.10752807
+        },
+        {
+          "id": "materials",
+          "weight": 0.91465908
+        },
+        {
+          "id": "other_assets",
+          "weight": 1.29741217
+        },
+        {
+          "id": "technology",
+          "weight": 58.27706509
+        },
+        {
+          "id": "utilities",
+          "weight": 1.0745467799999937
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 1.46365915
+        },
+        {
+          "id": "ireland",
+          "weight": 1.80451128
+        },
+        {
+          "id": "netherlands",
+          "weight": 1.31328321
+        },
+        {
+          "id": "other_countries",
+          "weight": 0.40100251
+        },
+        {
+          "id": "united_kingdom",
+          "weight": 0.66165414
+        },
+        {
+          "id": "united_states",
+          "weight": 94.35588971
+        }
+      ],
+      "source_url": "https://funds.cifinancial.com/en/documents/static/Fund_Profiles/Exchange_Traded_Funds/383287/CIInvescoNASDAQ100IndexETF_Monthly_Profile.pdf",
+      "note": "QQC : part QQQM de 99,51 % publiée par CI au 31 août; placements QQQM au 2026-10-09, reclassés selon les secteurs GICS publiés par BlackRock. ARM classé en technologie d’après son activité de concepteur de semi-conducteurs. Géographie CI au 31 août. Dates distinctes, comparaison sectorielle indicative.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh",
+      "sector_as_of": "2026-10-09",
+      "sector_indicative": true,
+      "underlying_source_url": "https://www.invesco.com/us/en/financial-products/etfs/invesco-nasdaq-100-etf.html",
+      "classification_source_url": "https://www.blackrock.com/ca/investors/en/products/309480/ishares-core-equity-etf-portfolio-fund",
+      "refresh": {
+        "kind": "qqqm",
+        "download_url": "https://dng-api.invesco.com/cache/v1/accounts/en_US/shareclasses/46138G649/holdings/fund?idType=cusip&productType=ETF",
+        "wrapper_weight": 99.51,
+        "wrapper_as_of": "2026-08-31",
+        "gics_by_ticker": {
+          "NVDA": "technology",
+          "AAPL": "technology",
+          "MSFT": "technology",
+          "MU": "technology",
+          "AMZN": "consumer_discretionary",
+          "AMD": "technology",
+          "META": "communication_services",
+          "GOOGL": "communication_services",
+          "TSLA": "consumer_discretionary",
+          "SPCX": "communication_services",
+          "GOOG": "communication_services",
+          "AVGO": "technology",
+          "INTC": "technology",
+          "WMT": "consumer_staples",
+          "PLTR": "technology",
+          "CSCO": "technology",
+          "COST": "consumer_staples",
+          "AMAT": "technology",
+          "LRCX": "technology",
+          "PANW": "technology",
+          "NFLX": "communication_services",
+          "CRWD": "technology",
+          "TXN": "technology",
+          "KLAC": "technology",
+          "MRVL": "technology",
+          "SNDK": "technology",
+          "AMGN": "health_care",
+          "LIN": "materials",
+          "ADI": "technology",
+          "GILD": "health_care",
+          "QCOM": "technology",
+          "STX": "technology",
+          "PEP": "consumer_staples",
+          "TMUS": "communication_services",
+          "ISRG": "health_care",
+          "WDC": "technology",
+          "FTNT": "technology",
+          "VRTX": "health_care",
+          "BKNG": "consumer_discretionary",
+          "ADP": "industrials",
+          "CEG": "utilities",
+          "SBUX": "consumer_discretionary",
+          "LITE": "technology",
+          "DDOG": "technology",
+          "SNPS": "technology",
+          "CDNS": "technology",
+          "ADBE": "technology",
+          "MELI": "consumer_discretionary",
+          "MAR": "consumer_discretionary",
+          "MRNA": "health_care",
+          "CSX": "industrials",
+          "MNST": "consumer_staples",
+          "APP": "communication_services",
+          "INTU": "technology",
+          "CTAS": "industrials",
+          "DASH": "consumer_discretionary",
+          "MDLZ": "consumer_staples",
+          "REGN": "health_care",
+          "CMCSA": "communication_services",
+          "ROST": "consumer_discretionary",
+          "ORLY": "consumer_discretionary",
+          "ABNB": "consumer_discretionary",
+          "MPWR": "technology",
+          "AEP": "utilities",
+          "HON": "industrials",
+          "TER": "technology",
+          "ALAB": "technology",
+          "FAST": "industrials",
+          "NXPI": "technology",
+          "PCAR": "industrials",
+          "BKR": "energy",
+          "MSTR": "technology",
+          "PDD": "consumer_discretionary",
+          "FANG": "energy",
+          "NBIS": "technology",
+          "HONA": "industrials",
+          "ADSK": "technology",
+          "PYPL": "financials",
+          "XEL": "utilities",
+          "CCEP": "consumer_staples",
+          "KDP": "consumer_staples",
+          "EXC": "utilities",
+          "MCHP": "technology",
+          "RKLB": "industrials",
+          "IDXX": "health_care",
+          "TTWO": "communication_services",
+          "ODFL": "industrials",
+          "CRWV": "technology",
+          "PAYX": "industrials",
+          "WDAY": "technology",
+          "ROP": "technology",
+          "AXON": "industrials",
+          "DXCM": "health_care",
+          "ALNY": "health_care",
+          "GEHC": "health_care",
+          "CPRT": "industrials",
+          "SHOP": "technology",
+          "TRI": "industrials",
+          "FER": "industrials",
+          "ARM": "technology"
+        }
+      },
+      "classification_secondary_source_url": "https://www.arm.com/company"
+    },
+    {
+      "id": "RY",
+      "title": "Royal Bank of Canada",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "financials",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "SHOP",
+      "title": "Shopify",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "technology",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "SLF",
+      "title": "Sun Life Financial",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "financials",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "SNDK",
+      "title": "Sandisk CDR (couvert en CAD)",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "technology",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "united_states",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.ishares.com/us/products/239600/ishares-msci-acwi-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "SNDKUS",
+      "title": "Sandisk (action américaine)",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "technology",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "united_states",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.ishares.com/us/products/239600/ishares-msci-acwi-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "SU",
+      "title": "Suncor Energy",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "energy",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "T",
+      "title": "TELUS",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "communication_services",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "TD",
+      "title": "Toronto-Dominion Bank",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "financials",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "TOU",
+      "title": "Tourmaline Oil",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "energy",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "TRP",
+      "title": "TC Energy",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "energy",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "TSM",
+      "title": "Taiwan Semiconductor ADR",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "technology",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "taiwan",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.ishares.com/us/products/239600/ishares-msci-acwi-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "UNH",
+      "title": "UnitedHealth Group",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "health_care",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "united_states",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/309480/fund",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "V",
+      "title": "Visa",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "financials",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "united_states",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/309480/fund",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "VCN",
+      "title": "Vanguard FTSE Canada All Cap Index ETF",
+      "as_of": "2026-08-31",
+      "sectors": [
+        {
+          "id": "communication_services",
+          "weight": 1.22385012
+        },
+        {
+          "id": "consumer_discretionary",
+          "weight": 2.9516703
+        },
+        {
+          "id": "consumer_staples",
+          "weight": 2.82973028
+        },
+        {
+          "id": "energy",
+          "weight": 16.83062168
+        },
+        {
+          "id": "financials",
+          "weight": 34.49325345
+        },
+        {
+          "id": "health_care",
+          "weight": 0.21744002
+        },
+        {
+          "id": "industrials",
+          "weight": 9.92131099
+        },
+        {
+          "id": "materials",
+          "weight": 18.80540188
+        },
+        {
+          "id": "other_assets",
+          "weight": 0.74377007
+        },
+        {
+          "id": "real_estate",
+          "weight": 1.22431012
+        },
+        {
+          "id": "technology",
+          "weight": 8.14106081
+        },
+        {
+          "id": "utilities",
+          "weight": 2.6175802800000016
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 99.91963999
+        },
+        {
+          "id": "united_states",
+          "weight": 0.08036001
+        }
+      ],
+      "source_url": "https://www.vanguard.ca/en/product/etf/equity/9561/vanguard-ftse-canada-all-cap-index-etf",
+      "note": "Titres sous-jacents reclassés selon les secteurs GICS fournis par Vanguard; pondérations sur la totalité du FNB.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh",
+      "refresh": {
+        "kind": "vanguard",
+        "port_id": "9561",
+        "mode": "holdings"
+      }
+    },
+    {
+      "id": "VDY",
+      "title": "Vanguard Canadian High Dividend",
+      "as_of": "2026-08-31",
+      "sectors": [
+        {
+          "id": "communication_services",
+          "weight": 2.46749975
+        },
+        {
+          "id": "consumer_discretionary",
+          "weight": 2.77608972
+        },
+        {
+          "id": "consumer_staples",
+          "weight": 0.31493997
+        },
+        {
+          "id": "energy",
+          "weight": 28.42025716
+        },
+        {
+          "id": "financials",
+          "weight": 58.82469412
+        },
+        {
+          "id": "health_care",
+          "weight": 0.08728999
+        },
+        {
+          "id": "industrials",
+          "weight": 0.21110998
+        },
+        {
+          "id": "materials",
+          "weight": 2.06862979
+        },
+        {
+          "id": "other_assets",
+          "weight": 0.29212997
+        },
+        {
+          "id": "technology",
+          "weight": 0.36417996
+        },
+        {
+          "id": "utilities",
+          "weight": 4.173179590000008
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 99.9841
+        },
+        {
+          "id": "united_states",
+          "weight": 0.0159
+        }
+      ],
+      "source_url": "https://www.vanguard.ca/en/product/etf/equity/9560/vanguard-ftse-canadian-high-dividend-yield-index-etf",
+      "note": "Titres sous-jacents reclassés selon les secteurs GICS fournis par Vanguard; pondérations sur la totalité du FNB.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh",
+      "refresh": {
+        "kind": "vanguard",
+        "port_id": "9560",
+        "mode": "holdings"
+      }
+    },
+    {
+      "id": "VEE",
+      "title": "Vanguard Emerging Markets",
+      "as_of": "2026-08-31",
+      "sectors": [
+        {
+          "id": "communication_services",
+          "weight": 6.18831144
+        },
+        {
+          "id": "consumer_discretionary",
+          "weight": 9.20263239
+        },
+        {
+          "id": "consumer_staples",
+          "weight": 3.30932007
+        },
+        {
+          "id": "energy",
+          "weight": 3.70599888
+        },
+        {
+          "id": "financials",
+          "weight": 19.32349203
+        },
+        {
+          "id": "health_care",
+          "weight": 3.67665897
+        },
+        {
+          "id": "industrials",
+          "weight": 6.92981921
+        },
+        {
+          "id": "materials",
+          "weight": 7.63619709
+        },
+        {
+          "id": "other_assets",
+          "weight": 4.98811504
+        },
+        {
+          "id": "real_estate",
+          "weight": 1.97178408
+        },
+        {
+          "id": "technology",
+          "weight": 30.42278873
+        },
+        {
+          "id": "unclassified",
+          "weight": 0.04287987
+        },
+        {
+          "id": "utilities",
+          "weight": 2.6020021999999936
+        }
+      ],
+      "geography": [
+        {
+          "id": "brazil",
+          "weight": 3.8551719
+        },
+        {
+          "id": "canada",
+          "weight": 0.0
+        },
+        {
+          "id": "chile",
+          "weight": 0.60702676
+        },
+        {
+          "id": "china",
+          "weight": 6.17846815
+        },
+        {
+          "id": "colombia",
+          "weight": 0.15361653
+        },
+        {
+          "id": "czech_republic",
+          "weight": 0.14569722
+        },
+        {
+          "id": "egypt",
+          "weight": 0.08764231
+        },
+        {
+          "id": "greece",
+          "weight": 0.78864084
+        },
+        {
+          "id": "hong_kong",
+          "weight": 18.20588334
+        },
+        {
+          "id": "hungary",
+          "weight": 0.39541532
+        },
+        {
+          "id": "iceland",
+          "weight": 0.0775132
+        },
+        {
+          "id": "india",
+          "weight": 15.69675339
+        },
+        {
+          "id": "indonesia",
+          "weight": 0.73647541
+        },
+        {
+          "id": "korea_south",
+          "weight": 0.00016999
+        },
+        {
+          "id": "kuwait",
+          "weight": 0.68340007
+        },
+        {
+          "id": "malaysia",
+          "weight": 1.66785373
+        },
+        {
+          "id": "mexico",
+          "weight": 2.00884382
+        },
+        {
+          "id": "other_assets",
+          "weight": 0.02925743
+        },
+        {
+          "id": "philippines",
+          "weight": 0.38784599
+        },
+        {
+          "id": "pk",
+          "weight": 1e-05
+        },
+        {
+          "id": "poland",
+          "weight": 0.0034297
+        },
+        {
+          "id": "qatar",
+          "weight": 0.54741199
+        },
+        {
+          "id": "ro",
+          "weight": 0.12140935
+        },
+        {
+          "id": "russia",
+          "weight": 0.00014999
+        },
+        {
+          "id": "saudi_arabia",
+          "weight": 2.97252931
+        },
+        {
+          "id": "singapore",
+          "weight": 0.08905219
+        },
+        {
+          "id": "south_africa",
+          "weight": 3.717264
+        },
+        {
+          "id": "taiwan",
+          "weight": 31.00542082
+        },
+        {
+          "id": "thailand",
+          "weight": 1.59413019
+        },
+        {
+          "id": "turkey",
+          "weight": 0.94169741
+        },
+        {
+          "id": "united_arab_emirates",
+          "weight": 1.43810388
+        },
+        {
+          "id": "united_kingdom",
+          "weight": 0.02363793
+        },
+        {
+          "id": "united_states",
+          "weight": 5.82909879
+        },
+        {
+          "id": "xe",
+          "weight": 0.010979049999993723
+        }
+      ],
+      "source_url": "https://www.vanguard.ca/en/product/etf/equity/9556/vanguard-ftse-emerging-markets-all-cap-index-etf",
+      "note": "Titres sous-jacents reclassés selon les secteurs GICS fournis par Vanguard; pondérations sur la totalité du FNB.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh",
+      "refresh": {
+        "kind": "vanguard",
+        "port_id": "9556",
+        "mode": "delayeredHoldings"
+      }
+    },
+    {
+      "id": "VEQT",
+      "title": "Vanguard All-Equity ETF Portfolio",
+      "as_of": "2026-08-31",
+      "sectors": [
+        {
+          "id": "communication_services",
+          "weight": 5.37196078
+        },
+        {
+          "id": "consumer_discretionary",
+          "weight": 7.06765841
+        },
+        {
+          "id": "consumer_staples",
+          "weight": 4.03917051
+        },
+        {
+          "id": "energy",
+          "weight": 7.64514419
+        },
+        {
+          "id": "financials",
+          "weight": 21.61733219
+        },
+        {
+          "id": "health_care",
+          "weight": 6.32952379
+        },
+        {
+          "id": "industrials",
+          "weight": 11.1505086
+        },
+        {
+          "id": "materials",
+          "weight": 8.37447887
+        },
+        {
+          "id": "other_assets",
+          "weight": 0.90897336
+        },
+        {
+          "id": "real_estate",
+          "weight": 1.92254597
+        },
+        {
+          "id": "technology",
+          "weight": 23.13518111
+        },
+        {
+          "id": "unclassified",
+          "weight": 0.00430997
+        },
+        {
+          "id": "utilities",
+          "weight": 2.4332122499999937
+        }
+      ],
+      "geography": [
+        {
+          "id": "australia",
+          "weight": 1.1374817
+        },
+        {
+          "id": "austria",
+          "weight": 0.07007949
+        },
+        {
+          "id": "belgium",
+          "weight": 0.18504865
+        },
+        {
+          "id": "brazil",
+          "weight": 0.26981803
+        },
+        {
+          "id": "canada",
+          "weight": 30.60636657
+        },
+        {
+          "id": "chile",
+          "weight": 0.04248969
+        },
+        {
+          "id": "china",
+          "weight": 0.43272684
+        },
+        {
+          "id": "colombia",
+          "weight": 0.01075992
+        },
+        {
+          "id": "czech_republic",
+          "weight": 0.01018993
+        },
+        {
+          "id": "denmark",
+          "weight": 0.26716805
+        },
+        {
+          "id": "egypt",
+          "weight": 0.00613996
+        },
+        {
+          "id": "finland",
+          "weight": 0.17500872
+        },
+        {
+          "id": "france",
+          "weight": 1.33874023
+        },
+        {
+          "id": "germany",
+          "weight": 1.28051065
+        },
+        {
+          "id": "greece",
+          "weight": 0.0551996
+        },
+        {
+          "id": "hong_kong",
+          "weight": 1.58064846
+        },
+        {
+          "id": "hungary",
+          "weight": 0.0276698
+        },
+        {
+          "id": "iceland",
+          "weight": 0.00540996
+        },
+        {
+          "id": "india",
+          "weight": 1.09841198
+        },
+        {
+          "id": "indonesia",
+          "weight": 0.05154962
+        },
+        {
+          "id": "ireland",
+          "weight": 0.05670959
+        },
+        {
+          "id": "israel",
+          "weight": 0.22149838
+        },
+        {
+          "id": "italy",
+          "weight": 0.54870599
+        },
+        {
+          "id": "japan",
+          "weight": 4.15340968
+        },
+        {
+          "id": "korea_south",
+          "weight": 1.71353749
+        },
+        {
+          "id": "kuwait",
+          "weight": 0.04782965
+        },
+        {
+          "id": "malaysia",
+          "weight": 0.11673915
+        },
+        {
+          "id": "mexico",
+          "weight": 0.14058897
+        },
+        {
+          "id": "netherlands",
+          "weight": 0.75932446
+        },
+        {
+          "id": "new_zealand",
+          "weight": 0.03974971
+        },
+        {
+          "id": "norway",
+          "weight": 0.14266896
+        },
+        {
+          "id": "other_assets",
+          "weight": 0.00485996
+        },
+        {
+          "id": "philippines",
+          "weight": 0.0271598
+        },
+        {
+          "id": "poland",
+          "weight": 0.10427924
+        },
+        {
+          "id": "portugal",
+          "weight": 0.03276976
+        },
+        {
+          "id": "qatar",
+          "weight": 0.03828972
+        },
+        {
+          "id": "ro",
+          "weight": 0.00849994
+        },
+        {
+          "id": "russia",
+          "weight": 1e-05
+        },
+        {
+          "id": "saudi_arabia",
+          "weight": 0.20806848
+        },
+        {
+          "id": "singapore",
+          "weight": 0.27828797
+        },
+        {
+          "id": "south_africa",
+          "weight": 0.2601381
+        },
+        {
+          "id": "spain",
+          "weight": 0.58826571
+        },
+        {
+          "id": "sweden",
+          "weight": 0.53256611
+        },
+        {
+          "id": "switzerland",
+          "weight": 1.33720024
+        },
+        {
+          "id": "taiwan",
+          "weight": 2.16971416
+        },
+        {
+          "id": "thailand",
+          "weight": 0.11154919
+        },
+        {
+          "id": "turkey",
+          "weight": 0.06595952
+        },
+        {
+          "id": "united_arab_emirates",
+          "weight": 0.10060927
+        },
+        {
+          "id": "united_kingdom",
+          "weight": 2.22051379
+        },
+        {
+          "id": "united_states",
+          "weight": 45.31650919
+        },
+        {
+          "id": "xe",
+          "weight": 0.002569970000006278
+        }
+      ],
+      "source_url": "https://www.vanguard.ca/en/product/etf/asset-allocation/9692/vanguard-all-equity-etf-portfolio",
+      "note": "Titres sous-jacents reclassés selon les secteurs GICS fournis par Vanguard; pondérations sur la totalité du FNB.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh",
+      "refresh": {
+        "kind": "vanguard",
+        "port_id": "9692",
+        "mode": "delayeredHoldings"
+      }
+    },
+    {
+      "id": "VFV",
+      "title": "Vanguard S&P 500 Index ETF",
+      "as_of": "2026-08-31",
+      "sectors": [
+        {
+          "id": "communication_services",
+          "weight": 9.48398138
+        },
+        {
+          "id": "consumer_discretionary",
+          "weight": 9.12859095
+        },
+        {
+          "id": "consumer_staples",
+          "weight": 4.49371539
+        },
+        {
+          "id": "energy",
+          "weight": 3.47466417
+        },
+        {
+          "id": "financials",
+          "weight": 12.21974466
+        },
+        {
+          "id": "health_care",
+          "weight": 9.26487112
+        },
+        {
+          "id": "industrials",
+          "weight": 8.29858996
+        },
+        {
+          "id": "materials",
+          "weight": 1.82455219
+        },
+        {
+          "id": "other_assets",
+          "weight": 0.22119027
+        },
+        {
+          "id": "real_estate",
+          "weight": 1.79899216
+        },
+        {
+          "id": "technology",
+          "weight": 37.81019537
+        },
+        {
+          "id": "utilities",
+          "weight": 1.98091238
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 0.01625002
+        },
+        {
+          "id": "united_states",
+          "weight": 99.98374998
+        }
+      ],
+      "source_url": "https://www.vanguard.ca/en/product/etf/equity/9563/vanguard-sp-500-index-etf",
+      "note": "Titres sous-jacents reclassés selon les secteurs GICS fournis par Vanguard; pondérations sur la totalité du FNB.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh",
+      "refresh": {
+        "kind": "vanguard",
+        "port_id": "9563",
+        "mode": "delayeredHoldings"
+      }
+    },
+    {
+      "id": "VGRO",
+      "title": "Vanguard Growth ETF Portfolio",
+      "as_of": "2026-08-31",
+      "sectors": [
+        {
+          "id": "bonds",
+          "weight": 18.10123143
+        },
+        {
+          "id": "communication_services",
+          "weight": 4.38873066
+        },
+        {
+          "id": "consumer_discretionary",
+          "weight": 5.78568315
+        },
+        {
+          "id": "consumer_staples",
+          "weight": 3.30875327
+        },
+        {
+          "id": "energy",
+          "weight": 6.20784995
+        },
+        {
+          "id": "financials",
+          "weight": 17.63077386
+        },
+        {
+          "id": "health_care",
+          "weight": 5.19295361
+        },
+        {
+          "id": "industrials",
+          "weight": 9.13976715
+        },
+        {
+          "id": "materials",
+          "weight": 6.80906963
+        },
+        {
+          "id": "other_assets",
+          "weight": 0.97297566
+        },
+        {
+          "id": "real_estate",
+          "weight": 1.57340533
+        },
+        {
+          "id": "technology",
+          "weight": 18.89571422
+        },
+        {
+          "id": "unclassified",
+          "weight": 0.00353006
+        },
+        {
+          "id": "utilities",
+          "weight": 1.9895620200000064
+        }
+      ],
+      "geography": [
+        {
+          "id": "australia",
+          "weight": 1.10040772
+        },
+        {
+          "id": "austria",
+          "weight": 0.11257181
+        },
+        {
+          "id": "belgium",
+          "weight": 0.23151373
+        },
+        {
+          "id": "bermuda",
+          "weight": 0.00145002
+        },
+        {
+          "id": "bg",
+          "weight": 0.00410007
+        },
+        {
+          "id": "brazil",
+          "weight": 0.21880352
+        },
+        {
+          "id": "canada",
+          "weight": 35.85016719
+        },
+        {
+          "id": "cayman_islands",
+          "weight": 0.00340005
+        },
+        {
+          "id": "chile",
+          "weight": 0.04585074
+        },
+        {
+          "id": "china",
+          "weight": 0.39864642
+        },
+        {
+          "id": "colombia",
+          "weight": 0.00872014
+        },
+        {
+          "id": "czech_republic",
+          "weight": 0.02388038
+        },
+        {
+          "id": "denmark",
+          "weight": 0.25342408
+        },
+        {
+          "id": "ee",
+          "weight": 0.00052001
+        },
+        {
+          "id": "egypt",
+          "weight": 0.00497008
+        },
+        {
+          "id": "finland",
+          "weight": 0.17944289
+        },
+        {
+          "id": "france",
+          "weight": 1.57017528
+        },
+        {
+          "id": "germany",
+          "weight": 1.44932333
+        },
+        {
+          "id": "greece",
+          "weight": 0.05721092
+        },
+        {
+          "id": "guernsey",
+          "weight": 0.00012
+        },
+        {
+          "id": "hong_kong",
+          "weight": 1.29126079
+        },
+        {
+          "id": "hr",
+          "weight": 0.00231004
+        },
+        {
+          "id": "hungary",
+          "weight": 0.03614058
+        },
+        {
+          "id": "iceland",
+          "weight": 0.00441007
+        },
+        {
+          "id": "im",
+          "weight": 0.00019
+        },
+        {
+          "id": "india",
+          "weight": 0.89023433
+        },
+        {
+          "id": "indonesia",
+          "weight": 0.08109131
+        },
+        {
+          "id": "ireland",
+          "weight": 0.0808213
+        },
+        {
+          "id": "israel",
+          "weight": 0.20632332
+        },
+        {
+          "id": "italy",
+          "weight": 0.7266917
+        },
+        {
+          "id": "japan",
+          "weight": 3.87534239
+        },
+        {
+          "id": "jersey",
+          "weight": 0.02256036
+        },
+        {
+          "id": "korea_south",
+          "weight": 1.53345469
+        },
+        {
+          "id": "kuwait",
+          "weight": 0.03877062
+        },
+        {
+          "id": "kz",
+          "weight": 8e-05
+        },
+        {
+          "id": "li",
+          "weight": 0.00046001
+        },
+        {
+          "id": "lr",
+          "weight": 0.00073001
+        },
+        {
+          "id": "lt",
+          "weight": 0.00272004
+        },
+        {
+          "id": "luxembourg",
+          "weight": 0.04049065
+        },
+        {
+          "id": "lv",
+          "weight": 0.00224004
+        },
+        {
+          "id": "malaysia",
+          "weight": 0.13130211
+        },
+        {
+          "id": "mexico",
+          "weight": 0.16461265
+        },
+        {
+          "id": "mult",
+          "weight": 0.00121002
+        },
+        {
+          "id": "netherlands",
+          "weight": 0.77345245
+        },
+        {
+          "id": "new_zealand",
+          "weight": 0.04842078
+        },
+        {
+          "id": "norway",
+          "weight": 0.13946225
+        },
+        {
+          "id": "other_assets",
+          "weight": 0.03417055
+        },
+        {
+          "id": "pa",
+          "weight": 0.00342006
+        },
+        {
+          "id": "peru",
+          "weight": 0.00980016
+        },
+        {
+          "id": "philippines",
+          "weight": 0.02783045
+        },
+        {
+          "id": "poland",
+          "weight": 0.124212
+        },
+        {
+          "id": "portugal",
+          "weight": 0.05192084
+        },
+        {
+          "id": "qatar",
+          "weight": 0.0310405
+        },
+        {
+          "id": "ro",
+          "weight": 0.02525041
+        },
+        {
+          "id": "russia",
+          "weight": 1e-05
+        },
+        {
+          "id": "saudi_arabia",
+          "weight": 0.16917272
+        },
+        {
+          "id": "si",
+          "weight": 0.00257004
+        },
+        {
+          "id": "singapore",
+          "weight": 0.25890417
+        },
+        {
+          "id": "sk",
+          "weight": 0.00922015
+        },
+        {
+          "id": "snat",
+          "weight": 0.25972418
+        },
+        {
+          "id": "south_africa",
+          "weight": 0.21084339
+        },
+        {
+          "id": "spain",
+          "weight": 0.68506103
+        },
+        {
+          "id": "sweden",
+          "weight": 0.49320794
+        },
+        {
+          "id": "switzerland",
+          "weight": 1.16860881
+        },
+        {
+          "id": "taiwan",
+          "weight": 1.75826831
+        },
+        {
+          "id": "thailand",
+          "weight": 0.12218197
+        },
+        {
+          "id": "turkey",
+          "weight": 0.05330086
+        },
+        {
+          "id": "united_arab_emirates",
+          "weight": 0.08171132
+        },
+        {
+          "id": "united_kingdom",
+          "weight": 2.18076511
+        },
+        {
+          "id": "united_states",
+          "weight": 40.62517407
+        },
+        {
+          "id": "uy",
+          "weight": 0.00153002
+        },
+        {
+          "id": "vg",
+          "weight": 0.00023
+        },
+        {
+          "id": "xe",
+          "weight": 0.002390049999993722
+        }
+      ],
+      "source_url": "https://www.vanguard.ca/en/product/etf/asset-allocation/9579/vanguard-growth-etf-portfolio",
+      "note": "Titres sous-jacents reclassés selon les secteurs GICS fournis par Vanguard; pondérations sur la totalité du FNB.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh",
+      "refresh": {
+        "kind": "vanguard",
+        "port_id": "9579",
+        "mode": "delayeredHoldings"
+      }
+    },
+    {
+      "id": "VIU",
+      "title": "Vanguard FTSE Developed All Cap ex North America ETF",
+      "as_of": "2026-08-31",
+      "sectors": [
+        {
+          "id": "communication_services",
+          "weight": 3.36872505
+        },
+        {
+          "id": "consumer_discretionary",
+          "weight": 8.37221256
+        },
+        {
+          "id": "consumer_staples",
+          "weight": 5.87438881
+        },
+        {
+          "id": "energy",
+          "weight": 3.37233506
+        },
+        {
+          "id": "financials",
+          "weight": 23.05831459
+        },
+        {
+          "id": "health_care",
+          "weight": 8.64534297
+        },
+        {
+          "id": "industrials",
+          "weight": 18.81618822
+        },
+        {
+          "id": "materials",
+          "weight": 6.65222998
+        },
+        {
+          "id": "other_assets",
+          "weight": 0.97306146
+        },
+        {
+          "id": "real_estate",
+          "weight": 2.42768364
+        },
+        {
+          "id": "technology",
+          "weight": 15.23497285
+        },
+        {
+          "id": "unclassified",
+          "weight": 0.00728001
+        },
+        {
+          "id": "utilities",
+          "weight": 3.1972648
+        }
+      ],
+      "geography": [
+        {
+          "id": "australia",
+          "weight": 6.45191838
+        },
+        {
+          "id": "austria",
+          "weight": 0.39757312
+        },
+        {
+          "id": "belgium",
+          "weight": 1.04973184
+        },
+        {
+          "id": "canada",
+          "weight": 0.13933759
+        },
+        {
+          "id": "china",
+          "weight": 9e-05
+        },
+        {
+          "id": "denmark",
+          "weight": 1.51564378
+        },
+        {
+          "id": "finland",
+          "weight": 0.99268283
+        },
+        {
+          "id": "france",
+          "weight": 7.59434862
+        },
+        {
+          "id": "germany",
+          "weight": 7.26340434
+        },
+        {
+          "id": "hong_kong",
+          "weight": 1.73935991
+        },
+        {
+          "id": "ireland",
+          "weight": 0.32168443
+        },
+        {
+          "id": "israel",
+          "weight": 1.25665826
+        },
+        {
+          "id": "italy",
+          "weight": 3.11238616
+        },
+        {
+          "id": "japan",
+          "weight": 23.55994241
+        },
+        {
+          "id": "korea_south",
+          "weight": 9.72012184
+        },
+        {
+          "id": "netherlands",
+          "weight": 4.30717549
+        },
+        {
+          "id": "new_zealand",
+          "weight": 0.2254661
+        },
+        {
+          "id": "norway",
+          "weight": 0.809286
+        },
+        {
+          "id": "other_assets",
+          "weight": 0.0
+        },
+        {
+          "id": "poland",
+          "weight": 0.58994979
+        },
+        {
+          "id": "portugal",
+          "weight": 0.18592678
+        },
+        {
+          "id": "singapore",
+          "weight": 1.5430733
+        },
+        {
+          "id": "spain",
+          "weight": 3.33712227
+        },
+        {
+          "id": "sweden",
+          "weight": 3.02090774
+        },
+        {
+          "id": "switzerland",
+          "weight": 7.58514878
+        },
+        {
+          "id": "united_kingdom",
+          "weight": 12.58665225
+        },
+        {
+          "id": "united_states",
+          "weight": 0.68417816
+        },
+        {
+          "id": "xe",
+          "weight": 0.010229829999993723
+        }
+      ],
+      "source_url": "https://www.vanguard.ca/en/product/etf/equity/9569/vanguard-ftse-developed-all-cap-ex-north-america-index-etf",
+      "note": "Titres sous-jacents reclassés selon les secteurs GICS fournis par Vanguard; pondérations sur la totalité du FNB.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh",
+      "refresh": {
+        "kind": "vanguard",
+        "port_id": "9569",
+        "mode": "holdings"
+      }
+    },
+    {
+      "id": "VNP",
+      "title": "5N Plus",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "materials",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "WCN",
+      "title": "Waste Connections",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "industrials",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "united_states",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "WFC",
+      "title": "Wells Fargo",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "financials",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "united_states",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/309480/fund",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "WMT",
+      "title": "Walmart",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "consumer_staples",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "united_states",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.ishares.com/us/products/239600/ishares-msci-acwi-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "WSP",
+      "title": "WSP Global",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "industrials",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "XBB",
+      "title": "iShares Core Canadian Universe Bond Index ETF",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "bonds",
+          "weight": 99.98210893
+        },
+        {
+          "id": "other_assets",
+          "weight": 0.00361321
+        },
+        {
+          "id": "unclassified",
+          "weight": 0.014277860000007933
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 96.31233094
+        },
+        {
+          "id": "france",
+          "weight": 0.1386154
+        },
+        {
+          "id": "germany",
+          "weight": 0.26583466
+        },
+        {
+          "id": "supranational",
+          "weight": 0.44073114
+        },
+        {
+          "id": "switzerland",
+          "weight": 0.0492036
+        },
+        {
+          "id": "united_kingdom",
+          "weight": 0.10356676
+        },
+        {
+          "id": "united_states",
+          "weight": 2.689717500000006
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239493/ishares-canadian-universe-bond-index-etf",
+      "note": "Secteurs GICS et pays de risque; pondérations des placements sous-jacents, obligations et liquidités incluses.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh",
+      "refresh": {
+        "kind": "ishares",
+        "download_url": "https://www.blackrock.com/ca/investors/en/products/239493/ishares-canadian-universe-bond-index-etf/1464253357814.ajax?fileType=csv&fileName=XBB_holdings&dataType=fund"
+      }
+    },
+    {
+      "id": "XEF",
+      "title": "iShares Core MSCI EAFE IMI Index ETF",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "communication_services",
+          "weight": 3.76568221
+        },
+        {
+          "id": "consumer_discretionary",
+          "weight": 8.24168543
+        },
+        {
+          "id": "consumer_staples",
+          "weight": 6.18307456
+        },
+        {
+          "id": "energy",
+          "weight": 3.9251367
+        },
+        {
+          "id": "financials",
+          "weight": 25.67629651
+        },
+        {
+          "id": "health_care",
+          "weight": 9.17809012
+        },
+        {
+          "id": "industrials",
+          "weight": 18.72316191
+        },
+        {
+          "id": "materials",
+          "weight": 6.61901601
+        },
+        {
+          "id": "other_assets",
+          "weight": 0.72755638
+        },
+        {
+          "id": "real_estate",
+          "weight": 2.46208749
+        },
+        {
+          "id": "technology",
+          "weight": 11.10519186
+        },
+        {
+          "id": "utilities",
+          "weight": 3.3930208199999923
+        }
+      ],
+      "geography": [
+        {
+          "id": "australia",
+          "weight": 6.89987319
+        },
+        {
+          "id": "austria",
+          "weight": 0.42078169
+        },
+        {
+          "id": "belgium",
+          "weight": 1.08739941
+        },
+        {
+          "id": "canada",
+          "weight": 0.12647202
+        },
+        {
+          "id": "denmark",
+          "weight": 1.58417834
+        },
+        {
+          "id": "european_union",
+          "weight": 0.08334197
+        },
+        {
+          "id": "finland",
+          "weight": 1.12851049
+        },
+        {
+          "id": "france",
+          "weight": 8.13615373
+        },
+        {
+          "id": "germany",
+          "weight": 7.6808988
+        },
+        {
+          "id": "greece",
+          "weight": 0.02007395
+        },
+        {
+          "id": "hong_kong",
+          "weight": 1.70219456
+        },
+        {
+          "id": "ireland",
+          "weight": 0.38481141
+        },
+        {
+          "id": "israel",
+          "weight": 1.54463705
+        },
+        {
+          "id": "italy",
+          "weight": 2.9627262
+        },
+        {
+          "id": "japan",
+          "weight": 26.15327914
+        },
+        {
+          "id": "netherlands",
+          "weight": 5.1733321
+        },
+        {
+          "id": "new_zealand",
+          "weight": 0.197244
+        },
+        {
+          "id": "norway",
+          "weight": 0.88533473
+        },
+        {
+          "id": "portugal",
+          "weight": 0.19841614
+        },
+        {
+          "id": "singapore",
+          "weight": 1.81119704
+        },
+        {
+          "id": "spain",
+          "weight": 3.45674236
+        },
+        {
+          "id": "sweden",
+          "weight": 3.56836875
+        },
+        {
+          "id": "switzerland",
+          "weight": 8.28080819
+        },
+        {
+          "id": "united_kingdom",
+          "weight": 13.70818744
+        },
+        {
+          "id": "united_states",
+          "weight": 2.805037299999998
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/251421/ishares-msci-eafe-imi-index-etf",
+      "note": "Secteurs GICS et pays de risque; pondérations des placements sous-jacents, obligations et liquidités incluses.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh",
+      "refresh": {
+        "kind": "ishares",
+        "download_url": "https://www.blackrock.com/ca/investors/en/products/251421/ishares-msci-eafe-imi-index-etf/1464253357814.ajax?fileType=csv&fileName=XEF_holdings&dataType=fund"
+      }
+    },
+    {
+      "id": "XEQT",
+      "title": "iShares Core Equity ETF Portfolio",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "communication_services",
+          "weight": 5.80414172
+        },
+        {
+          "id": "consumer_discretionary",
+          "weight": 7.18288466
+        },
+        {
+          "id": "consumer_staples",
+          "weight": 4.38276699
+        },
+        {
+          "id": "energy",
+          "weight": 6.96014175
+        },
+        {
+          "id": "financials",
+          "weight": 20.28251259
+        },
+        {
+          "id": "health_care",
+          "weight": 7.00562044
+        },
+        {
+          "id": "industrials",
+          "weight": 11.59443766
+        },
+        {
+          "id": "materials",
+          "weight": 7.36733634
+        },
+        {
+          "id": "other_assets",
+          "weight": 0.48991204
+        },
+        {
+          "id": "real_estate",
+          "weight": 1.90826864
+        },
+        {
+          "id": "technology",
+          "weight": 24.38821349
+        },
+        {
+          "id": "utilities",
+          "weight": 2.633763680000008
+        }
+      ],
+      "geography": [
+        {
+          "id": "australia",
+          "weight": 1.70225882
+        },
+        {
+          "id": "austria",
+          "weight": 0.10324251
+        },
+        {
+          "id": "belgium",
+          "weight": 0.26685351
+        },
+        {
+          "id": "bermuda",
+          "weight": 0.16466135
+        },
+        {
+          "id": "brazil",
+          "weight": 0.23013153
+        },
+        {
+          "id": "canada",
+          "weight": 24.57289314
+        },
+        {
+          "id": "chile",
+          "weight": 0.02246167
+        },
+        {
+          "id": "china",
+          "weight": 0.88112371
+        },
+        {
+          "id": "colombia",
+          "weight": 0.0093523
+        },
+        {
+          "id": "czech_republic",
+          "weight": 0.00485827
+        },
+        {
+          "id": "denmark",
+          "weight": 0.38889444
+        },
+        {
+          "id": "egypt",
+          "weight": 0.00386891
+        },
+        {
+          "id": "european_union",
+          "weight": 0.02103915
+        },
+        {
+          "id": "finland",
+          "weight": 0.27686574
+        },
+        {
+          "id": "france",
+          "weight": 1.99674792
+        },
+        {
+          "id": "germany",
+          "weight": 1.88512647
+        },
+        {
+          "id": "greece",
+          "weight": 0.03361575
+        },
+        {
+          "id": "hong_kong",
+          "weight": 0.42097621
+        },
+        {
+          "id": "hungary",
+          "weight": 0.01364849
+        },
+        {
+          "id": "india",
+          "weight": 0.56069455
+        },
+        {
+          "id": "indonesia",
+          "weight": 0.02503995
+        },
+        {
+          "id": "ireland",
+          "weight": 0.0942723
+        },
+        {
+          "id": "israel",
+          "weight": 0.37919851
+        },
+        {
+          "id": "italy",
+          "weight": 0.72712545
+        },
+        {
+          "id": "japan",
+          "weight": 6.4189422
+        },
+        {
+          "id": "korea_south",
+          "weight": 0.97579712
+        },
+        {
+          "id": "kuwait",
+          "weight": 0.02675154
+        },
+        {
+          "id": "malaysia",
+          "weight": 0.05242108
+        },
+        {
+          "id": "mexico",
+          "weight": 0.07535125
+        },
+        {
+          "id": "netherlands",
+          "weight": 1.26969203
+        },
+        {
+          "id": "new_zealand",
+          "weight": 0.04839542
+        },
+        {
+          "id": "norway",
+          "weight": 0.2172686
+        },
+        {
+          "id": "peru",
+          "weight": 0.01809798
+        },
+        {
+          "id": "philippines",
+          "weight": 0.01490688
+        },
+        {
+          "id": "poland",
+          "weight": 0.05842794
+        },
+        {
+          "id": "portugal",
+          "weight": 0.04877102
+        },
+        {
+          "id": "qatar",
+          "weight": 0.02166093
+        },
+        {
+          "id": "saudi_arabia",
+          "weight": 0.11468646
+        },
+        {
+          "id": "singapore",
+          "weight": 0.44446802
+        },
+        {
+          "id": "south_africa",
+          "weight": 0.14381161
+        },
+        {
+          "id": "spain",
+          "weight": 0.84826019
+        },
+        {
+          "id": "sweden",
+          "weight": 0.87836265
+        },
+        {
+          "id": "switzerland",
+          "weight": 2.03237907
+        },
+        {
+          "id": "taiwan",
+          "weight": 1.41817308
+        },
+        {
+          "id": "thailand",
+          "weight": 0.05465728
+        },
+        {
+          "id": "turkey",
+          "weight": 0.02421974
+        },
+        {
+          "id": "united_arab_emirates",
+          "weight": 0.0567087
+        },
+        {
+          "id": "united_kingdom",
+          "weight": 3.36441664
+        },
+        {
+          "id": "united_states",
+          "weight": 46.58842192
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/309480/ishares-core-equity-etf-portfolio-fund",
+      "note": "Secteurs GICS et pays de risque; pondérations des placements sous-jacents, obligations et liquidités incluses.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh",
+      "refresh": {
+        "kind": "ishares",
+        "download_url": "https://www.blackrock.com/ca/investors/en/products/309480/fund/1464253357814.ajax?fileType=csv&fileName=XEQT_holdings&dataType=fund"
+      }
+    },
+    {
+      "id": "XGD",
+      "title": "iShares Global Gold",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "materials",
+          "weight": 99.89564105
+        },
+        {
+          "id": "other_assets",
+          "weight": 0.10435895
+        }
+      ],
+      "geography": [
+        {
+          "id": "australia",
+          "weight": 0.19754761
+        },
+        {
+          "id": "brazil",
+          "weight": 0.420014
+        },
+        {
+          "id": "canada",
+          "weight": 63.829232
+        },
+        {
+          "id": "colombia",
+          "weight": 0.09976032
+        },
+        {
+          "id": "south_africa",
+          "weight": 11.26904383
+        },
+        {
+          "id": "united_kingdom",
+          "weight": 1.56594122
+        },
+        {
+          "id": "united_states",
+          "weight": 22.61846102000001
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239848/ishares-sptsx-global-gold-index-etf",
+      "note": "Secteurs GICS et pays de risque; pondérations des placements sous-jacents, obligations et liquidités incluses.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh",
+      "refresh": {
+        "kind": "ishares",
+        "download_url": "https://www.blackrock.com/ca/investors/en/products/239848/ishares-sptsx-global-gold-index-etf/1464253357814.ajax?fileType=csv&fileName=XGD_holdings&dataType=fund"
+      }
+    },
+    {
+      "id": "XGRO",
+      "title": "iShares Core Growth ETF Portfolio",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "bonds",
+          "weight": 18.9492424
+        },
+        {
+          "id": "communication_services",
+          "weight": 4.69564649
+        },
+        {
+          "id": "consumer_discretionary",
+          "weight": 5.82242746
+        },
+        {
+          "id": "consumer_staples",
+          "weight": 3.55584617
+        },
+        {
+          "id": "energy",
+          "weight": 5.61043343
+        },
+        {
+          "id": "financials",
+          "weight": 16.40882576
+        },
+        {
+          "id": "health_care",
+          "weight": 5.68717134
+        },
+        {
+          "id": "industrials",
+          "weight": 9.41302539
+        },
+        {
+          "id": "materials",
+          "weight": 5.94613641
+        },
+        {
+          "id": "other_assets",
+          "weight": 0.52164182
+        },
+        {
+          "id": "real_estate",
+          "weight": 1.54747619
+        },
+        {
+          "id": "technology",
+          "weight": 19.70425363
+        },
+        {
+          "id": "unclassified",
+          "weight": 0.00417814
+        },
+        {
+          "id": "utilities",
+          "weight": 2.13369537
+        }
+      ],
+      "geography": [
+        {
+          "id": "australia",
+          "weight": 1.43214745
+        },
+        {
+          "id": "austria",
+          "weight": 0.08493052
+        },
+        {
+          "id": "barbados",
+          "weight": 2.36e-05
+        },
+        {
+          "id": "belgium",
+          "weight": 0.22792844
+        },
+        {
+          "id": "bermuda",
+          "weight": 0.1342251
+        },
+        {
+          "id": "brazil",
+          "weight": 0.19044552
+        },
+        {
+          "id": "canada",
+          "weight": 34.08683676
+        },
+        {
+          "id": "cayman_islands",
+          "weight": 2.674e-05
+        },
+        {
+          "id": "chile",
+          "weight": 0.02579085
+        },
+        {
+          "id": "china",
+          "weight": 0.71829295
+        },
+        {
+          "id": "colombia",
+          "weight": 0.00804123
+        },
+        {
+          "id": "czech_republic",
+          "weight": 0.00390452
+        },
+        {
+          "id": "denmark",
+          "weight": 0.32109275
+        },
+        {
+          "id": "ecuador",
+          "weight": 1.328e-05
+        },
+        {
+          "id": "egypt",
+          "weight": 0.00310439
+        },
+        {
+          "id": "european_union",
+          "weight": 0.01729711
+        },
+        {
+          "id": "finland",
+          "weight": 0.22829626
+        },
+        {
+          "id": "france",
+          "weight": 1.72162955
+        },
+        {
+          "id": "germany",
+          "weight": 1.66101703
+        },
+        {
+          "id": "greece",
+          "weight": 0.0270705
+        },
+        {
+          "id": "hong_kong",
+          "weight": 0.35231593
+        },
+        {
+          "id": "hungary",
+          "weight": 0.01095146
+        },
+        {
+          "id": "india",
+          "weight": 0.45161384
+        },
+        {
+          "id": "indonesia",
+          "weight": 0.02488086
+        },
+        {
+          "id": "ireland",
+          "weight": 0.09007556
+        },
+        {
+          "id": "israel",
+          "weight": 0.31252496
+        },
+        {
+          "id": "italy",
+          "weight": 0.60774775
+        },
+        {
+          "id": "japan",
+          "weight": 5.32245957
+        },
+        {
+          "id": "kazakhstan",
+          "weight": 0.00104985
+        },
+        {
+          "id": "korea_south",
+          "weight": 0.78735786
+        },
+        {
+          "id": "kuwait",
+          "weight": 0.02161169
+        },
+        {
+          "id": "luxembourg",
+          "weight": 0.00125602
+        },
+        {
+          "id": "macau",
+          "weight": 0.00075498
+        },
+        {
+          "id": "malaysia",
+          "weight": 0.04485968
+        },
+        {
+          "id": "mexico",
+          "weight": 0.0723081
+        },
+        {
+          "id": "morocco",
+          "weight": 0.00104008
+        },
+        {
+          "id": "netherlands",
+          "weight": 1.05314703
+        },
+        {
+          "id": "new_zealand",
+          "weight": 0.04175382
+        },
+        {
+          "id": "norway",
+          "weight": 0.18337749
+        },
+        {
+          "id": "oman",
+          "weight": 1.11e-06
+        },
+        {
+          "id": "panama",
+          "weight": 0.00046877
+        },
+        {
+          "id": "peru",
+          "weight": 0.01543344
+        },
+        {
+          "id": "philippines",
+          "weight": 0.01196119
+        },
+        {
+          "id": "poland",
+          "weight": 0.04705133
+        },
+        {
+          "id": "portugal",
+          "weight": 0.04023787
+        },
+        {
+          "id": "qatar",
+          "weight": 0.0192625
+        },
+        {
+          "id": "saudi_arabia",
+          "weight": 0.10111719
+        },
+        {
+          "id": "singapore",
+          "weight": 0.36711156
+        },
+        {
+          "id": "south_africa",
+          "weight": 0.11762198
+        },
+        {
+          "id": "spain",
+          "weight": 0.70770113
+        },
+        {
+          "id": "supranational",
+          "weight": 0.05439576
+        },
+        {
+          "id": "sweden",
+          "weight": 0.72401893
+        },
+        {
+          "id": "switzerland",
+          "weight": 1.71056202
+        },
+        {
+          "id": "taiwan",
+          "weight": 1.1395266
+        },
+        {
+          "id": "thailand",
+          "weight": 0.04563679
+        },
+        {
+          "id": "turkey",
+          "weight": 0.01948559
+        },
+        {
+          "id": "united_arab_emirates",
+          "weight": 0.05073739
+        },
+        {
+          "id": "united_kingdom",
+          "weight": 2.88116594
+        },
+        {
+          "id": "united_states",
+          "weight": 41.67330183
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239447/ishares-balanced-growth-coreportfoliotm-fund",
+      "note": "Secteurs GICS et pays de risque; pondérations des placements sous-jacents, obligations et liquidités incluses.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh",
+      "refresh": {
+        "kind": "ishares",
+        "download_url": "https://www.blackrock.com/ca/investors/en/products/239447/ishares-balanced-growth-coreportfoliotm-fund/1464253357814.ajax?fileType=csv&fileName=XGRO_holdings&dataType=fund"
+      }
+    },
+    {
+      "id": "XIC",
+      "title": "iShares Core S&P/TSX Capped Composite ETF",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "communication_services",
+          "weight": 1.36536376
+        },
+        {
+          "id": "consumer_discretionary",
+          "weight": 2.97032296
+        },
+        {
+          "id": "consumer_staples",
+          "weight": 2.96853594
+        },
+        {
+          "id": "energy",
+          "weight": 16.61565848
+        },
+        {
+          "id": "financials",
+          "weight": 33.41261606
+        },
+        {
+          "id": "health_care",
+          "weight": 0.30090209
+        },
+        {
+          "id": "industrials",
+          "weight": 9.89165447
+        },
+        {
+          "id": "materials",
+          "weight": 18.34963495
+        },
+        {
+          "id": "other_assets",
+          "weight": 0.35742347
+        },
+        {
+          "id": "real_estate",
+          "weight": 1.17743686
+        },
+        {
+          "id": "technology",
+          "weight": 9.32225728
+        },
+        {
+          "id": "utilities",
+          "weight": 3.268193680000008
+        }
+      ],
+      "geography": [
+        {
+          "id": "bermuda",
+          "weight": 0.6617038
+        },
+        {
+          "id": "canada",
+          "weight": 98.16837914
+        },
+        {
+          "id": "united_states",
+          "weight": 1.16991706
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf",
+      "note": "Secteurs GICS et pays de risque; pondérations des placements sous-jacents, obligations et liquidités incluses.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh",
+      "refresh": {
+        "kind": "ishares",
+        "download_url": "https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf/1464253357814.ajax?fileType=csv&fileName=XIC_holdings&dataType=fund"
+      }
+    },
+    {
+      "id": "XIU",
+      "title": "iShares S&P/TSX 60 Index ETF",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "communication_services",
+          "weight": 1.43836021
+        },
+        {
+          "id": "consumer_discretionary",
+          "weight": 3.1962586
+        },
+        {
+          "id": "consumer_staples",
+          "weight": 3.31247327
+        },
+        {
+          "id": "energy",
+          "weight": 17.30144613
+        },
+        {
+          "id": "financials",
+          "weight": 39.58105447
+        },
+        {
+          "id": "industrials",
+          "weight": 7.46424276
+        },
+        {
+          "id": "materials",
+          "weight": 13.79099072
+        },
+        {
+          "id": "other_assets",
+          "weight": 0.27621539
+        },
+        {
+          "id": "real_estate",
+          "weight": 0.18638922
+        },
+        {
+          "id": "technology",
+          "weight": 11.02309087
+        },
+        {
+          "id": "utilities",
+          "weight": 2.4294783600000063
+        }
+      ],
+      "geography": [
+        {
+          "id": "bermuda",
+          "weight": 0.59223629
+        },
+        {
+          "id": "canada",
+          "weight": 98.01906112
+        },
+        {
+          "id": "united_states",
+          "weight": 1.388702589999992
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239832/ishares-sptsx-60-index-etf",
+      "note": "Secteurs GICS et pays de risque; pondérations des placements sous-jacents, obligations et liquidités incluses.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh",
+      "refresh": {
+        "kind": "ishares",
+        "download_url": "https://www.blackrock.com/ca/investors/en/products/239832/ishares-sptsx-60-index-etf/1464253357814.ajax?fileType=csv&fileName=XIU_holdings&dataType=fund"
+      }
+    },
+    {
+      "id": "XOM",
+      "title": "Exxon Mobil",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "energy",
+          "weight": 100
+        }
+      ],
+      "geography": [
+        {
+          "id": "united_states",
+          "weight": 100
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/309480/fund",
+      "note": "Classification du titre et pays de risque publiés par BlackRock; indépendants de la devise de cotation.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "XUS",
+      "title": "iShares Core S&P 500 Index ETF",
+      "as_of": "2026-10-09",
+      "sectors": [
+        {
+          "id": "communication_services",
+          "weight": 9.64729774
+        },
+        {
+          "id": "consumer_discretionary",
+          "weight": 8.77283096
+        },
+        {
+          "id": "consumer_staples",
+          "weight": 4.50526437
+        },
+        {
+          "id": "energy",
+          "weight": 3.51184876
+        },
+        {
+          "id": "financials",
+          "weight": 11.41537985
+        },
+        {
+          "id": "health_care",
+          "weight": 9.1775688
+        },
+        {
+          "id": "industrials",
+          "weight": 7.96952161
+        },
+        {
+          "id": "materials",
+          "weight": 1.60836767
+        },
+        {
+          "id": "other_assets",
+          "weight": 0.29651547
+        },
+        {
+          "id": "real_estate",
+          "weight": 1.68179373
+        },
+        {
+          "id": "technology",
+          "weight": 39.4876534
+        },
+        {
+          "id": "utilities",
+          "weight": 1.92595764
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 0.0174494
+        },
+        {
+          "id": "united_states",
+          "weight": 99.9825506
+        }
+      ],
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/251422/ishares-sp-500-index-etf",
+      "note": "Secteurs GICS et pays de risque; pondérations des placements sous-jacents, obligations et liquidités incluses.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh",
+      "refresh": {
+        "kind": "ishares",
+        "download_url": "https://www.blackrock.com/ca/investors/en/products/251422/ishares-sp-500-index-etf/1464253357814.ajax?fileType=csv&fileName=XUS_holdings&dataType=fund"
+      }
+    },
+    {
+      "id": "ZAG",
+      "title": "BMO Aggregate Bond Index ETF",
+      "as_of": "2026-08-31",
+      "sectors": [
+        {
+          "id": "bonds",
+          "weight": 100.0
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 97.99
+        },
+        {
+          "id": "france",
+          "weight": 0.11
+        },
+        {
+          "id": "united_kingdom",
+          "weight": 0.01
+        },
+        {
+          "id": "united_states",
+          "weight": 1.89
+        }
+      ],
+      "source_url": "https://df.bmogam.com/assets/static/etf-profiles-pdfs/BMO%20Aggregate%20Bond%20Index%20ETF_Factsheet_EN_ZAG.pdf",
+      "note": "Répartition de la fiche mensuelle BMO; obligations présentées comme une classe distincte des secteurs actions.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    },
+    {
+      "id": "ZEB",
+      "title": "BMO Equal Weight Banks",
+      "as_of": "2026-08-31",
+      "sectors": [
+        {
+          "id": "financials",
+          "weight": 100.0
+        }
+      ],
+      "geography": [
+        {
+          "id": "canada",
+          "weight": 100.0
+        }
+      ],
+      "source_url": "https://df.bmogam.com/assets/static/etf-profiles-pdfs/BMO%20Equal%20Weight%20Banks%20Index%20ETF_Factsheet_EN_ZEB.pdf",
+      "note": "Répartition de la fiche mensuelle BMO; obligations présentées comme une classe distincte des secteurs actions.",
+      "checked_at": "2026-10-11T17:37:16.740929+00:00",
+      "fetch_status": "fresh"
+    }
+  ]
+}

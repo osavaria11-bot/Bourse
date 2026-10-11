@@ -119,6 +119,24 @@
       return a.ticker.localeCompare(b.ticker, "en");
     });
   }
+  function benchmarkFor(selected, security) {
+    const history = selected?.history || [], start = history[0], end = history.at(-1);
+    const validPortfolioBase = start && U.validNumber(start[1]) && start[1] > 0;
+    const validSecurity = security?.id === "FEQT" && security.currency === "CAD" && security.quote_symbol === "FEQT.NE";
+    const base = validSecurity && start ? observationAt(security.history, start[0]) : null;
+    const final = validSecurity && end ? observationAt(security.history, end[0]) : null;
+    const available = !selected?.incomplete && validPortfolioBase && base?.[1] > 0 && final?.[1] > 0;
+    const points = history.map(row => {
+      const quote = available ? observationAt(security.history, row[0]) : null;
+      return {date: row[0], value: row[1], portfolio: validPortfolioBase && U.validNumber(row[1]) ? (row[1] / start[1] - 1) * 100 : null,
+        benchmark: quote ? (quote[1] / base[1] - 1) * 100 : null, benchmark_date: quote?.[0] || null};
+    });
+    const last = points.at(-1);
+    return {available, normalized: !!validPortfolioBase, points, start: start?.[0], end: end?.[0],
+      portfolio_percent: last?.portfolio ?? null, benchmark_percent: available ? last.benchmark : null,
+      difference: available && U.validNumber(last.portfolio) ? last.portfolio - last.benchmark : null,
+      benchmark_start: base?.[0] || null, benchmark_end: final?.[0] || null};
+  }
   function performanceFor(positions, data, day, range = "1M") {
     let start = null;
     if (U.isDate(day) && RANGES.some(item => item.key === range)) {
@@ -142,5 +160,5 @@
     return {start, end: day, rows: sortRows(rows, "percent"), missing};
   }
   function monthlyPerformance(positions, data, day) {return performanceFor(positions, data, day, "1M");}
-  return {RANGES, normalizePrices, normalizePositions, observationAt, valuationAt, historyFor, period, sortRows, performanceFor, monthlyPerformance};
+  return {RANGES, normalizePrices, normalizePositions, observationAt, valuationAt, historyFor, period, benchmarkFor, sortRows, performanceFor, monthlyPerformance};
 });

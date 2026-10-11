@@ -55,6 +55,12 @@ Le **point quotidien** classe uniquement les positions présentes dans le naviga
 
 Le survol et les flèches du clavier donnent la date, la valorisation en CAD et le pourcentage depuis le premier point de la période sélectionnée. Une base de comparaison manquante laisse la variation indisponible, même si une partie de la courbe peut être affichée.
 
+Le graphique compare désormais le portefeuille à **FEQT**, coté en CAD sur Cboe Canada (`FEQT.NE`). Les deux courbes affichent le rendement de cours depuis la même date et la même base, hors dividendes; la légende et le survol montrent les deux rendements et leur écart en points de pourcentage. Le portefeuille conserve le change historique. Une base FEQT manquante ne raccourcit pas silencieusement la période; la comparaison devient indisponible.
+
+Les boutons **Secteurs** et **Géographie**, à côté des positions, ouvrent deux tableaux : poids du portefeuille, poids de FEQT et écart en points de pourcentage. Les poids utilisent les valeurs actuelles des titres en CAD, avec le taux USD/CAD courant. Les FNB sont décomposés selon leurs placements sous-jacents. Vanguard fournit les secteurs GICS des titres, ce qui permet d’harmoniser ses FNB avec Fidelity et BlackRock; les obligations restent une catégorie distincte. Les dates et sources de chaque répartition sont affichées. Les pays correspondent aux pays de risque publiés par l’émetteur, et non à la devise, au lieu de cotation ou à la répartition du chiffre d’affaires. Les pays que Fidelity ne détaille pas restent regroupés : une absence n’est pas interprétée comme une exposition nulle. Les répartitions incomplètes restent dans le dénominateur et aucun écart exact n’est inventé. Les quantités personnelles sont calculées uniquement dans le navigateur.
+
+`scripts/collect_portfolio_exposures.py` vérifie les sources Fidelity, BlackRock, Vanguard et QQQM tous les sept jours dans la collecte existante, conserve les dates réellement publiées et garde la dernière répartition datée en cas de panne. QQC utilise sa dernière part QQQM publiée par CI et les dernières positions QQQM; les dates distinctes et la comparaison indicative sont signalées. Les sources statiques et les classifications manquantes sont identifiées dans le fichier public, qui ne contient aucune quantité personnelle.
+
 L’historique est une **reconstitution avec les quantités actuelles constantes**, cours de clôture hors dividendes et taux USD/CAD disponible à chaque date. Il ne reproduit pas les dépôts, retraits, achats, ventes, espèces ou frais du compte. Un historique réel exige les transactions et mouvements d’argent. YTD compare la dernière date à la dernière clôture de l’année précédente; les périodes de six, trois et un mois partent de la dernière séance disponible à la date de référence; une semaine et trois jours correspondent à cinq et trois séances. Une base de comparaison manquante n’est jamais remplacée par un rendement fictif.
 
 
@@ -72,6 +78,7 @@ La configuration se trouve dans `data/series.json`. Les fichiers publiés sont :
 - `data/market-indices.json` : historiques de clôture, dates et statut de collecte des quatre indices et des FNB EEM et FEQT (schéma 2, `kind: market_indices`).
 - `data/securities.json` : catalogue public de 102 cotations, sans quantités personnelles.
 - `data/security-prices.json` : historiques des titres et USD/CAD, symboles et devises vérifiés (schéma 2, `kind: security_prices`).
+- `data/portfolio-exposures.json` : secteurs et pays des 102 instruments du catalogue, répartitions sous-jacentes des FNB, sources et dates (schéma 1, `kind: portfolio_exposures`).
 - `data/macro-briefing.json` : instantané statistique de secours généré avec les observations (schéma 2).
 
 Avant de publier une nouvelle édition :

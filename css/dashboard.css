@@ -110,6 +110,26 @@ details[open]>summary:after {content:"−"}
 .portfolio-period-controls .segmented {flex-wrap:wrap;justify-content:flex-end}
 .portfolio-period-controls .meta {margin-top:8px}
 .portfolio-chart {max-width:100%;margin:18px 0}
+.portfolio-benchmark {display:flex;align-items:center;flex-wrap:wrap;gap:10px 24px;margin-top:18px;font-size:13px;font-variant-numeric:tabular-nums}
+.portfolio-benchmark-item {display:inline-flex;align-items:center;gap:7px}
+.portfolio-swatch {display:inline-block;width:22px;height:3px;background:var(--chart)}
+.portfolio-swatch.feqt {background:var(--gold)}
+.chart-line.chart-benchmark {stroke:var(--gold);stroke-dasharray:7 4;stroke-width:2.2}
+.chart-dot.chart-benchmark-dot {fill:var(--gold);stroke:var(--surface)}
+.portfolio-exposure {margin-top:18px;padding:18px;border:1px solid var(--border);border-radius:10px;background:var(--bg)}
+.portfolio-exposure h3 {font-size:16px}
+.portfolio-exposure table {width:100%;min-width:420px;font-size:12px;font-variant-numeric:tabular-nums}
+.portfolio-exposure caption {text-align:left;padding:12px 0;color:var(--muted);font-size:11px}
+.portfolio-exposure td:not(:first-child),.portfolio-exposure th:not(:first-child) {text-align:right;white-space:nowrap}
+.portfolio-exposure td:first-child {min-width:145px}
+.portfolio-exposure .exposure-weight {display:block;margin-left:auto;max-width:120px;height:3px;margin-top:5px;background:var(--border);border-radius:2px}
+.exposure-weight span {display:block;height:100%;background:var(--chart);border-radius:2px}
+.exposure-weight.feqt span {background:var(--gold)}
+.exposure-difference {color:var(--text)}
+.portfolio-exposure-sources {margin-top:14px;font-size:11px;color:var(--muted)}
+.portfolio-exposure-sources summary {padding:5px 0}
+.portfolio-exposure-sources p {margin-top:7px;overflow-wrap:anywhere}
+.portfolio-positions-heading button[aria-expanded="true"] {border-color:var(--accent);background:var(--accent-soft)}
 .portfolio-empty {padding:20px 0;font-size:14px;color:var(--muted)}
 .portfolio-movers {border-top:1px solid var(--border);padding-top:18px;margin-top:18px}
 .portfolio-movers h3 {font-size:16px;font-weight:600;margin-top:4px}

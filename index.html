@@ -8,12 +8,13 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-title" content="SAVY" />
   <title>SAVY — Tableau macroéconomique</title>
-  <link rel="stylesheet" href="css/dashboard.css?v=20261011-index-returns" />
+  <link rel="stylesheet" href="css/dashboard.css?v=20261011-portfolio-feqt" />
   <script src="js/macro-utils.js?v=20261011-index-day-ytd" defer></script>
   <script src="js/live-fx.js?v=20261011-rates-news" defer></script>
-  <script src="js/portfolio-utils.js?v=20261011-rates-news" defer></script>
+  <script src="js/portfolio-utils.js?v=20261011-portfolio-feqt" defer></script>
+  <script src="js/portfolio-exposure-utils.js?v=20261011-portfolio-feqt" defer></script>
   <script src="js/portfolio-profile-utils.js?v=20261010-portefeuille-direct" defer></script>
-  <script src="js/portfolio.js?v=20261011-rates-news" defer></script>
+  <script src="js/portfolio.js?v=20261011-portfolio-feqt" defer></script>
   <script src="js/dashboard.js?v=20261011-feqt" defer></script>
 </head>
 <body>
@@ -55,6 +56,8 @@
       <div id="portfolioContent" hidden>
         <div class="portfolio-overview"><div><p id="portfolioValueLabel" class="eyebrow">VALEUR DES TITRES · CAD</p><p id="portfolioValue" class="portfolio-value">—</p><p id="portfolioChange" class="portfolio-change">—</p><p id="portfolioCurrencies" class="meta"></p><p id="portfolioFX" class="meta"></p><p id="portfolioCost" class="meta"></p><p id="portfolioUnrealized" class="portfolio-unrealized"></p></div><div class="portfolio-period-controls"><div id="portfolioRanges" class="segmented" role="group" aria-label="Période du portefeuille"></div><p id="portfolioPeriod" class="meta"></p></div></div>
         <p id="portfolioMissing" class="meta warning"></p>
+        <div id="portfolioBenchmark" class="portfolio-benchmark" aria-label="Rendement du portefeuille et de FEQT"></div>
+        <p id="portfolioBenchmarkNote" class="meta"></p>
         <div id="portfolioChart" class="chart-host portfolio-chart"></div>
         <section class="portfolio-movers" aria-labelledby="portfolioMoversTitle">
           <div class="portfolio-movers-heading"><div><p class="eyebrow">LE POINT QUOTIDIEN</p><h3 id="portfolioMoversTitle">Les meilleures et les pires performances sur un mois</h3></div><div id="portfolioMoversRanges" class="segmented" role="group" aria-label="Période du classement des positions"></div></div>
@@ -62,7 +65,9 @@
           <div class="portfolio-movers-grid"><div class="portfolio-movers-card"><h4>3 meilleures performances</h4><ol id="portfolioBest" class="portfolio-movers-list"></ol></div><div class="portfolio-movers-card"><h4>3 moins bonnes performances</h4><ol id="portfolioWorst" class="portfolio-movers-list"></ol></div></div>
           <p id="portfolioMoversNote" class="meta" role="status"></p>
         </section>
-        <div class="portfolio-positions-heading"><button id="portfolioPositionsToggle" class="button quiet" type="button" aria-expanded="false" aria-controls="portfolioPositions">Afficher mes positions</button><p class="meta">Clique sur une colonne de gain pour trier du plus élevé au plus faible, puis dans l’autre sens.</p></div>
+        <div class="portfolio-positions-heading"><button id="portfolioPositionsToggle" class="button quiet" type="button" aria-expanded="false" aria-controls="portfolioPositions">Afficher mes positions</button><button id="portfolioSectorsToggle" class="button quiet" type="button" aria-expanded="false" aria-controls="portfolioSectors">Secteurs</button><button id="portfolioGeographyToggle" class="button quiet" type="button" aria-expanded="false" aria-controls="portfolioGeography">Géographie</button><p class="meta">Compare les pondérations à FEQT ou affiche tes positions.</p></div>
+        <section id="portfolioSectors" class="portfolio-exposure" aria-labelledby="portfolioSectorsTitle" hidden><h3 id="portfolioSectorsTitle">Secteurs · mon portefeuille vs FEQT</h3><p id="portfolioSectorsStatus" class="meta" role="status"></p><div class="table-wrap"><table><caption>Poids selon la valeur actuelle en CAD · écart = mon portefeuille − FEQT, en points de pourcentage</caption><thead><tr><th scope="col">Secteur</th><th scope="col">Mon portefeuille</th><th scope="col">FEQT</th><th scope="col">Écart (pt)</th></tr></thead><tbody id="portfolioSectorsRows"></tbody></table></div><details class="portfolio-exposure-sources"><summary>Sources et dates des répartitions</summary><div id="portfolioSectorsSources"></div></details></section>
+        <section id="portfolioGeography" class="portfolio-exposure" aria-labelledby="portfolioGeographyTitle" hidden><h3 id="portfolioGeographyTitle">Géographie · mon portefeuille vs FEQT</h3><p id="portfolioGeographyStatus" class="meta" role="status"></p><div class="table-wrap"><table><caption>Pays de risque des titres et placements sous-jacents des FNB · écart en points de pourcentage</caption><thead><tr><th scope="col">Pays / exposition</th><th scope="col">Mon portefeuille</th><th scope="col">FEQT</th><th scope="col">Écart (pt)</th></tr></thead><tbody id="portfolioGeographyRows"></tbody></table></div><details class="portfolio-exposure-sources"><summary>Sources et dates des répartitions</summary><div id="portfolioGeographySources"></div></details></section>
         <div id="portfolioPositions" class="table-wrap portfolio-table" hidden><table><caption>Positions privées · les variations correspondent à la période sélectionnée; gains en CAD au taux actuel</caption><thead><tr><th scope="col">Titre</th><th scope="col">Quantité</th><th scope="col">Prix moyen</th><th scope="col">Cours et date</th><th scope="col">Valeur CAD</th><th scope="col">Poids</th><th scope="col" aria-sort="none"><button class="portfolio-sort" type="button" data-portfolio-sort="unrealized_percent">Gain latent % <span aria-hidden="true">↕</span></button></th><th scope="col" aria-sort="none"><button class="portfolio-sort" type="button" data-portfolio-sort="unrealized_cad">Gain latent CAD <span aria-hidden="true">↕</span></button></th><th scope="col" aria-sort="none"><button class="portfolio-sort" type="button" data-portfolio-sort="period_change_cad">Variation CAD <span aria-hidden="true">↕</span></button></th><th scope="col">Source</th></tr></thead><tbody id="portfolioRows"></tbody></table></div>
       </div>
       <form id="positionForm" class="position-form"><label>Titre<select id="positionTicker" aria-label="Titre à ajouter"></select></label><label>Quantité<input id="positionQuantity" type="text" inputmode="decimal" placeholder="Ex. 2,5" required /></label><label>Prix moyen<input id="positionAverageCost" type="text" inputmode="decimal" placeholder="Facultatif" /></label><button class="button" type="submit">Ajouter / modifier</button></form>

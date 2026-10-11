@@ -4,11 +4,13 @@ const assert = require("node:assert/strict"), fs = require("node:fs"), path = re
 const {chromium} = require(process.env.PLAYWRIGHT_MODULE_PATH || "playwright");
 const P = require("../js/portfolio-utils.js");
 const U = require("../js/macro-utils.js");
+const E = require("../js/portfolio-exposure-utils.js");
 const A = require("../js/portfolio-profile-utils.js"), crypto = require("node:crypto");
 const root = path.resolve(__dirname, "..");
 const catalog = JSON.parse(fs.readFileSync(path.join(root, "data/securities.json"), "utf8"));
 const rawPrices = JSON.parse(fs.readFileSync(path.join(root, "data/security-prices.json"), "utf8"));
 const prices = P.normalizePrices(rawPrices, catalog);
+const exposures = E.normalize(JSON.parse(fs.readFileSync(path.join(root, "data/portfolio-exposures.json"), "utf8")));
 const sample = catalog.series.filter(d => ["SHOP", "CLS", "V", "VFV", "MSFT", "XIU"].includes(d.id));
 const syntheticPositions = sample.map(d => ({ticker: d.id, quantity: d.id === "V" ? 1.5 : 2, currency: d.currency, average_cost: d.id === "CLS" ? 500 : d.id === "SHOP" ? 200 : d.id === "V" ? 350 : 50}));
 const fragment = Buffer.from(JSON.stringify(syntheticPositions.map(p => [p.ticker, p.quantity, p.currency, p.average_cost]))).toString("base64url");
@@ -75,6 +77,20 @@ async function main() {
     assert.equal(await page.locator("#portfolioValue").innerText(), new Intl.NumberFormat("fr-CA", {style: "currency", currency: "CAD", maximumFractionDigits: 2}).format(current.total));
     assert.match(await page.locator("#portfolioStatus").innerText(), /6\/6/);
     assert.match(await page.locator("#portfolioUnrealized").innerText(), /Gain latent estimé.*change actuel/);
+    for (const [view, axis] of [["Sectors", "sectors"], ["Geography", "geography"]]) {
+      const control = page.locator("#portfolio" + view + "Toggle"), panel = page.locator("#portfolio" + view);
+      assert.equal(await control.getAttribute("aria-expanded"), "false"); assert.equal(await panel.isVisible(), false);
+      await control.click(); assert.equal(await control.getAttribute("aria-expanded"), "true"); assert.equal(await panel.isVisible(), true);
+      const expected = E.compare(current, exposures, axis);
+      assert.equal(await page.locator("#portfolio" + view + "Rows tr").count(), expected.rows.length);
+      for (const row of expected.rows) {
+        const cells = await page.locator('#portfolio' + view + 'Rows tr[data-exposure="' + row.id + '"] td').allTextContents();
+        assert.equal(cells[0], (row.portfolio_undisclosed ? "≥ " : "") + U.formatNumber(row.portfolio, 2) + " %");
+        assert.equal(cells[1], U.validNumber(row.benchmark) ? U.formatNumber(row.benchmark, 2) + " %" : "Non publié");
+        assert.equal(cells[2], U.validNumber(row.difference) ? (row.difference > 0 ? "+" : "") + U.formatNumber(row.difference, 2) + " pt" : "—");
+      }
+      await control.click();
+    }
     const month = P.monthlyPerformance(syntheticPositions, prices, history.at(-1)[0]);
     assert.equal(month.rows.length, 6);
     const best = month.rows.slice(0, 3), worst = month.rows.slice(-3).reverse();
@@ -126,6 +142,9 @@ async function main() {
       await controls.getByRole("button", {name: range.label, exact: true}).click();
       assert.equal(await controls.getByRole("button", {name: range.label, exact: true}).getAttribute("aria-pressed"), "true");
       const selected = P.period(history, range.key);
+      const comparison = P.benchmarkFor(selected, prices.series.find(row => row.id === "FEQT"));
+      assert.equal(await page.locator("#portfolioChart .chart-benchmark").count(), 1);
+      assert.ok((await page.locator("#portfolioBenchmark").innerText()).includes("FEQT : " + (comparison.benchmark_percent > 0 ? "+" : "") + U.formatNumber(comparison.benchmark_percent, 2) + " %"));
       assert.match(await page.locator("#portfolioPeriod").innerText(), new RegExp(selected.start + ".*" + selected.end));
       assert.equal(await page.locator("#portfolioChart svg").count(), 1);
       const ticks = await page.locator("#portfolioChart .chart-axis").evaluateAll(nodes => nodes.slice(0, 4).map(n => n.textContent));
@@ -137,6 +156,7 @@ async function main() {
       assert.ok(text.includes(selected.end));
       assert.ok(text.includes(new Intl.NumberFormat("fr-CA", {style: "currency", currency: "CAD", maximumFractionDigits: 2}).format(selected.history.at(-1)[1])));
       assert.ok(text.includes((selected.percent > 0 ? "+" : "") + U.formatNumber(selected.percent, 2) + " % depuis le " + selected.start));
+      assert.ok(text.includes("FEQT : " + (comparison.benchmark_percent > 0 ? "+" : "") + U.formatNumber(comparison.benchmark_percent, 2) + " %"));
       const box = await chart.boundingBox();
       await chart.hover({position: {x: box.width * 85 / 900, y: box.height / 2}});
       assert.match(await page.locator("#portfolioChart .chart-tooltip").innerText(), new RegExp(selected.start + ".*0,00 % depuis le " + selected.start));
@@ -181,6 +201,11 @@ async function main() {
       assert.ok(await page.locator(".portfolio-table").evaluate(node => node.scrollWidth > node.clientWidth));
       assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
       await toggle.click();
+      for (const view of ["Sectors", "Geography"]) {
+        await page.locator("#portfolio" + view + "Toggle").click();
+        assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), view + " comparison overflows mobile");
+        await page.locator("#portfolio" + view + "Toggle").click();
+      }
     }
     if (process.env.SCREENSHOT_LOGS) {await page.setViewportSize({width: 375, height: 1000}); await page.locator("#portfolioTitle").scrollIntoViewIfNeeded(); console.log("SCREENSHOT_PORTFOLIO_MOBILE " + (await page.screenshot()).toString("base64"));}
     offline = true;
@@ -191,6 +216,7 @@ async function main() {
     await page.reload(); await page.waitForSelector("#portfolioChart svg");
     const incompleteChart = page.locator("#portfolioChart svg"); await incompleteChart.focus(); await incompleteChart.press("End");
     assert.match(await page.locator("#portfolioChart .chart-tooltip").innerText(), /variation indisponible.*base.*manquante/);
+    assert.equal(await page.locator("#portfolioChart .chart-benchmark").count(), 0);
     missingBaseline = false; missingFX = true;
     await page.reload(); await page.waitForFunction(() => document.querySelectorAll("#portfolioRows tr").length === 6);
     await page.evaluate(() => { window.SavyLiveFX.current = () => null; document.dispatchEvent(new Event("savy:fx")); });
@@ -198,6 +224,8 @@ async function main() {
     assert.equal(await page.locator("#portfolioChange").innerText(), "— · —");
     assert.match(await page.locator("#portfolioMissing").innerText(), /cours ou change manquant/);
     assert.equal(await page.locator("#portfolioChart svg").count(), 0);
+    assert.equal(await page.locator("#portfolioSectorsRows tr").count(), 0);
+    assert.equal(await page.locator("#portfolioGeographyRows tr").count(), 0);
     assert.match(await page.locator("#portfolioMoversNote").innerText(), /historique ou change manquant/);
     await moverControls.getByRole("button", {name: "YTD", exact: true}).click();
     assert.equal(await page.locator("#portfolioBest li[data-ticker]").count(), 3);

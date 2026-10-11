@@ -1,9 +1,13 @@
 (() => {
   "use strict";
-  const P = window.PortfolioUtils, U = window.MacroUtils, A = window.PortfolioProfileUtils, $ = selector => document.querySelector(selector);
+  const P = window.PortfolioUtils, U = window.MacroUtils, A = window.PortfolioProfileUtils, E = window.PortfolioExposureUtils, $ = selector => document.querySelector(selector);
   const HOLDINGS_KEY = "savy:private-holdings:v1", PRICE_KEY = "savy:security-prices:v1", POSITIONS_VISIBLE_KEY = "savy:portfolio-positions-visible:v1";
   const PROFILE_STATE_KEY = "savy:portfolio-profile-state:v1", PROFILE_CACHE_KEY = "savy:portfolio-profile-cache:v1";
+  const EXPOSURE_KEY = "savy:portfolio-exposures:v1", EXPOSURE_VIEWS_KEY = "savy:portfolio-exposure-views:v1";
   let catalog = null, prices = null, cached = false, range = "YTD", moversRange = "1M", positions = [], history = [], imported = false;
+  let exposures = null, exposureCached = false;
+  const exposureViewState = stored(EXPOSURE_VIEWS_KEY, {});
+  const exposureViews = {Sectors: exposureViewState?.Sectors === true, Geography: exposureViewState?.Geography === true};
   let profileState = stored(PROFILE_STATE_KEY, null), profileInitialized = false, holdingsAvailable = false, manifestURL = null;
   const personalKey = new URLSearchParams(location.hash.slice(1)).get("portfolio-key") || profileState?.key;
   let positionsVisible = stored(POSITIONS_VISIBLE_KEY, false) === true, sortKey = null, sortDescending = true;
@@ -81,6 +85,57 @@
     $("#portfolioPositionsToggle").setAttribute("aria-expanded", String(positionsVisible));
     $("#portfolioPositionsToggle").textContent = (positionsVisible ? "Masquer" : "Afficher") + " mes positions (" + positions.length + ")";
   }
+  function renderExposureVisibility() {
+    for (const view of ["Sectors", "Geography"]) {
+      $("#portfolio" + view).hidden = exposureViews?.[view] !== true;
+      $("#portfolio" + view + "Toggle").setAttribute("aria-expanded", String(exposureViews?.[view] === true));
+    }
+  }
+  function renderExposures(current) {
+    for (const [view, axis] of [["Sectors", "sectors"], ["Geography", "geography"]]) {
+      const result = E.compare(current, exposures, axis), table = document.createDocumentFragment(), sources = document.createDocumentFragment();
+      const status = $("#portfolio" + view + "Status");
+      status.textContent = !exposures ? "Les répartitions n’ont pas pu être chargées. Utilise « Actualiser »." : !result.available ?
+        "Une cotation et un taux de change complets sont nécessaires pour calculer les pondérations." :
+        "Valeurs au " + current.date + " · FEQT au " + result.benchmark_date + " · FNB décomposés en placements sous-jacents" +
+        (exposureCached ? " · répartitions conservées" : "") + (result.indicative ? " · comparaison indicative : dates sous-jacentes distinctes pour QQC" : "") + (result.coverage < 99.995 ? " · " + U.formatNumber(100 - result.coverage, 2) + " % non classé" : "");
+      status.classList.toggle("warning", !result.available || exposureCached || result.coverage < 99.995);
+      if (result.available) {
+        for (const row of result.rows) {
+          const tr = el("tr"); tr.dataset.exposure = row.id;
+          const name = el("th", "", row.label); name.scope = "row"; tr.append(name);
+          for (const [value, className] of [[row.portfolio, ""], [row.benchmark, "feqt"]]) {
+            const cell = el("td", "", U.validNumber(value) ? (className === "" && row.portfolio_undisclosed ? "≥ " : "") + U.formatNumber(value, 2) + " %" : "Non publié");
+            if (U.validNumber(value)) {const track = el("span", "exposure-weight " + className), fill = el("span"); fill.style.width = Math.max(0, Math.min(100, value)) + "%"; track.setAttribute("aria-hidden", "true"); track.append(fill); cell.append(track);}
+            tr.append(cell);
+          }
+          tr.append(el("td", "exposure-difference", U.validNumber(row.difference) ? (result.indicative ? "≈ " : "") + (row.difference > 0 ? "+" : "") + U.formatNumber(row.difference, 2) + " pt" : "—"));
+          table.append(tr);
+        }
+        const note = el("p", "", "Un écart positif indique une pondération plus élevée que FEQT. « Autres pays » regroupe les pays non détaillés par l’émetteur; leur poids individuel et leur écart ne sont pas disponibles. ≥ indique un poids minimal connu; aucun écart exact n’est calculé quand la répartition manque. Les actifs non classés restent visibles."); sources.append(note);
+        for (const source of [{id: "FEQT · référence", as_of: result.benchmark_date, source_url: result.benchmark_source, note: result.benchmark_note}, ...result.sources]) {
+          const paragraph = el("p"), link = el("a", "", source.id + " ↗"); link.href = source.source_url; link.target = "_blank"; link.rel = "noopener noreferrer";
+          paragraph.append(link, document.createTextNode(" · " + source.as_of + (source.note ? " · " + source.note : ""))); sources.append(paragraph);
+          for (const [url, label] of [[source.underlying_source_url, "Placements sous-jacents ↗"], [source.classification_source_url, "Classification GICS ↗"], [source.classification_secondary_source_url, "Activité de l’émetteur ↗"]]) if (url) {const extra = el("a", "", label); extra.href = url; extra.target = "_blank"; extra.rel = "noopener noreferrer"; paragraph.append(document.createTextNode(" · "), extra);}
+        }
+        if (result.missing.length) sources.append(el("p", "", "Répartition manquante : " + result.missing.join(", ") + "."));
+      }
+      $("#portfolio" + view + "Rows").replaceChildren(table); $("#portfolio" + view + "Sources").replaceChildren(sources);
+    }
+  }
+  function renderBenchmark(comparison) {
+    const legend = document.createDocumentFragment();
+    for (const [label, value, className] of [["Mon portefeuille", comparison.portfolio_percent, ""], ["FEQT", comparison.benchmark_percent, "feqt"]]) {
+      const item = el("span", "portfolio-benchmark-item"), swatch = el("span", "portfolio-swatch " + className); swatch.setAttribute("aria-hidden", "true");
+      item.append(swatch, el("span", "", label + " : "), el("strong", "", delta(value, true))); legend.append(item);
+    }
+    legend.append(el("span", "meta", "Écart : " + (U.validNumber(comparison.difference) ? (comparison.difference > 0 ? "+" : "") + U.formatNumber(comparison.difference, 2) + " pt" : "—")));
+    $("#portfolioBenchmark").replaceChildren(legend);
+    $("#portfolioBenchmarkNote").textContent = (comparison.normalized ? "Rendement en % · même base au " + comparison.start : "Valorisation en CAD · base de rendement manquante") +
+      " · clôtures en CAD, hors dividendes · positions actuelles reconstituées" + (comparison.available ?
+        (comparison.benchmark_start !== comparison.start || comparison.benchmark_end !== comparison.end ? " · FEQT : dernières clôtures disponibles du " + comparison.benchmark_start + " au " + comparison.benchmark_end : "") :
+        " · comparaison FEQT indisponible : historique ou base manquants pour cette période");
+  }
   function renderMovers(day) {
     const performance = P.performanceFor(positions, prices, day, moversRange);
     const periodLabel = {YTD: "YTD", "6M": "6 mois glissants", "3M": "3 mois glissants", "1M": "1 mois glissant", "1W": "5 séances", "3D": "3 séances"}[moversRange];
@@ -107,6 +162,7 @@
     $("#portfolioContent").hidden = positions.length === 0;
     $("#portfolioExport").disabled = !positions.length;
     renderPositionsVisibility();
+    renderExposureVisibility();
     for (const button of document.querySelectorAll("[data-portfolio-sort]")) {
       const active = button.dataset.portfolioSort === sortKey;
       button.closest("th").setAttribute("aria-sort", active ? (sortDescending ? "descending" : "ascending") : "none");
@@ -116,7 +172,7 @@
     for (const item of P.RANGES) {const button = el("button", "", item.label); button.type = "button"; button.setAttribute("aria-pressed", String(item.key === range)); button.addEventListener("click", () => {range = item.key; render();}); controls.append(button);}
     $("#portfolioRanges").replaceChildren(controls);
     if (!positions.length) {$("#portfolioStatus").textContent = "Importe ta sauvegarde ou ajoute tes positions. Les quantités restent sur cet appareil."; return;}
-    if (!prices || !history.length) {$("#portfolioStatus").textContent = "Les cours n’ont pas pu être chargés. Tes positions sont conservées; utilise « Actualiser »."; $("#portfolioChart").replaceChildren(); $("#portfolioRows").replaceChildren(); $("#portfolioBest").replaceChildren(); $("#portfolioWorst").replaceChildren(); $("#portfolioMoversPeriod").textContent = ""; $("#portfolioMoversNote").textContent = "Les classements seront disponibles avec les cotations."; return;}
+    if (!prices || !history.length) {$("#portfolioStatus").textContent = "Les cours n’ont pas pu être chargés. Tes positions sont conservées; utilise « Actualiser »."; $("#portfolioChart").replaceChildren(); $("#portfolioBenchmark").replaceChildren(); $("#portfolioBenchmarkNote").textContent = ""; $("#portfolioRows").replaceChildren(); $("#portfolioBest").replaceChildren(); $("#portfolioWorst").replaceChildren(); $("#portfolioMoversPeriod").textContent = ""; $("#portfolioMoversNote").textContent = "Les classements seront disponibles avec les cotations."; renderExposures(null); return;}
     const day = history.at(-1)[0], liveFx = window.SavyLiveFX?.current(), current = P.valuationAt(positions, prices, day, liveFx), selected = P.period(history, range);
     const baseline = P.valuationAt(positions, prices, selected.start), old = current.rows.filter(row => row.price_date && row.price_date < day);
     $("#portfolioStatus").textContent = (cached ? "Copie de cours conservée · " : "") + "Cours des titres au " + day + " · " +
@@ -137,6 +193,7 @@
     $("#portfolioUnrealized").className = "portfolio-unrealized change " + direction(current.unrealized_cad);
     $("#portfolioMissing").textContent = current.missing.length ? "Valeur partielle : cours ou change manquant pour " + current.missing.join(", ") + "." : "";
     renderMovers(day);
+    renderExposures(current);
     const previous = new Map(baseline.rows.map(row => [row.ticker, row]));
     const closedRows = new Map(P.valuationAt(positions, prices, day).rows.map(row => [row.ticker, row]));
     const comparedRows = current.rows.map(row => {
@@ -165,33 +222,40 @@
       tr.append(name, quantity, average, price, value, weight, gain, gainCAD, change, source); rows.append(tr);
     }
     $("#portfolioRows").replaceChildren(rows);
-    drawChart(selected.history);
+    const comparison = P.benchmarkFor(selected, prices.series.find(row => row.id === "FEQT"));
+    renderBenchmark(comparison); drawChart(selected.history, comparison);
   }
   function svgEl(tag, attrs, text) {const node = document.createElementNS("http://www.w3.org/2000/svg", tag); for (const [k, v] of Object.entries(attrs || {})) node.setAttribute(k, String(v)); if (text !== undefined) node.textContent = text; return node;}
-  function drawChart(data) {
+  function drawChart(original, comparison) {
+    const data = comparison.normalized ? comparison.points.map(row => [row.date, row.portfolio]) : original;
+    const benchmark = comparison.available ? comparison.points.map(row => [row.date, row.benchmark]) : [];
+    const details = new Map(comparison.points.map(row => [row.date, row]));
     const valid = data.filter(row => U.validNumber(row[1]));
     if (!valid.length) {$("#portfolioChart").replaceChildren(el("p", "chart-placeholder", "Un historique complet des cours et du change est nécessaire pour tracer le portefeuille.")); return;}
     const width = 900, height = 300, left = 85, right = 20, top = 18, bottom = 36;
-    const [low, high] = U.niceExtent(data); let firstTime = Date.parse(data[0][0]), lastTime = Date.parse(data.at(-1)[0]);
+    const [low, high] = U.niceExtent([...data, ...benchmark]); let firstTime = Date.parse(data[0][0]), lastTime = Date.parse(data.at(-1)[0]);
     if (firstTime === lastTime) {firstTime -= 43200000; lastTime += 43200000;}
     const x = day => left + (Date.parse(day) - firstTime) / (lastTime - firstTime) * (width - left - right);
     const y = value => top + (high - value) / (high - low) * (height - top - bottom);
     const svg = svgEl("svg", {viewBox: "0 0 " + width + " " + height, tabindex: 0, role: "img", "aria-label": "Historique théorique du portefeuille en dollars canadiens. Date, valeur et variation depuis le début de la période au survol. Flèches gauche et droite pour parcourir les valeurs."});
-    svg.append(svgEl("title", {}, "Valorisation reconstituée des positions actuelles · CAD"));
-    for (let i = 0; i < 4; i++) {const value = low + (high - low) * i / 3; svg.append(svgEl("line", {x1: left, x2: width - right, y1: y(value), y2: y(value), class: "chart-grid"}), svgEl("text", {x: left - 10, y: y(value) + 4, "text-anchor": "end", class: "chart-axis"}, U.formatNumber(value, high - low < 10 ? 2 : 0)));}
+    svg.setAttribute("aria-label", "Rendement du portefeuille et de FEQT en CAD, hors dividendes. Date, valeur et rendements au survol. Flèches gauche et droite pour parcourir les valeurs.");
+    svg.append(svgEl("title", {}, comparison.normalized ? "Rendement du portefeuille vs FEQT · même base · %" : "Valorisation reconstituée des positions actuelles · CAD"));
+    for (let i = 0; i < 4; i++) {const value = low + (high - low) * i / 3; svg.append(svgEl("line", {x1: left, x2: width - right, y1: y(value), y2: y(value), class: "chart-grid"}), svgEl("text", {x: left - 10, y: y(value) + 4, "text-anchor": "end", class: "chart-axis"}, U.formatNumber(value, high - low < 10 ? 2 : 0) + (comparison.normalized ? " %" : "")));}
     for (let i = 0; i < 4; i++) {const stamp = firstTime + (lastTime - firstTime) * i / 3; svg.append(svgEl("text", {x: left + (width - left - right) * i / 3, y: height - 9, class: "chart-axis", "text-anchor": i === 0 ? "start" : i === 3 ? "end" : "middle"}, new Intl.DateTimeFormat("fr-CA", {timeZone: "UTC", month: "short", day: "numeric"}).format(new Date(stamp))));}
     let path = "", connected = false;
     for (const row of data) {if (!U.validNumber(row[1])) {connected = false; continue;} path += (connected ? "L" : "M") + x(row[0]).toFixed(2) + "," + y(row[1]).toFixed(2); connected = true;}
     svg.append(svgEl("path", {d: path, class: "chart-line"}));
+    if (benchmark.length) {let benchmarkPath = "", linked = false; for (const row of benchmark) {if (!U.validNumber(row[1])) {linked = false; continue;} benchmarkPath += (linked ? "L" : "M") + x(row[0]).toFixed(2) + "," + y(row[1]).toFixed(2); linked = true;} svg.append(svgEl("path", {d: benchmarkPath, class: "chart-line chart-benchmark"}));}
     const guide = svgEl("line", {y1: top, y2: height - bottom, class: "chart-guide", visibility: "hidden"}), dot = svgEl("circle", {r: 4, class: "chart-dot", visibility: "hidden"}); svg.append(guide, dot);
-    const hint = "Survole le graphique pour voir la date, la valeur et le % depuis le début · flèches ← → au clavier";
+    const benchmarkDot = svgEl("circle", {r: 4, class: "chart-dot chart-benchmark-dot", visibility: "hidden"}); svg.append(benchmarkDot);
+    const hint = "Survole le graphique pour comparer le portefeuille et FEQT · flèches ← → au clavier";
     const tooltip = el("p", "chart-tooltip", hint); tooltip.setAttribute("aria-live", "polite"); let index = valid.length - 1;
-    const baseline = data[0], canCompare = U.validNumber(baseline[1]) && baseline[1] > 0;
-    function select(row) {if (!row) return; index = valid.findIndex(item => item[0] === row[0]); guide.setAttribute("x1", x(row[0])); guide.setAttribute("x2", x(row[0])); guide.setAttribute("visibility", "visible"); dot.setAttribute("cx", x(row[0])); dot.setAttribute("cy", y(row[1])); dot.setAttribute("visibility", "visible"); tooltip.textContent = row[0] + " · " + money(row[1]) + " CAD · " + (canCompare ? delta((row[1] / baseline[1] - 1) * 100, true) + " depuis le " + baseline[0] : "variation indisponible : base du " + baseline[0] + " manquante");}
+    const baseline = original[0], canCompare = U.validNumber(baseline[1]) && baseline[1] > 0;
+    function select(row) {if (!row) return; const detail = details.get(row[0]); index = valid.findIndex(item => item[0] === row[0]); guide.setAttribute("x1", x(row[0])); guide.setAttribute("x2", x(row[0])); guide.setAttribute("visibility", "visible"); dot.setAttribute("cx", x(row[0])); dot.setAttribute("cy", y(row[1])); dot.setAttribute("visibility", "visible"); tooltip.textContent = row[0] + " · " + money(detail.value) + " CAD · " + (canCompare ? delta(detail.portfolio, true) + " depuis le " + baseline[0] : "variation indisponible : base du " + baseline[0] + " manquante"); if (U.validNumber(detail.benchmark)) {benchmarkDot.setAttribute("cx", x(row[0])); benchmarkDot.setAttribute("cy", y(detail.benchmark)); benchmarkDot.setAttribute("visibility", "visible"); tooltip.textContent += " · FEQT : " + delta(detail.benchmark, true) + " · écart : " + U.formatNumber(detail.portfolio - detail.benchmark, 2) + " pt" + (detail.benchmark_date !== row[0] ? " (clôture FEQT du " + detail.benchmark_date + ")" : "");} else {benchmarkDot.setAttribute("visibility", "hidden"); tooltip.textContent += " · FEQT : —";}}
     svg.addEventListener("focus", () => select(valid[index]));
     svg.addEventListener("keydown", event => {if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return; event.preventDefault(); index = event.key === "Home" ? 0 : event.key === "End" ? valid.length - 1 : Math.min(valid.length - 1, Math.max(0, index + (event.key === "ArrowLeft" ? -1 : 1))); select(valid[index]);});
     svg.addEventListener("pointermove", event => {const rect = svg.getBoundingClientRect(); if (!rect.width) return; const coordinate = Math.max(left, Math.min(width - right, (event.clientX - rect.left) * width / rect.width)); select(U.nearestPoint(data, firstTime + (coordinate - left) / (width - left - right) * (lastTime - firstTime)));});
-    svg.addEventListener("pointerleave", () => {if (document.activeElement === svg) return; guide.setAttribute("visibility", "hidden"); dot.setAttribute("visibility", "hidden"); tooltip.textContent = hint;});
+    svg.addEventListener("pointerleave", () => {if (document.activeElement === svg) return; guide.setAttribute("visibility", "hidden"); dot.setAttribute("visibility", "hidden"); benchmarkDot.setAttribute("visibility", "hidden"); tooltip.textContent = hint;});
     $("#portfolioChart").replaceChildren(svg, tooltip);
   }
   async function refresh() {
@@ -199,8 +263,10 @@
       catalog = await fetchJSON("data/securities.json");
       if (!imported && !profileInitialized) setupPositions();
       await refreshPersonalProfile();
-      try {prices = P.normalizePrices(await fetchJSON("data/security-prices.json"), catalog); cached = false; save(PRICE_KEY, prices);}
-      catch {prices = P.normalizePrices(stored(PRICE_KEY, null), catalog); cached = true;}
+      await Promise.all([
+        (async () => {try {prices = P.normalizePrices(await fetchJSON("data/security-prices.json"), catalog); cached = false; save(PRICE_KEY, prices);} catch {prices = P.normalizePrices(stored(PRICE_KEY, null), catalog); cached = true;}})(),
+        (async () => {try {exposures = E.normalize(await fetchJSON("data/portfolio-exposures.json")); exposureCached = false; save(EXPOSURE_KEY, exposures);} catch {try {exposures = E.normalize(stored(EXPOSURE_KEY, null)); exposureCached = true;} catch {exposures = null;}}})(),
+      ]);
       history = P.historyFor(positions, prices); render();
     } catch {$("#portfolioStatus").textContent = "Cotations indisponibles. Les positions enregistrées sur cet appareil sont conservées.";}
   }
@@ -208,6 +274,7 @@
   $("#positionForm").addEventListener("submit", event => {event.preventDefault(); if (!catalog) return; try {const ticker = $("#positionTicker").value; const existing = positions.find(p => p.ticker === ticker); const quantity = Number($("#positionQuantity").value.trim().replace(",", ".")); const costText = $("#positionAverageCost").value.trim(); const average_cost = costText ? Number(costText.replace(",", ".")) : existing?.average_cost; const next = {ticker, quantity, ...(average_cost !== undefined ? {average_cost} : {})}; applyPositions(existing ? positions.map(p => p.ticker === ticker ? next : p) : [...positions, next]); $("#positionQuantity").value = ""; $("#positionAverageCost").value = "";} catch (error) {$("#portfolioMessage").textContent = error.message;}});
   $("#portfolioExport").addEventListener("click", () => {const blob = new Blob([JSON.stringify({schema_version: 1, base_currency: "CAD", positions}, null, 2) + "\n"], {type: "application/json"}); const url = URL.createObjectURL(blob), anchor = el("a"); anchor.href = url; anchor.download = "portefeuille-savy.json"; anchor.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);});
   $("#portfolioPositionsToggle").addEventListener("click", () => {positionsVisible = !positionsVisible; save(POSITIONS_VISIBLE_KEY, positionsVisible); renderPositionsVisibility();});
+  for (const view of ["Sectors", "Geography"]) $("#portfolio" + view + "Toggle").addEventListener("click", () => {exposureViews[view] = exposureViews[view] !== true; save(EXPOSURE_VIEWS_KEY, exposureViews); renderExposureVisibility();});
   document.addEventListener("click", event => {
     if (!profileInitialized) return;
     const anchor = event.target.closest?.("a[href^='#']"), hash = anchor?.getAttribute("href");
