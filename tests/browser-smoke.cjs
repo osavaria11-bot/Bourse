@@ -89,7 +89,7 @@ async function run() {
     const errors = [];
     page.on("pageerror", error => errors.push(error.message));
     await page.route("https://**", route => route.request().url().startsWith("https://biquote.io/api/USDCAD") ?
-      route.fulfill({status:200, contentType:"application/json", body:JSON.stringify({symbol:"USDCAD",mid:1.4265,timestamp:new Date().toISOString(),marketState:"open"})}) : route.abort());
+      route.fulfill({status:200, contentType:"application/json", headers:{"Access-Control-Allow-Origin":"*"}, body:JSON.stringify({symbol:"USDCAD",mid:1.4265,timestamp:new Date().toISOString(),marketState:"open"})}) : route.abort());
     await page.goto(url); await waitCount(page, indicatorCount);
     assert.deepEqual(await page.locator("#kpis .kpi").evaluateAll(nodes => nodes.map(node => node.dataset.id)),
       ["VIXCLS", "DFEDTARU", "CPIAUCSL", "DGS10", "DEXCAUS", "V39079"]);
