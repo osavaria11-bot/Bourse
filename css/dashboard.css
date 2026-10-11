@@ -144,7 +144,7 @@ details[open]>summary:after {content:"−"}
 .portfolio-earnings-state {font-size:9px;letter-spacing:.07em;color:var(--gold);white-space:nowrap}
 .portfolio-earnings-table {width:100%;font-size:11px;font-variant-numeric:tabular-nums;margin-top:12px;table-layout:fixed}
 .portfolio-earnings-table th {font-weight:500}
-.portfolio-earnings-table th:first-child {width:18%}
+.portfolio-earnings-table th:first-child {width:64px}
 .portfolio-earnings-table th:not(:first-child),.portfolio-earnings-table td:not(:first-child) {text-align:right}
 .portfolio-earnings-table th,.portfolio-earnings-table td {padding:6px 3px;overflow-wrap:anywhere}
 .portfolio-earnings-table .earnings-outcome {font-size:10px;border:0;padding-top:0;padding-bottom:11px}
