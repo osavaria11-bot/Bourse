@@ -46,8 +46,17 @@ async function main() {
   await new Promise(resolve => server.listen(0, "127.0.0.1", resolve));
   const url = "http://127.0.0.1:" + server.address().port;
   const browser = await chromium.launch({headless: true});
+  async function historicalContext(options) {
+    const context = await browser.newContext(options);
+    await context.addInitScript(() => {
+      const originalFetch = window.fetch.bind(window);
+      window.fetch = (input, init) => String(input?.url || input).startsWith("https://biquote.io/api/USDCAD") ?
+        Promise.reject(new Error("FX direct indisponible dans ce test de clôtures")) : originalFetch(input, init);
+    });
+    return context;
+  }
   try {
-    const context = await browser.newContext({viewport: {width: 1440, height: 1000}, acceptDownloads: true});
+    const context = await historicalContext({viewport: {width: 1440, height: 1000}, acceptDownloads: true});
     const page = await context.newPage(), errors = [];
     page.on("pageerror", error => errors.push(error.message)); await page.route("https://**", route => route.abort());
     await page.goto(url + "/#positions=" + fragment);
@@ -195,7 +204,7 @@ async function main() {
     assert.match(await page.locator("#portfolioMoversNote").innerText(), /historique ou change manquant/);
     assert.deepEqual(errors, []);
     await context.close(); missingFX = false;
-    const blankContext = await browser.newContext(), blank = await blankContext.newPage(); await blank.route("https://**", route => route.abort());
+    const blankContext = await historicalContext(), blank = await blankContext.newPage(); await blank.route("https://**", route => route.abort());
     await blank.goto(url); await blank.waitForFunction(expected => document.querySelector("#positionTicker").options.length === expected, catalog.series.length);
     assert.equal(await blank.locator("#portfolioContent").isVisible(), false);
     assert.equal(await blank.locator("#portfolioExport").isDisabled(), true);
@@ -223,7 +232,7 @@ async function main() {
     await blankContext.close();
     // A new Home Screen context gets access from the start URL, without file imports.
     offline = false; missingFX = false; missingBaseline = false;
-    const directContext = await browser.newContext({viewport: {width: 375, height: 950}});
+    const directContext = await historicalContext({viewport: {width: 375, height: 950}});
     const direct = await directContext.newPage();
     direct.on("pageerror", error => errors.push(error.message)); await direct.route("https://**", route => route.abort());
     const personalURL = A.personalURL(url + "/?v=synthetic-direct", personalKey);
@@ -257,7 +266,7 @@ async function main() {
     await direct.waitForFunction(() => document.querySelectorAll("#portfolioRows tr").length === 6);
     assert.equal(await direct.locator('input[aria-label="Quantité SHOP"]').inputValue(), "4");
     profileOffline = false;
-    const homeContext = await browser.newContext({viewport: {width: 320, height: 900}}), home = await homeContext.newPage();
+    const homeContext = await historicalContext({viewport: {width: 320, height: 900}}), home = await homeContext.newPage();
     home.on("pageerror", error => errors.push(error.message));
     await home.route("https://**", route => route.abort()); await home.goto(manifest.start_url);
     await home.waitForFunction(() => document.querySelectorAll("#portfolioRows tr").length === 6);
@@ -266,7 +275,7 @@ async function main() {
     await home.waitForFunction(() => document.querySelectorAll("#portfolioRows tr").length === 6);
     assert.ok(await home.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
     await homeContext.close();
-    const invalidContext = await browser.newContext(), invalid = await invalidContext.newPage();
+    const invalidContext = await historicalContext(), invalid = await invalidContext.newPage();
     invalid.on("pageerror", error => errors.push(error.message));
     await invalid.route("https://**", route => route.abort());
     await invalid.goto(A.personalURL(url + "/", crypto.randomBytes(32).toString("base64url")));
