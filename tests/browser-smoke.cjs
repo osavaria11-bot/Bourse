@@ -93,7 +93,13 @@ async function run() {
     await page.goto(url); await waitCount(page, indicatorCount);
     assert.deepEqual(await page.locator("#kpis .kpi").evaluateAll(nodes => nodes.map(node => node.dataset.id)),
       ["VIXCLS", "DFEDTARU", "CPIAUCSL", "DGS10", "DEXCAUS", "V39079"]);
-    await page.waitForFunction(() => document.querySelector('#kpis .kpi[data-id="DEXCAUS"] .kpi-value').textContent.includes("1,4265"));
+    try {
+      await page.waitForFunction(() => document.querySelector('#kpis .kpi[data-id="DEXCAUS"] .kpi-value').textContent.includes("1,4265"), undefined, {timeout: 5000});
+    } catch (error) {
+      console.error("FX test state:", await page.evaluate(() => ({quote: window.SavyLiveFX?.current(),
+        value: document.querySelector('#kpis .kpi[data-id="DEXCAUS"] .kpi-value')?.textContent})), errors);
+      throw error;
+    }
     assert.match(await page.locator('#kpis .kpi[data-id="DEXCAUS"]').innerText(), /biquote/);
     assert.match(await page.locator('#kpis .kpi[data-id="DFEDTARU"] .kpi-value').innerText(), /–.*%/);
     assert.equal(await page.locator(".odds-card").count(), 2);
