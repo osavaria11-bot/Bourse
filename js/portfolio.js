@@ -223,9 +223,9 @@
     }
     return currency ? money(value, currency) : U.formatNumber(value, 2) + " · devise N/D";
   }
-  function earningsWeekLabel(week) {return U.dateLabel(week.start) + " – " + U.dateLabel(week.end);}
+  function earningsWeekLabel(week) {return U.observationLabel(week.start) + " – " + U.observationLabel(week.end);}
   function earningsDateLabel(event) {
-    return event.report_at ? U.timestampLabel(event.report_at) + " · horaire du calendrier" : U.dateLabel(event.report_date) + " · heure N/D";
+    return event.report_at ? U.timestampLabel(event.report_at) + " · horaire du calendrier" : U.observationLabel(event.report_date) + " · heure N/D";
   }
   function earningsPendingLabel(event) {return event.report_date < F.localDay() ? "Publication à confirmer" : "À venir";}
   function renderEarnings(current) {
@@ -263,7 +263,7 @@
         const badge = el("button", "portfolio-earnings-badge", report.holdings.map(row => row.ticker).join(" / "));
         badge.type = "button"; badge.dataset.earningsId = report.id;
         const outcome = report.date_status === "reported" ? F.earningsOutcome(report.eps) : {status: "pending"};
-        badge.classList.add("earnings-" + outcome.status); badge.setAttribute("aria-label", "Voir les résultats de " + badge.textContent + " du " + U.dateLabel(day));
+        badge.classList.add("earnings-" + outcome.status); badge.setAttribute("aria-label", "Voir les résultats de " + badge.textContent + " du " + U.observationLabel(day));
         badge.append(el("small", "", report.date_status === "reported" ? outcome.status === "beat" ? "BPA battu" : outcome.status === "miss" ? "BPA raté" : outcome.status === "inline" ? "BPA conforme" : "Publié" : earningsPendingLabel(report)));
         badge.addEventListener("click", () => {const card = document.querySelector('#portfolioEarningsItems [data-earnings-id="' + report.id + '"]'); card?.scrollIntoView({behavior: "smooth", block: "center"}); card?.focus({preventScroll: true});});
         column.append(badge);
@@ -330,7 +330,7 @@
       const x = 46 + index % 2 * (cardWidth + 20), y = 160 + Math.floor(index / 2) * (cardHeight + 20);
       ctx.fillStyle = "#151e2a"; ctx.fillRect(x, y, cardWidth, cardHeight); ctx.fillStyle = "#d4b06a"; ctx.font = "600 18px Arial"; ctx.fillText(report.holdings.map(row => row.ticker).join(" / "), x + 20, y + 32);
       ctx.fillStyle = ink; ctx.font = "600 21px Arial"; wrapped(report.holdings[0].title, x + 20, y + 62, cardWidth - 40, 23, 1);
-      ctx.fillStyle = muted; ctx.font = "15px Arial"; ctx.fillText(U.dateLabel(report.report_date) + (report.quarter ? " · " + report.quarter : "") + (report.date_status === "estimated" ? " · Date estimée" : ""), x + 20, y + 90);
+      ctx.fillStyle = muted; ctx.font = "15px Arial"; ctx.fillText(U.observationLabel(report.report_date) + (report.quarter ? " · " + report.quarter : "") + (report.date_status === "estimated" ? " · Date estimée" : ""), x + 20, y + 90);
       let lineY = y + 130;
       for (const [key, label] of [["eps", "BPA"], ["revenue", "Revenus"]]) {
         const metric = report[key], outcome = F.earningsOutcome(metric);
