@@ -74,5 +74,6 @@ test("benchmark missing baselines, future quotes and wrong instruments cannot si
   for (const point of [security, {...security, currency: "USD"}, {...security, id: "VFV"}, {...security, history: [["2025-12-01", 10], ["2026-01-05", 11]]}]) {
     const result = P.benchmarkFor(selected, point); assert.equal(result.available, false); assert.equal(result.benchmark_percent, null); assert.equal(result.difference, null);
   }
-  assert.equal(P.benchmarkFor({...selected, incomplete: true}, {...security, history: [["2025-12-31", 10], ["2026-01-05", 11]]}).available, false);
+  const partial = P.benchmarkFor({...selected, incomplete: true}, {...security, history: [["2025-12-31", 10], ["2026-01-05", 11]]});
+  assert.equal(partial.available, false); assert.equal(partial.portfolio_percent, null);
 });

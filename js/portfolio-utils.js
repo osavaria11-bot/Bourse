@@ -133,7 +133,7 @@
     });
     const last = points.at(-1);
     return {available, normalized: !!validPortfolioBase, points, start: start?.[0], end: end?.[0],
-      portfolio_percent: last?.portfolio ?? null, benchmark_percent: available ? last.benchmark : null,
+      portfolio_percent: !selected?.incomplete ? last?.portfolio ?? null : null, benchmark_percent: available ? last.benchmark : null,
       difference: available && U.validNumber(last.portfolio) ? last.portfolio - last.benchmark : null,
       benchmark_start: base?.[0] || null, benchmark_end: final?.[0] || null};
   }
