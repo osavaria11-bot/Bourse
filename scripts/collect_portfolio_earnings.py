@@ -282,15 +282,21 @@ def collect_company(definition: dict, now: datetime, start: date, end: date, fet
             if not previous:
                 events[event["report_date"]] = event
             else:
-                previous["report_at"] = event["report_at"]
+                already_reported = previous["eps"]["actual"] is not None or previous["revenue"]["actual"] is not None
+                incoming_reported = event["eps"]["actual"] is not None or event["revenue"]["actual"] is not None
+                if incoming_reported or not already_reported:
+                    previous["report_at"] = event["report_at"]
                 # Only fill a missing EPS pair as a whole. Never mix currencies,
                 # actuals and estimates from different providers or quarters.
-                if previous["eps"]["estimate"] is None and event["eps"]["estimate"] is not None and (previous["eps"]["actual"] is None or event["eps"]["actual"] is not None):
+                if (previous["eps"]["actual"] is None and event["eps"]["actual"] is not None) or (previous["eps"]["estimate"] is None and event["eps"]["estimate"] is not None and (previous["eps"]["actual"] is None or event["eps"]["actual"] is not None)):
                     previous["eps"] = event["eps"]
-                if event["date_status"] == "reported":
+                if previous["eps"]["actual"] is not None or previous["revenue"]["actual"] is not None:
                     previous["date_status"] = "reported"
-                previous["sources"].extend(event["sources"])
-                if event["report_at"] and datetime.fromisoformat(event["report_at"]) > now:
+                elif previous["date_status"] == "reported":
+                    previous["date_status"] = "calendar"
+                known_urls = {source["url"] for source in previous["sources"]}
+                previous["sources"].extend(source for source in event["sources"] if source["url"] not in known_urls)
+                if previous["report_at"] and datetime.fromisoformat(previous["report_at"]) > now:
                     previous["eps"]["actual"] = previous["revenue"]["actual"] = None
                     previous["date_status"] = "estimated" if previous["date_status"] == "estimated" else "calendar"
                     previous["messages"] = []

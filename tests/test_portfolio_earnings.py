@@ -97,6 +97,24 @@ class EarningsTests(unittest.TestCase):
         self.assertEqual(result["instruments"]["FEQT"]["events"], [])
         self.assertEqual(earnings.collect(catalog, None, NOW, fail)["instruments"]["MSFT"]["fetch_status"], "unavailable")
 
+    def test_duplicate_yahoo_calendar_and_report_keep_the_published_pair_in_both_orders(self):
+        pending = '<tr><td>MSFT</td><td>July 29, 2026 at 5 PM EDT</td><td>-0.40</td><td>-</td></tr>'
+        reported = '<tr><td>MSFT</td><td>July 29, 2026 at 4 PM EDT</td><td>-0.50</td><td>-0.20</td></tr>'
+        for rows in [pending + reported, reported + pending]:
+            body = '<table><tr><th>Symbol</th><th>Earnings Date</th><th>EPS Estimate</th><th>Reported EPS</th></tr>' + rows + '</table>'
+            def fetch(url):
+                if "calendar" in url:
+                    return body
+                raise earnings.SourceError("Provider unavailable")
+            feed = earnings.collect_company({"id": "MSFT", "quote_symbol": "MSFT"}, NOW, NOW.date().replace(month=7, day=1), NOW.date().replace(month=12, day=1), fetch)
+            self.assertEqual(len(feed["events"]), 1)
+            event = feed["events"][0]
+            self.assertEqual(event["date_status"], "reported")
+            self.assertEqual(event["eps"]["actual"], -.2)
+            self.assertEqual(event["eps"]["estimate"], -.5)
+            self.assertEqual(event["report_at"], "2026-07-29T20:00:00+00:00")
+            self.assertEqual(len(event["sources"]), 1)
+
     def test_reviewed_messages_are_tied_to_the_exact_dated_report(self):
         event = earnings.parse_marketbeat(sample(), "MSFT", URL, NOW)[1]
         feed = {"company_symbol": "MSFT", "events": [event]}

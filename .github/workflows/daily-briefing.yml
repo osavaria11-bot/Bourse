@@ -51,6 +51,10 @@ jobs:
           python-version: "3.13"
       - name: Verify collector
         run: python -m unittest discover -s tests -p 'test_*.py' -v
+      - name: Setup Node for data validation
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24"
       - name: Collect observations and generate statistical snapshot
         run: python scripts/generate_daily_briefing.py
       - name: Refresh world equity charts
@@ -63,6 +67,13 @@ jobs:
         run: python scripts/collect_portfolio_earnings.py
       - name: Refresh next-decision market odds
         run: python scripts/collect_rate_odds.py
+      - name: Validate refreshed earnings before committing
+        run: |
+          node - <<'JS'
+          const fs = require('node:fs'), F = require('./js/portfolio-analytics-utils.js');
+          F.normalizeEarnings(JSON.parse(fs.readFileSync('data/portfolio-earnings.json', 'utf8')), JSON.parse(fs.readFileSync('data/securities.json', 'utf8')));
+          console.log('Refreshed earnings validated');
+          JS
       - name: Commit published data
         run: |
           git config user.name "github-actions[bot]"

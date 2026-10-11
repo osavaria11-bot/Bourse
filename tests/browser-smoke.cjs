@@ -226,6 +226,11 @@ async function run() {
     assert.equal(await page.locator("html").getAttribute("data-theme"), "light");
     for (const width of [1100, 375, 320]) {
       await page.setViewportSize({ width, height: 900 });
+      await page.locator("#kpis").scrollIntoViewIfNeeded();
+      await page.waitForFunction(() => {
+        const pair = [...document.querySelectorAll('#kpis .kpi[data-id="DEXCAUS"], #kpis .kpi[data-id="V39079"]')].map(node => node.getBoundingClientRect());
+        return pair.length === 2 && pair.every(rect => rect.width > 0 && rect.height > 0) && pair[0].top === pair[1].top && pair[1].left > pair[0].left;
+      });
       const layout = await page.evaluate(() => ({width: window.innerWidth, scrollWidth: document.documentElement.scrollWidth,
         overflow: [...document.querySelectorAll("body *")].filter(node => node.getBoundingClientRect().right > window.innerWidth + 1)
           .slice(0, 10).map(node => ({tag: node.tagName, className: String(node.className), right: node.getBoundingClientRect().right}))}));

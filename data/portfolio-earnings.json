@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "portfolio_earnings",
-  "generated_at": "2026-10-11T20:57:05.541446+00:00",
+  "generated_at": "2026-10-11T21:05:27.329715+00:00",
   "timezone": "America/Toronto",
   "window": {
     "start": "2026-07-13",
@@ -2882,7 +2882,7 @@
     },
     "GRGD": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-11T20:57:05.541446+00:00",
+      "fetched_at": "2026-10-11T21:05:18.054581+00:00",
       "company_symbol": "GRGD.TO",
       "source_url": "https://www.marketbeat.com/stocks/TSE/GRGD/earnings/",
       "events": [
@@ -2893,8 +2893,8 @@
           "quarter": null,
           "date_status": "reported",
           "eps": {
-            "actual": null,
-            "estimate": 0.44,
+            "actual": 0.96,
+            "estimate": 0.8,
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=GRGD.TO&size=100"
           },
@@ -2910,18 +2910,13 @@
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=GRGD.TO&size=100"
-            },
-            {
-              "label": "Yahoo Finance · calendrier et BPA",
-              "url": "https://finance.yahoo.com/calendar/earnings/?symbol=GRGD.TO&size=100"
             }
           ]
         }
       ],
       "source_warnings": [
         "MarketBeat: Tableau de résultats MarketBeat absent"
-      ],
-      "listing_note": null
+      ]
     },
     "GS": {
       "fetch_status": "fresh",
