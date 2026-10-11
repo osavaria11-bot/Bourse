@@ -248,7 +248,7 @@
     const result = F.selectEarnings(valuation, earnings, {ticker: earningsTicker, week: F.weekFor(earningsWeek)});
     earningsSelection = result;
     const warning = !earnings || earningsCached || result.cached.length > 0 || result.unavailable.length > 0 || !result.inWindow;
-    $("#portfolioEarningsStatus").textContent = earnings ? earningsWeekLabel(result.week) + " · " + result.reported + " résultat" + (result.reported > 1 ? "s" : "") + " publié" + (result.reported > 1 ? "s" : "") + " · " + result.pending + " à venir · collecte du " + U.timestampLabel(earnings.generated_at) +
+    $("#portfolioEarningsStatus").textContent = earnings ? earningsWeekLabel(result.week) + " · " + result.reported + " résultat" + (result.reported > 1 ? "s" : "") + " publié" + (result.reported > 1 ? "s" : "") + " · " + result.pending + " en attente · collecte du " + U.timestampLabel(earnings.generated_at) +
       (earningsCached || result.cached.length ? " · copie conservée; dates de collecte originales" : "") +
       (result.unavailable.length ? " · calendriers indisponibles : " + result.unavailable.join(", ") : "") +
       (!result.inWindow ? " · semaine hors de la fenêtre collectée; actualisation nécessaire" : "") : "Les résultats n’ont pas pu être chargés. Utilise « Actualiser ».";

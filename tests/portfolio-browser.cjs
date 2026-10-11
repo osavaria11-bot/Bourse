@@ -284,7 +284,7 @@ async function main() {
         await page.locator("#portfolio" + view + "Toggle").click();
       }
     }
-    if (process.env.SCREENSHOT_LOGS) {await page.setViewportSize({width: 375, height: 1000}); await page.locator("#portfolioTitle").scrollIntoViewIfNeeded(); console.log("SCREENSHOT_PORTFOLIO_MOBILE " + (await page.screenshot()).toString("base64"));}
+    if (process.env.SCREENSHOT_LOGS) {await page.setViewportSize({width: 375, height: 1000}); await page.locator("#portfolioTitle").scrollIntoViewIfNeeded(); console.log("SCREENSHOT_PORTFOLIO_MOBILE " + (await page.screenshot()).toString("base64")); console.log("SCREENSHOT_EARNINGS_MOBILE " + (await page.locator("#portfolioEarnings").screenshot()).toString("base64"));}
     offline = true;
     await page.reload(); await page.waitForFunction(() => document.querySelector("#portfolioStatus").textContent.includes("Copie de cours conservée"));
     assert.equal(await page.locator("#portfolioRows tr").count(), 6);

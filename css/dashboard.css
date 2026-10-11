@@ -148,7 +148,7 @@ details[open]>summary:after {content:"−"}
 .portfolio-earnings-table th:not(:first-child),.portfolio-earnings-table td:not(:first-child) {text-align:right}
 .portfolio-earnings-table th,.portfolio-earnings-table td {padding:6px 3px;overflow-wrap:anywhere}
 .portfolio-earnings-table .earnings-outcome {font-size:10px;border:0;padding-top:0;padding-bottom:11px}
-.earnings-beat {color:var(--up)}
+.earnings-beat {color:var(--accent)}
 .earnings-miss {color:var(--down)}
 .earnings-inline,.earnings-unknown,.earnings-pending {color:var(--muted)}
 .portfolio-earnings-messages {font-size:11px;line-height:1.6;margin:0;padding-left:17px}
