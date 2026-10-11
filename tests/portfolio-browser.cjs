@@ -144,7 +144,7 @@ async function main() {
       const selected = P.period(history, range.key);
       const comparison = P.benchmarkFor(selected, prices.series.find(row => row.id === "FEQT"));
       assert.equal(await page.locator("#portfolioChart .chart-benchmark").count(), 1);
-      assert.ok((await page.locator("#portfolioBenchmark").innerText()).includes("FEQT : " + (comparison.benchmark_percent > 0 ? "+" : "") + U.formatNumber(comparison.benchmark_percent, 2) + " %"));
+      assert.equal(await page.locator("#portfolioBenchmark .portfolio-benchmark-item:nth-child(2) strong").textContent(), (comparison.benchmark_percent > 0 ? "+" : "") + U.formatNumber(comparison.benchmark_percent, 2) + " %");
       assert.match(await page.locator("#portfolioPeriod").innerText(), new RegExp(selected.start + ".*" + selected.end));
       assert.equal(await page.locator("#portfolioChart svg").count(), 1);
       const ticks = await page.locator("#portfolioChart .chart-axis").evaluateAll(nodes => nodes.slice(0, 4).map(n => n.textContent));
