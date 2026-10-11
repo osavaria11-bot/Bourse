@@ -183,7 +183,9 @@ async function main() {
     const incompleteChart = page.locator("#portfolioChart svg"); await incompleteChart.focus(); await incompleteChart.press("End");
     assert.match(await page.locator("#portfolioChart .chart-tooltip").innerText(), /variation indisponible.*base.*manquante/);
     missingBaseline = false; missingFX = true;
-    await page.reload(); await page.waitForFunction(() => document.querySelector("#portfolioValueLabel").textContent.includes("PARTIELLE"));
+    await page.reload(); await page.waitForFunction(() => document.querySelectorAll("#portfolioRows tr").length === 6);
+    await page.evaluate(() => { window.SavyLiveFX.current = () => null; document.dispatchEvent(new Event("savy:fx")); });
+    await page.waitForFunction(() => document.querySelector("#portfolioValueLabel").textContent.includes("PARTIELLE"));
     assert.equal(await page.locator("#portfolioChange").innerText(), "— · —");
     assert.match(await page.locator("#portfolioMissing").innerText(), /cours ou change manquant/);
     assert.equal(await page.locator("#portfolioChart svg").count(), 0);
