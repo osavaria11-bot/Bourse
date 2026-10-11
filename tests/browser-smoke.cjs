@@ -250,6 +250,7 @@ async function run() {
     await empty.goto(url);
     await empty.waitForFunction(() => document.querySelector("#updated").textContent.includes("ne sont pas disponibles"));
     await empty.waitForFunction(() => document.querySelector("#briefingDate").textContent === "Édition indisponible");
+    await empty.waitForFunction(() => !document.querySelector("#refreshButton").disabled);
     assert.equal(await empty.locator("#refreshButton").isEnabled(), true);
     assert.deepEqual(errors, []);
     console.log("Browser checks passed: " + indicatorCount + " macro cards, live FX, both policy rates and meeting odds, sourced selective briefing, offline preservation and 320px mobile.");
