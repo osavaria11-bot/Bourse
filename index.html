@@ -8,13 +8,14 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-title" content="SAVY" />
   <title>SAVY — Tableau macroéconomique</title>
-  <link rel="stylesheet" href="css/dashboard.css?v=20261011-portfolio-feqt" />
+  <link rel="stylesheet" href="css/dashboard.css?v=20261011-portfolio-analytics" />
   <script src="js/macro-utils.js?v=20261011-index-day-ytd" defer></script>
   <script src="js/live-fx.js?v=20261011-rates-news" defer></script>
   <script src="js/portfolio-utils.js?v=20261011-portfolio-feqt" defer></script>
   <script src="js/portfolio-exposure-utils.js?v=20261011-portfolio-feqt" defer></script>
+  <script src="js/portfolio-analytics-utils.js?v=20261011-portfolio-analytics" defer></script>
   <script src="js/portfolio-profile-utils.js?v=20261010-portefeuille-direct" defer></script>
-  <script src="js/portfolio.js?v=20261011-portfolio-feqt" defer></script>
+  <script src="js/portfolio.js?v=20261011-portfolio-analytics" defer></script>
   <script src="js/dashboard.js?v=20261011-feqt" defer></script>
 </head>
 <body>
@@ -59,6 +60,26 @@
         <div id="portfolioBenchmark" class="portfolio-benchmark" aria-label="Rendement du portefeuille et de FEQT"></div>
         <p id="portfolioBenchmarkNote" class="meta"></p>
         <div id="portfolioChart" class="chart-host portfolio-chart"></div>
+        <section id="portfolioContributions" class="portfolio-analysis" aria-labelledby="portfolioContributionsTitle">
+          <div class="portfolio-analysis-heading"><div><p class="eyebrow">CE QUI EXPLIQUE LE RENDEMENT</p><h3 id="portfolioContributionsTitle">Contribution à la performance</h3></div><p id="portfolioContributionsTotal" class="portfolio-analysis-total"></p></div>
+          <p id="portfolioContributionsStatus" class="meta" role="status"></p>
+          <div class="portfolio-movers-grid"><div class="portfolio-movers-card"><h4>Principales contributions positives</h4><ol id="portfolioContributors" class="portfolio-movers-list"></ol></div><div class="portfolio-movers-card"><h4>Principales contributions négatives</h4><ol id="portfolioDetractors" class="portfolio-movers-list"></ol></div></div>
+          <details class="portfolio-contribution-details"><summary id="portfolioContributionsSummary">Voir toutes les contributions</summary><div class="table-wrap"><table><caption>Contribution en points de pourcentage au rendement du portefeuille sur la période du graphique</caption><thead><tr><th scope="col">Position</th><th scope="col">Poids au départ</th><th scope="col">Rendement CAD</th><th scope="col">Variation CAD</th><th scope="col">Contribution (pt)</th></tr></thead><tbody id="portfolioContributionRows"></tbody></table></div></details>
+          <p class="meta">Contribution = variation de la position en CAD ÷ valeur totale au départ × 100. Les contributions s’additionnent au rendement du graphique, avant arrondis. Quantités actuelles constantes, change historique, hors dividendes, frais et transactions.</p>
+        </section>
+        <section id="portfolioRisk" class="portfolio-analysis" aria-labelledby="portfolioRiskTitle">
+          <div class="portfolio-analysis-heading"><div><p class="eyebrow">LE RISQUE POUR CE RENDEMENT</p><h3 id="portfolioRiskTitle">Risque comparé à FEQT</h3></div><span class="portfolio-analysis-reference">Référence : FEQT · CAD</span></div>
+          <p id="portfolioRiskStatus" class="meta" role="status"></p>
+          <div class="table-wrap"><table class="portfolio-risk-table"><caption>Même période et mêmes clôtures communes pour les deux portefeuilles</caption><thead><tr><th scope="col">Mesure</th><th scope="col">Mon portefeuille</th><th scope="col">FEQT</th><th scope="col">Écart</th></tr></thead><tbody id="portfolioRiskRows"></tbody></table></div>
+          <p id="portfolioRiskNote" class="meta"></p>
+          <details class="portfolio-analysis-method"><summary>Comprendre les mesures</summary><p>Volatilité annualisée : écart-type des rendements de séances communes × √252, avec au moins 20 rendements. Baisse maximale : plus forte baisse entre un sommet et un creux dans cette période, calculée aux clôtures. Bêta relatif à FEQT : covariance des rendements ÷ variance des rendements de FEQT, avec au moins 30 rendements; FEQT vaut 1 par définition lorsque la mesure est disponible.</p><p>Un bêta supérieur à 1 indique une sensibilité historique plus élevée aux mouvements de FEQT. Il dépend de la référence et de la période; il ne représente pas une cible de rendement. <a href="https://rpc.cfainstitute.org/sites/default/files/-/media/documents/code/gips/measures-risk-adjusted-return.pdf" target="_blank" rel="noopener noreferrer">Méthode du bêta · CFA Institute ↗</a></p><p>Positions actuelles reconstituées, change historique, hors dividendes. Les séances sans clôture commune sont exclues, sans reprise de cours antérieurs. Une période trop courte ou un historique incomplet ne produit pas d’estimation fictive.</p></details>
+        </section>
+        <section id="portfolioNews" class="portfolio-analysis" aria-labelledby="portfolioNewsTitle">
+          <div class="portfolio-analysis-heading"><div><p class="eyebrow">LES ÉVÉNEMENTS À SURVEILLER</p><h3 id="portfolioNewsTitle">Actualités de mes positions</h3></div><div class="portfolio-news-filters"><label class="sr-only" for="portfolioNewsTicker">Filtrer les actualités par position</label><select id="portfolioNewsTicker"><option value="">Tous mes titres</option></select><label class="sr-only" for="portfolioNewsEvent">Filtrer le type d’actualité</label><select id="portfolioNewsEvent"><option value="all">Tous les événements</option><option value="results">Résultats / prévisions</option></select></div></div>
+          <p id="portfolioNewsStatus" class="meta" role="status"></p>
+          <div id="portfolioNewsItems" class="portfolio-news-grid"></div>
+          <p class="meta">Publications des 7 derniers jours, priorisées selon l’événement, la récence et le poids des positions directement détenues. Titres originaux des sources; « à surveiller » indique la pertinence de l’événement, sans présumer son effet sur le cours. Sélection dans ce navigateur à partir d’une veille du catalogue public.</p>
+        </section>
         <section class="portfolio-movers" aria-labelledby="portfolioMoversTitle">
           <div class="portfolio-movers-heading"><div><p class="eyebrow">LE POINT QUOTIDIEN</p><h3 id="portfolioMoversTitle">Les meilleures et les pires performances sur un mois</h3></div><div id="portfolioMoversRanges" class="segmented" role="group" aria-label="Période du classement des positions"></div></div>
           <p id="portfolioMoversPeriod" class="meta"></p>

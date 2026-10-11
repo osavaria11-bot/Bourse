@@ -1,11 +1,13 @@
 (() => {
   "use strict";
-  const P = window.PortfolioUtils, U = window.MacroUtils, A = window.PortfolioProfileUtils, E = window.PortfolioExposureUtils, $ = selector => document.querySelector(selector);
+  const P = window.PortfolioUtils, U = window.MacroUtils, A = window.PortfolioProfileUtils, E = window.PortfolioExposureUtils, F = window.PortfolioAnalyticsUtils, $ = selector => document.querySelector(selector);
   const HOLDINGS_KEY = "savy:private-holdings:v1", PRICE_KEY = "savy:security-prices:v1", POSITIONS_VISIBLE_KEY = "savy:portfolio-positions-visible:v1";
   const PROFILE_STATE_KEY = "savy:portfolio-profile-state:v1", PROFILE_CACHE_KEY = "savy:portfolio-profile-cache:v1";
   const EXPOSURE_KEY = "savy:portfolio-exposures:v1", EXPOSURE_VIEWS_KEY = "savy:portfolio-exposure-views:v1";
+  const NEWS_KEY = "savy:portfolio-news:v1";
   let catalog = null, prices = null, cached = false, range = "YTD", moversRange = "1M", positions = [], history = [], imported = false;
   let exposures = null, exposureCached = false;
+  let news = null, newsCached = false, newsTicker = "", newsEvent = "all";
   const exposureViewState = stored(EXPOSURE_VIEWS_KEY, {});
   const exposureViews = {Sectors: exposureViewState?.Sectors === true, Geography: exposureViewState?.Geography === true};
   let profileState = stored(PROFILE_STATE_KEY, null), profileInitialized = false, holdingsAvailable = false, manifestURL = null;
@@ -157,6 +159,89 @@
     $("#portfolioMoversNote").textContent = "Recalculé à chaque mise à jour quotidienne des cours, indépendamment de la période du graphique · " + performance.rows.length + "/" + positions.length + " titres comparables · hors dividendes" +
       (performance.missing.length ? " · historique ou change manquant : " + performance.missing.join(", ") : "");
   }
+  function points(value) {return U.validNumber(value) ? (value > 0 ? "+" : "") + U.formatNumber(value, 2) + " pt" : "—";}
+  function renderContributions(selected) {
+    const result = F.contributionsFor(positions, prices, selected), table = document.createDocumentFragment();
+    $("#portfolioContributionsTotal").textContent = result.available ? points(result.total) + " au total" : "—";
+    $("#portfolioContributionsStatus").textContent = result.available ? "Du " + result.start + " au " + result.end + " · même période que le graphique · contributions en CAD, change inclus" :
+      "Contributions indisponibles : une valeur complète de toutes les positions au début et à la fin de la période est nécessaire.";
+    $("#portfolioContributionsStatus").classList.toggle("warning", !result.available);
+    $("#portfolioContributionsSummary").textContent = "Voir toutes les contributions" + (result.available ? " (" + result.rows.length + ")" : "");
+    for (const [selector, rows, empty] of [["#portfolioContributors", result.rows.filter(row => row.contribution > 0).slice(0, 3), "Aucune contribution positive sur cette période."],
+      ["#portfolioDetractors", result.rows.filter(row => row.contribution < 0).slice(-3).reverse(), "Aucune contribution négative sur cette période."]]) {
+      const list = document.createDocumentFragment();
+      const largest = Math.max(0, ...result.rows.map(row => Math.abs(row.contribution)));
+      for (const row of rows) {
+        const li = el("li"), name = el("span", "portfolio-mover-name"); li.dataset.ticker = row.ticker;
+        name.append(el("strong", "", row.title), el("span", "portfolio-ticker", row.ticker + " · " + delta(row.change_cad) + " CAD"));
+        const bar = el("span", "contribution-bar " + direction(row.contribution)); bar.style.width = (largest ? Math.abs(row.contribution) / largest * 100 : 0) + "%"; bar.setAttribute("aria-hidden", "true"); name.append(bar);
+        li.append(name, el("span", "change " + direction(row.contribution), points(row.contribution))); list.append(li);
+      }
+      if (!rows.length) list.append(el("li", "meta", result.available ? empty : "Historique incomplet pour cette période."));
+      $(selector).replaceChildren(list);
+    }
+    for (const row of result.rows) {
+      const tr = el("tr"), name = el("td"); tr.dataset.ticker = row.ticker;
+      name.append(el("strong", "", row.title), el("span", "portfolio-ticker", row.ticker + " · clôtures du " + row.start_quote + " au " + row.end_quote));
+      tr.append(name, el("td", "", U.formatNumber(row.start_weight, 2) + " %"), el("td", "change " + direction(row.percent), delta(row.percent, true)),
+        el("td", "change " + direction(row.change_cad), delta(row.change_cad)), el("td", "change " + direction(row.contribution), points(row.contribution)));
+      table.append(tr);
+    }
+    $("#portfolioContributionRows").replaceChildren(table);
+  }
+  function renderRisk(selected) {
+    const risk = F.riskFor(positions, prices, selected), rows = document.createDocumentFragment();
+    $("#portfolioRiskStatus").textContent = risk.available ? "Du " + risk.start + " au " + risk.end + " · " + risk.observations + " rendements de séances communes · CAD, hors dividendes" +
+      (risk.start !== selected.start || risk.end !== selected.end ? " · période demandée : " + selected.start + " au " + selected.end : "") +
+      (risk.skipped_closes ? " · " + risk.skipped_closes + " clôtures sans correspondance exclues" : "") :
+      (risk.reason === "short_history" ? "Pas assez de clôtures communes sur cette période." : "Risque indisponible : un historique complet du portefeuille et de FEQT est nécessaire pour cette période.");
+    $("#portfolioRiskStatus").classList.toggle("warning", !risk.available);
+    const measurements = [["volatility", "Volatilité annualisée", risk.portfolio.volatility, risk.benchmark.volatility, "%"],
+      ["drawdown", "Baisse maximale", risk.portfolio.drawdown?.value, risk.benchmark.drawdown?.value, "%"],
+      ["beta", "Bêta relatif à FEQT", risk.portfolio.beta, risk.benchmark.beta, ""]];
+    for (const [key, label, portfolio, benchmark, unit] of measurements) {
+      const tr = el("tr"), heading = el("th", "", label); heading.scope = "row"; tr.dataset.metric = key; tr.append(heading);
+      for (const value of [portfolio, benchmark]) tr.append(el("td", "", U.validNumber(value) ? U.formatNumber(value, 2) + (unit ? " " + unit : "") : "N/D"));
+      tr.append(el("td", "", U.validNumber(portfolio) && U.validNumber(benchmark) ? unit ? points(portfolio - benchmark) :
+        (portfolio - benchmark > 0 ? "+" : "") + U.formatNumber(portfolio - benchmark, 2) : "—")); rows.append(tr);
+    }
+    $("#portfolioRiskRows").replaceChildren(rows);
+    const notes = [];
+    if (risk.available) {
+      if (!U.validNumber(risk.portfolio.volatility)) notes.push("Volatilité : minimum " + F.MIN_VOLATILITY_RETURNS + " rendements communs.");
+      if (!U.validNumber(risk.portfolio.beta)) notes.push(risk.beta_reason === "constant_benchmark" ? "Bêta indisponible : FEQT ne varie pas assez sur cet échantillon." : "Bêta : minimum " + F.MIN_BETA_RETURNS + " rendements communs.");
+      for (const [label, measure] of [["Portefeuille", risk.portfolio.drawdown], ["FEQT", risk.benchmark.drawdown]])
+        notes.push(label + " : " + (measure.value < 0 ? "baisse maximale du sommet du " + measure.peak_date + " au creux du " + measure.trough_date + "." : "aucune baisse entre sommet et creux observée sur ces clôtures."));
+    } else notes.push("Choisis une période plus longue si l’échantillon est trop court; aucune estimation ne remplace une donnée manquante.");
+    $("#portfolioRiskNote").textContent = notes.join(" ");
+  }
+  function renderNews(current) {
+    const valuation = current || {complete: false, total: 0, rows: positions.map(row => ({...row, title: catalog?.series.find(definition => definition.id === row.ticker)?.title || row.ticker}))};
+    if (!positions.some(row => row.ticker === newsTicker)) newsTicker = "";
+    const options = document.createDocumentFragment(), all = el("option", "", "Tous mes titres"); all.value = ""; options.append(all);
+    for (const row of [...valuation.rows].sort((a, b) => (b.value_cad || 0) - (a.value_cad || 0) || a.ticker.localeCompare(b.ticker))) {
+      const option = el("option", "", row.ticker + " · " + row.title); option.value = row.ticker; options.append(option);
+    }
+    $("#portfolioNewsTicker").replaceChildren(options); $("#portfolioNewsTicker").value = newsTicker;
+    const result = F.selectNews(valuation, news, {ticker: newsTicker, event: newsEvent}), content = document.createDocumentFragment();
+    $("#portfolioNewsStatus").textContent = news ? "Veille publiée le " + U.timestampLabel(news.generated_at) + " · " + result.rows.length + " / " + result.total + " publications récentes affichées · " + result.covered + " position" + (result.covered > 1 ? "s" : "") + " couverte" + (result.covered > 1 ? "s" : "") +
+      (newsCached || result.cached.length ? " · certains flux sont conservés; les dates des articles restent affichées" : "") +
+      (result.unavailable.length ? " · flux indisponibles : " + result.unavailable.join(", ") : "") + (!valuation.complete ? " · poids indisponibles, priorité selon événement et récence" : "") :
+      "Les actualités n’ont pas pu être chargées. Utilise « Actualiser ».";
+    $("#portfolioNewsStatus").classList.toggle("warning", !news || newsCached || result.cached.length > 0 || result.unavailable.length > 0 || (news && Date.now() - U.parseTimestamp(news.generated_at) > 36 * 3600000));
+    for (const article of result.rows) {
+      const card = el("article", "portfolio-news-card"), meta = el("div", "portfolio-news-meta"); card.dataset.newsId = article.id;
+      const time = el("time", "", U.timestampLabel(article.published_at)); time.dateTime = article.published_at;
+      meta.append(el("span", "portfolio-news-event", F.EVENTS[article.event].label), el("span", "", article.publisher), time);
+      const title = el("h4"), link = el("a", "", article.title + " ↗"); link.href = article.source_url; link.target = "_blank"; link.rel = "noopener noreferrer"; title.append(link);
+      const holdings = article.holdings.map(row => row.ticker + (U.validNumber(row.weight) ? " · " + U.formatNumber(row.weight, 2) + " % du portefeuille" : ""));
+      card.append(meta, title, el("p", "portfolio-news-holdings", holdings.join(" / ")),
+        el("p", "portfolio-news-reason", F.EVENTS[article.event].reason)); content.append(card);
+    }
+    if (!result.rows.length) content.append(el("p", "portfolio-news-empty", news ? "Aucune publication des sources retenues dans les 7 derniers jours pour cette sélection." : "La veille sera disponible lorsque les sources auront pu être chargées."));
+    $("#portfolioNewsItems").replaceChildren(content);
+  }
+  function renderAnalysis(selected, current) {renderContributions(selected); renderRisk(selected); renderNews(current);}
   function render() {
     $("#portfolioEmpty").hidden = positions.length > 0;
     $("#portfolioContent").hidden = positions.length === 0;
@@ -172,7 +257,7 @@
     for (const item of P.RANGES) {const button = el("button", "", item.label); button.type = "button"; button.setAttribute("aria-pressed", String(item.key === range)); button.addEventListener("click", () => {range = item.key; render();}); controls.append(button);}
     $("#portfolioRanges").replaceChildren(controls);
     if (!positions.length) {$("#portfolioStatus").textContent = "Importe ta sauvegarde ou ajoute tes positions. Les quantités restent sur cet appareil."; return;}
-    if (!prices || !history.length) {$("#portfolioStatus").textContent = "Les cours n’ont pas pu être chargés. Tes positions sont conservées; utilise « Actualiser »."; $("#portfolioChart").replaceChildren(); $("#portfolioBenchmark").replaceChildren(); $("#portfolioBenchmarkNote").textContent = ""; $("#portfolioRows").replaceChildren(); $("#portfolioBest").replaceChildren(); $("#portfolioWorst").replaceChildren(); $("#portfolioMoversPeriod").textContent = ""; $("#portfolioMoversNote").textContent = "Les classements seront disponibles avec les cotations."; renderExposures(null); return;}
+    if (!prices || !history.length) {$("#portfolioStatus").textContent = "Les cours n’ont pas pu être chargés. Tes positions sont conservées; utilise « Actualiser »."; $("#portfolioChart").replaceChildren(); $("#portfolioBenchmark").replaceChildren(); $("#portfolioBenchmarkNote").textContent = ""; $("#portfolioRows").replaceChildren(); $("#portfolioBest").replaceChildren(); $("#portfolioWorst").replaceChildren(); $("#portfolioMoversPeriod").textContent = ""; $("#portfolioMoversNote").textContent = "Les classements seront disponibles avec les cotations."; renderExposures(null); renderAnalysis(null, null); return;}
     const day = history.at(-1)[0], liveFx = window.SavyLiveFX?.current(), current = P.valuationAt(positions, prices, day, liveFx), selected = P.period(history, range);
     const baseline = P.valuationAt(positions, prices, selected.start), old = current.rows.filter(row => row.price_date && row.price_date < day);
     $("#portfolioStatus").textContent = (cached ? "Copie de cours conservée · " : "") + "Cours des titres au " + day + " · " +
@@ -194,6 +279,7 @@
     $("#portfolioMissing").textContent = current.missing.length ? "Valeur partielle : cours ou change manquant pour " + current.missing.join(", ") + "." : "";
     renderMovers(day);
     renderExposures(current);
+    renderAnalysis(selected, current);
     const previous = new Map(baseline.rows.map(row => [row.ticker, row]));
     const closedRows = new Map(P.valuationAt(positions, prices, day).rows.map(row => [row.ticker, row]));
     const comparedRows = current.rows.map(row => {
@@ -266,6 +352,7 @@
       await Promise.all([
         (async () => {try {prices = P.normalizePrices(await fetchJSON("data/security-prices.json"), catalog); cached = false; save(PRICE_KEY, prices);} catch {prices = P.normalizePrices(stored(PRICE_KEY, null), catalog); cached = true;}})(),
         (async () => {try {exposures = E.normalize(await fetchJSON("data/portfolio-exposures.json")); exposureCached = false; save(EXPOSURE_KEY, exposures);} catch {try {exposures = E.normalize(stored(EXPOSURE_KEY, null)); exposureCached = true;} catch {exposures = null;}}})(),
+        (async () => {try {news = F.normalizeNews(await fetchJSON("data/portfolio-news.json"), catalog); newsCached = false; save(NEWS_KEY, news);} catch {try {news = F.normalizeNews(stored(NEWS_KEY, null), catalog); newsCached = true;} catch {news = null;}}})(),
       ]);
       history = P.historyFor(positions, prices); render();
     } catch {$("#portfolioStatus").textContent = "Cotations indisponibles. Les positions enregistrées sur cet appareil sont conservées.";}
@@ -275,6 +362,8 @@
   $("#portfolioExport").addEventListener("click", () => {const blob = new Blob([JSON.stringify({schema_version: 1, base_currency: "CAD", positions}, null, 2) + "\n"], {type: "application/json"}); const url = URL.createObjectURL(blob), anchor = el("a"); anchor.href = url; anchor.download = "portefeuille-savy.json"; anchor.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);});
   $("#portfolioPositionsToggle").addEventListener("click", () => {positionsVisible = !positionsVisible; save(POSITIONS_VISIBLE_KEY, positionsVisible); renderPositionsVisibility();});
   for (const view of ["Sectors", "Geography"]) $("#portfolio" + view + "Toggle").addEventListener("click", () => {exposureViews[view] = exposureViews[view] !== true; save(EXPOSURE_VIEWS_KEY, exposureViews); renderExposureVisibility();});
+  $("#portfolioNewsTicker").addEventListener("change", event => {newsTicker = event.target.value; renderNews(prices && history.length ? P.valuationAt(positions, prices, history.at(-1)[0], window.SavyLiveFX?.current()) : null);});
+  $("#portfolioNewsEvent").addEventListener("change", event => {newsEvent = event.target.value; renderNews(prices && history.length ? P.valuationAt(positions, prices, history.at(-1)[0], window.SavyLiveFX?.current()) : null);});
   document.addEventListener("click", event => {
     if (!profileInitialized) return;
     const anchor = event.target.closest?.("a[href^='#']"), hash = anchor?.getAttribute("href");

@@ -110,6 +110,34 @@ details[open]>summary:after {content:"−"}
 .portfolio-period-controls .segmented {flex-wrap:wrap;justify-content:flex-end}
 .portfolio-period-controls .meta {margin-top:8px}
 .portfolio-chart {max-width:100%;margin:18px 0}
+.portfolio-analysis {min-width:0;border-top:1px solid var(--border);padding-top:20px;margin-top:22px}
+.portfolio-analysis-heading {display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.portfolio-analysis-heading h3 {font-size:16px;font-weight:600;margin-top:4px}
+.portfolio-analysis-total {font-size:18px;font-weight:600;font-variant-numeric:tabular-nums}
+.portfolio-analysis-reference {font-size:12px;color:var(--gold)}
+.portfolio-contribution-details,.portfolio-analysis-method {margin-top:14px;font-size:12px;color:var(--muted)}
+.portfolio-contribution-details summary,.portfolio-analysis-method summary {padding:7px 0}
+.portfolio-contribution-details table {min-width:610px;font-variant-numeric:tabular-nums;color:var(--text)}
+.portfolio-contribution-details th:not(:first-child),.portfolio-contribution-details td:not(:first-child) {text-align:right;white-space:nowrap}
+.portfolio-contribution-details td:first-child {min-width:180px}
+.contribution-bar {display:block;height:3px;margin-top:6px;border-radius:2px;background:var(--accent)}
+.contribution-bar.down {background:var(--down)}
+.portfolio-risk-table {min-width:480px;margin-top:7px;font-variant-numeric:tabular-nums}
+.portfolio-risk-table th:not(:first-child),.portfolio-risk-table td:not(:first-child) {text-align:right;white-space:nowrap}
+.portfolio-risk-table td:nth-child(2) {color:var(--accent)}
+.portfolio-risk-table td:nth-child(3) {color:var(--gold)}
+.portfolio-analysis-method p {margin-top:8px;line-height:1.7}
+.portfolio-news-filters {display:flex;flex-wrap:wrap;gap:7px;max-width:100%}
+.portfolio-news-filters select {max-width:100%;font-size:11px;border:1px solid var(--border);border-radius:7px;background:var(--bg);color:var(--text);padding:8px;min-height:36px}
+.portfolio-news-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:12px}
+.portfolio-news-card {min-width:0;padding:15px;border:1px solid var(--border);border-radius:10px;background:var(--bg)}
+.portfolio-news-card h4 {font-size:13px;font-weight:550;line-height:1.55;margin:8px 0;overflow-wrap:anywhere}
+.portfolio-news-meta {display:flex;align-items:center;flex-wrap:wrap;gap:5px 9px;font-size:10px;color:var(--muted)}
+.portfolio-news-event {color:var(--gold)}
+.portfolio-news-holdings {font-size:11px;color:var(--accent);overflow-wrap:anywhere;margin-top:6px}
+.portfolio-news-reason {font-size:11px;color:var(--muted);line-height:1.6;margin-top:9px}
+.portfolio-news-empty {font-size:12px;color:var(--muted);padding:12px 0;grid-column:1/-1}
+@media(max-width:700px) {.portfolio-news-grid {grid-template-columns:minmax(0,1fr)}.portfolio-news-filters {width:100%}.portfolio-news-filters select {min-width:0;flex:1 1 140px}.portfolio-analysis-total {font-size:16px}}
 .portfolio-benchmark {display:flex;align-items:center;flex-wrap:wrap;gap:10px 24px;margin-top:18px;font-size:13px;font-variant-numeric:tabular-nums}
 .portfolio-benchmark-item {display:inline-flex;align-items:center;gap:7px}
 .portfolio-swatch {display:inline-block;width:22px;height:3px;background:var(--chart)}

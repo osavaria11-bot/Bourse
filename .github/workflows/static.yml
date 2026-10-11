@@ -52,6 +52,7 @@ jobs:
           node --check js/macro-utils.js
           node --check js/portfolio-utils.js
           node --check js/portfolio-exposure-utils.js
+          node --check js/portfolio-analytics-utils.js
           node --check js/portfolio-profile-utils.js
           node --check js/portfolio.js
           npm test
