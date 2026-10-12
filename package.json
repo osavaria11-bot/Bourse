@@ -4,7 +4,7 @@
   "private": true,
   "description": "Static FRED macroeconomic dashboard",
   "scripts": {
-    "test": "node --test tests/*-utils.test.cjs",
+    "test": "node --test tests/*-utils.test.cjs tests/refresh-chain.test.cjs",
     "test:browser": "node tests/browser-smoke.cjs && node tests/portfolio-browser.cjs && node tests/intraday-browser.cjs"
   },
   "devDependencies": {

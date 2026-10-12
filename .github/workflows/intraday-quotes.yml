@@ -28,13 +28,16 @@ jobs:
     outputs:
       sha: ${{ steps.commit.outputs.sha }}
       ready: ${{ steps.validated.outputs.ready }}
+      started_at: ${{ steps.commit.outputs.started_at }}
     steps:
       - uses: actions/checkout@v6
         with:
           ref: main
           persist-credentials: false
       - id: commit
-        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+        run: |
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+          echo "started_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_OUTPUT"
       - name: Require the exact source to have passed full browser and collector validation
         id: validated
         uses: actions/github-script@v8
@@ -55,9 +58,10 @@ jobs:
     needs: source
     if: needs.source.outputs.ready == 'true'
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 12
     permissions:
       contents: read
+      actions: write
       pages: write
       id-token: write
     environment:
@@ -79,7 +83,16 @@ jobs:
           python -m unittest discover -s tests -p 'test_intraday_quotes.py' -v
           npm test
       - name: Collect actual exchange quotes without touching daily histories
-        run: python scripts/collect_intraday_quotes.py
+        id: collect
+        run: |
+          python scripts/collect_intraday_quotes.py
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          stamp = json.loads(Path('data/intraday-quotes.json').read_text())['generated_at']
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              output.write('collected_at=' + stamp + '\n')
+          PY
       - name: Validate generated snapshots
         run: node scripts/validate_intraday_quotes.cjs
       - uses: actions/configure-pages@v5
@@ -94,6 +107,18 @@ jobs:
       - name: Publish snapshot
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: Continue the actual quote feed without depending only on cron delivery
+        if: ${{ always() && !cancelled() }}
+        uses: actions/github-script@v8
+        env:
+          SOURCE_SHA: ${{ needs.source.outputs.sha }}
+          COLLECTED_AT: ${{ steps.collect.outputs.collected_at || needs.source.outputs.started_at }}
+        with:
+          script: |
+            await require('./scripts/queue_intraday_refresh.cjs')({
+              github, context, core, sourceSha: process.env.SOURCE_SHA,
+              collectedAt: process.env.COLLECTED_AT
+            });
 
 # Quote snapshots are generated deployment assets. They do not create
 # hundreds of daily commits or change the official closing-price histories.
