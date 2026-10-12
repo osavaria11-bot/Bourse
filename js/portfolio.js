@@ -507,7 +507,8 @@
     const details = new Map(comparison.points.map(row => [row.date, row]));
     const valid = data.filter(row => U.validNumber(row[1]));
     if (!valid.length) {$("#portfolioChart").replaceChildren(el("p", "chart-placeholder", "Un historique complet des cours et du change est nécessaire pour tracer le portefeuille.")); return;}
-    const width = 900, height = 300, left = 85, right = 20, top = 18, bottom = 36;
+    const width = intraday ? Math.max(320, Math.min(900, $("#portfolioChart").clientWidth || 900)) : 900;
+    const height = 300, left = 85, right = 20, top = 18, bottom = 36;
     const [low, high] = U.niceExtent([...data, ...benchmark]); let firstTime = Date.parse(data[0][0]), lastTime = Date.parse(data.at(-1)[0]);
     if (firstTime === lastTime) {firstTime -= 43200000; lastTime += 43200000;}
     const x = day => left + (Date.parse(day) - firstTime) / (lastTime - firstTime) * (width - left - right);
@@ -588,6 +589,11 @@
   for (const button of document.querySelectorAll("[data-portfolio-sort]")) button.addEventListener("click", () => {const key = button.dataset.portfolioSort; sortDescending = key === sortKey ? !sortDescending : true; sortKey = key; saveView(); render();});
   loadView(); renderPortfolioChoice();
   for (const button of document.querySelectorAll("[data-portfolio-id]")) button.addEventListener("click", () => choosePortfolio(button.dataset.portfolioId));
+  let chartResize;
+  window.addEventListener("resize", () => {
+    clearTimeout(chartResize);
+    chartResize = setTimeout(() => {if (range === "INTRADAY" && prices && history.length && !["INPUT", "SELECT"].includes(document.activeElement?.tagName)) render();}, 150);
+  });
   window.SavyPortfolio = {refresh};
   document.addEventListener("savy:quotes", () => {
     if (prices && history.length && !document.activeElement?.closest("#portfolioRows input")) render();
