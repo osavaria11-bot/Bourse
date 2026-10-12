@@ -161,5 +161,32 @@
     return {start, end: day, rows: sortRows(rows, "percent"), missing};
   }
   function monthlyPerformance(positions, data, day) {return performanceFor(positions, data, day, "1M");}
-  return {RANGES, BENCHMARKS, normalizePrices, normalizePositions, observationAt, valuationAt, historyFor, period, benchmarkFor, sortRows, performanceFor, monthlyPerformance};
+  function sessionChange(security, price, priceDate, quote = null) {
+    if (!security || !U.validNumber(price) || price <= 0) return null;
+    const day = quote?.session_date || priceDate?.slice(0, 10);
+    if (!U.isDate(day)) return null;
+    const closes = (security.history || []).filter(row => U.isDate(row[0]) && row[0] <= day && U.validNumber(row[1]) && row[1] > 0);
+    const prior = closes.filter(row => row[0] < day).at(-1);
+    const providerBase = U.validNumber(quote?.previous_close) && quote.previous_close > 0;
+    let base;
+    if (quote) {
+      if (quote.id !== security.id || quote.quote_symbol !== security.quote_symbol || quote.currency !== security.currency ||
+          !U.validNumber(quote.price) || Math.abs(quote.price - price) > price * 1e-8) return null;
+      base = providerBase ? quote.previous_close : prior?.[1];
+    } else {
+      const latest = closes.at(-1);
+      if (!latest || latest[0] !== day || Math.abs(latest[1] - price) > price * 1e-8) return null;
+      base = prior?.[1];
+    }
+    if (!(base > 0) || (!providerBase && (!prior || Date.parse(day) - Date.parse(prior[0]) > 7 * 86400000))) return null;
+    return {percent: (price / base - 1) * 100, previous_close: base, session_date: day};
+  }
+  function relativePerformance(comparison) {
+    if (!comparison?.available || !comparison.normalized) return {available: false, points: [], difference: null};
+    const points = comparison.points.filter(row => Number.isFinite(Date.parse(row.date))).map(row => ({...row,
+      difference: U.validNumber(row.portfolio) && U.validNumber(row.benchmark) ? row.portfolio - row.benchmark : null}));
+    const last = points.at(-1), available = points.filter(row => U.validNumber(row.difference)).length >= 2 && U.validNumber(last?.difference);
+    return {available, points, difference: available ? last.difference : null};
+  }
+  return {RANGES, BENCHMARKS, normalizePrices, normalizePositions, observationAt, valuationAt, historyFor, period, benchmarkFor, sortRows, performanceFor, monthlyPerformance, sessionChange, relativePerformance};
 });

@@ -2,6 +2,38 @@
 const {test} = require("node:test");
 const assert = require("node:assert/strict");
 const P = require("../js/portfolio-utils.js");
+test("the price badge compares the native session price to its previous close independently of FX and selected chart period", () => {
+  const security = {id: "MSFT", quote_symbol: "MSFT", currency: "USD", history: [["2026-10-08", 536], ["2026-10-09", 537.91]]};
+  const quote = {id: "MSFT", quote_symbol: "MSFT", currency: "USD", price: 541.03, previous_close: 537.91, session_date: "2026-10-12"};
+  const change = P.sessionChange(security, 541.03, "2026-10-12", quote);
+  assert.equal(change.percent.toFixed(2), "0.58"); assert.equal(change.session_date, "2026-10-12");
+  assert.equal(P.sessionChange(security, 541.03, "2026-10-12", {...quote, currency: "CAD"}), null);
+  assert.equal(P.sessionChange(security, 541.03, "2026-10-12", {...quote, quote_symbol: "MSFT.TO"}), null);
+  assert.equal(P.sessionChange(security, 537.91, "2026-10-09", quote), null, "A newer quote cannot label an older displayed price");
+});
+test("closed-market and historical price badges use the shown session, with missing previous closes left blank", () => {
+  const security = {id: "SHOP", quote_symbol: "SHOP.TO", currency: "CAD", history: [["2026-10-08", 100], ["2026-10-09", 98]]};
+  const historical = P.sessionChange(security, 98, "2026-10-09");
+  assert.ok(Math.abs(historical.percent + 2) < 1e-10); assert.equal(historical.session_date, "2026-10-09");
+  const closed = {id: "SHOP", quote_symbol: "SHOP.TO", currency: "CAD", price: 98, previous_close: null, session_date: "2026-10-09", market_state: "closed"};
+  assert.deepEqual(P.sessionChange(security, 98, "2026-10-09", closed), historical);
+  assert.equal(P.sessionChange({...security, history: [["2026-10-09", 98]]}, 98, "2026-10-09"), null);
+  assert.equal(P.sessionChange(security, 110, "2026-10-12"), null, "An unexplained price cannot be assigned a daily return");
+});
+test("relative performance follows each CAD benchmark's shared return base and preserves missing paired observations", () => {
+  for (const benchmark of ["FEQT", "VBAL", "VGRO"]) {
+    const selected = {incomplete: false, history: [["2026-10-08", 100], ["2026-10-09", null], ["2026-10-12", 125]]};
+    const reference = {id: benchmark, quote_symbol: P.BENCHMARKS[benchmark], currency: "CAD", history: [["2026-10-08", 10], ["2026-10-12", 12]]};
+    const comparison = P.benchmarkFor(selected, reference, benchmark), before = structuredClone(comparison);
+    const relative = P.relativePerformance(comparison);
+    assert.equal(relative.available, true); assert.equal(relative.points[0].difference, 0);
+    assert.equal(relative.points[1].difference, null);
+    assert.ok(Math.abs(relative.difference - 5) < 1e-10);
+    assert.deepEqual(comparison, before);
+    assert.equal(P.relativePerformance({...comparison, available: false}).available, false);
+    assert.equal(P.relativePerformance({...comparison, normalized: false}).available, false);
+  }
+});
 const catalog = {schema_version: 1, series: [
   {id: "SHOP", title: "Shopify", currency: "CAD", quote_symbol: "SHOP.TO"},
   {id: "CLS", title: "Celestica", currency: "USD", quote_symbol: "CLS"},

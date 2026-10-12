@@ -7,6 +7,21 @@ const U = require("../js/macro-utils.js");
 const E = require("../js/portfolio-exposure-utils.js");
 const F = require("../js/portfolio-analytics-utils.js");
 const A = require("../js/portfolio-profile-utils.js"), crypto = require("node:crypto");
+async function checkRelative(page, comparison, benchmark) {
+  assert.equal(await page.locator('#portfolioRelativeTitle').innerText(), 'Écart avec ' + benchmark);
+  if (!comparison.available) {assert.equal(await page.locator('#portfolioRelativeChart svg').count(), 0); return;}
+  const difference = Math.abs(comparison.difference) < .005 ? 0 : comparison.difference;
+  const expected = (difference > 0 ? '+' : '') + U.formatNumber(difference, 2) + ' pt';
+  assert.equal(await page.locator('#portfolioRelativeValue').innerText(), expected);
+  const chart = page.locator('#portfolioRelativeChart svg');
+  const box = await chart.boundingBox(); assert.equal(box.height, 128); assert.ok(box.width > box.height);
+  assert.equal(await chart.locator('path').evaluateAll(nodes => nodes.some(n => /NaN|Infinity/.test(n.getAttribute('d')))), false);
+  await chart.focus(); await chart.press('End');
+  const tooltip = await page.locator('#portfolioRelativeChart .chart-tooltip').innerText();
+  assert.ok(tooltip.includes(benchmark) && tooltip.includes('écart ' + expected));
+  await chart.press('Home');
+  assert.match(await page.locator('#portfolioRelativeChart .chart-tooltip').innerText(), /écart 0,00 pt/);
+}
 const root = path.resolve(__dirname, "..");
 const catalog = JSON.parse(fs.readFileSync(path.join(root, "data/securities.json"), "utf8"));
 const rawPrices = JSON.parse(fs.readFileSync(path.join(root, "data/security-prices.json"), "utf8"));
@@ -106,6 +121,11 @@ async function main() {
     assert.match(await toggle.innerText(), /Afficher mes positions \(6\)/);
     assert.equal(await page.locator('#portfolioRows tr[data-ticker="SHOP"] a').getAttribute("href"), "https://finance.yahoo.com/quote/SHOP.TO/");
     assert.equal(await page.locator('#portfolioRows tr[data-ticker="CLS"] a').getAttribute("href"), "https://finance.yahoo.com/quote/CLS/");
+    for (const position of syntheticPositions) {
+      const source = prices.series.find(row => row.id === position.ticker), closes = source.history.filter(row => typeof row[1] === 'number');
+      const daily = (closes.at(-1)[1] / closes.at(-2)[1] - 1) * 100, value = Math.abs(daily) < .005 ? 0 : daily;
+      assert.equal(await page.locator('#portfolioRows tr[data-ticker="' + position.ticker + '"] .position-day-change').innerText(), (value > 0 ? '+' : '') + U.formatNumber(value, 2) + '%');
+    }
     const history = P.historyFor(syntheticPositions, prices), current = P.valuationAt(syntheticPositions, prices, history.at(-1)[0]);
     assert.equal(await page.locator("#portfolioValue").innerText(), new Intl.NumberFormat("fr-CA", {style: "currency", currency: "CAD", maximumFractionDigits: 2}).format(current.total));
     assert.match(await page.locator("#portfolioStatus").innerText(), /6\/6/);
@@ -225,6 +245,7 @@ async function main() {
         assert.equal(cells[1], U.validNumber(benchmark) ? U.formatNumber(benchmark, 2) + unit : "N/D");
       }
       assert.equal(await page.locator("#portfolioChart .chart-benchmark").count(), 1);
+      await checkRelative(page, comparison, 'FEQT');
       assert.equal(await page.locator("#portfolioBenchmark .portfolio-benchmark-item:nth-child(2) strong").textContent(), (comparison.benchmark_percent > 0 ? "+" : "") + U.formatNumber(comparison.benchmark_percent, 2) + " %");
       assert.match(await page.locator("#portfolioPeriod").innerText(), new RegExp(selected.start + ".*" + selected.end));
       assert.equal(await page.locator("#portfolioChart svg").count(), 1);
@@ -266,6 +287,7 @@ async function main() {
     await controls.getByRole("button", {name: "YTD", exact: true}).click();
     await toggle.click();
     if (process.env.SCREENSHOT_LOGS) console.log("SCREENSHOT_PORTFOLIO_DESKTOP " + (await page.locator("#portfolio").screenshot()).toString("base64"));
+    if (process.env.SCREENSHOT_LOGS) console.log("SCREENSHOT_RELATIVE_DESKTOP " + (await page.locator(".portfolio-relative").screenshot()).toString("base64"));
     if (process.env.SCREENSHOT_LOGS) for (const [name, selector] of [["CONTRIBUTIONS", "#portfolioContributions"], ["RISK", "#portfolioRisk"], ["EARNINGS", "#portfolioEarnings"]])
       console.log("SCREENSHOT_ANALYTICS_" + name + " " + (await page.locator(selector).screenshot()).toString("base64"));
     for (const width of [375, 320]) {
@@ -392,6 +414,7 @@ async function main() {
     for (const item of P.RANGES) {
       await direct.locator('#portfolioRanges button').filter({hasText: new RegExp('^' + item.label + '$')}).click();
       const selected = P.period(secondHistory, item.key), expected = P.benchmarkFor(selected, prices.series.find(row => row.id === 'VBAL'), 'VBAL');
+      await checkRelative(direct, expected, 'VBAL');
       assert.equal(await direct.locator('#portfolioBenchmark .portfolio-benchmark-item:nth-child(2) strong').textContent(), (expected.benchmark_percent > 0 ? '+' : '') + U.formatNumber(expected.benchmark_percent, 2) + ' %');
       const risk = F.riskFor(secondSyntheticPositions, prices, selected, 'VBAL');
       const value = risk.portfolio.beta;
@@ -427,6 +450,8 @@ async function main() {
       await direct.setViewportSize({width: 1440, height: 1000}); await direct.locator('#portfolioTitle').scrollIntoViewIfNeeded();
       console.log('SCREENSHOT_PORTFOLIO2_DESKTOP ' + (await direct.locator('#portfolio').screenshot()).toString('base64'));
       await direct.setViewportSize({width: 320, height: 950}); await direct.evaluate(() => document.activeElement?.blur()); await direct.locator('#portfolioTitle').scrollIntoViewIfNeeded();
+      await direct.waitForTimeout(200);
+      console.log('SCREENSHOT_RELATIVE_MOBILE ' + (await direct.locator('.portfolio-relative').screenshot()).toString('base64'));
       console.log('SCREENSHOT_PORTFOLIO2_MOBILE ' + (await direct.screenshot()).toString('base64'));
     }
     assert.ok(await direct.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
@@ -470,6 +495,7 @@ async function main() {
     for (const item of P.RANGES) {
       await direct.locator('#portfolioRanges button').filter({hasText: new RegExp('^' + item.label + '$')}).click();
       const selected = P.period(thirdHistory, item.key), expected = P.benchmarkFor(selected, prices.series.find(row => row.id === 'VGRO'), 'VGRO');
+      await checkRelative(direct, expected, 'VGRO');
       assert.equal(await direct.locator('#portfolioBenchmark .portfolio-benchmark-item:nth-child(2) strong').textContent(), (expected.benchmark_percent > 0 ? '+' : '') + U.formatNumber(expected.benchmark_percent, 2) + ' %');
       const risk = F.riskFor(thirdSyntheticPositions, prices, selected, 'VGRO'), value = risk.portfolio.beta;
       assert.equal(await direct.locator('#portfolioRiskRows tr[data-metric="beta"] td').first().textContent(), U.validNumber(value) ? U.formatNumber(value, 2) : 'N/D');

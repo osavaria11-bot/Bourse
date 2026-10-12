@@ -18,6 +18,7 @@
   let benchmarkId = portfolioBenchmarks[activePortfolio];
   let catalog = null, prices = null, cached = false, range = "YTD", moversRange = "1M", positions = [], history = [], imported = false;
   let exposures = null, exposureCached = false;
+  let relativeComparison = null;
   let earnings = null, earningsCached = false, earningsTicker = "", earningsWeek = F.weekFor().start, earningsSelection = null;
   const exposureViewState = stored(EXPOSURE_VIEWS_KEY, {});
   const exposureViews = {Sectors: exposureViewState?.Sectors === true, Geography: exposureViewState?.Geography === true};
@@ -483,8 +484,17 @@
       const average = el("td"), costInput = el("input", "quantity-input"); costInput.type = "text"; costInput.inputMode = "decimal";
       costInput.value = U.validNumber(row.average_cost) ? String(row.average_cost).replace(".", ",") : ""; costInput.placeholder = "—"; costInput.setAttribute("aria-label", "Prix moyen " + row.ticker);
       costInput.addEventListener("change", () => {try {applyPositions(positions.map(p => p.ticker === row.ticker ? {...p, average_cost: costInput.value.trim() ? costInput.value : null} : p));} catch (error) {$("#portfolioMessage").textContent = error.message; costInput.value = U.validNumber(row.average_cost) ? String(row.average_cost).replace(".", ",") : "";}}); average.append(costInput, el("span", "portfolio-ticker", row.currency));
-      const price = el("td", "", U.formatNumber(row.price, row.decimals) + " " + row.currency);
-      const quote = quotes.get(row.ticker), priceDate = el("span", "portfolio-ticker portfolio-quote", quote ? window.IntradayUtils.shortLabel(quote) : (row.price_date || "Cours indisponible") + " · clôture quotidienne");
+      const price = el("td"), quote = quotes.get(row.ticker), quoteLine = el("span", "position-quote-line");
+      quoteLine.append(el("span", "position-price", U.formatNumber(row.price, row.decimals) + " " + row.currency));
+      const sessionChange = P.sessionChange(prices.series.find(p => p.id === row.ticker), row.price, row.price_date, quote);
+      if (sessionChange) {
+        const percent = Math.abs(sessionChange.percent) < .005 ? 0 : sessionChange.percent;
+        const change = el("span", "position-day-change change " + direction(percent), (percent > 0 ? "+" : "") + U.formatNumber(percent, 2) + "%");
+        change.title = "Variation de la séance du " + sessionChange.session_date + " depuis la clôture précédente, en " + row.currency;
+        quoteLine.append(change);
+      }
+      price.append(quoteLine);
+      const priceDate = el("span", "portfolio-ticker portfolio-quote", quote ? window.IntradayUtils.shortLabel(quote) : (row.price_date || "Cours indisponible") + " · clôture quotidienne");
       if (quote) priceDate.title = window.IntradayUtils.label(quote);
       price.append(priceDate);
       const value = el("td", "", money(row.value_cad));
@@ -503,9 +513,63 @@
     if (intraday) $("#portfolioBenchmarkNote").textContent = intraday.available ? "Intraday · rendements en CAD depuis la clôture du " + selected.start + " · points de 5 min · change inclus · hors dividendes" : "Comparaison intraday indisponible : cotations de séance incomplètes.";
     if (quotes.has(benchmarkId)) $("#portfolioBenchmarkNote").textContent += " · " + benchmarkId + " : " + window.IntradayUtils.label(quotes.get(benchmarkId));
     drawChart(selected.history, comparison);
+    drawRelativeChart(comparison);
     if (intraday && !intraday.available) $("#portfolioChart").replaceChildren(el("p", "chart-placeholder", "Courbe de séance à jour indisponible. Les positions sont conservées."));
   }
   function svgEl(tag, attrs, text) {const node = document.createElementNS("http://www.w3.org/2000/svg", tag); for (const [k, v] of Object.entries(attrs || {})) node.setAttribute(k, String(v)); if (text !== undefined) node.textContent = text; return node;}
+  function drawRelativeChart(comparison) {
+    relativeComparison = comparison;
+    const host = $("#portfolioRelativeChart"), relative = P.relativePerformance(comparison), metric = $("#portfolioRelativeValue");
+    $("#portfolioRelativeTitle").textContent = "Écart avec " + benchmarkId;
+    const shown = U.validNumber(relative.difference) && Math.abs(relative.difference) < .005 ? 0 : relative.difference;
+    metric.textContent = points(shown); metric.className = "change " + direction(shown);
+    if (!relative.available) {host.replaceChildren(el("p", "chart-placeholder", "Choisis une période avec un historique commun pour comparer le portefeuille à " + benchmarkId + ".")); return;}
+    const data = relative.points.map(row => [row.date, row.difference]), valid = data.filter(row => U.validNumber(row[1]));
+    const details = new Map(relative.points.map(row => [row.date, row]));
+    const width = Math.max(240, Math.round(host.clientWidth || 900)), height = 128, left = 58, right = 12, top = 10, bottom = 25;
+    const bound = Math.max(.1, ...valid.map(row => Math.abs(row[1]))) * 1.08;
+    let first = Date.parse(data[0][0]), last = Date.parse(data.at(-1)[0]);
+    if (first === last) {first -= 60000; last += 60000;}
+    const x = date => left + (Date.parse(date) - first) / (last - first) * (width - left - right);
+    const y = value => top + (bound - value) / (2 * bound) * (height - top - bottom), zero = y(0);
+    const svg = svgEl("svg", {viewBox: "0 0 " + width + " " + height, tabindex: 0, role: "img",
+      "aria-label": "Écart de rendement avec " + benchmarkId + " en points de pourcentage. Au-dessus de zéro : surperformance. Flèches gauche et droite pour parcourir les dates."});
+    const defs = svgEl("defs");
+    for (const [name, start, size] of [["up", top, zero - top], ["down", zero, height - bottom - zero]]) {
+      const clip = svgEl("clipPath", {id: "portfolio-relative-" + name});
+      clip.append(svgEl("rect", {x: left, y: start, width: width - left - right, height: size})); defs.append(clip);
+    }
+    svg.append(defs);
+    for (const value of [-bound, 0, bound]) svg.append(svgEl("line", {x1: left, x2: width - right, y1: y(value), y2: y(value), class: value === 0 ? "relative-zero" : "chart-grid"}),
+      svgEl("text", {x: left - 8, y: y(value) + 3, "text-anchor": "end", class: "chart-axis"}, U.formatNumber(value, bound < 100 ? 2 : 0) + " pt"));
+    const segments = []; let segment = [];
+    for (const row of data) {if (U.validNumber(row[1])) segment.push(row); else {if (segment.length) segments.push(segment); segment = [];}}
+    if (segment.length) segments.push(segment);
+    const line = segments.map(rows => rows.map((row, i) => (i ? "L" : "M") + x(row[0]).toFixed(2) + "," + y(row[1]).toFixed(2)).join("")).join("");
+    const area = segments.map(rows => "M" + x(rows[0][0]).toFixed(2) + "," + zero + "L" + rows.map(row => x(row[0]).toFixed(2) + "," + y(row[1]).toFixed(2)).join("L") + "L" + x(rows.at(-1)[0]).toFixed(2) + "," + zero + "Z").join("");
+    for (const name of ["up", "down"]) svg.append(svgEl("path", {d: area, class: "relative-area " + name, "clip-path": "url(#portfolio-relative-" + name + ")"}),
+      svgEl("path", {d: line, class: "relative-line " + name, "clip-path": "url(#portfolio-relative-" + name + ")"}));
+    for (let i = 0; i < (width < 400 ? 2 : 4); i++) {
+      const ratio = i / (width < 400 ? 1 : 3), stamp = first + (last - first) * ratio;
+      svg.append(svgEl("text", {x: left + (width - left - right) * ratio, y: height - 6, class: "chart-axis", "text-anchor": ratio === 0 ? "start" : ratio === 1 ? "end" : "middle"},
+        range === "INTRADAY" ? window.IntradayUtils.clock(stamp) : new Intl.DateTimeFormat("fr-CA", {timeZone: "UTC", month: "short", day: "numeric"}).format(stamp)));
+    }
+    const guide = svgEl("line", {y1: top, y2: height - bottom, class: "chart-guide", visibility: "hidden"}), dot = svgEl("circle", {r: 3, class: "chart-dot", visibility: "hidden"}); svg.append(guide, dot);
+    const hint = "Même période que le graphique · survole pour voir l’écart", tooltip = el("p", "chart-tooltip", hint); tooltip.setAttribute("aria-live", "polite");
+    let index = valid.length - 1;
+    function select(row) {
+      if (!row) return;
+      index = valid.findIndex(item => item[0] === row[0]); const detail = details.get(row[0]);
+      guide.setAttribute("x1", x(row[0])); guide.setAttribute("x2", x(row[0])); guide.setAttribute("visibility", "visible");
+      dot.setAttribute("cx", x(row[0])); dot.setAttribute("cy", y(row[1])); dot.setAttribute("visibility", "visible"); dot.style.fill = row[1] < 0 ? "var(--down)" : "var(--accent)";
+      tooltip.textContent = (range === "INTRADAY" ? window.IntradayUtils.clock(row[0]) : row[0]) + " · portefeuille " + delta(detail.portfolio, true) + " · " + benchmarkId + " " + delta(detail.benchmark, true) + " · écart " + points(Math.abs(row[1]) < .005 ? 0 : row[1]);
+    }
+    svg.addEventListener("focus", () => select(valid[index]));
+    svg.addEventListener("keydown", event => {if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return; event.preventDefault(); index = event.key === "Home" ? 0 : event.key === "End" ? valid.length - 1 : Math.min(valid.length - 1, Math.max(0, index + (event.key === "ArrowLeft" ? -1 : 1))); select(valid[index]);});
+    svg.addEventListener("pointermove", event => {const rect = svg.getBoundingClientRect(); if (!rect.width) return; const position = Math.max(left, Math.min(width - right, (event.clientX - rect.left) * width / rect.width)); select(U.nearestPoint(data, first + (position - left) / (width - left - right) * (last - first)));});
+    svg.addEventListener("pointerleave", () => {if (document.activeElement === svg) return; guide.setAttribute("visibility", "hidden"); dot.setAttribute("visibility", "hidden"); tooltip.textContent = hint;});
+    host.replaceChildren(svg, tooltip);
+  }
   function drawChart(original, comparison) {
     const intraday = range === "INTRADAY";
     const data = comparison.normalized ? comparison.points.map(row => [row.date, row.portfolio]) : original;
@@ -598,7 +662,7 @@
   let chartResize;
   window.addEventListener("resize", () => {
     clearTimeout(chartResize);
-    chartResize = setTimeout(() => {if (range === "INTRADAY" && prices && history.length && !["INPUT", "SELECT"].includes(document.activeElement?.tagName)) render();}, 150);
+    chartResize = setTimeout(() => {if (prices && history.length && !["INPUT", "SELECT"].includes(document.activeElement?.tagName)) {if (range === "INTRADAY") render(); else drawRelativeChart(relativeComparison);}}, 150);
   });
   window.SavyPortfolio = {refresh};
   document.addEventListener("savy:quotes", () => {

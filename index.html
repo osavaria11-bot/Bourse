@@ -8,17 +8,17 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-title" content="SAVY" />
   <title>SAVY — Tableau macroéconomique</title>
-  <link rel="stylesheet" href="css/dashboard.css?v=20261012-format-access" />
+  <link rel="stylesheet" href="css/dashboard.css?v=20261012-relative" />
   <script src="js/macro-utils.js?v=20261011-index-day-ytd" defer></script>
   <script src="js/intraday-utils.js?v=20261012-availability" defer></script>
   <script src="js/live-quotes.js?v=20261012-availability" defer></script>
   <script src="js/live-fx.js?v=20261012-availability" defer></script>
-  <script src="js/portfolio-utils.js?v=20261012-portfolio-3" defer></script>
+  <script src="js/portfolio-utils.js?v=20261012-relative" defer></script>
   <script src="js/portfolio-intraday-utils.js?v=20261012-availability" defer></script>
   <script src="js/portfolio-exposure-utils.js?v=20261012-portfolio-3" defer></script>
   <script src="js/portfolio-analytics-utils.js?v=20261012-portfolio-3" defer></script>
   <script src="js/portfolio-profile-utils.js?v=20261012-portfolio-3" defer></script>
-  <script src="js/portfolio.js?v=20261012-availability" defer></script>
+  <script src="js/portfolio.js?v=20261012-relative" defer></script>
   <script src="js/dashboard.js?v=20261012-availability" defer></script>
 </head>
 <body>
@@ -64,6 +64,11 @@
         <div id="portfolioBenchmark" class="portfolio-benchmark" aria-label="Rendement du portefeuille et de FEQT"></div>
         <p id="portfolioBenchmarkNote" class="meta"></p>
         <div id="portfolioChart" class="chart-host portfolio-chart"></div>
+        <section class="portfolio-relative" aria-labelledby="portfolioRelativeTitle">
+          <div class="portfolio-relative-heading"><h3 id="portfolioRelativeTitle">Écart avec FEQT</h3><strong id="portfolioRelativeValue" class="change">—</strong></div>
+          <p class="meta">Écart de rendement · au-dessus de zéro : surperformance</p>
+          <div id="portfolioRelativeChart" class="portfolio-relative-chart"></div>
+        </section>
         <section id="portfolioContributions" class="portfolio-analysis" aria-labelledby="portfolioContributionsTitle">
           <div class="portfolio-analysis-heading"><div><p class="eyebrow">CE QUI EXPLIQUE LE RENDEMENT</p><h3 id="portfolioContributionsTitle">Contribution à la performance</h3></div><p id="portfolioContributionsTotal" class="portfolio-analysis-total"></p></div>
           <p id="portfolioContributionsStatus" class="meta" role="status"></p>
