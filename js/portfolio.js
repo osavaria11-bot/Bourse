@@ -297,6 +297,7 @@
     const warning = !earnings || earningsCached || result.cached.length > 0 || result.unavailable.length > 0 || !result.inWindow;
     $("#portfolioEarningsStatus").textContent = earnings ? earningsWeekLabel(result.week) + " · " + result.reported + " résultat" + (result.reported > 1 ? "s" : "") + " publié" + (result.reported > 1 ? "s" : "") + " · " + result.pending + " en attente · collecte du " + U.timestampLabel(earnings.generated_at) +
       (earningsCached || result.cached.length ? " · copie conservée; dates de collecte originales" : "") +
+      (result.notApplicable.length ? " · " + result.notApplicable.length + " FNB hors du calendrier d’entreprise" : "") +
       (result.unavailable.length ? " · calendriers indisponibles : " + result.unavailable.join(", ") : "") +
       (!result.inWindow ? " · semaine hors de la fenêtre collectée; actualisation nécessaire" : "") : "Les résultats n’ont pas pu être chargés. Utilise « Actualiser ».";
     $("#portfolioEarningsStatus").classList.toggle("warning", warning);
@@ -349,7 +350,8 @@
       content.append(card);
     }
     if (!result.rows.length) {
-      const empty = el("div", "portfolio-earnings-empty"); empty.append(el("p", "", !earnings ? "Le calendrier apparaîtra lorsque les sources auront pu être chargées." : !result.inWindow ? "Aucune donnée collectée pour cette semaine." : result.unavailable.length ? "Aucun résultat repéré dans les calendriers disponibles. Certains titres n’ont pas pu être vérifiés." : "Aucun résultat prévu ou publié cette semaine pour tes titres. Change de semaine pour voir les dernières ou prochaines publications."));
+      const onlyFunds = result.notApplicable.length > 0 && result.notApplicable.length === valuation.rows.filter(row => !earningsTicker || row.ticker === earningsTicker).length;
+      const empty = el("div", "portfolio-earnings-empty"); empty.append(el("p", "", !earnings ? "Le calendrier apparaîtra lorsque les sources auront pu être chargées." : !result.inWindow ? "Aucune donnée collectée pour cette semaine." : onlyFunds ? "Tes titres sont des FNB : ils ne publient pas de BPA trimestriel d’entreprise. Le calendrier affichera les résultats si tu ajoutes des actions individuelles." : result.unavailable.length ? "Aucun résultat repéré dans les calendriers disponibles. Certains titres n’ont pas pu être vérifiés." : "Aucun résultat prévu ou publié cette semaine pour tes titres. Change de semaine pour voir les dernières ou prochaines publications."));
       const latest = valuation.rows.filter(row => !earningsTicker || row.ticker === earningsTicker).flatMap(row => earnings?.instruments[row.ticker]?.events || []).filter(event => event.date_status === "reported").sort((a, b) => b.report_date.localeCompare(a.report_date))[0];
       if (latest && F.weekFor(latest.report_date).start !== earningsWeek) {const button = el("button", "button quiet", "Voir ma dernière semaine de résultats"); button.type = "button"; button.addEventListener("click", () => {earningsWeek = F.weekFor(latest.report_date).start; renderEarnings(current);}); empty.append(button);}
       content.append(empty);
