@@ -403,8 +403,13 @@
     canvas.toBlob(blob => {if (!blob) return; const url = URL.createObjectURL(blob), link = el("a"); link.href = url; link.download = "savy-resultats-" + (activePortfolio !== "1" ? "portefeuille-" + activePortfolio + "-" : "") + result.week.start + ".png"; document.body.append(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(url), 30000);}, "image/png");
   }
   function renderAnalysis(selected, current, quoteData = prices, closedSelected = selected) {
-    renderContributions(selected, quoteData); renderRisk(selected?.intraday ? null : closedSelected); renderEarnings(current);
-    if (selected?.intraday) {$("#portfolioRiskStatus").textContent = "Les mesures de risque utilisent les clôtures quotidiennes. Choisis une période plus longue pour les consulter."; $("#portfolioRiskNote").textContent = "Les points intraday ne servent pas au calcul du bêta ou de la volatilité annualisée.";}
+    renderContributions(selected, quoteData); renderEarnings(current);
+    $("#portfolioRisk .table-wrap").hidden = Boolean(selected?.intraday);
+    if (selected?.intraday) {
+      $("#portfolioRiskRows").replaceChildren();
+      $("#portfolioRiskStatus").textContent = "Les mesures de risque utilisent les clôtures quotidiennes. Choisis 1 mois ou plus pour les consulter.";
+      $("#portfolioRiskStatus").classList.remove("warning"); $("#portfolioRiskNote").textContent = "";
+    } else renderRisk(closedSelected);
   }
   function render() {
     renderPortfolioChoice();
@@ -442,16 +447,17 @@
     $("#portfolioStatus").textContent = (cached ? "Copie de cours conservée · " : "") + "Cours des titres au " + day.slice(0, 10) + " · " +
       (positions.length - current.missing.length) + "/" + positions.length + " titres valorisés · collecte du " + U.timestampLabel(prices.generated_at) +
       (old.length ? " · " + old.length + " cours d’une séance antérieure repris" : "");
-    if (window.SavyLiveQuotes?.dataset()) $("#portfolioStatus").textContent += " · " + quoted.length + "/" + positions.length + " cotations en séance disponibles · collecte du " + U.timestampLabel(window.SavyLiveQuotes.dataset().generated_at) + " · cadence prévue 5 min, délai fournisseur possible";
+    if (window.SavyLiveQuotes?.dataset()) $("#portfolioStatus").textContent += " · " + quoted.length + "/" + positions.length + " cotations en séance disponibles · dernière collecte : " + U.timestampLabel(window.SavyLiveQuotes.dataset().generated_at) +
+      (intraday?.available && !intraday.current ? " · actualisation en attente, courbe datée conservée" : " · délai fournisseur possible");
     $("#portfolioStatus").classList.toggle("warning", cached || !current.complete || quoted.some(p => quotes.get(p.ticker).stale) || old.length > 0 || Date.now() - U.parseTimestamp(prices.generated_at) > 36 * 3600000);
-    $("#portfolioValueLabel").textContent = current.complete ? "VALEUR DES TITRES · CAD" : "VALEUR PARTIELLE · CAD";
+    $("#portfolioValueLabel").textContent = current.complete ? (intraday?.available && !intraday.current ? "DERNIÈRE VALEUR COLLECTÉE · CAD" : "VALEUR DES TITRES · CAD") : "VALEUR PARTIELLE · CAD";
     $("#portfolioValue").textContent = money(current.total);
     $("#portfolioChange").textContent = delta(selected.change) + " · " + delta(selected.percent, true);
     $("#portfolioChange").className = "portfolio-change change " + direction(selected.change);
-    $("#portfolioPeriod").textContent = intraday ? (intraday.available ? "Intraday · séance du " + intraday.session_date + " · " + window.IntradayUtils.clock(selected.history[0][0]) + " à " + window.IntradayUtils.clock(selected.end) + " · heure de Montréal" : "Courbe intraday à jour indisponible" + (intraday.missing.length ? " · " + intraday.missing.join(", ") : "")) :
+    $("#portfolioPeriod").textContent = intraday ? (intraday.available ? "Intraday · séance du " + intraday.session_date + " · " + window.IntradayUtils.clock(selected.history[0][0]) + " à " + window.IntradayUtils.clock(selected.end) + " · heure de Montréal" + (!intraday.current ? " · actualisation en attente" : "") : "Points intraday en attente" + (intraday.missing.length ? " · " + intraday.missing.join(", ") : "") + " · consulte les autres périodes") :
       "Du " + selected.start + " au " + selected.end + (selected.incomplete ? " · historique incomplet, variation indisponible" : " · derniers cours disponibles, hors dividendes");
     $("#portfolioFX").textContent = current.fx ? "1 $ US = " + U.formatNumber(current.fx, 4) + " $ CA · " +
-      (liveFx ? (liveFx.closed ? "dernier cours, marché fermé · " : "cotation indicative · ") + U.timestampLabel(liveFx.timestamp) + " · " + (liveFx.source || "biquote") : "clôture du " + current.fx_date + " · Yahoo Finance") : "Taux USD/CAD indisponible";
+      (liveFx ? (liveFx.stale ? "dernier cours collecté · " : liveFx.closed ? "dernier cours, marché fermé · " : "cotation indicative · ") + U.timestampLabel(liveFx.timestamp) + " · " + (liveFx.source || "biquote") : "clôture du " + current.fx_date + " · Yahoo Finance") : "Taux USD/CAD indisponible";
     $("#portfolioCurrencies").textContent = money(current.cad) + " en titres CAD · " + money(current.usd, "USD") + " en titres USD";
     $("#portfolioCost").textContent = "Coût converti au taux actuel : " + money(current.cost_converted);
     $("#portfolioUnrealized").textContent = "Gain latent estimé : " + delta(current.unrealized_cad) + " · " + delta(current.unrealized_percent, true) +

@@ -11,7 +11,7 @@
     const sources = new Map(prices.series.map(point => [point.id, point])), quotes = new Map();
     function quoteFor(id) {
       const base = sources.get(id), quote = base && I.choose(payload, id, {quote_symbol: base.quote_symbol, currency: base.currency}, now);
-      return I.isCurrent(quote, now) ? quote : null;
+      return quote ? {...quote, stale: !I.isCurrent(quote, now)} : null;
     }
     const missing = [];
     for (const position of positions) {const q = quoteFor(position.ticker); if (q) quotes.set(position.ticker, q); else missing.push(position.ticker);}
@@ -27,6 +27,7 @@
     const first = [...stamps].sort()[0], equityEnd = [...stamps].sort().at(-1);
     const sessionActive = trading.some(q => q.active);
     const usd = positions.some(p => p.currency === "USD"), fxQuote = usd ? quoteFor("USDCAD") : null;
+    const current = [...quotes.values(), ...(usd && fxQuote ? [fxQuote] : [])].every(q => !q.stale);
     const originalFx = sources.get("USDCAD"), fxBase = P.observationAt(originalFx?.history || [], previousDay);
     let fxHistory = [], fxSource = "Yahoo Finance";
     if (usd) {
@@ -35,7 +36,7 @@
       fxHistory = rates.map(row => [...row]);
       const fxStamp = U.parseTimestamp(liveFx?.timestamp), liveAge = now - fxStamp;
       const localDay = Number.isFinite(fxStamp) ? new Intl.DateTimeFormat("en-CA", {timeZone: "America/Toronto"}).format(fxStamp) : null;
-      if (sessionActive && !liveFx?.closed && localDay === day && U.validNumber(liveFx?.rate) && liveFx.rate > .5 && liveFx.rate < 3 &&
+      if (current && sessionActive && !liveFx?.closed && localDay === day && U.validNumber(liveFx?.rate) && liveFx.rate > .5 && liveFx.rate < 3 &&
           liveAge >= 0 && liveAge <= 600000 && fxStamp > U.parseTimestamp(fxHistory.at(-1)[0])) {
         fxHistory.push([new Date(fxStamp).toISOString(), liveFx.rate]); fxSource = "biquote";
       }
@@ -68,8 +69,8 @@
     const comparison = P.benchmarkFor({...selected, history: [[previousDay, baseline.total], ...history]}, byId.get(benchmarkId), benchmarkId);
     comparison.points = comparison.points.slice(1);
     const lastFx = usd ? P.observationAt(byId.get("USDCAD").history, end) : null;
-    return {available: true, missing: [], data, selected, comparison, session_date: day, active: sessionActive,
-      fx: lastFx ? {rate: lastFx[1], timestamp: lastFx[0], closed: !sessionActive, source: fxSource} : null};
+    return {available: true, current, missing: [], data, selected, comparison, session_date: day, active: sessionActive,
+      fx: lastFx ? {rate: lastFx[1], timestamp: lastFx[0], closed: !sessionActive, stale: !current, source: fxSource} : null};
   }
   return {session};
 });

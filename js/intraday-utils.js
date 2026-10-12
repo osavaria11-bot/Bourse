@@ -86,10 +86,12 @@
     return overlay(point, point ? choose(payload, point.id, point, now) : null);
   }
   function marketSession(point, payload, now = Date.now()) {
-    const quote = point ? choose(payload, point.id, {quote_symbol: point.quote_symbol, currency: point.currency}, now) : null;
-    const history = isCurrent(quote, now) ? quote.intraday_history || [] : [], available = history.length >= 2;
+    const received = point ? choose(payload, point.id, {quote_symbol: point.quote_symbol, currency: point.currency}, now) : null;
+    const current = isCurrent(received, now), quote = received ? {...received, stale: !current} : null;
+    // A delayed refresh does not invalidate the actual, dated session history.
+    const history = quote?.intraday_history || [], available = history.length >= 2;
     const base = quote?.previous_close, comparable = available && U.validNumber(base) && base > 0;
-    return {quote: available ? quote : null, history: available ? history : [], available, incomplete: !comparable,
+    return {quote: available ? quote : null, history: available ? history : [], available, current, incomplete: !comparable,
       start: available ? history[0][0] : null, end: available ? history.at(-1)[0] : null,
       baseline: comparable ? base : null, change: comparable ? quote.price - base : null,
       percent: comparable ? (quote.price / base - 1) * 100 : null};

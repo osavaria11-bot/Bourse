@@ -46,13 +46,30 @@ test("a closed all-CAD portfolio shows Friday's actual curve and never creates M
   assert.ok(view.selected.history.every(row => row[0].startsWith("2026-10-09T")));
   assert.ok(Math.abs(view.selected.percent - (50 / 45 - 1) * 100) < 1e-10);
 });
-test("intraday curves reject stale quotes, wrong listings and missing currency curves instead of inventing data", () => {
+test("intraday curves retain dated quotes but reject wrong listings and missing currency curves", () => {
   const rows = [q("AAPL", 110, 100), q("SHOP", 55, 50), q("USDCAD", 1.4, 1.3), q("FEQT", 11, 10)];
-  assert.equal(T.session(positions, prices, payload(rows), "FEQT", null, now + 13 * 60000).available, false);
+  const retained = T.session(positions, prices, payload(rows), "FEQT", null, now + 35 * 60000);
+  assert.equal(retained.available, true); assert.equal(retained.current, false);
+  assert.equal(retained.selected.end, "2026-10-12T13:59:00.000Z");
+  assert.equal(T.session(positions, prices, payload(rows), "FEQT", null, now + 8 * 86400000).available, false);
   const wrong = structuredClone(rows); wrong[0].currency = "CAD";
   assert.deepEqual(T.session(positions, prices, payload(wrong), "FEQT", null, now).missing, ["AAPL"]);
   const noFx = structuredClone(rows); noFx[2].intraday_history = [];
   assert.deepEqual(T.session(positions, prices, payload(noFx), "FEQT", null, now).missing, ["USDCAD"]);
+});
+test("all three benchmarks survive collection delays without appending a newer FX tick to old equity quotes", () => {
+  for (const benchmark of ["FEQT", "VBAL", "VGRO"]) {
+    const rows = [q("AAPL", 110, 100, 105), q("SHOP", 55, 50, 51), q("USDCAD", 1.4, 1.3, 1.32), q(benchmark, 11, 10, 10.5)];
+    const fresh = T.session(positions, prices, payload(rows), benchmark, null, now);
+    rows[0].fetch_status = "cached";
+    const retained = T.session(positions, prices, payload(rows), benchmark,
+      {rate: 1.6, timestamp: "2026-10-12T14:35:00Z", closed: false}, now + 35 * 60000);
+    assert.equal(retained.available, true); assert.equal(retained.current, false);
+    assert.deepEqual(retained.selected.history, fresh.selected.history);
+    assert.equal(retained.comparison.available, true);
+    assert.equal(retained.fx.stale, true);
+    assert.ok(Math.abs(F.contributionsFor(positions, retained.data, retained.selected).total - retained.selected.percent) < 1e-10);
+  }
 });
 test("closed US holdings use the actual FX history of their session, not a newer forex day", () => {
   const rows = [q("AAPL", 110, 100, 105), q("SHOP", 55, 50, 51), q("FEQT", 11, 10, 10.5)].map(row => ({...row,

@@ -9,7 +9,7 @@
     VIXCLS: {id: "VIXCLS", symbol: "^VIX", unit: "points"},
     NASDAQXAU: {id: "NASDAQXAU", symbol: "^XAU", unit: "points"},
     VXEEMCLS: {id: "VXEEMCLS", symbol: "^VXEEM", unit: "points"},
-    DEXCAUS: {id: "DEXCAUS"},
+    DEXCAUS: {id: "USDCAD", symbol: "CAD=X", currency: "CAD"},
     DGS10: {id: "UST10Y", symbol: "^TNX", title: "Trésor américain · 10 ans (indice TNX)", unit: "%", change_unit: "pt",
       history_label: "Taux 10 ans FRED", description: "La cotation de séance est l’indice Cboe TNX. Le graphique conserve l’historique du taux 10 ans publié par FRED."},
     DCOILWTICO: {id: "WTIFUT", symbol: "CL=F", title: "Pétrole WTI · contrat à terme", unit: "$ US/baril",
@@ -103,15 +103,15 @@
     if (fx) {
       const quote = {price: fx.rate, timestamp: fx.timestamp, fetched_at: fx.fetched_at, fetch_status: "fresh", fx, active: !fx.closed,
         source_url: window.SavyLiveFX.source_url, label: (fx.closed ? "Marché fermé · dernier cours · " : "Cotation indicative · ") + U.timestampLabel(fx.timestamp) + " · biquote"};
-      return window.IntradayUtils.isCurrent(quote) ? quote : null;
+      if (window.IntradayUtils.isCurrent(quote)) return quote;
     }
     if (!definition.symbol) return null;
-    const q = window.SavyLiveQuotes?.current(definition.id, {quote_symbol: definition.symbol, currency: "USD"});
+    const q = window.SavyLiveQuotes?.current(definition.id, {quote_symbol: definition.symbol, currency: definition.currency || "USD"});
     return window.IntradayUtils.isCurrent(q) ? {...q, label: window.IntradayUtils.label(q)} : null;
   }
   function headline(point) {
     const definition = MARKET_INDICATORS[point?.id], live = indicatorQuote(point);
-    const available = live || (!definition && point && U.validNumber(point.value) && point.fetch_status === "fresh" &&
+    const available = live || (!definition && point && U.validNumber(point.value) && ["fresh", "cached"].includes(point.fetch_status) &&
       U.isDate(point.date) && U.ageDays(point.date) <= point.max_age_days);
     const unit = definition?.unit || point?.unit || "", decimals = point?.decimals ?? 2;
     const change = !available ? null : live ? (U.validNumber(live.previous_close) ? U.changeLabel({...point,
@@ -146,7 +146,7 @@
       card.append(el("p", "kpi-value", valueText));
       if (live) card.append(quoteMeta(live));
       else card.append(el("p", "meta" + (current.value === null ? " warning" : ""), current.value === null ?
-        (current.market ? "Cotation à jour indisponible" : "Publication à jour indisponible") : U.observationLabel(point.date, point.frequency)));
+        (current.market ? "Actualisation de la cotation en attente" : "Nouvelle publication en attente") : U.observationLabel(point.date, point.frequency) + (point.fetch_status === "cached" ? " · dernière valeur conservée" : "")));
       if (current.change) card.append(el("p", "change " + current.change.direction, current.change.text));
       fragment.append(card);
     }
@@ -264,7 +264,7 @@
     bottom.append(source, details);
     card.append(top, title, valueRow);
     if (live) card.append(quoteMeta(live));
-    else if (current.value === null) card.append(el("p", "status-note", current.market ? "Cotation à jour indisponible" : "Publication à jour indisponible"));
+    else if (current.value === null) card.append(el("p", "status-note", current.market ? "Actualisation de la cotation en attente" : "Nouvelle publication en attente"));
     card.append(date);
     if (point.fetch_status === "cached") card.append(el("p", "status-note", "Valeur conservée · dernière collecte réussie : " + U.timestampLabel(point.last_successful_fetch)));
     else if (point.fetch_status === "unavailable") card.append(el("p", "status-note", "Source indisponible · aucune valeur valide conservée"));
@@ -532,8 +532,9 @@
     const oldCollection = data && Date.now() - U.parseTimestamp(data.generated_at) > 36 * 3600000;
     if (oldCollection) $("#marketStatus").textContent += " · collecte ancienne";
     const liveData = window.SavyLiveQuotes?.dataset();
-    if (liveData) $("#marketStatus").textContent += " · cotations en séance collectées le " + U.timestampLabel(liveData.generated_at) + " · cadence prévue 5 min, délai fournisseur possible";
-    $("#marketStatus").classList.toggle("warning", !data || state.marketCached || available !== MARKET_DEFINITIONS.length || oldCollection);
+    const delayed = liveData && Date.now() - U.parseTimestamp(liveData.generated_at) > 12 * 60000;
+    if (liveData) $("#marketStatus").textContent += " · dernière collecte des cotations : " + U.timestampLabel(liveData.generated_at) + (delayed ? " · actualisation en attente, courbes datées conservées" : " · délai fournisseur possible");
+    $("#marketStatus").classList.toggle("warning", !data || state.marketCached || available !== MARKET_DEFINITIONS.length || oldCollection || Boolean(delayed));
     const fragment = document.createDocumentFragment();
     const periodLabel = MARKET_CHART_RANGES.find(item => item.key === state.marketRange).label, intraday = state.marketRange === "INTRADAY";
     for (const [id, title, category, symbol] of MARKET_DEFINITIONS) {
@@ -547,7 +548,7 @@
       card.append(el("p", "market-value", point ? U.formatNumber(point.value, 2) + (point.value !== null && isETF ? " " + point.unit : "") : "—"));
       const old = point?.date && Date.now() - Date.parse(point.date) > 7 * 86400000;
       card.append(el("p", "meta" + (old || point?.current_quote?.stale || point?.fetch_status === "cached" ? " warning" : ""),
-        point?.current_quote ? window.IntradayUtils.label(point.current_quote) : intraday ? "Cotation de séance à jour indisponible" : point?.date ? "Clôture du " + point.date + (old ? " · observation ancienne" : "") + (point.fetch_status === "cached" ? " · dernière valeur conservée" : "") : "Clôture indisponible"));
+        point?.current_quote ? window.IntradayUtils.label(point.current_quote) : intraday ? "Premiers points de séance en attente" : point?.date ? "Clôture du " + point.date + (old ? " · observation ancienne" : "") + (point.fetch_status === "cached" ? " · dernière valeur conservée" : "") : "Clôture indisponible"));
       const change = el("p", "change market-return " + (selected.change > 0 ? "up" : selected.change < 0 ? "down" : "flat"),
         U.validNumber(selected.percent) ? (selected.percent > 0 ? "+" : "") + U.formatNumber(selected.percent, 2) + " % · " + periodLabel : "Rendement indisponible · " + periodLabel);
       const dates = intraday ? (session.available ? "Séance du " + session.quote.session_date + " · points de 5 min · variation depuis la clôture précédente" : "Courbe intraday indisponible") :
@@ -555,7 +556,7 @@
       change.title = dates;
       card.append(change, el("p", "meta market-period", dates));
       const host = el("div", "chart-host");
-      if (intraday && !session.available) host.append(el("p", "chart-placeholder", "Courbe de séance à jour indisponible."));
+      if (intraday && !session.available) host.append(el("p", "chart-placeholder", "La courbe apparaîtra dès la réception de points intraday. Les autres périodes restent consultables."));
       else if (point) drawChart(host, point, state.marketRange, {history: selected.history, showPercent: true, incomplete: selected.incomplete, intraday, baseline: session?.baseline});
       else host.append(el("p", "chart-placeholder", "Historique indisponible pour cette collecte."));
       const link = el("a", "", "Voir " + (isETF ? "le FNB" : "cet indice") + " sur Yahoo Finance ↗");

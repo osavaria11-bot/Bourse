@@ -128,9 +128,11 @@ async function main() {
     const intradayValue = await page.locator("#portfolioValue").innerText();
     assert.equal(intradayValue, money(2 * apple * 1.1 * 1.4 + shop * 1.05));
     assert.match(await page.locator("#portfolioRiskStatus").innerText(), /clôtures quotidiennes/);
+    assert.equal(await page.locator("#portfolioRisk .table-wrap").isVisible(), false, "Intraday risk must explain the period choice without a table of N/D");
     await page.locator('#portfolioRanges [data-range="YTD"]').click();
     assert.ok(await page.locator("#portfolioContributionRows tr").count() === 2);
     assert.match(await page.locator("#portfolioRiskStatus").innerText(), /séances communes|assez de clôtures/);
+    assert.equal(await page.locator("#portfolioRisk .table-wrap").isVisible(), true);
     const value = await page.locator("#portfolioValue").innerText();
     unavailable = true; await page.evaluate(() => window.SavyLiveQuotes.refresh());
     assert.equal(await page.locator("#portfolioValue").innerText(), value, "An outage keeps the last dated quote");
@@ -155,6 +157,7 @@ async function main() {
     direct.on("pageerror", error => errors.push(error.message)); await direct.route("https://**", route => route.abort());
     await direct.goto(A.personalURL(url, personalKey));
     await direct.waitForFunction(() => document.querySelectorAll("#portfolioRows tr").length === 2 && document.querySelector("#portfolioPersonalLink").hidden === false);
+    assert.ok((await direct.locator('.indicator-card[data-id="DEXCAUS"] .current-value').innerText()).includes("1,40"), "USD/CAD uses the collected quote when biquote cannot be reached");
     for (const id of ["2", "3", "1", "3", "2"]) {
       await direct.locator('[data-portfolio-id="' + id + '"]').click();
       await direct.waitForFunction(id => JSON.parse(localStorage.getItem("savy:portfolio-active:v1")) === id &&
@@ -184,6 +187,24 @@ async function main() {
     assert.equal(new URLSearchParams(new URL(direct.url()).hash.slice(1)).get("portfolio-key"), personalKey);
     await direct.locator('[data-portfolio-id="3"]').click();
     await direct.waitForFunction(() => document.querySelector('#portfolioRows tr[data-ticker="MSFTCDR"]'));
+    // Reproduce the production failure: a valid snapshot ages without a new collector run.
+    await direct.evaluate(time => {Date.now = () => time;}, now + 35 * 60000);
+    await direct.evaluate(() => window.SavyLiveQuotes.refresh());
+    assert.equal(await direct.locator('.indicator-card[data-id="DTWEXBGS"] .current-value').innerText(), "—", "Old macro prices stay hidden");
+    await direct.locator('#marketRanges [data-range="INTRADAY"]').click();
+    assert.equal(await direct.locator('.market-card[data-id="SPX"] .chart-line').count(), 1);
+    assert.match(await direct.locator('.market-card[data-id="SPX"] .meta').first().innerText(), /Cotation conservée/);
+    for (const id of ["1", "2", "3"]) {
+      await direct.locator('[data-portfolio-id="' + id + '"]').click();
+      await direct.waitForFunction(id => JSON.parse(localStorage.getItem("savy:portfolio-active:v1")) === id &&
+        document.querySelectorAll("#portfolioRows tr").length === (id === "1" ? 2 : 6), id);
+      await direct.locator('#portfolioRanges [data-range="INTRADAY"]').click();
+      assert.equal(await direct.locator("#portfolioChart .chart-line").count(), 1);
+      assert.equal(await direct.locator("#portfolioChart .chart-benchmark").count(), 1);
+      assert.match(await direct.locator("#portfolioPeriod").innerText(), /actualisation en attente/);
+      assert.equal(await direct.locator("#portfolioValueLabel").innerText(), "DERNIÈRE VALEUR COLLECTÉE · CAD");
+      assert.equal(await direct.locator("#portfolioRisk .table-wrap").isVisible(), false);
+    }
     assert.deepEqual(errors, []);
     console.log("Intraday UI verified: current macro headlines and stale-number removal, minute charts for indices and all three portfolios, 320–1440px layout, contributions, daily risk, shared access and source/currency fallback.");
   } finally {await browser.close(); await new Promise(resolve => server.close(resolve));}

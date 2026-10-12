@@ -68,6 +68,10 @@ test("intraday charts keep only actual session points and use the previous close
   const payload = I.normalize(data([quote]), now), selected = I.marketSession(point("AAPL", 100), payload, now);
   assert.deepEqual(selected.history, [["2026-10-12T13:30:00.000Z", 106], ["2026-10-12T13:59:00.000Z", 110]]);
   assert.ok(Math.abs(selected.percent - 10) < 1e-10);
-  assert.equal(I.marketSession(point("AAPL", 100), payload, now + 13 * 60000).available, false);
+  const delayed = I.marketSession(point("AAPL", 100), payload, now + 35 * 60000);
+  assert.equal(delayed.available, true); assert.equal(delayed.current, false);
+  assert.deepEqual(delayed.history, selected.history);
+  assert.match(I.label(delayed.quote), /Cotation conservée/);
+  assert.equal(I.marketSession(point("AAPL", 100), payload, now + 8 * 86400000).available, false);
   assert.equal(I.clock(now), I.clock(new Date(now).toISOString()));
 });

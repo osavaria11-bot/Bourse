@@ -2,8 +2,9 @@ name: Intraday quotes
 
 on:
   schedule:
-    - cron: "2-57/5 3-16 * * 1-5"
-      timezone: "America/Toronto"
+    # Explicit UTC schedule covers overseas, North American and FX sessions.
+    # Actions may delay scheduled runs; the UI retains their dated history.
+    - cron: "2-57/5 * * * 1-5"
   workflow_dispatch:
   workflow_run:
     workflows: ["Deploy static content to Pages"]
