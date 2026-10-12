@@ -15,6 +15,19 @@ def fixture(symbol="MSFT", currency="USD", stamp=None, start=None, end=None):
             "end": end or NOW.timestamp() + 21600}}}}]}}
 
 class QuoteTests(unittest.TestCase):
+    def test_forex_history_keeps_the_recent_closed_equity_session(self):
+        data = fixture("CAD=X", "CAD"); result = data["chart"]["result"][0]
+        result["meta"]["regularMarketPrice"] = 1.4
+        friday = datetime(2026, 10, 9, 19, 55, tzinfo=timezone.utc).timestamp()
+        result["timestamp"] = [friday, NOW.timestamp() - 600, NOW.timestamp() - 300]
+        result["indicators"] = {"quote": [{"close": [1.3, 99, 1.39]}]}
+        definition = {"id": "USDCAD", "title": "USD/CAD", "quote_symbol": "CAD=X", "currency": "CAD"}
+        parsed = quotes.parse_quote(data, definition, NOW)
+        self.assertEqual(parsed["intraday_sessions"]["2026-10-09"], [["2026-10-09T19:55:00Z", 1.3]])
+        self.assertEqual(parsed["intraday_history"], [["2026-10-12T13:55:00Z", 1.39], ["2026-10-12T13:59:00Z", 1.4]])
+        result["meta"]["regularMarketPrice"] = 100
+        with self.assertRaises(quotes.markets.macro.SourceError):
+            quotes.parse_quote(data, definition, NOW)
     def test_intraday_history_filters_other_sessions_future_and_invalid_points(self):
         data = fixture(); result = data["chart"]["result"][0]
         ticks = [NOW.timestamp() - 3 * 86400, NOW.timestamp() - 1200, NOW.timestamp() - 600,

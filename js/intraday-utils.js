@@ -17,18 +17,34 @@
           typeof row.quote_symbol !== "string" || !/^[A-Za-z0-9^.=\-]+$/.test(row.quote_symbol) ||
           !U.validNumber(row.price) || row.price <= 0 || !Number.isFinite(stamp) || !Number.isFinite(fetched) ||
           stamp > now + 300000 || fetched > now + 300000 || stamp > fetched + 300000 ||
+          (row.id === "USDCAD" && (row.quote_symbol !== "CAD=X" || row.currency !== "CAD" || row.price <= .5 || row.price >= 3)) ||
           !U.isDate(row.session_date) || row.session_date !== day || !["regular", "closed"].includes(row.market_state) ||
           !["fresh", "cached"].includes(row.fetch_status)) continue;
       seen.add(row.id);
       const minutes = new Map();
       if (Array.isArray(row.intraday_history) && row.intraday_history.length <= 1600) for (const point of row.intraday_history) {
         const time = U.parseTimestamp(point?.[0]);
-        if (Number.isFinite(time) && time <= stamp && time <= now && U.validNumber(point?.[1]) && point[1] > 0 && localDay.format(time) === day)
+        if (Number.isFinite(time) && time <= stamp && time <= now && U.validNumber(point?.[1]) && point[1] > 0 &&
+            (row.id !== "USDCAD" || (point[1] > .5 && point[1] < 3)) && localDay.format(time) === day)
           minutes.set(new Date(time).toISOString(), point[1]);
       }
       if (minutes.size) minutes.set(new Date(stamp).toISOString(), row.price);
       const intraday_history = [...minutes].sort((a, b) => a[0].localeCompare(b[0]));
-      quotes.push({...row, intraday_history, previous_close: U.validNumber(row.previous_close) && row.previous_close > 0 ? row.previous_close : null,
+      const intraday_sessions = {};
+      if (row.id === "USDCAD" && row.quote_symbol === "CAD=X" && row.currency === "CAD" &&
+          row.intraday_sessions && typeof row.intraday_sessions === "object" && Object.keys(row.intraday_sessions).length <= 8) {
+        for (const [session, rows] of Object.entries(row.intraday_sessions)) {
+          if (!U.isDate(session) || !Array.isArray(rows) || rows.length > 1600) continue;
+          const valid = new Map();
+          for (const point of rows) {
+            const time = U.parseTimestamp(point?.[0]);
+            if (Number.isFinite(time) && time <= stamp && now - time <= 7 * DAY && U.validNumber(point?.[1]) && point[1] > .5 && point[1] < 3 && localDay.format(time) === session)
+              valid.set(new Date(time).toISOString(), point[1]);
+          }
+          intraday_sessions[session] = [...valid].sort((a, b) => a[0].localeCompare(b[0]));
+        }
+      }
+      quotes.push({...row, intraday_history, intraday_sessions, previous_close: U.validNumber(row.previous_close) && row.previous_close > 0 ? row.previous_close : null,
         source_label: "Yahoo Finance", source_url: "https://finance.yahoo.com/quote/" + encodeURIComponent(row.quote_symbol) + "/"});
     }
     return {...payload, quotes};

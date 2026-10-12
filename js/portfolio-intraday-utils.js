@@ -30,11 +30,12 @@
     const originalFx = sources.get("USDCAD"), fxBase = P.observationAt(originalFx?.history || [], previousDay);
     let fxHistory = [], fxSource = "Yahoo Finance";
     if (usd) {
-      if (!fxQuote || fxQuote.session_date !== day || fxQuote.intraday_history.length < 2 || !fxBase) return unavailable(["USDCAD"]);
-      fxHistory = fxQuote.intraday_history.map(row => [...row]);
+      const rates = fxQuote?.intraday_sessions?.[day] || (fxQuote?.session_date === day ? fxQuote.intraday_history : []);
+      if (!fxQuote || rates.length < 2 || !fxBase) return unavailable(["USDCAD"]);
+      fxHistory = rates.map(row => [...row]);
       const fxStamp = U.parseTimestamp(liveFx?.timestamp), liveAge = now - fxStamp;
       const localDay = Number.isFinite(fxStamp) ? new Intl.DateTimeFormat("en-CA", {timeZone: "America/Toronto"}).format(fxStamp) : null;
-      if (sessionActive && localDay === day && U.validNumber(liveFx?.rate) && liveFx.rate > .5 && liveFx.rate < 3 &&
+      if (sessionActive && !liveFx?.closed && localDay === day && U.validNumber(liveFx?.rate) && liveFx.rate > .5 && liveFx.rate < 3 &&
           liveAge >= 0 && liveAge <= 600000 && fxStamp > U.parseTimestamp(fxHistory.at(-1)[0])) {
         fxHistory.push([new Date(fxStamp).toISOString(), liveFx.rate]); fxSource = "biquote";
       }

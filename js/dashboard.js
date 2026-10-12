@@ -277,8 +277,8 @@
     state.visible = U.filterSeries(state.dataset.series, {
       search: "", category: state.category, sort: state.sort,
       favorites: state.favorites, favoritesOnly: state.favoritesOnly,
-    }).filter(point => !state.search || U.filterSeries([point], {search: state.search}).length ||
-      U.normalizeSearch(MARKET_INDICATORS[point.id]?.title || "").includes(U.normalizeSearch(state.search)));
+    }).filter(point => !state.search || U.filterSeries([{...point,
+      title: point.title + " " + (MARKET_INDICATORS[point.id]?.title || "")}], {search: state.search}).length);
     const fragment = document.createDocumentFragment();
     for (const point of state.visible) fragment.append(buildCard(point));
     $("#grid").replaceChildren(fragment);

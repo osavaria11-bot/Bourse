@@ -54,3 +54,13 @@ test("intraday curves reject stale quotes, wrong listings and missing currency c
   const noFx = structuredClone(rows); noFx[2].intraday_history = [];
   assert.deepEqual(T.session(positions, prices, payload(noFx), "FEQT", null, now).missing, ["USDCAD"]);
 });
+test("closed US holdings use the actual FX history of their session, not a newer forex day", () => {
+  const rows = [q("AAPL", 110, 100, 105), q("SHOP", 55, 50, 51), q("FEQT", 11, 10, 10.5)].map(row => ({...row,
+    market_state: "closed", session_date: "2026-10-09", timestamp: "2026-10-09T19:59:00Z",
+    intraday_history: [["2026-10-09T13:30:00Z", row.intraday_history[0][1]], ["2026-10-09T19:55:00Z", row.price]]}));
+  const fx = {...q("USDCAD", 1.6, 1.5), intraday_sessions: {"2026-10-09": [["2026-10-09T13:30:00Z", 1.32], ["2026-10-09T19:59:00Z", 1.4]]}};
+  const view = T.session(positions, prices, payload([...rows, fx]), "FEQT", {rate: 1.6, timestamp: "2026-10-12T14:00:00Z", closed: false}, now);
+  assert.equal(view.available, true); assert.equal(view.session_date, "2026-10-09");
+  assert.equal(view.selected.history.at(-1)[1], 2 * 110 * 1.4 + 55);
+  assert.ok(view.selected.history.every(row => row[0].startsWith("2026-10-09T")));
+});

@@ -47,6 +47,8 @@ def parse_quote(payload, definition, now):
             raise ValueError("Wrong symbol or invalid quote")
         if definition.get("currency") and meta.get("currency") != definition["currency"]:
             raise ValueError("Wrong currency")
+        if definition["id"] == "USDCAD" and not .5 < price < 3:
+            raise ValueError("Invalid USD/CAD rate")
         instant = datetime.fromtimestamp(stamp, timezone.utc)
         age = (now - instant).total_seconds()
         if age < -300 or age > 7 * 86400:
@@ -64,7 +66,7 @@ def parse_quote(payload, definition, now):
         delay = delay if finite(delay) and 0 <= delay <= 120 else None
     except (KeyError, TypeError, IndexError, ValueError, OSError) as error:
         raise markets.macro.SourceError(f"{definition['id']}: invalid intraday quote ({error})") from error
-    points = {}
+    points, fx_sessions = {}, {}
     timestamps = result.get("timestamp", [])
     indicators = result.get("indicators")
     quote_rows = indicators.get("quote", []) if isinstance(indicators, dict) else []
@@ -73,14 +75,21 @@ def parse_quote(payload, definition, now):
         for tick, close in zip(timestamps, closes):
             if not finite(tick) or not finite(close) or close <= 0 or tick > min(stamp, now.timestamp()):
                 continue
+            if definition["id"] == "USDCAD" and not .5 < close < 3:
+                continue
             try:
                 time = datetime.fromtimestamp(tick, timezone.utc)
-                if time.astimezone(zone).date().isoformat() == session_date:
+                day = time.astimezone(zone).date().isoformat()
+                if definition["id"] == "USDCAD" and 0 <= (now - time).total_seconds() <= 7 * 86400:
+                    fx_sessions.setdefault(day, {})[time.isoformat().replace("+00:00", "Z")] = close
+                if day == session_date:
                     points[time.isoformat().replace("+00:00", "Z")] = close
             except (ValueError, OverflowError, OSError):
                 continue
     if points:
         points[instant.isoformat().replace("+00:00", "Z")] = price
+        if definition["id"] == "USDCAD":
+            fx_sessions[session_date] = points
     return {"id": definition["id"], "title": definition["title"], "quote_symbol": meta["symbol"],
         "currency": meta["currency"], "price": price, "previous_close": previous,
         "timestamp": instant.isoformat().replace("+00:00", "Z"), "session_date": session_date,
@@ -90,13 +99,15 @@ def parse_quote(payload, definition, now):
         "session_end": datetime.fromtimestamp(end, timezone.utc).isoformat().replace("+00:00", "Z"),
         "provider_delay_minutes": delay, "fetch_status": "fresh", "fetched_at": now.isoformat().replace("+00:00", "Z"),
         "history_interval_minutes": 5, "intraday_history": [[tick, value] for tick, value in sorted(points.items())],
+        **({"intraday_sessions": {day: [[tick, value] for tick, value in sorted(rows.items())] for day, rows in fx_sessions.items()}} if definition["id"] == "USDCAD" else {}),
         "source_label": "Yahoo Finance", "source_url": "https://finance.yahoo.com/quote/" + quote(meta["symbol"], safe="") + "/"}
 
 def fetch_quote(definition, now):
     last_error = None
     for host in ("query1.finance.yahoo.com", "query2.finance.yahoo.com"):
         try:
-            request = Request(f"https://{host}/v8/finance/chart/{quote(definition['quote_symbol'], safe='')}?range=1d&interval=5m",
+            history_range = "5d" if definition["id"] == "USDCAD" else "1d"
+            request = Request(f"https://{host}/v8/finance/chart/{quote(definition['quote_symbol'], safe='')}?range={history_range}&interval=5m",
                 headers={"User-Agent": "Mozilla/5.0 SAVY/4.0", "Accept": "application/json"})
             with urlopen(request, timeout=12) as response:
                 return parse_quote(json.load(response), definition, now)
