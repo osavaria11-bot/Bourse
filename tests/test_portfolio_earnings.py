@@ -25,6 +25,24 @@ def yahoo(symbol="MSFT"):
 
 
 class EarningsTests(unittest.TestCase):
+    def test_cdr_results_use_the_underlying_us_company_and_new_funds_have_no_eps(self):
+        def fetch(url):
+            if 'calendar' in url:
+                return yahoo()
+            if 'reports' in url:
+                return '<h3>No transcript</h3>'
+            return sample()
+        definitions = [{'id': 'MSFT', 'quote_symbol': 'MSFT'}, {'id': 'MSFTCDR', 'quote_symbol': 'MSFT.TO'}]
+        definitions += [{'id': ticker, 'quote_symbol': ticker, 'source_url': URL} for ticker in ['FBAL', 'SPYM', 'CASH', 'ZUH']]
+        data = earnings.collect({'series': definitions}, None, NOW, fetch)
+        cdr = data['instruments']['MSFTCDR']
+        self.assertEqual(cdr['company_symbol'], 'MSFT')
+        self.assertIsNotNone(cdr['listing_note'])
+        self.assertEqual(cdr['events'], data['instruments']['MSFT']['events'])
+        self.assertEqual(cdr['events'][1]['eps']['currency'], 'USD')
+        self.assertEqual(data['coverage']['not_applicable'], 4)
+        self.assertEqual(earnings.source_for({'id': 'DIS', 'quote_symbol': 'DIS'})[1], 'https://www.marketbeat.com/stocks/NYSE/DIS/earnings/')
+
     def test_metrics_keep_bases_currencies_and_dates_separate(self):
         events = earnings.parse_marketbeat(sample(), "MSFT", URL, NOW)
         current = events[1]

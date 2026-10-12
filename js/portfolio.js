@@ -6,21 +6,23 @@
   const EXPOSURE_KEY = "savy:portfolio-exposures:v1", EXPOSURE_VIEWS_KEY = "savy:portfolio-exposure-views:v1";
   const EARNINGS_KEY = "savy:portfolio-earnings:v1";
   const ACTIVE_KEY = "savy:portfolio-active:v1", VIEW_KEY = "savy:portfolio-view:v1";
+  const portfolioIds = ["1", "2", "3"];
   const scopedKeys = new Set([HOLDINGS_KEY, POSITIONS_VISIBLE_KEY, PROFILE_STATE_KEY, PROFILE_CACHE_KEY, EXPOSURE_VIEWS_KEY, VIEW_KEY]);
   const initialFragment = new URLSearchParams(location.hash.slice(1));
   let activePortfolio = "1";
-  activePortfolio = initialFragment.get("portfolio") === "2" || (!initialFragment.has("portfolio") && stored(ACTIVE_KEY, "1") === "2") ? "2" : "1";
-  let benchmarkId = activePortfolio === "2" ? "VBAL" : "FEQT";
+  const selectedPortfolio = initialFragment.get("portfolio") || stored(ACTIVE_KEY, "1");
+  activePortfolio = portfolioIds.includes(selectedPortfolio) ? selectedPortfolio : "1";
+  let benchmarkId = activePortfolio === "1" ? "FEQT" : "VBAL";
   let catalog = null, prices = null, cached = false, range = "YTD", moversRange = "1M", positions = [], history = [], imported = false;
   let exposures = null, exposureCached = false;
   let earnings = null, earningsCached = false, earningsTicker = "", earningsWeek = F.weekFor().start, earningsSelection = null;
   const exposureViewState = stored(EXPOSURE_VIEWS_KEY, {});
   const exposureViews = {Sectors: exposureViewState?.Sectors === true, Geography: exposureViewState?.Geography === true};
   let profileState = stored(PROFILE_STATE_KEY, null), profileInitialized = false, holdingsAvailable = false, manifestURL = null;
-  const personalKey = initialFragment.get("portfolio-key") || profileState?.key || rawStored(PROFILE_STATE_KEY, null)?.key || rawStored(PROFILE_STATE_KEY + ":2", null)?.key;
+  const personalKey = initialFragment.get("portfolio-key") || profileState?.key || rawStored(PROFILE_STATE_KEY, null)?.key || rawStored(PROFILE_STATE_KEY + ":2", null)?.key || rawStored(PROFILE_STATE_KEY + ":3", null)?.key;
   let positionsVisible = stored(POSITIONS_VISIBLE_KEY, false) === true, sortKey = null, sortDescending = true;
   const importFragment = new URLSearchParams(location.hash.slice(1)).get("positions");
-  function scopedKey(key) {return activePortfolio === "2" && scopedKeys.has(key) ? key + ":2" : key;}
+  function scopedKey(key) {return activePortfolio !== "1" && scopedKeys.has(key) ? key + ":" + activePortfolio : key;}
   function rawStored(key, fallback) {try {return JSON.parse(localStorage.getItem(key)) ?? fallback;} catch {return fallback;}}
   function stored(key, fallback) {return rawStored(scopedKey(key), fallback);}
   function save(key, value) {try {localStorage.setItem(scopedKey(key), JSON.stringify(value)); return true;} catch {return false;}}
@@ -28,7 +30,7 @@
   const labelWalker = document.createTreeWalker($("#portfolio"), NodeFilter.SHOW_TEXT);
   while (labelWalker.nextNode()) if (labelWalker.currentNode.nodeValue.includes("FEQT") && !labelWalker.currentNode.parentElement.closest("[data-portfolio-id]")) referenceLabels.push({node: labelWalker.currentNode, template: labelWalker.currentNode.nodeValue});
   function renderPortfolioChoice() {
-    $("#portfolioTitle").textContent = activePortfolio === "2" ? "Portefeuille 2" : "Mon portefeuille";
+    $("#portfolioTitle").textContent = activePortfolio === "1" ? "Mon portefeuille" : "Portefeuille " + activePortfolio;
     $("#portfolio").dataset.portfolio = activePortfolio;
     for (const button of document.querySelectorAll("[data-portfolio-id]")) button.setAttribute("aria-pressed", String(button.dataset.portfolioId === activePortfolio));
     for (const label of referenceLabels) label.node.nodeValue = label.template.replaceAll("FEQT", benchmarkId);
@@ -46,15 +48,15 @@
     for (const button of $("#portfolioMoversRanges").querySelectorAll("button")) button.setAttribute("aria-pressed", String(button.dataset.range === moversRange));
   }
   async function choosePortfolio(id) {
-    if (!["1", "2"].includes(id) || id === activePortfolio || !catalog) return;
-    saveView(); activePortfolio = id; benchmarkId = id === "2" ? "VBAL" : "FEQT"; save(ACTIVE_KEY, id);
+    if (!portfolioIds.includes(id) || id === activePortfolio || !catalog) return;
+    saveView(); activePortfolio = id; benchmarkId = id === "1" ? "FEQT" : "VBAL"; save(ACTIVE_KEY, id);
     profileState = stored(PROFILE_STATE_KEY, null); profileInitialized = false;
     positionsVisible = stored(POSITIONS_VISIBLE_KEY, false) === true;
     const views = stored(EXPOSURE_VIEWS_KEY, {}); exposureViews.Sectors = views.Sectors === true; exposureViews.Geography = views.Geography === true;
     loadView(); setupPositions(); history = prices ? P.historyFor(positions, prices) : [];
     $("#portfolioMessage").textContent = ""; render();
     if (personalKey) await refreshPersonalProfile();
-    else {const fragment = new URLSearchParams(); if (id === "2") fragment.set("portfolio", "2"); window.history.replaceState(null, "", location.pathname + location.search + (fragment.size ? "#" + fragment : "#portfolio"));}
+    else {const fragment = new URLSearchParams(); if (id !== "1") fragment.set("portfolio", id); window.history.replaceState(null, "", location.pathname + location.search + (fragment.size ? "#" + fragment : "#portfolio"));}
   }
   function el(tag, className, text) {const node = document.createElement(tag); if (className) node.className = className; if (text !== undefined) node.textContent = text; return node;}
   function money(value, currency = "CAD") {return U.validNumber(value) ? new Intl.NumberFormat("fr-CA", {style: "currency", currency, maximumFractionDigits: 2}).format(value) : "—";}
@@ -111,7 +113,7 @@
     try {
       if (!A.validKey(personalKey)) throw new Error("Lien personnel invalide");
       let profile;
-      try {profile = await fetchJSON(requestedPortfolio === "2" ? "data/personal-portfolio-2.json" : "data/personal-portfolio.json");}
+      try {profile = await fetchJSON(requestedPortfolio === "1" ? "data/personal-portfolio.json" : "data/personal-portfolio-" + requestedPortfolio + ".json");}
       catch {if (requestedPortfolio !== activePortfolio) return; profile = stored(PROFILE_CACHE_KEY, null);}
       // Authentication also binds the revision; unverified data never replaces holdings.
       const unlocked = await A.unlock(profile, personalKey);
@@ -392,7 +394,7 @@
     });
     if (!result.rows.length) {ctx.fillStyle = muted; ctx.font = "23px Arial"; wrapped("Aucun résultat repéré pour mes titres cette semaine." + (result.unavailable.length ? " Calendriers indisponibles : " + result.unavailable.join(", ") : ""), 46, 215, width - 92, 32);}
     ctx.fillStyle = muted; ctx.font = "13px Arial"; ctx.fillText("Collecte : " + U.timestampLabel(earnings.generated_at) + (earningsCached || result.cached.length ? " · COPIE CONSERVÉE" : "") + " · Attentes absentes = N/D · BPA et consensus du même fournisseur", 46, canvas.height - 33);
-    canvas.toBlob(blob => {if (!blob) return; const url = URL.createObjectURL(blob), link = el("a"); link.href = url; link.download = "savy-resultats-" + (activePortfolio === "2" ? "portefeuille-2-" : "") + result.week.start + ".png"; document.body.append(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(url), 30000);}, "image/png");
+    canvas.toBlob(blob => {if (!blob) return; const url = URL.createObjectURL(blob), link = el("a"); link.href = url; link.download = "savy-resultats-" + (activePortfolio !== "1" ? "portefeuille-" + activePortfolio + "-" : "") + result.week.start + ".png"; document.body.append(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(url), 30000);}, "image/png");
   }
   function renderAnalysis(selected, current) {renderContributions(selected); renderRisk(selected); renderEarnings(current);}
   function render() {
@@ -513,7 +515,7 @@
   }
   $("#portfolioImport").addEventListener("change", async event => {const file = event.target.files[0]; if (!file || !catalog) return; try {if (file.size > 100000) throw new Error("Fichier trop volumineux"); applyPositions(JSON.parse(await file.text()));} catch (error) {$("#portfolioMessage").textContent = "Import impossible : " + error.message;} finally {event.target.value = "";}});
   $("#positionForm").addEventListener("submit", event => {event.preventDefault(); if (!catalog) return; try {const ticker = $("#positionTicker").value; const existing = positions.find(p => p.ticker === ticker); const quantity = Number($("#positionQuantity").value.trim().replace(",", ".")); const costText = $("#positionAverageCost").value.trim(); const average_cost = costText ? Number(costText.replace(",", ".")) : existing?.average_cost; const next = {ticker, quantity, ...(average_cost !== undefined ? {average_cost} : {})}; applyPositions(existing ? positions.map(p => p.ticker === ticker ? next : p) : [...positions, next]); $("#positionQuantity").value = ""; $("#positionAverageCost").value = "";} catch (error) {$("#portfolioMessage").textContent = error.message;}});
-  $("#portfolioExport").addEventListener("click", () => {const blob = new Blob([JSON.stringify({schema_version: 1, base_currency: "CAD", portfolio_id: activePortfolio, benchmark: benchmarkId, positions}, null, 2) + "\n"], {type: "application/json"}); const url = URL.createObjectURL(blob), anchor = el("a"); anchor.href = url; anchor.download = activePortfolio === "2" ? "portefeuille-2-savy.json" : "portefeuille-savy.json"; anchor.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);});
+  $("#portfolioExport").addEventListener("click", () => {const blob = new Blob([JSON.stringify({schema_version: 1, base_currency: "CAD", portfolio_id: activePortfolio, benchmark: benchmarkId, positions}, null, 2) + "\n"], {type: "application/json"}); const url = URL.createObjectURL(blob), anchor = el("a"); anchor.href = url; anchor.download = activePortfolio === "1" ? "portefeuille-savy.json" : "portefeuille-" + activePortfolio + "-savy.json"; anchor.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);});
   $("#portfolioPositionsToggle").addEventListener("click", () => {positionsVisible = !positionsVisible; save(POSITIONS_VISIBLE_KEY, positionsVisible); renderPositionsVisibility();});
   for (const view of ["Sectors", "Geography"]) $("#portfolio" + view + "Toggle").addEventListener("click", () => {exposureViews[view] = exposureViews[view] !== true; save(EXPOSURE_VIEWS_KEY, exposureViews); renderExposureVisibility();});
   function currentEarningsValuation() {return prices && history.length ? P.valuationAt(positions, prices, history.at(-1)[0], window.SavyLiveFX?.current()) : null;}

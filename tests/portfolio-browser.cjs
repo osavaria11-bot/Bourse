@@ -15,6 +15,7 @@ const exposures = E.normalize(JSON.parse(fs.readFileSync(path.join(root, "data/p
 const sample = catalog.series.filter(d => ["SHOP", "CLS", "V", "VFV", "MSFT", "XIU"].includes(d.id));
 const syntheticPositions = sample.map(d => ({ticker: d.id, quantity: d.id === "V" ? 1.5 : 2, currency: d.currency, average_cost: d.id === "CLS" ? 500 : d.id === "SHOP" ? 200 : d.id === "V" ? 350 : 50}));
 const secondSyntheticPositions = ["VBAL", "FCIN", "XSP", "CGL", "XLF", "ACWV"].map((id, i) => ({ticker: id, quantity: i + 2.5, currency: catalog.series.find(row => row.id === id).currency, average_cost: 25 + i * 5}));
+const thirdSyntheticPositions = ["MSFTCDR", "FBAL", "SPYM", "CASH", "DIS", "NFLX"].map((id, i) => ({ticker: id, quantity: i + 1.5, currency: catalog.series.find(row => row.id === id).currency, average_cost: 20 + i}));
 const fragment = Buffer.from(JSON.stringify(syntheticPositions.map(p => [p.ticker, p.quantity, p.currency, p.average_cost]))).toString("base64url");
 let offline = false, missingFX = false, missingBaseline = false, earningsOffline = false;
 const thisWeek = F.weekFor(), today = F.localDay(), todayOffset = thisWeek.days.indexOf(today);
@@ -28,21 +29,22 @@ function syntheticEarnings(id, offset, pending = false) {
 }
 const nextWeekEvent = {...syntheticEarnings("ffffffffffffffff", 0, true), report_date: F.shiftDay(thisWeek.start, 8)};
 const syntheticEarningsData = {schema_version: 1, kind: "portfolio_earnings", generated_at: new Date().toISOString(), timezone: "America/Toronto", window: {start: F.shiftDay(thisWeek.start, -84), end: F.shiftDay(thisWeek.start, 41)}, instruments: Object.fromEntries(catalog.series.map(row => [row.id,
-  {company_symbol: row.quote_symbol, source_url: "https://example.com/earnings", fetch_status: ["VFV", "XIU", ...secondSyntheticPositions.map(item => item.ticker)].includes(row.id) ? "not_applicable" : "fresh", fetched_at: new Date().toISOString(), events:
-    row.id === "MSFT" ? [syntheticEarnings("aaaaaaaaaaaaaaaa", 0)] : row.id === "SHOP" ? [syntheticEarnings("bbbbbbbbbbbbbbbb", 1)] : row.id === "CLS" ? [syntheticEarnings("cccccccccccccccc", 2)] :
+  {company_symbol: row.id === "MSFTCDR" ? "MSFT" : row.quote_symbol, listing_note: row.id === "MSFTCDR" ? "Résultats de Microsoft en USD." : null, source_url: "https://example.com/earnings", fetch_status: ["VFV", "XIU", "FBAL", "SPYM", "CASH", ...secondSyntheticPositions.map(item => item.ticker)].includes(row.id) ? "not_applicable" : "fresh", fetched_at: new Date().toISOString(), events:
+    ["MSFT", "MSFTCDR"].includes(row.id) ? [syntheticEarnings("aaaaaaaaaaaaaaaa", 0)] : row.id === "DIS" ? [syntheticEarnings("1111111111111111", 1)] : row.id === "SHOP" ? [syntheticEarnings("bbbbbbbbbbbbbbbb", 1)] : row.id === "CLS" ? [syntheticEarnings("cccccccccccccccc", 2)] :
     row.id === "V" ? [syntheticEarnings("dddddddddddddddd", 4, true), nextWeekEvent] : row.id === "NVDA" ? [syntheticEarnings("eeeeeeeeeeeeeeee", 1)] : []}]))};
 let profileOffline = false;
 const personalKey = crypto.randomBytes(32).toString("base64url");
 function sealFixture(positions, revision, portfolioId = "1") {
   const profile = {schema_version: 1, kind: "encrypted_portfolio", algorithm: "AES-GCM", revision};
-  if (portfolioId === "2") profile.portfolio_id = "2";
+  if (portfolioId !== "1") profile.portfolio_id = portfolioId;
   const iv = crypto.randomBytes(12), cipher = crypto.createCipheriv("aes-256-gcm", Buffer.from(personalKey, "base64url"), iv);
   cipher.setAAD(A.associatedData(profile));
-  const ciphertext = Buffer.concat([cipher.update(JSON.stringify({positions, ...(portfolioId === "2" ? {portfolio_id: "2", benchmark: "VBAL"} : {})})), cipher.final(), cipher.getAuthTag()]);
+  const ciphertext = Buffer.concat([cipher.update(JSON.stringify({positions, ...(portfolioId !== "1" ? {portfolio_id: portfolioId, benchmark: "VBAL"} : {})})), cipher.final(), cipher.getAuthTag()]);
   return {...profile, iv: iv.toString("base64url"), ciphertext: ciphertext.toString("base64url")};
 }
 let profileFixture = sealFixture(syntheticPositions, "synthetic-v1");
 let secondProfileFixture = sealFixture(secondSyntheticPositions, "synthetic-second-v1", "2");
+let thirdProfileFixture = sealFixture(thirdSyntheticPositions, "synthetic-third-v1", "3");
 const requestPaths = [];
 const mime = {".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".json": "application/json", ".png": "image/png"};
 const server = http.createServer((request, response) => {
@@ -59,6 +61,10 @@ const server = http.createServer((request, response) => {
   if (pathname === "/data/personal-portfolio-2.json") {
     response.writeHead(profileOffline ? 503 : 200, {"Content-Type": "application/json"});
     response.end(profileOffline ? "{}" : JSON.stringify(secondProfileFixture)); return;
+  }
+  if (pathname === "/data/personal-portfolio-3.json") {
+    response.writeHead(profileOffline ? 503 : 200, {"Content-Type": "application/json"});
+    response.end(profileOffline ? "{}" : JSON.stringify(thirdProfileFixture)); return;
   }
   if (pathname === "/data/security-prices.json") {
     const data = structuredClone(rawPrices);
@@ -367,7 +373,7 @@ async function main() {
     await cdp.detach();
     assert.equal(requestPaths.some(p => p.includes(personalKey)), false);
     assert.equal(requestPaths.filter(p => p.includes("portfolio-earnings")).some(p => /ticker=|positions=|portfolio-key=/.test(p)), false);
-    // The same personal key opens two independently authenticated profiles.
+    // The same personal key opens three independently authenticated profiles.
     await direct.locator('#portfolioRanges button').filter({hasText: /^1 mois$/}).click();
     await direct.locator('[data-portfolio-id="2"]').click();
     await direct.waitForFunction(() => document.querySelector('#portfolioTitle').textContent === 'Portefeuille 2' && document.querySelector('#portfolioRows tr[data-ticker="VBAL"]') && document.querySelector('#portfolioMessage').textContent.includes('chargées automatiquement'));
@@ -447,10 +453,96 @@ async function main() {
     assert.match(await direct.locator('#portfolioMessage').innerText(), /autre portefeuille/);
     assert.deepEqual(await direct.evaluate(() => JSON.parse(localStorage.getItem('savy:private-holdings:v1:2')).positions), editedSecond);
     secondProfileFixture = goodSecondProfile;
+    await direct.locator('[data-portfolio-id="3"]').click();
+    await direct.waitForFunction(() => document.querySelector('#portfolioTitle').textContent === 'Portefeuille 3' && document.querySelector('#portfolioRows tr[data-ticker="MSFTCDR"]') && document.querySelector('#portfolioMessage').textContent.includes('chargées automatiquement'));
+    assert.deepEqual(await direct.evaluate(() => JSON.parse(localStorage.getItem('savy:private-holdings:v1:3')).positions), thirdSyntheticPositions);
+    assert.deepEqual(await direct.evaluate(() => JSON.parse(localStorage.getItem('savy:private-holdings:v1:2')).positions), editedSecond);
+    assert.deepEqual(await direct.evaluate(() => JSON.parse(localStorage.getItem('savy:private-holdings:v1')).positions), syntheticPositions);
+    assert.equal(await direct.locator('[data-portfolio-id="3"]').getAttribute('aria-pressed'), 'true');
+    assert.equal(await direct.locator('#portfolioRiskTitle').textContent(), 'Risque comparé à VBAL');
+    assert.match(await direct.locator('#portfolioBenchmark').innerText(), /VBAL/);
+    assert.equal(await direct.locator('#portfolioChart .chart-benchmark').count(), 1);
+    assert.equal(await direct.locator('#portfolioPositions').isVisible(), false);
+    assert.equal(await direct.locator('#portfolioRows tr[data-ticker="MSFTCDR"] a').getAttribute('href'), 'https://finance.yahoo.com/quote/MSFT.TO/');
+    const thirdHistory = P.historyFor(thirdSyntheticPositions, prices), thirdCurrent = P.valuationAt(thirdSyntheticPositions, prices, thirdHistory.at(-1)[0]);
+    assert.equal(await direct.locator('#portfolioValue').textContent(), new Intl.NumberFormat('fr-CA', {style: 'currency', currency: 'CAD', maximumFractionDigits: 2}).format(thirdCurrent.total));
+    for (const item of P.RANGES) {
+      await direct.locator('#portfolioRanges button').filter({hasText: new RegExp('^' + item.label + '$')}).click();
+      const selected = P.period(thirdHistory, item.key), expected = P.benchmarkFor(selected, prices.series.find(row => row.id === 'VBAL'), 'VBAL');
+      assert.equal(await direct.locator('#portfolioBenchmark .portfolio-benchmark-item:nth-child(2) strong').textContent(), (expected.benchmark_percent > 0 ? '+' : '') + U.formatNumber(expected.benchmark_percent, 2) + ' %');
+      const risk = F.riskFor(thirdSyntheticPositions, prices, selected, 'VBAL'), value = risk.portfolio.beta;
+      assert.equal(await direct.locator('#portfolioRiskRows tr[data-metric="beta"] td').first().textContent(), U.validNumber(value) ? U.formatNumber(value, 2) : 'N/D');
+      assert.equal(await direct.locator('#portfolioContributionRows tr').count(), F.contributionsFor(thirdSyntheticPositions, prices, selected).rows.length);
+    }
+    await direct.locator('#portfolioRanges button').filter({hasText: /^6 mois$/}).click();
+    for (const [view, axis] of [['Sectors', 'sectors'], ['Geography', 'geography']]) {
+      await direct.locator('#portfolio' + view + 'Toggle').click();
+      const result = E.compare(thirdCurrent, exposures, axis, 'VBAL');
+      assert.equal(result.coverage, 100);
+      assert.equal(await direct.locator('#portfolio' + view + 'Rows tr').count(), result.rows.length);
+      assert.match(await direct.locator('#portfolio' + view + 'Title').textContent(), /VBAL/);
+      for (const row of result.rows) {
+        const cells = await direct.locator('#portfolio' + view + 'Rows tr[data-exposure="' + row.id + '"] td').allTextContents();
+        assert.equal(cells[1], U.validNumber(row.benchmark) ? U.formatNumber(row.benchmark, 2) + ' %' : 'Non publié');
+        assert.equal(cells[2], U.validNumber(row.difference) ? (row.difference > 0 ? '+' : '') + U.formatNumber(row.difference, 2) + ' pt' : '—');
+      }
+    }
+    assert.equal(await direct.locator('#portfolioEarningsItems article').count(), 2);
+    assert.match(await direct.locator('#portfolioEarningsItems').innerText(), /MSFTCDR.*Microsoft/s);
+    assert.match(await direct.locator('#portfolioEarningsItems').innerText(), /entreprise sous-jacente/);
+    assert.equal(await direct.locator('#portfolioEarningsItems [data-earnings-id="bbbbbbbbbbbbbbbb"]').count(), 0);
+    await direct.locator('#portfolioEarningsTicker').selectOption('MSFTCDR');
+    assert.equal(await direct.locator('#portfolioEarningsItems article').count(), 1);
+    await direct.locator('#portfolioEarningsTicker').selectOption('');
+    const thirdImageDownload = direct.waitForEvent('download'); await direct.locator('#portfolioEarningsImage').click();
+    const thirdImageFile = await thirdImageDownload;
+    assert.equal(thirdImageFile.suggestedFilename(), 'savy-resultats-portefeuille-3-' + thisWeek.start + '.png');
+    assert.equal(fs.readFileSync(await thirdImageFile.path()).subarray(1, 4).toString(), 'PNG');
+    await direct.locator('#portfolioPositionsToggle').click();
+    await direct.locator('input[aria-label="Quantité MSFTCDR"]').fill('4,25'); await direct.locator('input[aria-label="Quantité MSFTCDR"]').press('Tab');
+    const editedThird = thirdSyntheticPositions.map(row => row.ticker === 'MSFTCDR' ? {...row, quantity: 4.25} : row);
+    const thirdDownload = direct.waitForEvent('download'); await direct.locator('#portfolioExport').click();
+    const thirdFile = await thirdDownload, thirdBackup = JSON.parse(fs.readFileSync(await thirdFile.path(), 'utf8'));
+    assert.equal(thirdFile.suggestedFilename(), 'portefeuille-3-savy.json'); assert.equal(thirdBackup.portfolio_id, '3'); assert.equal(thirdBackup.benchmark, 'VBAL'); assert.deepEqual(thirdBackup.positions, editedThird);
+    const thirdManifest = await direct.evaluate(async () => (await fetch(document.querySelector('#savyPersonalManifest').href)).json());
+    assert.equal(new URLSearchParams(new URL(thirdManifest.start_url).hash.slice(1)).get('portfolio'), '3');
+    if (process.env.SCREENSHOT_LOGS) {
+      for (const [name, width] of [['DESKTOP', 1440], ['MOBILE', 375]]) {
+        await direct.setViewportSize({width, height: 1000}); await direct.evaluate(() => document.activeElement?.blur());
+        await direct.locator('#portfolio').evaluate(node => node.scrollIntoView({block: 'start'}));
+        console.log('SCREENSHOT_PORTFOLIO3_' + name + ' ' + (await direct.screenshot()).toString('base64'));
+      }
+    }
+    await direct.setViewportSize({width: 320, height: 950});
+    assert.ok(await direct.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+    profileOffline = true; await direct.reload();
+    await direct.waitForFunction(() => document.querySelector('#portfolioRows input[aria-label="Quantité MSFTCDR"]')?.value === '4,25');
+    assert.match(await direct.locator('#portfolioBenchmark').innerText(), /VBAL/);
+    profileOffline = false;
+    const goodThirdProfile = thirdProfileFixture; thirdProfileFixture = secondProfileFixture;
+    await direct.locator('#refreshButton').click(); await direct.waitForFunction(() => !document.querySelector('#refreshButton').disabled);
+    assert.match(await direct.locator('#portfolioMessage').innerText(), /autre portefeuille/);
+    assert.deepEqual(await direct.evaluate(() => JSON.parse(localStorage.getItem('savy:private-holdings:v1:3')).positions), editedThird);
+    thirdProfileFixture = goodThirdProfile;
+    const thirdHomeContext = await historicalContext({viewport: {width: 320, height: 950}}), thirdHome = await thirdHomeContext.newPage();
+    thirdHome.on('pageerror', error => errors.push(error.message)); await thirdHome.route('https://**', route => route.abort()); await thirdHome.goto(thirdManifest.start_url);
+    await thirdHome.waitForFunction(() => document.querySelector('#portfolioRows tr[data-ticker="MSFTCDR"]'));
+    assert.deepEqual(await thirdHome.evaluate(() => JSON.parse(localStorage.getItem('savy:private-holdings:v1:3')).positions), thirdSyntheticPositions);
+    assert.equal(await thirdHome.evaluate(() => localStorage.getItem('savy:private-holdings:v1:2')), null);
+    assert.equal(await thirdHome.evaluate(() => localStorage.getItem('savy:private-holdings:v1')), null);
+    assert.ok(await thirdHome.evaluate(() => document.documentElement.scrollWidth <= innerWidth)); await thirdHomeContext.close();
+    await direct.locator('[data-portfolio-id="2"]').click();
+    await direct.waitForFunction(() => document.querySelector('#portfolioRows input[aria-label="Quantité XSP"]')?.value === '8,5');
+    assert.equal(await direct.locator('#portfolioRanges button[aria-pressed="true"]').textContent(), '3 mois');
+    await direct.locator('[data-portfolio-id="3"]').click();
+    await direct.waitForFunction(() => document.querySelector('#portfolioRows input[aria-label="Quantité MSFTCDR"]')?.value === '4,25');
+    assert.equal(await direct.locator('#portfolioRanges button[aria-pressed="true"]').textContent(), '6 mois');
+    assert.equal(await direct.locator('#portfolioPositions').isVisible(), true);
+    assert.equal(requestPaths.some(p => p.includes(personalKey)), false);
     await direct.locator('[data-portfolio-id="1"]').click();
     await direct.waitForFunction(() => document.querySelector('#portfolioRows tr[data-ticker="SHOP"]'));
     await direct.locator('#portfolioRanges button').filter({hasText: /^YTD$/}).click();
-    console.log('Two portfolio checks passed: separate authenticated profiles, edits, UI state and exports, VBAL benchmark/risk across all periods, underlying sector/geography differences, offline cache and fresh Home Screen access, swapped profile rejected, desktop and 320px mobile.');
+    console.log('Three portfolio checks passed: separate authenticated profiles, edits, UI state and exports, VBAL benchmark/risk across all periods, underlying sector/geography differences, CDR in CAD and results in USD, earnings PNG, offline cache and fresh Home Screen access, swapped profiles rejected, desktop and 320/375px mobile.');
     await direct.locator("#portfolioPositionsToggle").click();
     await direct.locator('input[aria-label="Quantité SHOP"]').fill("3");
     await direct.locator('input[aria-label="Quantité SHOP"]').press("Tab");

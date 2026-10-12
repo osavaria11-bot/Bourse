@@ -27,8 +27,8 @@ except ImportError:
 
 ROOT = Path(__file__).resolve().parents[1]
 TORONTO = ZoneInfo("America/Toronto")
-ETFS = set("ACWV CGL FCIN FCUV FEQT QQC VBAL VCN VDY VEE VEQT VFV VGRO VIU XBB XEF XEQT XGD XGRO XHY XIC XIG XIU XLF XSB XSP XSU XUS ZAG ZEB ZLB ZRE".split())
-NYSE = set("APH APO BAC CLS CRM CVX GS HD JNJ JPM MOD MRK NU NVO PFE TSM UNH V WFC XOM".split())
+ETFS = set("ACWV CASH CGL FBAL FCIN FCUV FEQT QQC SPYM VBAL VCN VDY VEE VEQT VFV VGRO VIU XBB XEF XEQT XGD XGRO XHY XIC XIG XIU XLF XSB XSP XSU XUS ZAG ZEB ZLB ZRE ZUH".split())
+NYSE = set("APH APO BAC CLS CRM CVX DIS GS HD JNJ JPM MOD MRK NU NVO PFE TSM UNH V WFC XOM".split())
 # These Canadian listings share the issuer's US results. Keep the local holding ID
 # and explicitly display the reporting currency, including the Sandisk CDR.
 US_LISTINGS = {
@@ -36,6 +36,7 @@ US_LISTINGS = {
     "BN": ("NYSE", "BN"), "BNS": ("NYSE", "BNS"), "CCO": ("NYSE", "CCJ"),
     "CM": ("NYSE", "CM"), "CNQ": ("NYSE", "CNQ"), "CNR": ("NYSE", "CNI"),
     "CP": ("NYSE", "CP"), "CVE": ("NYSE", "CVE"), "DSG": ("NASDAQ", "DSGX"),
+    "MSFTCDR": ("NASDAQ", "MSFT"),
     "ENB": ("NYSE", "ENB"), "FTS": ("NYSE", "FTS"), "HBM": ("NYSE", "HBM"),
     "MFC": ("NYSE", "MFC"), "NXE": ("NYSE", "NXE"), "RY": ("NYSE", "RY"),
     "SHOP": ("NASDAQ", "SHOP"), "SLF": ("NYSE", "SLF"), "SNDK": ("NASDAQ", "SNDK"),

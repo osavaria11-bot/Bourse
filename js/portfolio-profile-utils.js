@@ -18,7 +18,7 @@
     if (!validKey(key) || profile?.schema_version !== 1 || profile.kind !== "encrypted_portfolio" ||
         profile.algorithm !== "AES-GCM" || typeof profile.revision !== "string" || !profile.revision || profile.revision.length > 100 ||
         typeof profile.ciphertext !== "string" || profile.ciphertext.length > 140000 ||
-        (profile.portfolio_id !== undefined && !["1", "2"].includes(profile.portfolio_id))) throw new Error("Portefeuille intégré invalide");
+        (profile.portfolio_id !== undefined && !["1", "2", "3"].includes(profile.portfolio_id))) throw new Error("Portefeuille intégré invalide");
     const iv = bytes(profile.iv), ciphertext = bytes(profile.ciphertext);
     if (iv.length !== 12 || ciphertext.length < 16) throw new Error("Portefeuille intégré invalide");
     if (!globalThis.crypto?.subtle) throw new Error("Ouvre le lien personnel dans un navigateur récent");
@@ -33,7 +33,7 @@
     const url = new URL(".", pageURL);
     const release = new URL(pageURL).searchParams.get("v");
     if (release) url.searchParams.set("v", release);
-    url.hash = "portfolio-key=" + key + (portfolioId === "2" ? "&portfolio=2" : "");
+    url.hash = "portfolio-key=" + key + (["2", "3"].includes(portfolioId) ? "&portfolio=" + portfolioId : "");
     return url.href;
   }
   function homeManifest(pageURL, key, portfolioId = "1") {

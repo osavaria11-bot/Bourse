@@ -34,6 +34,20 @@ test("price source identity and currency mismatches are rejected", () => {
   const badClose = dataset(); badClose.series[0].value = 999;
   assert.throws(() => P.normalizePrices(badClose, catalog), /Clôture/);
 });
+test("Microsoft CDR uses its CAD listing independently of the USD Microsoft stock", () => {
+  const listings = {schema_version: 1, series: [
+    {id: "MSFTCDR", title: "Microsoft CDR", currency: "CAD", quote_symbol: "MSFT.TO"},
+    {id: "MSFT", title: "Microsoft", currency: "USD", quote_symbol: "MSFT"},
+  ]};
+  const data = {schema_version: 2, kind: "security_prices", generated_at: new Date().toISOString(), series:
+    [...listings.series, {id: "USDCAD", currency: "CAD", quote_symbol: "CAD=X"}].map((row, i) =>
+      ({...row, date: "2026-10-09", value: [37, 500, 1.4][i], history: [["2026-10-08", [37, 500, 1.4][i]], ["2026-10-09", [37, 500, 1.4][i]]], fetch_status: "fresh"}))};
+  const positions = P.normalizePositions([["MSFTCDR", 2, "CAD", 25], ["MSFT", 1, "USD", 400]], listings);
+  const current = P.valuationAt(positions, P.normalizePrices(data, listings), "2026-10-09");
+  assert.equal(current.total, 74 + 700);
+  assert.equal(current.unrealized_cad, 24 + 140);
+  assert.throws(() => P.normalizePositions([["MSFTCDR", 2, "USD"]], listings), /Devise/);
+});
 test("historical USD/CAD is applied on each valuation date, with no future quotes", () => {
   const prices = P.normalizePrices(dataset(), catalog);
   const positions = P.normalizePositions([["SHOP", 2], ["CLS", 3]], catalog);

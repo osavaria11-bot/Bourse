@@ -28,14 +28,15 @@ test("The personal Home Screen URL retains access in its fragment and uses the s
   assert.equal(manifest.scope, "https://example.test/Bourse/"); assert.equal(manifest.display, "standalone");
   assert.throws(() => A.personalURL(page, "invalid"));
 });
-test("the second profile binds its portfolio ID to authentication and its Home Screen selection", async () => {
-  const f = fixture(), profile = {...f.profile, portfolio_id: "2"}, iv = crypto.randomBytes(12);
+for (const portfolioId of ["2", "3"]) test("profile " + portfolioId + " binds its portfolio ID to authentication and its Home Screen selection", async () => {
+  const f = fixture(), profile = {...f.profile, portfolio_id: portfolioId}, iv = crypto.randomBytes(12);
   const cipher = crypto.createCipheriv("aes-256-gcm", Buffer.from(f.key, "base64url"), iv); cipher.setAAD(A.associatedData(profile));
-  const content = {...f.portfolio, portfolio_id: "2", benchmark: "VBAL"};
+  const content = {...f.portfolio, portfolio_id: portfolioId, benchmark: "VBAL"};
   profile.iv = iv.toString("base64url"); profile.ciphertext = Buffer.concat([cipher.update(JSON.stringify(content)), cipher.final(), cipher.getAuthTag()]).toString("base64url");
   assert.deepEqual(await A.unlock(profile, f.key), content);
   await assert.rejects(A.unlock({...profile, portfolio_id: "1"}, f.key));
+  await assert.rejects(A.unlock({...profile, portfolio_id: portfolioId === "2" ? "3" : "2"}, f.key));
   await assert.rejects(A.unlock({...profile, portfolio_id: undefined}, f.key));
-  const manifest = A.homeManifest("https://example.test/Bourse/", f.key, "2"), params = new URLSearchParams(new URL(manifest.start_url).hash.slice(1));
-  assert.equal(params.get("portfolio"), "2"); assert.equal(params.get("portfolio-key"), f.key); assert.equal(manifest.scope, "https://example.test/Bourse/");
+  const manifest = A.homeManifest("https://example.test/Bourse/", f.key, portfolioId), params = new URLSearchParams(new URL(manifest.start_url).hash.slice(1));
+  assert.equal(params.get("portfolio"), portfolioId); assert.equal(params.get("portfolio-key"), f.key); assert.equal(manifest.scope, "https://example.test/Bourse/");
 });

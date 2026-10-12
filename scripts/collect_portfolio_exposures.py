@@ -93,6 +93,25 @@ def ssga_xlf_exposure(blob):
             'geography': distribution({'united_states': weight, 'other_assets': max(0, 100 - weight)})}
 
 
+def ssga_spym_exposure(body):
+    if 'SPYM' not in body or 'Portfolio S&amp;P 500' not in body:
+        raise ValueError('Wrong State Street S&P 500 fund')
+    for table in re.finditer(r'<table[^>]*>(.*?)</table>', body, re.S):
+        weights = {}
+        for row in re.findall(r'<tr[^>]*>(.*?)</tr>', table[1], re.S):
+            cells = [unescape(re.sub(r'<[^>]+>', '', cell)).strip() for cell in re.findall(r'<td[^>]*>(.*?)</td>', row, re.S)]
+            if len(cells) >= 2 and cells[0] in SECTORS and re.fullmatch(r'[\d.]+%', cells[1]):
+                weights[SECTORS[cells[0]]] = float(cells[1][:-1])
+        if len(weights) < 10:
+            continue
+        dated = re.findall(r'as of\s+([A-Z][a-z]{2}\s+\d{1,2}\s+\d{4})', body[:table.start()])
+        if not dated:
+            raise ValueError('State Street sector date missing')
+        return {'as_of': datetime.strptime(dated[-1], '%b %d %Y').date().isoformat(),
+                'sectors': distribution(weights), 'geography': [{'id': 'united_states', 'weight': 100}]}
+    raise ValueError('State Street sector table missing')
+
+
 def country_id(name):
     return re.sub(r"[^a-z0-9]+", "_", name.lower()).strip("_")
 
@@ -231,6 +250,7 @@ def main(argv=None):
                 request = Request(provider['download_url'], headers={'User-Agent': 'Mozilla/5.0 SAVY/3.0'})
                 with urlopen(request, timeout=25) as response:
                     values = ssga_xlf_exposure(response.read())
+            elif provider.get("kind") == "ssga_spym": values = ssga_spym_exposure(fetch(item['source_url']))
             elif provider.get("kind") == "vanguard": values = vanguard_exposure(provider["port_id"], provider["mode"])
             elif provider.get("kind") == "qqqm":
                 source = json.loads(fetch(provider["download_url"]))

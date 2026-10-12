@@ -47,6 +47,18 @@ class ExposureTests(unittest.TestCase):
         self.assertAlmostEqual(next(row['weight'] for row in result['geography'] if row['id'] == 'united_states'), 99.9)
         with self.assertRaises(ValueError): exposures.ssga_xlf_exposure(archive(shared.replace('XLF', 'XLK')))
 
+    def test_spym_uses_the_dated_fund_sector_table_before_the_index(self):
+        names = list(exposures.SECTORS)[:11]
+        def table(weight):
+            return '<table>' + ''.join(f'<tr><td>{name}</td><td>{weight}%</td></tr>' for name in names) + '</table>'
+        body = 'SPYM Portfolio S&amp;P 500 Fund as of Oct 08 2026' + table(9) + 'Index as of Oct 09 2026' + table(8)
+        result = exposures.ssga_spym_exposure(body)
+        self.assertEqual(result['as_of'], '2026-10-08')
+        self.assertEqual(next(row['weight'] for row in result['sectors'] if row['id'] == 'technology'), 9)
+        self.assertEqual(result['geography'], [{'id': 'united_states', 'weight': 100}])
+        with self.assertRaises(ValueError): exposures.ssga_spym_exposure(body.replace('SPYM', 'SPY'))
+        with self.assertRaises(ValueError): exposures.ssga_spym_exposure(body.replace('as of', 'undated'))
+
     def test_vanguard_uses_gics_instead_of_icb_and_keeps_bonds_in_the_denominator(self):
         rows = [
             {"marketValuePercentage": 60, "gicsSectorDescription": "Communication Services", "icbIndustryDescription": "Technology", "securityType": "EQ.STOCK", "effectiveDate": "2026-08-31", "bloombergIsoCountry": "US"},
