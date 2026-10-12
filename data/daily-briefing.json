@@ -3,75 +3,84 @@
   "kind": "news_digest",
   "language": "fr",
   "timezone": "America/Toronto",
-  "edition_date": "2026-10-11",
-  "generated_at": "2026-10-11T14:23:18.774913+00:00",
-  "editorial_note": "Sélection selon la nouveauté et l’effet possible sur les taux, les bénéfices et les marchés. Les chiffres anticipés ne sont pas des publications réalisées.",
+  "edition_date": "2026-10-12",
+  "generated_at": "2026-10-12T11:07:37Z",
+  "editorial_note": "Priorité aux faits du week-end et de ce matin. Le point sur le dollar canadien du 9 octobre reste pertinent pendant le congé de l’Action de grâce. Les résultats et le CPI à venir sont distingués des données déjà publiées; les impacts sont des mécanismes possibles.",
   "stories": [
     {
-      "topic": "Risque mondial",
-      "title": "Énergie et dette : la Banque mondiale prépare une aide de crise",
-      "summary": "La Banque mondiale discute avec 30 à 40 pays d’une aide pour absorber la hausse du diesel et des engrais liée au conflit au Moyen-Orient. Elle a déjà ouvert 25 milliards de dollars de fonds de crise, mais la demande initiale était faible; son président s’attend à davantage de demandes si les pressions persistent. Les pays en développement doivent 400 milliards de dollars à leurs créanciers externes en 2026, dont environ un tiers en intérêts.",
-      "impact": "Le risque est une pression simultanée sur l’inflation et le coût du crédit, surtout pour les emprunteurs émergents.",
-      "source_label": "Reuters",
-      "source_url": "https://www.reuters.com/business/finance/world-bank-talks-with-dozens-countries-about-crisis-aid-banga-says-2026-10-11/",
+      "topic": "Énergie",
+      "title": "Le Brent reste au-dessus de 104 $ malgré le plan de diesel russe",
+      "summary": "Dans son compte rendu matinal du 12 octobre, AP situe le Brent au-dessus de 104 $ US le baril. Le plan américain annoncé vendredi prévoit des livraisons de diesel russe. Trump a aussi annoncé dimanche un cessez-le-feu énergétique Russie–Ukraine sans préciser ses modalités; Kyiv a rapporté des frappes russes après l’annonce. L’amélioration effective de l’approvisionnement reste à vérifier.",
+      "impact": "Un apaisement appliqué pourrait réduire les coûts du transport et la pression inflationniste. Des attaques persistantes maintiendraient le risque sur les marges.",
+      "source_label": "Associated Press",
+      "source_url": "https://apnews.com/article/stock-markets-oil-trump-inflation-a9a26b9706963afe9bdeda1b2eb1f51d",
+      "published_date": "2026-10-12"
+    },
+    {
+      "topic": "Semi-conducteurs",
+      "title": "Micron recule avant l’ouverture après une avancée annoncée par CXMT",
+      "summary": "CXMT, fabricant chinois de mémoire, affirme avoir progressé dans une architecture permettant davantage de cellules sur une puce. Micron reculait d’environ 2 % avant l’ouverture américaine, selon MarketWatch ce matin; Samsung et SK Hynix baissaient aussi à Séoul. Il s’agit de mouvements avant la séance américaine, pas de rendements de clôture.",
+      "impact": "Une concurrence accrue pourrait peser sur les prix et les marges de la mémoire. Un progrès technique ne garantit toutefois pas une hausse immédiate de l’offre commerciale.",
+      "source_label": "MarketWatch",
+      "source_url": "https://www.marketwatch.com/livecoverage/stock-market-today-dow-s-p-500-nasdaq-climb-wall-street-banks-earnings-season/card/memory-chip-makers-slide-as-cxmt-reports-technological-progress-JfFeuqwkJssxf04Ke7ng",
+      "published_date": "2026-10-12"
+    },
+    {
+      "topic": "Amazon · intelligence artificielle",
+      "title": "Amazon discuterait d’un rachat de Decart autour de 7 milliards $ US",
+      "summary": "Reuters, citant le Wall Street Journal, rapporte des pourparlers pour une acquisition de Decart pouvant atteindre environ 7 milliards $ US. Cette entreprise développe notamment l’édition vidéo en temps réel et des environnements simulés pour tester la robotique. Amazon a refusé de commenter; les négociations pourraient échouer ou attirer un autre acheteur.",
+      "impact": "Une acquisition renforcerait les capacités d’IA d’Amazon, mais son prix augmenterait les exigences de rentabilité. Le montant envisagé reste une information rapportée, pas une transaction conclue.",
+      "source_label": "Reuters, d’après le Wall Street Journal",
+      "source_url": "https://www.reuters.com/business/retail-consumer/amazon-talks-buy-ai-startup-decart-around-7-billion-wsj-reports-2026-10-11/",
       "published_date": "2026-10-11"
     },
     {
-      "topic": "États-Unis · semaine à surveiller",
-      "title": "CPI et résultats bancaires pourraient déplacer les taux et les actions",
-      "summary": "Reuters relève que le CPI américain de septembre sera publié mercredi : les économistes interrogés attendent 3,7 % sur un an pour l’indice global et 2,5 % hors alimentation et énergie. Ce sont des prévisions, pas des résultats. JPMorgan, Goldman Sachs et d’autres grandes banques présenteront aussi leurs résultats; les bénéfices de l’ensemble du S&P 500 sont attendus en hausse de plus de 30 % au troisième trimestre selon LSEG IBES.",
-      "impact": "Un CPI plus chaud pourrait relancer les attentes de hausse de taux; les banques donneront des indices sur le crédit et la consommation.",
-      "source_label": "Reuters",
-      "source_url": "https://www.reuters.com/business/wall-st-week-ahead-bank-earnings-cpi-headline-busy-markets-week-sp-500-hovers-2026-10-09/",
-      "published_date": "2026-10-09"
+      "topic": "États-Unis · échéances",
+      "title": "Les banques publient demain; le CPI de septembre arrive mercredi",
+      "summary": "JPMorgan et Goldman Sachs doivent publier le 13 octobre, avant l’ouverture. Le CPI américain de septembre est prévu le 14 octobre à 8 h 30, heure de Montréal. Reuters rapporte un consensus de croissance des bénéfices du S&P 500 de 30,6 % au troisième trimestre, et une inflation attendue de 3,7 % sur un an, ou 2,5 % hors alimentation et énergie. Ces chiffres restent des prévisions.",
+      "impact": "Des bénéfices ou perspectives décevants fragiliseraient les valorisations; une inflation supérieure aux attentes pourrait faire remonter les rendements obligataires et le taux d’actualisation des actions.",
+      "source_label": "Reuters · calendrier vérifié auprès des banques et du BLS",
+      "source_url": "https://www.reuters.com/business/us-stock-futures-muted-oil-stays-above-100-ahead-earnings-2026-10-12/",
+      "published_date": "2026-10-12"
     },
     {
-      "topic": "Canada · emploi",
-      "title": "Le marché du travail canadien recule encore en septembre",
-      "summary": "Le Canada a perdu 68 300 emplois en septembre après un recul de 41 700 en août. Le chômage est passé de 6,4 % à 6,5 %, et le taux de participation est tombé à 64,8 %. La faiblesse touche particulièrement les jeunes et le secteur public. Selon Reuters, cette publication a réduit les attentes d’une hausse du taux de la Banque du Canada dès octobre.",
-      "impact": "La faiblesse de l’emploi complique une hausse de taux, même si l’énergie entretient le risque inflationniste.",
-      "source_label": "Reuters",
-      "source_url": "https://www.reuters.com/world/americas/canadas-employment-surprisingly-shrinks-september-jobless-rate-inches-up-2026-10-09/",
-      "published_date": "2026-10-09"
-    },
-    {
-      "topic": "États-Unis · ménages",
-      "title": "Confiance Michigan à 46,3 avant les nouvelles données d’inflation",
-      "summary": "La mesure préliminaire de la confiance des consommateurs américains est descendue de 48,1 en septembre à 46,3 en octobre. Les attentes d’inflation à un an ont augmenté de 4,6 % à 4,7 %. La faiblesse de la confiance ne signifie pas à elle seule une baisse immédiate des dépenses : Reuters souligne que les ménages à revenu élevé les soutiennent encore.",
-      "impact": "Le prochain CPI américain aidera à départager le risque d’inflation persistante et celui d’un ralentissement de la demande.",
-      "source_label": "Reuters",
-      "source_url": "https://www.reuters.com/business/us-consumer-sentiment-deteriorates-further-october-2026-10-09/",
+      "topic": "Canada · devises",
+      "title": "Le huard aborde le congé après un creux de 18 mois vendredi",
+      "summary": "Le 9 octobre, le dollar canadien a touché un creux intrajournalier depuis avril 2025 après la perte de 68 300 emplois en septembre. Les rendements canadiens ont baissé, tandis que les attentes de hausse de taux diminuaient. Ce dernier développement avant le congé reste pertinent pour les actifs américains évalués en CAD; le cours cité par Reuters vendredi n’est pas une cotation de ce matin.",
+      "impact": "Un huard plus faible augmente mécaniquement la valeur en CAD d’un actif américain non couvert, à cours US constant; il renchérit aussi les importations.",
+      "source_label": "Reuters, republication Kitco",
+      "source_url": "https://www.kitco.com/news/off-the-wire/2026-10-09/canadian-dollar-hits-18-month-low-jobs-data-clips-rate-hike-bets",
       "published_date": "2026-10-09"
     }
   ],
   "fred_watch": [
     {
-      "series_id": "CPIAUCSL",
-      "title": "Inflation CPI américaine",
-      "explanation": "Le dernier taux sur 12 mois est de 3,35 % en août, légèrement au-dessus des 3,30 % de juillet. Le chiffre de septembre est encore à venir : compare surtout l'écart entre la prévision et la publication.",
-      "observation_date": "2026-08-01",
-      "source_url": "https://fred.stlouisfed.org/series/CPIAUCSL"
-    },
-    {
-      "series_id": "PCEPILFE",
-      "title": "PCE sous-jacent",
-      "explanation": "À 3,01 % sur 12 mois en août, cette mesure est restée près du niveau de juillet (2,98 %). Elle aide à juger si le choc énergétique se diffuse à l'inflation de fond.",
-      "observation_date": "2026-08-01",
-      "source_url": "https://fred.stlouisfed.org/series/PCEPILFE"
-    },
-    {
-      "series_id": "PAYEMS",
-      "title": "Créations d'emplois américaines",
-      "explanation": "La variation mensuelle des emplois est passée de 133 000 en août à 29 000 en septembre. Ce ralentissement peut tempérer la pression pour relever les taux si les prochaines données le confirment.",
-      "observation_date": "2026-09-01",
-      "source_url": "https://fred.stlouisfed.org/series/PAYEMS"
-    },
-    {
       "series_id": "DGS10",
-      "title": "Rendement du Trésor américain à 10 ans",
-      "explanation": "La dernière observation disponible dans le tableau est de 5,22 % au 8 octobre. Des rendements élevés augmentent le taux d'actualisation des actions et le coût de financement; surveille la prochaine clôture publiée.",
+      "title": "10 ans américain : détente limitée",
+      "explanation": "Au 8 octobre 2026, le rendement est de 5,22 %, contre 5,28 % le 7 octobre : baisse de 6 points de base. Le niveau reste élevé pour le financement et l’actualisation des actions; cette observation ne décrit pas les échanges de ce matin.",
       "observation_date": "2026-10-08",
       "source_url": "https://fred.stlouisfed.org/series/DGS10"
+    },
+    {
+      "series_id": "CPILFESL",
+      "title": "CPI sous-jacent : surveiller la prochaine surprise",
+      "explanation": "En août 2026, la hausse sur 12 mois calculée à partir des niveaux désaisonnalisés est de 2,45 %, contre 2,47 % en juillet. La désinflation est légère. Le chiffre de septembre attendu le 14 octobre reste à publier et peut différer de ce calcul FRED.",
+      "observation_date": "2026-08-01",
+      "source_url": "https://fred.stlouisfed.org/series/CPILFESL"
+    },
+    {
+      "series_id": "BAMLH0A0HYM2",
+      "title": "Crédit à haut rendement : prime en hausse",
+      "explanation": "Au 8 octobre 2026, l’écart ajusté pour les options atteint 3,15 % (315 points de base), contre 3,09 % la veille. Cette hausse de 6 points de base renchérit le crédit risqué relativement au Trésor; elle ne mesure pas à elle seule des défauts réalisés.",
+      "observation_date": "2026-10-08",
+      "source_url": "https://fred.stlouisfed.org/series/BAMLH0A0HYM2"
+    },
+    {
+      "series_id": "RRSFS",
+      "title": "Consommation : le dernier volume observé a rebondi",
+      "explanation": "En août 2026, les ventes au détail et restauration réelles atteignent 231 630 millions de dollars de 1982–1984, contre 229 697 en juillet : hausse calculée de 0,84 %. Les volumes ont donc progressé ce mois-là; cela ne préjuge pas des dépenses de septembre.",
+      "observation_date": "2026-08-01",
+      "source_url": "https://fred.stlouisfed.org/series/RRSFS"
     }
   ]
 }
