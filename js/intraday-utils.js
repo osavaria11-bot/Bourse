@@ -40,6 +40,13 @@
     return (row.stale ? "Cotation conservée · " : row.active ? "En séance · " : "Marché fermé · dernier cours · ") +
       U.timestampLabel(row.timestamp) + " · Yahoo Finance" + (row.provider_delay_minutes > 0 ? " · retard fournisseur " + row.provider_delay_minutes + " min" : "");
   }
+  function shortLabel(row) {
+    if (!row) return "Clôture quotidienne";
+    const time = new Intl.DateTimeFormat("fr-CA", {timeZone: "America/Toronto", month: "short", day: "numeric",
+      hour: "2-digit", minute: "2-digit"}).format(U.parseTimestamp(row.timestamp));
+    return (row.stale ? "Cotation conservée" : row.active ? "En séance" : "Marché fermé") + " · " + time +
+      (row.provider_delay_minutes > 0 ? " · retard " + row.provider_delay_minutes + " min" : "");
+  }
   function overlay(point, row) {
     if (!row) return point;
     return {...point, value: row.price, date: row.session_date,
@@ -65,5 +72,5 @@
     }
     return {...data, series};
   }
-  return {normalize, choose, label, overlay, marketPoint, portfolioView};
+  return {normalize, choose, label, shortLabel, overlay, marketPoint, portfolioView};
 });

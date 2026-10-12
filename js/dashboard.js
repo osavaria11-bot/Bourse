@@ -85,12 +85,20 @@
   }
   function indicatorQuote(point) {
     const fx = point?.id === "DEXCAUS" ? window.SavyLiveFX?.current() : null;
-    if (fx) return {price: fx.rate, timestamp: fx.timestamp, fx, source_url: window.SavyLiveFX.source_url,
+    if (fx) return {price: fx.rate, timestamp: fx.timestamp, fx, active: !fx.closed, source_url: window.SavyLiveFX.source_url,
       label: (fx.closed ? "Marché fermé · dernier cours · " : "Cotation indicative · ") + U.timestampLabel(fx.timestamp) + " · biquote"};
     const symbols = {VIXCLS: "^VIX", NASDAQXAU: "^XAU", VXEEMCLS: "^VXEEM"};
     if (!symbols[point?.id]) return null;
     const q = window.SavyLiveQuotes?.current(point.id, {...point, quote_symbol: symbols[point.id], currency: "USD"});
     return q ? {...q, label: window.IntradayUtils.label(q)} : null;
+  }
+  function quoteMeta(quote) {
+    const note = el("div", "quote-meta"), time = el("p", "meta" + (quote.stale ? " warning" : ""), window.IntradayUtils.shortLabel(quote));
+    if (quote.fx && !quote.fx.closed) time.textContent = time.textContent.replace("En séance", "Cotation indicative");
+    time.title = quote.label;
+    const link = el("a", "meta", (quote.fx ? "biquote" : "Yahoo Finance") + " ↗");
+    link.href = quote.source_url; link.target = "_blank"; link.rel = "noopener noreferrer";
+    note.append(time, link); return note;
   }
   function marketCompanion(point) {
     const definitions = {DGS10: ["UST10Y", "10 ans en séance · indice Cboe TNX", "%"],
@@ -99,10 +107,12 @@
     const definition = definitions[point?.id], q = definition && window.SavyLiveQuotes?.current(definition[0]);
     if (!q) return null;
     const note = el("div", "live-companion");
-    const link = el("a", "meta", definition[1] + " : " + U.formatNumber(q.price, point.decimals) + " " + definition[2] + " ↗");
+    note.append(el("p", "live-companion-title", definition[1]));
+    const link = el("a", "live-companion-value", U.formatNumber(q.price, point.decimals) + " " + definition[2] + " ↗");
     link.href = q.source_url; link.target = "_blank"; link.rel = "noopener noreferrer";
-    note.append(link, el("p", "meta" + (q.stale ? " warning" : ""), window.IntradayUtils.label(q)));
-    note.append(el("p", "meta", "Référence de marché distincte de la série FRED du graphique."));
+    const time = el("p", "meta" + (q.stale ? " warning" : ""), window.IntradayUtils.shortLabel(q));
+    time.title = window.IntradayUtils.label(q);
+    note.append(link, time, el("p", "meta companion-note", "Référence distincte du graphique FRED."));
     return note;
   }
   function quotedChange(point, q) {
@@ -126,11 +136,10 @@
       const valueText = live ? U.formatNumber(live.price, id === "DEXCAUS" ? 4 : point.decimals) : range ? U.formatNumber(lower.value, 2) + "–" + U.formatNumber(point.value, 2) + " %" :
         point ? U.formatNumber(point.value, point.decimals) + (point.value !== null && point.unit === "%" ? " %" : "") : "—";
       card.append(el("p", "kpi-value", valueText));
-      card.append(el("p", "meta", live ? live.label :
-        point ? U.observationLabel(point.date, point.frequency) + (id === "DEXCAUS" ? " · historique FRED" : "") : "Période non disponible"));
+      if (live) card.append(quoteMeta(live));
+      else card.append(el("p", "meta", point ? U.observationLabel(point.date, point.frequency) + (id === "DEXCAUS" ? " · historique FRED" : "") : "Période non disponible"));
       const change = point ? U.changeLabel(point) : { text: "En attente de collecte", direction: "flat" };
-      if (live) {const link = el("a", "meta", "Source : " + (live.fx ? "biquote" : "Yahoo Finance") + " ↗"); link.href = live.source_url; link.target = "_blank"; link.rel = "noopener noreferrer"; card.append(link);}
-      else card.append(el("p", "change " + change.direction, id === "DEXCAUS" ? "Dernière observation FRED · " + change.text : change.text));
+      if (!live) card.append(el("p", "change " + change.direction, id === "DEXCAUS" ? "Dernière observation FRED · " + change.text : change.text));
       const companion = marketCompanion(point); if (companion) card.append(companion);
       fragment.append(card);
     }
@@ -246,7 +255,7 @@
     details.addEventListener("click", () => openDetails(point.id));
     bottom.append(source, details);
     card.append(top, title, valueRow);
-    if (live) {const link = el("a", "meta" + (live.stale ? " warning" : ""), live.label + " ↗"); link.href = live.source_url; link.target = "_blank"; link.rel = "noopener noreferrer"; card.append(link);}
+    if (live) card.append(quoteMeta(live));
     card.append(date);
     const companion = marketCompanion(point); if (companion) card.append(companion);
     if (point.fetch_status === "cached") card.append(el("p", "status-note", "Valeur conservée · dernière collecte réussie : " + U.timestampLabel(point.last_successful_fetch)));

@@ -44,9 +44,19 @@ button {color:var(--text)}
 .kpi-grid {display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
 .kpi {padding:16px 18px;background:var(--surface);border:1px solid var(--border);border-radius:12px;min-width:0}
 .kpi .eyebrow {font-size:9px}
-.kpi-value {font-size:25px;font-weight:650;letter-spacing:-.035em;margin:6px 0 4px;font-variant-numeric:tabular-nums}
+.kpi-value {font-size:clamp(18px,1.7vw,25px);font-weight:650;letter-spacing:-.035em;margin:6px 0 4px;line-height:1.3;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
 .kpi .meta {font-size:10px}
 .kpi a.meta {display:inline-block;font-size:10px;margin-top:4px}
+.kpi .change {white-space:normal;overflow-wrap:anywhere}
+.quote-meta {margin-top:6px;min-width:0;overflow-wrap:anywhere}
+.quote-meta>a {display:inline-block;font-size:11px;margin-top:2px}
+.live-companion {margin-top:10px;padding-top:10px;border-top:1px solid var(--border);min-width:0;overflow-wrap:anywhere}
+.live-companion-title {font-size:11px;color:var(--muted);line-height:1.4;margin-bottom:3px}
+.live-companion-value {display:inline-block;font-size:16px;font-weight:550;font-variant-numeric:tabular-nums}
+.live-companion .meta {font-size:11px;margin-top:3px}
+.kpi .live-companion-title,.kpi .live-companion .meta {font-size:10px}
+.kpi .live-companion-value {font-size:14px}
+.companion-note {font-style:italic}
 .policy-odds {margin-top:18px}
 .policy-odds-heading {display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap;margin-bottom:10px}
 .policy-odds-heading h2 {font-size:16px;margin-top:3px}
@@ -204,6 +214,7 @@ th[aria-sort="ascending"] .portfolio-sort,th[aria-sort="descending"] .portfolio-
 .portfolio-table caption {text-align:left;color:var(--muted);font-size:11px;padding:0 0 10px}
 .portfolio-table td:first-child {min-width:180px}
 .portfolio-ticker {display:block;font-size:10px;font-weight:400;color:var(--muted);margin-top:3px;white-space:nowrap}
+.portfolio-quote {max-width:170px;white-space:normal;line-height:1.5}
 .quantity-input {width:78px;max-width:100%;padding:7px;border:1px solid var(--border);border-radius:6px;background:var(--bg);color:var(--text);font-size:12px}
 .remove-position {margin-left:12px;padding:4px 8px;color:var(--muted);border:1px solid var(--border);border-radius:6px;background:transparent}
 .position-form {display:flex;align-items:flex-end;flex-wrap:wrap;gap:12px;padding-top:20px}
@@ -232,8 +243,8 @@ select {background:var(--raised);border:1px solid var(--border);color:var(--text
 .segmented {display:inline-flex;gap:3px;padding:3px;border:1px solid var(--border);border-radius:8px}
 .segmented button {padding:5px 8px;border:0;background:transparent;font-size:11px;color:var(--muted);border-radius:5px;min-height:28px;white-space:nowrap}
 .segmented button[aria-pressed="true"] {background:var(--accent-soft);color:var(--accent)}
-.portfolio-choice {margin:4px 0 12px;gap:6px;max-width:100%;flex-wrap:wrap}
-.portfolio-choice button {padding:9px 13px;font-size:13px;min-height:44px}
+.portfolio-choice {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:min(100%,520px);margin:4px 0 12px;gap:6px;max-width:100%}
+.portfolio-choice button {padding:9px 6px;font-size:clamp(11px,1.5vw,13px);min-height:44px;min-width:0;white-space:normal;overflow-wrap:anywhere}
 .portfolio-choice button span {display:block;font-size:10px;letter-spacing:.07em;margin-top:2px;color:var(--muted)}
 .grid {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;align-items:start}
 .indicator-card {padding:17px 18px;min-width:0}
@@ -243,7 +254,9 @@ select {background:var(--raised);border:1px solid var(--border);color:var(--text
 .favorite-button[aria-pressed="true"] {color:var(--gold)}
 .indicator-card h3 {font-size:14px;font-weight:550;line-height:1.4;min-height:40px;margin:6px 0 10px}
 .value-row {display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
-.current-value {font-size:26px;font-weight:600;letter-spacing:-.035em;line-height:1.3;font-variant-numeric:tabular-nums}
+.current-value {font-size:26px;font-weight:600;letter-spacing:-.035em;line-height:1.3;font-variant-numeric:tabular-nums;min-width:0;max-width:100%;overflow-wrap:anywhere}
+.indicator-card .change {max-width:100%;white-space:normal;overflow-wrap:anywhere}
+.indicator-card .meta {overflow-wrap:anywhere}
 .value-unit {font-size:12px;font-weight:400;color:var(--muted);letter-spacing:0}
 .change {font-size:11px;white-space:nowrap;color:var(--muted);font-variant-numeric:tabular-nums}
 .change.up {color:var(--accent)}
@@ -300,7 +313,7 @@ th:last-child,td:last-child {text-align:right}
   .brand h1 {font-size:27px}.brand-mark {width:36px;height:36px;font-size:22px}
   .brand .eyebrow,.source-label {display:none}
   .header-actions {gap:6px;justify-content:flex-end}.header-actions .button {font-size:11px;padding:7px 9px}
-  .kpi-grid {grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.kpi {padding:13px}.kpi-value {font-size:22px}
+  .kpi-grid {grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.kpi {padding:13px}.kpi-value {font-size:clamp(18px,5vw,22px)}
   .briefing {padding:16px}.details-label {display:none}.briefing-text {font-size:12px}
   .section-heading {align-items:flex-start;flex-direction:column}h2 {font-size:1.25rem}
   .toolbar {padding:13px}.toolbar-top {gap:10px}.search-label {flex-basis:100%}

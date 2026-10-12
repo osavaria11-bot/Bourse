@@ -3,6 +3,7 @@
   const P = window.PortfolioUtils, U = window.MacroUtils, A = window.PortfolioProfileUtils, E = window.PortfolioExposureUtils, F = window.PortfolioAnalyticsUtils, $ = selector => document.querySelector(selector);
   const HOLDINGS_KEY = "savy:private-holdings:v1", PRICE_KEY = "savy:security-prices:v1", POSITIONS_VISIBLE_KEY = "savy:portfolio-positions-visible:v1";
   const PROFILE_STATE_KEY = "savy:portfolio-profile-state:v1", PROFILE_CACHE_KEY = "savy:portfolio-profile-cache:v1";
+  const ACCESS_KEY = "savy:portfolio-access:v1";
   const EXPOSURE_KEY = "savy:portfolio-exposures:v1", EXPOSURE_VIEWS_KEY = "savy:portfolio-exposure-views:v1";
   const EARNINGS_KEY = "savy:portfolio-earnings:v1";
   const ACTIVE_KEY = "savy:portfolio-active:v1", VIEW_KEY = "savy:portfolio-view:v1";
@@ -20,7 +21,9 @@
   const exposureViewState = stored(EXPOSURE_VIEWS_KEY, {});
   const exposureViews = {Sectors: exposureViewState?.Sectors === true, Geography: exposureViewState?.Geography === true};
   let profileState = stored(PROFILE_STATE_KEY, null), profileInitialized = false, holdingsAvailable = false, manifestURL = null;
-  const personalKey = initialFragment.get("portfolio-key") || profileState?.key || rawStored(PROFILE_STATE_KEY, null)?.key || rawStored(PROFILE_STATE_KEY + ":2", null)?.key || rawStored(PROFILE_STATE_KEY + ":3", null)?.key;
+  const personalKey = initialFragment.get("portfolio-key") || [rawStored(ACCESS_KEY, null)?.key, profileState?.key,
+    rawStored(PROFILE_STATE_KEY, null)?.key, rawStored(PROFILE_STATE_KEY + ":2", null)?.key,
+    rawStored(PROFILE_STATE_KEY + ":3", null)?.key].find(key => A.validKey(key));
   let positionsVisible = stored(POSITIONS_VISIBLE_KEY, false) === true, sortKey = null, sortDescending = true;
   const importFragment = new URLSearchParams(location.hash.slice(1)).get("positions");
   function scopedKey(key) {return activePortfolio !== "1" && scopedKeys.has(key) ? key + ":" + activePortfolio : key;}
@@ -126,6 +129,7 @@
         $("#portfolioMessage").textContent = loaded.length + " positions chargées automatiquement dans le portefeuille " + requestedPortfolio + ". Ton lien personnel fonctionne aussi depuis l’écran d’accueil.";
       }
       profileState = {key: personalKey, revision: profile.revision};
+      save(ACCESS_KEY, {key: personalKey});
       save(PROFILE_STATE_KEY, profileState); save(PROFILE_CACHE_KEY, profile);
       profileInitialized = true; configurePersonalLink();
     } catch (error) {if (requestedPortfolio === activePortfolio) $("#portfolioMessage").textContent = "Lien personnel indisponible : " + error.message + ". Les positions déjà enregistrées sont conservées.";}
@@ -413,7 +417,12 @@
     const controls = document.createDocumentFragment();
     for (const item of P.RANGES) {const button = el("button", "", item.label); button.type = "button"; button.setAttribute("aria-pressed", String(item.key === range)); button.addEventListener("click", () => {range = item.key; saveView(); render();}); controls.append(button);}
     $("#portfolioRanges").replaceChildren(controls);
-    if (!positions.length) {$("#portfolioStatus").textContent = "Importe ta sauvegarde ou ajoute tes positions. Les quantités restent sur cet appareil."; return;}
+    if (!positions.length) {
+      const needsLink = !holdingsAvailable && !personalKey;
+      $("#portfolioStatus").textContent = needsLink ? "Portefeuille " + activePortfolio + " : ouvre ton lien personnel pour retrouver tes positions." : "Importe ta sauvegarde ou ajoute tes positions. Les quantités restent sur cet appareil.";
+      $("#portfolioEmpty").textContent = needsLink ? "Ton lien personnel donne accès aux trois portefeuilles et mémorise cet accès sur cet appareil. Tu peux aussi importer une sauvegarde." : "Ajoute des titres ci-dessous ou importe une sauvegarde de ce portefeuille.";
+      return;
+    }
     if (!prices || !history.length) {$("#portfolioStatus").textContent = "Les cours n’ont pas pu être chargés. Tes positions sont conservées; utilise « Actualiser »."; $("#portfolioChart").replaceChildren(); $("#portfolioBenchmark").replaceChildren(); $("#portfolioBenchmarkNote").textContent = ""; $("#portfolioRows").replaceChildren(); $("#portfolioBest").replaceChildren(); $("#portfolioWorst").replaceChildren(); $("#portfolioMoversPeriod").textContent = ""; $("#portfolioMoversNote").textContent = "Les classements seront disponibles avec les cotations."; renderExposures(null); renderAnalysis(null, null); return;}
     const liveFx = window.SavyLiveFX?.current(), quoteData = window.SavyLiveQuotes?.portfolioView(prices, positions, liveFx) || prices;
     const currentHistory = P.historyFor(positions, quoteData), day = currentHistory.at(-1)[0];
@@ -459,7 +468,10 @@
       const average = el("td"), costInput = el("input", "quantity-input"); costInput.type = "text"; costInput.inputMode = "decimal";
       costInput.value = U.validNumber(row.average_cost) ? String(row.average_cost).replace(".", ",") : ""; costInput.placeholder = "—"; costInput.setAttribute("aria-label", "Prix moyen " + row.ticker);
       costInput.addEventListener("change", () => {try {applyPositions(positions.map(p => p.ticker === row.ticker ? {...p, average_cost: costInput.value.trim() ? costInput.value : null} : p));} catch (error) {$("#portfolioMessage").textContent = error.message; costInput.value = U.validNumber(row.average_cost) ? String(row.average_cost).replace(".", ",") : "";}}); average.append(costInput, el("span", "portfolio-ticker", row.currency));
-      const price = el("td", "", U.formatNumber(row.price, row.decimals) + " " + row.currency); price.append(el("span", "portfolio-ticker", quotes.has(row.ticker) ? window.IntradayUtils.label(quotes.get(row.ticker)) : (row.price_date || "Cours indisponible") + " · clôture quotidienne"));
+      const price = el("td", "", U.formatNumber(row.price, row.decimals) + " " + row.currency);
+      const quote = quotes.get(row.ticker), priceDate = el("span", "portfolio-ticker portfolio-quote", quote ? window.IntradayUtils.shortLabel(quote) : (row.price_date || "Cours indisponible") + " · clôture quotidienne");
+      if (quote) priceDate.title = window.IntradayUtils.label(quote);
+      price.append(priceDate);
       const value = el("td", "", money(row.value_cad));
       const weight = el("td", "", current.complete && row.value_cad !== null ? U.formatNumber(row.value_cad / current.total * 100, 2) + " %" : "—");
       const change = el("td", "change " + direction(row.period_change_cad), delta(row.period_change_cad));
