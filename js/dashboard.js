@@ -366,6 +366,7 @@
   function updateDetail() {
     const point = state.seriesById.get(state.detailId);
     if (!point) return;
+    const live = indicatorQuote(point);
     $("#detailTitle").textContent = point.title;
     $("#detailCategory").textContent = point.category + " · " + point.id;
     $("#detailMeta").textContent = (live ? "Graphique FRED · dernière observation : " : "Observation : ") + U.observationLabel(point.date, point.frequency) + " · Collecte : " + U.timestampLabel(point.last_successful_fetch);
