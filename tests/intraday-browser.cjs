@@ -199,7 +199,7 @@ async function main() {
       await direct.waitForFunction(id => JSON.parse(localStorage.getItem("savy:portfolio-active:v1")) === id &&
         document.querySelectorAll("#portfolioRows tr").length === (id === "1" ? 2 : 6), id);
       await direct.locator('#portfolioRanges [data-range="INTRADAY"]').click();
-      assert.equal(await direct.locator("#portfolioChart .chart-line").count(), 1);
+      assert.equal(await direct.locator("#portfolioChart .chart-line:not(.chart-benchmark)").count(), 1);
       assert.equal(await direct.locator("#portfolioChart .chart-benchmark").count(), 1);
       assert.match(await direct.locator("#portfolioPeriod").innerText(), /actualisation en attente/);
       assert.equal(await direct.locator("#portfolioValueLabel").innerText(), "DERNIÈRE VALEUR COLLECTÉE · CAD");
