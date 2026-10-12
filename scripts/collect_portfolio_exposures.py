@@ -11,6 +11,8 @@ import json
 from pathlib import Path
 import re
 from urllib.request import Request, urlopen
+from xml.etree import ElementTree as ET
+from zipfile import ZipFile
 
 ROOT = Path(__file__).resolve().parents[1]
 SECTORS = {
@@ -53,6 +55,42 @@ def fetch(url, body=None, headers=None):
     request = Request(url, data=body, headers={"User-Agent": "Mozilla/5.0 SAVY/3.0", **(headers or {})})
     with urlopen(request, timeout=25) as response:
         return response.read().decode("utf-8-sig")
+
+
+def ssga_xlf_exposure(blob):
+    """Read the issuer's dated XLSX, preserving cash and other residual assets."""
+    ns = {'x': 'http://schemas.openxmlformats.org/spreadsheetml/2006/main'}
+    with ZipFile(io.BytesIO(blob)) as book:
+        shared = ET.fromstring(book.read('xl/sharedStrings.xml'))
+        strings = [''.join(item.itertext()) for item in shared.findall('x:si', ns)]
+        sheet = ET.fromstring(book.read('xl/worksheets/sheet1.xml'))
+        rows = []
+        for row in sheet.findall('.//x:sheetData/x:row', ns):
+            cells = {}
+            for cell in row.findall('x:c', ns):
+                value = cell.find('x:v', ns)
+                if value is not None and value.text is not None:
+                    cells[re.sub(r'\d', '', cell.attrib['r'])] = strings[int(value.text)] if cell.attrib.get('t') == 's' else value.text
+            rows.append(cells)
+    if not any(row.get('A') == 'Ticker Symbol:' and row.get('B') == 'XLF' for row in rows):
+        raise ValueError('Wrong State Street fund')
+    dated = next(row['B'] for row in rows if row.get('A') == 'Holdings:')
+    as_of = datetime.strptime(dated.removeprefix('As of '), '%d-%b-%Y').date().isoformat()
+    if not any(row.get('A') == 'Name' and row.get('B') == 'Ticker' and row.get('E') == 'Weight' for row in rows):
+        raise ValueError('State Street holdings header missing')
+    weight = 0
+    for row in rows:
+        name = row.get('A', '')
+        if not row.get('E') or row.get('B') in [None, '-', 'Ticker'] or re.search(r'DOLLAR|STERLING|MONEY MARKET|^XAF ', name):
+            continue
+        value = float(row['E'])
+        if value < 0 or value > 100:
+            raise ValueError('Invalid State Street equity weight')
+        weight += value
+    if not 90 <= weight <= 100.0005:
+        raise ValueError('Incomplete financial sector holdings')
+    return {'as_of': as_of, 'sectors': distribution({'financials': weight, 'other_assets': max(0, 100 - weight)}),
+            'geography': distribution({'united_states': weight, 'other_assets': max(0, 100 - weight)})}
 
 
 def country_id(name):
@@ -117,8 +155,12 @@ def ishares_rows(body):
     return as_of, rows
 
 
-def aggregate_ishares(body):
+def aggregate_ishares(body, long_assets=False):
     as_of, rows = ishares_rows(body)
+    if long_assets:
+        # Hedging forwards can have negative market values. For these funds,
+        # describe invested assets separately from the currency hedge.
+        rows = [row for row in rows if row['Asset Class'] in ['Equity', 'Fixed Income', 'Cash', 'Commodity'] and float(row['Market Value'].replace(',', '')) > 0]
     sectors, geography = defaultdict(float), defaultdict(float)
     total = sum(float(row["Market Value"].replace(",", "")) for row in rows)
     if total <= 0:
@@ -184,7 +226,11 @@ def main(argv=None):
             return item
         try:
             if provider.get("kind") == "fidelity": values = fidelity_exposure(fetch(item["source_url"]))
-            elif provider.get("kind") == "ishares": values = aggregate_ishares(fetch(provider["download_url"]))
+            elif provider.get("kind") == "ishares": values = aggregate_ishares(fetch(provider["download_url"]), provider.get("long_assets", False))
+            elif provider.get("kind") == "ssga_xlf":
+                request = Request(provider['download_url'], headers={'User-Agent': 'Mozilla/5.0 SAVY/3.0'})
+                with urlopen(request, timeout=25) as response:
+                    values = ssga_xlf_exposure(response.read())
             elif provider.get("kind") == "vanguard": values = vanguard_exposure(provider["port_id"], provider["mode"])
             elif provider.get("kind") == "qqqm":
                 source = json.loads(fetch(provider["download_url"]))

@@ -77,3 +77,26 @@ test("benchmark missing baselines, future quotes and wrong instruments cannot si
   const partial = P.benchmarkFor({...selected, incomplete: true}, {...security, history: [["2025-12-31", 10], ["2026-01-05", 11]]});
   assert.equal(partial.available, false); assert.equal(partial.portfolio_percent, null);
 });
+test("VBAL is an explicit CAD benchmark and never silently falls back to FEQT", () => {
+  const selected = P.period([["2025-12-31", 100], ["2026-01-05", 120]], "YTD");
+  const security = {id: "VBAL", currency: "CAD", quote_symbol: "VBAL.TO", history: [["2025-12-31", 40], ["2026-01-05", 42]]};
+  const result = P.benchmarkFor(selected, security, "VBAL");
+  assert.equal(result.available, true); assert.ok(Math.abs(result.benchmark_percent - 5) < 1e-10);
+  assert.ok(Math.abs(result.difference - 15) < 1e-10);
+  assert.equal(P.benchmarkFor(selected, security).available, false);
+  assert.equal(P.benchmarkFor(selected, {...security, quote_symbol: "VBAL.NE"}, "VBAL").available, false);
+  assert.equal(P.benchmarkFor(selected, security, "UNKNOWN").available, false);
+});
+test("a portfolio entirely in VBAL reproduces its bond, sector and geography allocations", () => {
+  const input = fixture(); input.benchmarks = ["FEQT", "VBAL"]; input.labels.sectors.bonds = "Obligations";
+  input.instruments.push({id: "VBAL", as_of: "2026-08-31", source_url: "https://www.vanguard.ca/en/product/9578",
+    sectors: [{id: "technology", weight: 12}, {id: "financials", weight: 48}, {id: "bonds", weight: 40}],
+    geography: [{id: "canada", weight: 45}, {id: "united_states", weight: 55}]});
+  const data = E.normalize(input), current = {complete: true, total: 100, rows: [{ticker: "VBAL", value_cad: 100}]};
+  for (const axis of ["sectors", "geography"]) for (const row of E.compare(current, data, axis, "VBAL").rows) {
+    assert.equal(row.portfolio, row.benchmark); assert.equal(row.difference, 0);
+  }
+  const different = E.compare(current, data, "sectors");
+  assert.equal(different.rows.find(row => row.id === "bonds").difference, 40);
+  assert.equal(E.compare(current, data, "sectors", "UNKNOWN").available, false);
+});

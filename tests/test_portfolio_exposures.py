@@ -1,4 +1,7 @@
 import json
+import io
+from zipfile import ZipFile
+from xml.sax.saxutils import escape
 import unittest
 from scripts import collect_portfolio_exposures as exposures
 
@@ -17,6 +20,32 @@ class ExposureTests(unittest.TestCase):
         self.assertEqual(result["as_of"], "2026-10-09")
         self.assertEqual({r["id"]: r["weight"] for r in result["sectors"]}, {"technology": 70, "bonds": 29, "other_assets": 1})
         self.assertEqual({r["id"]: r["weight"] for r in result["geography"]}, {"taiwan": 70, "canada": 30})
+
+    def test_currency_hedges_do_not_turn_us_assets_into_canadian_exposure(self):
+        body = 'Fund Holdings as of,"Oct 9, 2026"\n\nTicker,Name,Sector,Asset Class,Market Value,Weight (%),Location\nSTOCK,Stock,Information Technology,Equity,98,122.5,United States\nCAD,Cash,Cash,Cash,2,2.5,Canada\nUSD,Hedge,Cash,Forwards,-20,-25,Canada\n'
+        result = exposures.aggregate_ishares(body, long_assets=True)
+        self.assertEqual({r['id']: r['weight'] for r in result['sectors']}, {'technology': 98, 'other_assets': 2})
+        self.assertEqual({r['id']: r['weight'] for r in result['geography']}, {'united_states': 98, 'canada': 2})
+
+    def test_state_street_keeps_small_cash_residual_and_checks_fund_identity(self):
+        values = ['Ticker Symbol:', 'XLF', 'Holdings:', 'As of 08-Oct-2026', 'Name', 'Ticker', 'Weight', 'Financial stock', 'JPM', 'US DOLLAR', '-']
+        shared = '<sst xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">' + ''.join('<si><t>' + escape(value) + '</t></si>' for value in values) + '</sst>'
+        rows = [('A1', 's', 0), ('B1', 's', 1), ('A2', 's', 2), ('B2', 's', 3), ('A3', 's', 4), ('B3', 's', 5), ('E3', 's', 6), ('A4', 's', 7), ('B4', 's', 8), ('E4', 'n', 99.9), ('A5', 's', 9), ('B5', 's', 10), ('E5', 'n', .1)]
+        body = '<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetData>'
+        for index in range(1, 6):
+            body += '<row>' + ''.join(f'<c r="{cell}" t="{kind}"><v>{value}</v></c>' for cell, kind, value in rows if cell.endswith(str(index))) + '</row>'
+        body += '</sheetData></worksheet>'
+        def archive(strings):
+            buffer = io.BytesIO()
+            with ZipFile(buffer, 'w') as book:
+                book.writestr('xl/sharedStrings.xml', strings)
+                book.writestr('xl/worksheets/sheet1.xml', body)
+            return buffer.getvalue()
+        result = exposures.ssga_xlf_exposure(archive(shared))
+        self.assertEqual(result['as_of'], '2026-10-08')
+        self.assertAlmostEqual(next(row['weight'] for row in result['sectors'] if row['id'] == 'other_assets'), .1)
+        self.assertAlmostEqual(next(row['weight'] for row in result['geography'] if row['id'] == 'united_states'), 99.9)
+        with self.assertRaises(ValueError): exposures.ssga_xlf_exposure(archive(shared.replace('XLF', 'XLK')))
 
     def test_vanguard_uses_gics_instead_of_icb_and_keeps_bonds_in_the_denominator(self):
         rows = [

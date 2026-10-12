@@ -138,3 +138,17 @@ test("earnings validation rejects false future results, unsafe sources, wrong da
   const result = F.selectEarnings({rows: [{ticker: "BIG", title: "Big"}]}, normalized, {week: F.weekFor("2026-10-11"), now}); assert.deepEqual(result.cached, ["BIG"]);
   assert.equal(normalized.instruments.BIG.fetched_at, "2026-10-01T20:00:00Z");
 });
+test("risk and beta use the selected VBAL closes while FEQT remains the first portfolio reference", () => {
+  const data = riskFixture(), positions = [{ticker: "AAA", quantity: 3, currency: "CAD"}];
+  let value = 40;
+  const original = data.series[1].history;
+  const history = original.map((row, i) => {if (i) value *= 1 + (row[1] / original[i - 1][1] - 1) * .5; return [row[0], value];});
+  data.series.push({id: "VBAL", currency: "CAD", quote_symbol: "VBAL.TO", history});
+  const selected = selection(data, positions), feqt = F.riskFor(positions, data, selected), vbal = F.riskFor(positions, data, selected, "VBAL");
+  almost(feqt.portfolio.beta, 1.5); almost(vbal.portfolio.beta, 3);
+  almost(vbal.benchmark.volatility, feqt.benchmark.volatility / 2);
+  const self = [{ticker: "VBAL", quantity: 4, currency: "CAD"}];
+  almost(F.riskFor(self, data, selection(data, self), "VBAL").portfolio.beta, 1);
+  data.series.at(-1).quote_symbol = "VBAL.NE";
+  assert.equal(F.riskFor(positions, data, selected, "VBAL").available, false);
+});

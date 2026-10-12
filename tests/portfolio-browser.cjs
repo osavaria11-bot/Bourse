@@ -14,6 +14,7 @@ const prices = P.normalizePrices(rawPrices, catalog);
 const exposures = E.normalize(JSON.parse(fs.readFileSync(path.join(root, "data/portfolio-exposures.json"), "utf8")));
 const sample = catalog.series.filter(d => ["SHOP", "CLS", "V", "VFV", "MSFT", "XIU"].includes(d.id));
 const syntheticPositions = sample.map(d => ({ticker: d.id, quantity: d.id === "V" ? 1.5 : 2, currency: d.currency, average_cost: d.id === "CLS" ? 500 : d.id === "SHOP" ? 200 : d.id === "V" ? 350 : 50}));
+const secondSyntheticPositions = ["VBAL", "FCIN", "XSP", "CGL", "XLF", "ACWV"].map((id, i) => ({ticker: id, quantity: i + 2.5, currency: catalog.series.find(row => row.id === id).currency, average_cost: 25 + i * 5}));
 const fragment = Buffer.from(JSON.stringify(syntheticPositions.map(p => [p.ticker, p.quantity, p.currency, p.average_cost]))).toString("base64url");
 let offline = false, missingFX = false, missingBaseline = false, earningsOffline = false;
 const thisWeek = F.weekFor(), today = F.localDay(), todayOffset = thisWeek.days.indexOf(today);
@@ -27,19 +28,21 @@ function syntheticEarnings(id, offset, pending = false) {
 }
 const nextWeekEvent = {...syntheticEarnings("ffffffffffffffff", 0, true), report_date: F.shiftDay(thisWeek.start, 8)};
 const syntheticEarningsData = {schema_version: 1, kind: "portfolio_earnings", generated_at: new Date().toISOString(), timezone: "America/Toronto", window: {start: F.shiftDay(thisWeek.start, -84), end: F.shiftDay(thisWeek.start, 41)}, instruments: Object.fromEntries(catalog.series.map(row => [row.id,
-  {company_symbol: row.quote_symbol, source_url: "https://example.com/earnings", fetch_status: ["VFV", "XIU"].includes(row.id) ? "not_applicable" : "fresh", fetched_at: new Date().toISOString(), events:
+  {company_symbol: row.quote_symbol, source_url: "https://example.com/earnings", fetch_status: ["VFV", "XIU", ...secondSyntheticPositions.map(item => item.ticker)].includes(row.id) ? "not_applicable" : "fresh", fetched_at: new Date().toISOString(), events:
     row.id === "MSFT" ? [syntheticEarnings("aaaaaaaaaaaaaaaa", 0)] : row.id === "SHOP" ? [syntheticEarnings("bbbbbbbbbbbbbbbb", 1)] : row.id === "CLS" ? [syntheticEarnings("cccccccccccccccc", 2)] :
     row.id === "V" ? [syntheticEarnings("dddddddddddddddd", 4, true), nextWeekEvent] : row.id === "NVDA" ? [syntheticEarnings("eeeeeeeeeeeeeeee", 1)] : []}]))};
 let profileOffline = false;
 const personalKey = crypto.randomBytes(32).toString("base64url");
-function sealFixture(positions, revision) {
+function sealFixture(positions, revision, portfolioId = "1") {
   const profile = {schema_version: 1, kind: "encrypted_portfolio", algorithm: "AES-GCM", revision};
+  if (portfolioId === "2") profile.portfolio_id = "2";
   const iv = crypto.randomBytes(12), cipher = crypto.createCipheriv("aes-256-gcm", Buffer.from(personalKey, "base64url"), iv);
   cipher.setAAD(A.associatedData(profile));
-  const ciphertext = Buffer.concat([cipher.update(JSON.stringify({positions})), cipher.final(), cipher.getAuthTag()]);
+  const ciphertext = Buffer.concat([cipher.update(JSON.stringify({positions, ...(portfolioId === "2" ? {portfolio_id: "2", benchmark: "VBAL"} : {})})), cipher.final(), cipher.getAuthTag()]);
   return {...profile, iv: iv.toString("base64url"), ciphertext: ciphertext.toString("base64url")};
 }
 let profileFixture = sealFixture(syntheticPositions, "synthetic-v1");
+let secondProfileFixture = sealFixture(secondSyntheticPositions, "synthetic-second-v1", "2");
 const requestPaths = [];
 const mime = {".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".json": "application/json", ".png": "image/png"};
 const server = http.createServer((request, response) => {
@@ -52,6 +55,10 @@ const server = http.createServer((request, response) => {
   if (pathname === "/data/personal-portfolio.json") {
     response.writeHead(profileOffline ? 503 : 200, {"Content-Type": "application/json"});
     response.end(profileOffline ? "{}" : JSON.stringify(profileFixture)); return;
+  }
+  if (pathname === "/data/personal-portfolio-2.json") {
+    response.writeHead(profileOffline ? 503 : 200, {"Content-Type": "application/json"});
+    response.end(profileOffline ? "{}" : JSON.stringify(secondProfileFixture)); return;
   }
   if (pathname === "/data/security-prices.json") {
     const data = structuredClone(rawPrices);
@@ -360,6 +367,90 @@ async function main() {
     await cdp.detach();
     assert.equal(requestPaths.some(p => p.includes(personalKey)), false);
     assert.equal(requestPaths.filter(p => p.includes("portfolio-earnings")).some(p => /ticker=|positions=|portfolio-key=/.test(p)), false);
+    // The same personal key opens two independently authenticated profiles.
+    await direct.locator('#portfolioRanges button').filter({hasText: /^1 mois$/}).click();
+    await direct.locator('[data-portfolio-id="2"]').click();
+    await direct.waitForFunction(() => document.querySelector('#portfolioTitle').textContent === 'Portefeuille 2' && document.querySelector('#portfolioRows tr[data-ticker="VBAL"]') && document.querySelector('#portfolioMessage').textContent.includes('chargées automatiquement'));
+    assert.deepEqual(await direct.evaluate(() => JSON.parse(localStorage.getItem('savy:private-holdings:v1:2')).positions), secondSyntheticPositions);
+    assert.deepEqual(await direct.evaluate(() => JSON.parse(localStorage.getItem('savy:private-holdings:v1')).positions), syntheticPositions);
+    assert.match(await direct.locator('[data-portfolio-id="1"]').innerText(), /FEQT/);
+    assert.match(await direct.locator('[data-portfolio-id="2"]').innerText(), /VBAL/);
+    assert.equal(await direct.locator('[data-portfolio-id="2"]').getAttribute('aria-pressed'), 'true');
+    assert.equal(await direct.locator('#portfolioRiskTitle').textContent(), 'Risque comparé à VBAL');
+    assert.match(await direct.locator('#portfolioBenchmark').innerText(), /VBAL/);
+    assert.equal(await direct.locator('#portfolioChart .chart-benchmark').count(), 1);
+    assert.equal(await direct.locator('#portfolioPositions').isVisible(), false);
+    const secondHistory = P.historyFor(secondSyntheticPositions, prices), secondDay = secondHistory.at(-1)[0];
+    const secondCurrent = P.valuationAt(secondSyntheticPositions, prices, secondDay);
+    for (const item of P.RANGES) {
+      await direct.locator('#portfolioRanges button').filter({hasText: new RegExp('^' + item.label + '$')}).click();
+      const selected = P.period(secondHistory, item.key), expected = P.benchmarkFor(selected, prices.series.find(row => row.id === 'VBAL'), 'VBAL');
+      assert.equal(await direct.locator('#portfolioBenchmark .portfolio-benchmark-item:nth-child(2) strong').textContent(), (expected.benchmark_percent > 0 ? '+' : '') + U.formatNumber(expected.benchmark_percent, 2) + ' %');
+      const risk = F.riskFor(secondSyntheticPositions, prices, selected, 'VBAL');
+      const value = risk.portfolio.beta;
+      assert.equal(await direct.locator('#portfolioRiskRows tr[data-metric="beta"] td').first().textContent(), U.validNumber(value) ? U.formatNumber(value, 2) : 'N/D');
+      const contributed = F.contributionsFor(secondSyntheticPositions, prices, selected);
+      assert.equal(await direct.locator('#portfolioContributionRows tr').count(), contributed.rows.length);
+    }
+    await direct.locator('#portfolioRanges button').filter({hasText: /^3 mois$/}).click();
+    for (const [view, axis] of [['Sectors', 'sectors'], ['Geography', 'geography']]) {
+      await direct.locator('#portfolio' + view + 'Toggle').click();
+      const result = E.compare(secondCurrent, exposures, axis, 'VBAL');
+      assert.equal(await direct.locator('#portfolio' + view + 'Rows tr').count(), result.rows.length);
+      assert.match(await direct.locator('#portfolio' + view + 'Title').textContent(), /VBAL/);
+      for (const row of result.rows) {
+        const cells = await direct.locator('#portfolio' + view + 'Rows tr[data-exposure="' + row.id + '"] td').allTextContents();
+        assert.equal(cells[1], U.validNumber(row.benchmark) ? U.formatNumber(row.benchmark, 2) + ' %' : 'Non publié');
+        assert.equal(cells[2], U.validNumber(row.difference) ? (row.difference > 0 ? '+' : '') + U.formatNumber(row.difference, 2) + ' pt' : '—');
+      }
+    }
+    assert.match(await direct.locator('#portfolioEarningsStatus').innerText(), /6 FNB/);
+    assert.equal(await direct.locator('#portfolioEarningsItems article').count(), 0);
+    await direct.locator('#portfolioPositionsToggle').click();
+    await direct.locator('input[aria-label="Quantité XSP"]').fill('8,5');
+    await direct.locator('input[aria-label="Quantité XSP"]').press('Tab');
+    const editedSecond = secondSyntheticPositions.map(row => row.ticker === 'XSP' ? {...row, quantity: 8.5} : row);
+    const secondDownload = direct.waitForEvent('download'); await direct.locator('#portfolioExport').click();
+    const secondFile = await secondDownload, secondBackup = JSON.parse(fs.readFileSync(await secondFile.path(), 'utf8'));
+    assert.equal(secondFile.suggestedFilename(), 'portefeuille-2-savy.json'); assert.equal(secondBackup.portfolio_id, '2'); assert.equal(secondBackup.benchmark, 'VBAL'); assert.deepEqual(secondBackup.positions, editedSecond);
+    const secondManifest = await direct.evaluate(async () => (await fetch(document.querySelector('#savyPersonalManifest').href)).json());
+    assert.equal(new URLSearchParams(new URL(secondManifest.start_url).hash.slice(1)).get('portfolio'), '2');
+    assert.equal(new URLSearchParams(new URL(direct.url()).hash.slice(1)).get('portfolio-key'), personalKey);
+    if (process.env.SCREENSHOT_LOGS) {
+      await direct.setViewportSize({width: 1440, height: 1000}); await direct.locator('#portfolioTitle').scrollIntoViewIfNeeded();
+      console.log('SCREENSHOT_PORTFOLIO2_DESKTOP ' + (await direct.locator('#portfolio').screenshot()).toString('base64'));
+      await direct.setViewportSize({width: 320, height: 950}); await direct.evaluate(() => document.activeElement?.blur()); await direct.locator('#portfolioTitle').scrollIntoViewIfNeeded();
+      console.log('SCREENSHOT_PORTFOLIO2_MOBILE ' + (await direct.screenshot()).toString('base64'));
+    }
+    assert.ok(await direct.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+    profileOffline = true; await direct.reload();
+    await direct.waitForFunction(() => document.querySelector('#portfolioRows input[aria-label="Quantité XSP"]')?.value === '8,5');
+    assert.match(await direct.locator('#portfolioBenchmark').innerText(), /VBAL/);
+    profileOffline = false;
+    await direct.locator('[data-portfolio-id="1"]').click();
+    await direct.waitForFunction(() => document.querySelector('#portfolioRows tr[data-ticker="SHOP"]') && new URLSearchParams(location.hash.slice(1)).get('portfolio') !== '2');
+    assert.equal(await direct.locator('#portfolioRanges button[aria-pressed="true"]').textContent(), '1 mois');
+    assert.equal(await direct.locator('#portfolioPositions').isVisible(), false);
+    assert.match(await direct.locator('#portfolioRiskTitle').textContent(), /FEQT/);
+    await direct.locator('[data-portfolio-id="2"]').click();
+    await direct.waitForFunction(() => document.querySelector('#portfolioRows input[aria-label="Quantité XSP"]')?.value === '8,5');
+    assert.equal(await direct.locator('#portfolioRanges button[aria-pressed="true"]').textContent(), '3 mois');
+    assert.equal(await direct.locator('#portfolioPositions').isVisible(), true);
+    const secondHomeContext = await historicalContext({viewport: {width: 320, height: 950}}), secondHome = await secondHomeContext.newPage();
+    secondHome.on('pageerror', error => errors.push(error.message)); await secondHome.route('https://**', route => route.abort()); await secondHome.goto(secondManifest.start_url);
+    await secondHome.waitForFunction(() => document.querySelector('#portfolioRows tr[data-ticker="VBAL"]'));
+    assert.deepEqual(await secondHome.evaluate(() => JSON.parse(localStorage.getItem('savy:private-holdings:v1:2')).positions), secondSyntheticPositions);
+    assert.equal(await secondHome.evaluate(() => localStorage.getItem('savy:private-holdings:v1')), null);
+    assert.ok(await secondHome.evaluate(() => document.documentElement.scrollWidth <= innerWidth)); await secondHomeContext.close();
+    const goodSecondProfile = secondProfileFixture; secondProfileFixture = profileFixture;
+    await direct.locator('#refreshButton').click(); await direct.waitForFunction(() => !document.querySelector('#refreshButton').disabled);
+    assert.match(await direct.locator('#portfolioMessage').innerText(), /autre portefeuille/);
+    assert.deepEqual(await direct.evaluate(() => JSON.parse(localStorage.getItem('savy:private-holdings:v1:2')).positions), editedSecond);
+    secondProfileFixture = goodSecondProfile;
+    await direct.locator('[data-portfolio-id="1"]').click();
+    await direct.waitForFunction(() => document.querySelector('#portfolioRows tr[data-ticker="SHOP"]'));
+    await direct.locator('#portfolioRanges button').filter({hasText: /^YTD$/}).click();
+    console.log('Two portfolio checks passed: separate authenticated profiles, edits, UI state and exports, VBAL benchmark/risk across all periods, underlying sector/geography differences, offline cache and fresh Home Screen access, swapped profile rejected, desktop and 320px mobile.');
     await direct.locator("#portfolioPositionsToggle").click();
     await direct.locator('input[aria-label="Quantité SHOP"]').fill("3");
     await direct.locator('input[aria-label="Quantité SHOP"]').press("Tab");

@@ -12,12 +12,14 @@ let key;
 try {key = new URLSearchParams(new URL(input.savy_access.url).hash.slice(1)).get("portfolio-key");} catch { /* First creation. */ }
 if (!A.validKey(key)) key = crypto.randomBytes(32).toString("base64url");
 const profile = {schema_version: 1, kind: "encrypted_portfolio", algorithm: "AES-GCM", revision: new Date().toISOString()};
+if (input.portfolio_id === "2") profile.portfolio_id = "2";
 const iv = crypto.randomBytes(12), cipher = crypto.createCipheriv("aes-256-gcm", Buffer.from(key, "base64url"), iv);
 cipher.setAAD(A.associatedData(profile));
-const plaintext = JSON.stringify({schema_version: 1, base_currency: "CAD", as_of: input.as_of, positions});
+const plaintext = JSON.stringify({schema_version: 1, base_currency: "CAD", as_of: input.as_of,
+  ...(input.portfolio_id === "2" ? {portfolio_id: "2", benchmark: "VBAL"} : {}), positions});
 const ciphertext = Buffer.concat([cipher.update(plaintext, "utf8"), cipher.final(), cipher.getAuthTag()]);
 profile.iv = iv.toString("base64url"); profile.ciphertext = ciphertext.toString("base64url");
 fs.writeFileSync(outputPath, JSON.stringify(profile, null, 2) + "\n");
-input.savy_access = {url: A.personalURL("https://osavaria11-bot.github.io/Bourse/?v=20261010-portefeuille-direct", key), profile_revision: profile.revision};
+input.savy_access = {url: A.personalURL("https://osavaria11-bot.github.io/Bourse/?v=20261012-portfolio-2", key, input.portfolio_id), profile_revision: profile.revision};
 fs.writeFileSync(inputPath, JSON.stringify(input, null, 2) + "\n");
 console.log(positions.length + " positions intégrées dans le fichier public chiffré; lien conservé avec la sauvegarde privée.");

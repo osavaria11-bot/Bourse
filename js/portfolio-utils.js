@@ -5,6 +5,7 @@
   "use strict";
   const RANGES = [{key: "YTD", label: "YTD"}, {key: "6M", label: "6 mois"}, {key: "3M", label: "3 mois"},
     {key: "1M", label: "1 mois"}, {key: "1W", label: "1 semaine"}, {key: "3D", label: "3 jours"}];
+  const BENCHMARKS = {FEQT: "FEQT.NE", VBAL: "VBAL.TO"};
   function normalizePrices(payload, catalog) {
     if (catalog?.schema_version !== 1 || !Array.isArray(catalog.series) || payload?.kind !== "security_prices" ||
         !Number.isFinite(U.parseTimestamp(payload.generated_at)) || U.parseTimestamp(payload.generated_at) > Date.now() + 300000) throw new Error("Cotations invalides");
@@ -119,10 +120,10 @@
       return a.ticker.localeCompare(b.ticker, "en");
     });
   }
-  function benchmarkFor(selected, security) {
+  function benchmarkFor(selected, security, benchmarkId = "FEQT") {
     const history = selected?.history || [], start = history[0], end = history.at(-1);
     const validPortfolioBase = start && U.validNumber(start[1]) && start[1] > 0;
-    const validSecurity = security?.id === "FEQT" && security.currency === "CAD" && security.quote_symbol === "FEQT.NE";
+    const validSecurity = Object.hasOwn(BENCHMARKS, benchmarkId) && security?.id === benchmarkId && security.currency === "CAD" && security.quote_symbol === BENCHMARKS[benchmarkId];
     const base = validSecurity && start ? observationAt(security.history, start[0]) : null;
     const final = validSecurity && end ? observationAt(security.history, end[0]) : null;
     const available = !selected?.incomplete && validPortfolioBase && base?.[1] > 0 && final?.[1] > 0;
@@ -160,5 +161,5 @@
     return {start, end: day, rows: sortRows(rows, "percent"), missing};
   }
   function monthlyPerformance(positions, data, day) {return performanceFor(positions, data, day, "1M");}
-  return {RANGES, normalizePrices, normalizePositions, observationAt, valuationAt, historyFor, period, benchmarkFor, sortRows, performanceFor, monthlyPerformance};
+  return {RANGES, BENCHMARKS, normalizePrices, normalizePositions, observationAt, valuationAt, historyFor, period, benchmarkFor, sortRows, performanceFor, monthlyPerformance};
 });

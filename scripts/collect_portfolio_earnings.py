@@ -27,7 +27,7 @@ except ImportError:
 
 ROOT = Path(__file__).resolve().parents[1]
 TORONTO = ZoneInfo("America/Toronto")
-ETFS = set("FEQT QQC VCN VDY VEE VEQT VFV VGRO VIU XBB XEF XEQT XGD XGRO XIC XIU XUS ZAG ZEB".split())
+ETFS = set("ACWV CGL FCIN FCUV FEQT QQC VBAL VCN VDY VEE VEQT VFV VGRO VIU XBB XEF XEQT XGD XGRO XHY XIC XIG XIU XLF XSB XSP XSU XUS ZAG ZEB ZLB ZRE".split())
 NYSE = set("APH APO BAC CLS CRM CVX GS HD JNJ JPM MOD MRK NU NVO PFE TSM UNH V WFC XOM".split())
 # These Canadian listings share the issuer's US results. Keep the local holding ID
 # and explicitly display the reporting currency, including the Sandisk CDR.

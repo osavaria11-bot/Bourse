@@ -40,13 +40,13 @@
     }
     return {value: worst, peak_date: from, trough_date: to};
   }
-  function riskFor(positions, data, selected) {
+  function riskFor(positions, data, selected, benchmarkId = "FEQT") {
     const unavailable = {available: false, reason: "missing_history", start: selected?.start, end: selected?.end, observations: 0,
       portfolio: {volatility: null, drawdown: null, beta: null}, benchmark: {volatility: null, drawdown: null, beta: null}};
     if (!positions?.length || !data || selected?.incomplete || !selected?.history?.length ||
         selected.history.some(row => !U.validNumber(row[1]) || row[1] <= 0)) return unavailable;
-    const byId = new Map(data.series.map(row => [row.id, row])), feqt = byId.get("FEQT");
-    if (feqt?.currency !== "CAD" || feqt.quote_symbol !== "FEQT.NE") return unavailable;
+    const byId = new Map(data.series.map(row => [row.id, row])), feqt = byId.get(benchmarkId);
+    if (!Object.hasOwn(P.BENCHMARKS, benchmarkId) || feqt?.currency !== "CAD" || feqt.quote_symbol !== P.BENCHMARKS[benchmarkId]) return unavailable;
     const required = [...new Set(positions.map(row => row.ticker))];
     if (positions.some(row => row.currency === "USD")) required.push("USDCAD");
     if (required.some(id => !byId.has(id))) return unavailable;

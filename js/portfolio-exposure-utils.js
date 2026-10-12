@@ -29,13 +29,15 @@
       }
       return next;
     });
-    if (!seen.has("FEQT")) throw new Error("Référence FEQT manquante");
+    const benchmarks = payload.benchmarks || [payload.benchmark];
+    if (!Array.isArray(benchmarks) || !benchmarks.includes(payload.benchmark) || benchmarks.some(id => !["FEQT", "VBAL"].includes(id) || !seen.has(id))) throw new Error("Répartition de référence manquante");
     return {...payload, instruments};
   }
-  function compare(valuation, dataset, axis) {
+  function compare(valuation, dataset, axis, benchmarkId = "FEQT") {
     if (!AXES.includes(axis)) throw new Error("Répartition inconnue");
     if (!valuation?.complete || !(valuation.total > 0) || !dataset) return {available: false, rows: [], coverage: 0, sources: [], missing: []};
-    const lookup = new Map(dataset.instruments.map(row => [row.id, row])), reference = lookup.get("FEQT");
+    const lookup = new Map(dataset.instruments.map(row => [row.id, row])), reference = lookup.get(benchmarkId);
+    if (!["FEQT", "VBAL"].includes(benchmarkId) || !reference) return {available: false, rows: [], coverage: 0, sources: [], missing: []};
     const weights = new Map(), sources = [], missing = [], countryDisclosures = [];
     let indicative = false;
     for (const holding of valuation.rows) {

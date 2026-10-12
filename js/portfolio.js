@@ -5,17 +5,57 @@
   const PROFILE_STATE_KEY = "savy:portfolio-profile-state:v1", PROFILE_CACHE_KEY = "savy:portfolio-profile-cache:v1";
   const EXPOSURE_KEY = "savy:portfolio-exposures:v1", EXPOSURE_VIEWS_KEY = "savy:portfolio-exposure-views:v1";
   const EARNINGS_KEY = "savy:portfolio-earnings:v1";
+  const ACTIVE_KEY = "savy:portfolio-active:v1", VIEW_KEY = "savy:portfolio-view:v1";
+  const scopedKeys = new Set([HOLDINGS_KEY, POSITIONS_VISIBLE_KEY, PROFILE_STATE_KEY, PROFILE_CACHE_KEY, EXPOSURE_VIEWS_KEY, VIEW_KEY]);
+  const initialFragment = new URLSearchParams(location.hash.slice(1));
+  let activePortfolio = "1";
+  activePortfolio = initialFragment.get("portfolio") === "2" || (!initialFragment.has("portfolio") && stored(ACTIVE_KEY, "1") === "2") ? "2" : "1";
+  let benchmarkId = activePortfolio === "2" ? "VBAL" : "FEQT";
   let catalog = null, prices = null, cached = false, range = "YTD", moversRange = "1M", positions = [], history = [], imported = false;
   let exposures = null, exposureCached = false;
   let earnings = null, earningsCached = false, earningsTicker = "", earningsWeek = F.weekFor().start, earningsSelection = null;
   const exposureViewState = stored(EXPOSURE_VIEWS_KEY, {});
   const exposureViews = {Sectors: exposureViewState?.Sectors === true, Geography: exposureViewState?.Geography === true};
   let profileState = stored(PROFILE_STATE_KEY, null), profileInitialized = false, holdingsAvailable = false, manifestURL = null;
-  const personalKey = new URLSearchParams(location.hash.slice(1)).get("portfolio-key") || profileState?.key;
+  const personalKey = initialFragment.get("portfolio-key") || profileState?.key || rawStored(PROFILE_STATE_KEY, null)?.key || rawStored(PROFILE_STATE_KEY + ":2", null)?.key;
   let positionsVisible = stored(POSITIONS_VISIBLE_KEY, false) === true, sortKey = null, sortDescending = true;
   const importFragment = new URLSearchParams(location.hash.slice(1)).get("positions");
-  function stored(key, fallback) {try {return JSON.parse(localStorage.getItem(key)) ?? fallback;} catch {return fallback;}}
-  function save(key, value) {try {localStorage.setItem(key, JSON.stringify(value)); return true;} catch {return false;}}
+  function scopedKey(key) {return activePortfolio === "2" && scopedKeys.has(key) ? key + ":2" : key;}
+  function rawStored(key, fallback) {try {return JSON.parse(localStorage.getItem(key)) ?? fallback;} catch {return fallback;}}
+  function stored(key, fallback) {return rawStored(scopedKey(key), fallback);}
+  function save(key, value) {try {localStorage.setItem(scopedKey(key), JSON.stringify(value)); return true;} catch {return false;}}
+  const referenceLabels = [];
+  const labelWalker = document.createTreeWalker($("#portfolio"), NodeFilter.SHOW_TEXT);
+  while (labelWalker.nextNode()) if (labelWalker.currentNode.nodeValue.includes("FEQT") && !labelWalker.currentNode.parentElement.closest("[data-portfolio-id]")) referenceLabels.push({node: labelWalker.currentNode, template: labelWalker.currentNode.nodeValue});
+  function renderPortfolioChoice() {
+    $("#portfolioTitle").textContent = activePortfolio === "2" ? "Portefeuille 2" : "Mon portefeuille";
+    $("#portfolio").dataset.portfolio = activePortfolio;
+    for (const button of document.querySelectorAll("[data-portfolio-id]")) button.setAttribute("aria-pressed", String(button.dataset.portfolioId === activePortfolio));
+    for (const label of referenceLabels) label.node.nodeValue = label.template.replaceAll("FEQT", benchmarkId);
+    $("#portfolioBenchmark").setAttribute("aria-label", "Rendement du portefeuille et de " + benchmarkId);
+  }
+  function saveView() {save(VIEW_KEY, {range, moversRange, sortKey, sortDescending, earningsWeek, earningsTicker});}
+  function loadView() {
+    const view = stored(VIEW_KEY, {});
+    range = P.RANGES.some(item => item.key === view.range) ? view.range : "YTD";
+    moversRange = P.RANGES.some(item => item.key === view.moversRange) ? view.moversRange : "1M";
+    sortKey = ["unrealized_percent", "unrealized_cad", "period_change_cad"].includes(view.sortKey) ? view.sortKey : null;
+    sortDescending = view.sortDescending !== false;
+    earningsWeek = typeof view.earningsWeek === "string" && U.isDate(view.earningsWeek) ? F.weekFor(view.earningsWeek).start : F.weekFor().start;
+    earningsTicker = typeof view.earningsTicker === "string" ? view.earningsTicker : "";
+    for (const button of $("#portfolioMoversRanges").querySelectorAll("button")) button.setAttribute("aria-pressed", String(button.dataset.range === moversRange));
+  }
+  async function choosePortfolio(id) {
+    if (!["1", "2"].includes(id) || id === activePortfolio || !catalog) return;
+    saveView(); activePortfolio = id; benchmarkId = id === "2" ? "VBAL" : "FEQT"; save(ACTIVE_KEY, id);
+    profileState = stored(PROFILE_STATE_KEY, null); profileInitialized = false;
+    positionsVisible = stored(POSITIONS_VISIBLE_KEY, false) === true;
+    const views = stored(EXPOSURE_VIEWS_KEY, {}); exposureViews.Sectors = views.Sectors === true; exposureViews.Geography = views.Geography === true;
+    loadView(); setupPositions(); history = prices ? P.historyFor(positions, prices) : [];
+    $("#portfolioMessage").textContent = ""; render();
+    if (personalKey) await refreshPersonalProfile();
+    else {const fragment = new URLSearchParams(); if (id === "2") fragment.set("portfolio", "2"); window.history.replaceState(null, "", location.pathname + location.search + (fragment.size ? "#" + fragment : "#portfolio"));}
+  }
   function el(tag, className, text) {const node = document.createElement(tag); if (className) node.className = className; if (text !== undefined) node.textContent = text; return node;}
   function money(value, currency = "CAD") {return U.validNumber(value) ? new Intl.NumberFormat("fr-CA", {style: "currency", currency, maximumFractionDigits: 2}).format(value) : "—";}
   function delta(value, percent = false) {return U.validNumber(value) ? (value > 0 ? "+" : "") + (percent ? U.formatNumber(value, 2) + " %" : money(value)) : "—";}
@@ -26,6 +66,7 @@
     finally {clearTimeout(timeout);}
   }
   function applyPositions(input) {
+    if (input?.portfolio_id && input.portfolio_id !== activePortfolio) throw new Error("Choisis le portefeuille " + input.portfolio_id + " avant d’importer ce fichier");
     const next = P.normalizePositions(input, catalog);
     positions = next;
     holdingsAvailable = true;
@@ -54,33 +95,37 @@
     }
   }
   function configurePersonalLink() {
-    const url = A.personalURL(location.href, personalKey);
+    const url = A.personalURL(location.href, personalKey, activePortfolio);
     const anchor = $("#portfolioPersonalLink"); anchor.href = url; anchor.hidden = false;
     // Keep the personal fragment so a new Home Screen storage context can open it.
     window.history.replaceState(null, "", url);
-    if (!manifestURL) {
-      manifestURL = URL.createObjectURL(new Blob([JSON.stringify(A.homeManifest(url, personalKey))], {type: "application/manifest+json"}));
-      const manifest = el("link"); manifest.rel = "manifest"; manifest.id = "savyPersonalManifest"; manifest.href = manifestURL;
-      document.head.append(manifest);
-    }
+    if (manifestURL) URL.revokeObjectURL(manifestURL);
+    manifestURL = URL.createObjectURL(new Blob([JSON.stringify(A.homeManifest(url, personalKey, activePortfolio))], {type: "application/manifest+json"}));
+    let manifest = $("#savyPersonalManifest");
+    if (!manifest) {manifest = el("link"); manifest.rel = "manifest"; manifest.id = "savyPersonalManifest"; document.head.append(manifest);}
+    manifest.href = manifestURL;
   }
   async function refreshPersonalProfile() {
     if (!personalKey || importFragment) return;
+    const requestedPortfolio = activePortfolio;
     try {
       if (!A.validKey(personalKey)) throw new Error("Lien personnel invalide");
       let profile;
-      try {profile = await fetchJSON("data/personal-portfolio.json");}
-      catch {profile = stored(PROFILE_CACHE_KEY, null);}
+      try {profile = await fetchJSON(requestedPortfolio === "2" ? "data/personal-portfolio-2.json" : "data/personal-portfolio.json");}
+      catch {if (requestedPortfolio !== activePortfolio) return; profile = stored(PROFILE_CACHE_KEY, null);}
       // Authentication also binds the revision; unverified data never replaces holdings.
-      const loaded = P.normalizePositions(await A.unlock(profile, personalKey), catalog);
+      const unlocked = await A.unlock(profile, personalKey);
+      if ((profile.portfolio_id || "1") !== requestedPortfolio || (unlocked.portfolio_id && unlocked.portfolio_id !== requestedPortfolio)) throw new Error("Le profil appartient à un autre portefeuille");
+      const loaded = P.normalizePositions(unlocked, catalog);
+      if (requestedPortfolio !== activePortfolio) return;
       if (!holdingsAvailable || profileState?.key !== personalKey || profileState?.revision !== profile.revision) {
         applyPositions(loaded);
-        $("#portfolioMessage").textContent = loaded.length + " positions chargées automatiquement. Ton lien personnel fonctionne aussi depuis l’écran d’accueil.";
+        $("#portfolioMessage").textContent = loaded.length + " positions chargées automatiquement dans le portefeuille " + requestedPortfolio + ". Ton lien personnel fonctionne aussi depuis l’écran d’accueil.";
       }
       profileState = {key: personalKey, revision: profile.revision};
       save(PROFILE_STATE_KEY, profileState); save(PROFILE_CACHE_KEY, profile);
       profileInitialized = true; configurePersonalLink();
-    } catch (error) {$("#portfolioMessage").textContent = "Lien personnel indisponible : " + error.message + ". Les positions déjà enregistrées sont conservées.";}
+    } catch (error) {if (requestedPortfolio === activePortfolio) $("#portfolioMessage").textContent = "Lien personnel indisponible : " + error.message + ". Les positions déjà enregistrées sont conservées.";}
   }
   function renderPositionsVisibility() {
     $("#portfolioPositions").hidden = !positionsVisible;
@@ -95,11 +140,11 @@
   }
   function renderExposures(current) {
     for (const [view, axis] of [["Sectors", "sectors"], ["Geography", "geography"]]) {
-      const result = E.compare(current, exposures, axis), table = document.createDocumentFragment(), sources = document.createDocumentFragment();
+      const result = E.compare(current, exposures, axis, benchmarkId), table = document.createDocumentFragment(), sources = document.createDocumentFragment();
       const status = $("#portfolio" + view + "Status");
       status.textContent = !exposures ? "Les répartitions n’ont pas pu être chargées. Utilise « Actualiser »." : !result.available ?
         "Une cotation et un taux de change complets sont nécessaires pour calculer les pondérations." :
-        "Valeurs au " + current.date + " · FEQT au " + result.benchmark_date + " · FNB décomposés en placements sous-jacents" +
+        "Valeurs au " + current.date + (" · FEQT au ".replaceAll("FEQT", benchmarkId)) + result.benchmark_date + " · FNB décomposés en placements sous-jacents" +
         (exposureCached ? " · répartitions conservées" : "") + (result.indicative ? " · comparaison indicative : dates sous-jacentes distinctes pour QQC" : "") + (result.coverage < 99.995 ? " · " + U.formatNumber(100 - result.coverage, 2) + " % non classé" : "");
       status.classList.toggle("warning", !result.available || exposureCached || result.coverage < 99.995);
       if (result.available) {
@@ -114,8 +159,8 @@
           tr.append(el("td", "exposure-difference", U.validNumber(row.difference) ? (result.indicative ? "≈ " : "") + (row.difference > 0 ? "+" : "") + U.formatNumber(row.difference, 2) + " pt" : "—"));
           table.append(tr);
         }
-        const note = el("p", "", "Un écart positif indique une pondération plus élevée que FEQT. « Autres pays » regroupe les pays non détaillés par l’émetteur; leur poids individuel et leur écart ne sont pas disponibles. ≥ indique un poids minimal connu; aucun écart exact n’est calculé quand la répartition manque. Les actifs non classés restent visibles."); sources.append(note);
-        for (const source of [{id: "FEQT · référence", as_of: result.benchmark_date, source_url: result.benchmark_source, note: result.benchmark_note}, ...result.sources]) {
+        const note = el("p", "", ("Un écart positif indique une pondération plus élevée que FEQT. « Autres pays » regroupe les pays non détaillés par l’émetteur; leur poids individuel et leur écart ne sont pas disponibles. ≥ indique un poids minimal connu; aucun écart exact n’est calculé quand la répartition manque. Les actifs non classés restent visibles.".replaceAll("FEQT", benchmarkId))); sources.append(note);
+        for (const source of [{id: ("FEQT · référence".replaceAll("FEQT", benchmarkId)), as_of: result.benchmark_date, source_url: result.benchmark_source, note: result.benchmark_note}, ...result.sources]) {
           const paragraph = el("p"), link = el("a", "", source.id + " ↗"); link.href = source.source_url; link.target = "_blank"; link.rel = "noopener noreferrer";
           paragraph.append(link, document.createTextNode(" · " + source.as_of + (source.note ? " · " + source.note : ""))); sources.append(paragraph);
           for (const [url, label] of [[source.underlying_source_url, "Placements sous-jacents ↗"], [source.classification_source_url, "Classification GICS ↗"], [source.classification_secondary_source_url, "Activité de l’émetteur ↗"]]) if (url) {const extra = el("a", "", label); extra.href = url; extra.target = "_blank"; extra.rel = "noopener noreferrer"; paragraph.append(document.createTextNode(" · "), extra);}
@@ -127,7 +172,7 @@
   }
   function renderBenchmark(comparison) {
     const legend = document.createDocumentFragment();
-    for (const [label, value, className] of [["Mon portefeuille", comparison.portfolio_percent, ""], ["FEQT", comparison.benchmark_percent, "feqt"]]) {
+    for (const [label, value, className] of [["Mon portefeuille", comparison.portfolio_percent, ""], [benchmarkId, comparison.benchmark_percent, "feqt"]]) {
       const item = el("span", "portfolio-benchmark-item"), swatch = el("span", "portfolio-swatch " + className); swatch.setAttribute("aria-hidden", "true");
       item.append(swatch, el("span", "", label + " : "), el("strong", "", delta(value, true))); legend.append(item);
     }
@@ -135,10 +180,12 @@
     $("#portfolioBenchmark").replaceChildren(legend);
     $("#portfolioBenchmarkNote").textContent = (comparison.normalized ? "Rendement en % · même base au " + comparison.start : "Valorisation en CAD · base de rendement manquante") +
       " · clôtures en CAD, hors dividendes · positions actuelles reconstituées" + (comparison.available ?
-        (comparison.benchmark_start !== comparison.start || comparison.benchmark_end !== comparison.end ? " · FEQT : dernières clôtures disponibles du " + comparison.benchmark_start + " au " + comparison.benchmark_end : "") :
-        " · comparaison FEQT indisponible : historique ou base manquants pour cette période");
+        (comparison.benchmark_start !== comparison.start || comparison.benchmark_end !== comparison.end ? (" · FEQT : dernières clôtures disponibles du ".replaceAll("FEQT", benchmarkId)) + comparison.benchmark_start + " au " + comparison.benchmark_end : "") :
+        (" · comparaison FEQT indisponible : historique ou base manquants pour cette période".replaceAll("FEQT", benchmarkId)));
   }
   function renderMovers(day) {
+    const heading = {YTD: "depuis le début de l’année", "6M": "sur six mois", "3M": "sur trois mois", "1M": "sur un mois", "1W": "sur une semaine", "3D": "sur trois jours"}[moversRange];
+    $("#portfolioMoversTitle").textContent = "Les meilleures et les pires performances " + heading;
     const performance = P.performanceFor(positions, prices, day, moversRange);
     const periodLabel = {YTD: "YTD", "6M": "6 mois glissants", "3M": "3 mois glissants", "1M": "1 mois glissant", "1W": "5 séances", "3D": "3 séances"}[moversRange];
     $("#portfolioMoversPeriod").textContent = (performance.start ? "Du " + performance.start + " au " + performance.end : "Base de comparaison indisponible") + " · " + periodLabel + " · rendement en CAD, change inclus";
@@ -190,15 +237,15 @@
     $("#portfolioContributionRows").replaceChildren(table);
   }
   function renderRisk(selected) {
-    const risk = F.riskFor(positions, prices, selected), rows = document.createDocumentFragment();
+    const risk = F.riskFor(positions, prices, selected, benchmarkId), rows = document.createDocumentFragment();
     $("#portfolioRiskStatus").textContent = risk.available ? "Du " + risk.start + " au " + risk.end + " · " + risk.observations + " rendements de séances communes · CAD, hors dividendes" +
       (risk.start !== selected.start || risk.end !== selected.end ? " · période demandée : " + selected.start + " au " + selected.end : "") +
       (risk.skipped_closes ? " · " + risk.skipped_closes + " clôtures sans correspondance exclues" : "") :
-      (risk.reason === "short_history" ? "Pas assez de clôtures communes sur cette période." : "Risque indisponible : un historique complet du portefeuille et de FEQT est nécessaire pour cette période.");
+      (risk.reason === "short_history" ? "Pas assez de clôtures communes sur cette période." : ("Risque indisponible : un historique complet du portefeuille et de FEQT est nécessaire pour cette période.".replaceAll("FEQT", benchmarkId)));
     $("#portfolioRiskStatus").classList.toggle("warning", !risk.available);
     const measurements = [["volatility", "Volatilité annualisée", risk.portfolio.volatility, risk.benchmark.volatility, "%"],
       ["drawdown", "Baisse maximale", risk.portfolio.drawdown?.value, risk.benchmark.drawdown?.value, "%"],
-      ["beta", "Bêta relatif à FEQT", risk.portfolio.beta, risk.benchmark.beta, ""]];
+      ["beta", ("Bêta relatif à FEQT".replaceAll("FEQT", benchmarkId)), risk.portfolio.beta, risk.benchmark.beta, ""]];
     for (const [key, label, portfolio, benchmark, unit] of measurements) {
       const tr = el("tr"), heading = el("th", "", label); heading.scope = "row"; tr.dataset.metric = key; tr.append(heading);
       for (const value of [portfolio, benchmark]) tr.append(el("td", "", U.validNumber(value) ? U.formatNumber(value, 2) + (unit ? " " + unit : "") : "N/D"));
@@ -209,8 +256,8 @@
     const notes = [];
     if (risk.available) {
       if (!U.validNumber(risk.portfolio.volatility)) notes.push("Volatilité : minimum " + F.MIN_VOLATILITY_RETURNS + " rendements communs.");
-      if (!U.validNumber(risk.portfolio.beta)) notes.push(risk.beta_reason === "constant_benchmark" ? "Bêta indisponible : FEQT ne varie pas assez sur cet échantillon." : "Bêta : minimum " + F.MIN_BETA_RETURNS + " rendements communs.");
-      for (const [label, measure] of [["Portefeuille", risk.portfolio.drawdown], ["FEQT", risk.benchmark.drawdown]])
+      if (!U.validNumber(risk.portfolio.beta)) notes.push(risk.beta_reason === "constant_benchmark" ? ("Bêta indisponible : FEQT ne varie pas assez sur cet échantillon.".replaceAll("FEQT", benchmarkId)) : "Bêta : minimum " + F.MIN_BETA_RETURNS + " rendements communs.");
+      for (const [label, measure] of [["Portefeuille", risk.portfolio.drawdown], [benchmarkId, risk.benchmark.drawdown]])
         notes.push(label + " : " + (measure.value < 0 ? "baisse maximale du sommet du " + measure.peak_date + " au creux du " + measure.trough_date + "." : "aucune baisse entre sommet et creux observée sur ces clôtures."));
     } else notes.push("Choisis une période plus longue si l’échantillon est trop court; aucune estimation ne remplace une donnée manquante.");
     $("#portfolioRiskNote").textContent = notes.join(" ");
@@ -343,10 +390,11 @@
     });
     if (!result.rows.length) {ctx.fillStyle = muted; ctx.font = "23px Arial"; wrapped("Aucun résultat repéré pour mes titres cette semaine." + (result.unavailable.length ? " Calendriers indisponibles : " + result.unavailable.join(", ") : ""), 46, 215, width - 92, 32);}
     ctx.fillStyle = muted; ctx.font = "13px Arial"; ctx.fillText("Collecte : " + U.timestampLabel(earnings.generated_at) + (earningsCached || result.cached.length ? " · COPIE CONSERVÉE" : "") + " · Attentes absentes = N/D · BPA et consensus du même fournisseur", 46, canvas.height - 33);
-    canvas.toBlob(blob => {if (!blob) return; const url = URL.createObjectURL(blob), link = el("a"); link.href = url; link.download = "savy-resultats-" + result.week.start + ".png"; document.body.append(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(url), 30000);}, "image/png");
+    canvas.toBlob(blob => {if (!blob) return; const url = URL.createObjectURL(blob), link = el("a"); link.href = url; link.download = "savy-resultats-" + (activePortfolio === "2" ? "portefeuille-2-" : "") + result.week.start + ".png"; document.body.append(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(url), 30000);}, "image/png");
   }
   function renderAnalysis(selected, current) {renderContributions(selected); renderRisk(selected); renderEarnings(current);}
   function render() {
+    renderPortfolioChoice();
     $("#portfolioEmpty").hidden = positions.length > 0;
     $("#portfolioContent").hidden = positions.length === 0;
     $("#portfolioExport").disabled = !positions.length;
@@ -358,7 +406,7 @@
       button.querySelector("span").textContent = active ? (sortDescending ? "↓" : "↑") : "↕";
     }
     const controls = document.createDocumentFragment();
-    for (const item of P.RANGES) {const button = el("button", "", item.label); button.type = "button"; button.setAttribute("aria-pressed", String(item.key === range)); button.addEventListener("click", () => {range = item.key; render();}); controls.append(button);}
+    for (const item of P.RANGES) {const button = el("button", "", item.label); button.type = "button"; button.setAttribute("aria-pressed", String(item.key === range)); button.addEventListener("click", () => {range = item.key; saveView(); render();}); controls.append(button);}
     $("#portfolioRanges").replaceChildren(controls);
     if (!positions.length) {$("#portfolioStatus").textContent = "Importe ta sauvegarde ou ajoute tes positions. Les quantités restent sur cet appareil."; return;}
     if (!prices || !history.length) {$("#portfolioStatus").textContent = "Les cours n’ont pas pu être chargés. Tes positions sont conservées; utilise « Actualiser »."; $("#portfolioChart").replaceChildren(); $("#portfolioBenchmark").replaceChildren(); $("#portfolioBenchmarkNote").textContent = ""; $("#portfolioRows").replaceChildren(); $("#portfolioBest").replaceChildren(); $("#portfolioWorst").replaceChildren(); $("#portfolioMoversPeriod").textContent = ""; $("#portfolioMoversNote").textContent = "Les classements seront disponibles avec les cotations."; renderExposures(null); renderAnalysis(null, null); return;}
@@ -412,7 +460,7 @@
       tr.append(name, quantity, average, price, value, weight, gain, gainCAD, change, source); rows.append(tr);
     }
     $("#portfolioRows").replaceChildren(rows);
-    const comparison = P.benchmarkFor(selected, prices.series.find(row => row.id === "FEQT"));
+    const comparison = P.benchmarkFor(selected, prices.series.find(row => row.id === benchmarkId), benchmarkId);
     renderBenchmark(comparison); drawChart(selected.history, comparison);
   }
   function svgEl(tag, attrs, text) {const node = document.createElementNS("http://www.w3.org/2000/svg", tag); for (const [k, v] of Object.entries(attrs || {})) node.setAttribute(k, String(v)); if (text !== undefined) node.textContent = text; return node;}
@@ -428,8 +476,8 @@
     const x = day => left + (Date.parse(day) - firstTime) / (lastTime - firstTime) * (width - left - right);
     const y = value => top + (high - value) / (high - low) * (height - top - bottom);
     const svg = svgEl("svg", {viewBox: "0 0 " + width + " " + height, tabindex: 0, role: "img", "aria-label": "Historique théorique du portefeuille en dollars canadiens. Date, valeur et variation depuis le début de la période au survol. Flèches gauche et droite pour parcourir les valeurs."});
-    svg.setAttribute("aria-label", "Rendement du portefeuille et de FEQT en CAD, hors dividendes. Date, valeur et rendements au survol. Flèches gauche et droite pour parcourir les valeurs.");
-    svg.append(svgEl("title", {}, comparison.normalized ? "Rendement du portefeuille vs FEQT · même base · %" : "Valorisation reconstituée des positions actuelles · CAD"));
+    svg.setAttribute("aria-label", ("Rendement du portefeuille et de FEQT en CAD, hors dividendes. Date, valeur et rendements au survol. Flèches gauche et droite pour parcourir les valeurs.".replaceAll("FEQT", benchmarkId)));
+    svg.append(svgEl("title", {}, comparison.normalized ? ("Rendement du portefeuille vs FEQT · même base · %".replaceAll("FEQT", benchmarkId)) : "Valorisation reconstituée des positions actuelles · CAD"));
     for (let i = 0; i < 4; i++) {const value = low + (high - low) * i / 3; svg.append(svgEl("line", {x1: left, x2: width - right, y1: y(value), y2: y(value), class: "chart-grid"}), svgEl("text", {x: left - 10, y: y(value) + 4, "text-anchor": "end", class: "chart-axis"}, U.formatNumber(value, high - low < 10 ? 2 : 0) + (comparison.normalized ? " %" : "")));}
     for (let i = 0; i < 4; i++) {const stamp = firstTime + (lastTime - firstTime) * i / 3; svg.append(svgEl("text", {x: left + (width - left - right) * i / 3, y: height - 9, class: "chart-axis", "text-anchor": i === 0 ? "start" : i === 3 ? "end" : "middle"}, new Intl.DateTimeFormat("fr-CA", {timeZone: "UTC", month: "short", day: "numeric"}).format(new Date(stamp))));}
     let path = "", connected = false;
@@ -438,10 +486,10 @@
     if (benchmark.length) {let benchmarkPath = "", linked = false; for (const row of benchmark) {if (!U.validNumber(row[1])) {linked = false; continue;} benchmarkPath += (linked ? "L" : "M") + x(row[0]).toFixed(2) + "," + y(row[1]).toFixed(2); linked = true;} svg.append(svgEl("path", {d: benchmarkPath, class: "chart-line chart-benchmark"}));}
     const guide = svgEl("line", {y1: top, y2: height - bottom, class: "chart-guide", visibility: "hidden"}), dot = svgEl("circle", {r: 4, class: "chart-dot", visibility: "hidden"}); svg.append(guide, dot);
     const benchmarkDot = svgEl("circle", {r: 4, class: "chart-dot chart-benchmark-dot", visibility: "hidden"}); svg.append(benchmarkDot);
-    const hint = "Survole le graphique pour comparer le portefeuille et FEQT · flèches ← → au clavier";
+    const hint = ("Survole le graphique pour comparer le portefeuille et FEQT · flèches ← → au clavier".replaceAll("FEQT", benchmarkId));
     const tooltip = el("p", "chart-tooltip", hint); tooltip.setAttribute("aria-live", "polite"); let index = valid.length - 1;
     const baseline = original[0], canCompare = U.validNumber(baseline[1]) && baseline[1] > 0;
-    function select(row) {if (!row) return; const detail = details.get(row[0]); index = valid.findIndex(item => item[0] === row[0]); guide.setAttribute("x1", x(row[0])); guide.setAttribute("x2", x(row[0])); guide.setAttribute("visibility", "visible"); dot.setAttribute("cx", x(row[0])); dot.setAttribute("cy", y(row[1])); dot.setAttribute("visibility", "visible"); tooltip.textContent = row[0] + " · " + money(detail.value) + " CAD · " + (canCompare ? delta(detail.portfolio, true) + " depuis le " + baseline[0] : "variation indisponible : base du " + baseline[0] + " manquante"); if (U.validNumber(detail.benchmark)) {benchmarkDot.setAttribute("cx", x(row[0])); benchmarkDot.setAttribute("cy", y(detail.benchmark)); benchmarkDot.setAttribute("visibility", "visible"); tooltip.textContent += " · FEQT : " + delta(detail.benchmark, true) + " · écart : " + U.formatNumber(detail.portfolio - detail.benchmark, 2) + " pt" + (detail.benchmark_date !== row[0] ? " (clôture FEQT du " + detail.benchmark_date + ")" : "");} else {benchmarkDot.setAttribute("visibility", "hidden"); tooltip.textContent += " · FEQT : —";}}
+    function select(row) {if (!row) return; const detail = details.get(row[0]); index = valid.findIndex(item => item[0] === row[0]); guide.setAttribute("x1", x(row[0])); guide.setAttribute("x2", x(row[0])); guide.setAttribute("visibility", "visible"); dot.setAttribute("cx", x(row[0])); dot.setAttribute("cy", y(row[1])); dot.setAttribute("visibility", "visible"); tooltip.textContent = row[0] + " · " + money(detail.value) + " CAD · " + (canCompare ? delta(detail.portfolio, true) + " depuis le " + baseline[0] : "variation indisponible : base du " + baseline[0] + " manquante"); if (U.validNumber(detail.benchmark)) {benchmarkDot.setAttribute("cx", x(row[0])); benchmarkDot.setAttribute("cy", y(detail.benchmark)); benchmarkDot.setAttribute("visibility", "visible"); tooltip.textContent += (" · FEQT : ".replaceAll("FEQT", benchmarkId)) + delta(detail.benchmark, true) + " · écart : " + U.formatNumber(detail.portfolio - detail.benchmark, 2) + " pt" + (detail.benchmark_date !== row[0] ? (" (clôture FEQT du ".replaceAll("FEQT", benchmarkId)) + detail.benchmark_date + ")" : "");} else {benchmarkDot.setAttribute("visibility", "hidden"); tooltip.textContent += (" · FEQT : —".replaceAll("FEQT", benchmarkId));}}
     svg.addEventListener("focus", () => select(valid[index]));
     svg.addEventListener("keydown", event => {if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return; event.preventDefault(); index = event.key === "Home" ? 0 : event.key === "End" ? valid.length - 1 : Math.min(valid.length - 1, Math.max(0, index + (event.key === "ArrowLeft" ? -1 : 1))); select(valid[index]);});
     svg.addEventListener("pointermove", event => {const rect = svg.getBoundingClientRect(); if (!rect.width) return; const coordinate = Math.max(left, Math.min(width - right, (event.clientX - rect.left) * width / rect.width)); select(U.nearestPoint(data, firstTime + (coordinate - left) / (width - left - right) * (lastTime - firstTime)));});
@@ -463,12 +511,12 @@
   }
   $("#portfolioImport").addEventListener("change", async event => {const file = event.target.files[0]; if (!file || !catalog) return; try {if (file.size > 100000) throw new Error("Fichier trop volumineux"); applyPositions(JSON.parse(await file.text()));} catch (error) {$("#portfolioMessage").textContent = "Import impossible : " + error.message;} finally {event.target.value = "";}});
   $("#positionForm").addEventListener("submit", event => {event.preventDefault(); if (!catalog) return; try {const ticker = $("#positionTicker").value; const existing = positions.find(p => p.ticker === ticker); const quantity = Number($("#positionQuantity").value.trim().replace(",", ".")); const costText = $("#positionAverageCost").value.trim(); const average_cost = costText ? Number(costText.replace(",", ".")) : existing?.average_cost; const next = {ticker, quantity, ...(average_cost !== undefined ? {average_cost} : {})}; applyPositions(existing ? positions.map(p => p.ticker === ticker ? next : p) : [...positions, next]); $("#positionQuantity").value = ""; $("#positionAverageCost").value = "";} catch (error) {$("#portfolioMessage").textContent = error.message;}});
-  $("#portfolioExport").addEventListener("click", () => {const blob = new Blob([JSON.stringify({schema_version: 1, base_currency: "CAD", positions}, null, 2) + "\n"], {type: "application/json"}); const url = URL.createObjectURL(blob), anchor = el("a"); anchor.href = url; anchor.download = "portefeuille-savy.json"; anchor.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);});
+  $("#portfolioExport").addEventListener("click", () => {const blob = new Blob([JSON.stringify({schema_version: 1, base_currency: "CAD", portfolio_id: activePortfolio, benchmark: benchmarkId, positions}, null, 2) + "\n"], {type: "application/json"}); const url = URL.createObjectURL(blob), anchor = el("a"); anchor.href = url; anchor.download = activePortfolio === "2" ? "portefeuille-2-savy.json" : "portefeuille-savy.json"; anchor.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);});
   $("#portfolioPositionsToggle").addEventListener("click", () => {positionsVisible = !positionsVisible; save(POSITIONS_VISIBLE_KEY, positionsVisible); renderPositionsVisibility();});
   for (const view of ["Sectors", "Geography"]) $("#portfolio" + view + "Toggle").addEventListener("click", () => {exposureViews[view] = exposureViews[view] !== true; save(EXPOSURE_VIEWS_KEY, exposureViews); renderExposureVisibility();});
   function currentEarningsValuation() {return prices && history.length ? P.valuationAt(positions, prices, history.at(-1)[0], window.SavyLiveFX?.current()) : null;}
-  $("#portfolioEarningsTicker").addEventListener("change", event => {earningsTicker = event.target.value; renderEarnings(currentEarningsValuation());});
-  $("#portfolioEarningsWeek").addEventListener("change", event => {earningsWeek = event.target.value; renderEarnings(currentEarningsValuation());});
+  $("#portfolioEarningsTicker").addEventListener("change", event => {earningsTicker = event.target.value; saveView(); renderEarnings(currentEarningsValuation());});
+  $("#portfolioEarningsWeek").addEventListener("change", event => {earningsWeek = event.target.value; saveView(); renderEarnings(currentEarningsValuation());});
   $("#portfolioEarningsImage").addEventListener("click", saveEarningsImage);
   document.addEventListener("click", event => {
     if (!profileInitialized) return;
@@ -478,9 +526,9 @@
   });
   for (const item of P.RANGES) {
     const button = el("button", "", item.label); button.type = "button";
-    button.setAttribute("aria-pressed", String(item.key === moversRange));
+    button.dataset.range = item.key; button.setAttribute("aria-pressed", String(item.key === moversRange));
     button.addEventListener("click", () => {
-      moversRange = item.key;
+      moversRange = item.key; saveView();
       for (const other of $("#portfolioMoversRanges").querySelectorAll("button")) other.setAttribute("aria-pressed", String(other === button));
       const label = {YTD: "depuis le début de l’année", "6M": "sur six mois", "3M": "sur trois mois", "1M": "sur un mois", "1W": "sur une semaine", "3D": "sur trois jours"}[moversRange];
       $("#portfolioMoversTitle").textContent = "Les meilleures et les pires performances " + label;
@@ -488,7 +536,9 @@
     });
     $("#portfolioMoversRanges").append(button);
   }
-  for (const button of document.querySelectorAll("[data-portfolio-sort]")) button.addEventListener("click", () => {const key = button.dataset.portfolioSort; sortDescending = key === sortKey ? !sortDescending : true; sortKey = key; render();});
+  for (const button of document.querySelectorAll("[data-portfolio-sort]")) button.addEventListener("click", () => {const key = button.dataset.portfolioSort; sortDescending = key === sortKey ? !sortDescending : true; sortKey = key; saveView(); render();});
+  loadView(); renderPortfolioChoice();
+  for (const button of document.querySelectorAll("[data-portfolio-id]")) button.addEventListener("click", () => choosePortfolio(button.dataset.portfolioId));
   window.SavyPortfolio = {refresh};
   document.addEventListener("savy:fx", () => {
     if (prices && history.length && !document.activeElement?.closest("#portfolioRows input")) render();
