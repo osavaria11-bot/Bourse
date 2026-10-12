@@ -5,7 +5,7 @@
   "use strict";
   const RANGES = [{key: "YTD", label: "YTD"}, {key: "6M", label: "6 mois"}, {key: "3M", label: "3 mois"},
     {key: "1M", label: "1 mois"}, {key: "1W", label: "1 semaine"}, {key: "3D", label: "3 jours"}];
-  const BENCHMARKS = {FEQT: "FEQT.NE", VBAL: "VBAL.TO"};
+  const BENCHMARKS = {FEQT: "FEQT.NE", VBAL: "VBAL.TO", VGRO: "VGRO.TO"};
   function normalizePrices(payload, catalog) {
     if (catalog?.schema_version !== 1 || !Array.isArray(catalog.series) || payload?.kind !== "security_prices" ||
         !Number.isFinite(U.parseTimestamp(payload.generated_at)) || U.parseTimestamp(payload.generated_at) > Date.now() + 300000) throw new Error("Cotations invalides");

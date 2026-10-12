@@ -31,7 +31,7 @@ test("The personal Home Screen URL retains access in its fragment and uses the s
 for (const portfolioId of ["2", "3"]) test("profile " + portfolioId + " binds its portfolio ID to authentication and its Home Screen selection", async () => {
   const f = fixture(), profile = {...f.profile, portfolio_id: portfolioId}, iv = crypto.randomBytes(12);
   const cipher = crypto.createCipheriv("aes-256-gcm", Buffer.from(f.key, "base64url"), iv); cipher.setAAD(A.associatedData(profile));
-  const content = {...f.portfolio, portfolio_id: portfolioId, benchmark: "VBAL"};
+  const content = {...f.portfolio, portfolio_id: portfolioId, benchmark: portfolioId === "3" ? "VGRO" : "VBAL"};
   profile.iv = iv.toString("base64url"); profile.ciphertext = Buffer.concat([cipher.update(JSON.stringify(content)), cipher.final(), cipher.getAuthTag()]).toString("base64url");
   assert.deepEqual(await A.unlock(profile, f.key), content);
   await assert.rejects(A.unlock({...profile, portfolio_id: "1"}, f.key));

@@ -7,12 +7,13 @@
   const EARNINGS_KEY = "savy:portfolio-earnings:v1";
   const ACTIVE_KEY = "savy:portfolio-active:v1", VIEW_KEY = "savy:portfolio-view:v1";
   const portfolioIds = ["1", "2", "3"];
+  const portfolioBenchmarks = {"1": "FEQT", "2": "VBAL", "3": "VGRO"};
   const scopedKeys = new Set([HOLDINGS_KEY, POSITIONS_VISIBLE_KEY, PROFILE_STATE_KEY, PROFILE_CACHE_KEY, EXPOSURE_VIEWS_KEY, VIEW_KEY]);
   const initialFragment = new URLSearchParams(location.hash.slice(1));
   let activePortfolio = "1";
   const selectedPortfolio = initialFragment.get("portfolio") || stored(ACTIVE_KEY, "1");
   activePortfolio = portfolioIds.includes(selectedPortfolio) ? selectedPortfolio : "1";
-  let benchmarkId = activePortfolio === "1" ? "FEQT" : "VBAL";
+  let benchmarkId = portfolioBenchmarks[activePortfolio];
   let catalog = null, prices = null, cached = false, range = "YTD", moversRange = "1M", positions = [], history = [], imported = false;
   let exposures = null, exposureCached = false;
   let earnings = null, earningsCached = false, earningsTicker = "", earningsWeek = F.weekFor().start, earningsSelection = null;
@@ -49,7 +50,7 @@
   }
   async function choosePortfolio(id) {
     if (!portfolioIds.includes(id) || id === activePortfolio || !catalog) return;
-    saveView(); activePortfolio = id; benchmarkId = id === "1" ? "FEQT" : "VBAL"; save(ACTIVE_KEY, id);
+    saveView(); activePortfolio = id; benchmarkId = portfolioBenchmarks[id]; save(ACTIVE_KEY, id);
     profileState = stored(PROFILE_STATE_KEY, null); profileInitialized = false;
     positionsVisible = stored(POSITIONS_VISIBLE_KEY, false) === true;
     const views = stored(EXPOSURE_VIEWS_KEY, {}); exposureViews.Sectors = views.Sectors === true; exposureViews.Geography = views.Geography === true;

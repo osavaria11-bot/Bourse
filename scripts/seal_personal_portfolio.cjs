@@ -16,7 +16,7 @@ if (["2", "3"].includes(input.portfolio_id)) profile.portfolio_id = input.portfo
 const iv = crypto.randomBytes(12), cipher = crypto.createCipheriv("aes-256-gcm", Buffer.from(key, "base64url"), iv);
 cipher.setAAD(A.associatedData(profile));
 const plaintext = JSON.stringify({schema_version: 1, base_currency: "CAD", as_of: input.as_of,
-  ...(["2", "3"].includes(input.portfolio_id) ? {portfolio_id: input.portfolio_id, benchmark: "VBAL"} : {}), positions});
+  ...(["2", "3"].includes(input.portfolio_id) ? {portfolio_id: input.portfolio_id, benchmark: input.portfolio_id === "3" ? "VGRO" : "VBAL"} : {}), positions});
 const ciphertext = Buffer.concat([cipher.update(plaintext, "utf8"), cipher.final(), cipher.getAuthTag()]);
 profile.iv = iv.toString("base64url"); profile.ciphertext = ciphertext.toString("base64url");
 fs.writeFileSync(outputPath, JSON.stringify(profile, null, 2) + "\n");

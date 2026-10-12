@@ -39,7 +39,7 @@ function sealFixture(positions, revision, portfolioId = "1") {
   if (portfolioId !== "1") profile.portfolio_id = portfolioId;
   const iv = crypto.randomBytes(12), cipher = crypto.createCipheriv("aes-256-gcm", Buffer.from(personalKey, "base64url"), iv);
   cipher.setAAD(A.associatedData(profile));
-  const ciphertext = Buffer.concat([cipher.update(JSON.stringify({positions, ...(portfolioId !== "1" ? {portfolio_id: portfolioId, benchmark: "VBAL"} : {})})), cipher.final(), cipher.getAuthTag()]);
+  const ciphertext = Buffer.concat([cipher.update(JSON.stringify({positions, ...(portfolioId !== "1" ? {portfolio_id: portfolioId, benchmark: portfolioId === "3" ? "VGRO" : "VBAL"} : {})})), cipher.final(), cipher.getAuthTag()]);
   return {...profile, iv: iv.toString("base64url"), ciphertext: ciphertext.toString("base64url")};
 }
 let profileFixture = sealFixture(syntheticPositions, "synthetic-v1");
@@ -459,8 +459,8 @@ async function main() {
     assert.deepEqual(await direct.evaluate(() => JSON.parse(localStorage.getItem('savy:private-holdings:v1:2')).positions), editedSecond);
     assert.deepEqual(await direct.evaluate(() => JSON.parse(localStorage.getItem('savy:private-holdings:v1')).positions), syntheticPositions);
     assert.equal(await direct.locator('[data-portfolio-id="3"]').getAttribute('aria-pressed'), 'true');
-    assert.equal(await direct.locator('#portfolioRiskTitle').textContent(), 'Risque comparé à VBAL');
-    assert.match(await direct.locator('#portfolioBenchmark').innerText(), /VBAL/);
+    assert.equal(await direct.locator('#portfolioRiskTitle').textContent(), 'Risque comparé à VGRO');
+    assert.match(await direct.locator('#portfolioBenchmark').innerText(), /VGRO/);
     assert.equal(await direct.locator('#portfolioChart .chart-benchmark').count(), 1);
     assert.equal(await direct.locator('#portfolioPositions').isVisible(), false);
     assert.equal(await direct.locator('#portfolioRows tr[data-ticker="MSFTCDR"] a').getAttribute('href'), 'https://finance.yahoo.com/quote/MSFT.TO/');
@@ -468,19 +468,19 @@ async function main() {
     assert.equal(await direct.locator('#portfolioValue').textContent(), new Intl.NumberFormat('fr-CA', {style: 'currency', currency: 'CAD', maximumFractionDigits: 2}).format(thirdCurrent.total));
     for (const item of P.RANGES) {
       await direct.locator('#portfolioRanges button').filter({hasText: new RegExp('^' + item.label + '$')}).click();
-      const selected = P.period(thirdHistory, item.key), expected = P.benchmarkFor(selected, prices.series.find(row => row.id === 'VBAL'), 'VBAL');
+      const selected = P.period(thirdHistory, item.key), expected = P.benchmarkFor(selected, prices.series.find(row => row.id === 'VGRO'), 'VGRO');
       assert.equal(await direct.locator('#portfolioBenchmark .portfolio-benchmark-item:nth-child(2) strong').textContent(), (expected.benchmark_percent > 0 ? '+' : '') + U.formatNumber(expected.benchmark_percent, 2) + ' %');
-      const risk = F.riskFor(thirdSyntheticPositions, prices, selected, 'VBAL'), value = risk.portfolio.beta;
+      const risk = F.riskFor(thirdSyntheticPositions, prices, selected, 'VGRO'), value = risk.portfolio.beta;
       assert.equal(await direct.locator('#portfolioRiskRows tr[data-metric="beta"] td').first().textContent(), U.validNumber(value) ? U.formatNumber(value, 2) : 'N/D');
       assert.equal(await direct.locator('#portfolioContributionRows tr').count(), F.contributionsFor(thirdSyntheticPositions, prices, selected).rows.length);
     }
     await direct.locator('#portfolioRanges button').filter({hasText: /^6 mois$/}).click();
     for (const [view, axis] of [['Sectors', 'sectors'], ['Geography', 'geography']]) {
       await direct.locator('#portfolio' + view + 'Toggle').click();
-      const result = E.compare(thirdCurrent, exposures, axis, 'VBAL');
+      const result = E.compare(thirdCurrent, exposures, axis, 'VGRO');
       assert.equal(result.coverage, 100);
       assert.equal(await direct.locator('#portfolio' + view + 'Rows tr').count(), result.rows.length);
-      assert.match(await direct.locator('#portfolio' + view + 'Title').textContent(), /VBAL/);
+      assert.match(await direct.locator('#portfolio' + view + 'Title').textContent(), /VGRO/);
       for (const row of result.rows) {
         const cells = await direct.locator('#portfolio' + view + 'Rows tr[data-exposure="' + row.id + '"] td').allTextContents();
         assert.equal(cells[1], U.validNumber(row.benchmark) ? U.formatNumber(row.benchmark, 2) + ' %' : 'Non publié');
@@ -503,7 +503,7 @@ async function main() {
     const editedThird = thirdSyntheticPositions.map(row => row.ticker === 'MSFTCDR' ? {...row, quantity: 4.25} : row);
     const thirdDownload = direct.waitForEvent('download'); await direct.locator('#portfolioExport').click();
     const thirdFile = await thirdDownload, thirdBackup = JSON.parse(fs.readFileSync(await thirdFile.path(), 'utf8'));
-    assert.equal(thirdFile.suggestedFilename(), 'portefeuille-3-savy.json'); assert.equal(thirdBackup.portfolio_id, '3'); assert.equal(thirdBackup.benchmark, 'VBAL'); assert.deepEqual(thirdBackup.positions, editedThird);
+    assert.equal(thirdFile.suggestedFilename(), 'portefeuille-3-savy.json'); assert.equal(thirdBackup.portfolio_id, '3'); assert.equal(thirdBackup.benchmark, 'VGRO'); assert.deepEqual(thirdBackup.positions, editedThird);
     const thirdManifest = await direct.evaluate(async () => (await fetch(document.querySelector('#savyPersonalManifest').href)).json());
     assert.equal(new URLSearchParams(new URL(thirdManifest.start_url).hash.slice(1)).get('portfolio'), '3');
     if (process.env.SCREENSHOT_LOGS) {
@@ -517,7 +517,7 @@ async function main() {
     assert.ok(await direct.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
     profileOffline = true; await direct.reload();
     await direct.waitForFunction(() => document.querySelector('#portfolioRows input[aria-label="Quantité MSFTCDR"]')?.value === '4,25');
-    assert.match(await direct.locator('#portfolioBenchmark').innerText(), /VBAL/);
+    assert.match(await direct.locator('#portfolioBenchmark').innerText(), /VGRO/);
     profileOffline = false;
     const goodThirdProfile = thirdProfileFixture; thirdProfileFixture = secondProfileFixture;
     await direct.locator('#refreshButton').click(); await direct.waitForFunction(() => !document.querySelector('#refreshButton').disabled);
@@ -542,7 +542,7 @@ async function main() {
     await direct.locator('[data-portfolio-id="1"]').click();
     await direct.waitForFunction(() => document.querySelector('#portfolioRows tr[data-ticker="SHOP"]'));
     await direct.locator('#portfolioRanges button').filter({hasText: /^YTD$/}).click();
-    console.log('Three portfolio checks passed: separate authenticated profiles, edits, UI state and exports, VBAL benchmark/risk across all periods, underlying sector/geography differences, CDR in CAD and results in USD, earnings PNG, offline cache and fresh Home Screen access, swapped profiles rejected, desktop and 320/375px mobile.');
+    console.log('Three portfolio checks passed: separate authenticated profiles, edits, UI state and exports, VBAL/VGRO benchmark/risk across all periods, underlying sector/geography differences, CDR in CAD and results in USD, earnings PNG, offline cache and fresh Home Screen access, swapped profiles rejected, desktop and 320/375px mobile.');
     await direct.locator("#portfolioPositionsToggle").click();
     await direct.locator('input[aria-label="Quantité SHOP"]').fill("3");
     await direct.locator('input[aria-label="Quantité SHOP"]').press("Tab");

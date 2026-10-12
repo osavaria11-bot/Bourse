@@ -6171,6 +6171,7 @@
   ],
   "benchmarks": [
     "FEQT",
-    "VBAL"
+    "VBAL",
+    "VGRO"
   ]
 }
