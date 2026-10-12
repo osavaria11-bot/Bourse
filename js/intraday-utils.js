@@ -43,7 +43,7 @@
   function shortLabel(row) {
     if (!row) return "Clôture quotidienne";
     const time = new Intl.DateTimeFormat("fr-CA", {timeZone: "America/Toronto", month: "short", day: "numeric",
-      hour: "2-digit", minute: "2-digit"}).format(U.parseTimestamp(row.timestamp));
+      hour: "2-digit", minute: "2-digit"}).format(U.parseTimestamp(row.timestamp)).replace(/(\d{1,2}) h (\d{2})/, "$1\u00a0h\u00a0$2");
     return (row.stale ? "Cotation conservée" : row.active ? "En séance" : "Marché fermé") + " · " + time +
       (row.provider_delay_minutes > 0 ? " · retard " + row.provider_delay_minutes + " min" : "");
   }

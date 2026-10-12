@@ -43,7 +43,7 @@ button {color:var(--text)}
 .update-status.warning {color:var(--gold)}
 .kpi-grid {display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
 .kpi {padding:16px 18px;background:var(--surface);border:1px solid var(--border);border-radius:12px;min-width:0}
-.kpi .eyebrow {font-size:9px}
+.kpi .eyebrow {font-size:9px;line-height:1.3;min-height:2.6em}
 .kpi-value {font-size:clamp(18px,1.7vw,25px);font-weight:650;letter-spacing:-.035em;margin:6px 0 4px;line-height:1.3;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
 .kpi .meta {font-size:10px}
 .kpi a.meta {display:inline-block;font-size:10px;margin-top:4px}
@@ -51,11 +51,12 @@ button {color:var(--text)}
 .quote-meta {margin-top:6px;min-width:0;overflow-wrap:anywhere}
 .quote-meta>a {display:inline-block;font-size:11px;margin-top:2px}
 .live-companion {margin-top:10px;padding-top:10px;border-top:1px solid var(--border);min-width:0;overflow-wrap:anywhere}
+.compact-companion {margin-top:7px;padding-top:7px}
 .live-companion-title {font-size:11px;color:var(--muted);line-height:1.4;margin-bottom:3px}
 .live-companion-value {display:inline-block;font-size:16px;font-weight:550;font-variant-numeric:tabular-nums}
 .live-companion .meta {font-size:11px;margin-top:3px}
 .kpi .live-companion-title,.kpi .live-companion .meta {font-size:10px}
-.kpi .live-companion-value {font-size:14px}
+.kpi .live-companion-value {font-size:12px}
 .companion-note {font-style:italic}
 .policy-odds {margin-top:18px}
 .policy-odds-heading {display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap;margin-bottom:10px}

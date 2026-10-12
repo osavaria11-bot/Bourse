@@ -100,19 +100,21 @@
     link.href = quote.source_url; link.target = "_blank"; link.rel = "noopener noreferrer";
     note.append(time, link); return note;
   }
-  function marketCompanion(point) {
-    const definitions = {DGS10: ["UST10Y", "10 ans en séance · indice Cboe TNX", "%"],
+  function marketCompanion(point, compact = false) {
+    const definitions = {DGS10: ["UST10Y", "10 ans en séance · indice Cboe TNX", "%", "Indice TNX"],
       DCOILWTICO: ["WTIFUT", "WTI à terme · contrat proche", "$ US/baril"],
       DTWEXBGS: ["DXY", "Dollar en séance · DXY, six devises", "points"]};
     const definition = definitions[point?.id], q = definition && window.SavyLiveQuotes?.current(definition[0]);
     if (!q) return null;
-    const note = el("div", "live-companion");
-    note.append(el("p", "live-companion-title", definition[1]));
-    const link = el("a", "live-companion-value", U.formatNumber(q.price, point.decimals) + " " + definition[2] + " ↗");
+    const note = el("div", "live-companion" + (compact ? " compact-companion" : ""));
+    if (!compact) note.append(el("p", "live-companion-title", definition[1]));
+    const link = el("a", "live-companion-value", (compact ? (definition[3] || definition[1]) + " · " : "") + U.formatNumber(q.price, point.decimals) + " " + definition[2] + " ↗");
     link.href = q.source_url; link.target = "_blank"; link.rel = "noopener noreferrer";
     const time = el("p", "meta" + (q.stale ? " warning" : ""), window.IntradayUtils.shortLabel(q));
     time.title = window.IntradayUtils.label(q);
-    note.append(link, time, el("p", "meta companion-note", "Référence distincte du graphique FRED."));
+    note.append(link, time);
+    if (compact) note.title = "Référence de marché distincte de la série FRED du graphique. " + window.IntradayUtils.label(q);
+    else note.append(el("p", "meta companion-note", "Référence distincte du graphique FRED."));
     return note;
   }
   function quotedChange(point, q) {
@@ -140,7 +142,7 @@
       else card.append(el("p", "meta", point ? U.observationLabel(point.date, point.frequency) + (id === "DEXCAUS" ? " · historique FRED" : "") : "Période non disponible"));
       const change = point ? U.changeLabel(point) : { text: "En attente de collecte", direction: "flat" };
       if (!live) card.append(el("p", "change " + change.direction, id === "DEXCAUS" ? "Dernière observation FRED · " + change.text : change.text));
-      const companion = marketCompanion(point); if (companion) card.append(companion);
+      const companion = marketCompanion(point, true); if (companion) card.append(companion);
       fragment.append(card);
     }
     $("#kpis").replaceChildren(fragment);

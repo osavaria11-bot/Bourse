@@ -74,6 +74,9 @@ async function main() {
       }).map(node => card.dataset.id + ": " + node.className);
     }));
     assert.deepEqual(overflow, [], "Macro content must fit each card at " + width + "px");
+    const offsets = await page.locator("#kpis .kpi").evaluateAll(cards => cards.map(card =>
+      card.querySelector(".kpi-value").getBoundingClientRect().top - card.getBoundingClientRect().top));
+    assert.ok(Math.max(...offsets) - Math.min(...offsets) < 1, "Summary values must align below their labels at " + width + "px");
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
   }
   try {
