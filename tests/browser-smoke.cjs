@@ -47,7 +47,7 @@ const briefing = {schema_version: 4, kind: "news_digest", language: "fr", timezo
     explanation: "Observation synthétique pour le test du tableau.", observation_date: edition,
     source_url: "https://fred.stlouisfed.org/series/" + id}))};
 const odds = {schema_version: 1, kind: "rate_odds", generated_at: now.toISOString(), decisions: ["fed", "canada"].map(id => ({
-  id, meeting_date: new Date(now.getTime() + 15 * 86400000).toISOString().slice(0,10), as_of: now.toISOString().slice(0,10),
+  id, meeting_date: new Date(now.getTime() + 15 * 86400000).toISOString().slice(0,10), as_of: new Intl.DateTimeFormat("en-CA", {timeZone: "America/Toronto"}).format(now),
   hike: 20, hold: 80, cut: 0, status: "fresh", methodology: "OIS"}))};
 let offline = false, failAllData = false, failNews = false, invalidNews = false, failMarkets = false, invalidMarkets = false;
 const contentTypes = { ".html": "text/html", ".css": "text/css", ".js": "text/javascript", ".json": "application/json", ".png": "image/png" };
