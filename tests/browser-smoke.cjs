@@ -154,7 +154,7 @@ async function run() {
     assert.match(await feqtCard.locator("a").innerText(), /FNB/);
     assert.equal(await feqtCard.locator("a").getAttribute("href"), "https://finance.yahoo.com/quote/FEQT.NE/");
     const marketRange = page.getByRole("group", {name: "Période des indices boursiers"});
-    assert.equal(await marketRange.getByRole("button").count(), 9);
+    assert.equal(await marketRange.getByRole("button").count(), 10);
     const history = markets.series[0].history;
     const oneMonth = new Date(markets.series[0].date + "T00:00:00Z");
     const anchorDay = oneMonth.getUTCDate(); oneMonth.setUTCDate(1); oneMonth.setUTCMonth(oneMonth.getUTCMonth() - 1);

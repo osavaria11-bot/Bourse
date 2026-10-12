@@ -9,6 +9,7 @@
   const ACTIVE_KEY = "savy:portfolio-active:v1", VIEW_KEY = "savy:portfolio-view:v1";
   const portfolioIds = ["1", "2", "3"];
   const portfolioBenchmarks = {"1": "FEQT", "2": "VBAL", "3": "VGRO"};
+  const chartRanges = [{key: "INTRADAY", label: "Intraday"}, ...P.RANGES];
   const scopedKeys = new Set([HOLDINGS_KEY, POSITIONS_VISIBLE_KEY, PROFILE_STATE_KEY, PROFILE_CACHE_KEY, EXPOSURE_VIEWS_KEY, VIEW_KEY]);
   const initialFragment = new URLSearchParams(location.hash.slice(1));
   let activePortfolio = "1";
@@ -43,7 +44,7 @@
   function saveView() {save(VIEW_KEY, {range, moversRange, sortKey, sortDescending, earningsWeek, earningsTicker});}
   function loadView() {
     const view = stored(VIEW_KEY, {});
-    range = P.RANGES.some(item => item.key === view.range) ? view.range : "YTD";
+    range = chartRanges.some(item => item.key === view.range) ? view.range : "YTD";
     moversRange = P.RANGES.some(item => item.key === view.moversRange) ? view.moversRange : "1M";
     sortKey = ["unrealized_percent", "unrealized_cad", "period_change_cad"].includes(view.sortKey) ? view.sortKey : null;
     sortDescending = view.sortDescending !== false;
@@ -217,7 +218,7 @@
   function renderContributions(selected, quoteData = prices) {
     const result = F.contributionsFor(positions, quoteData, selected), table = document.createDocumentFragment();
     $("#portfolioContributionsTotal").textContent = result.available ? points(result.total) + " au total" : "—";
-    $("#portfolioContributionsStatus").textContent = result.available ? "Du " + result.start + " au " + result.end + " · même période que le graphique · contributions en CAD, change inclus" :
+    $("#portfolioContributionsStatus").textContent = result.available ? (selected.intraday ? "Séance du " + selected.session_date + " · depuis la clôture précédente" : "Du " + result.start + " au " + result.end) + " · même période que le graphique · contributions en CAD, change inclus" :
       "Contributions indisponibles : une valeur complète de toutes les positions au début et à la fin de la période est nécessaire.";
     $("#portfolioContributionsStatus").classList.toggle("warning", !result.available);
     $("#portfolioContributionsSummary").textContent = "Voir toutes les contributions" + (result.available ? " (" + result.rows.length + ")" : "");
@@ -401,7 +402,10 @@
     ctx.fillStyle = muted; ctx.font = "13px Arial"; ctx.fillText("Collecte : " + U.timestampLabel(earnings.generated_at) + (earningsCached || result.cached.length ? " · COPIE CONSERVÉE" : "") + " · Attentes absentes = N/D · BPA et consensus du même fournisseur", 46, canvas.height - 33);
     canvas.toBlob(blob => {if (!blob) return; const url = URL.createObjectURL(blob), link = el("a"); link.href = url; link.download = "savy-resultats-" + (activePortfolio !== "1" ? "portefeuille-" + activePortfolio + "-" : "") + result.week.start + ".png"; document.body.append(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(url), 30000);}, "image/png");
   }
-  function renderAnalysis(selected, current, quoteData = prices, closedSelected = selected) {renderContributions(selected, quoteData); renderRisk(closedSelected); renderEarnings(current);}
+  function renderAnalysis(selected, current, quoteData = prices, closedSelected = selected) {
+    renderContributions(selected, quoteData); renderRisk(selected?.intraday ? null : closedSelected); renderEarnings(current);
+    if (selected?.intraday) {$("#portfolioRiskStatus").textContent = "Les mesures de risque utilisent les clôtures quotidiennes. Choisis une période plus longue pour les consulter."; $("#portfolioRiskNote").textContent = "Les points intraday ne servent pas au calcul du bêta ou de la volatilité annualisée.";}
+  }
   function render() {
     renderPortfolioChoice();
     $("#portfolioEmpty").hidden = positions.length > 0;
@@ -415,7 +419,7 @@
       button.querySelector("span").textContent = active ? (sortDescending ? "↓" : "↑") : "↕";
     }
     const controls = document.createDocumentFragment();
-    for (const item of P.RANGES) {const button = el("button", "", item.label); button.type = "button"; button.setAttribute("aria-pressed", String(item.key === range)); button.addEventListener("click", () => {range = item.key; saveView(); render();}); controls.append(button);}
+    for (const item of chartRanges) {const button = el("button", "", item.label); button.type = "button"; button.dataset.range = item.key; button.setAttribute("aria-pressed", String(item.key === range)); button.addEventListener("click", () => {range = item.key; saveView(); render();}); controls.append(button);}
     $("#portfolioRanges").replaceChildren(controls);
     if (!positions.length) {
       const needsLink = !holdingsAvailable && !personalKey;
@@ -424,14 +428,18 @@
       return;
     }
     if (!prices || !history.length) {$("#portfolioStatus").textContent = "Les cours n’ont pas pu être chargés. Tes positions sont conservées; utilise « Actualiser »."; $("#portfolioChart").replaceChildren(); $("#portfolioBenchmark").replaceChildren(); $("#portfolioBenchmarkNote").textContent = ""; $("#portfolioRows").replaceChildren(); $("#portfolioBest").replaceChildren(); $("#portfolioWorst").replaceChildren(); $("#portfolioMoversPeriod").textContent = ""; $("#portfolioMoversNote").textContent = "Les classements seront disponibles avec les cotations."; renderExposures(null); renderAnalysis(null, null); return;}
-    const liveFx = window.SavyLiveFX?.current(), quoteData = window.SavyLiveQuotes?.portfolioView(prices, positions, liveFx) || prices;
-    const currentHistory = P.historyFor(positions, quoteData), day = currentHistory.at(-1)[0];
-    const current = P.valuationAt(positions, quoteData, day, liveFx), selected = P.period(currentHistory, range);
+    let liveFx = window.SavyLiveFX?.current();
+    const dailyQuotes = window.SavyLiveQuotes?.portfolioView(prices, positions, liveFx) || prices;
+    const currentHistory = P.historyFor(positions, dailyQuotes), dailyDay = currentHistory.at(-1)[0];
+    const intraday = range === "INTRADAY" ? window.PortfolioIntradayUtils.session(positions, prices, window.SavyLiveQuotes?.dataset(), benchmarkId, liveFx) : null;
+    const quoteData = intraday?.data || dailyQuotes, day = intraday?.available ? intraday.selected.end : dailyDay;
+    if (intraday?.fx) liveFx = intraday.fx;
+    const current = P.valuationAt(positions, quoteData, day, liveFx), selected = intraday ? intraday.selected : P.period(currentHistory, range);
     const closedSelected = {...selected, history: history.filter(row => row[0] >= selected.start && row[0] <= selected.end)};
     const quotes = new Map(quoteData.series.filter(p => p.current_quote).map(p => [p.id, p.current_quote]));
     const quoted = positions.filter(p => quotes.has(p.ticker));
-    const baseline = P.valuationAt(positions, quoteData, selected.start), old = current.rows.filter(row => row.price_date && row.price_date < day);
-    $("#portfolioStatus").textContent = (cached ? "Copie de cours conservée · " : "") + "Cours des titres au " + day + " · " +
+    const baseline = P.valuationAt(positions, quoteData, selected.start), old = current.rows.filter(row => row.price_date && row.price_date.slice(0, 10) < day.slice(0, 10));
+    $("#portfolioStatus").textContent = (cached ? "Copie de cours conservée · " : "") + "Cours des titres au " + day.slice(0, 10) + " · " +
       (positions.length - current.missing.length) + "/" + positions.length + " titres valorisés · collecte du " + U.timestampLabel(prices.generated_at) +
       (old.length ? " · " + old.length + " cours d’une séance antérieure repris" : "");
     if (window.SavyLiveQuotes?.dataset()) $("#portfolioStatus").textContent += " · " + quoted.length + "/" + positions.length + " cotations en séance disponibles · collecte du " + U.timestampLabel(window.SavyLiveQuotes.dataset().generated_at) + " · cadence prévue 5 min, délai fournisseur possible";
@@ -440,16 +448,17 @@
     $("#portfolioValue").textContent = money(current.total);
     $("#portfolioChange").textContent = delta(selected.change) + " · " + delta(selected.percent, true);
     $("#portfolioChange").className = "portfolio-change change " + direction(selected.change);
-    $("#portfolioPeriod").textContent = "Du " + selected.start + " au " + selected.end + (selected.incomplete ? " · historique incomplet, variation indisponible" : " · derniers cours disponibles, hors dividendes");
+    $("#portfolioPeriod").textContent = intraday ? (intraday.available ? "Intraday · séance du " + intraday.session_date + " · " + window.IntradayUtils.clock(selected.history[0][0]) + " à " + window.IntradayUtils.clock(selected.end) + " · heure de Montréal" : "Courbe intraday à jour indisponible" + (intraday.missing.length ? " · " + intraday.missing.join(", ") : "")) :
+      "Du " + selected.start + " au " + selected.end + (selected.incomplete ? " · historique incomplet, variation indisponible" : " · derniers cours disponibles, hors dividendes");
     $("#portfolioFX").textContent = current.fx ? "1 $ US = " + U.formatNumber(current.fx, 4) + " $ CA · " +
-      (liveFx ? (liveFx.closed ? "dernier cours, marché fermé · " : "cotation indicative · ") + U.timestampLabel(liveFx.timestamp) + " · biquote" : "clôture du " + current.fx_date + " · Yahoo Finance") : "Taux USD/CAD indisponible";
+      (liveFx ? (liveFx.closed ? "dernier cours, marché fermé · " : "cotation indicative · ") + U.timestampLabel(liveFx.timestamp) + " · " + (liveFx.source || "biquote") : "clôture du " + current.fx_date + " · Yahoo Finance") : "Taux USD/CAD indisponible";
     $("#portfolioCurrencies").textContent = money(current.cad) + " en titres CAD · " + money(current.usd, "USD") + " en titres USD";
     $("#portfolioCost").textContent = "Coût converti au taux actuel : " + money(current.cost_converted);
     $("#portfolioUnrealized").textContent = "Gain latent estimé : " + delta(current.unrealized_cad) + " · " + delta(current.unrealized_percent, true) +
       (current.costs_available < positions.length ? " · prix moyens ou change incomplets" : " · change actuel");
     $("#portfolioUnrealized").className = "portfolio-unrealized change " + direction(current.unrealized_cad);
     $("#portfolioMissing").textContent = current.missing.length ? "Valeur partielle : cours ou change manquant pour " + current.missing.join(", ") + "." : "";
-    renderMovers(day, quoteData);
+    renderMovers(dailyDay, dailyQuotes);
     renderExposures(current);
     renderAnalysis(selected, current, quoteData, closedSelected);
     const previous = new Map(baseline.rows.map(row => [row.ticker, row]));
@@ -483,13 +492,16 @@
       tr.append(name, quantity, average, price, value, weight, gain, gainCAD, change, source); rows.append(tr);
     }
     $("#portfolioRows").replaceChildren(rows);
-    const comparison = P.benchmarkFor(selected, quoteData.series.find(row => row.id === benchmarkId), benchmarkId);
+    const comparison = intraday ? intraday.comparison : P.benchmarkFor(selected, quoteData.series.find(row => row.id === benchmarkId), benchmarkId);
     renderBenchmark(comparison);
+    if (intraday) $("#portfolioBenchmarkNote").textContent = intraday.available ? "Intraday · rendements en CAD depuis la clôture du " + selected.start + " · points de 5 min · change inclus · hors dividendes" : "Comparaison intraday indisponible : cotations de séance incomplètes.";
     if (quotes.has(benchmarkId)) $("#portfolioBenchmarkNote").textContent += " · " + benchmarkId + " : " + window.IntradayUtils.label(quotes.get(benchmarkId));
     drawChart(selected.history, comparison);
+    if (intraday && !intraday.available) $("#portfolioChart").replaceChildren(el("p", "chart-placeholder", "Courbe de séance à jour indisponible. Les positions sont conservées."));
   }
   function svgEl(tag, attrs, text) {const node = document.createElementNS("http://www.w3.org/2000/svg", tag); for (const [k, v] of Object.entries(attrs || {})) node.setAttribute(k, String(v)); if (text !== undefined) node.textContent = text; return node;}
   function drawChart(original, comparison) {
+    const intraday = range === "INTRADAY";
     const data = comparison.normalized ? comparison.points.map(row => [row.date, row.portfolio]) : original;
     const benchmark = comparison.available ? comparison.points.map(row => [row.date, row.benchmark]) : [];
     const details = new Map(comparison.points.map(row => [row.date, row]));
@@ -504,7 +516,7 @@
     svg.setAttribute("aria-label", ("Rendement du portefeuille et de FEQT en CAD, hors dividendes. Date, valeur et rendements au survol. Flèches gauche et droite pour parcourir les valeurs.".replaceAll("FEQT", benchmarkId)));
     svg.append(svgEl("title", {}, comparison.normalized ? ("Rendement du portefeuille vs FEQT · même base · %".replaceAll("FEQT", benchmarkId)) : "Valorisation reconstituée des positions actuelles · CAD"));
     for (let i = 0; i < 4; i++) {const value = low + (high - low) * i / 3; svg.append(svgEl("line", {x1: left, x2: width - right, y1: y(value), y2: y(value), class: "chart-grid"}), svgEl("text", {x: left - 10, y: y(value) + 4, "text-anchor": "end", class: "chart-axis"}, U.formatNumber(value, high - low < 10 ? 2 : 0) + (comparison.normalized ? " %" : "")));}
-    for (let i = 0; i < 4; i++) {const stamp = firstTime + (lastTime - firstTime) * i / 3; svg.append(svgEl("text", {x: left + (width - left - right) * i / 3, y: height - 9, class: "chart-axis", "text-anchor": i === 0 ? "start" : i === 3 ? "end" : "middle"}, new Intl.DateTimeFormat("fr-CA", {timeZone: "UTC", month: "short", day: "numeric"}).format(new Date(stamp))));}
+    for (let i = 0; i < 4; i++) {const stamp = firstTime + (lastTime - firstTime) * i / 3; svg.append(svgEl("text", {x: left + (width - left - right) * i / 3, y: height - 9, class: "chart-axis", "text-anchor": i === 0 ? "start" : i === 3 ? "end" : "middle"}, intraday ? window.IntradayUtils.clock(stamp) : new Intl.DateTimeFormat("fr-CA", {timeZone: "UTC", month: "short", day: "numeric"}).format(new Date(stamp))));}
     let path = "", connected = false;
     for (const row of data) {if (!U.validNumber(row[1])) {connected = false; continue;} path += (connected ? "L" : "M") + x(row[0]).toFixed(2) + "," + y(row[1]).toFixed(2); connected = true;}
     svg.append(svgEl("path", {d: path, class: "chart-line"}));
@@ -514,7 +526,19 @@
     const hint = ("Survole le graphique pour comparer le portefeuille et FEQT · flèches ← → au clavier".replaceAll("FEQT", benchmarkId));
     const tooltip = el("p", "chart-tooltip", hint); tooltip.setAttribute("aria-live", "polite"); let index = valid.length - 1;
     const baseline = original[0], canCompare = U.validNumber(baseline[1]) && baseline[1] > 0;
-    function select(row) {if (!row) return; const detail = details.get(row[0]); index = valid.findIndex(item => item[0] === row[0]); guide.setAttribute("x1", x(row[0])); guide.setAttribute("x2", x(row[0])); guide.setAttribute("visibility", "visible"); dot.setAttribute("cx", x(row[0])); dot.setAttribute("cy", y(row[1])); dot.setAttribute("visibility", "visible"); tooltip.textContent = row[0] + " · " + money(detail.value) + " CAD · " + (canCompare ? delta(detail.portfolio, true) + " depuis le " + baseline[0] : "variation indisponible : base du " + baseline[0] + " manquante"); if (U.validNumber(detail.benchmark)) {benchmarkDot.setAttribute("cx", x(row[0])); benchmarkDot.setAttribute("cy", y(detail.benchmark)); benchmarkDot.setAttribute("visibility", "visible"); tooltip.textContent += (" · FEQT : ".replaceAll("FEQT", benchmarkId)) + delta(detail.benchmark, true) + " · écart : " + U.formatNumber(detail.portfolio - detail.benchmark, 2) + " pt" + (detail.benchmark_date !== row[0] ? (" (clôture FEQT du ".replaceAll("FEQT", benchmarkId)) + detail.benchmark_date + ")" : "");} else {benchmarkDot.setAttribute("visibility", "hidden"); tooltip.textContent += (" · FEQT : —".replaceAll("FEQT", benchmarkId));}}
+    function select(row) {
+      if (!row) return;
+      const detail = details.get(row[0]); index = valid.findIndex(item => item[0] === row[0]);
+      guide.setAttribute("x1", x(row[0])); guide.setAttribute("x2", x(row[0])); guide.setAttribute("visibility", "visible");
+      dot.setAttribute("cx", x(row[0])); dot.setAttribute("cy", y(row[1])); dot.setAttribute("visibility", "visible");
+      tooltip.textContent = (intraday ? U.timestampLabel(row[0]) : row[0]) + " · " + money(detail.value) + " CAD · " +
+        (canCompare ? delta(detail.portfolio, true) + (intraday ? " depuis la clôture du " + comparison.start : " depuis le " + baseline[0]) : "variation indisponible : base du " + baseline[0] + " manquante");
+      if (U.validNumber(detail.benchmark)) {
+        benchmarkDot.setAttribute("cx", x(row[0])); benchmarkDot.setAttribute("cy", y(detail.benchmark)); benchmarkDot.setAttribute("visibility", "visible");
+        tooltip.textContent += " · " + benchmarkId + " : " + delta(detail.benchmark, true) + " · écart : " + U.formatNumber(detail.portfolio - detail.benchmark, 2) + " pt";
+        if (detail.benchmark_date !== row[0]) tooltip.textContent += " (" + (intraday ? "dernière cotation" : "clôture") + " du " + (intraday && detail.benchmark_date?.includes("T") ? window.IntradayUtils.clock(detail.benchmark_date) : detail.benchmark_date) + ")";
+      } else {benchmarkDot.setAttribute("visibility", "hidden"); tooltip.textContent += " · " + benchmarkId + " : —";}
+    }
     svg.addEventListener("focus", () => select(valid[index]));
     svg.addEventListener("keydown", event => {if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return; event.preventDefault(); index = event.key === "Home" ? 0 : event.key === "End" ? valid.length - 1 : Math.min(valid.length - 1, Math.max(0, index + (event.key === "ArrowLeft" ? -1 : 1))); select(valid[index]);});
     svg.addEventListener("pointermove", event => {const rect = svg.getBoundingClientRect(); if (!rect.width) return; const coordinate = Math.max(left, Math.min(width - right, (event.clientX - rect.left) * width / rect.width)); select(U.nearestPoint(data, firstTime + (coordinate - left) / (width - left - right) * (lastTime - firstTime)));});

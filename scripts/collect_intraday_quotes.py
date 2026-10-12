@@ -24,6 +24,7 @@ MACRO_QUOTES = [
     {"id": "UST10Y", "title": "Rendement 10 ans · indice Cboe TNX", "quote_symbol": "^TNX", "currency": "USD"},
     {"id": "WTIFUT", "title": "WTI · contrat à terme proche", "quote_symbol": "CL=F", "currency": "USD"},
     {"id": "DXY", "title": "US Dollar Index · panier de six devises", "quote_symbol": "DX-Y.NYB", "currency": "USD"},
+    {"id": "USDCAD", "title": "USD/CAD", "quote_symbol": "CAD=X", "currency": "CAD"},
 ]
 
 def definitions():
@@ -39,7 +40,8 @@ def parse_quote(payload, definition, now):
         chart = payload["chart"]
         if chart.get("error"):
             raise ValueError("Provider error")
-        meta = chart["result"][0]["meta"]
+        result = chart["result"][0]
+        meta = result["meta"]
         price, stamp = meta["regularMarketPrice"], meta["regularMarketTime"]
         if meta["symbol"] != definition["quote_symbol"] or not finite(price) or price <= 0 or not finite(stamp):
             raise ValueError("Wrong symbol or invalid quote")
@@ -62,6 +64,23 @@ def parse_quote(payload, definition, now):
         delay = delay if finite(delay) and 0 <= delay <= 120 else None
     except (KeyError, TypeError, IndexError, ValueError, OSError) as error:
         raise markets.macro.SourceError(f"{definition['id']}: invalid intraday quote ({error})") from error
+    points = {}
+    timestamps = result.get("timestamp", [])
+    indicators = result.get("indicators")
+    quote_rows = indicators.get("quote", []) if isinstance(indicators, dict) else []
+    closes = quote_rows[0].get("close", []) if isinstance(quote_rows, list) and quote_rows and isinstance(quote_rows[0], dict) else []
+    if isinstance(timestamps, list) and isinstance(closes, list) and len(timestamps) == len(closes):
+        for tick, close in zip(timestamps, closes):
+            if not finite(tick) or not finite(close) or close <= 0 or tick > min(stamp, now.timestamp()):
+                continue
+            try:
+                time = datetime.fromtimestamp(tick, timezone.utc)
+                if time.astimezone(zone).date().isoformat() == session_date:
+                    points[time.isoformat().replace("+00:00", "Z")] = close
+            except (ValueError, OverflowError, OSError):
+                continue
+    if points:
+        points[instant.isoformat().replace("+00:00", "Z")] = price
     return {"id": definition["id"], "title": definition["title"], "quote_symbol": meta["symbol"],
         "currency": meta["currency"], "price": price, "previous_close": previous,
         "timestamp": instant.isoformat().replace("+00:00", "Z"), "session_date": session_date,
@@ -70,13 +89,14 @@ def parse_quote(payload, definition, now):
         "session_start": datetime.fromtimestamp(start, timezone.utc).isoformat().replace("+00:00", "Z"),
         "session_end": datetime.fromtimestamp(end, timezone.utc).isoformat().replace("+00:00", "Z"),
         "provider_delay_minutes": delay, "fetch_status": "fresh", "fetched_at": now.isoformat().replace("+00:00", "Z"),
+        "history_interval_minutes": 5, "intraday_history": [[tick, value] for tick, value in sorted(points.items())],
         "source_label": "Yahoo Finance", "source_url": "https://finance.yahoo.com/quote/" + quote(meta["symbol"], safe="") + "/"}
 
 def fetch_quote(definition, now):
     last_error = None
     for host in ("query1.finance.yahoo.com", "query2.finance.yahoo.com"):
         try:
-            request = Request(f"https://{host}/v8/finance/chart/{quote(definition['quote_symbol'], safe='')}?range=1d&interval=1m",
+            request = Request(f"https://{host}/v8/finance/chart/{quote(definition['quote_symbol'], safe='')}?range=1d&interval=5m",
                 headers={"User-Agent": "Mozilla/5.0 SAVY/4.0", "Accept": "application/json"})
             with urlopen(request, timeout=12) as response:
                 return parse_quote(json.load(response), definition, now)

@@ -33,7 +33,7 @@ async function main() {
     assert.equal(await page.locator(".news-section .meta a").count(), headlines);
     assert.equal(await page.locator(".odds-card").count(), 2);
     const marketRanges = page.getByRole("group", {name: "Période des indices boursiers"});
-    assert.equal(await marketRanges.getByRole("button").count(), 9);
+    assert.equal(await marketRanges.getByRole("button").count(), 10);
     for (const range of U.MARKET_RANGES) {
       await marketRanges.getByRole("button", {name: range.label, exact: true}).click();
       assert.equal(await marketRanges.getByRole("button", {name: range.label, exact: true}).getAttribute("aria-pressed"), "true");

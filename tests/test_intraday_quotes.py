@@ -15,6 +15,17 @@ def fixture(symbol="MSFT", currency="USD", stamp=None, start=None, end=None):
             "end": end or NOW.timestamp() + 21600}}}}]}}
 
 class QuoteTests(unittest.TestCase):
+    def test_intraday_history_filters_other_sessions_future_and_invalid_points(self):
+        data = fixture(); result = data["chart"]["result"][0]
+        ticks = [NOW.timestamp() - 3 * 86400, NOW.timestamp() - 1200, NOW.timestamp() - 600,
+                 NOW.timestamp() - 300, NOW.timestamp() + 60]
+        result["timestamp"] = ticks
+        result["indicators"] = {"quote": [{"close": [90, 98, None, 99, 120]}]}
+        parsed = quotes.parse_quote(data, DEFINITION, NOW)
+        self.assertEqual(parsed["intraday_history"], [["2026-10-12T13:40:00Z", 98], ["2026-10-12T13:55:00Z", 99], ["2026-10-12T13:59:00Z", 100]])
+        self.assertEqual(parsed["history_interval_minutes"], 5)
+        result["indicators"]["quote"] = []
+        self.assertEqual(quotes.parse_quote(data, DEFINITION, NOW)["intraday_history"], [])
     def test_regular_quote_preserves_trade_time_not_fetch_time(self):
         result = quotes.parse_quote(fixture(), DEFINITION, NOW)
         self.assertEqual(result["price"], 100)

@@ -10,15 +10,16 @@
   <title>SAVY — Tableau macroéconomique</title>
   <link rel="stylesheet" href="css/dashboard.css?v=20261012-format-access" />
   <script src="js/macro-utils.js?v=20261011-index-day-ytd" defer></script>
-  <script src="js/intraday-utils.js?v=20261012-format-access" defer></script>
-  <script src="js/live-quotes.js?v=20261012-quotes" defer></script>
-  <script src="js/live-fx.js?v=20261011-rates-news" defer></script>
+  <script src="js/intraday-utils.js?v=20261012-session" defer></script>
+  <script src="js/live-quotes.js?v=20261012-session" defer></script>
+  <script src="js/live-fx.js?v=20261012-session" defer></script>
   <script src="js/portfolio-utils.js?v=20261012-portfolio-3" defer></script>
+  <script src="js/portfolio-intraday-utils.js?v=20261012-session" defer></script>
   <script src="js/portfolio-exposure-utils.js?v=20261012-portfolio-3" defer></script>
   <script src="js/portfolio-analytics-utils.js?v=20261012-portfolio-3" defer></script>
   <script src="js/portfolio-profile-utils.js?v=20261012-portfolio-3" defer></script>
-  <script src="js/portfolio.js?v=20261012-format-access" defer></script>
-  <script src="js/dashboard.js?v=20261012-format-access" defer></script>
+  <script src="js/portfolio.js?v=20261012-session" defer></script>
+  <script src="js/dashboard.js?v=20261012-session" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#indicators">Aller aux indicateurs</a>
@@ -48,7 +49,7 @@
         <div class="market-heading"><div><p class="eyebrow">LES GRANDS MARCHÉS</p><h3 id="marketTitle">Indices boursiers mondiaux</h3></div><div id="marketRanges" class="segmented" role="group" aria-label="Période des indices boursiers"></div></div>
         <p id="marketStatus" class="meta" role="status">Chargement des indices…</p>
         <div id="marketGrid" class="market-grid"></div>
-        <p class="meta">Derniers cours de Yahoo Finance, relus chaque minute; collecte prévue toutes les 5 minutes pendant les séances, avec retard fournisseur possible. L’heure réelle de cotation et le statut de marché sont affichés. Le dernier point et le rendement incluent la séance en cours quand elle est disponible. Le rendement en % correspond à la période sélectionnée : 1 jour = 1 séance, 3 jours = 3 séances, 1 semaine = 5 séances. YTD part de la dernière clôture de l’année précédente; les mois et années utilisent la clôture à la date de départ ou celle qui la précède si le marché est fermé. Indices en points; marchés émergents représentés par <a href="https://www.ishares.com/us/products/239637/ishares-msci-emerging-markets-etf" target="_blank" rel="noopener noreferrer">l’ETF EEM suivant le MSCI Emerging Markets</a>, en dollars US. <a href="https://www.fidelity.ca/en/products/etfs/feqt/" target="_blank" rel="noopener noreferrer">FEQT, le FNB Fidelity All-in-One Equity</a>, est affiché en dollars canadiens. Chaque graphique possède sa propre échelle; rendements en devise locale, hors dividendes. Une période sans historique suffisant affiche « Rendement indisponible ».</p>
+        <p class="meta">Intraday affiche les points de cinq minutes de la séance, avec le rendement depuis la clôture précédente. Un marché fermé affiche sa dernière séance datée. Derniers cours de Yahoo Finance, relus chaque minute; collecte prévue toutes les 5 minutes pendant les séances, avec retard fournisseur possible. L’heure réelle de cotation et le statut de marché sont affichés. Le dernier point et le rendement incluent la séance en cours quand elle est disponible. Le rendement en % correspond à la période sélectionnée : 1 jour = 1 séance, 3 jours = 3 séances, 1 semaine = 5 séances. YTD part de la dernière clôture de l’année précédente; les mois et années utilisent la clôture à la date de départ ou celle qui la précède si le marché est fermé. Indices en points; marchés émergents représentés par <a href="https://www.ishares.com/us/products/239637/ishares-msci-emerging-markets-etf" target="_blank" rel="noopener noreferrer">l’ETF EEM suivant le MSCI Emerging Markets</a>, en dollars US. <a href="https://www.fidelity.ca/en/products/etfs/feqt/" target="_blank" rel="noopener noreferrer">FEQT, le FNB Fidelity All-in-One Equity</a>, est affiché en dollars canadiens. Chaque graphique possède sa propre échelle; rendements en devise locale, hors dividendes. Une période sans historique suffisant affiche « Rendement indisponible ».</p>
       </section>
     </details>
     <section id="portfolio" class="portfolio card" aria-labelledby="portfolioTitle">

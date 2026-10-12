@@ -26,7 +26,8 @@
     try {await pending;} finally {pending = null;}
   }
   window.SavyLiveQuotes = {refresh, dataset: () => data, current: (id, base) => I.choose(data, id, base),
-    marketPoint: point => I.marketPoint(point, data), portfolioView: (prices, positions, fx) => I.portfolioView(prices, positions, data, fx)};
+    marketPoint: point => I.marketPoint(point, data), marketSession: point => I.marketSession(point, data),
+    portfolioView: (prices, positions, fx) => I.portfolioView(prices, positions, data, fx)};
   refresh();
   setInterval(() => {if (document.visibilityState === "visible") refresh();}, 60000);
   document.addEventListener("visibilitychange", () => {if (document.visibilityState === "visible") refresh();});

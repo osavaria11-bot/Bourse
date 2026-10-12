@@ -53,3 +53,21 @@ test("older snapshots, mismatched listings and stale trades are described accura
   assert.match(I.label(closed), /Marché fermé/);
   assert.equal(I.choose(payload, "AAPL", null, now + 8 * 86400000), null);
 });
+test("current market numbers require a recent successful collection, including when the exchange is closed", () => {
+  const fresh = I.choose(I.normalize(data([q()]), now), "AAPL", null, now);
+  assert.equal(I.isCurrent(fresh, now), true);
+  assert.equal(I.isCurrent({...fresh, fetch_status: "cached"}, now), false);
+  assert.equal(I.isCurrent(fresh, now + 13 * 60000), false);
+  const closed = {...fresh, active: false, timestamp: "2026-10-09T19:59:00Z"};
+  assert.equal(I.isCurrent(closed, now), true);
+  assert.equal(I.isCurrent(closed, now + 13 * 60000), false);
+});
+test("intraday charts keep only actual session points and use the previous close as their return base", () => {
+  const quote = {...q(), intraday_history: [["2026-10-09T13:30:00Z", 100], ["2026-10-12T13:30:00Z", 105],
+    ["2026-10-12T13:30:00Z", 106], ["2026-10-12T13:45:00Z", null], ["2026-10-12T14:05:00Z", 120]]};
+  const payload = I.normalize(data([quote]), now), selected = I.marketSession(point("AAPL", 100), payload, now);
+  assert.deepEqual(selected.history, [["2026-10-12T13:30:00.000Z", 106], ["2026-10-12T13:59:00.000Z", 110]]);
+  assert.ok(Math.abs(selected.percent - 10) < 1e-10);
+  assert.equal(I.marketSession(point("AAPL", 100), payload, now + 13 * 60000).available, false);
+  assert.equal(I.clock(now), I.clock(new Date(now).toISOString()));
+});

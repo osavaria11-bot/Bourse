@@ -10,7 +10,7 @@
     if (payload?.symbol !== "USDCAD" || !Number.isFinite(rate) || rate < .5 || rate > 3 ||
         !Number.isFinite(timestamp) || age < -300000 || age > (closed ? 4 * 86400000 : 10 * 60000) ||
         !["open", "closed"].includes(payload.marketState)) throw new Error("Cotation de change absente ou ancienne");
-    return {rate, timestamp: payload.timestamp, closed, source: "biquote"};
+    return {rate, timestamp: payload.timestamp, fetched_at: new Date(now).toISOString(), closed, source: "biquote"};
   }
   function current() {
     if (!quote) return null;

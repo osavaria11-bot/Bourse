@@ -24,8 +24,9 @@ const encryptedProfiles = Object.fromEntries(Object.entries(profiles).map(([id, 
 }));
 function q(id, symbol, currency, price) {return {id, quote_symbol: symbol, currency, price, previous_close: price / 1.1,
   timestamp: new Date(now - 60000).toISOString(), fetched_at: new Date(now).toISOString(), session_date: day,
-  exchange_timezone: "America/Toronto", market_state: "regular", fetch_status: "fresh", session_end: new Date(now + 3600000).toISOString()};}
-let wrongCurrency = false, unavailable = false;
+  exchange_timezone: "America/Toronto", market_state: "regular", fetch_status: "fresh", session_end: new Date(now + 3600000).toISOString(),
+  intraday_history: [15, 10, 5, 1].map((minutes, i) => [new Date(now - minutes * 60000).toISOString(), price * (.96 + i * .04 / 3)])};}
+let wrongCurrency = false, unavailable = false, staleMacro = false;
 const snapshot = {schema_version: 1, kind: "intraday_quotes", generated_at: new Date(now).toISOString(), quotes: [
   q("AAPL", "AAPL", "USD", apple * 1.1), q("SHOP", "SHOP.TO", "CAD", shop * 1.05),
   q("SPX", "^GSPC", "USD", spx.value * 1.01), q("FEQT", "FEQT.NE", "CAD", prices.series.find(p => p.id === "FEQT").value * 1.02),
@@ -35,7 +36,8 @@ const snapshot = {schema_version: 1, kind: "intraday_quotes", generated_at: new 
     const point = prices.series.find(p => p.id === id);
     return q(id, point.quote_symbol, point.currency, point.value * 1.03);
   }),
-  q("VGRO", "VGRO.TO", "CAD", prices.series.find(p => p.id === "VGRO").value * 1.02)
+  q("VGRO", "VGRO.TO", "CAD", prices.series.find(p => p.id === "VGRO").value * 1.02),
+  q("USDCAD", "CAD=X", "CAD", 1.4)
 ]};
 const types = {".html": "text/html", ".js": "text/javascript", ".json": "application/json", ".css": "text/css", ".png": "image/png"};
 const server = http.createServer((request, response) => {
@@ -44,6 +46,7 @@ const server = http.createServer((request, response) => {
   if (profileId) {response.writeHead(200, {"Content-Type": "application/json"}); response.end(JSON.stringify(encryptedProfiles[profileId])); return;}
   if (pathname === "/data/intraday-quotes.json") {
     const data = structuredClone(snapshot); if (wrongCurrency) data.quotes[0].currency = "CAD";
+    if (staleMacro) for (const row of data.quotes) if (["DXY", "WTIFUT", "UST10Y", "VIXCLS"].includes(row.id)) row.fetch_status = "cached";
     response.writeHead(unavailable ? 503 : 200, {"Content-Type": "application/json"});
     response.end(unavailable ? "{}" : JSON.stringify(data)); return;
   }
@@ -91,13 +94,41 @@ async function main() {
     await page.locator("#portfolioPositionsToggle").click();
     assert.match(await page.locator('#portfolioRows tr[data-ticker="AAPL"] td').nth(3).innerText(), /En séance/);
     assert.match(await page.locator('.indicator-card[data-id="VIXCLS"] .current-value').innerText(), /25,50/);
-    assert.match(await page.locator('.indicator-card[data-id="DCOILWTICO"] .live-companion').innerText(), /WTI à terme/);
+    for (const [id, title, value] of [["DCOILWTICO", "WTI · contrat à terme", "95,00"], ["DTWEXBGS", "DXY (six devises)", "100,20"], ["DGS10", "10 ans (indice TNX)", "5,10"]]) {
+      const card = page.locator('.indicator-card[data-id="' + id + '"]');
+      assert.ok((await card.locator("h3").innerText()).includes(title));
+      assert.ok((await card.locator(".current-value").innerText()).includes(value));
+      assert.equal(await card.locator(".live-companion").count(), 0);
+    }
+    assert.equal(await page.locator('#kpis [data-id="DGS10"] .kpi-value').innerText(), "5,10 %");
+    const dollar = page.locator('.indicator-card[data-id="DTWEXBGS"]');
+    await dollar.locator(".detail-button").click();
+    assert.equal(await page.locator("#detailValue").innerText(), "100,20 points");
+    staleMacro = true; await page.evaluate(() => window.SavyLiveQuotes.refresh());
+    assert.equal(await dollar.locator(".current-value").innerText(), "—");
+    assert.equal(await dollar.locator(".change").count(), 0);
+    assert.equal(await page.locator("#detailValue").innerText(), "—");
+    assert.equal(await page.locator('#kpis [data-id="DGS10"] .kpi-value').innerText(), "—");
+    await page.locator("#closeDialog").click(); staleMacro = false; await page.evaluate(() => window.SavyLiveQuotes.refresh());
     await page.locator("#marketRanges").getByRole("button", {name: "1 jour", exact: true}).click();
     assert.match(await page.locator('.market-card[data-id="SPX"] .meta').first().innerText(), /En séance/);
     const actualReturn = await page.locator('.market-card[data-id="SPX"] .market-return').innerText();
     const base = spx.date === day ? spx.history.at(-2)[1] : spx.value;
     const expected = (spx.value * 1.01 / base - 1) * 100;
     assert.equal(actualReturn, (expected > 0 ? "+" : "") + U.formatNumber(expected, 2) + " % · 1 jour");
+    await page.locator('#marketRanges [data-range="INTRADAY"]').click();
+    const marketCurve = page.locator('.market-card[data-id="SPX"]');
+    assert.ok((await marketCurve.locator(".chart-line").getAttribute("d")).split("L").length >= 3);
+    await marketCurve.locator("svg").focus(); await page.keyboard.press("End");
+    assert.match(await marketCurve.locator(".chart-tooltip").innerText(), /heure de Montréal.*clôture précédente/);
+    assert.match(await marketCurve.locator(".chart-axis").last().innerText(), /h/);
+    await page.locator('#portfolioRanges [data-range="INTRADAY"]').click();
+    assert.match(await page.locator("#portfolioPeriod").innerText(), /Intraday.*heure de Montréal/);
+    assert.equal(await page.locator("#portfolioChart .chart-benchmark").count(), 1);
+    const intradayValue = await page.locator("#portfolioValue").innerText();
+    assert.equal(intradayValue, money(2 * apple * 1.1 * 1.4 + shop * 1.05));
+    assert.match(await page.locator("#portfolioRiskStatus").innerText(), /clôtures quotidiennes/);
+    await page.locator('#portfolioRanges [data-range="YTD"]').click();
     assert.ok(await page.locator("#portfolioContributionRows tr").count() === 2);
     assert.match(await page.locator("#portfolioRiskStatus").innerText(), /séances communes|assez de clôtures/);
     const value = await page.locator("#portfolioValue").innerText();
@@ -110,7 +141,7 @@ async function main() {
     for (const width of [1440, 1101, 768, 390, 375, 320]) await checkMacroBounds(page, width);
     if (process.env.MACRO_SCREENSHOT_LOGS) {
       await page.setViewportSize({width: 375, height: 1000});
-      for (const [name, selector] of [["KPIS", "#kpis"], ["FX", '.indicator-card[data-id="DEXCAUS"]'], ["WTI", '.indicator-card[data-id="DCOILWTICO"]']])
+      for (const [name, selector] of [["KPIS", "#kpis"], ["FX", '.indicator-card[data-id="DEXCAUS"]'], ["WTI", '.indicator-card[data-id="DCOILWTICO"]'], ["DXY", '.indicator-card[data-id="DTWEXBGS"]'], ["INTRADAY_INDEX", '.market-card[data-id="SPX"]']])
         console.log("SCREENSHOT_LIVE_MACRO_MOBILE_" + name + " " + (await page.locator(selector).screenshot()).toString("base64"));
     }
     await page.locator("#portfolio").scrollIntoViewIfNeeded();
@@ -133,6 +164,15 @@ async function main() {
       assert.equal(await direct.locator('[data-portfolio-id="' + id + '"]').getAttribute("aria-pressed"), "true");
       assert.ok(await direct.locator("#portfolioBenchmark").innerText().then(text => text.includes({"1": "FEQT", "2": "VBAL", "3": "VGRO"}[id])));
       assert.match(await direct.locator("#portfolioStatus").innerText(), /cotations en séance/);
+      await direct.locator('#portfolioRanges [data-range="INTRADAY"]').click();
+      assert.match(await direct.locator("#portfolioPeriod").innerText(), /Intraday · séance/);
+      assert.equal(await direct.locator("#portfolioChart svg").count(), 1);
+      assert.equal(await direct.locator("#portfolioChart .chart-benchmark").count(), 1);
+      const value = await direct.locator("#portfolioValue").innerText();
+      await direct.locator("#portfolioChart svg").focus(); await direct.keyboard.press("End");
+      assert.ok((await direct.locator("#portfolioChart .chart-tooltip").innerText()).includes(value), "Chart and headline value agree in portfolio " + id);
+      if (process.env.MACRO_SCREENSHOT_LOGS && id === "3") console.log("SCREENSHOT_INTRADAY_PORTFOLIO3 " + (await direct.locator("#portfolioChart").screenshot()).toString("base64"));
+      await direct.locator('#portfolioRanges [data-range="YTD"]').click();
       const rects = await direct.locator("[data-portfolio-id]").evaluateAll(nodes => nodes.map(node => node.getBoundingClientRect().top));
       assert.deepEqual(rects, [rects[0], rects[0], rects[0]], "All three portfolio buttons stay on one row at 320px");
       assert.equal(await direct.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
@@ -145,7 +185,7 @@ async function main() {
     await direct.locator('[data-portfolio-id="3"]').click();
     await direct.waitForFunction(() => document.querySelector('#portfolioRows tr[data-ticker="MSFTCDR"]'));
     assert.deepEqual(errors, []);
-    console.log("Intraday UI verified: live values, macro layout at 320–1440px, three encrypted portfolios, shared access recovery, contributions, daily risk and outage/currency fallback.");
+    console.log("Intraday UI verified: current macro headlines and stale-number removal, minute charts for indices and all three portfolios, 320–1440px layout, contributions, daily risk, shared access and source/currency fallback.");
   } finally {await browser.close(); await new Promise(resolve => server.close(resolve));}
 }
 main().catch(error => {console.error(error); process.exitCode = 1;});

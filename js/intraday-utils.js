@@ -11,8 +11,8 @@
     const quotes = [], seen = new Set();
     for (const row of payload.quotes) {
       const stamp = U.parseTimestamp(row?.timestamp), fetched = U.parseTimestamp(row?.fetched_at);
-      let day;
-      try {day = new Intl.DateTimeFormat("en-CA", {timeZone: row.exchange_timezone}).format(stamp);} catch {continue;}
+      let day, localDay;
+      try {localDay = new Intl.DateTimeFormat("en-CA", {timeZone: row.exchange_timezone}); day = localDay.format(stamp);} catch {continue;}
       if (!row || typeof row.id !== "string" || !/^[A-Z0-9]+$/.test(row.id) || seen.has(row.id) ||
           typeof row.quote_symbol !== "string" || !/^[A-Za-z0-9^.=\-]+$/.test(row.quote_symbol) ||
           !U.validNumber(row.price) || row.price <= 0 || !Number.isFinite(stamp) || !Number.isFinite(fetched) ||
@@ -20,7 +20,15 @@
           !U.isDate(row.session_date) || row.session_date !== day || !["regular", "closed"].includes(row.market_state) ||
           !["fresh", "cached"].includes(row.fetch_status)) continue;
       seen.add(row.id);
-      quotes.push({...row, previous_close: U.validNumber(row.previous_close) && row.previous_close > 0 ? row.previous_close : null,
+      const minutes = new Map();
+      if (Array.isArray(row.intraday_history) && row.intraday_history.length <= 1600) for (const point of row.intraday_history) {
+        const time = U.parseTimestamp(point?.[0]);
+        if (Number.isFinite(time) && time <= stamp && time <= now && U.validNumber(point?.[1]) && point[1] > 0 && localDay.format(time) === day)
+          minutes.set(new Date(time).toISOString(), point[1]);
+      }
+      if (minutes.size) minutes.set(new Date(stamp).toISOString(), row.price);
+      const intraday_history = [...minutes].sort((a, b) => a[0].localeCompare(b[0]));
+      quotes.push({...row, intraday_history, previous_close: U.validNumber(row.previous_close) && row.previous_close > 0 ? row.previous_close : null,
         source_label: "Yahoo Finance", source_url: "https://finance.yahoo.com/quote/" + encodeURIComponent(row.quote_symbol) + "/"});
     }
     return {...payload, quotes};
@@ -40,6 +48,12 @@
     return (row.stale ? "Cotation conservée · " : row.active ? "En séance · " : "Marché fermé · dernier cours · ") +
       U.timestampLabel(row.timestamp) + " · Yahoo Finance" + (row.provider_delay_minutes > 0 ? " · retard fournisseur " + row.provider_delay_minutes + " min" : "");
   }
+  function isCurrent(row, now = Date.now()) {
+    if (!row || row.stale || row.fetch_status !== "fresh") return false;
+    const collectedAge = now - U.parseTimestamp(row.fetched_at), tradeAge = now - U.parseTimestamp(row.timestamp);
+    return collectedAge >= -300000 && collectedAge <= 12 * 60000 && tradeAge >= -300000 &&
+      tradeAge <= (row.active ? 30 * 60000 : 7 * DAY);
+  }
   function shortLabel(row) {
     if (!row) return "Clôture quotidienne";
     const time = new Intl.DateTimeFormat("fr-CA", {timeZone: "America/Toronto", month: "short", day: "numeric",
@@ -54,6 +68,18 @@
   }
   function marketPoint(point, payload, now = Date.now()) {
     return overlay(point, point ? choose(payload, point.id, point, now) : null);
+  }
+  function marketSession(point, payload, now = Date.now()) {
+    const quote = point ? choose(payload, point.id, {quote_symbol: point.quote_symbol, currency: point.currency}, now) : null;
+    const history = isCurrent(quote, now) ? quote.intraday_history || [] : [], available = history.length >= 2;
+    const base = quote?.previous_close, comparable = available && U.validNumber(base) && base > 0;
+    return {quote: available ? quote : null, history: available ? history : [], available, incomplete: !comparable,
+      start: available ? history[0][0] : null, end: available ? history.at(-1)[0] : null,
+      baseline: comparable ? base : null, change: comparable ? quote.price - base : null,
+      percent: comparable ? (quote.price / base - 1) * 100 : null};
+  }
+  function clock(value) {
+    return new Intl.DateTimeFormat("fr-CA", {timeZone: "America/Toronto", hour: "2-digit", minute: "2-digit"}).format(typeof value === "number" ? value : U.parseTimestamp(value));
   }
   function portfolioView(data, positions, payload, fx, now = Date.now()) {
     if (!data) return data;
@@ -72,5 +98,5 @@
     }
     return {...data, series};
   }
-  return {normalize, choose, label, shortLabel, overlay, marketPoint, portfolioView};
+  return {normalize, choose, label, shortLabel, isCurrent, clock, marketSession, overlay, marketPoint, portfolioView};
 });

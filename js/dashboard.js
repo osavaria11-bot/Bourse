@@ -5,6 +5,18 @@
   const CACHE_KEY = "savy:macro-data:v2";
   const NEWS_CACHE_KEY = "savy:news-digest:v5";
   const MARKET_CACHE_KEY = "savy:market-indices:v1";
+  const MARKET_INDICATORS = {
+    VIXCLS: {id: "VIXCLS", symbol: "^VIX", unit: "points"},
+    NASDAQXAU: {id: "NASDAQXAU", symbol: "^XAU", unit: "points"},
+    VXEEMCLS: {id: "VXEEMCLS", symbol: "^VXEEM", unit: "points"},
+    DEXCAUS: {id: "DEXCAUS"},
+    DGS10: {id: "UST10Y", symbol: "^TNX", title: "Trésor américain · 10 ans (indice TNX)", unit: "%", change_unit: "pt",
+      history_label: "Taux 10 ans FRED", description: "La cotation de séance est l’indice Cboe TNX. Le graphique conserve l’historique du taux 10 ans publié par FRED."},
+    DCOILWTICO: {id: "WTIFUT", symbol: "CL=F", title: "Pétrole WTI · contrat à terme", unit: "$ US/baril",
+      history_label: "WTI au comptant FRED", description: "La cotation de séance est celle du contrat à terme WTI proche. Le graphique conserve l’historique du prix WTI au comptant publié par FRED."},
+    DTWEXBGS: {id: "DXY", symbol: "DX-Y.NYB", title: "Dollar américain · DXY (six devises)", unit: "points",
+      history_label: "Indice large du dollar FRED", description: "La cotation de séance est le DXY, un panier de six devises. Le graphique conserve l’historique de l’indice large du dollar FRED, qui utilise un autre panier."},
+  };
   const MARKET_DEFINITIONS = [
     ["SPX", "S&P 500", "États-Unis", "^GSPC"],
     ["IXIC", "Nasdaq Composite", "États-Unis", "^IXIC"],
@@ -13,6 +25,7 @@
     ["EEM", "MSCI émergents · ETF EEM", "Marchés émergents", "EEM"],
     ["FEQT", "FEQT · Fidelity All-in-One Equity", "Monde · FNB en CAD", "FEQT.NE"],
   ];
+  const MARKET_CHART_RANGES = [{key: "INTRADAY", label: "Intraday"}, ...U.MARKET_RANGES];
   const PREFS_KEY = "savy:preferences:v2";
   function readStored(key, fallback) {
     try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; }
@@ -84,13 +97,27 @@
     $("#updated").classList.toggle("warning", state.origin !== "published" || fresh !== dataset.series.length || age > 36);
   }
   function indicatorQuote(point) {
+    const definition = MARKET_INDICATORS[point?.id];
+    if (!definition) return null;
     const fx = point?.id === "DEXCAUS" ? window.SavyLiveFX?.current() : null;
-    if (fx) return {price: fx.rate, timestamp: fx.timestamp, fx, active: !fx.closed, source_url: window.SavyLiveFX.source_url,
-      label: (fx.closed ? "Marché fermé · dernier cours · " : "Cotation indicative · ") + U.timestampLabel(fx.timestamp) + " · biquote"};
-    const symbols = {VIXCLS: "^VIX", NASDAQXAU: "^XAU", VXEEMCLS: "^VXEEM"};
-    if (!symbols[point?.id]) return null;
-    const q = window.SavyLiveQuotes?.current(point.id, {...point, quote_symbol: symbols[point.id], currency: "USD"});
-    return q ? {...q, label: window.IntradayUtils.label(q)} : null;
+    if (fx) {
+      const quote = {price: fx.rate, timestamp: fx.timestamp, fetched_at: fx.fetched_at, fetch_status: "fresh", fx, active: !fx.closed,
+        source_url: window.SavyLiveFX.source_url, label: (fx.closed ? "Marché fermé · dernier cours · " : "Cotation indicative · ") + U.timestampLabel(fx.timestamp) + " · biquote"};
+      return window.IntradayUtils.isCurrent(quote) ? quote : null;
+    }
+    if (!definition.symbol) return null;
+    const q = window.SavyLiveQuotes?.current(definition.id, {quote_symbol: definition.symbol, currency: "USD"});
+    return window.IntradayUtils.isCurrent(q) ? {...q, label: window.IntradayUtils.label(q)} : null;
+  }
+  function headline(point) {
+    const definition = MARKET_INDICATORS[point?.id], live = indicatorQuote(point);
+    const available = live || (!definition && point && U.validNumber(point.value) && point.fetch_status === "fresh" &&
+      U.isDate(point.date) && U.ageDays(point.date) <= point.max_age_days);
+    const unit = definition?.unit || point?.unit || "", decimals = point?.decimals ?? 2;
+    const change = !available ? null : live ? (U.validNumber(live.previous_close) ? U.changeLabel({...point,
+      change: live.price - live.previous_close, previous_date: live.session_date, unit, change_unit: definition?.change_unit || unit}) : null) : U.changeLabel(point);
+    return {title: definition?.title || point?.title, value: available ? live?.price ?? point.value : null, unit, decimals,
+      live, change, market: Boolean(definition), historyLabel: definition?.history_label, description: definition?.description};
   }
   function quoteMeta(quote) {
     const note = el("div", "quote-meta"), time = el("p", "meta" + (quote.stale ? " warning" : ""), window.IntradayUtils.shortLabel(quote));
@@ -100,31 +127,10 @@
     link.href = quote.source_url; link.target = "_blank"; link.rel = "noopener noreferrer";
     note.append(time, link); return note;
   }
-  function marketCompanion(point, compact = false) {
-    const definitions = {DGS10: ["UST10Y", "10 ans en séance · indice Cboe TNX", "%", "Indice TNX"],
-      DCOILWTICO: ["WTIFUT", "WTI à terme · contrat proche", "$ US/baril"],
-      DTWEXBGS: ["DXY", "Dollar en séance · DXY, six devises", "points"]};
-    const definition = definitions[point?.id], q = definition && window.SavyLiveQuotes?.current(definition[0]);
-    if (!q) return null;
-    const note = el("div", "live-companion" + (compact ? " compact-companion" : ""));
-    if (!compact) note.append(el("p", "live-companion-title", definition[1]));
-    const link = el("a", "live-companion-value", (compact ? (definition[3] || definition[1]) + " · " : "") + U.formatNumber(q.price, point.decimals) + " " + definition[2] + " ↗");
-    link.href = q.source_url; link.target = "_blank"; link.rel = "noopener noreferrer";
-    const time = el("p", "meta" + (q.stale ? " warning" : ""), window.IntradayUtils.shortLabel(q));
-    time.title = window.IntradayUtils.label(q);
-    note.append(link, time);
-    if (compact) note.title = "Référence de marché distincte de la série FRED du graphique. " + window.IntradayUtils.label(q);
-    else note.append(el("p", "meta companion-note", "Référence distincte du graphique FRED."));
-    return note;
-  }
-  function quotedChange(point, q) {
-    if (!q || !U.validNumber(q.previous_close)) return U.changeLabel(point);
-    return U.changeLabel({...point, change: q.price - q.previous_close, previous_date: point.previous_date || point.date});
-  }
   function renderKpis() {
     const definitions = [
       ["VIXCLS", "VIX · volatilité"], ["DFEDTARU", "Fed · taux directeur"], ["CPIAUCSL", "Inflation CPI · 12 mois"],
-      ["DGS10", "Trésor US · 10 ans"], ["DEXCAUS", "USD/CAD"], ["V39079", "Canada · taux directeur"],
+      ["DGS10", "Trésor US · 10 ans (TNX)"], ["DEXCAUS", "USD/CAD"], ["V39079", "Canada · taux directeur"],
     ];
     const fragment = document.createDocumentFragment();
     for (const [id, label] of definitions) {
@@ -132,17 +138,16 @@
       const card = el("article", "kpi");
       card.dataset.id = id;
       card.append(el("p", "eyebrow", label));
-      const live = indicatorQuote(point);
+      const current = headline(point), live = current.live;
       const lower = id === "DFEDTARU" ? state.seriesById.get("DFEDTARL") : null;
-      const range = point?.value !== null && point?.value !== undefined && lower?.value !== null && lower?.value !== undefined;
-      const valueText = live ? U.formatNumber(live.price, id === "DEXCAUS" ? 4 : point.decimals) : range ? U.formatNumber(lower.value, 2) + "–" + U.formatNumber(point.value, 2) + " %" :
-        point ? U.formatNumber(point.value, point.decimals) + (point.value !== null && point.unit === "%" ? " %" : "") : "—";
+      const range = current.value !== null && lower && headline(lower).value !== null;
+      const valueText = range ? U.formatNumber(lower.value, 2) + "–" + U.formatNumber(current.value, 2) + " %" :
+        U.formatNumber(current.value, current.decimals) + (current.value !== null && current.unit === "%" ? " %" : "");
       card.append(el("p", "kpi-value", valueText));
       if (live) card.append(quoteMeta(live));
-      else card.append(el("p", "meta", point ? U.observationLabel(point.date, point.frequency) + (id === "DEXCAUS" ? " · historique FRED" : "") : "Période non disponible"));
-      const change = point ? U.changeLabel(point) : { text: "En attente de collecte", direction: "flat" };
-      if (!live) card.append(el("p", "change " + change.direction, id === "DEXCAUS" ? "Dernière observation FRED · " + change.text : change.text));
-      const companion = marketCompanion(point, true); if (companion) card.append(companion);
+      else card.append(el("p", "meta" + (current.value === null ? " warning" : ""), current.value === null ?
+        (current.market ? "Cotation à jour indisponible" : "Publication à jour indisponible") : U.observationLabel(point.date, point.frequency)));
+      if (current.change) card.append(el("p", "change " + current.change.direction, current.change.text));
       fragment.append(card);
     }
     $("#kpis").replaceChildren(fragment);
@@ -235,18 +240,19 @@
       }
     });
     top.append(favorite);
-    const title = el("h3", "", point.title);
+    const current = headline(point), title = el("h3", "", current.title);
     const valueRow = el("div", "value-row");
-    const live = indicatorQuote(point);
-    const value = el("p", "current-value", U.formatNumber(live?.price ?? point.value, point.decimals));
-    if (point.value !== null) value.append(el("span", "value-unit", " " + point.unit));
-    const change = quotedChange(point, live);
-    if (live?.fx) change.text = "Historique FRED · " + change.text;
-    const changeNode = el("p", "change " + change.direction, change.text);
-    if (live && !live.fx) changeNode.title = "Par rapport à la clôture de la séance précédente";
-    else if (point.previous_date) changeNode.title = "Par rapport à " + U.observationLabel(point.previous_date, point.frequency);
-    valueRow.append(value, changeNode);
-    const date = el("p", "observation-date", (live ? "Graphique FRED · dernière observation : " : "Observation : ") + U.observationLabel(point.date, point.frequency));
+    const live = current.live;
+    const value = el("p", "current-value", U.formatNumber(current.value, current.decimals));
+    if (current.value !== null) value.append(el("span", "value-unit", " " + current.unit));
+    valueRow.append(value);
+    if (current.change) {
+      const changeNode = el("p", "change " + current.change.direction, current.change.text);
+      changeNode.title = live ? "Par rapport à la clôture de la séance précédente" : "Par rapport à " + U.observationLabel(point.previous_date, point.frequency);
+      valueRow.append(changeNode);
+    }
+    const date = el("p", "observation-date", (current.historyLabel ? "Historique : " + current.historyLabel + " (série distincte) · " :
+      current.market ? "Historique FRED · " : "Observation : ") + U.observationLabel(point.date, point.frequency));
     const host = el("div", "chart-host"); host.dataset.id = point.id;
     host.append(el("p", "chart-placeholder", "Chargement du graphique…"));
     const bottom = el("div", "card-bottom");
@@ -258,8 +264,8 @@
     bottom.append(source, details);
     card.append(top, title, valueRow);
     if (live) card.append(quoteMeta(live));
+    else if (current.value === null) card.append(el("p", "status-note", current.market ? "Cotation à jour indisponible" : "Publication à jour indisponible"));
     card.append(date);
-    const companion = marketCompanion(point); if (companion) card.append(companion);
     if (point.fetch_status === "cached") card.append(el("p", "status-note", "Valeur conservée · dernière collecte réussie : " + U.timestampLabel(point.last_successful_fetch)));
     else if (point.fetch_status === "unavailable") card.append(el("p", "status-note", "Source indisponible · aucune valeur valide conservée"));
     else if (U.ageDays(point.date) > point.max_age_days) card.append(el("p", "status-note", "Période éloignée · vérifier le calendrier de publication"));
@@ -269,9 +275,10 @@
   function renderCards() {
     observer?.disconnect();
     state.visible = U.filterSeries(state.dataset.series, {
-      search: state.search, category: state.category, sort: state.sort,
+      search: "", category: state.category, sort: state.sort,
       favorites: state.favorites, favoritesOnly: state.favoritesOnly,
-    });
+    }).filter(point => !state.search || U.filterSeries([point], {search: state.search}).length ||
+      U.normalizeSearch(MARKET_INDICATORS[point.id]?.title || "").includes(U.normalizeSearch(state.search)));
     const fragment = document.createDocumentFragment();
     for (const point of state.visible) fragment.append(buildCard(point));
     $("#grid").replaceChildren(fragment);
@@ -320,7 +327,7 @@
       const fraction = tickCount === 1 ? 0.5 : i / (tickCount - 1);
       const tickTime = firstTime + fraction * (lastTime - firstTime);
       const date = new Date(tickTime);
-      const label = new Intl.DateTimeFormat("fr-CA", { timeZone: "UTC",
+      const label = options.intraday ? window.IntradayUtils.clock(tickTime) : new Intl.DateTimeFormat("fr-CA", { timeZone: "UTC",
         ...(range.endsWith("M") || ["1D", "3D", "1W"].includes(range) ? { month: "short", day: "numeric" } : ["1Y", "YTD"].includes(range) ? { month: "short", year: "2-digit" } : { year: "numeric" }),
       }).format(date);
       svg.append(svgEl("text", { x: left + fraction * plotWidth, y: height - 8,
@@ -346,10 +353,10 @@
       if (!row) return;
       guide.setAttribute("x1", x(row[0])); guide.setAttribute("x2", x(row[0])); guide.setAttribute("visibility", "visible");
       selectedDot.setAttribute("cx", x(row[0])); selectedDot.setAttribute("cy", y(row[1])); selectedDot.setAttribute("visibility", "visible");
-      tooltip.textContent = U.observationLabel(row[0], point.frequency) + " · " + U.formatNumber(row[1], point.decimals) + " " + point.unit;
+      tooltip.textContent = (options.intraday ? U.timestampLabel(row[0]) : U.observationLabel(row[0], point.frequency)) + " · " + U.formatNumber(row[1], point.decimals) + " " + point.unit;
       if (options.showPercent) {
-        const percent = options.incomplete ? null : (row[1] / valid[0][1] - 1) * 100;
-        tooltip.textContent += U.validNumber(percent) ? " · " + (percent > 0 ? "+" : "") + U.formatNumber(percent, 2) + " % depuis le " + valid[0][0] : " · rendement indisponible : base manquante";
+        const percent = options.incomplete ? null : (row[1] / (options.baseline || valid[0][1]) - 1) * 100;
+        tooltip.textContent += U.validNumber(percent) ? " · " + (percent > 0 ? "+" : "") + U.formatNumber(percent, 2) + (options.intraday ? " % depuis la clôture précédente" : " % depuis le " + valid[0][0]) : " · rendement indisponible : base manquante";
       }
       selected = valid.findIndex(item => item[0] === row[0]);
     }
@@ -377,12 +384,13 @@
   function updateDetail() {
     const point = state.seriesById.get(state.detailId);
     if (!point) return;
-    const live = indicatorQuote(point);
-    $("#detailTitle").textContent = point.title;
+    const current = headline(point), live = current.live;
+    $("#detailTitle").textContent = current.title;
     $("#detailCategory").textContent = point.category + " · " + point.id;
-    $("#detailMeta").textContent = (live ? "Graphique FRED · dernière observation : " : "Observation : ") + U.observationLabel(point.date, point.frequency) + " · Collecte : " + U.timestampLabel(point.last_successful_fetch);
-    $("#detailValue").textContent = U.formatNumber(point.value, point.decimals) + (point.value !== null ? " " + point.unit : "");
-    $("#detailDescription").textContent = point.description;
+    $("#detailMeta").textContent = (live ? live.label + " · " : current.value === null ? "Valeur à jour indisponible · " : "") +
+      (current.historyLabel ? "Historique : " + current.historyLabel + " (série distincte) · " : "Historique · ") + U.observationLabel(point.date, point.frequency);
+    $("#detailValue").textContent = U.formatNumber(current.value, current.decimals) + (current.value !== null ? " " + current.unit : "");
+    $("#detailDescription").textContent = current.description || point.description;
     $("#detailSource").href = point.source_url;
     $("#detailSource").textContent = "Voir la série originale · " + point.source_label + " ↗";
     renderRanges($("#detailRanges"), state.detailRange, range => { state.detailRange = range; updateDetail(); });
@@ -510,9 +518,9 @@
   }
   function renderMarkets() {
     const ranges = document.createDocumentFragment();
-    for (const range of U.MARKET_RANGES) {
+    for (const range of MARKET_CHART_RANGES) {
       const button = el("button", "", range.label);
-      button.type = "button"; button.setAttribute("aria-pressed", String(range.key === state.marketRange));
+      button.type = "button"; button.dataset.range = range.key; button.setAttribute("aria-pressed", String(range.key === state.marketRange));
       button.addEventListener("click", () => {state.marketRange = range.key; renderMarkets();});
       ranges.append(button);
     }
@@ -527,25 +535,28 @@
     if (liveData) $("#marketStatus").textContent += " · cotations en séance collectées le " + U.timestampLabel(liveData.generated_at) + " · cadence prévue 5 min, délai fournisseur possible";
     $("#marketStatus").classList.toggle("warning", !data || state.marketCached || available !== MARKET_DEFINITIONS.length || oldCollection);
     const fragment = document.createDocumentFragment();
-    const periodLabel = U.MARKET_RANGES.find(item => item.key === state.marketRange).label;
+    const periodLabel = MARKET_CHART_RANGES.find(item => item.key === state.marketRange).label, intraday = state.marketRange === "INTRADAY";
     for (const [id, title, category, symbol] of MARKET_DEFINITIONS) {
       const original = data?.series.find(item => item.id === id);
-      const point = window.SavyLiveQuotes?.marketPoint(original) || original;
+      const session = intraday ? window.SavyLiveQuotes?.marketSession(original) || {history: [], incomplete: true, available: false} : null;
+      const point = intraday ? (session.quote ? {...original, value: session.quote.price, current_quote: session.quote} : {...original, value: null}) : window.SavyLiveQuotes?.marketPoint(original) || original;
       const isETF = id === "EEM" || id === "FEQT";
-      const selected = U.marketPeriod(point, state.marketRange);
+      const selected = intraday ? session : U.marketPeriod(point, state.marketRange);
       const card = el("article", "market-card"); card.dataset.id = id;
       card.append(el("p", "eyebrow", category), el("h4", "", title));
       card.append(el("p", "market-value", point ? U.formatNumber(point.value, 2) + (point.value !== null && isETF ? " " + point.unit : "") : "—"));
       const old = point?.date && Date.now() - Date.parse(point.date) > 7 * 86400000;
       card.append(el("p", "meta" + (old || point?.current_quote?.stale || point?.fetch_status === "cached" ? " warning" : ""),
-        point?.current_quote ? window.IntradayUtils.label(point.current_quote) : point?.date ? "Clôture du " + point.date + (old ? " · observation ancienne" : "") + (point.fetch_status === "cached" ? " · dernière valeur conservée" : "") : "Clôture indisponible"));
+        point?.current_quote ? window.IntradayUtils.label(point.current_quote) : intraday ? "Cotation de séance à jour indisponible" : point?.date ? "Clôture du " + point.date + (old ? " · observation ancienne" : "") + (point.fetch_status === "cached" ? " · dernière valeur conservée" : "") : "Clôture indisponible"));
       const change = el("p", "change market-return " + (selected.change > 0 ? "up" : selected.change < 0 ? "down" : "flat"),
         U.validNumber(selected.percent) ? (selected.percent > 0 ? "+" : "") + U.formatNumber(selected.percent, 2) + " % · " + periodLabel : "Rendement indisponible · " + periodLabel);
-      const dates = selected.start && selected.end ? "Du " + selected.start + " au " + selected.end + (selected.incomplete ? " · historique incomplet" : " · hors dividendes") : "Base de comparaison indisponible";
+      const dates = intraday ? (session.available ? "Séance du " + session.quote.session_date + " · points de 5 min · variation depuis la clôture précédente" : "Courbe intraday indisponible") :
+        selected.start && selected.end ? "Du " + selected.start + " au " + selected.end + (selected.incomplete ? " · historique incomplet" : " · hors dividendes") : "Base de comparaison indisponible";
       change.title = dates;
       card.append(change, el("p", "meta market-period", dates));
       const host = el("div", "chart-host");
-      if (point) drawChart(host, point, state.marketRange, {history: selected.history, showPercent: true, incomplete: selected.incomplete});
+      if (intraday && !session.available) host.append(el("p", "chart-placeholder", "Courbe de séance à jour indisponible."));
+      else if (point) drawChart(host, point, state.marketRange, {history: selected.history, showPercent: true, incomplete: selected.incomplete, intraday, baseline: session?.baseline});
       else host.append(el("p", "chart-placeholder", "Historique indisponible pour cette collecte."));
       const link = el("a", "", "Voir " + (isETF ? "le FNB" : "cet indice") + " sur Yahoo Finance ↗");
       link.href = "https://finance.yahoo.com/quote/" + encodeURIComponent(symbol) + "/";
@@ -602,7 +613,15 @@
     state.favoritesOnly = !state.favoritesOnly; event.currentTarget.setAttribute("aria-pressed", String(state.favoritesOnly));
     if (state.dataset) renderCards();
   });
-  $("#exportButton").addEventListener("click", () => downloadCSV(U.snapshotCSV(state.visible), "SAVY-indicateurs-" + new Date().toISOString().slice(0, 10) + ".csv"));
+  $("#exportButton").addEventListener("click", () => downloadCSV(U.snapshotCSV(state.visible.map(point => {
+    const current = headline(point), q = current.live;
+    return {...point, title: current.title, id: q?.id || point.id, value: current.value, unit: current.unit,
+      date: q ? q.session_date || new Intl.DateTimeFormat("en-CA", {timeZone: "America/Toronto"}).format(U.parseTimestamp(q.timestamp)) : point.date,
+      previous_value: q ? q.previous_close ?? null : current.value !== null ? point.previous_value : null,
+      previous_date: q ? null : current.value !== null ? point.previous_date : null,
+      change: q && U.validNumber(q.previous_close) ? q.price - q.previous_close : q ? null : current.value !== null ? point.change : null,
+      last_successful_fetch: q?.fetched_at || point.last_successful_fetch, source_url: q?.source_url || point.source_url};
+  })), "SAVY-indicateurs-" + new Date().toISOString().slice(0, 10) + ".csv"));
   $("#detailExport").addEventListener("click", () => {
     const point = state.seriesById.get(state.detailId);
     if (point) downloadCSV(U.historyCSV(point, state.detailRange), "SAVY-" + point.id + "-" + state.detailRange + ".csv");
@@ -628,8 +647,8 @@
     renderRanges($("#rangeControls"), range, setGlobalRange);
     if (state.dataset) renderCards();
   }
-  document.addEventListener("savy:quotes", () => {if (state.dataset) {renderKpis(); renderCards();} renderMarkets();});
-  document.addEventListener("savy:fx", () => {if (state.dataset) {renderKpis(); renderCards();}});
+  document.addEventListener("savy:quotes", () => {if (state.dataset) {renderKpis(); renderCards(); if ($("#detailDialog").open) updateDetail();} renderMarkets();});
+  document.addEventListener("savy:fx", () => {if (state.dataset) {renderKpis(); renderCards(); if ($("#detailDialog").open) updateDetail();}});
   applyTheme(); loadDataset();
   setInterval(() => { if (document.visibilityState === "visible") loadDataset(); }, 15 * 60 * 1000);
 })();
