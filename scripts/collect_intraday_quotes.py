@@ -78,7 +78,10 @@ def parse_quote(payload, definition, now):
             if definition["id"] == "USDCAD" and not .5 < close < 3:
                 continue
             try:
-                time = datetime.fromtimestamp(tick, timezone.utc)
+                # Yahoo timestamps each candle at its opening. Its close is
+                # known at the interval end, or at the actual latest trade
+                # for the unfinished candle; never use future FX in a value.
+                time = datetime.fromtimestamp(min(tick + 300, stamp), timezone.utc)
                 day = time.astimezone(zone).date().isoformat()
                 if definition["id"] == "USDCAD" and 0 <= (now - time).total_seconds() <= 7 * 86400:
                     fx_sessions.setdefault(day, {})[time.isoformat().replace("+00:00", "Z")] = close

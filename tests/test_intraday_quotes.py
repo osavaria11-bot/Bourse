@@ -19,12 +19,12 @@ class QuoteTests(unittest.TestCase):
         data = fixture("CAD=X", "CAD"); result = data["chart"]["result"][0]
         result["meta"]["regularMarketPrice"] = 1.4
         friday = datetime(2026, 10, 9, 19, 55, tzinfo=timezone.utc).timestamp()
-        result["timestamp"] = [friday, NOW.timestamp() - 600, NOW.timestamp() - 300]
-        result["indicators"] = {"quote": [{"close": [1.3, 99, 1.39]}]}
+        result["timestamp"] = [friday, NOW.timestamp() - 900, NOW.timestamp() - 600, NOW.timestamp() - 300]
+        result["indicators"] = {"quote": [{"close": [1.3, 99, 1.38, 1.39]}]}
         definition = {"id": "USDCAD", "title": "USD/CAD", "quote_symbol": "CAD=X", "currency": "CAD"}
         parsed = quotes.parse_quote(data, definition, NOW)
-        self.assertEqual(parsed["intraday_sessions"]["2026-10-09"], [["2026-10-09T19:55:00Z", 1.3]])
-        self.assertEqual(parsed["intraday_history"], [["2026-10-12T13:55:00Z", 1.39], ["2026-10-12T13:59:00Z", 1.4]])
+        self.assertEqual(parsed["intraday_sessions"]["2026-10-09"], [["2026-10-09T20:00:00Z", 1.3]])
+        self.assertEqual(parsed["intraday_history"], [["2026-10-12T13:55:00Z", 1.38], ["2026-10-12T13:59:00Z", 1.4]])
         result["meta"]["regularMarketPrice"] = 100
         with self.assertRaises(quotes.markets.macro.SourceError):
             quotes.parse_quote(data, definition, NOW)
@@ -35,7 +35,7 @@ class QuoteTests(unittest.TestCase):
         result["timestamp"] = ticks
         result["indicators"] = {"quote": [{"close": [90, 98, None, 99, 120]}]}
         parsed = quotes.parse_quote(data, DEFINITION, NOW)
-        self.assertEqual(parsed["intraday_history"], [["2026-10-12T13:40:00Z", 98], ["2026-10-12T13:55:00Z", 99], ["2026-10-12T13:59:00Z", 100]])
+        self.assertEqual(parsed["intraday_history"], [["2026-10-12T13:45:00Z", 98], ["2026-10-12T13:59:00Z", 100]])
         self.assertEqual(parsed["history_interval_minutes"], 5)
         result["indicators"]["quote"] = []
         self.assertEqual(quotes.parse_quote(data, DEFINITION, NOW)["intraday_history"], [])

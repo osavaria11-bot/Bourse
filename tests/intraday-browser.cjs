@@ -121,7 +121,7 @@ async function main() {
     assert.ok((await marketCurve.locator(".chart-line").getAttribute("d")).split("L").length >= 3);
     await marketCurve.locator("svg").focus(); await page.keyboard.press("End");
     assert.match(await marketCurve.locator(".chart-tooltip").innerText(), /heure de Montréal.*clôture précédente/);
-    assert.match(await marketCurve.locator(".chart-axis").last().innerText(), /h/);
+    assert.match(await marketCurve.locator(".chart-axis").last().textContent(), /h/);
     await page.locator('#portfolioRanges [data-range="INTRADAY"]').click();
     assert.match(await page.locator("#portfolioPeriod").innerText(), /Intraday.*heure de Montréal/);
     assert.equal(await page.locator("#portfolioChart .chart-benchmark").count(), 1);
