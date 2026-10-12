@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-10-12T03:13:32.527466+00:00",
-  "last_successful_update": "2026-10-12T03:13:32.527466+00:00",
+  "generated_at": "2026-10-12T20:00:19.174360+00:00",
+  "last_successful_update": "2026-10-12T20:00:19.174360+00:00",
   "update_status": "fresh_data",
   "coverage": {
     "total": 34,
@@ -10,7 +10,7 @@
     "unavailable": 0
   },
   "data_provider": "FRED / Banque du Canada",
-  "briefing_paragraph": "Dernières observations publiées — Inflation CPI · annuelle : 3,35 % (période : 2026-08-01); Inflation PCE sous-jacente · annuelle : 3,01 % (période : 2026-08-01); Taux de chômage américain : 4,20 % (période : 2026-09-01); Créations nettes d’emplois · mensuelles : 29 milliers (période : 2026-09-01); Croissance du PIB réel · trimestre annualisé : 2,22 % (période : 2026-04-01); Taux directeur américain · borne inférieure : 3,75 % (période : 2026-10-11); Taux directeur américain · borne supérieure : 4,00 % (période : 2026-10-11); Trésor américain · 10 ans : 5,22 % (période : 2026-10-08); Courbe des taux · 10 ans – 2 ans : 0,44 pt (période : 2026-10-09); Volatilité anticipée · VIX : 15,41 points (période : 2026-10-08); USD/CAD · dollars canadiens pour 1 $ US : 1,4253 $ CA/$ US (période : 2026-10-02); Taux directeur canadien : 2,25 % (période : 2026-10-08).",
+  "briefing_paragraph": "Dernières observations publiées — Inflation CPI · annuelle : 3,35 % (période : 2026-08-01); Inflation PCE sous-jacente · annuelle : 3,01 % (période : 2026-08-01); Taux de chômage américain : 4,20 % (période : 2026-09-01); Créations nettes d’emplois · mensuelles : 29 milliers (période : 2026-09-01); Croissance du PIB réel · trimestre annualisé : 2,22 % (période : 2026-04-01); Taux directeur américain · borne inférieure : 3,75 % (période : 2026-10-12); Taux directeur américain · borne supérieure : 4,00 % (période : 2026-10-12); Trésor américain · 10 ans : 5,22 % (période : 2026-10-08); Courbe des taux · 10 ans – 2 ans : 0,44 pt (période : 2026-10-09); Volatilité anticipée · VIX : 14,84 points (période : 2026-10-09); USD/CAD · dollars canadiens pour 1 $ US : 1,4253 $ CA/$ US (période : 2026-10-02); Taux directeur canadien : 2,25 % (période : 2026-10-09).",
   "news_digest_note": "Veille complémentaire. Les données suivent le calendrier de publication de chaque source.",
   "news_sources": [
     {
@@ -48,20 +48,20 @@
     {
       "id": "DFEDTARU",
       "title": "Taux directeur américain · borne supérieure",
-      "date": "2026-10-11",
+      "date": "2026-10-12",
       "value": 4.0,
       "previous_value": 4.0,
-      "previous_date": "2026-10-10",
+      "previous_date": "2026-10-11",
       "unit": "%",
       "fetch_status": "fresh"
     },
     {
       "id": "DFEDTARL",
       "title": "Taux directeur américain · borne inférieure",
-      "date": "2026-10-11",
+      "date": "2026-10-12",
       "value": 3.75,
       "previous_value": 3.75,
-      "previous_date": "2026-10-10",
+      "previous_date": "2026-10-11",
       "unit": "%",
       "fetch_status": "fresh"
     },
@@ -128,10 +128,10 @@
     {
       "id": "VIXCLS",
       "title": "Volatilité anticipée · VIX",
-      "date": "2026-10-08",
-      "value": 15.41,
-      "previous_value": 15.08,
-      "previous_date": "2026-10-07",
+      "date": "2026-10-09",
+      "value": 14.84,
+      "previous_value": 15.41,
+      "previous_date": "2026-10-08",
       "unit": "points",
       "fetch_status": "fresh"
     },
@@ -148,10 +148,10 @@
     {
       "id": "V39079",
       "title": "Taux directeur canadien",
-      "date": "2026-10-08",
+      "date": "2026-10-09",
       "value": 2.25,
       "previous_value": 2.25,
-      "previous_date": "2026-10-07",
+      "previous_date": "2026-10-08",
       "unit": "%",
       "fetch_status": "fresh"
     }
