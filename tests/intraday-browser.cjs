@@ -34,7 +34,13 @@ async function main() {
   const browser = await chromium.launch({headless: true}), url = "http://127.0.0.1:" + server.address().port;
   try {
     const context = await browser.newContext({viewport: {width: 1440, height: 1000}});
-    await context.addInitScript(positions => localStorage.setItem("savy:private-holdings:v1", JSON.stringify({schema_version: 1, positions})), holdings);
+    await context.addInitScript(({positions, timestamp}) => {
+      localStorage.setItem("savy:private-holdings:v1", JSON.stringify({schema_version: 1, positions}));
+      const originalFetch = window.fetch.bind(window);
+      window.fetch = (input, init) => String(input?.url || input).startsWith("https://biquote.io/api/USDCAD") ?
+        Promise.resolve(new Response(JSON.stringify({symbol: "USDCAD", mid: 1.4, timestamp, marketState: "open"}),
+          {status: 200, headers: {"Content-Type": "application/json"}})) : originalFetch(input, init);
+    }, {positions: holdings, timestamp: new Date(now).toISOString()});
     const page = await context.newPage(), errors = []; page.on("pageerror", error => errors.push(error.message));
     await page.route("https://**", route => route.request().url().startsWith("https://biquote.io/api/USDCAD") ?
       route.fulfill({status: 200, contentType: "application/json", headers: {"Access-Control-Allow-Origin": "*"}, body: JSON.stringify({symbol: "USDCAD", mid: 1.4, timestamp: new Date(now).toISOString(), marketState: "open"})}) : route.abort());
