@@ -5,7 +5,7 @@ on:
     branches: ["main", "codex/**"]
   workflow_dispatch:
   workflow_run:
-    workflows: ["Daily briefing"]
+    workflows: ["Daily briefing", "Fresh macro releases"]
     types: [completed]
     branches: ["main"]
 
@@ -49,6 +49,8 @@ jobs:
         run: |
           node --check js/dashboard.js
           node --check js/live-fx.js
+          node --check js/live-quotes.js
+          node --check js/intraday-utils.js
           node --check js/macro-utils.js
           node --check js/portfolio-utils.js
           node --check js/portfolio-exposure-utils.js
@@ -56,6 +58,7 @@ jobs:
           node --check js/portfolio-profile-utils.js
           node --check js/portfolio.js
           npm test
+          node scripts/validate_intraday_quotes.cjs
       - name: Validate dated earnings data and reviewed messages
         run: |
           node - <<'JS'

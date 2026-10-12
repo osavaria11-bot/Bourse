@@ -83,6 +83,32 @@
       (age > 36 ? " · collecte ancienne" : "");
     $("#updated").classList.toggle("warning", state.origin !== "published" || fresh !== dataset.series.length || age > 36);
   }
+  function indicatorQuote(point) {
+    const fx = point?.id === "DEXCAUS" ? window.SavyLiveFX?.current() : null;
+    if (fx) return {price: fx.rate, timestamp: fx.timestamp, fx, source_url: window.SavyLiveFX.source_url,
+      label: (fx.closed ? "Marché fermé · dernier cours · " : "Cotation indicative · ") + U.timestampLabel(fx.timestamp) + " · biquote"};
+    const symbols = {VIXCLS: "^VIX", NASDAQXAU: "^XAU", VXEEMCLS: "^VXEEM"};
+    if (!symbols[point?.id]) return null;
+    const q = window.SavyLiveQuotes?.current(point.id, {...point, quote_symbol: symbols[point.id], currency: "USD"});
+    return q ? {...q, label: window.IntradayUtils.label(q)} : null;
+  }
+  function marketCompanion(point) {
+    const definitions = {DGS10: ["UST10Y", "10 ans en séance · indice Cboe TNX", "%"],
+      DCOILWTICO: ["WTIFUT", "WTI à terme · contrat proche", "$ US/baril"],
+      DTWEXBGS: ["DXY", "Dollar en séance · DXY, six devises", "points"]};
+    const definition = definitions[point?.id], q = definition && window.SavyLiveQuotes?.current(definition[0]);
+    if (!q) return null;
+    const note = el("div", "live-companion");
+    const link = el("a", "meta", definition[1] + " : " + U.formatNumber(q.price, point.decimals) + " " + definition[2] + " ↗");
+    link.href = q.source_url; link.target = "_blank"; link.rel = "noopener noreferrer";
+    note.append(link, el("p", "meta" + (q.stale ? " warning" : ""), window.IntradayUtils.label(q)));
+    note.append(el("p", "meta", "Référence de marché distincte de la série FRED du graphique."));
+    return note;
+  }
+  function quotedChange(point, q) {
+    if (!q || !U.validNumber(q.previous_close)) return U.changeLabel(point);
+    return U.changeLabel({...point, change: q.price - q.previous_close, previous_date: point.previous_date || point.date});
+  }
   function renderKpis() {
     const definitions = [
       ["VIXCLS", "VIX · volatilité"], ["DFEDTARU", "Fed · taux directeur"], ["CPIAUCSL", "Inflation CPI · 12 mois"],
@@ -94,17 +120,18 @@
       const card = el("article", "kpi");
       card.dataset.id = id;
       card.append(el("p", "eyebrow", label));
-      const live = id === "DEXCAUS" ? window.SavyLiveFX?.current() : null;
+      const live = indicatorQuote(point);
       const lower = id === "DFEDTARU" ? state.seriesById.get("DFEDTARL") : null;
       const range = point?.value !== null && point?.value !== undefined && lower?.value !== null && lower?.value !== undefined;
-      const valueText = live ? U.formatNumber(live.rate, 4) : range ? U.formatNumber(lower.value, 2) + "–" + U.formatNumber(point.value, 2) + " %" :
+      const valueText = live ? U.formatNumber(live.price, id === "DEXCAUS" ? 4 : point.decimals) : range ? U.formatNumber(lower.value, 2) + "–" + U.formatNumber(point.value, 2) + " %" :
         point ? U.formatNumber(point.value, point.decimals) + (point.value !== null && point.unit === "%" ? " %" : "") : "—";
       card.append(el("p", "kpi-value", valueText));
-      card.append(el("p", "meta", live ? (live.closed ? "Marché fermé · dernier cours " : "Cotation indicative · ") + U.timestampLabel(live.timestamp) :
+      card.append(el("p", "meta", live ? live.label :
         point ? U.observationLabel(point.date, point.frequency) + (id === "DEXCAUS" ? " · historique FRED" : "") : "Période non disponible"));
       const change = point ? U.changeLabel(point) : { text: "En attente de collecte", direction: "flat" };
-      if (live) {const link = el("a", "meta", "Source : biquote ↗"); link.href = window.SavyLiveFX.source_url; link.target = "_blank"; link.rel = "noopener noreferrer"; card.append(link);}
+      if (live) {const link = el("a", "meta", "Source : " + (live.fx ? "biquote" : "Yahoo Finance") + " ↗"); link.href = live.source_url; link.target = "_blank"; link.rel = "noopener noreferrer"; card.append(link);}
       else card.append(el("p", "change " + change.direction, id === "DEXCAUS" ? "Dernière observation FRED · " + change.text : change.text));
+      const companion = marketCompanion(point); if (companion) card.append(companion);
       fragment.append(card);
     }
     $("#kpis").replaceChildren(fragment);
@@ -199,13 +226,16 @@
     top.append(favorite);
     const title = el("h3", "", point.title);
     const valueRow = el("div", "value-row");
-    const value = el("p", "current-value", U.formatNumber(point.value, point.decimals));
+    const live = indicatorQuote(point);
+    const value = el("p", "current-value", U.formatNumber(live?.price ?? point.value, point.decimals));
     if (point.value !== null) value.append(el("span", "value-unit", " " + point.unit));
-    const change = U.changeLabel(point);
+    const change = quotedChange(point, live);
+    if (live?.fx) change.text = "Historique FRED · " + change.text;
     const changeNode = el("p", "change " + change.direction, change.text);
-    if (point.previous_date) changeNode.title = "Par rapport à " + U.observationLabel(point.previous_date, point.frequency);
+    if (live && !live.fx) changeNode.title = "Par rapport à la clôture de la séance précédente";
+    else if (point.previous_date) changeNode.title = "Par rapport à " + U.observationLabel(point.previous_date, point.frequency);
     valueRow.append(value, changeNode);
-    const date = el("p", "observation-date", "Observation : " + U.observationLabel(point.date, point.frequency));
+    const date = el("p", "observation-date", (live ? "Graphique FRED · dernière observation : " : "Observation : ") + U.observationLabel(point.date, point.frequency));
     const host = el("div", "chart-host"); host.dataset.id = point.id;
     host.append(el("p", "chart-placeholder", "Chargement du graphique…"));
     const bottom = el("div", "card-bottom");
@@ -215,7 +245,10 @@
     details.type = "button"; details.setAttribute("aria-label", "Explorer : " + point.title);
     details.addEventListener("click", () => openDetails(point.id));
     bottom.append(source, details);
-    card.append(top, title, valueRow, date);
+    card.append(top, title, valueRow);
+    if (live) {const link = el("a", "meta" + (live.stale ? " warning" : ""), live.label + " ↗"); link.href = live.source_url; link.target = "_blank"; link.rel = "noopener noreferrer"; card.append(link);}
+    card.append(date);
+    const companion = marketCompanion(point); if (companion) card.append(companion);
     if (point.fetch_status === "cached") card.append(el("p", "status-note", "Valeur conservée · dernière collecte réussie : " + U.timestampLabel(point.last_successful_fetch)));
     else if (point.fetch_status === "unavailable") card.append(el("p", "status-note", "Source indisponible · aucune valeur valide conservée"));
     else if (U.ageDays(point.date) > point.max_age_days) card.append(el("p", "status-note", "Période éloignée · vérifier le calendrier de publication"));
@@ -335,7 +368,7 @@
     if (!point) return;
     $("#detailTitle").textContent = point.title;
     $("#detailCategory").textContent = point.category + " · " + point.id;
-    $("#detailMeta").textContent = "Observation : " + U.observationLabel(point.date, point.frequency) + " · Collecte : " + U.timestampLabel(point.last_successful_fetch);
+    $("#detailMeta").textContent = (live ? "Graphique FRED · dernière observation : " : "Observation : ") + U.observationLabel(point.date, point.frequency) + " · Collecte : " + U.timestampLabel(point.last_successful_fetch);
     $("#detailValue").textContent = U.formatNumber(point.value, point.decimals) + (point.value !== null ? " " + point.unit : "");
     $("#detailDescription").textContent = point.description;
     $("#detailSource").href = point.source_url;
@@ -478,19 +511,22 @@
       "Collecte du " + U.timestampLabel(data.generated_at) + " · " + available + "/" + MARKET_DEFINITIONS.length + " marchés disponibles" : "Cotations indisponibles. Réessaie avec « Actualiser » ou consulte les sources ci-dessous.";
     const oldCollection = data && Date.now() - U.parseTimestamp(data.generated_at) > 36 * 3600000;
     if (oldCollection) $("#marketStatus").textContent += " · collecte ancienne";
+    const liveData = window.SavyLiveQuotes?.dataset();
+    if (liveData) $("#marketStatus").textContent += " · cotations en séance collectées le " + U.timestampLabel(liveData.generated_at) + " · cadence prévue 5 min, délai fournisseur possible";
     $("#marketStatus").classList.toggle("warning", !data || state.marketCached || available !== MARKET_DEFINITIONS.length || oldCollection);
     const fragment = document.createDocumentFragment();
     const periodLabel = U.MARKET_RANGES.find(item => item.key === state.marketRange).label;
     for (const [id, title, category, symbol] of MARKET_DEFINITIONS) {
-      const point = data?.series.find(item => item.id === id);
+      const original = data?.series.find(item => item.id === id);
+      const point = window.SavyLiveQuotes?.marketPoint(original) || original;
       const isETF = id === "EEM" || id === "FEQT";
       const selected = U.marketPeriod(point, state.marketRange);
       const card = el("article", "market-card"); card.dataset.id = id;
       card.append(el("p", "eyebrow", category), el("h4", "", title));
       card.append(el("p", "market-value", point ? U.formatNumber(point.value, 2) + (point.value !== null && isETF ? " " + point.unit : "") : "—"));
       const old = point?.date && Date.now() - Date.parse(point.date) > 7 * 86400000;
-      card.append(el("p", "meta" + (old || point?.fetch_status === "cached" ? " warning" : ""),
-        point?.date ? "Clôture du " + point.date + (old ? " · observation ancienne" : "") + (point.fetch_status === "cached" ? " · dernière valeur conservée" : "") : "Clôture indisponible"));
+      card.append(el("p", "meta" + (old || point?.current_quote?.stale || point?.fetch_status === "cached" ? " warning" : ""),
+        point?.current_quote ? window.IntradayUtils.label(point.current_quote) : point?.date ? "Clôture du " + point.date + (old ? " · observation ancienne" : "") + (point.fetch_status === "cached" ? " · dernière valeur conservée" : "") : "Clôture indisponible"));
       const change = el("p", "change market-return " + (selected.change > 0 ? "up" : selected.change < 0 ? "down" : "flat"),
         U.validNumber(selected.percent) ? (selected.percent > 0 ? "+" : "") + U.formatNumber(selected.percent, 2) + " % · " + periodLabel : "Rendement indisponible · " + periodLabel);
       const dates = selected.start && selected.end ? "Du " + selected.start + " au " + selected.end + (selected.incomplete ? " · historique incomplet" : " · hors dividendes") : "Base de comparaison indisponible";
@@ -541,12 +577,11 @@
         $("#updated").classList.add("warning");
       }
     } finally {
-      await Promise.all([loadBriefing(), loadMarkets(), loadOdds(), window.SavyPortfolio?.refresh(), window.SavyLiveFX?.refresh()]);
+      await Promise.all([loadBriefing(), loadMarkets(), loadOdds(), window.SavyPortfolio?.refresh(), window.SavyLiveFX?.refresh(), window.SavyLiveQuotes?.refresh()]);
       state.loading = false; $("#refreshButton").disabled = false; $("#refreshButton").textContent = "Actualiser";
     }
   }
   $("#refreshButton").addEventListener("click", loadDataset);
-  document.addEventListener("savy:fx", () => {if (state.dataset) renderKpis();});
   $("#themeToggle").addEventListener("click", () => { state.theme = state.theme === "dark" ? "light" : "dark"; applyTheme(); savePreferences(); });
   $("#searchInput").addEventListener("input", event => { state.search = event.target.value; if (state.dataset) renderCards(); });
   $("#sortSelect").value = state.sort;
@@ -581,6 +616,8 @@
     renderRanges($("#rangeControls"), range, setGlobalRange);
     if (state.dataset) renderCards();
   }
+  document.addEventListener("savy:quotes", () => {if (state.dataset) {renderKpis(); renderCards();} renderMarkets();});
+  document.addEventListener("savy:fx", () => {if (state.dataset) {renderKpis(); renderCards();}});
   applyTheme(); loadDataset();
   setInterval(() => { if (document.visibilityState === "visible") loadDataset(); }, 15 * 60 * 1000);
 })();

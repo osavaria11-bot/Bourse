@@ -1,0 +1,94 @@
+name: Intraday quotes
+
+on:
+  schedule:
+    - cron: "2-57/5 3-16 * * 1-5"
+      timezone: "America/Toronto"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+# The same group as the full deployment prevents an older snapshot from
+# overwriting a newer briefing, portfolio feature or macro release.
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  source:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    outputs:
+      sha: ${{ steps.commit.outputs.sha }}
+      ready: ${{ steps.validated.outputs.ready }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+          persist-credentials: false
+      - id: commit
+        run: echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+      - name: Require the exact source to have passed full browser and collector validation
+        id: validated
+        uses: actions/github-script@v8
+        env:
+          SOURCE_SHA: ${{ steps.commit.outputs.sha }}
+        with:
+          script: |
+            const {data} = await github.rest.actions.listWorkflowRuns({
+              owner: context.repo.owner, repo: context.repo.repo,
+              workflow_id: 'static.yml', head_sha: process.env.SOURCE_SHA,
+              status: 'success', per_page: 5
+            });
+            const ready = data.workflow_runs.some(run => run.head_sha === process.env.SOURCE_SHA);
+            core.setOutput('ready', ready ? 'true' : 'false');
+            core.info(ready ? 'Exact source already validated.' : 'Waiting for full source validation; published site kept.');
+
+  refresh:
+    needs: source
+    if: needs.source.outputs.ready == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.source.outputs.sha }}
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+      - name: Check quote collector and financial calculations
+        run: |
+          python -m unittest discover -s tests -p 'test_intraday_quotes.py' -v
+          npm test
+      - name: Collect actual exchange quotes without touching daily histories
+        run: python scripts/collect_intraday_quotes.py
+      - name: Validate generated snapshots
+        run: node scripts/validate_intraday_quotes.cjs
+      - uses: actions/configure-pages@v5
+      - name: Package validated source and generated quote data
+        run: |
+          mkdir -p _site
+          cp index.html 221.png 2121.png _site/
+          cp -R css js data _site/
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - name: Publish snapshot
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+# Quote snapshots are generated deployment assets. They do not create
+# hundreds of daily commits or change the official closing-price histories.

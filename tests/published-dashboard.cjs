@@ -10,6 +10,7 @@ const markets = JSON.parse(fs.readFileSync(path.join(root, "data/market-indices.
 const mime = {".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".json": "application/json", ".png": "image/png"};
 const server = http.createServer((request, response) => {
   const pathname = new URL(request.url, "http://localhost").pathname;
+  if (pathname === "/data/intraday-quotes.json") {response.writeHead(503); response.end("{}"); return;}
   const filename = path.resolve(root, "." + (pathname === "/" ? "/index.html" : pathname));
   if (!filename.startsWith(root + path.sep) || !fs.existsSync(filename) || !fs.statSync(filename).isFile()) {response.writeHead(404); response.end(); return;}
   response.writeHead(200, {"Content-Type": mime[path.extname(filename)] || "application/octet-stream"});

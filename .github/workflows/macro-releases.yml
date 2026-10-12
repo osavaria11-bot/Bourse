@@ -1,0 +1,45 @@
+name: Fresh macro releases
+
+on:
+  schedule:
+    - cron: "37 8 * * 1-5"
+      timezone: "America/Toronto"
+    - cron: "52 9 * * 1-5"
+      timezone: "America/Toronto"
+    - cron: "7 10,14 * * 1-5"
+      timezone: "America/Toronto"
+    - cron: "37 14 * * 1-5"
+      timezone: "America/Toronto"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+concurrency:
+  group: macro-data-refresh
+  cancel-in-progress: false
+jobs:
+  refresh:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Refresh official observations and decision odds after key release times
+        run: |
+          python scripts/generate_daily_briefing.py
+          python scripts/collect_rate_odds.py
+      - name: Commit only macro data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/macro-data.json data/macro-briefing.json data/rate-odds.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "data: actualiser les publications macro et décisions de taux"
+          git pull --rebase origin main
+          git push origin HEAD:main

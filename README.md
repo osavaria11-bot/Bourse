@@ -11,15 +11,29 @@ Un tableau de bord en français pour suivre le cycle économique aux États-Unis
 - **Export CSV** de la sélection, compatible avec Excel et protégé contre les formules dans les champs texte.
 - **Modes clair et sombre**, disposition adaptée au téléphone et dialogues accessibles au clavier.
 - **Nouvelles sélectionnées pour leur effet sur les marchés** : 1 à 6 sujets récents en français, chacun avec sa publication datée, son lien et la raison de le surveiller. Sous le briefing, 3 à 4 points expliquent les graphiques FRED à surveiller avec leur vraie période d’observation. Aucun quota de mots.
-- **USD/CAD de marché** : cours médian indicatif de biquote demandé au navigateur chaque minute, avec heure et statut du marché; les graphiques et variations historiques du portefeuille restent calculés sur des clôtures quotidiennes Yahoo Finance.
+- **USD/CAD de marché** : cours médian indicatif de biquote demandé au navigateur chaque minute, avec heure et statut du marché; les observations passées du portefeuille utilisent les clôtures quotidiennes Yahoo Finance et le dernier point peut utiliser la cotation de séance.
 - **Décisions Fed et Banque du Canada** : fourchette cible américaine officielle et probabilités de hausse, maintien ou baisse à la prochaine réunion, issues des swaps SOFR/CORRA selon BlueGamma et affichées avec leur date.
-- **Six graphiques de marchés mondiaux** : S&P 500, Nasdaq Composite, S&P/TSX Composite, STOXX Europe 600, FNB EEM suivant le MSCI Emerging Markets et FEQT (Fidelity All-in-One Equity) en CAD. Clôtures quotidiennes, périodes de 1 jour à 10 ans incluant YTD, rendements en % et sources accessibles.
+- **Six graphiques de marchés mondiaux** : S&P 500, Nasdaq Composite, S&P/TSX Composite, STOXX Europe 600, FNB EEM suivant le MSCI Emerging Markets et FEQT (Fidelity All-in-One Equity) en CAD. Historique de clôtures et dernier cours en séance, périodes de 1 jour à 10 ans incluant YTD, rendements en % et sources accessibles.
 - **Portefeuille privé** : quantités conservées dans le navigateur, valorisation en CAD, prix moyens, gains latents, pondérations et variations par titre, import/export JSON et graphique YTD, 6 mois, 3 mois, 1 mois, 1 semaine et 3 jours.
 - **Vue compacte du portefeuille** : positions repliées par défaut, choix mémorisé sur l’appareil, et tri croissant/décroissant des gains latents en % et en CAD ainsi que des variations en CAD.
 - **Point quotidien des positions** : les trois meilleures et les trois moins bonnes performances en %, en CAD avec le change, actualisées avec les cours. Les boutons YTD, 6 mois, 3 mois, 1 mois, 1 semaine et 3 jours permettent de choisir la période du classement; un mois glissant reste sélectionné par défaut. Le survol du graphique affiche date, montant et % depuis le début de la période affichée.
 - Arbres de décision NFCI et TEV/EBITDA et ressources complémentaires conservés.
 
 Les périodes de graphique se terminent à la dernière observation de chaque série. Une flèche indique le sens de variation depuis l’observation précédente, dont la date est disponible au survol. Les périodes mensuelles et trimestrielles sont affichées comme telles.
+
+## Cotations en séance
+
+Les cours de **tous les titres du catalogue, des six marchés et du VIX/XAU/VXEEM** disposent d’un instantané de la dernière cotation Yahoo Finance. La cotation source, sa devise, sa place boursière, sa vraie heure et le calendrier de séance sont vérifiés. Il s’agit du cours de la séance régulière; les cours après fermeture ne sont pas utilisés. Les cotations CDR restent distinctes des actions américaines, et aucun CFD ne remplace un titre ou un indice.
+
+`Intraday quotes` collecte les instantanés toutes les cinq minutes, de 3 h à 16 h 57 en semaine à Montréal, pour couvrir l’Europe et l’Amérique du Nord. La publication GitHub et le fournisseur peuvent ajouter un délai : ce service n’est pas un flux tick par tick garanti. La page relit les instantanés chaque minute lorsqu’elle est visible. Le taux USD/CAD indicatif conserve son appel direct biquote chaque minute. Le dernier cours, les marchés fermés, les observations anciennes et le repli sur une clôture sont indiqués. Les instantanés sont des fichiers générés lors du déploiement; les historiques officiels et les positions personnelles ne sont jamais modifiés par ce workflow.
+
+Le workflow de cotations publie seulement un commit source qui a déjà réussi les contrôles complets, puis valide les nouvelles données et les calculs financiers. Il partage la file de déploiement de SAVY, pour préserver les autres mises à jour. Une panne conserve la publication existante et ses dates. Le navigateur refuse un instantané global plus ancien et conserve les dernières cotations plus récentes déjà reçues.
+
+Les graphiques des indices incluent le cours de séance comme dernier point et recalculent le rendement de chaque période. Les trois portefeuilles incluent les dernières cotations disponibles dans leurs valeurs, gains latents, répartitions, classements, contributions et dernière observation du graphique. Les références FEQT, VBAL et VGRO suivent le même mécanisme. Les contributions s’additionnent au rendement affiché; le change historique est conservé avant l’observation courante. Les cotations intrajournalières restent séparées des clôtures : volatilité, bêta et baisse maximale utilisent uniquement les séances clôturées communes. Une fermeture canadienne ne crée pas une séance fictive à partir d’un cours de change du jour.
+
+Pour les indicateurs macro, le VIX, le PHLX XAU et VXEEM utilisent leur cotation lorsqu’elle est disponible; leur graphique historique reste FRED. USD/CAD utilise biquote sur la carte macro comme dans le bandeau. Trois compléments explicitement distincts sont proposés : indice de rendement Cboe TNX pour le 10 ans, contrat WTI proche pour le pétrole et DXY pour le dollar. Ils ne remplacent pas une série FRED de maturité constante, de pétrole spot ou de panier large par un instrument différent.
+
+`Fresh macro releases` relit les publications officielles à 8 h 37, 9 h 52, 10 h 07, 14 h 07 et 14 h 37 en semaine, en plus des collectes habituelles. FRED et la Banque du Canada restent les sources des statistiques économiques et des décisions; leurs périodes de référence restent intactes.
 
 ## Mise à jour et fiabilité
 

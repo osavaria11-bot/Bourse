@@ -50,6 +50,7 @@ const mime = {".html": "text/html", ".js": "text/javascript", ".css": "text/css"
 const server = http.createServer((request, response) => {
   requestPaths.push(request.url);
   const pathname = new URL(request.url, "http://localhost").pathname;
+  if (pathname === "/data/intraday-quotes.json") {response.writeHead(503); response.end("{}"); return;}
   if (pathname === "/data/portfolio-earnings.json") {
     response.writeHead(offline || earningsOffline ? 503 : 200, {"Content-Type": "application/json"});
     response.end(offline || earningsOffline ? "{}" : JSON.stringify(syntheticEarningsData)); return;

@@ -10,13 +10,15 @@
   <title>SAVY — Tableau macroéconomique</title>
   <link rel="stylesheet" href="css/dashboard.css?v=20261012-portfolio-3" />
   <script src="js/macro-utils.js?v=20261011-index-day-ytd" defer></script>
+  <script src="js/intraday-utils.js?v=20261012-quotes" defer></script>
+  <script src="js/live-quotes.js?v=20261012-quotes" defer></script>
   <script src="js/live-fx.js?v=20261011-rates-news" defer></script>
   <script src="js/portfolio-utils.js?v=20261012-portfolio-3" defer></script>
   <script src="js/portfolio-exposure-utils.js?v=20261012-portfolio-3" defer></script>
   <script src="js/portfolio-analytics-utils.js?v=20261012-portfolio-3" defer></script>
   <script src="js/portfolio-profile-utils.js?v=20261012-portfolio-3" defer></script>
-  <script src="js/portfolio.js?v=20261012-portfolio-3" defer></script>
-  <script src="js/dashboard.js?v=20261011-feqt" defer></script>
+  <script src="js/portfolio.js?v=20261012-quotes" defer></script>
+  <script src="js/dashboard.js?v=20261012-quotes" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#indicators">Aller aux indicateurs</a>
@@ -25,7 +27,7 @@
       <div class="brand"><span class="brand-mark" aria-hidden="true">S</span><div><h1>SAVY<span class="brand-dot">.</span></h1><p class="eyebrow">Le cycle, en perspective.</p></div></div>
       <div class="header-actions"><a class="button quiet" href="#portfolio">Mon portefeuille ↓</a><button id="themeToggle" class="button quiet" type="button" aria-label="Activer le mode clair">Mode clair</button><button id="refreshButton" class="button" type="button">Actualiser</button></div>
     </header>
-    <div class="intro-line"><p>États-Unis & Canada <span class="muted">/ dernières observations publiées</span></p><p class="muted">3 collectes par jour en semaine · dates propres à chaque série</p></div>
+    <div class="intro-line"><p>États-Unis & Canada <span class="muted">/ dernières observations publiées</span></p><p class="muted">Cours en séance · collecte prévue toutes les 5 min · statistiques datées</p></div>
     <p id="updated" class="update-status" role="status" aria-live="polite">Chargement des données publiées…</p>
     <section id="kpis" class="kpi-grid" aria-label="Indicateurs clés"></section>
     <section class="policy-odds" aria-labelledby="oddsTitle">
@@ -46,7 +48,7 @@
         <div class="market-heading"><div><p class="eyebrow">LES GRANDS MARCHÉS</p><h3 id="marketTitle">Indices boursiers mondiaux</h3></div><div id="marketRanges" class="segmented" role="group" aria-label="Période des indices boursiers"></div></div>
         <p id="marketStatus" class="meta" role="status">Chargement des indices…</p>
         <div id="marketGrid" class="market-grid"></div>
-        <p class="meta">Clôtures quotidiennes de Yahoo Finance. Le rendement en % correspond à la période sélectionnée : 1 jour = 1 séance, 3 jours = 3 séances, 1 semaine = 5 séances. YTD part de la dernière clôture de l’année précédente; les mois et années utilisent la clôture à la date de départ ou celle qui la précède si le marché est fermé. Indices en points; marchés émergents représentés par <a href="https://www.ishares.com/us/products/239637/ishares-msci-emerging-markets-etf" target="_blank" rel="noopener noreferrer">l’ETF EEM suivant le MSCI Emerging Markets</a>, en dollars US. <a href="https://www.fidelity.ca/en/products/etfs/feqt/" target="_blank" rel="noopener noreferrer">FEQT, le FNB Fidelity All-in-One Equity</a>, est affiché en dollars canadiens. Chaque graphique possède sa propre échelle; rendements en devise locale, hors dividendes. Une période sans historique suffisant affiche « Rendement indisponible ».</p>
+        <p class="meta">Derniers cours de Yahoo Finance, relus chaque minute; collecte prévue toutes les 5 minutes pendant les séances, avec retard fournisseur possible. L’heure réelle de cotation et le statut de marché sont affichés. Le dernier point et le rendement incluent la séance en cours quand elle est disponible. Le rendement en % correspond à la période sélectionnée : 1 jour = 1 séance, 3 jours = 3 séances, 1 semaine = 5 séances. YTD part de la dernière clôture de l’année précédente; les mois et années utilisent la clôture à la date de départ ou celle qui la précède si le marché est fermé. Indices en points; marchés émergents représentés par <a href="https://www.ishares.com/us/products/239637/ishares-msci-emerging-markets-etf" target="_blank" rel="noopener noreferrer">l’ETF EEM suivant le MSCI Emerging Markets</a>, en dollars US. <a href="https://www.fidelity.ca/en/products/etfs/feqt/" target="_blank" rel="noopener noreferrer">FEQT, le FNB Fidelity All-in-One Equity</a>, est affiché en dollars canadiens. Chaque graphique possède sa propre échelle; rendements en devise locale, hors dividendes. Une période sans historique suffisant affiche « Rendement indisponible ».</p>
       </section>
     </details>
     <section id="portfolio" class="portfolio card" aria-labelledby="portfolioTitle">
@@ -94,7 +96,7 @@
         <div id="portfolioPositions" class="table-wrap portfolio-table" hidden><table><caption>Positions privées · les variations correspondent à la période sélectionnée; gains en CAD au taux actuel</caption><thead><tr><th scope="col">Titre</th><th scope="col">Quantité</th><th scope="col">Prix moyen</th><th scope="col">Cours et date</th><th scope="col">Valeur CAD</th><th scope="col">Poids</th><th scope="col" aria-sort="none"><button class="portfolio-sort" type="button" data-portfolio-sort="unrealized_percent">Gain latent % <span aria-hidden="true">↕</span></button></th><th scope="col" aria-sort="none"><button class="portfolio-sort" type="button" data-portfolio-sort="unrealized_cad">Gain latent CAD <span aria-hidden="true">↕</span></button></th><th scope="col" aria-sort="none"><button class="portfolio-sort" type="button" data-portfolio-sort="period_change_cad">Variation CAD <span aria-hidden="true">↕</span></button></th><th scope="col">Source</th></tr></thead><tbody id="portfolioRows"></tbody></table></div>
       </div>
       <form id="positionForm" class="position-form"><label>Titre<select id="positionTicker" aria-label="Titre à ajouter"></select></label><label>Quantité<input id="positionQuantity" type="text" inputmode="decimal" placeholder="Ex. 2,5" required /></label><label>Prix moyen<input id="positionAverageCost" type="text" inputmode="decimal" placeholder="Facultatif" /></label><button class="button" type="submit">Ajouter / modifier</button></form>
-      <p class="meta portfolio-method">Valeur affichée : dernières clôtures des titres, converties au cours indicatif USD/CAD disponible à l’ouverture de la page. Le graphique et les variations utilisent les clôtures historiques et le taux de change de chaque date. Historique reconstitué avec les quantités actuelles, hors transactions, dividendes, frais et espèces. YTD part de la dernière clôture de l’année précédente; 1 semaine et 3 jours couvrent 5 et 3 séances.</p>
+      <p class="meta portfolio-method">Valeur affichée : derniers cours disponibles des titres, convertis au cours indicatif USD/CAD. Cotations en séance collectées environ toutes les 5 minutes et relues chaque minute, avec retard fournisseur possible; l’heure réelle est indiquée par titre. Le dernier point du graphique, les contributions et les classements incluent ces cotations; le risque utilise uniquement les clôtures quotidiennes communes. Les valeurs de marchés fermés gardent leur dernière séance. Le change historique est conservé avant le point courant. Historique reconstitué avec les quantités actuelles, hors transactions, dividendes, frais et espèces. YTD part de la dernière clôture de l’année précédente; 1 semaine et 3 jours couvrent 5 et 3 séances.</p>
       <p class="meta">Le gain latent par titre compare le cours au prix moyen dans sa devise. Le total des gains et le coût en CAD sont convertis au taux actuel : ils excluent l’effet du change depuis les achats. Les cours se mettent à jour avec le site. Le lien personnel ouvre ton portefeuille intégré sur un nouvel appareil, sans fichier à importer. Les modifications faites ici restent dans ce navigateur; l’export permet de les conserver.</p>
     </section>
     <section class="workspace" id="indicators" aria-labelledby="indicatorsTitle">

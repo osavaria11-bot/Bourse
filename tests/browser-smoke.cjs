@@ -53,6 +53,7 @@ let offline = false, failAllData = false, failNews = false, invalidNews = false,
 const contentTypes = { ".html": "text/html", ".css": "text/css", ".js": "text/javascript", ".json": "application/json", ".png": "image/png" };
 const server = http.createServer((request, response) => {
   const pathname = new URL(request.url, "http://localhost").pathname;
+  if (pathname === "/data/intraday-quotes.json") {response.writeHead(503); response.end("{}"); return;}
   if (pathname === "/data/market-indices.json") {
     response.writeHead(failMarkets ? 503 : 200, {"Content-Type": "application/json"});
     response.end(failMarkets ? "{}" : JSON.stringify(invalidMarkets ? {...markets, series: markets.series.slice(0, -1)} : markets)); return;
