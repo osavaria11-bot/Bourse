@@ -11,14 +11,21 @@
     const sources = new Map(prices.series.map(point => [point.id, point])), quotes = new Map();
     function quoteFor(id) {
       const base = sources.get(id), quote = base && I.choose(payload, id, {quote_symbol: base.quote_symbol, currency: base.currency}, now);
-      return quote ? {...quote, stale: !I.isCurrent(quote, now)} : null;
+      // A validated last trade is still an observation when the provider
+      // returns no five-minute candles for an illiquid holding.
+      return quote ? {...quote, stale: !I.isCurrent(quote, now),
+        intraday_history: quote.intraday_history.length ? quote.intraday_history :
+          [[new Date(U.parseTimestamp(quote.timestamp)).toISOString(), quote.price]]} : null;
     }
     const missing = [];
     for (const position of positions) {const q = quoteFor(position.ticker); if (q) quotes.set(position.ticker, q); else missing.push(position.ticker);}
     if (missing.length) return unavailable(missing);
     const day = [...quotes.values()].map(q => q.session_date).sort().at(-1);
     const trading = [...quotes.values()].filter(q => q.session_date === day);
-    for (const q of trading) if (q.intraday_history.length < 2) missing.push(q.id);
+    // Thinly traded ETFs may have only one actual trade in this session.
+    // Carry the previous close until that observation, then its last known
+    // price; require multiple timestamps for the whole portfolio below.
+    for (const q of trading) if (q.intraday_history.length < 1) missing.push(q.id);
     if (missing.length) return unavailable(missing);
     const daily = P.historyFor(positions, prices).filter(row => row[0] < day && U.validNumber(row[1]));
     const previousDay = daily.at(-1)?.[0];
