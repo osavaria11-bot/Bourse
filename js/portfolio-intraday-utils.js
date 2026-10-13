@@ -18,7 +18,10 @@
     if (missing.length) return unavailable(missing);
     const day = [...quotes.values()].map(q => q.session_date).sort().at(-1);
     const trading = [...quotes.values()].filter(q => q.session_date === day);
-    for (const q of trading) if (q.intraday_history.length < 2) missing.push(q.id);
+    // A thinly traded ETF may have only one actual trade so far. Carry
+    // its last observed price across the portfolio timeline; do not
+    // require every holding to have enough ticks to draw its own curve.
+    for (const q of trading) if (!q.intraday_history.length) missing.push(q.id);
     if (missing.length) return unavailable(missing);
     const daily = P.historyFor(positions, prices).filter(row => row[0] < day && U.validNumber(row[1]));
     const previousDay = daily.at(-1)?.[0];
