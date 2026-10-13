@@ -14,23 +14,6 @@ function q(id, price, previous, first = price) {
     intraday_history: [["2026-10-12T13:30:00Z", first], ["2026-10-12T13:55:00Z", price]]};
 }
 function payload(rows) {return I.normalize({schema_version: 1, kind: "intraday_quotes", generated_at: "2026-10-12T14:00:00Z", quotes: rows}, now);}
-test("VBAL and VGRO portfolios retain a thinly traded ETF's single observed trade", () => {
-  for (const benchmark of ["VBAL", "VGRO"]) {
-    const sparse = {...q("SHOP", 55, 50), timestamp: "2026-10-12T13:47:20Z",
-      intraday_history: [["2026-10-12T13:47:20Z", 55]]};
-    const holdings = [positions[1], {ticker: benchmark, currency: "CAD", quantity: 1}];
-    const rows = [sparse, q(benchmark, 11, 10, 10.5)];
-    const view = T.session(holdings, prices, payload(rows), benchmark, null, now);
-    assert.equal(view.available, true);
-    assert.equal(view.comparison.available, true);
-    assert.equal(view.selected.history[0][1], 50 + 10.5, "Use the previous close before the first observed ETF trade");
-    assert.equal(view.selected.history.find(row => row[0] === "2026-10-12T13:47:20.000Z")[1], 55 + 10.5);
-    assert.equal(view.selected.history.at(-1)[1], 55 + 11, "Carry the actual ETF trade across subsequent portfolio points");
-    assert.equal(view.data.series.find(row => row.id === "SHOP").history.length, 2, "Do not fabricate additional ETF trades");
-    assert.ok(Math.abs(F.contributionsFor(holdings, view.data, view.selected).total - view.selected.percent) < 1e-10);
-    assert.equal(T.session(holdings, prices, payload([{...sparse, intraday_history: []}, rows[1]]), benchmark, null, now).available, false);
-  }
-});
 test("intraday CAD valuation, currency movement, contributions and each benchmark share one previous-close base", () => {
   for (const benchmark of ["FEQT", "VBAL", "VGRO"]) {
     const before = structuredClone(prices), rows = [q("AAPL", 110, 100, 105), q("SHOP", 55, 50, 51), q("USDCAD", 1.4, 1.3, 1.32), q(benchmark, 11, 10, 10.5)];
@@ -62,6 +45,29 @@ test("a closed all-CAD portfolio shows Friday's actual curve and never creates M
   assert.equal(view.available, true); assert.equal(view.session_date, "2026-10-09");
   assert.ok(view.selected.history.every(row => row[0].startsWith("2026-10-09T")));
   assert.ok(Math.abs(view.selected.percent - (50 / 45 - 1) * 100) < 1e-10);
+});
+test("sparse ETF trades do not block VBAL or VGRO portfolios and never leak future prices", () => {
+  for (const benchmark of ["VBAL", "VGRO"]) {
+    const holdings = [{ticker: "SHOP", currency: "CAD", quantity: 1}, {ticker: "FEQT", currency: "CAD", quantity: 2}];
+    for (const sparseHistory of [[["2026-10-12T13:59:00Z", 12]], []]) {
+      const sparse = {...q("FEQT", 12, 10), intraday_history: sparseHistory};
+      const rows = [q("SHOP", 55, 50, 51), sparse, q(benchmark, 11, 10, 10.5)];
+      const view = T.session(holdings, prices, payload(rows), benchmark, null, now);
+      assert.equal(view.available, true);
+      assert.equal(view.comparison.available, true);
+      assert.equal(view.selected.history[0][1], 51 + 2 * 10, "Use previous close before the ETF's first actual trade");
+      assert.equal(view.selected.history.at(-1)[1], 55 + 2 * 12);
+      assert.ok(Math.abs(view.selected.percent - (79 / 70 - 1) * 100) < 1e-10);
+      assert.ok(Math.abs(F.contributionsFor(holdings, view.data, view.selected).total - view.selected.percent) < 1e-10);
+      assert.deepEqual(view.data.series.find(row => row.id === "FEQT").history,
+        [["2026-10-09", 10], ["2026-10-12T13:59:00.000Z", 12]], "No invented ETF candles");
+    }
+    assert.deepEqual(T.session(holdings, prices, payload([q("SHOP", 55, 50), q(benchmark, 11, 10)]), benchmark, null, now).missing, ["FEQT"]);
+  }
+});
+test("a portfolio with only one total observation still cannot produce an intraday curve", () => {
+  const sparse = {...q("SHOP", 55, 50), intraday_history: []};
+  assert.equal(T.session([positions[1]], prices, payload([sparse, q("VBAL", 11, 10)]), "VBAL", null, now).available, false);
 });
 test("intraday curves retain dated quotes but reject wrong listings and missing currency curves", () => {
   const rows = [q("AAPL", 110, 100), q("SHOP", 55, 50), q("USDCAD", 1.4, 1.3), q("FEQT", 11, 10)];
