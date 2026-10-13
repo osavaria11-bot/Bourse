@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
   "kind": "rate_odds",
-  "generated_at": "2026-10-13T20:11:36.533778+00:00",
+  "generated_at": "2026-10-13T21:51:57.923982+00:00",
   "decisions": [
     {
       "id": "fed",
       "label": "Fed",
       "meeting_date": "2026-10-28",
       "as_of": "2026-10-13",
-      "hike": 33,
-      "hold": 67,
+      "hike": 34,
+      "hold": 66,
       "cut": 0,
       "source": "BlueGamma",
       "source_url": "https://www.bluegamma.io/central-banks/central-bank-interest-rate-forecasts/federal-reserve-interest-rate-forecast",
