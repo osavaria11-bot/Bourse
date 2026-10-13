@@ -3,84 +3,84 @@
   "kind": "news_digest",
   "language": "fr",
   "timezone": "America/Toronto",
-  "edition_date": "2026-10-12",
-  "generated_at": "2026-10-12T11:07:37Z",
-  "editorial_note": "Priorité aux faits du week-end et de ce matin. Le point sur le dollar canadien du 9 octobre reste pertinent pendant le congé de l’Action de grâce. Les résultats et le CPI à venir sont distingués des données déjà publiées; les impacts sont des mécanismes possibles.",
+  "edition_date": "2026-10-13",
+  "generated_at": "2026-10-13T11:07:03Z",
+  "editorial_note": "Édition centrée sur les premiers résultats bancaires publiés avant l’ouverture, la vente mondiale de semi-conducteurs et les nouvelles prévisions du FMI. Les cours prémarché et intrajournaliers sont identifiés comme tels; le CPI de septembre demeure à venir.",
   "stories": [
     {
-      "topic": "Énergie",
-      "title": "Le Brent reste au-dessus de 104 $ malgré le plan de diesel russe",
-      "summary": "Dans son compte rendu matinal du 12 octobre, AP situe le Brent au-dessus de 104 $ US le baril. Le plan américain annoncé vendredi prévoit des livraisons de diesel russe. Trump a aussi annoncé dimanche un cessez-le-feu énergétique Russie–Ukraine sans préciser ses modalités; Kyiv a rapporté des frappes russes après l’annonce. L’amélioration effective de l’approvisionnement reste à vérifier.",
-      "impact": "Un apaisement appliqué pourrait réduire les coûts du transport et la pression inflationniste. Des attaques persistantes maintiendraient le risque sur les marges.",
-      "source_label": "Associated Press",
-      "source_url": "https://apnews.com/article/stock-markets-oil-trump-inflation-a9a26b9706963afe9bdeda1b2eb1f51d",
-      "published_date": "2026-10-12"
+      "topic": "Banques américaines",
+      "title": "JPMorgan augmente son bénéfice grâce au trading et aux commissions",
+      "summary": "JPMorgan Chase a dégagé un bénéfice net de 15,3 milliards $ US au troisième trimestre, soit 5,57 $ par action, contre 14,4 milliards et 5,07 $ un an plus tôt. Les revenus de marchés ont progressé de 15 % et les commissions de banque d’investissement de 14 %. Reuters souligne que les émissions de dette des grandes entreprises technologiques, destinées à financer l’IA, soutiennent les marchés de capitaux malgré le ralentissement des transactions.",
+      "impact": "La diversification des revenus amortit le risque de taux pour les banques. Elle montre aussi que l’essor de l’IA dépend davantage du financement obligataire, ce qui accroît la sensibilité aux rendements.",
+      "source_label": "Reuters",
+      "source_url": "https://www.reuters.com/business/finance/jpmorgans-profit-rises-investment-banking-trading-strength-2026-10-13/",
+      "published_date": "2026-10-13"
+    },
+    {
+      "topic": "Crédit américain",
+      "title": "Wells Fargo profite de la croissance des prêts et du revenu d’intérêts",
+      "summary": "Wells Fargo a déclaré un bénéfice net trimestriel de 5,95 milliards $ US, ou 1,87 $ par action, contre 5,59 milliards et 1,66 $ un an auparavant. Le revenu net d’intérêts a augmenté de 5 % à 12,52 milliards, aidé par la croissance des prêts après la levée du plafond d’actifs imposé par la Fed. La banque dit que ses clients particuliers et entreprises demeurent en bonne santé, mais l’action reculait de 1,5 % avant l’ouverture.",
+      "impact": "Les marges bancaires profitent encore des taux élevés, mais une hausse des coûts de financement ou un affaiblissement du crédit à la consommation pourrait rapidement réduire cet avantage.",
+      "source_label": "Reuters",
+      "source_url": "https://www.reuters.com/business/finance/wells-fargo-profit-rises-robust-loan-growth-interest-income-2026-10-13/",
+      "published_date": "2026-10-13"
     },
     {
       "topic": "Semi-conducteurs",
-      "title": "Micron recule avant l’ouverture après une avancée annoncée par CXMT",
-      "summary": "CXMT, fabricant chinois de mémoire, affirme avoir progressé dans une architecture permettant davantage de cellules sur une puce. Micron reculait d’environ 2 % avant l’ouverture américaine, selon MarketWatch ce matin; Samsung et SK Hynix baissaient aussi à Séoul. Il s’agit de mouvements avant la séance américaine, pas de rendements de clôture.",
-      "impact": "Une concurrence accrue pourrait peser sur les prix et les marges de la mémoire. Un progrès technique ne garantit toutefois pas une hausse immédiate de l’offre commerciale.",
-      "source_label": "MarketWatch",
-      "source_url": "https://www.marketwatch.com/livecoverage/stock-market-today-dow-s-p-500-nasdaq-climb-wall-street-banks-earnings-season/card/memory-chip-makers-slide-as-cxmt-reports-technological-progress-JfFeuqwkJssxf04Ke7ng",
+      "title": "La concurrence chinoise déclenche une vente mondiale des puces",
+      "summary": "Les actions liées aux semi-conducteurs ont chuté en Asie après des informations sur les progrès du fabricant chinois de mémoire CXMT et des commentaires prudents du PDG de Broadcom sur certains financements de l’IA. Le KOSPI a perdu plus de 5 %, Samsung 7,4 % et SK Hynix 10 %. Avant l’ouverture américaine, Micron reculait de 2,5 % et Nvidia de 0,6 %. Ces variations sont intrajournalières ou prémarché, pas des clôtures américaines.",
+      "impact": "Le marché réévalue à la fois les barrières technologiques et le rendement du capital investi en IA. Une concurrence mémoire plus rapide pourrait comprimer les prix et les marges.",
+      "source_label": "Reuters",
+      "source_url": "https://www.reuters.com/world/asia-pacific/global-markets-wrapup-1-2026-10-13/",
+      "published_date": "2026-10-13"
+    },
+    {
+      "topic": "FMI · croissance mondiale",
+      "title": "Le FMI relève légèrement 2026, mais avertit sur l’IA, la guerre et la dette",
+      "summary": "Le FMI a relevé sa prévision de croissance mondiale de 2026 à 3,1 %, contre 3,0 % en juillet, et maintenu 3,4 % pour 2027. Il prévoit 2,3 % pour les États-Unis en 2026 et 2027; ses projections pour la Chine passent à 4,5 % puis 4,0 %. L’investissement en IA soutient l’activité, mais le FMI avertit qu’une rentabilité décevante pourrait faire chuter l’investissement et les prix d’actifs, tandis qu’une guerre prolongée et la dette publique peuvent maintenir l’inflation et les rendements élevés.",
+      "impact": "La hausse du scénario central soutient les bénéfices cycliques. En revanche, la dépendance à l’IA et aux conditions de financement augmente le risque de correction simultanée des actions technologiques et des obligations longues.",
+      "source_label": "Reuters, d’après le World Economic Outlook du FMI",
+      "source_url": "https://www.reuters.com/world/china/imf-says-ai-investment-propping-up-global-growth-war-debt-threaten-outlook-2026-10-13/",
+      "published_date": "2026-10-13"
+    },
+    {
+      "topic": "Réserve fédérale",
+      "title": "Hammack veut atteindre une politique restrictive rapidement",
+      "summary": "Beth Hammack, présidente de la Fed de Cleveland et membre votante en 2026, estime que la banque centrale devrait atteindre une orientation restrictive « relativement rapidement », par petits ajustements, parce que l’inflation lui paraît plus généralisée. Ses équipes évaluent l’inflation sous-jacente dans le milieu ou le haut de la zone de 2 %. Elle juge que l’économie peut supporter un resserrement. Le CPI de septembre sera publié mercredi; ce chiffre à venir n’est pas encore connu.",
+      "impact": "Cette prise de position renforce le risque de taux si le CPI surprend à la hausse. Elle peut peser sur les multiples de croissance et les obligations longues, sans garantir une hausse dès le 28 octobre.",
+      "source_label": "Reuters",
+      "source_url": "https://www.reuters.com/markets/us/feds-hammack-backs-restrictive-policy-says-better-if-it-comes-relatively-quickly-2026-10-12/",
       "published_date": "2026-10-12"
-    },
-    {
-      "topic": "Amazon · intelligence artificielle",
-      "title": "Amazon discuterait d’un rachat de Decart autour de 7 milliards $ US",
-      "summary": "Reuters, citant le Wall Street Journal, rapporte des pourparlers pour une acquisition de Decart pouvant atteindre environ 7 milliards $ US. Cette entreprise développe notamment l’édition vidéo en temps réel et des environnements simulés pour tester la robotique. Amazon a refusé de commenter; les négociations pourraient échouer ou attirer un autre acheteur.",
-      "impact": "Une acquisition renforcerait les capacités d’IA d’Amazon, mais son prix augmenterait les exigences de rentabilité. Le montant envisagé reste une information rapportée, pas une transaction conclue.",
-      "source_label": "Reuters, d’après le Wall Street Journal",
-      "source_url": "https://www.reuters.com/business/retail-consumer/amazon-talks-buy-ai-startup-decart-around-7-billion-wsj-reports-2026-10-11/",
-      "published_date": "2026-10-11"
-    },
-    {
-      "topic": "États-Unis · échéances",
-      "title": "Les banques publient demain; le CPI de septembre arrive mercredi",
-      "summary": "JPMorgan et Goldman Sachs doivent publier le 13 octobre, avant l’ouverture. Le CPI américain de septembre est prévu le 14 octobre à 8 h 30, heure de Montréal. Reuters rapporte un consensus de croissance des bénéfices du S&P 500 de 30,6 % au troisième trimestre, et une inflation attendue de 3,7 % sur un an, ou 2,5 % hors alimentation et énergie. Ces chiffres restent des prévisions.",
-      "impact": "Des bénéfices ou perspectives décevants fragiliseraient les valorisations; une inflation supérieure aux attentes pourrait faire remonter les rendements obligataires et le taux d’actualisation des actions.",
-      "source_label": "Reuters · calendrier vérifié auprès des banques et du BLS",
-      "source_url": "https://www.reuters.com/business/us-stock-futures-muted-oil-stays-above-100-ahead-earnings-2026-10-12/",
-      "published_date": "2026-10-12"
-    },
-    {
-      "topic": "Canada · devises",
-      "title": "Le huard aborde le congé après un creux de 18 mois vendredi",
-      "summary": "Le 9 octobre, le dollar canadien a touché un creux intrajournalier depuis avril 2025 après la perte de 68 300 emplois en septembre. Les rendements canadiens ont baissé, tandis que les attentes de hausse de taux diminuaient. Ce dernier développement avant le congé reste pertinent pour les actifs américains évalués en CAD; le cours cité par Reuters vendredi n’est pas une cotation de ce matin.",
-      "impact": "Un huard plus faible augmente mécaniquement la valeur en CAD d’un actif américain non couvert, à cours US constant; il renchérit aussi les importations.",
-      "source_label": "Reuters, republication Kitco",
-      "source_url": "https://www.kitco.com/news/off-the-wire/2026-10-09/canadian-dollar-hits-18-month-low-jobs-data-clips-rate-hike-bets",
-      "published_date": "2026-10-09"
     }
   ],
   "fred_watch": [
     {
       "series_id": "DGS10",
-      "title": "10 ans américain : détente limitée",
-      "explanation": "Au 8 octobre 2026, le rendement est de 5,22 %, contre 5,28 % le 7 octobre : baisse de 6 points de base. Le niveau reste élevé pour le financement et l’actualisation des actions; cette observation ne décrit pas les échanges de ce matin.",
+      "title": "10 ans américain : le coût du capital reste élevé",
+      "explanation": "Au 8 octobre 2026, le rendement est de 5,22 %, contre 5,28 % le 7 octobre : recul de 6 points de base. La baisse est modeste face au niveau absolu, qui continue de freiner les valorisations et le refinancement. Il s’agit de la dernière observation FRED disponible, pas du taux en temps réel.",
       "observation_date": "2026-10-08",
       "source_url": "https://fred.stlouisfed.org/series/DGS10"
     },
     {
-      "series_id": "CPILFESL",
-      "title": "CPI sous-jacent : surveiller la prochaine surprise",
-      "explanation": "En août 2026, la hausse sur 12 mois calculée à partir des niveaux désaisonnalisés est de 2,45 %, contre 2,47 % en juillet. La désinflation est légère. Le chiffre de septembre attendu le 14 octobre reste à publier et peut différer de ce calcul FRED.",
-      "observation_date": "2026-08-01",
-      "source_url": "https://fred.stlouisfed.org/series/CPILFESL"
-    },
-    {
       "series_id": "BAMLH0A0HYM2",
-      "title": "Crédit à haut rendement : prime en hausse",
-      "explanation": "Au 8 octobre 2026, l’écart ajusté pour les options atteint 3,15 % (315 points de base), contre 3,09 % la veille. Cette hausse de 6 points de base renchérit le crédit risqué relativement au Trésor; elle ne mesure pas à elle seule des défauts réalisés.",
+      "title": "Crédit à haut rendement : légère détérioration",
+      "explanation": "Au 8 octobre 2026, l’écart ajusté pour les options atteint 3,15 % (315 points de base), contre 3,09 % la veille. L’élargissement de 6 points de base signale une prime de risque un peu plus forte, sans indiquer à lui seul une hausse des défauts.",
       "observation_date": "2026-10-08",
       "source_url": "https://fred.stlouisfed.org/series/BAMLH0A0HYM2"
     },
     {
-      "series_id": "RRSFS",
-      "title": "Consommation : le dernier volume observé a rebondi",
-      "explanation": "En août 2026, les ventes au détail et restauration réelles atteignent 231 630 millions de dollars de 1982–1984, contre 229 697 en juillet : hausse calculée de 0,84 %. Les volumes ont donc progressé ce mois-là; cela ne préjuge pas des dépenses de septembre.",
+      "series_id": "CPILFESL",
+      "title": "Inflation sous-jacente : désinflation presque à l’arrêt",
+      "explanation": "En août 2026, le taux sur 12 mois calculé à partir du CPI désaisonnalisé est de 2,45 %, contre 2,47 % en juillet. Le recul de 0,02 point est minime. Le CPI de septembre attendu le 14 octobre demeure une publication future.",
       "observation_date": "2026-08-01",
-      "source_url": "https://fred.stlouisfed.org/series/RRSFS"
+      "source_url": "https://fred.stlouisfed.org/series/CPILFESL"
+    },
+    {
+      "series_id": "PAYEMS",
+      "title": "Emploi américain : net ralentissement des créations",
+      "explanation": "En septembre 2026, les emplois salariés non agricoles ont augmenté de 29 000, après 133 000 en août; la série est transformée en variation mensuelle. Le ralentissement réduit la marge de resserrement de la Fed, mais un seul mois ne prouve pas une contraction durable.",
+      "observation_date": "2026-09-01",
+      "source_url": "https://fred.stlouisfed.org/series/PAYEMS"
     }
   ]
 }
