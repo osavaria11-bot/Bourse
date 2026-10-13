@@ -155,22 +155,16 @@
   function renderOdds(dataset) {
     const host = $("#rateOdds"), fragment = document.createDocumentFragment();
     for (const key of ["fed", "canada"]) {
-      const row = dataset?.decisions?.find(item => item.id === key);
+      const odds = U.rateOddsFor(dataset, key), row = odds?.row;
       const card = el("article", "odds-card");
       card.append(el("h3", "", key === "fed" ? "Réserve fédérale américaine" : "Banque du Canada"));
       const source = el("a", "meta", "Voir les probabilités chez BlueGamma ↗");
       source.href = key === "fed" ? "https://www.bluegamma.io/central-banks/central-bank-interest-rate-forecasts/federal-reserve-interest-rate-forecast" : "https://www.bluegamma.io/central-banks/central-bank-interest-rate-forecasts/the-bank-of-canada-interest-rate-forecast";
       source.target = "_blank"; source.rel = "noopener noreferrer";
-      const age = row?.as_of ? (Date.now() - Date.parse(row.as_of + "T23:59:59Z")) / 86400000 : Infinity;
-      const today = new Intl.DateTimeFormat("en-CA", {timeZone: "America/Toronto"}).format(new Date());
-      const valid = dataset?.kind === "rate_odds" && row && U.isDate(row.as_of) && U.isDate(row.meeting_date) &&
-        Number.isFinite(age) && age >= -1 && age <= 5 && row.as_of < row.meeting_date &&
-        row.as_of <= today && row.meeting_date >= today &&
-        [row.hike, row.hold, row.cut].every(n => Number.isInteger(n) && n >= 0 && n <= 100) &&
-        Math.abs(row.hike + row.hold + row.cut - 100) <= 1;
-      if (valid) {
-        card.append(el("p", "meta" + (age > 2 || row.status !== "fresh" ? " warning" : ""),
-          "Décision : " + row.meeting_date + " · cotes du " + row.as_of + (row.status !== "fresh" ? " · dernière valeur conservée" : "")));
+      if (odds) {
+        card.append(el("p", "meta" + (odds.age > 2 || row.status !== "fresh" ? " warning" : ""),
+          "Décision : " + row.meeting_date + " · cotes du " + row.as_of + (odds.sourceDayAhead ? " (date du fournisseur)" : "") +
+          (row.status !== "fresh" ? " · dernière valeur conservée" : "")));
         const list = el("div", "odds-bars");
         for (const [label, value] of [["Hausse", row.hike], ["Maintien", row.hold], ["Baisse", row.cut]]) {
           const line = el("div", "odds-line"), track = el("span", "odds-track"), fill = el("span", "odds-fill");

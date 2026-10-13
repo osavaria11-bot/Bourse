@@ -291,8 +291,37 @@ async function run() {
     await empty.waitForFunction(() => document.querySelector("#briefingDate").textContent === "Édition indisponible");
     await empty.waitForFunction(() => !document.querySelector("#refreshButton").disabled);
     assert.equal(await empty.locator("#refreshButton").isEnabled(), true);
+    const oddsContext = await browser.newContext({timezoneId: "America/Toronto", viewport: {width: 375, height: 900}});
+    const oddsPage = await oddsContext.newPage();
+    oddsPage.on("pageerror", error => errors.push(error.message));
+    await oddsPage.route("https://**", route => route.abort());
+    await oddsPage.clock.setFixedTime(new Date("2026-10-13T02:19:17Z"));
+    const eveningOdds = {schema_version: 1, kind: "rate_odds", generated_at: "2026-10-13T00:56:18Z", decisions: [
+      {id: "fed", as_of: "2026-10-13", meeting_date: "2026-10-28", hike: 30, hold: 70, cut: 0, status: "fresh", methodology: "SOFR OIS"},
+      {id: "canada", as_of: "2026-10-12", meeting_date: "2026-10-28", hike: 28, hold: 72, cut: 0, status: "fresh", methodology: "CORRA OIS"},
+    ]};
+    await oddsPage.route("**/data/rate-odds.json?*", route => route.fulfill({status: 200, contentType: "application/json", body: JSON.stringify(eveningOdds)}));
+    await oddsPage.goto(url);
+    await oddsPage.waitForFunction(() => document.querySelectorAll(".odds-bars").length === 2);
+    const fedOdds = oddsPage.locator(".odds-card").first(), canadaOdds = oddsPage.locator(".odds-card").nth(1);
+    assert.match(await fedOdds.innerText(), /cotes du 2026-10-13 \(date du fournisseur\)/);
+    assert.equal(await fedOdds.locator(".odds-line strong").allTextContents().then(values => values.join(",")), "30 %,70 %,0 %");
+    assert.match(await canadaOdds.innerText(), /cotes du 2026-10-12/);
+    assert.doesNotMatch(await canadaOdds.innerText(), /date du fournisseur/);
+    assert.equal(await oddsPage.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
+    eveningOdds.decisions[0].as_of = "2026-10-14";
+    await oddsPage.reload();
+    await oddsPage.waitForFunction(() => document.querySelectorAll(".odds-card").length === 2);
+    assert.equal(await fedOdds.locator(".odds-bars").count(), 0, "A genuine future source date must remain hidden");
+    assert.match(await fedOdds.innerText(), /Cotes à jour indisponibles/);
+    assert.equal(await canadaOdds.locator(".odds-line").count(), 3, "One invalid bank must not hide the other");
+    eveningOdds.decisions[0].as_of = "2026-10-12"; eveningOdds.decisions[0].status = "cached";
+    await oddsPage.reload();
+    await oddsPage.waitForFunction(() => document.querySelectorAll(".odds-bars").length === 2);
+    assert.match(await fedOdds.innerText(), /cotes du 2026-10-12 · dernière valeur conservée/);
+    await oddsContext.close();
     assert.deepEqual(errors, []);
-    console.log("Browser checks passed: " + indicatorCount + " macro cards, live FX, both policy rates and meeting odds, sourced selective briefing, offline preservation and 320px mobile.");
+    console.log("Browser checks passed: " + indicatorCount + " macro cards, live FX, both policy rates and meeting odds, Quebec evening UTC odds rollover, sourced selective briefing, offline preservation and 320px mobile.");
     await freshContext.close(); await context.close();
   } finally { await browser.close(); }
 }

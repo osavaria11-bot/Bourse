@@ -140,3 +140,40 @@ test("Bank of Canada policy rate keeps its official source across normalization 
   assert.match(U.historyCSV(bank, "1M"), /bankofcanada\.ca/);
   assert.doesNotMatch(U.historyCSV(bank, "1M"), /Série FRED|javascript:bad/);
 });
+
+const oddsSample = () => ({schema_version: 1, kind: "rate_odds", generated_at: "2026-10-13T00:56:18Z", decisions: [
+  {id: "fed", as_of: "2026-10-13", meeting_date: "2026-10-28", hike: 30, hold: 70, cut: 0, status: "fresh"},
+  {id: "canada", as_of: "2026-10-12", meeting_date: "2026-10-28", hike: 28, hold: 72, cut: 0, status: "fresh"},
+]});
+test("Published UTC meeting odds remain available during the previous evening in Quebec", () => {
+  const now = new Date("2026-10-13T02:19:17Z"), data = oddsSample(), before = structuredClone(data);
+  const fed = U.rateOddsFor(data, "fed", now), canada = U.rateOddsFor(data, "canada", now);
+  assert.equal(fed.row.as_of, "2026-10-13");
+  assert.equal(fed.row.hold, 70);
+  assert.equal(fed.sourceDayAhead, true);
+  assert.equal(canada.sourceDayAhead, false);
+  assert.equal(U.rateOddsFor(data, "fed", new Date("2026-10-13T04:01:00Z")).sourceDayAhead, false);
+  assert.deepEqual(data, before, "The provider observation date must never be rewritten");
+});
+test("Odds still reject genuine future dates, uncollected observations, stale dates and invalid probabilities", () => {
+  const now = new Date("2026-10-13T02:19:17Z");
+  for (const overrides of [{as_of: "2026-10-14"}, {as_of: "2026-10-06"}, {as_of: "2026-02-30"},
+    {meeting_date: "2026-10-11"}, {hold: 50}, {hike: "30"}, {cut: -1}]) {
+    const data = oddsSample(); Object.assign(data.decisions[0], overrides);
+    assert.equal(U.rateOddsFor(data, "fed", now), null, JSON.stringify(overrides));
+  }
+  for (const generated_at of ["invalid", "2026-10-14T00:56:18Z", "2026-10-12T23:56:18Z"]) {
+    assert.equal(U.rateOddsFor({...oddsSample(), generated_at}, "fed", now), null, generated_at);
+  }
+  assert.equal(U.rateOddsFor(null, "fed", now), null);
+  assert.equal(U.rateOddsFor(oddsSample(), "unknown", now), null);
+});
+test("Decision expiry follows Quebec's calendar through winter and summer UTC rollovers", () => {
+  for (const [stamp, as_of, meeting_date] of [["2026-07-14T02:00:00Z", "2026-07-12", "2026-07-13"],
+    ["2026-12-16T04:00:00Z", "2026-12-14", "2026-12-15"]]) {
+    const now = new Date(stamp), data = {schema_version: 1, kind: "rate_odds", generated_at: stamp,
+      decisions: [{id: "fed", as_of, meeting_date, hike: 30, hold: 70, cut: 0, status: "cached"}]};
+    assert.equal(U.rateOddsFor(data, "fed", now).row.as_of, as_of);
+    assert.equal(U.rateOddsFor(data, "fed", new Date(now.getTime() + 3 * 3600000)), null);
+  }
+});
