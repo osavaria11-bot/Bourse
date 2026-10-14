@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-10-14T01:55:17.481993+00:00",
-  "last_successful_update": "2026-10-14T01:55:17.481993+00:00",
+  "generated_at": "2026-10-14T15:30:54.017800+00:00",
+  "last_successful_update": "2026-10-14T15:30:54.017800+00:00",
   "update_status": "fresh_data",
   "coverage": {
     "total": 34,
@@ -10,7 +10,7 @@
     "unavailable": 0
   },
   "data_provider": "FRED / Banque du Canada",
-  "briefing_paragraph": "Dernières observations publiées — Inflation CPI · annuelle : 3,35 % (période : 2026-08-01); Inflation PCE sous-jacente · annuelle : 3,01 % (période : 2026-08-01); Taux de chômage américain : 4,20 % (période : 2026-09-01); Créations nettes d’emplois · mensuelles : 29 milliers (période : 2026-09-01); Croissance du PIB réel · trimestre annualisé : 2,22 % (période : 2026-04-01); Taux directeur américain · borne inférieure : 3,75 % (période : 2026-10-13); Taux directeur américain · borne supérieure : 4,00 % (période : 2026-10-13); Trésor américain · 10 ans : 5,24 % (période : 2026-10-09); Courbe des taux · 10 ans – 2 ans : 0,42 pt (période : 2026-10-13); Volatilité anticipée · VIX : 15,21 points (période : 2026-10-12); USD/CAD · dollars canadiens pour 1 $ US : 1,4269 $ CA/$ US (période : 2026-10-09); Taux directeur canadien : 2,25 % (période : 2026-10-12).",
+  "briefing_paragraph": "Dernières observations publiées — Inflation CPI · annuelle : 3,72 % (période : 2026-09-01); Inflation PCE sous-jacente · annuelle : 3,01 % (période : 2026-08-01); Taux de chômage américain : 4,20 % (période : 2026-09-01); Créations nettes d’emplois · mensuelles : 29 milliers (période : 2026-09-01); Croissance du PIB réel · trimestre annualisé : 2,22 % (période : 2026-04-01); Taux directeur américain · borne inférieure : 3,75 % (période : 2026-10-14); Taux directeur américain · borne supérieure : 4,00 % (période : 2026-10-14); Trésor américain · 10 ans : 5,24 % (période : 2026-10-09); Courbe des taux · 10 ans – 2 ans : 0,42 pt (période : 2026-10-13); Volatilité anticipée · VIX : 15,27 points (période : 2026-10-13); USD/CAD · dollars canadiens pour 1 $ US : 1,4269 $ CA/$ US (période : 2026-10-09); Taux directeur canadien : 2,25 % (période : 2026-10-13).",
   "news_digest_note": "Veille complémentaire. Les données suivent le calendrier de publication de chaque source.",
   "news_sources": [
     {
@@ -48,20 +48,20 @@
     {
       "id": "DFEDTARU",
       "title": "Taux directeur américain · borne supérieure",
-      "date": "2026-10-13",
+      "date": "2026-10-14",
       "value": 4.0,
       "previous_value": 4.0,
-      "previous_date": "2026-10-12",
+      "previous_date": "2026-10-13",
       "unit": "%",
       "fetch_status": "fresh"
     },
     {
       "id": "DFEDTARL",
       "title": "Taux directeur américain · borne inférieure",
-      "date": "2026-10-13",
+      "date": "2026-10-14",
       "value": 3.75,
       "previous_value": 3.75,
-      "previous_date": "2026-10-12",
+      "previous_date": "2026-10-13",
       "unit": "%",
       "fetch_status": "fresh"
     },
@@ -78,10 +78,10 @@
     {
       "id": "CPIAUCSL",
       "title": "Inflation CPI · annuelle",
-      "date": "2026-08-01",
-      "value": 3.353016,
-      "previous_value": 3.303856,
-      "previous_date": "2026-07-01",
+      "date": "2026-09-01",
+      "value": 3.717251,
+      "previous_value": 3.353016,
+      "previous_date": "2026-08-01",
       "unit": "%",
       "fetch_status": "fresh"
     },
@@ -128,10 +128,10 @@
     {
       "id": "VIXCLS",
       "title": "Volatilité anticipée · VIX",
-      "date": "2026-10-12",
-      "value": 15.21,
-      "previous_value": 14.84,
-      "previous_date": "2026-10-09",
+      "date": "2026-10-13",
+      "value": 15.27,
+      "previous_value": 15.21,
+      "previous_date": "2026-10-12",
       "unit": "points",
       "fetch_status": "fresh"
     },
@@ -148,10 +148,10 @@
     {
       "id": "V39079",
       "title": "Taux directeur canadien",
-      "date": "2026-10-12",
+      "date": "2026-10-13",
       "value": 2.25,
       "previous_value": 2.25,
-      "previous_date": "2026-10-09",
+      "previous_date": "2026-10-12",
       "unit": "%",
       "fetch_status": "fresh"
     }
