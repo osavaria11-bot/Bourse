@@ -108,7 +108,7 @@ async function run() {
     assert.match(await page.locator(".odds-card").first().innerText(), /Hausse.*20 %/s);
     const policyKpi = page.locator('#kpis .kpi[data-id="V39079"]');
     assert.match(await policyKpi.locator(".kpi-value").innerText(), /%/);
-    const desktopPair = await page.locator('#kpis .kpi[data-id="DEXCAUS"], #kpis .kpi[data-id="V39079"]').evaluateAll(nodes => nodes.map(node => {
+    const desktopPair = await page.evaluate(() => [...document.querySelectorAll('#kpis .kpi[data-id="DEXCAUS"], #kpis .kpi[data-id="V39079"]')].map(node => {
       const rect = node.getBoundingClientRect(); return {top: rect.top, left: rect.left};
     }));
     assert.equal(desktopPair[0].top, desktopPair[1].top);
@@ -202,11 +202,12 @@ async function run() {
     await page.locator("#searchInput").fill(""); await waitCount(page, indicatorCount);
     await page.locator("#categoryFilters button").filter({ hasText: /^Canada$/ }).click(); await waitCount(page, 3);
     await page.locator("#categoryFilters button").filter({ hasText: /^Tous$/ }).click(); await waitCount(page, indicatorCount);
-    await page.locator(".favorite-button").first().click();
+    const favoriteId = await page.locator(".indicator-card").first().getAttribute("data-id");
+    await page.locator('.indicator-card[data-id="' + favoriteId + '"] .favorite-button').click();
     await page.locator("#favoritesOnly").click(); await waitCount(page, 1);
     await page.locator("#favoritesOnly").click(); await waitCount(page, indicatorCount);
     await page.reload(); await waitCount(page, indicatorCount);
-    assert.equal(await page.locator(".favorite-button").first().getAttribute("aria-pressed"), "true");
+    assert.equal(await page.locator('.indicator-card[data-id="' + favoriteId + '"] .favorite-button').getAttribute("aria-pressed"), "true");
     await page.locator("#rangeControls button[data-range='3M']").click();
     assert.equal(await page.locator("#rangeControls button[data-range='3M']").getAttribute("aria-pressed"), "true");
     await page.locator('.indicator-card[data-id="T10Y2Y"] .detail-button').click();
