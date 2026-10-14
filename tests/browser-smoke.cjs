@@ -209,7 +209,7 @@ async function run() {
     assert.equal(await page.locator(".favorite-button").first().getAttribute("aria-pressed"), "true");
     await page.locator("#rangeControls button[data-range='3M']").click();
     assert.equal(await page.locator("#rangeControls button[data-range='3M']").getAttribute("aria-pressed"), "true");
-    await page.locator(".detail-button").first().click();
+    await page.locator('.indicator-card[data-id="T10Y2Y"] .detail-button').click();
     await page.waitForFunction(() => document.querySelector("#detailDialog").open);
     assert.ok(await page.locator("#detailTable tr").count() > 0);
     await page.locator("#detailRanges button[data-range='1M']").click();
