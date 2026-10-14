@@ -500,7 +500,6 @@
       price.append(quoteLine);
       const priceDate = el("span", "portfolio-ticker portfolio-quote", quote ? window.IntradayUtils.shortLabel(quote) : (row.price_date || "Cours indisponible") + " · clôture quotidienne");
       if (quote) priceDate.title = "Cours daté du " + U.timestampLabel(quote.timestamp) + " · source consultée le " + U.timestampLabel(quote.fetched_at);
-      if (quote) priceDate.title = window.IntradayUtils.label(quote);
       price.append(priceDate);
       const value = el("td", "", money(row.value_cad));
       const weight = el("td", "", current.complete && row.value_cad !== null ? U.formatNumber(row.value_cad / current.total * 100, 2) + " %" : "—");
