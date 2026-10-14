@@ -38,7 +38,20 @@ class QuoteTests(unittest.TestCase):
         self.assertEqual(parsed["intraday_history"], [["2026-10-12T13:45:00Z", 98], ["2026-10-12T13:59:00Z", 100]])
         self.assertEqual(parsed["history_interval_minutes"], 5)
         result["indicators"]["quote"] = []
-        self.assertEqual(quotes.parse_quote(data, DEFINITION, NOW)["intraday_history"], [])
+        self.assertEqual(quotes.parse_quote(data, DEFINITION, NOW)["intraday_history"], [["2026-10-12T13:59:00Z", 100]])
+    def test_thinly_traded_etf_without_candles_keeps_its_actual_last_trade(self):
+        definition = {"id": "XIG", "title": "XIG", "quote_symbol": "XIG.TO", "currency": "CAD"}
+        trade = datetime(2026, 10, 12, 13, 39, 3, tzinfo=timezone.utc)
+        for close_rows in (None, [], [None, None]):
+            data = fixture("XIG.TO", "CAD", stamp=trade.timestamp())
+            result = data["chart"]["result"][0]
+            if close_rows is not None:
+                result["timestamp"] = [trade.timestamp() - 600, trade.timestamp() - 300][:len(close_rows)]
+                result["indicators"] = {"quote": [{"close": close_rows}]}
+            parsed = quotes.parse_quote(data, definition, NOW)
+            self.assertEqual(parsed["intraday_history"], [["2026-10-12T13:39:03Z", 100]])
+            self.assertEqual(parsed["timestamp"], "2026-10-12T13:39:03Z")
+            self.assertEqual(parsed["fetched_at"], "2026-10-12T14:00:00Z")
     def test_regular_quote_preserves_trade_time_not_fetch_time(self):
         result = quotes.parse_quote(fixture(), DEFINITION, NOW)
         self.assertEqual(result["price"], 100)

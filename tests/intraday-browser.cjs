@@ -10,7 +10,7 @@ const holdings = [{ticker: "AAPL", currency: "USD", quantity: 2, average_cost: 1
 const apple = prices.series.find(p => p.id === "AAPL").value, shop = prices.series.find(p => p.id === "SHOP").value;
 const spx = load("data/market-indices.json").series.find(p => p.id === "SPX");
 const catalogue = load("data/securities.json");
-const profiles = {"1": holdings, "2": ["VBAL", "FCIN", "XSP", "CGL", "XLF", "ACWV"],
+const profiles = {"1": holdings, "2": ["VBAL", "FCIN", "XSP", "CGL", "XLF", "XIG"],
   "3": ["MSFTCDR", "FBAL", "SPYM", "CASH", "DIS", "NFLX"]};
 for (const id of ["2", "3"]) profiles[id] = profiles[id].map((ticker, i) => ({ticker, quantity: i + 1.5,
   currency: catalogue.series.find(row => row.id === ticker).currency, average_cost: 25 + i}));
@@ -34,7 +34,11 @@ const snapshot = {schema_version: 1, kind: "intraday_quotes", generated_at: new 
   q("UST10Y", "^TNX", "USD", 5.1), q("WTIFUT", "CL=F", "USD", 95), q("DXY", "DX-Y.NYB", "USD", 100.2),
   ...[...new Set([...profiles["2"], ...profiles["3"]].map(p => p.ticker))].map(id => {
     const point = prices.series.find(p => p.id === id);
-    return q(id, point.quote_symbol, point.currency, point.value * 1.03);
+    const quote = q(id, point.quote_symbol, point.currency, point.value * 1.03);
+    // Reproduce the real VBAL failure: XIG has a dated last trade,
+    // but the provider supplies no five-minute candles.
+    if (id === "XIG") quote.intraday_history = [];
+    return quote;
   }),
   q("VGRO", "VGRO.TO", "CAD", prices.series.find(p => p.id === "VGRO").value * 1.02),
   q("USDCAD", "CAD=X", "CAD", 1.4)
@@ -181,6 +185,11 @@ async function main() {
       assert.match(await direct.locator("#portfolioPeriod").innerText(), /Intraday · séance/);
       assert.equal(await direct.locator("#portfolioChart svg").count(), 1);
       assert.equal(await direct.locator("#portfolioChart .chart-benchmark").count(), 1);
+      if (id === "2") {
+        assert.deepEqual(await direct.evaluate(() => window.SavyLiveQuotes.dataset().quotes.find(q => q.id === "XIG").intraday_history),
+          [[new Date(now - 60000).toISOString(), snapshot.quotes.find(q => q.id === "XIG").price]],
+          "The VBAL curve uses XIG's actual trade without inventing candle points");
+      }
       assert.equal(await direct.locator('#portfolioRelativeTitle').innerText(), 'Écart avec ' + {'1':'FEQT','2':'VBAL','3':'VGRO'}[id]);
       const relative = direct.locator('#portfolioRelativeChart svg');
       assert.equal((await relative.boundingBox()).height, 128);

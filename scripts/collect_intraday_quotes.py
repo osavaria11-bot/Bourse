@@ -89,10 +89,11 @@ def parse_quote(payload, definition, now):
                     points[time.isoformat().replace("+00:00", "Z")] = close
             except (ValueError, OverflowError, OSError):
                 continue
-    if points:
-        points[instant.isoformat().replace("+00:00", "Z")] = price
-        if definition["id"] == "USDCAD":
-            fx_sessions[session_date] = points
+    # A valid last trade remains usable when Yahoo supplies no candles
+    # for an illiquid ETF. Retain only its actual exchange timestamp.
+    points[instant.isoformat().replace("+00:00", "Z")] = price
+    if definition["id"] == "USDCAD":
+        fx_sessions[session_date] = points
     return {"id": definition["id"], "title": definition["title"], "quote_symbol": meta["symbol"],
         "currency": meta["currency"], "price": price, "previous_close": previous,
         "timestamp": instant.isoformat().replace("+00:00", "Z"), "session_date": session_date,

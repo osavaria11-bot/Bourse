@@ -16,6 +16,16 @@ test("quote normalization validates the exchange-local date and fixes attributio
   assert.equal(I.normalize(data([{...q(), session_date: "2026-10-11"}, {...q("SHOP"), price: 0}]), now).quotes.length, 0);
   assert.equal(I.choose(result, "AAPL", {...point("AAPL", 100), currency: "CAD"}, now), null);
 });
+test("a validated last trade survives a missing or empty candle history without changing its timestamp", () => {
+  for (const history of [undefined, [], [["2026-10-12T14:05:00Z", 120], ["2026-10-12T13:30:00Z", null]]]) {
+    const row = {...q(), intraday_history: history};
+    const normalized = I.normalize(data([row]), now).quotes[0];
+    assert.deepEqual(normalized.intraday_history, [["2026-10-12T13:59:00.000Z", 110]]);
+    assert.equal(normalized.timestamp, row.timestamp);
+    assert.equal(I.marketSession(point("AAPL", 100), data([normalized]), now).available, false,
+      "One observed trade alone is not a standalone instrument curve");
+  }
+});
 test("one-session return includes the current trade and preserves the immutable close history", () => {
   const base = point("AAPL", 100), before = structuredClone(base);
   const live = I.marketPoint(base, I.normalize(data([q()]), now), now), result = U.marketPeriod(live, "1D");

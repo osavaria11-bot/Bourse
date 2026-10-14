@@ -28,8 +28,25 @@ test("VBAL and VGRO portfolios retain a thinly traded ETF's single observed trad
     assert.equal(view.selected.history.at(-1)[1], 55 + 11, "Carry the actual ETF trade across subsequent portfolio points");
     assert.equal(view.data.series.find(row => row.id === "SHOP").history.length, 2, "Do not fabricate additional ETF trades");
     assert.ok(Math.abs(F.contributionsFor(holdings, view.data, view.selected).total - view.selected.percent) < 1e-10);
-    assert.equal(T.session(holdings, prices, payload([{...sparse, intraday_history: []}, rows[1]]), benchmark, null, now).available, false);
+    const noCandles = T.session(holdings, prices, payload([{...sparse, intraday_history: []}, rows[1]]), benchmark, null, now);
+    assert.equal(noCandles.available, true, "An observed last trade remains usable when candle history is empty");
+    assert.equal(noCandles.selected.history.at(-1)[1], 55 + 11);
+    assert.equal(T.session(holdings, prices, payload([rows[1]]), benchmark, null, now).available, false,
+      "A truly missing holding price must still block complete valuation");
   }
+});
+test("a VBAL portfolio uses XIG's actual trade when its candle array is empty", () => {
+  const lastTrade = {...q("SHOP", 55, 50), id: "XIG", quote_symbol: "XIG.TO",
+    timestamp: "2026-10-12T13:39:03Z", intraday_history: []};
+  const source = {...prices, series: [...prices.series, point("XIG", "XIG.TO", "CAD", 50)]};
+  const holdings = [{ticker: "XIG", currency: "CAD", quantity: 2}, {ticker: "SHOP", currency: "CAD", quantity: 1}];
+  const view = T.session(holdings, source, payload([lastTrade, q("SHOP", 55, 50, 51), q("VBAL", 11, 10, 10.5)]), "VBAL", null, now);
+  assert.equal(view.available, true); assert.equal(view.comparison.available, true);
+  assert.equal(view.selected.history[0][1], 2 * 50 + 51, "Before XIG's trade use the preceding close");
+  assert.equal(view.selected.history.find(row => row[0] === "2026-10-12T13:39:03.000Z")[1], 2 * 55 + 51);
+  assert.equal(view.selected.history.at(-1)[1], 2 * 55 + 55);
+  assert.equal(view.data.series.find(row => row.id === "XIG").history.length, 2, "Only the prior close and actual trade are stored");
+  assert.ok(Math.abs(F.contributionsFor(holdings, view.data, view.selected).total - view.selected.percent) < 1e-10);
 });
 test("intraday CAD valuation, currency movement, contributions and each benchmark share one previous-close base", () => {
   for (const benchmark of ["FEQT", "VBAL", "VGRO"]) {

@@ -28,7 +28,10 @@
             (row.id !== "USDCAD" || (point[1] > .5 && point[1] < 3)) && localDay.format(time) === day)
           minutes.set(new Date(time).toISOString(), point[1]);
       }
-      if (minutes.size) minutes.set(new Date(stamp).toISOString(), row.price);
+      // The exchange's validated last trade is an observation even when
+      // a thinly traded ETF has no five-minute candles in the response.
+      // Keep its actual trade time; never invent a tick at collection time.
+      minutes.set(new Date(stamp).toISOString(), row.price);
       const intraday_history = [...minutes].sort((a, b) => a[0].localeCompare(b[0]));
       const intraday_sessions = {};
       if (row.id === "USDCAD" && row.quote_symbol === "CAD=X" && row.currency === "CAD" &&
