@@ -270,9 +270,12 @@ async function run() {
     assert.equal(await page.locator(".news-section").count(), 3);
     invalidMarkets = true;
     await page.reload(); await page.waitForFunction(() => document.querySelector("#marketStatus").textContent.includes("Copie conservée"));
+    assert.equal(await page.locator('#marketRanges [data-range="INTRADAY"]').getAttribute("aria-pressed"), "true");
+    await page.locator('#marketRanges [data-range="1Y"]').click();
     assert.equal(await page.locator("#marketGrid svg").count(), 6);
     invalidMarkets = false; failMarkets = true;
     await page.reload(); await page.waitForFunction(() => document.querySelector("#marketStatus").textContent.includes("Copie conservée"));
+    await page.locator('#marketRanges [data-range="1Y"]').click();
     assert.equal(await page.locator("#marketGrid svg").count(), 6);
     assert.match(await page.locator("#briefingDate").innerText(), new RegExp(edition));
     invalidNews = false; failNews = true;
