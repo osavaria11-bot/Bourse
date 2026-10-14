@@ -90,6 +90,21 @@ test("Sorting does not reorder the original dataset", () => {
   assert.equal(U.filterSeries(input, { sort: "name" })[0].title, "A");
   assert.equal(input[0].title, "Z");
 });
+test("recent sorting uses the displayed observation time, puts unavailable values last and preserves ties", () => {
+  const rows = [
+    {...sample(), id: "MONTHLY", date: "2026-10-01"},
+    {...sample(), id: "DXY", date: "2026-10-02"},
+    {...sample(), id: "MISSING", date: "2026-10-14"},
+    {...sample(), id: "FX", date: "2026-10-09"},
+    {...sample(), id: "DAILY", date: "2026-10-13"},
+    {...sample(), id: "DAILY2", date: "2026-10-13"},
+  ];
+  const before = structuredClone(rows), displayed = {DXY: "2026-10-14T14:00:00Z", FX: "2026-10-14T14:01:00Z", MISSING: null};
+  const sorted = U.filterSeries(rows, {sort: "recent", dateFor: point => Object.hasOwn(displayed, point.id) ? displayed[point.id] : point.date});
+  assert.deepEqual(sorted.map(point => point.id), ["FX", "DXY", "DAILY", "DAILY2", "MONTHLY", "MISSING"]);
+  assert.deepEqual(rows, before);
+  assert.equal(U.filterSeries(rows, {sort: "recent"})[0].id, "MISSING", "Existing date-only callers keep their observation ordering");
+});
 test("Nonfinite and future observations never become displayed values", () => {
   const normalized = U.normalizeDataset({ schema_version: 2, generated_at: "2026-10-10T16:00:00Z",
     series: [{ ...sample(), value: NaN }, { ...sample(), id: "FUTURE", date: "2026-10-11" }] }, "2026-10-10");

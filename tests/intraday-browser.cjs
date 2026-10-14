@@ -65,6 +65,11 @@ async function main() {
     const context = await browser.newContext(options);
     await context.addInitScript(({positions, timestamp}) => {
       if (positions) localStorage.setItem("savy:private-holdings:v1", JSON.stringify({schema_version: 1, positions}));
+      if (!localStorage.getItem("savy:preferences:v2")) localStorage.setItem("savy:preferences:v2", JSON.stringify({sort: "name"}));
+      for (const suffix of ["", ":2", ":3"]) {
+        const key = "savy:portfolio-view:v1" + suffix;
+        if (!localStorage.getItem(key)) localStorage.setItem(key, JSON.stringify({range: "YTD"}));
+      }
       const originalFetch = window.fetch.bind(window);
       window.fetch = (input, init) => String(input?.url || input).startsWith("https://biquote.io/api/USDCAD") ?
         Promise.resolve(new Response(JSON.stringify({symbol: "USDCAD", mid: 1.4, timestamp, marketState: "open"}),
@@ -92,6 +97,11 @@ async function main() {
     await page.route("https://**", route => route.request().url().startsWith("https://biquote.io/api/USDCAD") ?
       route.fulfill({status: 200, contentType: "application/json", headers: {"Access-Control-Allow-Origin": "*"}, body: JSON.stringify({symbol: "USDCAD", mid: 1.4, timestamp: new Date(now).toISOString(), marketState: "open"})}) : route.abort());
     await page.goto(url); await page.waitForFunction(() => document.querySelector("#refreshButton").disabled === false && document.querySelectorAll("#portfolioRows tr").length === 2);
+    assert.equal(await page.locator("#sortSelect").inputValue(), "recent", "An old saved sort cannot override the recent-first opening order");
+    await page.waitForFunction(() => document.querySelector("#grid .indicator-card")?.dataset.id === "DEXCAUS");
+    assert.equal(await page.locator('#marketRanges [data-range="INTRADAY"]').getAttribute("aria-pressed"), "true");
+    assert.equal(await page.locator('#portfolioRanges [data-range="INTRADAY"]').getAttribute("aria-pressed"), "true");
+    assert.equal(await page.locator("#portfolioChart .chart-benchmark").count(), 1);
     const money = value => new Intl.NumberFormat("fr-CA", {style: "currency", currency: "CAD", maximumFractionDigits: 2}).format(value);
     assert.equal(await page.locator("#portfolioValue").innerText(), money(2 * apple * 1.1 * 1.4 + shop * 1.05));
     assert.match(await page.locator("#portfolioStatus").innerText(), /2\/2 cotations en séance/);
@@ -181,7 +191,8 @@ async function main() {
       assert.equal(await direct.locator('[data-portfolio-id="' + id + '"]').getAttribute("aria-pressed"), "true");
       assert.ok(await direct.locator("#portfolioBenchmark").innerText().then(text => text.includes({"1": "FEQT", "2": "VBAL", "3": "VGRO"}[id])));
       assert.match(await direct.locator("#portfolioStatus").innerText(), /cotations en séance/);
-      await direct.locator('#portfolioRanges [data-range="INTRADAY"]').click();
+      assert.equal(await direct.locator('#portfolioRanges [data-range="INTRADAY"]').getAttribute("aria-pressed"), "true",
+        "Each portfolio opens on Intraday, including a portfolio previously viewed in YTD");
       assert.match(await direct.locator("#portfolioPeriod").innerText(), /Intraday · séance/);
       assert.equal(await direct.locator("#portfolioChart svg").count(), 1);
       assert.equal(await direct.locator("#portfolioChart .chart-benchmark").count(), 1);
@@ -209,6 +220,9 @@ async function main() {
     await direct.evaluate(() => {for (const suffix of ["", ":2", ":3"]) localStorage.removeItem("savy:portfolio-profile-state:v1" + suffix);});
     await direct.goto(url);
     await direct.waitForFunction(() => document.querySelector("#portfolioPersonalLink").hidden === false && document.querySelectorAll("#portfolioRows tr").length === 6);
+    assert.equal(await direct.locator('#marketRanges [data-range="INTRADAY"]').getAttribute("aria-pressed"), "true");
+    assert.equal(await direct.locator('#portfolioRanges [data-range="INTRADAY"]').getAttribute("aria-pressed"), "true");
+    assert.equal(await direct.locator("#portfolioChart .chart-benchmark").count(), 1);
     assert.equal(new URLSearchParams(new URL(direct.url()).hash.slice(1)).get("portfolio-key"), personalKey);
     await direct.locator('[data-portfolio-id="3"]').click();
     await direct.waitForFunction(() => document.querySelector('#portfolioRows tr[data-ticker="MSFTCDR"]'));

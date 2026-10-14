@@ -16,7 +16,7 @@
   const selectedPortfolio = initialFragment.get("portfolio") || stored(ACTIVE_KEY, "1");
   activePortfolio = portfolioIds.includes(selectedPortfolio) ? selectedPortfolio : "1";
   let benchmarkId = portfolioBenchmarks[activePortfolio];
-  let catalog = null, prices = null, cached = false, range = "YTD", moversRange = "1M", positions = [], history = [], imported = false;
+  let catalog = null, prices = null, cached = false, range = "INTRADAY", moversRange = "1M", positions = [], history = [], imported = false;
   let exposures = null, exposureCached = false;
   let relativeComparison = null;
   let earnings = null, earningsCached = false, earningsTicker = "", earningsWeek = F.weekFor().start, earningsSelection = null;
@@ -45,7 +45,9 @@
   function saveView() {save(VIEW_KEY, {range, moversRange, sortKey, sortDescending, earningsWeek, earningsTicker});}
   function loadView() {
     const view = stored(VIEW_KEY, {});
-    range = chartRanges.some(item => item.key === view.range) ? view.range : "YTD";
+    // Every portfolio opens on its session chart, including when this
+    // browser remembers a previously selected historical period.
+    range = "INTRADAY";
     moversRange = P.RANGES.some(item => item.key === view.moversRange) ? view.moversRange : "1M";
     sortKey = ["unrealized_percent", "unrealized_cad", "period_change_cad"].includes(view.sortKey) ? view.sortKey : null;
     sortDescending = view.sortDescending !== false;

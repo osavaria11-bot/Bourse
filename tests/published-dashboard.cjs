@@ -24,6 +24,9 @@ async function main() {
     const errors = []; page.on("pageerror", error => errors.push(error.message));
     await page.route("https://**", route => route.abort());
     await page.goto("http://127.0.0.1:" + server.address().port);
+    await page.waitForSelector('#marketRanges [data-range="INTRADAY"]');
+    assert.equal(await page.locator('#marketRanges [data-range="INTRADAY"]').getAttribute("aria-pressed"), "true");
+    await page.locator('#marketRanges [data-range="1Y"]').click();
     await page.waitForFunction(() => document.querySelectorAll("#marketGrid svg").length === 6 && document.querySelectorAll(".news-section").length >= 1);
     const feqtCard = page.locator('.market-card[data-id="FEQT"]');
     assert.match(await feqtCard.locator("h4").innerText(), /FEQT.*Fidelity/);

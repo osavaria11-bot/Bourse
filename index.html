@@ -9,7 +9,7 @@
   <meta name="apple-mobile-web-app-title" content="SAVY" />
   <title>SAVY — Tableau macroéconomique</title>
   <link rel="stylesheet" href="css/dashboard.css?v=20261012-relative" />
-  <script src="js/macro-utils.js?v=20261013-odds-date" defer></script>
+  <script src="js/macro-utils.js?v=20261014-defaults" defer></script>
   <script src="js/intraday-utils.js?v=20261014-etf-last-trade" defer></script>
   <script src="js/live-quotes.js?v=20261012-availability" defer></script>
   <script src="js/live-fx.js?v=20261012-availability" defer></script>
@@ -18,8 +18,8 @@
   <script src="js/portfolio-exposure-utils.js?v=20261012-portfolio-3" defer></script>
   <script src="js/portfolio-analytics-utils.js?v=20261012-portfolio-3" defer></script>
   <script src="js/portfolio-profile-utils.js?v=20261012-portfolio-3" defer></script>
-  <script src="js/portfolio.js?v=20261013-sparse-etfs" defer></script>
-  <script src="js/dashboard.js?v=20261013-odds-date" defer></script>
+  <script src="js/portfolio.js?v=20261014-defaults" defer></script>
+  <script src="js/dashboard.js?v=20261014-defaults" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#indicators">Aller aux indicateurs</a>
@@ -111,7 +111,7 @@
         <div class="toolbar-top">
           <label class="search-label"><span class="sr-only">Rechercher un indicateur</span><input id="searchInput" type="search" placeholder="Rechercher : inflation, chômage, VIX…" autocomplete="off" /></label>
           <button id="favoritesOnly" class="button quiet" type="button" aria-pressed="false">☆ Mes favoris</button>
-          <label class="sort-label">Trier <select id="sortSelect"><option value="default">Ordre du tableau</option><option value="name">Nom A → Z</option><option value="recent">Observation récente</option></select></label>
+          <label class="sort-label">Trier <select id="sortSelect"><option value="recent">Données les plus récentes</option><option value="name">Nom A → Z</option><option value="default">Ordre du tableau</option></select></label>
         </div>
         <div id="categoryFilters" class="category-filters" role="group" aria-label="Filtrer les indicateurs par catégorie"></div>
         <div class="toolbar-bottom"><p id="resultCount" class="meta" role="status"></p><div class="range-wrap"><span class="meta">Historique</span><div id="rangeControls" class="segmented" role="group" aria-label="Période avant la dernière observation"></div></div></div>

@@ -38,11 +38,11 @@
     dataset: null, seriesById: new Map(), visible: [], origin: "published",
     search: "", category: typeof prefs.category === "string" ? prefs.category : "all",
     range: U.RANGES.some(range => range.key === prefs.range) ? prefs.range : "10Y",
-    sort: ["default", "name", "recent"].includes(prefs.sort) ? prefs.sort : "default",
+    sort: "recent",
     favorites: new Set(Array.isArray(prefs.favorites) ? prefs.favorites.filter(id => typeof id === "string" && /^[A-Z0-9]+$/.test(id)) : []),
     favoritesOnly: false, theme: prefs.theme === "light" ? "light" : "dark",
     detailId: null, detailRange: "10Y", loading: false,
-    marketDataset: null, marketRange: "1Y", marketCached: false,
+    marketDataset: null, marketRange: "INTRADAY", marketCached: false,
   };
   function el(tag, className, text) {
     const node = document.createElement(tag);
@@ -270,6 +270,7 @@
     observer?.disconnect();
     state.visible = U.filterSeries(state.dataset.series, {
       search: "", category: state.category, sort: state.sort,
+      dateFor: point => {const current = headline(point); return current.value !== null ? current.live?.timestamp || point.date : null;},
       favorites: state.favorites, favoritesOnly: state.favoritesOnly,
     }).filter(point => !state.search || U.filterSeries([{...point,
       title: point.title + " " + (MARKET_INDICATORS[point.id]?.title || "")}], {search: state.search}).length);

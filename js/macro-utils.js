@@ -101,7 +101,13 @@
       (!search || normalizeSearch([point.title, point.id, point.category, point.description].join(" ")).includes(search))
     );
     if (options.sort === "name") output.sort((a, b) => a.title.localeCompare(b.title, "fr", { sensitivity: "base" }));
-    if (options.sort === "recent") output.sort((a, b) => (b.date || "").localeCompare(a.date || ""));
+    if (options.sort === "recent") {
+      const dates = new Map(output.map(point => {
+        const date = parseTimestamp(options.dateFor ? options.dateFor(point) : point.date);
+        return [point.id, Number.isFinite(date) ? date : -Infinity];
+      }));
+      output.sort((a, b) => dates.get(b.id) - dates.get(a.id));
+    }
     return output;
   }
   function rangeStart(anchor, range) {

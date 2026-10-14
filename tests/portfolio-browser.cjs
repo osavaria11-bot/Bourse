@@ -111,6 +111,8 @@ async function main() {
     page.on("pageerror", error => errors.push(error.message)); await page.route("https://**", route => route.abort());
     await page.goto(url + "/#positions=" + fragment);
     await page.waitForFunction(expected => document.querySelectorAll("#portfolioRows tr").length === expected, syntheticPositions.length);
+    assert.equal(await page.locator('#portfolioRanges button[aria-pressed="true"]').textContent(), 'Intraday');
+    await page.locator('#portfolioRanges [data-range="YTD"]').click();
     assert.equal(new URL(page.url()).hash, "#portfolio");
     assert.equal(requestPaths.some(p => p.includes("positions=") || p.includes(fragment)), false);
     const saved = await page.evaluate(() => JSON.parse(localStorage.getItem("savy:private-holdings:v1")));
@@ -326,7 +328,10 @@ async function main() {
     assert.equal(await page.locator("#portfolioRows tr").count(), 6);
     assert.equal(await page.locator("#portfolioBest li[data-ticker]").count(), 3);
     offline = false; missingBaseline = true;
-    await page.reload(); await page.waitForSelector("#portfolioChart svg");
+    await page.reload(); await page.waitForSelector('#portfolioRanges [data-range="YTD"]');
+    assert.equal(await page.locator('#portfolioRanges button[aria-pressed="true"]').textContent(), 'Intraday');
+    await page.locator('#portfolioRanges [data-range="YTD"]').click();
+    await page.waitForSelector("#portfolioChart svg");
     const incompleteChart = page.locator("#portfolioChart svg"); await incompleteChart.focus(); await incompleteChart.press("End");
     assert.match(await page.locator("#portfolioChart .chart-tooltip").innerText(), /variation indisponible.*base.*manquante/);
     assert.equal(await page.locator("#portfolioChart .chart-benchmark").count(), 0);
@@ -385,6 +390,7 @@ async function main() {
     const personalURL = A.personalURL(url + "/?v=synthetic-direct", personalKey);
     await direct.goto(personalURL);
     await direct.waitForFunction(() => document.querySelectorAll("#portfolioRows tr").length === 6);
+    assert.equal(await direct.locator('#portfolioRanges button[aria-pressed="true"]').textContent(), 'Intraday');
     assert.deepEqual(await direct.evaluate(() => JSON.parse(localStorage.getItem("savy:private-holdings:v1")).positions), syntheticPositions);
     assert.equal(direct.url(), personalURL);
     assert.match(await direct.locator("#portfolioMessage").innerText(), /chargées automatiquement/);
@@ -400,6 +406,8 @@ async function main() {
     await direct.locator('#portfolioRanges button').filter({hasText: /^1 mois$/}).click();
     await direct.locator('[data-portfolio-id="2"]').click();
     await direct.waitForFunction(() => document.querySelector('#portfolioTitle').textContent === 'Portefeuille 2' && document.querySelector('#portfolioRows tr[data-ticker="VBAL"]') && document.querySelector('#portfolioMessage').textContent.includes('chargées automatiquement'));
+    assert.equal(await direct.locator('#portfolioRanges button[aria-pressed="true"]').textContent(), 'Intraday');
+    await direct.locator('#portfolioRanges [data-range="YTD"]').click();
     assert.deepEqual(await direct.evaluate(() => JSON.parse(localStorage.getItem('savy:private-holdings:v1:2')).positions), secondSyntheticPositions);
     assert.deepEqual(await direct.evaluate(() => JSON.parse(localStorage.getItem('savy:private-holdings:v1')).positions), syntheticPositions);
     assert.match(await direct.locator('[data-portfolio-id="1"]').innerText(), /FEQT/);
@@ -461,12 +469,12 @@ async function main() {
     profileOffline = false;
     await direct.locator('[data-portfolio-id="1"]').click();
     await direct.waitForFunction(() => document.querySelector('#portfolioRows tr[data-ticker="SHOP"]') && new URLSearchParams(location.hash.slice(1)).get('portfolio') !== '2');
-    assert.equal(await direct.locator('#portfolioRanges button[aria-pressed="true"]').textContent(), '1 mois');
+    assert.equal(await direct.locator('#portfolioRanges button[aria-pressed="true"]').textContent(), 'Intraday');
     assert.equal(await direct.locator('#portfolioPositions').isVisible(), false);
     assert.match(await direct.locator('#portfolioRiskTitle').textContent(), /FEQT/);
     await direct.locator('[data-portfolio-id="2"]').click();
     await direct.waitForFunction(() => document.querySelector('#portfolioRows input[aria-label="Quantité XSP"]')?.value === '8,5');
-    assert.equal(await direct.locator('#portfolioRanges button[aria-pressed="true"]').textContent(), '3 mois');
+    assert.equal(await direct.locator('#portfolioRanges button[aria-pressed="true"]').textContent(), 'Intraday');
     assert.equal(await direct.locator('#portfolioPositions').isVisible(), true);
     const secondHomeContext = await historicalContext({viewport: {width: 320, height: 950}}), secondHome = await secondHomeContext.newPage();
     secondHome.on('pageerror', error => errors.push(error.message)); await secondHome.route('https://**', route => route.abort()); await secondHome.goto(secondManifest.start_url);
@@ -481,6 +489,8 @@ async function main() {
     secondProfileFixture = goodSecondProfile;
     await direct.locator('[data-portfolio-id="3"]').click();
     await direct.waitForFunction(() => document.querySelector('#portfolioTitle').textContent === 'Portefeuille 3' && document.querySelector('#portfolioRows tr[data-ticker="MSFTCDR"]') && document.querySelector('#portfolioMessage').textContent.includes('chargées automatiquement'));
+    assert.equal(await direct.locator('#portfolioRanges button[aria-pressed="true"]').textContent(), 'Intraday');
+    await direct.locator('#portfolioRanges [data-range="YTD"]').click();
     assert.deepEqual(await direct.evaluate(() => JSON.parse(localStorage.getItem('savy:private-holdings:v1:3')).positions), thirdSyntheticPositions);
     assert.deepEqual(await direct.evaluate(() => JSON.parse(localStorage.getItem('savy:private-holdings:v1:2')).positions), editedSecond);
     assert.deepEqual(await direct.evaluate(() => JSON.parse(localStorage.getItem('savy:private-holdings:v1')).positions), syntheticPositions);
@@ -560,10 +570,10 @@ async function main() {
     assert.ok(await thirdHome.evaluate(() => document.documentElement.scrollWidth <= innerWidth)); await thirdHomeContext.close();
     await direct.locator('[data-portfolio-id="2"]').click();
     await direct.waitForFunction(() => document.querySelector('#portfolioRows input[aria-label="Quantité XSP"]')?.value === '8,5');
-    assert.equal(await direct.locator('#portfolioRanges button[aria-pressed="true"]').textContent(), '3 mois');
+    assert.equal(await direct.locator('#portfolioRanges button[aria-pressed="true"]').textContent(), 'Intraday');
     await direct.locator('[data-portfolio-id="3"]').click();
     await direct.waitForFunction(() => document.querySelector('#portfolioRows input[aria-label="Quantité MSFTCDR"]')?.value === '4,25');
-    assert.equal(await direct.locator('#portfolioRanges button[aria-pressed="true"]').textContent(), '6 mois');
+    assert.equal(await direct.locator('#portfolioRanges button[aria-pressed="true"]').textContent(), 'Intraday');
     assert.equal(await direct.locator('#portfolioPositions').isVisible(), true);
     assert.equal(requestPaths.some(p => p.includes(personalKey)), false);
     await direct.locator('[data-portfolio-id="1"]').click();
