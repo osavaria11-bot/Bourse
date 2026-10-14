@@ -452,6 +452,8 @@
       (old.length ? " · " + old.length + " cours d’une séance antérieure repris" : "");
     if (window.SavyLiveQuotes?.dataset()) $("#portfolioStatus").textContent += " · " + quoted.length + "/" + positions.length + " cotations en séance disponibles · dernière collecte : " + U.timestampLabel(window.SavyLiveQuotes.dataset().generated_at) +
       (intraday?.available && !intraday.current ? " · actualisation en attente, courbe datée conservée" : " · délai fournisseur possible");
+    if (intraday?.available && intraday.current && intraday.retained_quotes.length) $("#portfolioStatus").textContent +=
+      " · derniers cours plus anciens pour " + intraday.retained_quotes.join(", ") + " : voir les heures par position";
     $("#portfolioStatus").classList.toggle("warning", cached || !current.complete || quoted.some(p => quotes.get(p.ticker).stale) || old.length > 0 || Date.now() - U.parseTimestamp(prices.generated_at) > 36 * 3600000);
     $("#portfolioValueLabel").textContent = current.complete ? (intraday?.available && !intraday.current ? "DERNIÈRE VALEUR COLLECTÉE · CAD" : "VALEUR DES TITRES · CAD") : "VALEUR PARTIELLE · CAD";
     $("#portfolioValue").textContent = money(current.total);
@@ -497,6 +499,7 @@
       }
       price.append(quoteLine);
       const priceDate = el("span", "portfolio-ticker portfolio-quote", quote ? window.IntradayUtils.shortLabel(quote) : (row.price_date || "Cours indisponible") + " · clôture quotidienne");
+      if (quote) priceDate.title = "Cours daté du " + U.timestampLabel(quote.timestamp) + " · source consultée le " + U.timestampLabel(quote.fetched_at);
       if (quote) priceDate.title = window.IntradayUtils.label(quote);
       price.append(priceDate);
       const value = el("td", "", money(row.value_cad));

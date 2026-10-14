@@ -37,11 +37,15 @@ const snapshot = {schema_version: 1, kind: "intraday_quotes", generated_at: new 
     const quote = q(id, point.quote_symbol, point.currency, point.value * 1.03);
     // Reproduce the real VBAL failure: XIG has a dated last trade,
     // but the provider supplies no five-minute candles.
-    if (id === "XIG") quote.intraday_history = [];
+    if (id === "XIG") {
+      quote.intraday_history = [];
+      quote.timestamp = new Date(now - 55 * 60000).toISOString();
+    }
     return quote;
   }),
   q("VGRO", "VGRO.TO", "CAD", prices.series.find(p => p.id === "VGRO").value * 1.02),
-  q("USDCAD", "CAD=X", "CAD", 1.4)
+  {...q("USDCAD", "CAD=X", "CAD", 1.4), intraday_history: [[new Date(now - 60 * 60000).toISOString(), 1.4],
+    ...q("USDCAD", "CAD=X", "CAD", 1.4).intraday_history]}
 ]};
 const types = {".html": "text/html", ".js": "text/javascript", ".json": "application/json", ".css": "text/css", ".png": "image/png"};
 const server = http.createServer((request, response) => {
@@ -198,8 +202,13 @@ async function main() {
       assert.equal(await direct.locator("#portfolioChart .chart-benchmark").count(), 1);
       if (id === "2") {
         assert.deepEqual(await direct.evaluate(() => window.SavyLiveQuotes.dataset().quotes.find(q => q.id === "XIG").intraday_history),
-          [[new Date(now - 60000).toISOString(), snapshot.quotes.find(q => q.id === "XIG").price]],
+          [[new Date(now - 55 * 60000).toISOString(), snapshot.quotes.find(q => q.id === "XIG").price]],
           "The VBAL curve uses XIG's actual trade without inventing candle points");
+        assert.doesNotMatch(await direct.locator("#portfolioPeriod").innerText(), /actualisation en attente/,
+          "An older XIG trade must not report a stopped provider refresh");
+        assert.match(await direct.locator("#portfolioStatus").innerText(), /derniers cours plus anciens pour XIG/);
+        assert.equal(await direct.locator("#portfolioValueLabel").innerText(), "VALEUR DES TITRES · CAD");
+        assert.match(await direct.locator('#portfolioRows tr[data-ticker="XIG"] .portfolio-quote').getAttribute("title"), /Cours daté du.*source consultée le/);
       }
       assert.equal(await direct.locator('#portfolioRelativeTitle').innerText(), 'Écart avec ' + {'1':'FEQT','2':'VBAL','3':'VGRO'}[id]);
       const relative = direct.locator('#portfolioRelativeChart svg');

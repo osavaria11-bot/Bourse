@@ -48,6 +48,26 @@ test("a VBAL portfolio uses XIG's actual trade when its candle array is empty", 
   assert.equal(view.data.series.find(row => row.id === "XIG").history.length, 2, "Only the prior close and actual trade are stored");
   assert.ok(Math.abs(F.contributionsFor(holdings, view.data, view.selected).total - view.selected.percent) < 1e-10);
 });
+test("fresh collections with an older ETF trade remain current and accept fresh same-session FX", () => {
+  const later = now + 60 * 60000;
+  for (const benchmark of ["FEQT", "VBAL", "VGRO"]) {
+    const rows = [q("AAPL", 110, 100, 105), q("SHOP", 55, 50, 51), q("USDCAD", 1.4, 1.3, 1.32), q(benchmark, 11, 10, 10.5)]
+      .map(row => ({...row, fetched_at: new Date(later).toISOString(), timestamp: new Date(later - 60000).toISOString(),
+        intraday_history: [row.intraday_history[0], [new Date(later - 5 * 60000).toISOString(), row.price]]}));
+    rows[1] = {...q("SHOP", 55, 50, 51), fetched_at: new Date(later).toISOString()};
+    const input = I.normalize({schema_version: 1, kind: "intraday_quotes", generated_at: new Date(later).toISOString(), quotes: rows}, later);
+    const view = T.session(positions, prices, input, benchmark, {rate: 1.45, timestamp: new Date(later).toISOString(), closed: false}, later);
+    assert.equal(view.available, true); assert.equal(view.current, true);
+    assert.deepEqual(view.retained_quotes, ["SHOP"]);
+    assert.equal(view.data.series.find(row => row.id === "SHOP").current_quote.timestamp, rows[1].timestamp);
+    assert.equal(view.data.series.find(row => row.id === "SHOP").current_quote.stale, true);
+    assert.equal(view.fx.source, "biquote"); assert.equal(view.fx.stale, false);
+    assert.equal(view.selected.history.at(-1)[1], 2 * 110 * 1.45 + 55);
+    assert.ok(Math.abs(F.contributionsFor(positions, view.data, view.selected).total - view.selected.percent) < 1e-10);
+    const late = T.session(positions, prices, input, benchmark, null, later + 13 * 60000);
+    assert.equal(late.available, true); assert.equal(late.current, false, "A genuinely delayed collection must still be flagged");
+  }
+});
 test("intraday CAD valuation, currency movement, contributions and each benchmark share one previous-close base", () => {
   for (const benchmark of ["FEQT", "VBAL", "VGRO"]) {
     const before = structuredClone(prices), rows = [q("AAPL", 110, 100, 105), q("SHOP", 55, 50, 51), q("USDCAD", 1.4, 1.3, 1.32), q(benchmark, 11, 10, 10.5)];

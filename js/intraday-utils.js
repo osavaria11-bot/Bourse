@@ -67,10 +67,14 @@
     return (row.stale ? "Cotation conservée · " : row.active ? "En séance · " : "Marché fermé · dernier cours · ") +
       U.timestampLabel(row.timestamp) + " · Yahoo Finance" + (row.provider_delay_minutes > 0 ? " · retard fournisseur " + row.provider_delay_minutes + " min" : "");
   }
+  function collectionIsCurrent(row, now = Date.now()) {
+    const age = now - U.parseTimestamp(row?.fetched_at);
+    return row?.fetch_status === "fresh" && Number.isFinite(age) && age >= -300000 && age <= 12 * 60000;
+  }
   function isCurrent(row, now = Date.now()) {
-    if (!row || row.stale || row.fetch_status !== "fresh") return false;
-    const collectedAge = now - U.parseTimestamp(row.fetched_at), tradeAge = now - U.parseTimestamp(row.timestamp);
-    return collectedAge >= -300000 && collectedAge <= 12 * 60000 && tradeAge >= -300000 &&
+    if (!collectionIsCurrent(row, now) || row.stale) return false;
+    const tradeAge = now - U.parseTimestamp(row.timestamp);
+    return tradeAge >= -300000 &&
       tradeAge <= (row.active ? 30 * 60000 : 7 * DAY);
   }
   function shortLabel(row) {
@@ -119,5 +123,5 @@
     }
     return {...data, series};
   }
-  return {normalize, choose, label, shortLabel, isCurrent, clock, marketSession, overlay, marketPoint, portfolioView};
+  return {normalize, choose, label, shortLabel, collectionIsCurrent, isCurrent, clock, marketSession, overlay, marketPoint, portfolioView};
 });

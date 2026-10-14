@@ -72,6 +72,15 @@ test("current market numbers require a recent successful collection, including w
   assert.equal(I.isCurrent(closed, now), true);
   assert.equal(I.isCurrent(closed, now + 13 * 60000), false);
 });
+test("a recent provider check and a recent price have independent freshness", () => {
+  const checked = {...q(), timestamp: "2026-10-12T13:10:00Z", stale: true};
+  assert.equal(I.collectionIsCurrent(checked, now), true);
+  assert.equal(I.isCurrent(checked, now), false, "Do not present a retained last price as a recent market tick");
+  assert.equal(I.collectionIsCurrent({...checked, fetch_status: "cached"}, now), false);
+  assert.equal(I.collectionIsCurrent(checked, now + 13 * 60000), false);
+  assert.equal(I.collectionIsCurrent({...checked, fetched_at: "2026-10-12T14:10:00Z"}, now), false);
+  assert.equal(I.collectionIsCurrent({...checked, fetched_at: null}, now), false);
+});
 test("intraday charts keep only actual session points and use the previous close as their return base", () => {
   const quote = {...q(), intraday_history: [["2026-10-09T13:30:00Z", 100], ["2026-10-12T13:30:00Z", 105],
     ["2026-10-12T13:30:00Z", 106], ["2026-10-12T13:45:00Z", null], ["2026-10-12T14:05:00Z", 120]]};

@@ -30,7 +30,11 @@
     const first = [...stamps].sort()[0], equityEnd = [...stamps].sort().at(-1);
     const sessionActive = trading.some(q => q.active);
     const usd = positions.some(p => p.currency === "USD"), fxQuote = usd ? quoteFor("USDCAD") : null;
-    const current = [...quotes.values(), ...(usd && fxQuote ? [fxQuote] : [])].every(q => !q.stale);
+    // A successful refresh and a recent exchange trade are different
+    // clocks. An old last trade must keep its date, without suggesting
+    // that the collector stopped or blocking a fresh same-session FX rate.
+    const current = [...quotes.values(), ...(usd && fxQuote ? [fxQuote] : [])].every(q => I.collectionIsCurrent(q, now));
+    const retained_quotes = [...quotes.values()].filter(q => !I.isCurrent(q, now)).map(q => q.id);
     const originalFx = sources.get("USDCAD"), fxBase = P.observationAt(originalFx?.history || [], previousDay);
     let fxHistory = [], fxSource = "Yahoo Finance";
     if (usd) {
@@ -72,7 +76,7 @@
     const comparison = P.benchmarkFor({...selected, history: [[previousDay, baseline.total], ...history]}, byId.get(benchmarkId), benchmarkId);
     comparison.points = comparison.points.slice(1);
     const lastFx = usd ? P.observationAt(byId.get("USDCAD").history, end) : null;
-    return {available: true, current, missing: [], data, selected, comparison, session_date: day, active: sessionActive,
+    return {available: true, current, retained_quotes, missing: [], data, selected, comparison, session_date: day, active: sessionActive,
       fx: lastFx ? {rate: lastFx[1], timestamp: lastFx[0], closed: !sessionActive, stale: !current, source: fxSource} : null};
   }
   return {session};
