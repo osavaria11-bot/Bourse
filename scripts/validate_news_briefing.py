@@ -47,8 +47,8 @@ def validate(payload: dict, now: datetime | None = None) -> int:
                 raise ValueError(f"Champ {field} manquant")
         summary_words = len(story["summary"].split())
         impact_words = len(story["impact"].split())
-        if not 15 <= summary_words <= 120 or not 5 <= impact_words <= 60:
-            raise ValueError("Une nouvelle doit être courte, précise et expliquer son effet")
+        if summary_words < 15 or impact_words < 5:
+            raise ValueError("Une nouvelle doit donner du contexte et expliquer son effet")
         words += summary_words + impact_words
         try:
             published = date.fromisoformat(story["published_date"])
@@ -56,8 +56,6 @@ def validate(payload: dict, now: datetime | None = None) -> int:
             raise ValueError("Date de publication invalide") from error
         if published > edition or (edition - published).days > 14:
             raise ValueError("Publication future ou trop ancienne")
-    if words > 700:
-        raise ValueError("Le briefing doit rester sélectif")
     watch = payload.get("fred_watch")
     if not isinstance(watch, list) or not 3 <= len(watch) <= 4:
         raise ValueError("Trois ou quatre graphiques FRED sont requis")

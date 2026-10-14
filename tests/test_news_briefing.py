@@ -26,6 +26,22 @@ class NewsBriefingTests(unittest.TestCase):
     def test_short_verified_edition_has_no_forced_word_quota(self):
         self.assertEqual(validate(edition(), NOW), 26)
 
+    def test_long_sourced_analysis_has_no_word_ceiling(self):
+        payload = edition()
+        story = payload["stories"][0]
+        story["summary"] = " ".join([story["summary"]] * 10)
+        story["impact"] = " ".join([story["impact"]] * 10)
+        payload["stories"] = []
+        for index in range(3):
+            item = copy.deepcopy(story)
+            item["source_url"] = f"https://www.ft.com/content/example-{index}"
+            payload["stories"].append(item)
+        words = sum(len(item["summary"].split()) + len(item["impact"].split())
+                    for item in payload["stories"])
+        self.assertGreater(words, 700)
+        payload["word_count"] = words
+        self.assertEqual(validate(payload, NOW), words)
+
     def test_future_old_duplicate_and_unsafe_publications_are_rejected(self):
         invalid = []
         for field, value in [("published_date", "2026-10-12"), ("published_date", "2026-09-01"),
