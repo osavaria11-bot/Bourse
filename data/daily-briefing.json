@@ -3,84 +3,93 @@
   "kind": "news_digest",
   "language": "fr",
   "timezone": "America/Toronto",
-  "edition_date": "2026-10-13",
-  "generated_at": "2026-10-13T11:07:03Z",
-  "editorial_note": "Édition centrée sur les premiers résultats bancaires publiés avant l’ouverture, la vente mondiale de semi-conducteurs et les nouvelles prévisions du FMI. Les cours prémarché et intrajournaliers sont identifiés comme tels; le CPI de septembre demeure à venir.",
+  "edition_date": "2026-10-14",
+  "generated_at": "2026-10-14T11:02:43Z",
+  "editorial_note": "Édition préparée avant le CPI américain de 8 h 30, dont l’horaire a été vérifié auprès du BLS. Les résultats d’entreprises sont réalisés; les perspectives d’ASML et de l’AIE ainsi que le consensus d’inflation restent des prévisions. Les impacts sont des interprétations conditionnelles. Les observations FRED gardent leur vraie date économique, distincte de la collecte.",
   "stories": [
     {
+      "topic": "Inflation américaine",
+      "title": "CPI à 8 h 30 : le consensus attend 3,6 %, pas encore un résultat",
+      "summary": "Le CPI de septembre est attendu ce 14 octobre à 8 h 30 à Montréal. Le consensus Reuters prévoit +0,6 % sur le mois et +3,6 % sur un an; hors alimentation et énergie, +0,2 % mensuel et +2,5 % annuel. Ces attentes ne sont pas des résultats publiés.",
+      "impact": "Une surprise sous-jacente à la hausse pourrait relever les rendements et le dollar, en comprimant les multiples des actions de croissance. Le détail importe autant que l’inflation globale.",
+      "source_label": "Reuters · horaire vérifié auprès du BLS",
+      "source_url": "https://www.reuters.com/world/us/high-gasoline-prices-expected-boost-us-consumer-inflation-september-2026-10-14/",
+      "published_date": "2026-10-14"
+    },
+    {
+      "topic": "Semi-conducteurs · IA",
+      "title": "ASML relève ses perspectives et prévoit un manque de capacité jusqu’en 2028",
+      "summary": "ASML a publié 11,66 milliards € de ventes au troisième trimestre, une marge brute de 57,5 % et 4,96 milliards € de bénéfice net. L’entreprise prévoit 14,2 à 15,2 milliards € de ventes au quatrième trimestre. Selon sa direction, la capacité planifiée pour 2027 et 2028 ne suffira pas à répondre à la demande de ses clients, portée par l’IA.",
+      "impact": "Ces perspectives soutiennent la demande d’équipements et la visibilité du cycle des puces. Les contraintes de production peuvent néanmoins retarder les capacités des clients; elles ne garantissent pas leur rentabilité.",
+      "source_label": "ASML · résultats et perspectives officiels",
+      "source_url": "https://www.investor.asml.com/news-releases/news-release-details/asml-reports-eu11.7-billion-total-net-sales-and-eu5.0-billion-net-income-q3-2026",
+      "published_date": "2026-10-14"
+    },
+    {
       "topic": "Banques américaines",
-      "title": "JPMorgan augmente son bénéfice grâce au trading et aux commissions",
-      "summary": "JPMorgan Chase a dégagé un bénéfice net de 15,3 milliards $ US au troisième trimestre, soit 5,57 $ par action, contre 14,4 milliards et 5,07 $ un an plus tôt. Les revenus de marchés ont progressé de 15 % et les commissions de banque d’investissement de 14 %. Reuters souligne que les émissions de dette des grandes entreprises technologiques, destinées à financer l’IA, soutiennent les marchés de capitaux malgré le ralentissement des transactions.",
-      "impact": "La diversification des revenus amortit le risque de taux pour les banques. Elle montre aussi que l’essor de l’IA dépend davantage du financement obligataire, ce qui accroît la sensibilité aux rendements.",
+      "title": "Bank of America : une charge réglementaire de 1,2 milliard $ pèse sur le bénéfice",
+      "summary": "Bank of America a déclaré un bénéfice trimestriel de 6,9 milliards $ US, ou 0,91 $ par action, contre 8,3 milliards et 1,04 $ un an auparavant. La banque a comptabilisé 1,2 milliard $ pour couvrir des amendes liées à des défaillances dans la détection d’activités potentiellement illicites, dont le blanchiment.",
+      "impact": "Il faut isoler cette charge réglementaire avant d’extrapoler la baisse du bénéfice à l’ensemble du crédit. Le risque de conformité reste toutefois un coût concret pour les actionnaires.",
       "source_label": "Reuters",
-      "source_url": "https://www.reuters.com/business/finance/jpmorgans-profit-rises-investment-banking-trading-strength-2026-10-13/",
+      "source_url": "https://www.reuters.com/business/finance/bank-america-profit-hurt-by-12-billion-fine-over-anti-money-laundering-2026-10-14/",
+      "published_date": "2026-10-14"
+    },
+    {
+      "topic": "Énergie · diesel",
+      "title": "L’AIE avertit que la tension sur le diesel pourrait durer en 2027",
+      "summary": "Selon l’AIE, la reprise attendue des raffineries en fin d’année ne compensera pas le déficit de diesel accumulé en 2026. Les exportations du Moyen-Orient et de Russie ont perdu ensemble 1,3 million de barils par jour en septembre. Les marges de raffinage ont approché 95 $ US par baril, un montant distinct du prix du brut.",
+      "impact": "Le carburant renchérit transport et distribution, menaçant marges et pouvoir d’achat. Les raffineurs peuvent profiter de marges élevées, malgré les interruptions d’approvisionnement.",
+      "source_label": "Reuters · rapport de l’AIE",
+      "source_url": "https://www.reuters.com/business/energy/diesel-shortages-could-persist-well-into-2027-iea-says-2026-10-14/",
+      "published_date": "2026-10-14"
+    },
+    {
+      "topic": "Canada · centres de données",
+      "title": "Enerflex décroche un contrat de plus de 1 GW pour alimenter un centre de données",
+      "summary": "Enerflex a annoncé le 13 octobre un contrat de conception et d’assemblage de générateurs au gaz naturel de plus d’un gigawatt pour un projet nord-américain de centre de données. Son carnet de commandes de production électrique hors réseau dépasse désormais 1,75 GW, avec des livraisons prévues jusqu’en 2028. L’annonce ne divulgue ni la valeur du nouveau contrat ni sa marge.",
+      "impact": "La demande liée à l’IA se traduit ici par une commande d’équipements canadiens. Le carnet améliore la visibilité commerciale, mais sa conversion en bénéfices dépendra des coûts et de l’exécution.",
+      "source_label": "Enerflex · communiqué officiel",
+      "source_url": "https://investors.enerflex.com/news-releases/news-release-details/enerflex-announces-major-project-award-and-increases-behind",
       "published_date": "2026-10-13"
     },
     {
-      "topic": "Crédit américain",
-      "title": "Wells Fargo profite de la croissance des prêts et du revenu d’intérêts",
-      "summary": "Wells Fargo a déclaré un bénéfice net trimestriel de 5,95 milliards $ US, ou 1,87 $ par action, contre 5,59 milliards et 1,66 $ un an auparavant. Le revenu net d’intérêts a augmenté de 5 % à 12,52 milliards, aidé par la croissance des prêts après la levée du plafond d’actifs imposé par la Fed. La banque dit que ses clients particuliers et entreprises demeurent en bonne santé, mais l’action reculait de 1,5 % avant l’ouverture.",
-      "impact": "Les marges bancaires profitent encore des taux élevés, mais une hausse des coûts de financement ou un affaiblissement du crédit à la consommation pourrait rapidement réduire cet avantage.",
+      "topic": "Chine · coûts industriels",
+      "title": "L’inflation à la production chinoise accélère à 5 %, le CPI reste à 0,9 %",
+      "summary": "En septembre, les prix à la production chinois ont augmenté de 5 % sur un an, contre 3,8 % en août et 4,5 % attendus. Le CPI n’a progressé que de 0,9 %, sous le consensus de 1 %. L’énergie renchérit les intrants, sans transmission équivalente aux prix payés par les ménages.",
+      "impact": "Ce décalage peut comprimer les marges industrielles et accroître les coûts des importateurs. Il ne prouve ni une consommation vigoureuse ni une hausse uniforme des prix exportés.",
       "source_label": "Reuters",
-      "source_url": "https://www.reuters.com/business/finance/wells-fargo-profit-rises-robust-loan-growth-interest-income-2026-10-13/",
-      "published_date": "2026-10-13"
-    },
-    {
-      "topic": "Semi-conducteurs",
-      "title": "La concurrence chinoise déclenche une vente mondiale des puces",
-      "summary": "Les actions liées aux semi-conducteurs ont chuté en Asie après des informations sur les progrès du fabricant chinois de mémoire CXMT et des commentaires prudents du PDG de Broadcom sur certains financements de l’IA. Le KOSPI a perdu plus de 5 %, Samsung 7,4 % et SK Hynix 10 %. Avant l’ouverture américaine, Micron reculait de 2,5 % et Nvidia de 0,6 %. Ces variations sont intrajournalières ou prémarché, pas des clôtures américaines.",
-      "impact": "Le marché réévalue à la fois les barrières technologiques et le rendement du capital investi en IA. Une concurrence mémoire plus rapide pourrait comprimer les prix et les marges.",
-      "source_label": "Reuters",
-      "source_url": "https://www.reuters.com/world/asia-pacific/global-markets-wrapup-1-2026-10-13/",
-      "published_date": "2026-10-13"
-    },
-    {
-      "topic": "FMI · croissance mondiale",
-      "title": "Le FMI relève légèrement 2026, mais avertit sur l’IA, la guerre et la dette",
-      "summary": "Le FMI a relevé sa prévision de croissance mondiale de 2026 à 3,1 %, contre 3,0 % en juillet, et maintenu 3,4 % pour 2027. Il prévoit 2,3 % pour les États-Unis en 2026 et 2027; ses projections pour la Chine passent à 4,5 % puis 4,0 %. L’investissement en IA soutient l’activité, mais le FMI avertit qu’une rentabilité décevante pourrait faire chuter l’investissement et les prix d’actifs, tandis qu’une guerre prolongée et la dette publique peuvent maintenir l’inflation et les rendements élevés.",
-      "impact": "La hausse du scénario central soutient les bénéfices cycliques. En revanche, la dépendance à l’IA et aux conditions de financement augmente le risque de correction simultanée des actions technologiques et des obligations longues.",
-      "source_label": "Reuters, d’après le World Economic Outlook du FMI",
-      "source_url": "https://www.reuters.com/world/china/imf-says-ai-investment-propping-up-global-growth-war-debt-threaten-outlook-2026-10-13/",
-      "published_date": "2026-10-13"
-    },
-    {
-      "topic": "Réserve fédérale",
-      "title": "Hammack veut atteindre une politique restrictive rapidement",
-      "summary": "Beth Hammack, présidente de la Fed de Cleveland et membre votante en 2026, estime que la banque centrale devrait atteindre une orientation restrictive « relativement rapidement », par petits ajustements, parce que l’inflation lui paraît plus généralisée. Ses équipes évaluent l’inflation sous-jacente dans le milieu ou le haut de la zone de 2 %. Elle juge que l’économie peut supporter un resserrement. Le CPI de septembre sera publié mercredi; ce chiffre à venir n’est pas encore connu.",
-      "impact": "Cette prise de position renforce le risque de taux si le CPI surprend à la hausse. Elle peut peser sur les multiples de croissance et les obligations longues, sans garantir une hausse dès le 28 octobre.",
-      "source_label": "Reuters",
-      "source_url": "https://www.reuters.com/markets/us/feds-hammack-backs-restrictive-policy-says-better-if-it-comes-relatively-quickly-2026-10-12/",
-      "published_date": "2026-10-12"
+      "source_url": "https://www.reuters.com/world/asia-pacific/chinas-factory-gate-inflation-accelerates-september-2026-10-14/",
+      "published_date": "2026-10-14"
     }
   ],
   "fred_watch": [
     {
       "series_id": "DGS10",
-      "title": "10 ans américain : le coût du capital reste élevé",
-      "explanation": "Au 8 octobre 2026, le rendement est de 5,22 %, contre 5,28 % le 7 octobre : recul de 6 points de base. La baisse est modeste face au niveau absolu, qui continue de freiner les valorisations et le refinancement. Il s’agit de la dernière observation FRED disponible, pas du taux en temps réel.",
-      "observation_date": "2026-10-08",
+      "title": "10 ans américain : 5,24 %, un coût du capital encore élevé",
+      "explanation": "Au 9 octobre 2026, le rendement à 10 ans est de 5,24 %, contre 5,22 % le 8 octobre : hausse de 2 points de base. Ce niveau maintient la pression sur les valorisations et les refinancements. C’est la dernière observation de ce graphique FRED, pas le rendement en temps réel.",
+      "observation_date": "2026-10-09",
       "source_url": "https://fred.stlouisfed.org/series/DGS10"
     },
     {
       "series_id": "BAMLH0A0HYM2",
-      "title": "Crédit à haut rendement : légère détérioration",
-      "explanation": "Au 8 octobre 2026, l’écart ajusté pour les options atteint 3,15 % (315 points de base), contre 3,09 % la veille. L’élargissement de 6 points de base signale une prime de risque un peu plus forte, sans indiquer à lui seul une hausse des défauts.",
-      "observation_date": "2026-10-08",
+      "title": "Haut rendement : la prime de crédit se stabilise à 311 points de base",
+      "explanation": "Au 12 octobre 2026, l’écart de crédit ajusté pour les options est de 3,11 % (311 points de base), inchangé depuis le 9 octobre, après 3,15 % le 8 octobre. Le crédit n’indique donc pas de nouvelle détérioration sur ces observations. Cet écart n’est ni le rendement total des obligations ni une probabilité de défaut.",
+      "observation_date": "2026-10-12",
       "source_url": "https://fred.stlouisfed.org/series/BAMLH0A0HYM2"
     },
     {
-      "series_id": "CPILFESL",
-      "title": "Inflation sous-jacente : désinflation presque à l’arrêt",
-      "explanation": "En août 2026, le taux sur 12 mois calculé à partir du CPI désaisonnalisé est de 2,45 %, contre 2,47 % en juillet. Le recul de 0,02 point est minime. Le CPI de septembre attendu le 14 octobre demeure une publication future.",
+      "series_id": "PCEPILFE",
+      "title": "PCE sous-jacent : environ 3 % avant le nouveau CPI",
+      "explanation": "En août 2026, l’inflation PCE hors alimentation et énergie atteint 3,01 % sur 12 mois, contre 2,98 % en juillet. La transformation est annuelle, calculée à partir des niveaux de l’indice, pas un rythme mensuel annualisé. Cette légère remontée entretient le risque de taux; elle ne prédit pas le CPI de septembre ni la prochaine décision de la Fed.",
       "observation_date": "2026-08-01",
-      "source_url": "https://fred.stlouisfed.org/series/CPILFESL"
+      "source_url": "https://fred.stlouisfed.org/series/PCEPILFE"
     },
     {
-      "series_id": "PAYEMS",
-      "title": "Emploi américain : net ralentissement des créations",
-      "explanation": "En septembre 2026, les emplois salariés non agricoles ont augmenté de 29 000, après 133 000 en août; la série est transformée en variation mensuelle. Le ralentissement réduit la marge de resserrement de la Fed, mais un seul mois ne prouve pas une contraction durable.",
-      "observation_date": "2026-09-01",
-      "source_url": "https://fred.stlouisfed.org/series/PAYEMS"
+      "series_id": "RRSFS",
+      "title": "Ventes au détail réelles : la dépense a rebondi malgré une confiance faible",
+      "explanation": "En août 2026, les ventes au détail et restauration réelles atteignent 231 630 M$ en dollars de 1982–1984, contre 229 697 M$ en juillet : +0,84 % calculé. Le graphique montre un niveau corrigé de l’inflation. Ce rebond soutient l’activité observée, sans garantir sa poursuite; une confiance faible n’équivaut pas à une baisse réalisée des dépenses.",
+      "observation_date": "2026-08-01",
+      "source_url": "https://fred.stlouisfed.org/series/RRSFS"
     }
   ]
 }
