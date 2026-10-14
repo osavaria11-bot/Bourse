@@ -4,92 +4,58 @@
   "language": "fr",
   "timezone": "America/Toronto",
   "edition_date": "2026-10-14",
-  "generated_at": "2026-10-14T11:02:43Z",
-  "editorial_note": "Édition préparée avant le CPI américain de 8 h 30, dont l’horaire a été vérifié auprès du BLS. Les résultats d’entreprises sont réalisés; les perspectives d’ASML et de l’AIE ainsi que le consensus d’inflation restent des prévisions. Les impacts sont des interprétations conditionnelles. Les observations FRED gardent leur vraie date économique, distincte de la collecte.",
+  "generated_at": "2026-10-14T13:37:03Z",
+  "editorial_note": "Édition actualisée après la publication du CPI de septembre. Trois sujets approfondis relient résultats, attentes, propos des dirigeants et conséquences financières. Les réactions citées sont des instantanés du 14 octobre : prémarché américain ou début de séance à Amsterdam, jamais des clôtures. « Ma lecture » distingue l’analyse des faits. Les graphiques FRED conservent leur période économique et peuvent précéder les publications du jour.",
   "stories": [
     {
-      "topic": "Inflation américaine",
-      "title": "CPI à 8 h 30 : le consensus attend 3,6 %, pas encore un résultat",
-      "summary": "Le CPI de septembre est attendu ce 14 octobre à 8 h 30 à Montréal. Le consensus Reuters prévoit +0,6 % sur le mois et +3,6 % sur un an; hors alimentation et énergie, +0,2 % mensuel et +2,5 % annuel. Ces attentes ne sont pas des résultats publiés.",
-      "impact": "Une surprise sous-jacente à la hausse pourrait relever les rendements et le dollar, en comprimant les multiples des actions de croissance. Le détail importe autant que l’inflation globale.",
-      "source_label": "Reuters · horaire vérifié auprès du BLS",
-      "source_url": "https://www.reuters.com/world/us/high-gasoline-prices-expected-boost-us-consumer-inflation-september-2026-10-14/",
+      "topic": "Inflation · taux · devises",
+      "title": "Le CPI surprend à la hausse : le marché revalorise le risque de taux",
+      "summary": "Le CPI publié à 8 h 30 augmente de 0,6 % sur le mois et de 3,7 % sur un an, contre 3,6 % attendu. La surprise importante concerne aussi le sous-jacent : +0,3 % mensuel, contre +0,2 % prévu. L’essence explique plus de la moitié de la hausse globale; le logement accélère également à +0,4 %. L’inflation dépasse donc la seule pompe à essence. Dans la réaction initiale rapportée par Reuters à 9 h 14, les futures Nasdaq perdaient 0,7 %, le rendement du Trésor à 10 ans montait de 10 points de base à 5,314 % et l’indice dollar gagnait 0,55 %. Ces chiffres précèdent l’ouverture américaine.",
+      "impact": "Ma lecture : une surprise inflationniste relève les taux attendus, pénalisant les obligations longues et les multiples de croissance. Un dollar fort peut amortir les pertes en CAD des actions américaines non couvertes. Une surprise baissière soutiendrait généralement obligations et valorisations; si elle résulte d’une contraction de la demande, la baisse des bénéfices pourrait cependant dominer.",
+      "source_label": "BLS · réaction et consensus Reuters",
+      "source_url": "https://www.reuters.com/business/view-hot-september-cpi-sends-rate-hike-bets-soaring-2026-10-14/",
       "published_date": "2026-10-14"
     },
     {
-      "topic": "Semi-conducteurs · IA",
-      "title": "ASML relève ses perspectives et prévoit un manque de capacité jusqu’en 2028",
-      "summary": "ASML a publié 11,66 milliards € de ventes au troisième trimestre, une marge brute de 57,5 % et 4,96 milliards € de bénéfice net. L’entreprise prévoit 14,2 à 15,2 milliards € de ventes au quatrième trimestre. Selon sa direction, la capacité planifiée pour 2027 et 2028 ne suffira pas à répondre à la demande de ses clients, portée par l’IA.",
-      "impact": "Ces perspectives soutiennent la demande d’équipements et la visibilité du cycle des puces. Les contraintes de production peuvent néanmoins retarder les capacités des clients; elles ne garantissent pas leur rentabilité.",
-      "source_label": "ASML · résultats et perspectives officiels",
-      "source_url": "https://www.investor.asml.com/news-releases/news-release-details/asml-reports-eu11.7-billion-total-net-sales-and-eu5.0-billion-net-income-q3-2026",
+      "topic": "ASML · chaîne de valeur de l’IA",
+      "title": "ASML : demande jusqu’en 2028 et hausses de prix renforcent les perspectives",
+      "summary": "ASML dépasse les attentes de bénéfice avec 4,96 milliards €, malgré des ventes de 11,66 milliards légèrement inférieures aux 11,71 milliards attendus selon Visible Alpha. Sa marge brute de 57,5 % dépasse aussi les attentes. Le point marquant : Christophe Fouquet dit que certains clients envisagent des commandes pour 2029–2030 et que la capacité planifiée pour 2027–2028 ne suffira pas. Le directeur financier précise que les hausses de prix commenceront à se refléter en 2027, pleinement en 2028. ASML relève le plancher de ses ventes annuelles à 44 milliards €, contre 43 auparavant. L’action gagnait plus de 2 % en début de séance à Amsterdam selon Dow Jones.",
+      "impact": "Ma lecture : sa position est solide. Son exclusivité en lithographie EUV lui permet de profiter des investissements de plusieurs fabricants et de relever ses prix. Le marché semble apprécier cette visibilité après les doutes sur l’IA. Je surveillerais la conversion des projets en commandes fermes et les livraisons; des taux élevés peuvent freiner le financement du cycle.",
+      "source_label": "Dow Jones Newswires via MarketScreener · ASML",
+      "source_url": "https://www.marketscreener.com/news/chip-machine-supplier-asml-boosts-guidance-for-third-time-on-surging-ai-demand-3rd-update-ce785dd2da8df422",
       "published_date": "2026-10-14"
     },
     {
-      "topic": "Banques américaines",
-      "title": "Bank of America : une charge réglementaire de 1,2 milliard $ pèse sur le bénéfice",
-      "summary": "Bank of America a déclaré un bénéfice trimestriel de 6,9 milliards $ US, ou 0,91 $ par action, contre 8,3 milliards et 1,04 $ un an auparavant. La banque a comptabilisé 1,2 milliard $ pour couvrir des amendes liées à des défaillances dans la détection d’activités potentiellement illicites, dont le blanchiment.",
-      "impact": "Il faut isoler cette charge réglementaire avant d’extrapoler la baisse du bénéfice à l’ensemble du crédit. Le risque de conformité reste toutefois un coût concret pour les actionnaires.",
-      "source_label": "Reuters",
-      "source_url": "https://www.reuters.com/business/finance/bank-america-profit-hurt-by-12-billion-fine-over-anti-money-laundering-2026-10-14/",
-      "published_date": "2026-10-14"
-    },
-    {
-      "topic": "Énergie · diesel",
-      "title": "L’AIE avertit que la tension sur le diesel pourrait durer en 2027",
-      "summary": "Selon l’AIE, la reprise attendue des raffineries en fin d’année ne compensera pas le déficit de diesel accumulé en 2026. Les exportations du Moyen-Orient et de Russie ont perdu ensemble 1,3 million de barils par jour en septembre. Les marges de raffinage ont approché 95 $ US par baril, un montant distinct du prix du brut.",
-      "impact": "Le carburant renchérit transport et distribution, menaçant marges et pouvoir d’achat. Les raffineurs peuvent profiter de marges élevées, malgré les interruptions d’approvisionnement.",
-      "source_label": "Reuters · rapport de l’AIE",
-      "source_url": "https://www.reuters.com/business/energy/diesel-shortages-could-persist-well-into-2027-iea-says-2026-10-14/",
-      "published_date": "2026-10-14"
-    },
-    {
-      "topic": "Canada · centres de données",
-      "title": "Enerflex décroche un contrat de plus de 1 GW pour alimenter un centre de données",
-      "summary": "Enerflex a annoncé le 13 octobre un contrat de conception et d’assemblage de générateurs au gaz naturel de plus d’un gigawatt pour un projet nord-américain de centre de données. Son carnet de commandes de production électrique hors réseau dépasse désormais 1,75 GW, avec des livraisons prévues jusqu’en 2028. L’annonce ne divulgue ni la valeur du nouveau contrat ni sa marge.",
-      "impact": "La demande liée à l’IA se traduit ici par une commande d’équipements canadiens. Le carnet améliore la visibilité commerciale, mais sa conversion en bénéfices dépendra des coûts et de l’exécution.",
-      "source_label": "Enerflex · communiqué officiel",
-      "source_url": "https://investors.enerflex.com/news-releases/news-release-details/enerflex-announces-major-project-award-and-increases-behind",
-      "published_date": "2026-10-13"
-    },
-    {
-      "topic": "Chine · coûts industriels",
-      "title": "L’inflation à la production chinoise accélère à 5 %, le CPI reste à 0,9 %",
-      "summary": "En septembre, les prix à la production chinois ont augmenté de 5 % sur un an, contre 3,8 % en août et 4,5 % attendus. Le CPI n’a progressé que de 0,9 %, sous le consensus de 1 %. L’énergie renchérit les intrants, sans transmission équivalente aux prix payés par les ménages.",
-      "impact": "Ce décalage peut comprimer les marges industrielles et accroître les coûts des importateurs. Il ne prouve ni une consommation vigoureuse ni une hausse uniforme des prix exportés.",
-      "source_label": "Reuters",
-      "source_url": "https://www.reuters.com/world/asia-pacific/chinas-factory-gate-inflation-accelerates-september-2026-10-14/",
+      "topic": "Morgan Stanley · qualité des bénéfices",
+      "title": "Morgan Stanley bat le consensus, mais le trading explique une grande part de la surprise",
+      "summary": "Morgan Stanley publie un BPA dilué de 3,03 $ US, contre 2,91 $ attendu selon LSEG. Le trading actions progresse de 41 %, tandis que le revenu fixe recule de 7,3 %. Ted Pick met en avant 232 milliards $ de nouveaux actifs en gestion de patrimoine. Le communiqué précise toutefois que plus de la moitié provient de flux liés aux introductions en Bourse; les flux vers les actifs à honoraires atteignent environ 80 milliards $. Cette distinction compte pour les futurs revenus récurrents. Reuters rapporte une réaction initiale légèrement négative en prémarché, malgré le dépassement du consensus, dans un contexte de hausse des taux et de résultats patrimoniaux un peu sous les attentes.",
+      "impact": "Ma lecture : la franchise de patrimoine apporte des honoraires plus durables que les commissions liées à une poussée de volatilité. Je privilégierais la croissance des actifs facturés et des marges pour juger le résultat. Le trading peut soutenir un trimestre sans assurer le suivant; la réaction du cours reflète aussi le contexte macro, pas uniquement le BPA.",
+      "source_label": "Reuters · communiqué officiel Morgan Stanley",
+      "source_url": "https://www.reuters.com/business/finance/morgan-stanley-profit-rises-equity-trading-strength-2026-10-14/",
       "published_date": "2026-10-14"
     }
   ],
   "fred_watch": [
     {
       "series_id": "DGS10",
-      "title": "10 ans américain : 5,24 %, un coût du capital encore élevé",
-      "explanation": "Au 9 octobre 2026, le rendement à 10 ans est de 5,24 %, contre 5,22 % le 8 octobre : hausse de 2 points de base. Ce niveau maintient la pression sur les valorisations et les refinancements. C’est la dernière observation de ce graphique FRED, pas le rendement en temps réel.",
+      "title": "10 ans : distinguer le graphique FRED de la réaction au CPI",
+      "explanation": "Dernier point du fichier : 5,24 % au 9 octobre 2026, contre 5,22 % le 8 octobre. Ce rendement FRED précède le CPI du 14 octobre et ne doit pas être présenté comme un taux du jour. Le mécanisme reste central : quand le rendement monte, les obligations longues perdent davantage de valeur et les bénéfices futurs sont actualisés plus fortement.",
       "observation_date": "2026-10-09",
       "source_url": "https://fred.stlouisfed.org/series/DGS10"
     },
     {
       "series_id": "BAMLH0A0HYM2",
-      "title": "Haut rendement : la prime de crédit se stabilise à 311 points de base",
-      "explanation": "Au 12 octobre 2026, l’écart de crédit ajusté pour les options est de 3,11 % (311 points de base), inchangé depuis le 9 octobre, après 3,15 % le 8 octobre. Le crédit n’indique donc pas de nouvelle détérioration sur ces observations. Cet écart n’est ni le rendement total des obligations ni une probabilité de défaut.",
+      "title": "Crédit : le coût d’emprunt peut monter même sans élargissement des écarts",
+      "explanation": "Au 12 octobre 2026, l’écart de crédit ajusté pour les options est de 3,11 % (311 points de base), inchangé depuis le 9 octobre. Il s’ajoute au taux souverain comparable pour former le coût du financement. Une hausse des rendements publics peut donc renchérir le refinancement même avec un écart stable; cette observation précède la réaction au CPI.",
       "observation_date": "2026-10-12",
       "source_url": "https://fred.stlouisfed.org/series/BAMLH0A0HYM2"
     },
     {
       "series_id": "PCEPILFE",
-      "title": "PCE sous-jacent : environ 3 % avant le nouveau CPI",
-      "explanation": "En août 2026, l’inflation PCE hors alimentation et énergie atteint 3,01 % sur 12 mois, contre 2,98 % en juillet. La transformation est annuelle, calculée à partir des niveaux de l’indice, pas un rythme mensuel annualisé. Cette légère remontée entretient le risque de taux; elle ne prédit pas le CPI de septembre ni la prochaine décision de la Fed.",
+      "title": "PCE sous-jacent : pourquoi le CPI ne tranche pas seul la décision de la Fed",
+      "explanation": "En août 2026, le PCE hors alimentation et énergie progresse de 3,01 % sur 12 mois, contre 2,98 % en juillet; la série applique une transformation annuelle aux niveaux de l’indice. Ses pondérations diffèrent du CPI. Le CPI de septembre apporte donc un signal, sans donner directement le prochain PCE : il faut identifier les composantes qui se transmettront au panier suivi par la Fed.",
       "observation_date": "2026-08-01",
       "source_url": "https://fred.stlouisfed.org/series/PCEPILFE"
-    },
-    {
-      "series_id": "RRSFS",
-      "title": "Ventes au détail réelles : la dépense a rebondi malgré une confiance faible",
-      "explanation": "En août 2026, les ventes au détail et restauration réelles atteignent 231 630 M$ en dollars de 1982–1984, contre 229 697 M$ en juillet : +0,84 % calculé. Le graphique montre un niveau corrigé de l’inflation. Ce rebond soutient l’activité observée, sans garantir sa poursuite; une confiance faible n’équivaut pas à une baisse réalisée des dépenses.",
-      "observation_date": "2026-08-01",
-      "source_url": "https://fred.stlouisfed.org/series/RRSFS"
     }
   ]
 }
