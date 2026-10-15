@@ -1,4 +1,5 @@
 "use strict";
+const audioUtils = require("../js/briefing-audio-utils.js");
 /* Browser fixtures are synthetic and never written to the site's data directory. */
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
@@ -50,9 +51,20 @@ const odds = {schema_version: 1, kind: "rate_odds", generated_at: now.toISOStrin
   id, meeting_date: new Date(now.getTime() + 15 * 86400000).toISOString().slice(0,10), as_of: new Intl.DateTimeFormat("en-CA", {timeZone: "America/Toronto"}).format(now),
   hike: 20, hold: 80, cut: 0, status: "fresh", methodology: "OIS"}))};
 let offline = false, failAllData = false, failNews = false, invalidNews = false, failMarkets = false, invalidMarkets = false;
+let naturalAudio = false;
 const contentTypes = { ".html": "text/html", ".css": "text/css", ".js": "text/javascript", ".json": "application/json", ".png": "image/png" };
 const server = http.createServer((request, response) => {
   const pathname = new URL(request.url, "http://localhost").pathname;
+  if (pathname === "/data/briefing-audio.json") {
+    if (!naturalAudio) {response.writeHead(404); response.end("{}"); return;}
+    const n = audioUtils.narration(briefing);
+    response.writeHead(200, {"Content-Type": "application/json"});
+    response.end(JSON.stringify({schema_version: 1, kind: "briefing_audio", text: n.text,
+      src: "data/audio/briefing-" + "a".repeat(24) + ".mp3", duration: n.chapters.length * 20,
+      voice_label: "Sylvie · Français (Canada)",
+      chapters: n.chapters.map((chapter, index) => ({...chapter, time_start: index * 20, time_end: (index + 1) * 20}))}));
+    return;
+  }
   if (pathname === "/data/intraday-quotes.json") {response.writeHead(503); response.end("{}"); return;}
   if (pathname === "/data/market-indices.json") {
     response.writeHead(failMarkets ? 503 : 200, {"Content-Type": "application/json"});
@@ -143,6 +155,38 @@ async function run() {
     assert.equal(await noVoice.locator("#briefingAudioPlay").isDisabled(), true);
     assert.match(await noVoice.locator("#briefingAudioStatus").innerText(), /pas disponible/);
     await noVoiceContext.close();
+    naturalAudio = true;
+    const naturalContext = await browser.newContext(), naturalPage = await naturalContext.newPage();
+    await naturalPage.addInitScript(() => {
+      Object.defineProperty(window, "speechSynthesis", {configurable: true, value: undefined});
+      Object.defineProperty(window, "SpeechSynthesisUtterance", {configurable: true, value: undefined});
+      window.Audio = class extends EventTarget {
+        constructor() {super(); this.currentTime = 0; this.readyState = 1; this.plays = 0; window.__savyNaturalTest = this;}
+        play() {this.plays++; return Promise.resolve();}
+        pause() {}
+        removeAttribute(name) {if (name === "src") this.src = "";}
+      };
+    });
+    await naturalPage.route("https://**", route => route.abort());
+    await naturalPage.goto(url); await waitCount(naturalPage, indicatorCount);
+    await naturalPage.waitForFunction(() => window.SavyBriefingAudio?.snapshot().natural);
+    assert.match(await naturalPage.locator("#briefingAudioStatus").innerText(), /Voix naturelle/);
+    assert.match(await naturalPage.locator("#briefingAudioNote").innerText(), /Sylvie/);
+    assert.equal(await naturalPage.evaluate(() => window.__savyNaturalTest.plays), 0, "Natural audio never autoplays");
+    await naturalPage.locator("#briefingAudioPlay").click();
+    assert.equal(await naturalPage.evaluate(() => window.SavyBriefingAudio.snapshot().engine), "neural");
+    await naturalPage.locator("#briefingAudioChapter").selectOption("2");
+    assert.equal(await naturalPage.evaluate(() => window.__savyNaturalTest.currentTime), 40);
+    await naturalPage.locator("#briefingAudioRate").selectOption("1.5");
+    assert.equal(await naturalPage.evaluate(() => window.__savyNaturalTest.playbackRate), 1.5);
+    await naturalPage.evaluate(() => {window.__savyNaturalTest.currentTime = 50; window.__savyNaturalTest.dispatchEvent(new Event("timeupdate"));});
+    assert.match(await naturalPage.locator("#briefingAudioTime").innerText(), /0:50/);
+    await naturalPage.locator("#briefingAudioPlay").click();
+    assert.equal(await naturalPage.evaluate(() => window.SavyBriefingAudio.snapshot().state), "paused");
+    await naturalPage.locator("#briefingAudioPlay").click();
+    await naturalPage.evaluate(() => window.__savyNaturalTest.dispatchEvent(new Event("ended")));
+    assert.match(await naturalPage.locator("#briefingAudioPlay").innerText(), /Réécouter/);
+    await naturalContext.close(); naturalAudio = false;
     console.log("Briefing audio controls passed: user gesture, French Canadian voice, pause/resume, speed, chapters, refresh continuity, mobile layout and unsupported browsers.");
     assert.equal(await page.locator("#sortSelect").inputValue(), "recent");
     assert.deepEqual(await page.locator("#kpis .kpi").evaluateAll(nodes => nodes.map(node => node.dataset.id)),

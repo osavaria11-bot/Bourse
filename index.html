@@ -19,8 +19,8 @@
   <script src="js/portfolio-analytics-utils.js?v=20261012-portfolio-3" defer></script>
   <script src="js/portfolio-profile-utils.js?v=20261012-portfolio-3" defer></script>
   <script src="js/portfolio.js?v=20261014-refresh-status" defer></script>
-  <script src="js/briefing-audio-utils.js?v=20261015-audio" defer></script>
-  <script src="js/briefing-audio.js?v=20261015-audio" defer></script>
+  <script src="js/briefing-audio-utils.js?v=20261015-natural-voice" defer></script>
+  <script src="js/briefing-audio.js?v=20261015-natural-voice" defer></script>
   <script src="js/dashboard.js?v=20261015-audio" defer></script>
 </head>
 <body>
@@ -45,7 +45,7 @@
         <div class="briefing-audio-controls"><button id="briefingAudioPlay" class="button" type="button" aria-pressed="false" disabled>▶ Écouter le briefing</button><button id="briefingAudioPrevious" class="button quiet" type="button" aria-label="Sujet précédent" disabled>‹</button><button id="briefingAudioNext" class="button quiet" type="button" aria-label="Sujet suivant" disabled>›</button><button id="briefingAudioStop" class="button quiet" type="button" disabled>Recommencer</button><label class="briefing-audio-speed" for="briefingAudioRate">Vitesse<select id="briefingAudioRate" disabled><option value="0.75">0,75×</option><option value="1" selected>1×</option><option value="1.25">1,25×</option><option value="1.5">1,5×</option><option value="1.75">1,75×</option><option value="2">2×</option></select></label></div>
         <label class="sr-only" for="briefingAudioProgress">Progression de l’écoute</label><input id="briefingAudioProgress" type="range" min="0" max="1" value="0" step="1" disabled />
         <label class="sr-only" for="briefingAudioChapter">Choisir un sujet du briefing</label><select id="briefingAudioChapter" aria-label="Choisir un sujet du briefing" disabled><option>Chargement des sujets…</option></select>
-        <p class="meta briefing-audio-note">Garde cette page ouverte pendant l’écoute. La voix française disponible sur ton appareil est utilisée.</p>
+        <p id="briefingAudioNote" class="meta briefing-audio-note">Une version du briefing pensée pour l’écoute, en français canadien.</p>
       </section>
       <div id="briefingParagraph" class="briefing-text" aria-live="polite">Chargement du briefing…</div>
       <p id="briefingNote" class="meta"></p>

@@ -79,3 +79,74 @@ test("Voice errors are retryable, and unavailable or late-loading voice lists do
   const unsupported = U.createPlayer({speech: null, Utterance: null}); unsupported.setBriefing(briefing()); unsupported.play();
   assert.equal(unsupported.snapshot().state, "unavailable");
 });
+
+function oralEdition() {
+  const b = briefing();
+  b.audio_script = {edition_date: b.edition_date, source_generated_at: b.generated_at,
+    intro: "Bonjour. Voici notre version orale du quinze octobre.",
+    stories: b.stories.map((story, index) => ({title: story.title, text: "Voici ce qui change dans le sujet " + index + ". Une explication distincte, préparée pour être écoutée et comprendre les implications."})),
+    watch: "Regardons les taux en conservant leur vraie date d’observation.", outro: "Bonne journée. Les sources sont dans le texte."};
+  return b;
+}
+function manifestFor(b) {
+  const n = U.narration(b);
+  return {schema_version: 1, kind: "briefing_audio", text: n.text,
+    src: "data/audio/briefing-" + "a".repeat(24) + ".mp3", duration: n.chapters.length * 20,
+    voice_label: "Sylvie · Français (Canada)",
+    chapters: n.chapters.map((chapter, index) => ({...chapter, time_start: index * 20, time_end: (index + 1) * 20}))};
+}
+class Media extends EventTarget {
+  constructor() {super(); this.currentTime = 0; this.readyState = 1; this.plays = 0; this.pauses = 0; this.src = "";}
+  play() {this.plays++; return Promise.resolve();}
+  pause() {this.pauses++;}
+  removeAttribute(name) {if (name === "src") this.src = "";}
+  fire(name) {this.dispatchEvent(new Event(name));}
+}
+test("A separately written oral edition is used only for its matching written edition", () => {
+  const b = oralEdition(), n = U.narration(b);
+  assert.equal(n.adapted, true); assert.match(n.text, /version orale/);
+  assert.doesNotMatch(n.text, /Le chiffre publié augmente/);
+  assert.deepEqual(n.chapters.slice(1, 3).map(c => c.title), b.stories.map(s => s.title));
+  b.generated_at = "2026-10-15T12:00:00Z";
+  assert.equal(U.narration(b).adapted, false, "An old script cannot narrate a newer revision");
+  b.audio_script.source_generated_at = b.generated_at; b.audio_script.stories[0].title = "Other story";
+  assert.equal(U.narration(b).adapted, false);
+});
+test("Natural playback uses the MP3 and its chapter timings without requiring device speech", () => {
+  const b = oralEdition(), media = new Media(), player = U.createPlayer({media});
+  player.setBriefing(b); assert.equal(player.snapshot().supported, false);
+  assert.equal(player.setAudio(manifestFor(b)), true); assert.equal(player.snapshot().supported, true);
+  assert.equal(player.snapshot().adapted, true); assert.equal(media.plays, 0, "Loading never autoplays");
+  player.play(); assert.equal(media.plays, 1); assert.equal(player.snapshot().engine, "neural");
+  player.selectChapter(2); assert.equal(media.currentTime, 40); assert.equal(player.snapshot().chapter, 2);
+  const plays = media.plays; player.setRate(1.5); assert.equal(media.playbackRate, 1.5); assert.equal(media.plays, plays);
+  media.currentTime = 50; media.fire("timeupdate"); assert.equal(player.snapshot().chapter, 2);
+  assert.ok(Math.abs(player.snapshot().elapsed - 50) < .2);
+  const position = player.snapshot().position; player.pause(); media.fire("ended");
+  assert.equal(player.snapshot().state, "paused"); assert.equal(player.snapshot().position, position);
+  player.play(); assert.ok(Math.abs(media.currentTime - 50) < .2);
+  media.fire("ended"); assert.equal(player.snapshot().state, "ended");
+  player.play(); assert.equal(media.currentTime, 0); player.stop(); assert.equal(player.snapshot().state, "ready");
+});
+test("Unmatched audio, incomplete timings and external media URLs are rejected", () => {
+  const b = briefing(), n = U.narration(b), valid = manifestFor(b);
+  for (const invalid of [{...valid, text: "Yesterday’s edition"}, {...valid, src: "https://other.test/tracker.mp3"},
+    {...valid, duration: Infinity}, {...valid, chapters: valid.chapters.slice(1)},
+    {...valid, chapters: valid.chapters.map((c, i) => i === 1 ? {...c, time_start: 0} : c)}]) assert.equal(U.audioManifest(invalid, n), null);
+  const media = new Media(), player = U.createPlayer({media}); player.setBriefing(b); player.setAudio(valid); player.play();
+  player.setBriefing({...b, edition_date: "2026-10-16"}); media.fire("ended");
+  assert.equal(player.snapshot().natural, false); assert.equal(player.snapshot().state, "unavailable");
+  assert.equal(player.setAudio(valid), false);
+});
+test("A late MP3 preserves current speech and becomes active on the next resume", () => {
+  const media = new Media(), speech = fixture().speech;
+  class Utterance {constructor(text) {this.text = text;}}
+  const player = U.createPlayer({speech, Utterance, media}); player.setBriefing(briefing()); player.play();
+  speech.current.onboundary({charIndex: 25}); const calls = speech.calls.length;
+  player.setAudio(manifestFor(briefing())); assert.equal(speech.calls.length, calls); assert.equal(media.plays, 0);
+  assert.equal(player.snapshot().engine, "device"); player.pause(); player.play();
+  assert.equal(player.snapshot().engine, "neural"); assert.equal(player.snapshot().position, 25); assert.equal(media.plays, 1);
+});
+test("High quality French voices are preferred for device fallback", () => {
+  assert.equal(U.preferredVoice([{lang: "fr-CA", name: "Basic"}, {lang: "fr-FR", name: "Thomas (Premium)"}]).name, "Thomas (Premium)");
+});

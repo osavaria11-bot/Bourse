@@ -79,6 +79,21 @@ def validate(payload: dict, now: datetime | None = None) -> int:
             raise ValueError("Observation FRED future")
     if "word_count" in payload and payload["word_count"] != words:
         raise ValueError("Compte des mots incohérent")
+    if "audio_script" in payload:
+        script = payload["audio_script"]
+        if (not isinstance(script, dict) or script.get("edition_date") != payload["edition_date"]
+                or script.get("source_generated_at") != payload["generated_at"]):
+            raise ValueError("La version orale doit correspondre à l’édition écrite")
+        if any(not isinstance(script.get(field), str) or not script[field].strip()
+               for field in ("intro", "watch", "outro")):
+            raise ValueError("Présentation, graphiques et conclusion de la version orale requis")
+        oral_stories = script.get("stories")
+        if not isinstance(oral_stories, list) or len(oral_stories) != len(stories):
+            raise ValueError("La version orale doit reprendre les nouvelles de l’édition")
+        for oral, story in zip(oral_stories, stories):
+            if (not isinstance(oral, dict) or oral.get("title") != story["title"]
+                    or not isinstance(oral.get("text"), str) or len(oral["text"].split()) < 20):
+                raise ValueError("Chapitre oral absent ou incohérent")
     return words
 
 def main() -> None:

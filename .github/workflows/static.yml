@@ -181,6 +181,25 @@ jobs:
         run: |
           python3 scripts/collect_intraday_quotes.py
           node scripts/validate_intraday_quotes.cjs
+      - name: Setup Python for natural narration
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Restore narration for this exact public edition
+        uses: actions/cache@v4
+        with:
+          path: |
+            data/briefing-audio.json
+            data/audio
+          key: briefing-audio-v1-${{ hashFiles('data/daily-briefing.json', 'js/briefing-audio-utils.js', 'scripts/generate_briefing_audio.py', 'scripts/requirements-audio.txt') }}
+      - name: Generate or reuse natural Canadian French narration
+        continue-on-error: true
+        timeout-minutes: 7
+        run: |
+          if ! python scripts/generate_briefing_audio.py --reuse-only; then
+            python -m pip install --disable-pip-version-check -r scripts/requirements-audio.txt
+            python scripts/generate_briefing_audio.py
+          fi
       - name: Prepare static site
         run: |
           mkdir -p _site

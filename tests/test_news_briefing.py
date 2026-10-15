@@ -65,5 +65,19 @@ class NewsBriefingTests(unittest.TestCase):
             with self.subTest(payload=payload), self.assertRaises(ValueError):
                 validate(payload, NOW)
 
+    def test_oral_version_must_match_the_written_edition(self):
+        payload = edition()
+        payload["audio_script"] = {"edition_date": payload["edition_date"],
+            "source_generated_at": payload["generated_at"], "intro": "Bonjour.", "watch": "Les graphiques.",
+            "outro": "Bonne journée.", "stories": [{"title": payload["stories"][0]["title"],
+                "text": "Voici une version pensée pour être écoutée avec des phrases simples qui expliquent les mêmes faits et les implications pour les marchés."}]}
+        self.assertEqual(validate(payload, NOW), 26)
+        for field, value in [("edition_date", "2026-10-10"), ("source_generated_at", "2026-10-10T11:00:00Z"),
+                             ("stories", []), ("intro", "")]:
+            invalid = copy.deepcopy(payload)
+            invalid["audio_script"][field] = value
+            with self.subTest(field=field), self.assertRaises(ValueError):
+                validate(invalid, NOW)
+
 if __name__ == "__main__":
     unittest.main()
