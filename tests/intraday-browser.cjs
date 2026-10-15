@@ -133,14 +133,25 @@ async function main() {
       assert.equal(await card.locator(".live-companion").count(), 0);
     }
     assert.equal(await page.locator('#kpis [data-id="DGS10"] .kpi-value').innerText(), "5,10 %");
+    const emergingQuote = snapshot.quotes.find(row => row.id === "VXEEMCLS"), originalEmerging = structuredClone(emergingQuote);
+    const publishedEmerging = load("data/macro-data.json").series.find(row => row.id === "VXEEMCLS");
+    const oldEmergingDay = new Date(Date.parse(publishedEmerging.date) - 86400000).toISOString().slice(0, 10);
+    Object.assign(emergingQuote, {timestamp: oldEmergingDay + "T14:00:00Z", session_date: oldEmergingDay, market_state: "closed", intraday_history: []});
+    await page.evaluate(() => window.SavyLiveQuotes.refresh());
+    const emergingCard = page.locator('.indicator-card[data-id="VXEEMCLS"]');
+    assert.equal(await emergingCard.locator(".current-value").innerText(), U.formatNumber(publishedEmerging.value, publishedEmerging.decimals) + " " + publishedEmerging.unit,
+      "A freshly checked but older Yahoo quote cannot hide a newer official VXEEM observation");
+    assert.match(await emergingCard.locator(".publication-fallback").innerText(), /FRED/);
+    Object.assign(emergingQuote, originalEmerging); await page.evaluate(() => window.SavyLiveQuotes.refresh());
     const dollar = page.locator('.indicator-card[data-id="DTWEXBGS"]');
     await dollar.locator(".detail-button").click();
     assert.equal(await page.locator("#detailValue").innerText(), "100,20 points");
     staleMacro = true; await page.evaluate(() => window.SavyLiveQuotes.refresh());
-    assert.equal(await dollar.locator(".current-value").innerText(), "—");
-    assert.equal(await dollar.locator(".change").count(), 0);
-    assert.equal(await page.locator("#detailValue").innerText(), "—");
-    assert.equal(await page.locator('#kpis [data-id="DGS10"] .kpi-value').innerText(), "—");
+    assert.equal(await dollar.locator(".current-value").innerText(), "100,20 points");
+    assert.match(await dollar.locator(".quote-meta").innerText(), /Cotation conservée/);
+    assert.equal(await page.locator("#detailValue").innerText(), "100,20 points");
+    assert.equal(await page.locator('#kpis [data-id="DGS10"] .kpi-value').innerText(), "5,10 %");
+    assert.match(await page.locator('#kpis [data-id="DGS10"]').innerText(), /Cotation conservée/);
     await page.locator("#closeDialog").click(); staleMacro = false; await page.evaluate(() => window.SavyLiveQuotes.refresh());
     await page.locator("#marketRanges").getByRole("button", {name: "1 jour", exact: true}).click();
     assert.match(await page.locator('.market-card[data-id="SPX"] .meta').first().innerText(), /En séance/);
@@ -242,10 +253,12 @@ async function main() {
     assert.equal(new URLSearchParams(new URL(direct.url()).hash.slice(1)).get("portfolio-key"), personalKey);
     await direct.locator('[data-portfolio-id="3"]').click();
     await direct.waitForFunction(() => document.querySelector('#portfolioRows tr[data-ticker="MSFTCDR"]'));
-    // Reproduce the production failure: a valid snapshot ages without a new collector run.
-    await direct.evaluate(time => {Date.now = () => time;}, now + 35 * 60000);
+    // Reproduce the production failure after the close: a valid snapshot ages
+    // beyond the refresh window while its real observations remain usable.
+    await direct.evaluate(time => {Date.now = () => time;}, now + 75 * 60000);
     await direct.evaluate(() => window.SavyLiveQuotes.refresh());
-    assert.equal(await direct.locator('.indicator-card[data-id="DTWEXBGS"] .current-value').innerText(), "—", "Old macro prices stay hidden");
+    assert.equal(await direct.locator('.indicator-card[data-id="DTWEXBGS"] .current-value').innerText(), "100,20 points", "A dated quote remains visible when the feed pauses");
+    assert.match(await direct.locator('.indicator-card[data-id="DTWEXBGS"] .quote-meta').innerText(), /Cotation conservée/);
     await direct.locator('#marketRanges [data-range="INTRADAY"]').click();
     assert.equal(await direct.locator('.market-card[data-id="SPX"] .chart-line').count(), 1);
     assert.match(await direct.locator('.market-card[data-id="SPX"] .meta').first().innerText(), /Cotation conservée/);
@@ -261,7 +274,7 @@ async function main() {
       assert.equal(await direct.locator("#portfolioRisk .table-wrap").isVisible(), false);
     }
     assert.deepEqual(errors, []);
-    console.log("Intraday UI verified: current macro headlines and stale-number removal, minute charts for indices and all three portfolios, 320–1440px layout, contributions, daily risk, shared access and source/currency fallback.");
+    console.log("Intraday UI verified: current and explicitly retained macro headlines, older VXEEM quote rejected, after-close refresh pause, minute charts for indices and all three portfolios, 320–1440px layout, contributions, daily risk, shared access and source/currency fallback.");
   } finally {await browser.close(); await new Promise(resolve => server.close(resolve));}
 }
 main().catch(error => {console.error(error); process.exitCode = 1;});

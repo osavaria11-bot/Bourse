@@ -106,18 +106,22 @@
       if (window.IntradayUtils.isCurrent(quote)) return quote;
     }
     if (!definition.symbol) return null;
-    const q = window.SavyLiveQuotes?.current(definition.id, {quote_symbol: definition.symbol, currency: definition.currency || "USD"});
-    return window.IntradayUtils.isCurrent(q) ? {...q, label: window.IntradayUtils.label(q)} : null;
+    const q = window.SavyLiveQuotes?.current(definition.id, {quote_symbol: definition.symbol, currency: definition.currency || "USD", date: point.date,
+      last_successful_fetch: point.last_successful_fetch});
+    if (!q) return null;
+    // Keep a validated last trade with its actual date when the feed pauses,
+    // including after the close. Never label that observation as current.
+    const dated = {...q, stale: !window.IntradayUtils.isCurrent(q)};
+    return {...dated, label: window.IntradayUtils.label(dated)};
   }
   function headline(point) {
     const definition = MARKET_INDICATORS[point?.id], live = indicatorQuote(point);
-    const available = live || (!definition && point && U.validNumber(point.value) && ["fresh", "cached"].includes(point.fetch_status) &&
-      U.isDate(point.date) && U.ageDays(point.date) <= point.max_age_days);
-    const unit = definition?.unit || point?.unit || "", decimals = point?.decimals ?? 2;
+    const available = live || (point && U.validNumber(point.value) && ["fresh", "cached"].includes(point.fetch_status) && U.isDate(point.date));
+    const unit = (live ? definition?.unit : point?.unit) || point?.unit || "", decimals = point?.decimals ?? 2;
     const change = !available ? null : live ? (U.validNumber(live.previous_close) ? U.changeLabel({...point,
       change: live.price - live.previous_close, previous_date: live.session_date, unit, change_unit: definition?.change_unit || unit}) : null) : U.changeLabel(point);
-    return {title: definition?.title || point?.title, value: available ? live?.price ?? point.value : null, unit, decimals,
-      live, change, market: Boolean(definition), historyLabel: definition?.history_label, description: definition?.description};
+    return {title: (live ? definition?.title : null) || point?.title, value: available ? live?.price ?? point.value : null, unit, decimals,
+      live, change, market: Boolean(definition), historyLabel: live ? definition?.history_label : null, description: live ? definition?.description : null};
   }
   function quoteMeta(quote) {
     const note = el("div", "quote-meta"), time = el("p", "meta" + (quote.stale ? " warning" : ""), window.IntradayUtils.shortLabel(quote));
@@ -137,8 +141,8 @@
       const point = state.seriesById.get(id);
       const card = el("article", "kpi");
       card.dataset.id = id;
-      card.append(el("p", "eyebrow", label));
       const current = headline(point), live = current.live;
+      card.append(el("p", "eyebrow", id === "DGS10" && !live ? "Trésor US · 10 ans" : label));
       const lower = id === "DFEDTARU" ? state.seriesById.get("DFEDTARL") : null;
       const range = current.value !== null && lower && headline(lower).value !== null;
       const valueText = range ? U.formatNumber(lower.value, 2) + "–" + U.formatNumber(current.value, 2) + " %" :
@@ -146,7 +150,7 @@
       card.append(el("p", "kpi-value", valueText));
       if (live) card.append(quoteMeta(live));
       else card.append(el("p", "meta" + (current.value === null ? " warning" : ""), current.value === null ?
-        (current.market ? "Actualisation de la cotation en attente" : "Nouvelle publication en attente") : U.observationLabel(point.date, point.frequency) + (point.fetch_status === "cached" ? " · dernière valeur conservée" : "")));
+        "Aucune observation disponible" : (current.market ? "Dernière observation publiée · " : "") + U.observationLabel(point.date, point.frequency) + (point.fetch_status === "cached" ? " · dernière valeur conservée" : "")));
       if (current.change) card.append(el("p", "change " + current.change.direction, current.change.text));
       fragment.append(card);
     }
@@ -246,7 +250,7 @@
       valueRow.append(changeNode);
     }
     const date = el("p", "observation-date", (current.historyLabel ? "Historique : " + current.historyLabel + " (série distincte) · " :
-      current.market ? "Historique FRED · " : "Observation : ") + U.observationLabel(point.date, point.frequency));
+      live ? "Historique FRED · " : "Dernière observation publiée : ") + U.observationLabel(point.date, point.frequency));
     const host = el("div", "chart-host"); host.dataset.id = point.id;
     host.append(el("p", "chart-placeholder", "Chargement du graphique…"));
     const bottom = el("div", "card-bottom");
@@ -258,11 +262,12 @@
     bottom.append(source, details);
     card.append(top, title, valueRow);
     if (live) card.append(quoteMeta(live));
-    else if (current.value === null) card.append(el("p", "status-note", current.market ? "Actualisation de la cotation en attente" : "Nouvelle publication en attente"));
+    else if (current.value === null) card.append(el("p", "status-note", "Aucune observation disponible pour cette collecte."));
+    else if (current.market) card.append(el("p", "status-note publication-fallback", "Cotation en séance indisponible · dernière observation FRED affichée."));
     card.append(date);
     if (point.fetch_status === "cached") card.append(el("p", "status-note", "Valeur conservée · dernière collecte réussie : " + U.timestampLabel(point.last_successful_fetch)));
     else if (point.fetch_status === "unavailable") card.append(el("p", "status-note", "Source indisponible · aucune valeur valide conservée"));
-    else if (U.ageDays(point.date) > point.max_age_days) card.append(el("p", "status-note", "Période éloignée · vérifier le calendrier de publication"));
+    else if (U.ageDays(point.date) > point.max_age_days) card.append(el("p", "status-note", "Observation ancienne · dernière période disponible conservée."));
     card.append(host, bottom);
     return card;
   }
@@ -383,7 +388,7 @@
     $("#detailTitle").textContent = current.title;
     $("#detailCategory").textContent = point.category + " · " + point.id;
     $("#detailMeta").textContent = (live ? live.label + " · " : current.value === null ? "Valeur à jour indisponible · " : "") +
-      (current.historyLabel ? "Historique : " + current.historyLabel + " (série distincte) · " : "Historique · ") + U.observationLabel(point.date, point.frequency);
+      (current.historyLabel ? "Historique : " + current.historyLabel + " (série distincte) · " : live ? "Historique · " : "Dernière observation publiée · ") + U.observationLabel(point.date, point.frequency);
     $("#detailValue").textContent = U.formatNumber(current.value, current.decimals) + (current.value !== null ? " " + current.unit : "");
     $("#detailDescription").textContent = current.description || point.description;
     $("#detailSource").href = point.source_url;

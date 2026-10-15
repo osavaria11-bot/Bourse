@@ -1,5 +1,5 @@
 "use strict";
-const {chromium} = require("playwright");
+const {chromium} = require(process.env.PLAYWRIGHT_MODULE_PATH || "playwright");
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const path = require("node:path");
@@ -7,6 +7,15 @@ const http = require("node:http");
 const root = path.resolve(__dirname, "..");
 const U = require("../js/macro-utils.js");
 const markets = JSON.parse(fs.readFileSync(path.join(root, "data/market-indices.json"), "utf8"));
+const macro = U.normalizeDataset(JSON.parse(fs.readFileSync(path.join(root, "data/macro-data.json"), "utf8")));
+function expectedBaseline(point, range) {
+  const history = point.history.filter(row => row[0] <= point.date);
+  const sessions = {"1D": 1, "3D": 3, "1W": 5}[range];
+  const requested = range === "YTD" ? (Number(point.date.slice(0, 4)) - 1) + "-12-31" : sessions ? null : U.rangeStart(point.date, range);
+  const base = sessions ? history.at(-sessions - 1) : history.filter(row => row[0] <= requested).at(-1);
+  return base && U.validNumber(base[1]) && base[1] > 0 &&
+    (sessions || Date.parse(requested) - Date.parse(base[0]) <= 7 * 86400000) ? base : null;
+}
 const mime = {".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".json": "application/json", ".png": "image/png"};
 const server = http.createServer((request, response) => {
   const pathname = new URL(request.url, "http://localhost").pathname;
@@ -42,8 +51,11 @@ async function main() {
       assert.equal(await marketRanges.getByRole("button", {name: range.label, exact: true}).getAttribute("aria-pressed"), "true");
       for (const point of markets.series) {
         const period = U.marketPeriod(point, range.key);
-        const insufficient = point.id === "FEQT" && ["5Y", "10Y"].includes(range.key) && point.history[0][0] > U.rangeStart(point.date, range.key);
+        // Missing prices can affect a short period too. Such a period must
+        // report N/D without preventing unrelated observations from publishing.
+        const baseline = expectedBaseline(point, range.key), insufficient = !baseline;
         assert.equal(period.incomplete, insufficient, point.id + " " + range.key + " must accurately describe its available history");
+        if (baseline) assert.ok(Math.abs(period.percent - (point.value / baseline[1] - 1) * 100) < 1e-9);
         const card = page.locator('.market-card[data-id="' + point.id + '"]');
         const expected = insufficient ? "Rendement indisponible · " + range.label : (period.percent > 0 ? "+" : "") + U.formatNumber(period.percent, 2) + " % · " + range.label;
         assert.equal(await card.locator(".market-return").innerText(), expected, point.id + " " + range.key);
@@ -64,6 +76,26 @@ async function main() {
     assert.equal(await marketRanges.getByRole("button", {name: "1 jour", exact: true}).getAttribute("aria-pressed"), "true");
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
     if (process.env.SCREENSHOT_LOGS) console.log("SCREENSHOT_MARKETS_MOBILE " + (await page.screenshot()).toString("base64"));
+    const affected = ["DGS10", "INDPRO", "VIXCLS", "NASDAQXAU", "VXEEMCLS", "DTWEXBGS", "DCOILWTICO", "PURANUSDM"];
+    for (const id of affected) {
+      const point = macro.series.find(row => row.id === id);
+      await page.locator("#searchInput").fill(id);
+      const card = page.locator('.indicator-card[data-id="' + id + '"]');
+      await card.scrollIntoViewIfNeeded(); await card.locator("svg").waitFor({state: "visible"});
+      assert.equal(await card.locator(".current-value").innerText(), U.formatNumber(point.value, point.decimals) + " " + point.unit, id + " keeps its last published observation when live quotes are unavailable");
+      assert.ok((await card.locator(".observation-date").innerText()).includes(U.observationLabel(point.date, point.frequency)));
+      assert.equal(await card.locator("path.chart-line").evaluate(node => /NaN|Infinity/.test(node.getAttribute("d"))), false);
+      await card.locator(".detail-button").click();
+      for (const range of U.RANGES) {
+        await page.locator('#detailRanges [data-range="' + range.key + '"]').click();
+        await page.locator("#detailChart svg").waitFor({state: "visible"});
+        const chart = page.locator("#detailChart svg"); await chart.focus(); await chart.press("End");
+        assert.ok((await page.locator("#detailChart .chart-tooltip").innerText()).includes(U.formatNumber(point.value, point.decimals)), id + " " + range.key + " reaches its actual last published value");
+        assert.equal(await page.locator("#detailChart path.chart-line").evaluate(node => /NaN|Infinity/.test(node.getAttribute("d"))), false);
+      }
+      await page.locator("#closeDialog").click();
+    }
+    console.log("Actual macro observations verified: all eight affected cards keep dated published values and usable charts across all five periods when the quote feed is unavailable.");
     assert.deepEqual(errors, []);
   } finally {await browser.close();}
 }
