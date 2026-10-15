@@ -458,10 +458,12 @@
         $("#briefingDate").textContent = "Édition indisponible";
         $("#briefingParagraph").textContent = "Le briefing d’actualité n’a pas pu être chargé. Réessaie avec « Actualiser ».";
         $("#briefingNote").textContent = "Aucun résumé d’actualité vérifié n’est disponible dans ce navigateur.";
-        $("#briefingLinks").replaceChildren(); $("#fredWatchList").replaceChildren(); return;
+        $("#briefingLinks").replaceChildren(); $("#fredWatchList").replaceChildren();
+        window.SavyBriefingAudio?.setBriefing(null); return;
       }
     }
     const today = new Intl.DateTimeFormat("en-CA", {timeZone: "America/Toronto"}).format(new Date());
+    window.SavyBriefingAudio?.setBriefing(briefing);
     const old = briefing.edition_date < today;
     $("#briefingDate").textContent = (cached ? "Copie conservée · " : "") + "Édition du " + briefing.edition_date +
       " · " + briefing.stories.length + " nouvelles · Publié le " + U.timestampLabel(briefing.generated_at) + (old ? " · nouvelle édition en attente" : "");

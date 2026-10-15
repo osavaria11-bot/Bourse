@@ -89,11 +89,61 @@ async function run() {
   try {
     const context = await browser.newContext({ viewport: { width: 1440, height: 1000 }, acceptDownloads: true });
     const page = await context.newPage();
+    await page.addInitScript(() => {
+      const speech = {calls: [], cancelled: 0, current: null,
+        getVoices() {return [{lang: "en-US", default: true}, {lang: "fr-CA", name: "Voix française de test"}];},
+        speak(utterance) {this.current = utterance; this.calls.push({text: utterance.text, rate: utterance.rate, lang: utterance.lang});},
+        cancel() {this.cancelled++; this.current = null;}, resume() {}};
+      Object.defineProperty(window, "speechSynthesis", {configurable: true, value: speech});
+      Object.defineProperty(window, "SpeechSynthesisUtterance", {configurable: true, value: class {constructor(text) {this.text = text;}}});
+      window.__savySpeechTest = speech;
+    });
     const errors = [];
     page.on("pageerror", error => errors.push(error.message));
     await page.route("https://**", route => route.request().url().startsWith("https://biquote.io/api/USDCAD") ?
       route.fulfill({status:200, contentType:"application/json", headers:{"Access-Control-Allow-Origin":"*"}, body:JSON.stringify({symbol:"USDCAD",mid:1.4265,timestamp:new Date().toISOString(),marketState:"open"})}) : route.abort());
     await page.goto(url); await waitCount(page, indicatorCount);
+    await page.waitForFunction(() => !document.querySelector("#briefingAudioPlay").disabled);
+    const audioPlay = page.locator("#briefingAudioPlay");
+    assert.equal(await page.evaluate(() => window.__savySpeechTest.calls.length), 0, "Reading never autoplays");
+    await audioPlay.click(); assert.equal(await audioPlay.getAttribute("aria-pressed"), "true");
+    assert.equal(await page.evaluate(() => window.__savySpeechTest.current.lang), "fr-CA");
+    await page.evaluate(() => window.__savySpeechTest.current.onboundary({charIndex: 25}));
+    await audioPlay.click(); assert.match(await audioPlay.innerText(), /Reprendre/);
+    const readingPosition = await page.evaluate(() => window.SavyBriefingAudio.snapshot().position);
+    assert.equal(readingPosition, 25);
+    await audioPlay.click();
+    await page.locator("#briefingAudioRate").selectOption("1.5");
+    assert.equal(await page.evaluate(() => window.__savySpeechTest.current.rate), 1.5);
+    await page.locator("#briefingAudioNext").click();
+    assert.equal(await page.locator("#briefingAudioChapter").inputValue(), "1");
+    assert.match(await page.evaluate(() => window.__savySpeechTest.current.text), /Nouvelle 1/);
+    await page.locator("#briefingAudioPrevious").click();
+    await page.locator("#briefingAudioChapter").selectOption("2");
+    assert.match(await page.evaluate(() => window.__savySpeechTest.current.text), /Nouvelle 2/);
+    const spokenCount = await page.evaluate(() => window.__savySpeechTest.calls.length);
+    await page.locator("#refreshButton").click();
+    await page.waitForFunction(() => !document.querySelector("#refreshButton").disabled);
+    assert.equal(await page.evaluate(() => window.__savySpeechTest.calls.length), spokenCount, "An unchanged edition is not restarted by refreshing quotes");
+    assert.equal(await audioPlay.getAttribute("aria-pressed"), "true");
+    await page.locator("#briefingAudioStop").click();
+    assert.equal(await page.evaluate(() => window.SavyBriefingAudio.snapshot().position), 0);
+    assert.match(await audioPlay.innerText(), /Écouter le briefing/);
+    for (const width of [320, 375, 768, 1440]) {
+      await page.setViewportSize({width, height: 1000});
+      assert.ok(await page.locator("#briefingAudio").evaluate(node => node.scrollWidth <= node.clientWidth + 1), "Audio controls fit at " + width);
+    }
+    const noVoiceContext = await browser.newContext(), noVoice = await noVoiceContext.newPage();
+    await noVoice.addInitScript(() => {
+      Object.defineProperty(window, "speechSynthesis", {configurable: true, value: undefined});
+      Object.defineProperty(window, "SpeechSynthesisUtterance", {configurable: true, value: undefined});
+    });
+    await noVoice.route("https://**", route => route.abort());
+    await noVoice.goto(url); await waitCount(noVoice, indicatorCount);
+    assert.equal(await noVoice.locator("#briefingAudioPlay").isDisabled(), true);
+    assert.match(await noVoice.locator("#briefingAudioStatus").innerText(), /pas disponible/);
+    await noVoiceContext.close();
+    console.log("Briefing audio controls passed: user gesture, French Canadian voice, pause/resume, speed, chapters, refresh continuity, mobile layout and unsupported browsers.");
     assert.equal(await page.locator("#sortSelect").inputValue(), "recent");
     assert.deepEqual(await page.locator("#kpis .kpi").evaluateAll(nodes => nodes.map(node => node.dataset.id)),
       ["VIXCLS", "DFEDTARU", "CPIAUCSL", "DGS10", "DEXCAUS", "V39079"]);

@@ -48,6 +48,8 @@ jobs:
       - name: Dashboard regression tests
         run: |
           node --check js/dashboard.js
+          node --check js/briefing-audio-utils.js
+          node --check js/briefing-audio.js
           node --check js/live-fx.js
           node --check js/live-quotes.js
           node --check js/intraday-utils.js
