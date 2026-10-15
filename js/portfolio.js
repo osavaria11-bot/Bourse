@@ -468,9 +468,16 @@
         " · valeur " + money(row.value_cad) + (row.weight === null ? " · valorisation partielle" : " · poids " + U.formatNumber(row.weight, 2) + " %"));
       tile.setAttribute("aria-pressed", String(row.ticker === heatmapTicker)); tile.title = tile.getAttribute("aria-label");
       const label = el("span", "portfolio-heatmap-tile-label"); label.setAttribute("aria-hidden", "true");
-      if (row.width >= 53 && row.height >= 30) label.append(el("strong", "portfolio-heatmap-symbol", row.ticker));
-      if (row.width >= 62 && row.height >= 54) label.append(el("span", "portfolio-heatmap-return", change));
-      if (row.width >= 110 && row.height >= 90 && row.weight !== null) label.append(el("span", "portfolio-heatmap-weight", U.formatNumber(row.weight, 1) + " % du portefeuille"));
+      if (row.width >= 53 && row.height >= 30) {
+        const symbol = el("strong", "portfolio-heatmap-symbol", row.ticker);
+        symbol.style.fontSize = Math.min(23, Math.max(9, Math.min((row.width - 12) / (row.ticker.length * .7), (row.height - 16) / 2.7))) + "px";
+        label.append(symbol);
+      }
+      const returnSize = Math.min(18, (row.width - 12) / (change.length * .65), (row.height - 16) / 3.2);
+      if (row.width >= 62 && row.height >= 54 && returnSize >= 9) {
+        const value = el("span", "portfolio-heatmap-return", change); value.style.fontSize = returnSize + "px"; label.append(value);
+      }
+      if (row.width >= 110 && row.height >= 90 && row.weight !== null) label.append(el("span", "portfolio-heatmap-weight", "Poids " + U.formatNumber(row.weight, 1) + " %"));
       if (row.width >= 180 && row.height >= 125) label.append(el("span", "portfolio-heatmap-name", row.title));
       tile.append(label); tile.addEventListener("click", () => selectHeatmap(row.ticker)); fragment.append(tile);
     }

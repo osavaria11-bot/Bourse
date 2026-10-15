@@ -3,7 +3,7 @@
   else root.PortfolioHeatmapUtils = factory(root.MacroUtils, root.PortfolioUtils);
 })(typeof globalThis !== "undefined" ? globalThis : this, function (U, P) {
   "use strict";
-  const RANGES = [{key: "1D", label: "Jour", limit: 3}, {key: "1W", label: "1 semaine", limit: 8},
+  const RANGES = [{key: "1D", label: "Jour", limit: 3}, {key: "1W", label: "1 sem.", limit: 8},
     {key: "1M", label: "1 mois", limit: 15}, {key: "3M", label: "3 mois", limit: 30}, {key: "YTD", label: "YTD", limit: 50}];
   function model(current, prices, quoteData = prices, range = "1D") {
     if (!RANGES.some(item => item.key === range)) throw new Error("Période de heatmap invalide");

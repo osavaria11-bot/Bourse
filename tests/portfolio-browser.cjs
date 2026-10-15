@@ -46,6 +46,7 @@ async function checkHeatmap(page, positions, range = "1D", portfolio = "1") {
     assert.ok(tile.bounded); assert.ok(Math.abs(tile.fraction - row.weight / 100) < .001);
     const node = page.locator('#portfolioHeatmapTiles button[data-ticker="' + row.ticker + '"]');
     assert.ok((await node.getAttribute('aria-label')).includes(row.percent === null ? 'N/D' : (row.percent > 0 ? '+' : '') + U.formatNumber(row.percent, 2) + ' %'));
+    assert.ok(await node.evaluate(tile => [...tile.querySelectorAll('.portfolio-heatmap-return')].every(value => value.getBoundingClientRect().width <= tile.getBoundingClientRect().width - 10)), 'Visible return must fit its tile');
   }
   const ticker = model.valued[0].ticker;
   await page.locator('#portfolioHeatmapPosition').selectOption(ticker);
