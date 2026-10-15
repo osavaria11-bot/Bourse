@@ -3,6 +3,7 @@
 const assert = require("node:assert/strict"), fs = require("node:fs"), path = require("node:path"), http = require("node:http");
 const {chromium} = require(process.env.PLAYWRIGHT_MODULE_PATH || "playwright");
 const P = require("../js/portfolio-utils.js");
+const H = require("../js/portfolio-heatmap-utils.js");
 const U = require("../js/macro-utils.js");
 const E = require("../js/portfolio-exposure-utils.js");
 const F = require("../js/portfolio-analytics-utils.js");
@@ -26,6 +27,32 @@ const root = path.resolve(__dirname, "..");
 const catalog = JSON.parse(fs.readFileSync(path.join(root, "data/securities.json"), "utf8"));
 const rawPrices = JSON.parse(fs.readFileSync(path.join(root, "data/security-prices.json"), "utf8"));
 const prices = P.normalizePrices(rawPrices, catalog);
+async function checkHeatmap(page, positions, range = "1D", portfolio = "1") {
+  const history = P.historyFor(positions, prices), current = P.valuationAt(positions, prices, history.at(-1)[0]);
+  const model = H.model(current, prices, prices, range);
+  assert.equal(await page.locator('#portfolioHeatmapTitle').innerText(), 'Heatmap · portefeuille ' + portfolio);
+  assert.equal(await page.locator('#portfolioHeatmapTiles button').count(), model.valued.length);
+  assert.equal(await page.locator('#portfolioHeatmapPosition option').count(), positions.length);
+  const geometry = await page.locator('#portfolioHeatmapTiles').evaluate(host => {
+    const rect = host.getBoundingClientRect();
+    return [...host.querySelectorAll('button')].map(tile => {
+      const box = tile.getBoundingClientRect();
+      return {ticker: tile.dataset.ticker, fraction: box.width * box.height / (rect.width * rect.height),
+        bounded: box.left >= rect.left - 1 && box.top >= rect.top - 1 && box.right <= rect.right + 1 && box.bottom <= rect.bottom + 1};
+    });
+  });
+  for (const tile of geometry) {
+    const row = model.rows.find(item => item.ticker === tile.ticker);
+    assert.ok(tile.bounded); assert.ok(Math.abs(tile.fraction - row.weight / 100) < .001);
+    const node = page.locator('#portfolioHeatmapTiles button[data-ticker="' + row.ticker + '"]');
+    assert.ok((await node.getAttribute('aria-label')).includes(row.percent === null ? 'N/D' : (row.percent > 0 ? '+' : '') + U.formatNumber(row.percent, 2) + ' %'));
+  }
+  const ticker = model.valued[0].ticker;
+  await page.locator('#portfolioHeatmapPosition').selectOption(ticker);
+  assert.match(await page.locator('#portfolioHeatmapDetail').innerText(), new RegExp(ticker + '.*'));
+  assert.equal(await page.locator('#portfolioHeatmapTiles button[data-ticker="' + ticker + '"]').getAttribute('aria-pressed'), 'true');
+  assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'Heatmap overflows');
+}
 const exposures = E.normalize(JSON.parse(fs.readFileSync(path.join(root, "data/portfolio-exposures.json"), "utf8")));
 const sample = catalog.series.filter(d => ["SHOP", "CLS", "V", "VFV", "MSFT", "XIU"].includes(d.id));
 const syntheticPositions = sample.map(d => ({ticker: d.id, quantity: d.id === "V" ? 1.5 : 2, currency: d.currency, average_cost: d.id === "CLS" ? 500 : d.id === "SHOP" ? 200 : d.id === "V" ? 350 : 50}));
@@ -129,6 +156,21 @@ async function main() {
       assert.equal(await page.locator('#portfolioRows tr[data-ticker="' + position.ticker + '"] .position-day-change').innerText(), (value > 0 ? '+' : '') + U.formatNumber(value, 2) + '%');
     }
     const history = P.historyFor(syntheticPositions, prices), current = P.valuationAt(syntheticPositions, prices, history.at(-1)[0]);
+    await checkHeatmap(page, syntheticPositions);
+    const graphPeriod = await page.locator('#portfolioPeriod').innerText();
+    for (const item of H.RANGES) {
+      const control = page.locator('#portfolioHeatmapRanges [data-range="' + item.key + '"]');
+      await control.click();
+      assert.equal(await control.getAttribute('aria-pressed'), 'true');
+      assert.equal(await control.evaluate(node => node === document.activeElement), true);
+      await checkHeatmap(page, syntheticPositions, item.key);
+      assert.equal(await page.locator('#portfolioPeriod').innerText(), graphPeriod);
+    }
+    await page.locator('#portfolioHeatmapRanges [data-range="1D"]').click();
+    const heatTile = page.locator('#portfolioHeatmapTiles button[data-ticker="SHOP"]');
+    await heatTile.focus(); await heatTile.press('Enter');
+    assert.equal(await page.locator('#portfolioHeatmapPosition').inputValue(), 'SHOP');
+    if (process.env.HEATMAP_SCREENSHOT_LOGS) console.log('SCREENSHOT_HEATMAP_DESKTOP ' + (await page.locator('#portfolioHeatmap').screenshot()).toString('base64'));
     assert.equal(await page.locator("#portfolioValue").innerText(), new Intl.NumberFormat("fr-CA", {style: "currency", currency: "CAD", maximumFractionDigits: 2}).format(current.total));
     assert.match(await page.locator("#portfolioStatus").innerText(), /6\/6/);
     assert.match(await page.locator("#portfolioUnrealized").innerText(), /Gain latent estimé.*change actuel/);
@@ -296,6 +338,10 @@ async function main() {
       console.log("SCREENSHOT_ANALYTICS_" + name + " " + (await page.locator(selector).screenshot()).toString("base64"));
     for (const width of [375, 320]) {
       await page.setViewportSize({width, height: 1000});
+      await checkHeatmap(page, exported.positions);
+      await page.locator('#portfolioHeatmapTiles button[data-ticker="SHOP"]').click();
+      assert.equal(await page.locator('#portfolioHeatmapPosition').inputValue(), 'SHOP');
+      if (process.env.SCREENSHOT_LOGS || process.env.HEATMAP_SCREENSHOT_LOGS) console.log('SCREENSHOT_HEATMAP_' + width + ' ' + (await page.locator('#portfolioHeatmap').screenshot()).toString('base64'));
       const size = await page.evaluate(() => ({width: innerWidth, scroll: document.documentElement.scrollWidth,
         gainWhiteSpace: getComputedStyle(document.querySelector("#portfolioUnrealized")).whiteSpace}));
       assert.equal(size.gainWhiteSpace, "normal");
@@ -329,6 +375,7 @@ async function main() {
     await page.reload(); await page.waitForFunction(() => document.querySelector("#portfolioStatus").textContent.includes("Copie de cours conservée"));
     assert.equal(await page.locator("#portfolioRows tr").count(), 6);
     assert.equal(await page.locator("#portfolioBest li[data-ticker]").count(), 3);
+    assert.match(await page.locator('#portfolioHeatmapStatus').innerText(), /copie conservée/);
     offline = false; missingBaseline = true;
     await page.reload(); await page.waitForSelector('#portfolioRanges [data-range="YTD"]');
     assert.equal(await page.locator('#portfolioRanges button[aria-pressed="true"]').textContent(), 'Intraday');
@@ -346,6 +393,10 @@ async function main() {
     await page.waitForFunction(() => document.querySelector("#portfolioValueLabel").textContent.includes("PARTIELLE"));
     assert.equal(await page.locator("#portfolioChange").innerText(), "— · —");
     assert.match(await page.locator("#portfolioMissing").innerText(), /cours ou change manquant/);
+    assert.match(await page.locator('#portfolioHeatmapStatus').innerText(), /CARTE PARTIELLE/);
+    assert.equal(await page.locator('#portfolioHeatmapPosition option').count(), 6);
+    await page.locator('#portfolioHeatmapPosition').selectOption('V');
+    assert.match(await page.locator('#portfolioHeatmapDetail').innerText(), /N\/D · valorisation partielle/);
     assert.equal(await page.locator("#portfolioChart svg").count(), 0);
     assert.equal(await page.locator("#portfolioSectorsRows tr").count(), 0);
     assert.equal(await page.locator("#portfolioGeographyRows tr").count(), 0);
@@ -421,6 +472,9 @@ async function main() {
     assert.equal(await direct.locator('#portfolioPositions').isVisible(), false);
     const secondHistory = P.historyFor(secondSyntheticPositions, prices), secondDay = secondHistory.at(-1)[0];
     const secondCurrent = P.valuationAt(secondSyntheticPositions, prices, secondDay);
+    await checkHeatmap(direct, secondSyntheticPositions, '1D', '2');
+    await direct.locator('#portfolioHeatmapRanges [data-range="1M"]').click();
+    await checkHeatmap(direct, secondSyntheticPositions, '1M', '2');
     for (const item of P.RANGES) {
       await direct.locator('#portfolioRanges button').filter({hasText: new RegExp('^' + item.label + '$')}).click();
       const selected = P.period(secondHistory, item.key), expected = P.benchmarkFor(selected, prices.series.find(row => row.id === 'VBAL'), 'VBAL');
@@ -503,6 +557,7 @@ async function main() {
     assert.equal(await direct.locator('#portfolioPositions').isVisible(), false);
     assert.equal(await direct.locator('#portfolioRows tr[data-ticker="MSFTCDR"] a').getAttribute('href'), 'https://finance.yahoo.com/quote/MSFT.TO/');
     const thirdHistory = P.historyFor(thirdSyntheticPositions, prices), thirdCurrent = P.valuationAt(thirdSyntheticPositions, prices, thirdHistory.at(-1)[0]);
+    await checkHeatmap(direct, thirdSyntheticPositions, '1D', '3');
     assert.equal(await direct.locator('#portfolioValue').textContent(), new Intl.NumberFormat('fr-CA', {style: 'currency', currency: 'CAD', maximumFractionDigits: 2}).format(thirdCurrent.total));
     for (const item of P.RANGES) {
       await direct.locator('#portfolioRanges button').filter({hasText: new RegExp('^' + item.label + '$')}).click();

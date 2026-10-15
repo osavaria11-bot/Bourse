@@ -100,6 +100,12 @@ Le **lien personnel** ouvre automatiquement un portefeuille intégré, sans fich
 
 Pour mettre à jour la base intégrée, exécuter `node scripts/seal_personal_portfolio.cjs PRIVATE_INPUT data/personal-portfolio.json` avec la sauvegarde privée placée hors du dépôt. Le script conserve le lien dans le champ privé `savy_access`, réutilise sa clé, change le nonce et la révision, puis écrit uniquement le profil chiffré dans le dépôt. La sauvegarde et son lien restent hors du dépôt et des journaux publics.
 
+### Heatmap des portefeuilles
+
+La heatmap des portefeuilles 1, 2 et 3 utilise les seules positions déjà présentes dans le navigateur. Chaque surface est proportionnelle à la valeur actuelle en CAD; la couleur indique le rendement de cours dans la devise de cotation, hors dividendes et hors variation USD/CAD. Les périodes Jour, 1 semaine (5 séances), 1 mois, 3 mois et YTD sont indépendantes du graphique principal et mémorisées par portefeuille. Le détail au toucher, au clavier ou via le sélecteur donne variation, valeur, poids, cours, date réelle et base historique. Les petites positions restent accessibles sans agrandissement artificiel.
+
+L’échelle rouge/gris/vert est symétrique et plafonne seulement la couleur, jamais le rendement affiché. Une base absente ou une séance antérieure donne N/D, pas zéro. Une valorisation incomplète affiche explicitement une carte partielle, conserve tous les titres dans le sélecteur et ne prétend pas connaître leurs poids exacts. Aucun nouveau service, transmission de positions ni changement aux profils chiffrés. Le calcul et le treemap sont testés dans `tests/portfolio-heatmap-utils.test.cjs`, avec interactions et mobile dans `tests/portfolio-browser.cjs`.
+
 ## Indicateurs et transformations
 
 La configuration se trouve dans `data/series.json`. Les fichiers publiés sont :

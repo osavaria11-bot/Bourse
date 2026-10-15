@@ -112,13 +112,18 @@ async function main() {
     await page.locator("#portfolioPositionsToggle").click();
     assert.match(await page.locator('#portfolioRows tr[data-ticker="AAPL"] td').nth(3).innerText(), /En séance/);
     assert.equal(await page.locator('#portfolioRows tr[data-ticker="AAPL"] .position-day-change').innerText(), '+10,00%');
+    assert.match(await page.locator('#portfolioHeatmapTiles button[data-ticker="AAPL"]').getAttribute('aria-label'), /\+10,00 %/);
+    await page.locator('#portfolioHeatmapPosition').selectOption('AAPL');
+    assert.ok((await page.locator('#portfolioHeatmapDetail').innerText()).includes(money(2 * apple * 1.1 * 1.4)));
     assert.ok((await page.locator('#portfolioRows tr[data-ticker="AAPL"] .position-day-change').getAttribute('class')).includes('up'));
     const shopQuote = snapshot.quotes.find(q => q.id === 'SHOP'), shopBase = shopQuote.previous_close;
     shopQuote.previous_close = shopQuote.price * 1.06; await page.evaluate(() => window.SavyLiveQuotes.refresh());
     assert.equal(await page.locator('#portfolioRows tr[data-ticker="SHOP"] .position-day-change').innerText(), '-5,66%');
+    assert.match(await page.locator('#portfolioHeatmapTiles button[data-ticker="SHOP"]').getAttribute('aria-label'), /-5,66 %/);
     assert.ok((await page.locator('#portfolioRows tr[data-ticker="SHOP"] .position-day-change').getAttribute('class')).includes('down'));
     shopQuote.previous_close = shopQuote.price; await page.evaluate(() => window.SavyLiveQuotes.refresh());
     assert.equal(await page.locator('#portfolioRows tr[data-ticker="SHOP"] .position-day-change').innerText(), '0,00%');
+    assert.match(await page.locator('#portfolioHeatmapTiles button[data-ticker="SHOP"]').getAttribute('aria-label'), /0,00 %/);
     shopQuote.previous_close = shopBase; await page.evaluate(() => window.SavyLiveQuotes.refresh());
     assert.match(await page.locator('.indicator-card[data-id="VIXCLS"] .current-value').innerText(), /25,50/);
     for (const [id, title, value] of [["DCOILWTICO", "WTI · contrat à terme", "95,00"], ["DTWEXBGS", "DXY (six devises)", "100,20"], ["DGS10", "10 ans (indice TNX)", "5,10"]]) {
@@ -216,6 +221,8 @@ async function main() {
       await relative.focus(); await relative.press('End');
       assert.ok((await direct.locator('#portfolioRelativeChart .chart-tooltip').innerText()).includes('écart ' + await direct.locator('#portfolioRelativeValue').innerText()));
       assert.equal(await direct.locator('#portfolioRows .position-day-change').count(), profiles[id].length);
+      assert.equal(await direct.locator('#portfolioHeatmapTiles button').count(), profiles[id].length);
+      assert.equal(await direct.locator('#portfolioHeatmapTitle').innerText(), 'Heatmap · portefeuille ' + id);
       const value = await direct.locator("#portfolioValue").innerText();
       await direct.locator("#portfolioChart svg").focus(); await direct.keyboard.press("End");
       assert.ok((await direct.locator("#portfolioChart .chart-tooltip").innerText()).includes(value), "Chart and headline value agree in portfolio " + id);

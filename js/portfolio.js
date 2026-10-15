@@ -1,6 +1,6 @@
 (() => {
   "use strict";
-  const P = window.PortfolioUtils, U = window.MacroUtils, A = window.PortfolioProfileUtils, E = window.PortfolioExposureUtils, F = window.PortfolioAnalyticsUtils, $ = selector => document.querySelector(selector);
+  const P = window.PortfolioUtils, U = window.MacroUtils, A = window.PortfolioProfileUtils, E = window.PortfolioExposureUtils, F = window.PortfolioAnalyticsUtils, H = window.PortfolioHeatmapUtils, $ = selector => document.querySelector(selector);
   const HOLDINGS_KEY = "savy:private-holdings:v1", PRICE_KEY = "savy:security-prices:v1", POSITIONS_VISIBLE_KEY = "savy:portfolio-positions-visible:v1";
   const PROFILE_STATE_KEY = "savy:portfolio-profile-state:v1", PROFILE_CACHE_KEY = "savy:portfolio-profile-cache:v1";
   const ACCESS_KEY = "savy:portfolio-access:v1";
@@ -19,6 +19,7 @@
   let catalog = null, prices = null, cached = false, range = "INTRADAY", moversRange = "1M", positions = [], history = [], imported = false;
   let exposures = null, exposureCached = false;
   let relativeComparison = null;
+  let heatmapRange = "1D", heatmapTicker = "", heatmapModel = null;
   let earnings = null, earningsCached = false, earningsTicker = "", earningsWeek = F.weekFor().start, earningsSelection = null;
   const exposureViewState = stored(EXPOSURE_VIEWS_KEY, {});
   const exposureViews = {Sectors: exposureViewState?.Sectors === true, Geography: exposureViewState?.Geography === true};
@@ -42,12 +43,14 @@
     for (const label of referenceLabels) label.node.nodeValue = label.template.replaceAll("FEQT", benchmarkId);
     $("#portfolioBenchmark").setAttribute("aria-label", "Rendement du portefeuille et de " + benchmarkId);
   }
-  function saveView() {save(VIEW_KEY, {range, moversRange, sortKey, sortDescending, earningsWeek, earningsTicker});}
+  function saveView() {save(VIEW_KEY, {range, moversRange, sortKey, sortDescending, earningsWeek, earningsTicker, heatmapRange});}
   function loadView() {
     const view = stored(VIEW_KEY, {});
     // Every portfolio opens on its session chart, including when this
     // browser remembers a previously selected historical period.
     range = "INTRADAY";
+    heatmapRange = H.RANGES.some(item => item.key === view.heatmapRange) ? view.heatmapRange : "1D";
+    heatmapTicker = "";
     moversRange = P.RANGES.some(item => item.key === view.moversRange) ? view.moversRange : "1M";
     sortKey = ["unrealized_percent", "unrealized_cad", "period_change_cad"].includes(view.sortKey) ? view.sortKey : null;
     sortDescending = view.sortDescending !== false;
@@ -430,6 +433,76 @@
       $("#portfolioRiskStatus").classList.remove("warning"); $("#portfolioRiskNote").textContent = "";
     } else renderRisk(closedSelected);
   }
+  function selectHeatmap(ticker) {
+    const row = heatmapModel?.rows.find(item => item.ticker === ticker);
+    if (!row) return;
+    heatmapTicker = ticker; $("#portfolioHeatmapPosition").value = ticker;
+    for (const tile of $("#portfolioHeatmapTiles").querySelectorAll("button")) tile.setAttribute("aria-pressed", String(tile.dataset.ticker === ticker));
+    const detail = document.createDocumentFragment();
+    detail.append(el("strong", "", row.ticker + " · " + row.title));
+    const metrics = el("div", "portfolio-heatmap-metrics");
+    for (const [label, value] of [["Variation", row.percent === null ? "N/D · " + row.reason : delta(row.percent, true)],
+      ["Valeur CAD", money(row.value_cad)], ["Poids", row.weight === null ? "N/D · valorisation partielle" : U.formatNumber(row.weight, 2) + " %"],
+      ["Cours", U.validNumber(row.price) ? U.formatNumber(row.price, row.decimals) + " " + row.currency : "N/D"]]) {
+      const item = el("div"); item.append(el("span", "meta", label), el("strong", "", value)); metrics.append(item);
+    }
+    detail.append(metrics);
+    const time = row.quote ? window.IntradayUtils.shortLabel(row.quote) + " · " + U.timestampLabel(row.quote.timestamp) : "Clôture du " + (row.price_date || "—");
+    detail.append(el("p", "meta", time + (row.baseline_date ? " · base du " + row.baseline_date : "") +
+      (cached || row.fetch_status === "cached" ? " · copie conservée" : "")));
+    $("#portfolioHeatmapDetail").replaceChildren(detail);
+  }
+  function drawHeatmap() {
+    const host = $("#portfolioHeatmapTiles"), focused = document.activeElement?.closest("#portfolioHeatmapTiles button")?.dataset.ticker;
+    const width = host.clientWidth, height = host.clientHeight;
+    if (!heatmapModel?.valued.length) {host.replaceChildren(el("p", "chart-placeholder", "La heatmap apparaîtra avec les cours et le change nécessaires à la valorisation.")); return;}
+    if (!width || !height) return;
+    const fragment = document.createDocumentFragment(), limit = H.RANGES.find(item => item.key === heatmapRange).limit;
+    for (const row of H.layout(heatmapModel.valued, width, height)) {
+      const tile = el("button", "portfolio-heatmap-tile"); tile.type = "button"; tile.dataset.ticker = row.ticker;
+      tile.style.left = row.x / width * 100 + "%"; tile.style.top = row.y / height * 100 + "%";
+      tile.style.width = row.width / width * 100 + "%"; tile.style.height = row.height / height * 100 + "%";
+      tile.style.backgroundColor = H.color(row.percent, limit);
+      const change = row.percent === null ? "N/D" : delta(row.percent, true);
+      tile.setAttribute("aria-label", row.ticker + " · " + row.title + " · " + change + (row.reason ? " · " + row.reason : "") +
+        " · valeur " + money(row.value_cad) + (row.weight === null ? " · valorisation partielle" : " · poids " + U.formatNumber(row.weight, 2) + " %"));
+      tile.setAttribute("aria-pressed", String(row.ticker === heatmapTicker)); tile.title = tile.getAttribute("aria-label");
+      const label = el("span", "portfolio-heatmap-tile-label"); label.setAttribute("aria-hidden", "true");
+      if (row.width >= 53 && row.height >= 30) label.append(el("strong", "portfolio-heatmap-symbol", row.ticker));
+      if (row.width >= 62 && row.height >= 54) label.append(el("span", "portfolio-heatmap-return", change));
+      if (row.width >= 110 && row.height >= 90 && row.weight !== null) label.append(el("span", "portfolio-heatmap-weight", U.formatNumber(row.weight, 1) + " % du portefeuille"));
+      if (row.width >= 180 && row.height >= 125) label.append(el("span", "portfolio-heatmap-name", row.title));
+      tile.append(label); tile.addEventListener("click", () => selectHeatmap(row.ticker)); fragment.append(tile);
+    }
+    host.replaceChildren(fragment);
+    if (focused) [...host.querySelectorAll("button")].find(tile => tile.dataset.ticker === focused)?.focus({preventScroll: true});
+  }
+  function renderHeatmap(current, quoteData = prices) {
+    heatmapModel = H.model(current, prices, quoteData, heatmapRange);
+    const config = H.RANGES.find(item => item.key === heatmapRange);
+    for (const button of $("#portfolioHeatmapRanges").querySelectorAll("button")) button.setAttribute("aria-pressed", String(button.dataset.range === heatmapRange));
+    $("#portfolioHeatmapTitle").textContent = "Heatmap · portefeuille " + activePortfolio;
+    $("#portfolioHeatmapStatus").textContent = !heatmapModel.end ? "Cours indisponibles." :
+      (heatmapRange === "1D" ? "Séance du " + heatmapModel.end + " · depuis la clôture précédente" : heatmapModel.start ? "Du " + heatmapModel.start + " au " + heatmapModel.end : "Historique insuffisant au " + heatmapModel.end) +
+      " · " + heatmapModel.valued.length + "/" + heatmapModel.rows.length + " positions valorisées" +
+      (!heatmapModel.complete ? " · CARTE PARTIELLE : surfaces limitées aux positions valorisées, poids indisponibles" : "") +
+      (heatmapModel.missing.length ? " · sans valeur : " + heatmapModel.missing.join(", ") : "") +
+      (heatmapModel.unavailable.length ? " · variation N/D (gris) : " + heatmapModel.unavailable.join(", ") : "") + (cached ? " · copie conservée" : "");
+    $("#portfolioHeatmapStatus").classList.toggle("warning", cached || !heatmapModel.complete || heatmapModel.unavailable.length > 0);
+    const legend = document.createDocumentFragment();
+    for (const factor of [-1, -2 / 3, -1 / 3, 0, 1 / 3, 2 / 3, 1]) {
+      const item = el("span"), swatch = el("i"); swatch.style.backgroundColor = H.color(factor * config.limit, config.limit); swatch.setAttribute("aria-hidden", "true");
+      item.append(swatch, el("span", "", (factor === -1 ? "≤ " : factor === 1 ? "≥ " : "") + U.formatNumber(factor * config.limit, factor === 0 ? 0 : 1) + " %")); legend.append(item);
+    }
+    const unknown = el("span"), swatch = el("i"); swatch.style.backgroundColor = H.color(null, config.limit); swatch.setAttribute("aria-hidden", "true"); unknown.append(swatch, el("span", "", "N/D")); legend.append(unknown);
+    $("#portfolioHeatmapLegend").replaceChildren(legend);
+    const options = document.createDocumentFragment();
+    for (const row of heatmapModel.rows) {const option = el("option", "", row.ticker + " · " + (row.percent === null ? "N/D" : delta(row.percent, true))); option.value = row.ticker; options.append(option);}
+    $("#portfolioHeatmapPosition").replaceChildren(options); $("#portfolioHeatmapPosition").disabled = !heatmapModel.rows.length;
+    if (!heatmapModel.rows.some(row => row.ticker === heatmapTicker)) heatmapTicker = H.layout(heatmapModel.valued, 1, 1)[0]?.ticker || heatmapModel.rows[0]?.ticker || "";
+    drawHeatmap();
+    if (heatmapTicker) selectHeatmap(heatmapTicker); else $("#portfolioHeatmapDetail").replaceChildren();
+  }
   function render() {
     renderPortfolioChoice();
     $("#portfolioEmpty").hidden = positions.length > 0;
@@ -446,12 +519,13 @@
     for (const item of chartRanges) {const button = el("button", "", item.label); button.type = "button"; button.dataset.range = item.key; button.setAttribute("aria-pressed", String(item.key === range)); button.addEventListener("click", () => {range = item.key; saveView(); render();}); controls.append(button);}
     $("#portfolioRanges").replaceChildren(controls);
     if (!positions.length) {
+      renderHeatmap(null);
       const needsLink = !holdingsAvailable && !personalKey;
       $("#portfolioStatus").textContent = needsLink ? "Portefeuille " + activePortfolio + " : ouvre ton lien personnel pour retrouver tes positions." : "Importe ta sauvegarde ou ajoute tes positions. Les quantités restent sur cet appareil.";
       $("#portfolioEmpty").textContent = needsLink ? "Ton lien personnel donne accès aux trois portefeuilles et mémorise cet accès sur cet appareil. Tu peux aussi importer une sauvegarde." : "Ajoute des titres ci-dessous ou importe une sauvegarde de ce portefeuille.";
       return;
     }
-    if (!prices || !history.length) {$("#portfolioStatus").textContent = "Les cours n’ont pas pu être chargés. Tes positions sont conservées; utilise « Actualiser »."; $("#portfolioChart").replaceChildren(); $("#portfolioBenchmark").replaceChildren(); $("#portfolioBenchmarkNote").textContent = ""; $("#portfolioRows").replaceChildren(); $("#portfolioBest").replaceChildren(); $("#portfolioWorst").replaceChildren(); $("#portfolioMoversPeriod").textContent = ""; $("#portfolioMoversNote").textContent = "Les classements seront disponibles avec les cotations."; renderExposures(null); renderAnalysis(null, null); drawRelativeChart(null); return;}
+    if (!prices || !history.length) {$("#portfolioStatus").textContent = "Les cours n’ont pas pu être chargés. Tes positions sont conservées; utilise « Actualiser »."; $("#portfolioChart").replaceChildren(); $("#portfolioBenchmark").replaceChildren(); $("#portfolioBenchmarkNote").textContent = ""; $("#portfolioRows").replaceChildren(); $("#portfolioBest").replaceChildren(); $("#portfolioWorst").replaceChildren(); $("#portfolioMoversPeriod").textContent = ""; $("#portfolioMoversNote").textContent = "Les classements seront disponibles avec les cotations."; renderHeatmap(null); renderExposures(null); renderAnalysis(null, null); drawRelativeChart(null); return;}
     let liveFx = window.SavyLiveFX?.current();
     const dailyQuotes = window.SavyLiveQuotes?.portfolioView(prices, positions, liveFx) || prices;
     const currentHistory = P.historyFor(positions, dailyQuotes), dailyDay = currentHistory.at(-1)[0];
@@ -486,6 +560,7 @@
     $("#portfolioUnrealized").className = "portfolio-unrealized change " + direction(current.unrealized_cad);
     $("#portfolioMissing").textContent = current.missing.length ? "Valeur partielle : cours ou change manquant pour " + current.missing.join(", ") + "." : "";
     renderMovers(dailyDay, dailyQuotes);
+    renderHeatmap(current, quoteData);
     renderExposures(current);
     renderAnalysis(selected, current, quoteData, closedSelected);
     const previous = new Map(baseline.rows.map(row => [row.ticker, row]));
@@ -658,6 +733,14 @@
   $("#portfolioEarningsTicker").addEventListener("change", event => {earningsTicker = event.target.value; saveView(); renderEarnings(currentEarningsValuation());});
   $("#portfolioEarningsWeek").addEventListener("change", event => {earningsWeek = event.target.value; saveView(); renderEarnings(currentEarningsValuation());});
   $("#portfolioEarningsImage").addEventListener("click", saveEarningsImage);
+  for (const item of H.RANGES) {
+    const button = el("button", "", item.label); button.type = "button"; button.dataset.range = item.key;
+    button.setAttribute("aria-pressed", String(item.key === heatmapRange));
+    button.addEventListener("click", () => {heatmapRange = item.key; saveView(); render();});
+    $("#portfolioHeatmapRanges").append(button);
+  }
+  $("#portfolioHeatmapPosition").addEventListener("change", event => selectHeatmap(event.target.value));
+  if (typeof ResizeObserver !== "undefined") new ResizeObserver(() => drawHeatmap()).observe($("#portfolioHeatmapTiles"));
   document.addEventListener("click", event => {
     if (!profileInitialized) return;
     const anchor = event.target.closest?.("a[href^='#']"), hash = anchor?.getAttribute("href");
