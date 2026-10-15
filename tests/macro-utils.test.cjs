@@ -17,6 +17,7 @@ test("Invalid calendar dates and non-ISO dates are rejected", () => {
 test("Month and year ranges clamp leap days without spilling into March", () => {
   assert.equal(U.rangeStart("2024-03-31", "1M"), "2024-02-29");
   assert.equal(U.rangeStart("2024-02-29", "1Y"), "2023-02-28");
+  assert.equal(U.rangeStart("2024-02-29", "2Y"), "2022-02-28");
 });
 test("Ranges are anchored to the observation date and retain missing observations", () => {
   assert.deepEqual(U.visibleHistory(sample(), "1M"), [["2026-09-30", null], ["2026-10-09", -0.4]]);

@@ -68,15 +68,15 @@
     const last = available.map(country => country.history.filter(row => row.slice(1).some(U.validNumber)).at(-1)?.[0]).filter(Boolean);
     if (!last.length) return null;
     const b = last.sort()[0];
+    if (preset === "1D" || preset === "1W") {
+      const boundary = new Date(Date.parse(b) - (preset === "1D" ? 1 : 7) * 86400000).toISOString().slice(0, 10);
+      // A daily comparison uses the previous published session, including holidays.
+      const previous = preset === "1D" ? available.map(country => snapshot(country, boundary)?.date).filter(Boolean).sort()[0] : null;
+      return {b, a: previous || boundary};
+    }
     return {b, a: preset === "YTD" ? (Number(b.slice(0, 4)) - 1) + "-12-31" : U.rangeStart(b, preset)};
   }
-  const DATE_KEYS = ["a", "b", "c", "d", "e"];
-  function extraDefaults(base) {
-    const result = {...base};
-    for (const [key, period] of [["c", "1Y"], ["d", "5Y"], ["e", "10Y"]])
-      if (!result[key]) result[key] = [START, U.rangeStart(base.b, period)].sort().at(-1);
-    return result;
-  }
+  const DATE_KEYS = ["a", "b"];
   function multiComparison(country, dates) {
     if (!U.isDate(dates?.a) || !U.isDate(dates?.b) || Object.keys(dates).some(key => !DATE_KEYS.includes(key)) ||
         DATE_KEYS.some(key => Object.hasOwn(dates, key) && !U.isDate(dates[key]))) throw new Error("Dates de comparaison invalides");
@@ -94,5 +94,5 @@
     }
     return {...base, curves, rows};
   }
-  return {START, CONTRACTS, DATE_KEYS, localDay, normalize, snapshot, basisPoints, comparison, multiComparison, extraDefaults, defaults};
+  return {START, CONTRACTS, DATE_KEYS, localDay, normalize, snapshot, basisPoints, comparison, multiComparison, defaults};
 });

@@ -11,24 +11,9 @@
   function rate(value) {return U.validNumber(value) ? U.formatNumber(value, 2) + " %" : "N/D";}
   function bp(value) {return U.validNumber(value) ? (value > .005 ? "+" : "") + U.formatNumber(Math.abs(value) < .005 ? 0 : value, 1) + " pb" : "N/D";}
   function validDates(value) {return value && value.a && value.b && Object.keys(value).every(key => C.DATE_KEYS.includes(key) && U.isDate(value[key]) && value[key] >= C.START && value[key] <= C.localDay());}
+  function savedDates(value) {const pair = value && {a: value.a, b: value.b}; return validDates(pair) ? pair : null;}
   function enableControls(enabled) {
-    for (const node of document.querySelectorAll(".yield-date-controls input,.yield-date-controls button,#yieldAddDate")) node.disabled = !enabled;
-    $("#yieldAddDate").disabled = !enabled || !!dates && Object.keys(dates).length >= 5;
-  }
-  function renderDateControls() {
-    const fragment = document.createDocumentFragment();
-    for (const key of ["c", "d", "e"].filter(key => Object.hasOwn(dates, key))) {
-      const letter = key.toUpperCase(), group = el("div", "yield-extra-date"), label = el("label"), input = el("input");
-      input.type = "date"; input.id = "yieldDate" + letter; input.value = dates[key]; input.min = C.START; input.max = C.localDay(); label.htmlFor = input.id;
-      label.append(el("span", "yield-date-" + key, "Date " + letter + " · comparaison"), input);
-      input.addEventListener("change", () => applyDates({...dates, [key]: input.value}));
-      const remove = el("button", "button quiet yield-remove-date", "×"); remove.type = "button"; remove.setAttribute("aria-label", "Retirer la date " + letter);
-      remove.addEventListener("click", () => {const next = {...dates}; delete next[key]; applyDates(next); $("#yieldAddDate").focus();});
-      group.append(label, remove); fragment.append(group);
-    }
-    $("#yieldExtraDates").replaceChildren(fragment); $("#yieldExtraDates").hidden = Object.keys(dates).length === 2;
-    $("#yieldAddDate").textContent = Object.keys(dates).length >= 5 ? "5 dates affichées" : "Ajouter une date (" + Object.keys(dates).length + "/5)";
-    enableControls(true);
+    for (const node of document.querySelectorAll(".yield-date-controls input,.yield-date-controls button")) node.disabled = !enabled;
   }
   function applyDates(value, persist = true) {
     if (!validDates(value)) {
@@ -38,7 +23,6 @@
     }
     dates = {...value}; $("#yieldDateError").hidden = true;
     for (const [key, id] of [["a", "#yieldDateA"], ["b", "#yieldDateB"]]) {$(id).value = dates[key]; $(id).setAttribute("aria-invalid", "false");}
-    renderDateControls();
     if (persist) save(PREFS, dates);
     render(); return true;
   }
@@ -161,7 +145,7 @@
       if (!dates) {
         const saved = stored(PREFS), legacy = stored(LEGACY_PREFS), defaults = C.defaults(data);
         if (!defaults) {enableControls(false); $("#yieldStatus").textContent = "Aucune observation collectée."; return;}
-        applyDates(validDates(saved) ? saved : C.extraDefaults(validDates(legacy) ? legacy : defaults));
+        applyDates(savedDates(saved) || savedDates(legacy) || defaults);
       }
       else render();
     })();
@@ -169,10 +153,6 @@
   }
   for (const id of ["#yieldDateA", "#yieldDateB"]) $(id).addEventListener("change", () => applyDates({...dates, a: $("#yieldDateA").value, b: $("#yieldDateB").value}));
   $("#yieldSwap").addEventListener("click", () => {if (dates) applyDates({...dates, a: dates.b, b: dates.a});});
-  $("#yieldAddDate").addEventListener("click", () => {
-    if (!dates) return; const key = ["c", "d", "e"].find(key => !Object.hasOwn(dates, key)); if (!key) return;
-    applyDates({...dates, [key]: C.extraDefaults(dates)[key]}); $("#yieldDate" + key.toUpperCase()).focus();
-  });
   for (const button of document.querySelectorAll("[data-yield-preset]")) button.addEventListener("click", () => {if (data) applyDates({...dates, ...C.defaults(data, button.dataset.yieldPreset)});});
   if (typeof ResizeObserver !== "undefined") new ResizeObserver(() => drawCharts()).observe($("#yieldCurveGrid"));
   enableControls(false); window.SavyYieldCurves = {refresh};
