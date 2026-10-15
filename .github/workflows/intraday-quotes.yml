@@ -15,12 +15,10 @@ permissions:
   contents: read
   actions: read
 
-# The same group as the full deployment prevents an older snapshot from
-# overwriting a newer briefing, portfolio feature or macro release.
+# Quote orchestration has its own queue. A scheduled run whose source has not
+# passed full validation must never displace a pending full Pages deployment.
 concurrency:
-  # A cancelled full deployment must not enqueue a skipped quote run in the
-  # Pages group: doing so would cancel the newer deployment already pending.
-  group: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.conclusion != 'success' && format('quotes-skipped-{0}', github.run_id) || format('pages-{0}', github.ref) }}
+  group: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.conclusion != 'success' && format('quotes-skipped-{0}', github.run_id) || format('intraday-{0}', github.ref) }}
   cancel-in-progress: false
 
 jobs:
@@ -59,6 +57,11 @@ jobs:
   refresh:
     needs: source
     if: needs.source.outputs.ready == 'true'
+    # Only a validated source joins the publication queue shared with the full
+    # deployment, so quote-only runs cannot cancel a source validation run.
+    concurrency:
+      group: pages-${{ github.ref }}
+      cancel-in-progress: false
     runs-on: ubuntu-latest
     timeout-minutes: 12
     permissions:
