@@ -11,7 +11,7 @@ const fixture = {schema_version: 1, kind: "sovereign_yield_curves", unit: "perce
     methodology: id === "CA" ? "Obligations de référence; Long : environ 30 ans, échéance résiduelle variable." : "Treasury par yield curve.",
     tenors: country.tenors.map(([key, label, months, series_id]) => ({key, label, months, series_id})),
     fetch_status: "fresh", last_successful_fetch: stamp,
-    history: ["2016-01-04", "2025-10-14", "2025-12-31", "2026-09-14", "2026-10-09", "2026-10-13", "2026-10-14"].map((day, index) => [day, ...country.tenors.map((_, tenor) =>
+    history: ["2016-01-04", "2016-10-14", "2021-10-14", "2025-10-14", "2025-12-31", "2026-09-14", "2026-10-09", "2026-10-13", "2026-10-14"].map((day, index) => [day, ...country.tenors.map((_, tenor) =>
       id === "US" && day === "2026-10-14" && tenor === 6 ? null : Math.round((1.5 + (1 - countryIndex) * 1.5 + tenor * .12 + index * .07) * 100) / 100)])}))};
 const mime = {".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".json": "application/json", ".png": "image/png"};
 const requests = [];
@@ -32,13 +32,19 @@ async function main() {
     await page.locator("#yieldDateA").fill(a); await page.locator("#yieldDateB").fill(b); await page.locator("#yieldDateB").dispatchEvent("change");
   }
   async function check(page, a, b) {
+    const selection = await page.evaluate(() => JSON.parse(localStorage.getItem("savy:yield-curve-dates:v2")));
+    assert.equal(selection.a, a); assert.equal(selection.b, b);
     for (const country of normalized.countries) {
-      const model = C.comparison(country, a, b), card = page.locator('[data-yield-country="' + country.id + '"]');
+      const model = C.multiComparison(country, selection), card = page.locator('[data-yield-country="' + country.id + '"]');
       for (const row of model.rows) {
-        const cells = await card.locator('tr[data-tenor="' + row.key + '"] td').allTextContents();
-        assert.equal(cells[0], U.validNumber(row.a) ? U.formatNumber(row.a, 2) + " %" : "N/D");
-        assert.equal(cells[1], U.validNumber(row.b) ? U.formatNumber(row.b, 2) + " %" : "N/D");
-        assert.equal(cells[2], U.validNumber(row.change_bp) ? (row.change_bp > .005 ? "+" : "") + U.formatNumber(Math.abs(row.change_bp) < .005 ? 0 : row.change_bp, 1) + " pb" : "N/D");
+        const tr = card.locator('tr[data-tenor="' + row.key + '"]');
+        for (const curve of model.curves) {
+          const value = row.values[curve.key]; assert.equal(await tr.locator('[data-date-key="' + curve.key + '"]').textContent(), U.validNumber(value) ? U.formatNumber(value, 2) + " %" : "N/D");
+          if (curve.key !== "b") {
+            const change = row.changes[curve.key];
+            assert.equal(await tr.locator('[data-comparison="b-' + curve.key + '"]').textContent(), U.validNumber(change) ? (change > .005 ? "+" : "") + U.formatNumber(Math.abs(change) < .005 ? 0 : change, 1) + " pb" : "N/D");
+          }
+        }
       }
       assert.equal(await card.locator(".yield-line").evaluateAll(nodes => nodes.some(node => /NaN|Infinity/.test(node.getAttribute("d")))), false);
       if (model.a) assert.ok((await card.locator(".yield-chart-legend").innerText()).includes(model.a.date));
@@ -50,6 +56,8 @@ async function main() {
     page.on("pageerror", error => errors.push(error.message)); await page.route("https://**", route => route.abort());
     await page.goto(base); await page.waitForFunction(() => document.querySelectorAll(".yield-curve-card").length === 2);
     assert.equal(await page.locator("#yieldDateA").inputValue(), "2026-09-14"); assert.equal(await page.locator("#yieldDateB").inputValue(), "2026-10-14");
+    assert.equal(await page.locator("#yieldDateC").inputValue(), "2025-10-14"); assert.equal(await page.locator("#yieldDateD").inputValue(), "2021-10-14"); assert.equal(await page.locator("#yieldDateE").inputValue(), "2016-10-14");
+    assert.equal(await page.locator("#yieldChartUS .yield-line").count(), 5); assert.equal(await page.locator("#yieldAddDate").isDisabled(), true);
     await page.locator("#yieldTableUS summary").click(); await page.locator("#yieldTableCA summary").click();
     await check(page, "2026-09-14", "2026-10-14");
     assert.equal(await page.locator("#yieldChartUS path.yield-b").evaluate(node => (node.getAttribute("d").match(/M/g) || []).length), 2, "A missing 5-year yield breaks the line, without interpolation");
@@ -61,7 +69,7 @@ async function main() {
     await setDates(page, "2026-10-11", "2026-10-14"); await check(page, "2026-10-11", "2026-10-14");
     assert.match(await page.locator('[data-yield-country="CA"] .yield-chart-legend').innerText(), /2026-10-09 \(demandé : 2026-10-11\)/);
     await page.locator("#yieldSwap").click(); await check(page, "2026-10-14", "2026-10-11");
-    assert.deepEqual(await page.evaluate(() => JSON.parse(localStorage.getItem("savy:yield-curve-dates:v1"))), {a: "2026-10-14", b: "2026-10-11"});
+    assert.deepEqual(await page.evaluate(() => JSON.parse(localStorage.getItem("savy:yield-curve-dates:v2"))), {a: "2026-10-14", b: "2026-10-11", c: "2025-10-14", d: "2021-10-14", e: "2016-10-14"});
     await page.reload(); await page.waitForFunction(() => document.querySelectorAll(".yield-curve-card").length === 2);
     assert.equal(await page.locator("#yieldDateA").inputValue(), "2026-10-14"); assert.equal(await page.locator("#yieldDateB").inputValue(), "2026-10-11");
     await page.locator("#yieldDateA").fill(""); await page.locator("#yieldDateA").dispatchEvent("change"); assert.equal(await page.locator("#yieldDateError").isVisible(), true);
@@ -73,6 +81,14 @@ async function main() {
       assert.equal(await page.locator("#yieldDateA").inputValue(), expected.a); await check(page, expected.a, expected.b);
     }
     await page.locator('[data-yield-preset="1M"]').click();
+    for (const letter of ["C", "D", "E"]) await page.getByRole("button", {name: "Retirer la date " + letter, exact: true}).click();
+    assert.equal(await page.locator("#yieldChartUS .yield-line").count(), 2); await check(page, "2026-09-14", "2026-10-14");
+    await page.locator("#yieldAddDate").click(); assert.equal(await page.locator("#yieldDateC").inputValue(), "2025-10-14");
+    await page.locator("#yieldDateC").fill(""); await page.locator("#yieldDateC").dispatchEvent("change"); assert.equal(await page.locator("#yieldDateError").isVisible(), true);
+    await page.locator("#yieldDateC").fill("2026-10-11"); await page.locator("#yieldDateC").dispatchEvent("change"); assert.equal(await page.locator("#yieldDateError").isVisible(), false);
+    assert.match(await page.locator('[data-yield-country="US"] .yield-chart-legend').innerText(), /C · 2026-10-09 \(demandé : 2026-10-11\)/);
+    await page.locator("#yieldAddDate").click(); await page.locator("#yieldAddDate").click();
+    assert.equal(await page.locator("#yieldChartCA .yield-line").count(), 5); await check(page, "2026-09-14", "2026-10-14");
     for (const width of [768, 375, 320]) {
       await page.setViewportSize({width, height: 1000});
       await page.locator("#yieldTableCA summary").click();
@@ -83,6 +99,11 @@ async function main() {
     }
     await page.locator("#themeToggle").click(); assert.equal(await page.locator("html").getAttribute("data-theme"), "light");
     await check(page, "2026-09-14", "2026-10-14");
+    const legacyContext = await browser.newContext(), legacyPage = await legacyContext.newPage(); await legacyPage.route("https://**", route => route.abort());
+    await legacyContext.addInitScript(() => localStorage.setItem("savy:yield-curve-dates:v1", JSON.stringify({a: "2026-10-09", b: "2026-10-14"})));
+    legacyPage.on("pageerror", error => errors.push(error.message)); await legacyPage.goto(base);
+    await legacyPage.waitForFunction(() => document.querySelector("#yieldDateE")?.value === "2016-10-14");
+    assert.equal(await legacyPage.locator("#yieldDateA").inputValue(), "2026-10-09"); await check(legacyPage, "2026-10-09", "2026-10-14"); await legacyContext.close();
     offline = true; await page.evaluate(() => window.SavyYieldCurves.refresh());
     assert.match(await page.locator("#yieldStatus").innerText(), /Copie conservée/); await check(page, "2026-09-14", "2026-10-14");
     offline = false; malformed = true; await page.evaluate(() => window.SavyYieldCurves.refresh());
@@ -93,7 +114,7 @@ async function main() {
     assert.equal(await empty.locator("#yieldDateA").isDisabled(), true); assert.equal(await empty.locator("#yieldCurveGrid svg").count(), 0);
     assert.equal(requests.some(url => /portfolio-key=|positions=/.test(url)), false); assert.deepEqual(errors, []);
     await context.close(); await blank.close();
-    console.log("Yield curve browser checks passed: exact two-date tables and basis points, real observation dates on weekends, missing-tenor gaps, keyboard/pointer controls, swapped dates, presets/persistence, invalid/no-history dates, both themes, independent offline/cache handling and 320/375/768px mobile.");
+    console.log("Yield curve browser checks passed: two to five dates, optional date add/remove and persistence, exact per-date tables and basis points versus B, real observation dates on weekends, missing-tenor gaps, keyboard/pointer controls, swapped dates, presets, invalid/no-history dates, both themes, independent offline/cache handling and 320/375/768px mobile.");
   } finally {await browser.close(); server.close();}
 }
 main().catch(error => {console.error(error); server.close(); process.exitCode = 1;});

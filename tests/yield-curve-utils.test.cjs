@@ -67,3 +67,30 @@ test("published yield curves validate with enough history and all nominal maturi
   const data = C.normalize(JSON.parse(fs.readFileSync(path.join(__dirname, "../data/yield-curves.json"), "utf8")));
   for (const country of data.countries) {assert.ok(country.history.length > 2000); assert.ok(country.history[0][0].startsWith("2016")); assert.ok(country.history.at(-1).slice(1).every(Number.isFinite));}
 });
+test("five-date comparisons use one dated snapshot per curve and compare every date against B", () => {
+  const country = C.normalize(fixture(), NOW).countries[0], dates = {a: "2026-10-09", b: "2026-10-14", c: "2025-12-31", d: "2026-09-14", e: "2026-10-13"};
+  const before = structuredClone(country), result = C.multiComparison(country, dates);
+  assert.deepEqual(result.curves.map(curve => curve.label), ["A", "B", "C", "D", "E"]);
+  for (const row of result.rows) {
+    assert.equal(Object.keys(row.values).length, 5);
+    for (const key of ["a", "c", "d", "e"]) assert.ok(Math.abs(row.changes[key] - (row.values.b - row.values[key]) * 100) < 1e-9);
+  }
+  assert.deepEqual(country, before);
+  const swapped = C.multiComparison(country, {...dates, a: dates.b, b: dates.a});
+  assert.equal(swapped.curves.find(curve => curve.key === "c").snapshot.date, dates.c);
+  assert.ok(Math.abs(swapped.rows[0].changes.a + result.rows[0].changes.a) < 1e-9);
+});
+test("optional dates can be removed or unavailable independently without filling from another curve", () => {
+  const country = C.normalize(fixture(), NOW).countries[1], result = C.multiComparison(country, {a: "2026-10-09", b: "2026-10-14", e: "2016-01-01"});
+  assert.deepEqual(result.curves.map(curve => curve.key), ["a", "b", "e"]);
+  assert.equal(result.curves[2].snapshot, null); assert.ok(result.rows.every(row => row.values.e === null && row.changes.e === null));
+  assert.notEqual(result.rows[0].changes.a, null);
+  assert.equal(C.multiComparison(country, {a: "2026-10-09", b: "2026-10-14"}).curves.length, 2);
+  for (const dates of [{a: "2026-10-09", b: "2026-10-14", c: ""}, {a: "2026-10-09", b: "2026-10-14", f: "2026-10-13"}]) assert.throws(() => C.multiComparison(country, dates));
+});
+test("extra date defaults preserve existing choices and stay inside available history", () => {
+  const defaults = C.extraDefaults({a: "2026-09-14", b: "2026-10-14"});
+  assert.deepEqual(defaults, {a: "2026-09-14", b: "2026-10-14", c: "2025-10-14", d: "2021-10-14", e: "2016-10-14"});
+  assert.equal(C.extraDefaults({...defaults, c: "2026-10-09"}).c, "2026-10-09");
+  assert.equal(C.extraDefaults({a: "2016-01-04", b: "2016-02-01"}).e, C.START);
+});

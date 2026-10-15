@@ -8,10 +8,10 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-title" content="SAVY" />
   <title>SAVY — Tableau macroéconomique</title>
-  <link rel="stylesheet" href="css/dashboard.css?v=20261015-yield-curves" />
+  <link rel="stylesheet" href="css/dashboard.css?v=20261015-yield-multi" />
   <script src="js/macro-utils.js?v=20261015-macro-additions" defer></script>
-  <script src="js/yield-curve-utils.js?v=20261015-yield-curves" defer></script>
-  <script src="js/yield-curves.js?v=20261015-yield-curves" defer></script>
+  <script src="js/yield-curve-utils.js?v=20261015-yield-multi" defer></script>
+  <script src="js/yield-curves.js?v=20261015-yield-multi" defer></script>
   <script src="js/intraday-utils.js?v=20261014-refresh-status" defer></script>
   <script src="js/live-quotes.js?v=20261012-availability" defer></script>
   <script src="js/live-fx.js?v=20261012-availability" defer></script>
@@ -128,10 +128,12 @@
     <section id="yieldCurves" class="yield-curves card" aria-labelledby="yieldCurvesTitle">
       <div class="section-heading"><div><p class="eyebrow">LE MARCHÉ OBLIGATAIRE</p><h2 id="yieldCurvesTitle">Courbes de taux · États-Unis et Canada</h2></div><span class="meta">Taux nominaux · données quotidiennes publiées</span></div>
       <div class="yield-date-controls"><label for="yieldDateA"><span class="yield-date-a">Date A · comparaison</span><input id="yieldDateA" type="date" /></label><button id="yieldSwap" class="button quiet" type="button" aria-label="Inverser les deux dates">⇄ Inverser</button><label for="yieldDateB"><span class="yield-date-b">Date B · référence</span><input id="yieldDateB" type="date" /></label><div id="yieldPresets" class="segmented" role="group" aria-label="Comparer les courbes avec une période prédéfinie"><button type="button" data-yield-preset="1M">1 mois</button><button type="button" data-yield-preset="1Y">1 an</button><button type="button" data-yield-preset="YTD">YTD</button></div></div>
+      <div id="yieldExtraDates" class="yield-date-controls yield-extra-dates" aria-label="Dates de comparaison supplémentaires"></div>
+      <button id="yieldAddDate" class="button quiet" type="button">Ajouter une date</button>
       <p id="yieldStatus" class="meta" role="status">Chargement des courbes de taux…</p>
       <p id="yieldDateError" class="meta warning" role="alert" hidden></p>
       <div id="yieldCurveGrid" class="yield-curve-grid"></div>
-      <p class="meta yield-method-note">Fin de semaine ou jour sans publication : dernière observation antérieure, au plus sept jours avant. La date réellement utilisée est affichée pour chaque courbe; les échéances manquantes restent N/D. Δ = B − A.</p>
+      <p class="meta yield-method-note">Compare de deux à cinq dates. Fin de semaine ou jour sans publication : dernière observation antérieure, au plus sept jours avant. La date réellement utilisée est affichée pour chaque courbe; les échéances manquantes restent N/D. Les écarts comparent B à chaque autre date.</p>
     </section>
     <section class="workspace" id="indicators" aria-labelledby="indicatorsTitle">
       <div class="section-heading"><div><p class="eyebrow">TABLEAU DE BORD</p><h2 id="indicatorsTitle">Tes indicateurs macro</h2></div><button id="exportButton" class="button quiet" type="button" disabled>Exporter la sélection · CSV</button></div>

@@ -108,7 +108,9 @@ L’échelle rouge/gris/vert est symétrique et plafonne seulement la couleur, j
 
 ### Courbes de taux souverains
 
-La section **Courbes de taux · États-Unis et Canada** superpose deux dates choisies pour chaque pays, avec dates réellement utilisées, écarts `B − A` en points de base, variations des taux 2 et 10 ans et pentes 10 ans − 2 ans / 10 ans − 3 mois. Le tableau détaillé, le survol, le toucher et les flèches du clavier couvrent toutes les échéances. Les dates sont mémorisées dans le navigateur; les raccourcis 1 mois, 1 an et YTD partent des dernières observations publiées.
+La comparaison accepte **de deux à cinq dates**. Trois dates supplémentaires C, D et E apparaissent par défaut (1 an, 5 ans et 10 ans avant B), avec couleur et motif de ligne distincts. Elles sont modifiables, retirables et réajoutables; B reste la référence de tous les écarts. Le tableau donne chaque taux et chaque différence B − A/C/D/E en points de base. Les choix A/B existants sont conservés lors du passage à cinq dates; le navigateur mémorise ensuite les dates et les retraits. Les raccourcis et l’inversion A/B conservent C/D/E.
+
+La section **Courbes de taux · États-Unis et Canada** superpose de deux à cinq dates choisies pour chaque pays, avec dates réellement utilisées, écarts `B − A` en points de base, variations des taux 2 et 10 ans et pentes 10 ans − 2 ans / 10 ans − 3 mois. Le tableau détaillé, le survol, le toucher et les flèches du clavier couvrent toutes les échéances. Les dates sont mémorisées dans le navigateur; les raccourcis 1 mois, 1 an et YTD partent des dernières observations publiées.
 
 `scripts/collect_yield_curves.py` collecte les courbes nominales au pair du **U.S. Treasury** (CSV annuels, 1 mois à 30 ans) et les séries quotidiennes **Banque du Canada / CanDeal DNA** (bons 1/3/6/12 mois, obligations de référence 2/3/5/7/10 ans et long terme). Le long canadien est une émission de référence d’environ 30 ans avec échéance résiduelle variable, et non un taux zéro-coupon à maturité fixe. Les deux pays ont des méthodes distinctes, précisées dans leurs sources. Les échéances sont espacées uniformément dans chaque graphique.
 

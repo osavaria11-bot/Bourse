@@ -70,5 +70,29 @@
     const b = last.sort()[0];
     return {b, a: preset === "YTD" ? (Number(b.slice(0, 4)) - 1) + "-12-31" : U.rangeStart(b, preset)};
   }
-  return {START, CONTRACTS, localDay, normalize, snapshot, basisPoints, comparison, defaults};
+  const DATE_KEYS = ["a", "b", "c", "d", "e"];
+  function extraDefaults(base) {
+    const result = {...base};
+    for (const [key, period] of [["c", "1Y"], ["d", "5Y"], ["e", "10Y"]])
+      if (!result[key]) result[key] = [START, U.rangeStart(base.b, period)].sort().at(-1);
+    return result;
+  }
+  function multiComparison(country, dates) {
+    if (!U.isDate(dates?.a) || !U.isDate(dates?.b) || Object.keys(dates).some(key => !DATE_KEYS.includes(key)) ||
+        DATE_KEYS.some(key => Object.hasOwn(dates, key) && !U.isDate(dates[key]))) throw new Error("Dates de comparaison invalides");
+    const base = comparison(country, dates.a, dates.b);
+    const curves = DATE_KEYS.filter(key => Object.hasOwn(dates, key)).map(key => ({key, label: key.toUpperCase(), requested: dates[key], snapshot: snapshot(country, dates[key])}));
+    const rows = base.rows.map((row, index) => {
+      const values = Object.fromEntries(curves.map(curve => [curve.key, curve.snapshot?.values[index] ?? null]));
+      const changes = Object.fromEntries(curves.filter(curve => curve.key !== "b").map(curve => [curve.key, basisPoints(values[curve.key], values.b)]));
+      return {...row, values, changes};
+    });
+    const index10 = country.tenors.findIndex(row => row.key === "10Y"), index2 = country.tenors.findIndex(row => row.key === "2Y"), index3m = country.tenors.findIndex(row => row.key === "3M");
+    for (const curve of curves) {
+      curve.slope_2_10 = basisPoints(curve.snapshot?.values[index2], curve.snapshot?.values[index10]);
+      curve.slope_3m_10 = basisPoints(curve.snapshot?.values[index3m], curve.snapshot?.values[index10]);
+    }
+    return {...base, curves, rows};
+  }
+  return {START, CONTRACTS, DATE_KEYS, localDay, normalize, snapshot, basisPoints, comparison, multiComparison, extraDefaults, defaults};
 });
