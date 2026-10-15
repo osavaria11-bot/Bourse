@@ -348,11 +348,12 @@
         const outcome = F.earningsOutcome(metric), status = el("tr"), cell = el("td", "earnings-outcome earnings-" + outcome.status, report.date_status !== "reported" ? earningsPendingLabel(report) : outcome.status === "pending" ? "Montant publié N/D" : outcome.label + (U.validNumber(outcome.percent) ? " · " + delta(outcome.percent, true) : "")); cell.colSpan = 3; cell.dataset.metric = key; status.append(cell); body.append(status);
       }
       table.append(caption, head, body); card.append(table);
-      if (report.messages.length) {
+      const messages = F.earningsMessages(report);
+      if (messages.length) {
         card.append(el("h5", "", "Messages clés")); const list = el("ul", "portfolio-earnings-messages");
-        for (const message of report.messages) {const item = el("li", "", message.text); if (message.language === "en") {item.lang = "en"; item.append(el("small", "meta", " · thème cité en anglais"));} else if (message.kind === "calculated") item.append(el("small", "meta", " · comparaison calculée")); list.append(item);}
+        for (const message of messages) list.append(el("li", "", message.text));
         card.append(list);
-      } else card.append(el("p", "meta", report.date_status === "reported" ? "Messages de la conférence non disponibles dans les sources collectées." : "Messages et surprises à afficher après publication."));
+      } else card.append(el("p", "meta", report.date_status === "reported" ? "Analyse du compte rendu en attente de vérification. Les sources sont disponibles ci-dessous." : "Analyse et surprises disponibles après publication."));
       const links = el("div", "portfolio-earnings-sources");
       const sources = [...report.sources]; if (report.report_url) sources.push({label: "Compte rendu de la conférence", url: report.report_url});
       for (const source of sources) {const link = el("a", "", source.label + " ↗"); link.href = source.url; link.target = "_blank"; link.rel = "noopener noreferrer"; links.append(link);}
@@ -371,9 +372,20 @@
   }
   function saveEarningsImage() {
     const result = earningsSelection; if (!result?.inWindow || !earnings) return;
-    const canvas = document.createElement("canvas"), width = 1200, cardWidth = 544, cardHeight = 460, rows = Math.max(1, Math.ceil(result.rows.length / 2));
-    canvas.width = width; canvas.height = 160 + rows * (cardHeight + 20) + 70;
+    const canvas = document.createElement("canvas"), width = 1200, cardWidth = 544, rows = Math.max(1, Math.ceil(result.rows.length / 2));
     const ctx = canvas.getContext("2d"), ink = "#e8e9ed", muted = "#a5adb8";
+    function messageLines(text) {
+      const lines = []; let line = "";
+      for (const word of ("• " + text).split(/\s+/)) {
+        const next = line ? line + " " + word : word;
+        if (line && ctx.measureText(next).width > cardWidth - 40) {lines.push(line); line = word;} else line = next;
+      }
+      if (line) lines.push(line);
+      return lines;
+    }
+    ctx.font = "15px Arial";
+    const cardHeight = Math.max(420, ...result.rows.map(report => 290 + F.earningsMessages(report).reduce((height, message) => height + messageLines(message.text).length * 19 + 14, 0)));
+    canvas.width = width; canvas.height = 160 + rows * (cardHeight + 20) + 70;
     ctx.fillStyle = "#0c1119"; ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "#d4b06a"; ctx.font = "600 18px Arial"; ctx.fillText("SAVY · RÉSULTATS DE MES TITRES", 46, 44);
     ctx.fillStyle = ink; ctx.font = "600 30px Arial"; ctx.fillText(earningsWeekLabel(result.week), 46, 90);
@@ -398,8 +410,12 @@
         ctx.fillStyle = outcome.status === "beat" ? "#7bd7b5" : outcome.status === "miss" ? "#ef9b9b" : muted; ctx.font = "14px Arial"; ctx.fillText(report.date_status !== "reported" ? earningsPendingLabel(report) : outcome.status === "pending" ? "Montant publié N/D" : outcome.label, x + 20, lineY + 23); lineY += 59;
       }
       ctx.fillStyle = muted; ctx.font = "15px Arial";
-      for (const message of report.messages) {wrapped("• " + message.text, x + 20, lineY, cardWidth - 40, 19, 3); lineY += 60;}
-      if (!report.messages.length) wrapped(report.date_status === "reported" ? "Messages de la conférence non disponibles." : "Messages et surprises après publication.", x + 20, lineY, cardWidth - 40, 19, 2);
+      const messages = F.earningsMessages(report);
+      for (const message of messages) {
+        for (const line of messageLines(message.text)) {ctx.fillText(line, x + 20, lineY); lineY += 19;}
+        lineY += 14;
+      }
+      if (!messages.length) wrapped(report.date_status === "reported" ? "Analyse du compte rendu en attente de vérification." : "Analyse après publication.", x + 20, lineY, cardWidth - 40, 19, 2);
     });
     if (!result.rows.length) {ctx.fillStyle = muted; ctx.font = "23px Arial"; wrapped("Aucun résultat repéré pour mes titres cette semaine." + (result.unavailable.length ? " Calendriers indisponibles : " + result.unavailable.join(", ") : ""), 46, 215, width - 92, 32);}
     ctx.fillStyle = muted; ctx.font = "13px Arial"; ctx.fillText("Collecte : " + U.timestampLabel(earnings.generated_at) + (earningsCached || result.cached.length ? " · COPIE CONSERVÉE" : "") + " · Attentes absentes = N/D · BPA et consensus du même fournisseur", 46, canvas.height - 33);

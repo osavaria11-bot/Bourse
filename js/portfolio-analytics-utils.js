@@ -126,14 +126,14 @@
             (event.quarter !== null && !/^Q[1-4] \d{4}$/.test(event.quarter)) ||
             (event.report_at !== null && (!Number.isFinite(U.parseTimestamp(event.report_at)) || localDay(U.parseTimestamp(event.report_at)) !== event.report_date)) ||
             (event.report_url !== null && !safeHTTPS(event.report_url)) ||
-            !Array.isArray(event.messages) || event.messages.length > 3 || !Array.isArray(event.sources) || !event.sources.length || event.sources.length > 4) throw new Error("Événement de résultats invalide");
+            !Array.isArray(event.messages) || event.messages.length > 4 || !Array.isArray(event.sources) || !event.sources.length || event.sources.length > 4) throw new Error("Événement de résultats invalide");
         for (const key of ["eps", "revenue"]) {
           const metric = event[key];
           if (!metric || ![null, "USD", "CAD"].includes(metric.currency) || !safeHTTPS(metric.source_url) ||
               [metric.actual, metric.estimate].some(value => value !== null && (!U.validNumber(value) || (key === "revenue" && value < 0)))) throw new Error("Comparaison de résultats invalide");
         }
         if (event.sources.some(source => typeof source.label !== "string" || !source.label.trim() || source.label.length > 100 || !safeHTTPS(source.url)) ||
-            event.messages.some(message => typeof message.text !== "string" || !message.text.trim() || message.text.length > 300 || !["fr", "en"].includes(message.language) || !safeHTTPS(message.source_url))) throw new Error("Message ou source de résultats invalide");
+            event.messages.some(message => typeof message.text !== "string" || !message.text.trim() || message.text.length > 450 || !["fr", "en"].includes(message.language) || !safeHTTPS(message.source_url))) throw new Error("Message ou source de résultats invalide");
         const actual = U.validNumber(event.eps.actual) || U.validNumber(event.revenue.actual);
         if (event.date_status === "reported" && !actual || event.date_status !== "reported" && (actual || event.messages.length) ||
             actual && (event.report_date > today || event.report_at && U.parseTimestamp(event.report_at) > now)) throw new Error("Résultats non encore publiés");
@@ -141,6 +141,12 @@
       })};
     }
     return {...payload, instruments};
+  }
+  function earningsMessages(event) {
+    const messages = event?.messages;
+    return event?.date_status === "reported" && Array.isArray(messages) && messages.length >= 3 && messages.length <= 4 &&
+      messages.every(message => message.language === "fr" && message.kind === "reviewed_summary" &&
+        typeof message.text === "string" && message.text.trim() && message.text.length <= 450) ? messages : [];
   }
   function selectEarnings(current, earnings, {ticker = "", week = weekFor(), now = Date.now()} = {}) {
     const events = new Map(), unavailable = [], cached = [], notApplicable = [];
@@ -166,6 +172,6 @@
       pending: rows.filter(row => row.date_status !== "reported").length,
       inWindow: !!earnings && week.start >= earnings.window.start && week.end <= earnings.window.end};
   }
-  return {contributionsFor, riskFor, normalizeEarnings, selectEarnings, earningsOutcome, weekFor, localDay, shiftDay,
+  return {contributionsFor, riskFor, normalizeEarnings, selectEarnings, earningsOutcome, earningsMessages, weekFor, localDay, shiftDay,
     MIN_VOLATILITY_RETURNS, MIN_BETA_RETURNS, SESSIONS_PER_YEAR};
 });

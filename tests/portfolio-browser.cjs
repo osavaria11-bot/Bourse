@@ -39,7 +39,7 @@ function syntheticEarnings(id, offset, pending = false) {
   const metric = (actual, estimate) => ({actual, estimate, currency: "USD", source_url: "https://example.com/earnings"});
   return {id, report_date: date, report_at: null, quarter: "Q3 2026", date_status: pending ? "estimated" : "reported",
     eps: metric(pending ? null : 2.4, 2), revenue: metric(pending ? null : 2.1e9, 2.2e9),
-    messages: pending ? [] : [{text: "Demande en progression; dépenses surveillées.", language: "fr", source_url: "https://example.com/earnings-report", kind: "call_topic"}],
+    messages: pending ? [] : ["Demande en progression; dépenses surveillées.", "La direction relève ses perspectives annuelles.", "Les nouvelles capacités pèsent sur les marges à court terme.", "Le cash-flow opérationnel finance les investissements."].map(text => ({text, language: "fr", source_url: "https://example.com/earnings-report", kind: "reviewed_summary"})),
     report_url: "https://example.com/earnings-report", sources: [{label: "Source synthétique · compte rendu", url: "https://example.com/earnings-report"}]};
 }
 const nextWeekEvent = {...syntheticEarnings("ffffffffffffffff", 0, true), report_date: F.shiftDay(thisWeek.start, 8)};
@@ -139,6 +139,8 @@ async function main() {
     assert.equal(publication, syntheticEarningsData.instruments.MSFT.events[0].report_date);
     assert.match(await page.locator('#portfolioEarningsItems [data-earnings-id="aaaaaaaaaaaaaaaa"] [data-metric="eps"]').innerText(), /Au-dessus.*20,00/);
     assert.match(await page.locator('#portfolioEarningsItems [data-earnings-id="aaaaaaaaaaaaaaaa"] [data-metric="revenue"]').innerText(), /Sous les attentes/);
+    assert.equal(await page.locator('#portfolioEarningsItems [data-earnings-id="aaaaaaaaaaaaaaaa"] .portfolio-earnings-messages li').count(), 4);
+    assert.doesNotMatch(await page.locator('#portfolioEarnings').innerText(), /BPA = bénéfice|thème cité en anglais/);
     await page.locator("#portfolioEarningsTicker").selectOption("SHOP");
     assert.equal(await page.locator("#portfolioEarningsItems article").count(), 1);
     assert.match(await page.locator("#portfolioEarningsItems").innerText(), /SHOP.*Shopify/s);

@@ -116,6 +116,19 @@ test("earnings surprises compare like-for-like numbers, including losses and zer
   assert.equal(F.earningsOutcome(metric(1, null)).status, "unknown");
   assert.equal(F.earningsOutcome(metric(null, 2)).status, "pending");
 });
+test("earnings analysis displays only three or four reviewed French points, never generic fallback headings", () => {
+  const reported = event("aaaaaaaaaaaaaaaa", "2026-10-06");
+  assert.deepEqual(F.earningsMessages(reported), []);
+  reported.messages = ["Demande et moteurs de croissance.", "Perspectives de la direction.", "Marges et risques.", "Trésorerie et allocation du capital."].map(text =>
+    ({text, language: "fr", kind: "reviewed_summary", source_url: "https://example.com/report"}));
+  assert.equal(F.earningsMessages(reported).length, 4);
+  assert.equal(F.earningsMessages({...reported, messages: reported.messages.slice(0, 3)}).length, 3);
+  assert.equal(F.earningsMessages({...reported, messages: reported.messages.slice(0, 2)}).length, 0);
+  assert.equal(F.earningsMessages({...reported, date_status: "estimated"}).length, 0);
+  assert.equal(F.earningsMessages({...reported, messages: [...reported.messages, reported.messages[0]]}).length, 0);
+  const d = earningsFixture(); d.instruments.BIG.events[0].messages = reported.messages;
+  assert.equal(F.normalizeEarnings(d, earningsCatalog, now).instruments.BIG.events[0].messages.length, 4);
+});
 test("weekly earnings are held-only, merge CDR/issuer rows, support local filters and separate missing calendars from ETFs", () => {
   const earnings = F.normalizeEarnings(earningsFixture(), earningsCatalog, now);
   const current = {complete: true, total: 100, rows: [{ticker: "BIG", title: "Big", value_cad: 70}, {ticker: "CDR", title: "Big CDR", value_cad: 20}, {ticker: "EMPTY", title: "Empty", value_cad: 10}, {ticker: "ETF", title: "Fund", value_cad: 0}]};

@@ -1,3 +1,4 @@
+import copy
 import unittest
 from datetime import datetime, timezone
 
@@ -136,12 +137,37 @@ class EarningsTests(unittest.TestCase):
     def test_reviewed_messages_are_tied_to_the_exact_dated_report(self):
         event = earnings.parse_marketbeat(sample(), "MSFT", URL, NOW)[1]
         feed = {"company_symbol": "MSFT", "events": [event]}
-        highlights = {"reports": {"MSFT:2026-07-29": {"source_url": event["report_url"], "messages": ["Demande de services en progression."]}}}
+        points = ["Demande de services en progression.", "La direction relève ses perspectives annuelles.", "Le coût des investissements reste à surveiller.", "Les flux de trésorerie financent les nouvelles capacités."]
+        highlights = {"reports": {"MSFT:2026-07-29": {"source_url": event["report_url"], "messages": points}}}
         result = earnings.apply_reviewed_messages(feed, highlights)
+        self.assertEqual(len(result["events"][0]["messages"]), 4)
         self.assertEqual(result["events"][0]["messages"][0]["language"], "fr")
         wrong = {"reports": {"MSFT:2026-07-29": {"source_url": "https://example.com/another-quarter", "messages": ["Wrong quarter"]}}}
         result = earnings.apply_reviewed_messages(result, wrong)
         self.assertEqual(result["events"][0]["messages"][0]["text"], "Demande de services en progression.")
+
+    def test_reviewed_contract_rejects_one_line_fillers_duplicates_and_unsafe_sources(self):
+        payload = {"schema_version": 1, "kind": "reviewed_earnings_highlights", "reviewed_at": NOW.isoformat(),
+                   "reports": {"MSFT:2026-07-29": {"source_url": URL,
+                       "messages": ["La demande des clients se renforce.", "Les perspectives sont relevées.", "Les investissements pèsent sur la trésorerie."]}}}
+        self.assertEqual(earnings.validate_reviewed_highlights(payload), 1)
+        for messages in [["BPA battu."], ["Même point."] * 3, ["Point distinct " + str(i) for i in range(5)]]:
+            invalid = copy.deepcopy(payload); invalid["reports"]["MSFT:2026-07-29"]["messages"] = messages
+            with self.assertRaises(earnings.SourceError):
+                earnings.validate_reviewed_highlights(invalid)
+        invalid = copy.deepcopy(payload); invalid["reports"]["MSFT:2026-07-29"]["source_url"] = "javascript:alert(1)"
+        with self.assertRaises(earnings.SourceError):
+            earnings.validate_reviewed_highlights(invalid)
+
+    def test_primary_sources_can_support_a_review_bound_to_the_calendar_report(self):
+        event = earnings.parse_marketbeat(sample(), "MSFT", URL, NOW)[1]
+        primary = "https://example.com/issuer/2026-q4-results"
+        review = {"source_url": primary, "report_url": event["report_url"],
+                  "messages": ["La demande accélère.", "Les perspectives sont relevées.", "Les marges restent sous pression."]}
+        feed = earnings.apply_reviewed_messages({"company_symbol": "MSFT", "events": [event]}, {"reports": {"MSFT:2026-07-29": review}})
+        self.assertEqual(len(feed["events"][0]["messages"]), 3)
+        self.assertEqual(feed["events"][0]["messages"][0]["source_url"], primary)
+        self.assertTrue(any(source["url"] == primary for source in feed["events"][0]["sources"]))
 
 
 if __name__ == "__main__":

@@ -14,7 +14,7 @@
     "unavailable": 0,
     "not_applicable": 36
   },
-  "methodology": "Calendrier et résultats du catalogue public; filtrage des titres détenus dans le navigateur. BPA publié et consensus d’un même fournisseur. Chiffres dans leur devise de publication. Thèmes courts du compte rendu cités dans leur langue d’origine; comparaisons annuelles calculées séparément. Dates estimées signalées; valeurs absentes non extrapolées.",
+  "methodology": "Calendrier et résultats du catalogue public; filtrage des titres détenus dans le navigateur. BPA publié et consensus d’un même fournisseur. Chiffres dans leur devise de publication. Messages clés affichés seulement après vérification : trois ou quatre points français sur les moteurs, perspectives et risques du trimestre. Dates estimées signalées; valeurs absentes non extrapolées.",
   "instruments": {
     "AAPL": {
       "fetch_status": "fresh",
@@ -573,6 +573,12 @@
               "language": "fr",
               "source_url": "https://www.marketbeat.com/earnings/reports/2026-9-1-alimentation-couche-tard-inc-stock/",
               "kind": "reviewed_summary"
+            },
+            {
+              "text": "Les ventes de marchandises comparables aux États-Unis augmentent de 1,7 %, sous l’objectif de 2 à 3 %. La consommation discrétionnaire et les marges sur les marchandises restent à surveiller malgré la progression des profits.",
+              "language": "fr",
+              "source_url": "https://www.marketbeat.com/earnings/reports/2026-9-1-alimentation-couche-tard-inc-stock/",
+              "kind": "reviewed_summary"
             }
           ],
           "report_url": "https://www.marketbeat.com/earnings/reports/2026-9-1-alimentation-couche-tard-inc-stock/",
@@ -685,22 +691,28 @@
           },
           "messages": [
             {
-              "text": "Strong core banking momentum",
-              "language": "en",
+              "text": "Perspectives — La direction vise une croissance du revenu net d’intérêts d’au moins 8 % en 2027. Cette trajectoire repose notamment sur la hausse des prêts et sur ses hypothèses de taux; elle ne doit pas être extrapolée sans vérifier ces conditions.",
+              "language": "fr",
               "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-14-bank-of-america-co-stock/",
-              "kind": "call_topic"
+              "kind": "reviewed_summary"
             },
             {
-              "text": "Healthy client activity and credit quality",
-              "language": "en",
+              "text": "Élément exceptionnel — Le règlement réglementaire de 1,2 G$ US, non déductible fiscalement, pénalise le bénéfice publié. La direction considère le dossier réglé et les coûts de remédiation intégrés : distinguer cette charge de la rentabilité récurrente.",
+              "language": "fr",
               "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-14-bank-of-america-co-stock/",
-              "kind": "call_topic"
+              "kind": "reviewed_summary"
             },
             {
-              "text": "Markets and investment banking were weaker",
-              "language": "en",
+              "text": "Marchés — Les revenus de négociation reculent de 5 %, dont 17 % pour le revenu fixe, les devises et les matières premières. Les prêts et dépôts restent solides, mais cette faiblesse limite l’effet positif de la croissance bancaire.",
+              "language": "fr",
               "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-14-bank-of-america-co-stock/",
-              "kind": "call_topic"
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Capital — Le CET1 revient à 10,9 %, contre un minimum réglementaire indiqué de 10 %, après la croissance des prêts, le règlement et l’effet des taux. Les 8,3 G$ US rendus aux actionnaires montrent pourquoi la marge de capital mérite autant d’attention que le BPA.",
+              "language": "fr",
+              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-14-bank-of-america-co-stock/",
+              "kind": "reviewed_summary"
             }
           ],
           "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-14-bank-of-america-co-stock/",
@@ -712,6 +724,10 @@
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=BAC&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.marketbeat.com/earnings/reports/2026-10-14-bank-of-america-co-stock/"
             }
           ]
         }
@@ -2998,10 +3014,28 @@
           },
           "messages": [
             {
-              "text": "Revenus : +23,1 % par rapport au même trimestre un an plus tôt.",
+              "text": "Moteur du trimestre — Les revenus des activités actions atteignent 6,44 G$ US, en hausse de 72 % sur un an, portés par le financement et les dérivés. La croissance reste donc très exposée à l’activité des clients sur les marchés.",
               "language": "fr",
-              "source_url": "https://www.marketbeat.com/stocks/NYSE/GS/earnings/",
-              "kind": "calculated"
+              "source_url": "https://www.goldmansachs.com/pressroom/press-releases/current/pdfs/2026-q3-results.pdf",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Banque d’investissement — Les commissions progressent de 21 % à 3,22 G$ US avec les fusions-acquisitions et les émissions. Le carnet de commissions diminue toutefois depuis juin : le niveau du trimestre ne constitue pas à lui seul un nouveau rythme durable.",
+              "language": "fr",
+              "source_url": "https://www.goldmansachs.com/pressroom/press-releases/current/pdfs/2026-q3-results.pdf",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Revenus récurrents — Les frais de gestion et autres frais augmentent de 22 %, à 3,59 G$ US; la gestion d’actifs et de patrimoine croît de 14 %. Cette contribution diversifie les revenus au-delà des activités de négociation.",
+              "language": "fr",
+              "source_url": "https://www.goldmansachs.com/pressroom/press-releases/current/pdfs/2026-q3-results.pdf",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Risque de crédit — Les provisions montent à 368 M$ US, contre 102 M$ US au trimestre précédent, principalement sur des prêts à de grands clients. Ma lecture : surveiller leur normalisation et les dépréciations, même lorsque l’activité de marché soutient les profits.",
+              "language": "fr",
+              "source_url": "https://www.goldmansachs.com/pressroom/press-releases/current/pdfs/2026-q3-results.pdf",
+              "kind": "reviewed_summary"
             }
           ],
           "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-the-goldman-sachs-group-inc-stock/",
@@ -3013,6 +3047,10 @@
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=GS&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.goldmansachs.com/pressroom/press-releases/current/pdfs/2026-q3-results.pdf"
             }
           ]
         }
@@ -3302,10 +3340,28 @@
           },
           "messages": [
             {
-              "text": "Q3 sales rose 6% to $25.4 billion",
-              "language": "en",
+              "text": "Prévisions — J&J relève ses perspectives de croissance opérationnelle des ventes à 6,7–7,1 % et vise un BPA ajusté publié de 11,05–11,15 $ US pour 2026. Cette révision importe davantage que le faible écart des revenus au consensus.",
+              "language": "fr",
               "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-johnson-johnson-stock/",
-              "kind": "call_topic"
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Médicaments — TREMFYA croît d’environ 68 %, tandis que STELARA recule de 54 % sous la pression des biosimilaires. La capacité des nouvelles franchises à compenser l’érosion des anciens produits reste le test commercial central.",
+              "language": "fr",
+              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-johnson-johnson-stock/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "MedTech — La direction reconnaît une performance inférieure à ses attentes, surtout hors États-Unis et chez Abiomed. Elle vise une amélioration au quatrième trimestre, mais les achats hospitaliers et la concurrence en Asie restent des risques d’exécution.",
+              "language": "fr",
+              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-johnson-johnson-stock/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Acquisitions — Le directeur financier chiffre l’effet dilutif de Firefly Bio et Sail Biomedicines à 0,64 $ US par action en 2026 et 1,36 $ US en 2027. Ma lecture : il faut mesurer le progrès opérationnel sans ignorer le coût de construction du portefeuille futur.",
+              "language": "fr",
+              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-johnson-johnson-stock/",
+              "kind": "reviewed_summary"
             }
           ],
           "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-johnson-johnson-stock/",
@@ -3317,6 +3373,10 @@
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=JNJ&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.marketbeat.com/earnings/reports/2026-10-13-johnson-johnson-stock/"
             }
           ]
         }
@@ -3350,10 +3410,28 @@
           },
           "messages": [
             {
-              "text": "JPMorgan reported strong third-quarter results",
-              "language": "en",
+              "text": "Perspectives — Le directeur financier présente un scénario central préliminaire de 107 G$ US de revenu net d’intérêts hors marchés en 2027. Il insiste sur l’incertitude des hypothèses de taux et de bilan : cette indication n’est pas une garantie de revenus.",
+              "language": "fr",
               "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-jpmorgan-chase-co-stock/",
-              "kind": "call_topic"
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Rentabilité — Les revenus progressent d’environ 8 %, mais les dépenses de 12 %, avec les volumes, les recrutements et les salaires. La croissance commerciale ne se convertit donc pas intégralement en levier opérationnel.",
+              "language": "fr",
+              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-jpmorgan-chase-co-stock/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Allocation du capital — Les rachats d’actions se limitent à 1 G$ US; Jamie Dimon privilégie la croissance organique avant les rachats, surtout lorsque les cours sont élevés. Le CET1 descend de 30 points de base à 13,9 %.",
+              "language": "fr",
+              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-jpmorgan-chase-co-stock/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Crédit — Le coût du crédit atteint 2,7 G$ US, dont une hausse nette des réserves de 539 M$ US. Ma lecture : suivre la consommation et les pertes sur prêts si les taux réels restent élevés, au-delà du dynamisme des commissions et des marchés.",
+              "language": "fr",
+              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-jpmorgan-chase-co-stock/",
+              "kind": "reviewed_summary"
             }
           ],
           "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-jpmorgan-chase-co-stock/",
@@ -3365,6 +3443,10 @@
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=JPM&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.marketbeat.com/earnings/reports/2026-10-13-jpmorgan-chase-co-stock/"
             }
           ]
         }
@@ -6054,10 +6136,28 @@
           },
           "messages": [
             {
-              "text": "Strong third-quarter performance",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-15-taiwan-semiconductor-manufacturing-company-limited-stock/",
-              "kind": "call_topic"
+              "text": "Demande — Le calcul haute performance progresse de 22 % sur le trimestre et représente 68 % des revenus. La demande pour les procédés avancés soutient les ventes, au-delà du seul dépassement du BPA.",
+              "language": "fr",
+              "source_url": "https://investor.tsmc.com/english/quarterly-results/2026/q3",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Perspectives — La direction prévoit 52,3 à 54,3 G$ US de revenus au quatrième trimestre, contre 46,72 G$ US publiés au troisième. Le milieu de fourchette implique environ 14 % de croissance séquentielle; c’est une prévision, pas un résultat acquis.",
+              "language": "fr",
+              "source_url": "https://investor.tsmc.com/english/quarterly-results/2026/q3",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Marges — La marge brute descend de 67,7 à 66,4 %, surtout avec le démarrage du 2 nm. Le directeur financier prévoit aussi une dilution de 3 à 4 points liée aux usines étrangères dans les prochaines années : le coût de l’expansion reste à surveiller.",
+              "language": "fr",
+              "source_url": "https://investor.tsmc.com/english/quarterly-results/2026/q3",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Cash-flow — Les activités génèrent 919,8 G$ NT pour 443,2 G$ NT d’investissements au trimestre. Ma lecture : l’expansion reste autofinancée; la thèse dépend maintenant de la conversion de ces capacités en ventes rentables malgré la pression sur les marges.",
+              "language": "fr",
+              "source_url": "https://investor.tsmc.com/english/quarterly-results/2026/q3",
+              "kind": "reviewed_summary"
             }
           ],
           "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-15-taiwan-semiconductor-manufacturing-company-limited-stock/",
@@ -6069,6 +6169,10 @@
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=TSM&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://investor.tsmc.com/english/quarterly-results/2026/q3"
             }
           ]
         }
@@ -6102,16 +6206,28 @@
           },
           "messages": [
             {
-              "text": "Third-quarter results improved materially",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-unitedhealth-group-incorporated-stock/",
-              "kind": "call_topic"
+              "text": "Prévisions — UnitedHealth relève son objectif annuel de BPA ajusté à au moins 20,50 $ US, contre une fourchette de 19,50–20,00 $ US après le deuxième trimestre. Le relèvement confirme une meilleure trajectoire, sans effacer les risques d’exécution.",
+              "language": "fr",
+              "source_url": "https://www.unitedhealthgroup.com/content/dam/UHG/PDF/investors/2026/unh-reports-third-quarter-2026-results.pdf",
+              "kind": "reviewed_summary"
             },
             {
-              "text": "at least $20.50",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-unitedhealth-group-incorporated-stock/",
-              "kind": "call_topic"
+              "text": "Coûts médicaux — Le ratio de soins médicaux baisse de 89,9 à 88,4 % sur un an, avec la tarification, les changements de garanties et la gestion des coûts. C’est un moteur concret du redressement de la rentabilité de l’assurance.",
+              "language": "fr",
+              "source_url": "https://www.unitedhealthgroup.com/content/dam/UHG/PDF/investors/2026/unh-reports-third-quarter-2026-results.pdf",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Volumes — Les membres Medicare Advantage diminuent de 935 000 depuis le début de l’année et les revenus d’Optum Health reculent de 10 %. Ma lecture : le redressement des marges ne doit pas masquer la contraction de certaines clientèles.",
+              "language": "fr",
+              "source_url": "https://www.unitedhealthgroup.com/content/dam/UHG/PDF/investors/2026/unh-reports-third-quarter-2026-results.pdf",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Trésorerie et dette — Le cash-flow opérationnel atteint 5,1 G$ US, soit 1,2 fois le bénéfice net. Le ratio dette/capital reste à 41,7 %, au-dessus de l’objectif d’environ 40 % en fin d’année : la génération de liquidités doit aussi soutenir le désendettement.",
+              "language": "fr",
+              "source_url": "https://www.unitedhealthgroup.com/content/dam/UHG/PDF/investors/2026/unh-reports-third-quarter-2026-results.pdf",
+              "kind": "reviewed_summary"
             }
           ],
           "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-unitedhealth-group-incorporated-stock/",
@@ -6123,6 +6239,10 @@
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=UNH&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.unitedhealthgroup.com/content/dam/UHG/PDF/investors/2026/unh-reports-third-quarter-2026-results.pdf"
             }
           ]
         }
@@ -6481,10 +6601,28 @@
           },
           "messages": [
             {
-              "text": "Strong third-quarter performance",
-              "language": "en",
+              "text": "Activité — Les prêts moyens et les dépôts progressent chacun de 11 % sur un an. Cette croissance du bilan soutient les revenus, mais doit continuer à s’accompagner d’une discipline de souscription plutôt que d’une prise de risque accrue.",
+              "language": "fr",
               "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-wells-fargo-company-stock/",
-              "kind": "call_topic"
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Perspectives — La direction maintient environ 50 G$ US de revenu net d’intérêts pour 2026 et prévoit près de 13 G$ US au quatrième trimestre, avec une marge d’intérêt globalement stable. Les volumes et le renouvellement des actifs à taux fixe sont les moteurs annoncés.",
+              "language": "fr",
+              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-wells-fargo-company-stock/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Efficacité — Le ratio d’efficacité s’améliore de deux points à 63 % et les charges hors intérêts diminuent de 103 M$ US sur un an. Les économies compensent les dépenses liées à l’activité et soutiennent la progression de la rentabilité.",
+              "language": "fr",
+              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-wells-fargo-company-stock/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Crédit — Les pertes nettes sur prêts descendent à 38 points de base. Charlie Scharf ne constate pas encore de dégradation généralisée, mais rappelle que le cycle finira par se détériorer : surveiller les ménages sensibles aux taux et au coût de la vie.",
+              "language": "fr",
+              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-wells-fargo-company-stock/",
+              "kind": "reviewed_summary"
             }
           ],
           "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-wells-fargo-company-stock/",
@@ -6496,6 +6634,10 @@
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=WFC&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.marketbeat.com/earnings/reports/2026-10-13-wells-fargo-company-stock/"
             }
           ]
         }
@@ -6901,5 +7043,6 @@
       "source_warnings": []
     }
   },
-  "errors": {}
+  "errors": {},
+  "analysis_reviewed_at": "2026-10-15T17:27:55Z"
 }

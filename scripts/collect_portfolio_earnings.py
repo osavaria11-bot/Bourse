@@ -2,8 +2,8 @@
 """Collect earnings for the public catalogue. Private holdings never leave the client.
 
 Use paired actual/consensus metrics from one provider and currency. Calendar-only
-entries cannot claim a beat. Short conference-call topics are source quotations,
-limited to 24 words per report; numeric messages are calculated from dated rows.
+entries cannot claim a beat. The UI shows only reviewed French analyses with
+three or four substantive points, bound to the issuer and exact dated report.
 """
 from __future__ import annotations
 
@@ -27,6 +27,7 @@ except ImportError:
 
 ROOT = Path(__file__).resolve().parents[1]
 TORONTO = ZoneInfo("America/Toronto")
+METHODOLOGY = "Calendrier et résultats du catalogue public; filtrage des titres détenus dans le navigateur. BPA publié et consensus d’un même fournisseur. Chiffres dans leur devise de publication. Messages clés affichés seulement après vérification : trois ou quatre points français sur les moteurs, perspectives et risques du trimestre. Dates estimées signalées; valeurs absentes non extrapolées."
 ETFS = set("ACWV CASH CGL FBAL FCIN FCUV FEQT QQC SPYM VBAL VCN VDY VEE VEQT VFV VGRO VIU XBB XEF XEQT XGD XGRO XHY XIC XIG XIU XLF XSB XSP XSU XUS ZAG ZEB ZLB ZRE ZUH".split())
 NYSE = set("APH APO BAC CLS CRM CVX DIS GS HD JNJ JPM MOD MRK NU NVO PFE TSM UNH V WFC XOM".split())
 # These Canadian listings share the issuer's US results. Keep the local holding ID
@@ -328,13 +329,42 @@ def apply_reviewed_messages(feed: dict, highlights: dict) -> dict:
         key = feed["company_symbol"] + ":" + event["report_date"]
         reviewed = highlights.get("reports", {}).get(key)
         if (not reviewed or reviewed.get("report_url", reviewed.get("source_url")) != event["report_url"] or not safe_url(reviewed["source_url"])
-                or not isinstance(reviewed.get("messages"), list) or not 1 <= len(reviewed["messages"]) <= 3
-                or any(not isinstance(text, str) or not text.strip() or len(text) > 300 for text in reviewed["messages"])):
+                or not isinstance(reviewed.get("messages"), list) or not 3 <= len(reviewed["messages"]) <= 4
+                or any(not isinstance(text, str) or not text.strip() or len(text) > 450 for text in reviewed["messages"])):
             continue
         event["messages"] = [{"text": text, "language": "fr", "source_url": reviewed["source_url"], "kind": "reviewed_summary"} for text in reviewed["messages"]]
         if all(source["url"] != reviewed["source_url"] for source in event["sources"]):
             event["sources"].append({"label": "Source des messages clés", "url": reviewed["source_url"]})
     return feed
+
+
+def validate_reviewed_highlights(payload: dict) -> int:
+    if (not isinstance(payload, dict) or payload.get("schema_version") != 1
+            or payload.get("kind") != "reviewed_earnings_highlights" or not isinstance(payload.get("reports"), dict)):
+        raise SourceError("Format des analyses de résultats invalide")
+    try:
+        stamp = datetime.fromisoformat(payload["reviewed_at"].replace("Z", "+00:00"))
+        if not stamp.tzinfo or stamp > datetime.now(timezone.utc) + timedelta(minutes=5):
+            raise ValueError("Invalid review time")
+    except (KeyError, TypeError, AttributeError, ValueError) as error:
+        raise SourceError("Date de vérification des analyses invalide") from error
+    for key, reviewed in payload["reports"].items():
+        if (not re.fullmatch(r"[A-Z0-9][A-Z0-9.-]{0,29}:\d{4}-\d{2}-\d{2}", key)
+                or not isinstance(reviewed, dict) or not safe_url(reviewed.get("source_url"))
+                or reviewed.get("report_url") is not None and not safe_url(reviewed["report_url"])):
+            raise SourceError("Analyse sans entreprise, date ou source précise")
+        try:
+            day = date.fromisoformat(key.rsplit(":", 1)[1])
+            if day > datetime.now(TORONTO).date():
+                raise ValueError("Future result")
+        except ValueError as error:
+            raise SourceError("Date de résultat invalide") from error
+        messages = reviewed.get("messages")
+        if (not isinstance(messages, list) or not 3 <= len(messages) <= 4
+                or any(not isinstance(text, str) or not text.strip() or len(text) > 450 for text in messages)
+                or len(set(messages)) != len(messages)):
+            raise SourceError(f"{key} doit contenir trois ou quatre points distincts")
+    return len(payload["reports"])
 
 
 def collect(catalog: dict, previous: dict | None, now: datetime, fetcher=fetch_text, highlights: dict | None = None) -> dict:
@@ -369,25 +399,44 @@ def collect(catalog: dict, previous: dict | None, now: datetime, fetcher=fetch_t
                     old = (previous or {}).get("instruments", {}).get(identifier)
                     if old and old.get("fetch_status") in ("fresh", "cached") and old.get("fetched_at"):
                         retained = [event for event in old.get("events", []) if start.isoformat() <= event.get("report_date", "") <= end.isoformat()]
-                        instruments[identifier] = {**old, "fetch_status": "cached", "events": retained}
+                        instruments[identifier] = apply_reviewed_messages({**old, "fetch_status": "cached", "events": retained}, highlights or {})
                     else:
                         instruments[identifier] = {"fetch_status": "unavailable", "fetched_at": None, "company_symbol": source_for(definition)[0],
                                                    "source_url": source_for(definition)[1], "events": [], "source_warnings": []}
     coverage = {status: sum(feed["fetch_status"] == status for feed in instruments.values()) for status in ("fresh", "cached", "unavailable", "not_applicable")}
     return {"schema_version": 1, "kind": "portfolio_earnings", "generated_at": now.isoformat(), "timezone": "America/Toronto",
             "window": {"start": start.isoformat(), "end": end.isoformat()}, "coverage": {"total": len(definitions), **coverage},
-            "methodology": "Calendrier et résultats du catalogue public; filtrage des titres détenus dans le navigateur. BPA publié et consensus d’un même fournisseur. Chiffres dans leur devise de publication. Thèmes courts du compte rendu cités dans leur langue d’origine; comparaisons annuelles calculées séparément. Dates estimées signalées; valeurs absentes non extrapolées.",
+            "methodology": METHODOLOGY,
             "instruments": dict(sorted(instruments.items())), "errors": errors}
 
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--output-dir", type=Path, default=ROOT / "data")
+    parser.add_argument("--apply-reviewed-only", action="store_true", help="Apply verified editorial notes without fetching or changing financial metrics")
+    parser.add_argument("--validate-reviewed", action="store_true", help="Validate the three-to-four-point editorial contract without writing data")
     args = parser.parse_args()
     destination = args.output_dir / "portfolio-earnings.json"
     previous = read_json(destination) if destination.exists() else None
     highlights_path = ROOT / "data/earnings-highlights.json"
     highlights = read_json(highlights_path) if highlights_path.exists() else {}
+    if highlights:
+        reviewed_count = validate_reviewed_highlights(highlights)
+    else:
+        reviewed_count = 0
+    if args.validate_reviewed:
+        print(f"Validated {reviewed_count} dated earnings analyses with three or four points each.")
+        return
+    if args.apply_reviewed_only:
+        if not previous or not isinstance(previous.get("instruments"), dict):
+            raise SourceError("A collected public earnings file is required")
+        for feed in previous["instruments"].values():
+            apply_reviewed_messages(feed, highlights)
+        previous["analysis_reviewed_at"] = highlights.get("reviewed_at")
+        previous["methodology"] = METHODOLOGY
+        atomic_write_json(destination, previous)
+        print("Reviewed earnings analyses applied; financial metrics and collection timestamps unchanged.")
+        return
     payload = collect(read_json(ROOT / "data/securities.json"), previous, datetime.now(timezone.utc), highlights=highlights)
     atomic_write_json(destination, payload)
     print("Earnings coverage:", payload["coverage"])
