@@ -41,6 +41,7 @@
       const history = [...byDate].sort((a, b) => a[0].localeCompare(b[0]));
       const fetchStatus = value === null ? "unavailable" : point.fetch_status === "fresh" ? "fresh" : "cached";
       const bankPolicy = point.provider === "bank_of_canada" && point.id === "V39079";
+      const canadaLabour = point.provider === "statistics_canada" && point.id === "V2062815" && point.vector_id === 2062815;
       series.push({
         ...point, date: day, value, history, fetch_status: fetchStatus,
         title: typeof point.title === "string" ? point.title : point.id,
@@ -50,8 +51,9 @@
         description: typeof point.description === "string" ? point.description : "",
         change: validNumber(point.change) ? point.change : null,
         previous_date: isDate(point.previous_date) && point.previous_date <= today ? point.previous_date : null,
-        source_url: bankPolicy ? "https://www.bankofcanada.ca/core-functions/monetary-policy/key-interest-rate/" : "https://fred.stlouisfed.org/series/" + point.id,
-        source_label: bankPolicy ? "Banque du Canada" : "FRED",
+        source_url: bankPolicy ? "https://www.bankofcanada.ca/core-functions/monetary-policy/key-interest-rate/" :
+          canadaLabour ? "https://www150.statcan.gc.ca/t1/tbl1/fr/tv.action?pid=1410028701" : "https://fred.stlouisfed.org/series/" + point.id,
+        source_label: bankPolicy ? "Banque du Canada" : canadaLabour ? "Statistique Canada" : "FRED",
       });
     }
     if (!series.length) throw new Error("Aucun indicateur valide");
@@ -214,3 +216,4 @@
   }
   return { RANGES, MARKET_RANGES, isDate, validNumber, parseTimestamp, normalizeDataset, formatNumber, observationLabel, timestampLabel, changeLabel, filterSeries, rangeStart, visibleHistory, marketPeriod, niceExtent, nearestPoint, csvCell, toCSV, snapshotCSV, historyCSV, ageDays, rateOddsFor };
 });
+

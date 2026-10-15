@@ -111,14 +111,28 @@
     },
     {
       "id": "UNRATE",
-      "title": "Taux de chômage américain",
+      "title": "Taux de chômage · États-Unis",
       "category": "Emploi",
       "frequency": "monthly",
       "unit": "%",
       "decimals": 2,
       "transform": "none",
       "max_age_days": 75,
-      "description": "Part des personnes actives au chômage. Le rythme de hausse et la participation au marché du travail apportent du contexte au niveau du taux.",
+      "description": "Taux de chômage américain U-3, désaisonnalisé, des personnes de 16 ans et plus, publié par le Bureau of Labor Statistics. Une hausse peut signaler un ralentissement et modifier les attentes de taux de la Fed; à lire avec les créations d’emplois et la participation. La variation est exprimée en points de pourcentage depuis le mois précédent.",
+      "change_unit": "pt"
+    },
+    {
+      "id": "V2062815",
+      "title": "Taux de chômage · Canada",
+      "category": "Emploi",
+      "frequency": "monthly",
+      "unit": "%",
+      "decimals": 2,
+      "transform": "none",
+      "max_age_days": 75,
+      "provider": "statistics_canada",
+      "vector_id": 2062815,
+      "description": "Taux de chômage canadien désaisonnalisé des personnes de 15 ans et plus, publié dans l’Enquête sur la population active de Statistique Canada. Une hausse peut signaler un ralentissement et modifier les attentes de taux de la Banque du Canada; à lire avec l’emploi et la participation. La variation est exprimée en points de pourcentage depuis le mois précédent. Les populations couvertes diffèrent légèrement de la série américaine, qui commence à 16 ans.",
       "change_unit": "pt"
     },
     {
@@ -412,3 +426,4 @@
     }
   ]
 }
+

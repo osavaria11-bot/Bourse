@@ -193,12 +193,62 @@ class BankOfCanadaTests(unittest.TestCase):
         self.assertEqual(result["series"][0]["source_url"], generator.BANK_POLICY_URL)
         self.assertFalse(generator.usable_previous({**cached, "provider": "fred"}, self.definition, NOW.date()))
 
+class CanadaLabourTests(unittest.TestCase):
+    def setUp(self):
+        self.definition = {**definition("V2062815"), "provider": "statistics_canada", "vector_id": 2062815}
+        self.payload = [{"status": "SUCCESS", "object": {
+            "responseStatusCode": 0, "productId": 14100287, "vectorId": 2062815,
+            "vectorDataPoint": [self.row("2026-09-01", 6.5), self.row("2026-08-01", 6.4)]}}]
+
+    @staticmethod
+    def row(day, value, **changes):
+        return {"refPer": day, "value": value, "frequencyCode": 6, "scalarFactorCode": 0,
+                "securityLevelCode": 0, "releaseTime": "2026-10-09T08:30", **changes}
+
+    def test_reference_month_is_not_replaced_by_release_date(self):
+        rows = generator.parse_canada_labour_observations(json.dumps(self.payload), NOW.date())
+        self.assertEqual(rows, [["2026-08-01", 6.4], ["2026-09-01", 6.5]])
+
+    def test_invalid_future_nonmonthly_and_private_values_are_rejected(self):
+        self.payload[0]["object"]["vectorDataPoint"] += [
+            self.row("2026-11-01", 99), self.row("bad", 10), self.row("2026-07-01", True),
+            self.row("2026-06-01", None), self.row("2026-05-01", float("nan")),
+            self.row("2026-04-01", 1000), self.row("2026-03-01", -1),
+            self.row("2026-02-01", 10, scalarFactorCode=3),
+            self.row("2026-01-01", 10, frequencyCode=12),
+            self.row("2025-12-01", 10, securityLevelCode=1),
+        ]
+        self.assertEqual(generator.parse_canada_labour_observations(json.dumps(self.payload), NOW.date()),
+                         [["2026-08-01", 6.4], ["2026-09-01", 6.5]])
+
+    def test_wrong_vector_failed_response_and_invalid_json_are_rejected(self):
+        for payload in ("<html>outage</html>", "{}", "[]",
+                        json.dumps([{**self.payload[0], "status": "FAILED"}]),
+                        json.dumps([{"status": "SUCCESS", "object": {**self.payload[0]["object"], "vectorId": 999}}])):
+            with self.subTest(payload=payload), self.assertRaises(generator.SourceError):
+                generator.parse_canada_labour_observations(payload, NOW.date())
+
+    def test_fetch_uses_direct_statcan_data_with_monthly_change_in_points(self):
+        with patch.object(generator, "fetch_text", return_value=json.dumps(self.payload)) as fetch:
+            result = generator.fetch_series(self.definition, NOW)
+        self.assertIn("www150.statcan.gc.ca/t1/wds/rest/getDataFromVectorByReferencePeriodRange?vectorIds=2062815&startRefPeriod=2015-01-01&endReferencePeriod=2026-10-10", fetch.call_args.args[0])
+        self.assertEqual((result["date"], result["value"], result["change"]), ("2026-09-01", 6.5, 0.1))
+        self.assertEqual(result["source_url"], generator.CANADA_LABOUR_URL)
+        self.assertEqual(result["source_label"], "Statistique Canada")
+        with patch.object(generator, "fetch_series", side_effect=generator.SourceError("outage")):
+            fallback = generator.collect_sources([self.definition], {"series": [result]}, NOW)
+        self.assertEqual(fallback["series"][0]["fetch_status"], "cached")
+        self.assertEqual(fallback["series"][0]["date"], "2026-09-01")
+        self.assertEqual(fallback["series"][0]["history"], result["history"])
+
 class ConfigurationTests(unittest.TestCase):
     def test_unique_complete_indicator_definitions(self):
         config = generator.read_json(generator.ROOT / "data/series.json")
         ids = [item["id"] for item in config["series"]]
         self.assertEqual(len(ids), len(set(ids)))
-        self.assertEqual(len(ids), 34)
+        self.assertEqual(len(ids), 35)
+        self.assertEqual(ids[ids.index("UNRATE") + 1], "V2062815")
+        self.assertEqual(config["series"][ids.index("V2062815")]["provider"], "statistics_canada")
         self.assertIn("DFEDTARL", ids)
         self.assertIn("DFEDTARU", ids)
         self.assertNotIn("DFF", ids)
@@ -212,3 +262,4 @@ class ConfigurationTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+

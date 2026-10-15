@@ -156,6 +156,23 @@ test("Bank of Canada policy rate keeps its official source across normalization 
   assert.doesNotMatch(U.historyCSV(bank, "1M"), /Série FRED|javascript:bad/);
 });
 
+test("Canada and US unemployment remain searchable together with correct sources and percent-point changes", () => {
+  const input = {schema_version: 2, generated_at: "2026-10-10T16:00:00Z", series: [
+    {...sample(), id: "V2062815", provider: "statistics_canada", vector_id: 2062815,
+      title: "Taux de chômage · Canada", category: "Emploi", frequency: "monthly", date: "2026-09-01", previous_date: "2026-08-01", source_url: "javascript:bad"},
+    {...sample(), id: "UNRATE", title: "Taux de chômage · États-Unis", category: "Emploi"},
+  ]};
+  const rows = U.normalizeDataset(input, "2026-10-10").series;
+  assert.deepEqual(U.filterSeries(rows, {category: "Emploi", search: "chomage"}).map(p => p.id), ["V2062815", "UNRATE"]);
+  assert.equal(rows[0].source_label, "Statistique Canada");
+  assert.equal(rows[0].source_url, "https://www150.statcan.gc.ca/t1/tbl1/fr/tv.action?pid=1410028701");
+  assert.equal(rows[1].source_url, "https://fred.stlouisfed.org/series/UNRATE");
+  assert.equal(U.observationLabel(rows[0].date, rows[0].frequency), "sept. 2026");
+  assert.match(U.changeLabel(rows[0]).text, /pt$/);
+  assert.match(U.snapshotCSV(rows), /statcan\.gc\.ca/);
+  assert.doesNotMatch(U.historyCSV(rows[0], "1Y"), /javascript:bad/);
+});
+
 const oddsSample = () => ({schema_version: 1, kind: "rate_odds", generated_at: "2026-10-13T00:56:18Z", decisions: [
   {id: "fed", as_of: "2026-10-13", meeting_date: "2026-10-28", hike: 30, hold: 70, cut: 0, status: "fresh"},
   {id: "canada", as_of: "2026-10-12", meeting_date: "2026-10-28", hike: 28, hold: 72, cut: 0, status: "fresh"},
@@ -192,3 +209,4 @@ test("Decision expiry follows Quebec's calendar through winter and summer UTC ro
     assert.equal(U.rateOddsFor(data, "fed", new Date(now.getTime() + 3 * 3600000)), null);
   }
 });
+

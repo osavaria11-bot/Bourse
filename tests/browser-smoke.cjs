@@ -200,6 +200,17 @@ async function run() {
     await page.locator("#searchInput").fill("epargne"); await waitCount(page, 1);
     assert.equal(await page.locator(".indicator-card").getAttribute("data-id"), "A072RC1Q156SBEA");
     await page.locator("#searchInput").fill(""); await waitCount(page, indicatorCount);
+    await page.locator("#searchInput").fill("chomage"); await waitCount(page, 2);
+    const canadianUnemployment = page.locator('.indicator-card[data-id="V2062815"]');
+    assert.match(await canadianUnemployment.locator("h3").innerText(), /Canada/);
+    assert.match(await canadianUnemployment.locator(".card-bottom a").innerText(), /Statistique Canada/);
+    assert.equal(await canadianUnemployment.locator(".card-bottom a").getAttribute("href"), "https://www150.statcan.gc.ca/t1/tbl1/fr/tv.action?pid=1410028701");
+    await canadianUnemployment.locator(".detail-button").click();
+    await page.waitForFunction(() => document.querySelector("#detailDialog").open);
+    assert.match(await page.locator("#detailSource").innerText(), /Statistique Canada/);
+    await page.keyboard.press("Escape");
+    assert.equal(await page.locator('.indicator-card[data-id="UNRATE"]').count(), 1);
+    await page.locator("#searchInput").fill(""); await waitCount(page, indicatorCount);
     await page.locator("#categoryFilters button").filter({ hasText: /^Canada$/ }).click(); await waitCount(page, 3);
     await page.locator("#categoryFilters button").filter({ hasText: /^Tous$/ }).click(); await waitCount(page, indicatorCount);
     const favoriteId = await page.locator(".indicator-card").first().getAttribute("data-id");
@@ -335,3 +346,4 @@ async function run() {
   } finally { await browser.close(); }
 }
 run().catch(error => { console.error(error); process.exitCode = 1; }).finally(() => server.close());
+

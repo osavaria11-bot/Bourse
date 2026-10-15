@@ -1,10 +1,10 @@
 # SAVY — Tableau macroéconomique
 
-Un tableau de bord en français pour suivre le cycle économique aux États-Unis et au Canada, à partir des observations publiées sur **FRED** et par la **Banque du Canada**.
+Un tableau de bord en français pour suivre le cycle économique aux États-Unis et au Canada, à partir des observations publiées sur **FRED**, par la **Banque du Canada** et par **Statistique Canada**.
 
 ## Fonctions
 
-- **34 indicateurs** : taux, inflation, emploi, activité, crédit, marchés, immobilier, Canada et matières premières.
+- **35 indicateurs** : taux, inflation, emploi, activité, crédit, marchés, immobilier, Canada et matières premières. Les taux de chômage désaisonnalisés canadien et américain se trouvent dans **Emploi**, avec leur mois de référence, leur variation en points de pourcentage et dix ans d’historique. Le Canada utilise directement le vecteur `2062815` du tableau 14-10-0287-01 de Statistique Canada; les États-Unis utilisent `UNRATE` (BLS via FRED).
 - **Graphiques interactifs** avec périodes de 1 mois, 3 mois, 1 an, 5 ans et 10 ans; valeurs au survol et navigation avec les flèches du clavier.
 - **Vue détaillée** : explication de l’indicateur, dernières observations, lien vers la source et export de l’historique.
 - **Recherche**, filtres par catégorie, tri par nom ou date, et **favoris** conservés dans le navigateur.
@@ -171,3 +171,4 @@ Le sélecteur **Portefeuille 1 / Portefeuille 2 / Portefeuille 3** utilise FEQT 
 Le profil chiffré du deuxième portefeuille est `data/personal-portfolio-2.json`. Il réutilise la clé du lien personnel et authentifie aussi son identifiant de portefeuille; un profil du premier ne peut pas remplacer celui du second. Le manifeste d’écran d’accueil garde le portefeuille sélectionné dans le fragment d’URL. Pour modifier la base du deuxième, utiliser une sauvegarde privée avec `portfolio_id: "2"` et son accès personnel, puis `node scripts/seal_personal_portfolio.cjs PRIVATE_INPUT data/personal-portfolio-2.json`. Aucune quantité ni clé n’est enregistrée en clair dans le dépôt. Les données de XLF proviennent du fichier XLSX daté de State Street; les soldes hors actions ne sont pas assimilés au secteur financier.
 
 Le troisième profil est `data/personal-portfolio-3.json`, créé de la même façon avec `portfolio_id: "3"` et VGRO comme référence. Son identifiant est authentifié séparément et son lien d’écran d’accueil conserve la sélection 3. La cotation Microsoft CDR utilise `MSFTCDR` / `MSFT.TO` en CAD; l’action américaine `MSFT` en USD reste distincte. Ses résultats trimestriels proviennent de Microsoft et gardent leur devise USD. CASH est classé en liquidités, FBAL distingue les obligations et les cryptoactifs, et les nouveaux fonds citent leur émetteur avec la date des répartitions. Les tests vérifient les trois profils, leurs modifications indépendantes, les références VBAL/VGRO et les affichages mobiles, exclusivement avec des quantités synthétiques.
+
