@@ -18,7 +18,9 @@ permissions:
 # The same group as the full deployment prevents an older snapshot from
 # overwriting a newer briefing, portfolio feature or macro release.
 concurrency:
-  group: pages-${{ github.ref }}
+  # A cancelled full deployment must not enqueue a skipped quote run in the
+  # Pages group: doing so would cancel the newer deployment already pending.
+  group: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.conclusion != 'success' && format('quotes-skipped-{0}', github.run_id) || format('pages-{0}', github.ref) }}
   cancel-in-progress: false
 
 jobs:
@@ -122,3 +124,4 @@ jobs:
 
 # Quote snapshots are generated deployment assets. They do not create
 # hundreds of daily commits or change the official closing-price histories.
+

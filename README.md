@@ -33,7 +33,7 @@ Les graphiques des indices incluent le cours de séance comme dernier point et r
 
 Pour les indicateurs macro, le VIX, le PHLX XAU et VXEEM utilisent leur cotation lorsqu’elle est disponible; leur graphique historique reste FRED. USD/CAD utilise biquote sur la carte macro comme dans le bandeau. Trois compléments explicitement distincts sont proposés : indice de rendement Cboe TNX pour le 10 ans, contrat WTI proche pour le pétrole et DXY pour le dollar. Ils ne remplacent pas une série FRED de maturité constante, de pétrole spot ou de panier large par un instrument différent.
 
-`Fresh macro releases` relit les publications officielles à 8 h 37, 9 h 52, 10 h 07, 14 h 07 et 14 h 37 en semaine, en plus des collectes habituelles. FRED et la Banque du Canada restent les sources des statistiques économiques et des décisions; leurs périodes de référence restent intactes.
+`Fresh macro releases` relit les publications officielles à 8 h 37, 9 h 52, 10 h 07, 14 h 07 et 14 h 37 en semaine, en plus des collectes habituelles. FRED, la Banque du Canada et Statistique Canada sont les sources des statistiques économiques et des décisions; leurs périodes de référence restent intactes.
 
 ## Mise à jour et fiabilité
 
