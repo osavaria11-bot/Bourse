@@ -4,7 +4,10 @@ Un tableau de bord en français pour suivre le cycle économique aux États-Unis
 
 ## Fonctions
 
-- **35 indicateurs** : taux, inflation, emploi, activité, crédit, marchés, immobilier, Canada et matières premières. Les taux de chômage désaisonnalisés canadien et américain se trouvent dans **Emploi**, avec leur mois de référence, leur variation en points de pourcentage et dix ans d’historique. Le Canada utilise directement le vecteur `2062815` du tableau 14-10-0287-01 de Statistique Canada; les États-Unis utilisent `UNRATE` (BLS via FRED).
+- **41 indicateurs** : taux, inflation, emploi, activité, crédit, marchés, immobilier, Canada et matières premières. Les taux de chômage désaisonnalisés canadien et américain se trouvent dans **Emploi**, avec leur mois de référence, leur variation en points de pourcentage et dix ans d’historique. Le Canada utilise directement le vecteur `2062815` du tableau 14-10-0287-01 de Statistique Canada; les États-Unis utilisent `UNRATE` (BLS via FRED).
+- **Inflation canadienne** : IPC global sur 12 mois, calculé à partir du vecteur `41690973` du tableau 18-10-0004-01; CPI-trim (`108785715`) et CPI-median (`108785714`) déjà exprimés en variation annuelle, issus du tableau 18-10-0256-01. Les trois séries viennent directement de Statistique Canada et sont présentées dans **Inflation**.
+- **Demandes initiales d’assurance-chômage** : série hebdomadaire `ICSA` et moyenne mobile officielle sur quatre semaines `IC4WSA`, dans **Emploi**. Les valeurs sont des nombres de demandes par semaine, jamais des totaux mensuels ou sur quatre semaines.
+- **Taux réel américain à 10 ans** : rendement quotidien des TIPS à échéance constante `DFII10`, dans **Taux**, distinct du rendement nominal et de l’inflation courante.
 - **Graphiques interactifs** avec périodes de 1 mois, 3 mois, 1 an, 5 ans et 10 ans; valeurs au survol et navigation avec les flèches du clavier.
 - **Vue détaillée** : explication de l’indicateur, dernières observations, lien vers la source et export de l’historique.
 - **Recherche**, filtres par catégorie, tri par nom ou date, et **favoris** conservés dans le navigateur.

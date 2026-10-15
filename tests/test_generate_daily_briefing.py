@@ -241,12 +241,52 @@ class CanadaLabourTests(unittest.TestCase):
         self.assertEqual(fallback["series"][0]["date"], "2026-09-01")
         self.assertEqual(fallback["series"][0]["history"], result["history"])
 
+class CanadaInflationTests(unittest.TestCase):
+    def payload(self, series_id, rows):
+        spec = generator.STATCAN_SERIES[series_id]
+        return json.dumps([{"status": "SUCCESS", "object": {
+            "responseStatusCode": 0, "vectorId": spec["vector_id"], "productId": spec["product_id"],
+            "vectorDataPoint": [CanadaLabourTests.row(day, value) for day, value in rows]}}])
+
+    def test_cpi_index_above_100_is_transformed_once_to_annual_inflation(self):
+        item = {**definition("V41690973", "yoy"), "provider": "statistics_canada", "vector_id": 41690973}
+        payload = self.payload(item["id"], [["2025-08-01", 160], ["2025-09-01", 161],
+                                           ["2026-08-01", 164], ["2026-09-01", 167]])
+        with patch.object(generator, "fetch_text", return_value=payload):
+            result = generator.fetch_series(item, NOW)
+        self.assertAlmostEqual(result["value"], (167 / 161 - 1) * 100, places=6)
+        self.assertEqual(result["previous_value"], 2.5)
+        self.assertTrue(result["source_url"].endswith("pid=1810000401"))
+
+    def test_core_inflation_remains_an_annual_rate_including_negative_values(self):
+        for series_id in ("V108785715", "V108785714"):
+            with self.subTest(series_id=series_id):
+                item = {**definition(series_id), "provider": "statistics_canada",
+                        "vector_id": generator.STATCAN_SERIES[series_id]["vector_id"]}
+                payload = self.payload(series_id, [["2026-08-01", 0.1], ["2026-09-01", -0.2]])
+                with patch.object(generator, "fetch_text", return_value=payload):
+                    result = generator.fetch_series(item, NOW)
+                self.assertEqual((result["value"], result["change"]), (-0.2, -0.3))
+                self.assertTrue(result["source_url"].endswith("pid=1810025601"))
+
+    def test_wrong_table_or_vector_never_replaces_a_valid_series(self):
+        payload = json.loads(self.payload("V41690973", [["2026-09-01", 167]]))
+        payload[0]["object"]["productId"] = 14100287
+        with self.assertRaises(generator.SourceError):
+            generator.parse_statcan_observations(json.dumps(payload), "V41690973", NOW.date())
+        item = {**definition("V41690973", "yoy"), "provider": "statistics_canada", "vector_id": 41690973}
+        cached = generator.summarize(item, [["2026-09-01", 2.0]], NOW)
+        self.assertFalse(generator.usable_previous({**cached, "vector_id": 999}, item, NOW.date()))
+        with patch.object(generator, "fetch_text") as fetch, self.assertRaises(generator.SourceError):
+            generator.fetch_series({**item, "vector_id": 999}, NOW)
+        fetch.assert_not_called()
+
 class ConfigurationTests(unittest.TestCase):
     def test_unique_complete_indicator_definitions(self):
         config = generator.read_json(generator.ROOT / "data/series.json")
         ids = [item["id"] for item in config["series"]]
         self.assertEqual(len(ids), len(set(ids)))
-        self.assertEqual(len(ids), 35)
+        self.assertEqual(len(ids), 41)
         self.assertEqual(ids[ids.index("UNRATE") + 1], "V2062815")
         self.assertEqual(config["series"][ids.index("V2062815")]["provider"], "statistics_canada")
         self.assertIn("DFEDTARL", ids)
@@ -254,6 +294,12 @@ class ConfigurationTests(unittest.TestCase):
         self.assertNotIn("DFF", ids)
         self.assertEqual(config["series"][ids.index("V39079")]["provider"], "bank_of_canada")
         self.assertEqual(ids[ids.index("DEXCAUS") + 1], "V39079")
+        by_id = {item["id"]: item for item in config["series"]}
+        self.assertEqual(by_id["V41690973"]["transform"], "yoy")
+        for sid in ("V108785715", "V108785714", "ICSA", "IC4WSA", "DFII10"):
+            self.assertEqual(by_id[sid]["transform"], "none")
+        for sid in ("ICSA", "IC4WSA"):
+            self.assertEqual(by_id[sid]["frequency"], "weekly")
         for item in config["series"]:
             self.assertIn(item["frequency"], ("daily", "weekly", "monthly", "quarterly"))
             self.assertIn(item["transform"], ("none", "yoy", "mom_change", "qoq_annualized"))

@@ -200,7 +200,7 @@ async function run() {
     await page.locator("#searchInput").fill("epargne"); await waitCount(page, 1);
     assert.equal(await page.locator(".indicator-card").getAttribute("data-id"), "A072RC1Q156SBEA");
     await page.locator("#searchInput").fill(""); await waitCount(page, indicatorCount);
-    await page.locator("#searchInput").fill("chomage"); await waitCount(page, 2);
+    await page.locator("#searchInput").fill("chomage"); await waitCount(page, 4);
     const canadianUnemployment = page.locator('.indicator-card[data-id="V2062815"]');
     assert.match(await canadianUnemployment.locator("h3").innerText(), /Canada/);
     assert.match(await canadianUnemployment.locator(".card-bottom a").innerText(), /Statistique Canada/);
@@ -210,6 +210,20 @@ async function run() {
     assert.match(await page.locator("#detailSource").innerText(), /Statistique Canada/);
     await page.keyboard.press("Escape");
     assert.equal(await page.locator('.indicator-card[data-id="UNRATE"]').count(), 1);
+    assert.equal(await page.locator('.indicator-card[data-id="ICSA"]').count(), 1);
+    assert.equal(await page.locator('.indicator-card[data-id="IC4WSA"]').count(), 1);
+    await page.locator("#searchInput").fill("inflation canada"); await waitCount(page, 3);
+    for (const sid of ["V41690973", "V108785715", "V108785714"]) {
+      const card = page.locator('.indicator-card[data-id="' + sid + '"]');
+      assert.match(await card.locator(".card-bottom a").innerText(), /Statistique Canada/);
+      await card.locator(".detail-button").click();
+      await page.waitForFunction(() => document.querySelector("#detailDialog").open);
+      assert.match(await page.locator("#detailSource").getAttribute("href"), /statcan\.gc\.ca/);
+      assert.equal(await page.locator("#detailChart svg").count(), 1);
+      await page.keyboard.press("Escape");
+    }
+    await page.locator("#searchInput").fill("DFII10"); await waitCount(page, 1);
+    assert.match(await page.locator('.indicator-card[data-id="DFII10"] h3').innerText(), /TIPS/);
     await page.locator("#searchInput").fill(""); await waitCount(page, indicatorCount);
     await page.locator("#categoryFilters button").filter({ hasText: /^Canada$/ }).click(); await waitCount(page, 3);
     await page.locator("#categoryFilters button").filter({ hasText: /^Tous$/ }).click(); await waitCount(page, indicatorCount);

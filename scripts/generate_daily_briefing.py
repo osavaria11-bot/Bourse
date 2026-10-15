@@ -24,9 +24,15 @@ ROOT = Path(__file__).resolve().parents[1]
 TIMEOUT_SECONDS = 20
 RETRY_ATTEMPTS = 3
 HISTORY_YEARS = 10
-BRIEFING_IDS = ["CPIAUCSL", "PCEPILFE", "UNRATE", "V2062815", "PAYEMS", "GDPC1", "DFEDTARL", "DFEDTARU", "DGS10", "T10Y2Y", "VIXCLS", "DEXCAUS", "V39079"]
+BRIEFING_IDS = ["CPIAUCSL", "PCEPILFE", "V41690973", "V108785715", "V108785714", "UNRATE", "V2062815", "ICSA", "IC4WSA", "PAYEMS", "GDPC1", "DFEDTARL", "DFEDTARU", "DGS10", "DFII10", "T10Y2Y", "VIXCLS", "DEXCAUS", "V39079"]
 BANK_POLICY_URL = "https://www.bankofcanada.ca/core-functions/monetary-policy/key-interest-rate/"
 CANADA_LABOUR_URL = "https://www150.statcan.gc.ca/t1/tbl1/fr/tv.action?pid=1410028701"
+STATCAN_SERIES = {
+    "V2062815": {"vector_id": 2062815, "product_id": 14100287},
+    "V41690973": {"vector_id": 41690973, "product_id": 18100004},
+    "V108785715": {"vector_id": 108785715, "product_id": 18100256},
+    "V108785714": {"vector_id": 108785714, "product_id": 18100256},
+}
 NEWS_SOURCES = [
     {"label": "Reuters — Marchés", "url": "https://www.reuters.com/markets/", "description": "Actions, taux, devises et matières premières."},
     {"label": "Reuters — Économie", "url": "https://www.reuters.com/markets/econ-world/", "description": "Croissance, inflation et banques centrales."},
@@ -134,17 +140,22 @@ def source_metadata(definition: dict) -> dict:
     if definition.get("provider") == "bank_of_canada":
         return {"source_url": BANK_POLICY_URL, "source_label": "Banque du Canada"}
     if definition.get("provider") == "statistics_canada":
-        return {"source_url": CANADA_LABOUR_URL, "source_label": "Statistique Canada"}
+        series = STATCAN_SERIES.get(definition["id"])
+        return {"source_url": f"https://www150.statcan.gc.ca/t1/tbl1/fr/tv.action?pid={series['product_id']}01"
+                if series else "https://www.statcan.gc.ca/", "source_label": "Statistique Canada"}
     if "quote_symbol" in definition and "source_url" in definition:
         return {"source_url": definition["source_url"], "source_label": "Yahoo Finance"}
     return {"source_url": f"https://fred.stlouisfed.org/series/{definition['id']}", "source_label": "FRED"}
 
 def parse_canada_labour_observations(text: str, today: date) -> list[list]:
-    """Read the monthly, seasonally adjusted, Canada-wide unemployment rate.
+    """Read the seasonally adjusted unemployment rate, ages 15+, both sexes."""
+    return parse_statcan_observations(text, "V2062815", today)
 
-    Vector 2062815 is the total population aged 15+, both sexes, table 14-10-0287-01.
-    The reference month remains separate from the provider's release time.
-    """
+def parse_statcan_observations(text: str, series_id: str, today: date) -> list[list]:
+    """Validate a registered monthly vector without confusing release and reference dates."""
+    specification = STATCAN_SERIES.get(series_id)
+    if specification is None:
+        raise SourceError("Série Statistique Canada non prise en charge")
     try:
         payload = json.loads(text)
     except ValueError as exc:
@@ -154,24 +165,28 @@ def parse_canada_labour_observations(text: str, today: date) -> list[list]:
     vector = next((entry.get("object") for entry in payload
                    if isinstance(entry, dict) and entry.get("status") == "SUCCESS"
                    and isinstance(entry.get("object"), dict)
-                   and entry["object"].get("vectorId") == 2062815), None)
-    if (not vector or vector.get("productId") != 14100287
+                   and entry["object"].get("vectorId") == specification["vector_id"]), None)
+    if (not vector or vector.get("productId") != specification["product_id"]
             or vector.get("responseStatusCode") != 0
             or not isinstance(vector.get("vectorDataPoint"), list)):
-        raise SourceError("Statistique Canada : vecteur de chômage non reconnu")
+        raise SourceError("Statistique Canada : vecteur non reconnu")
     output = io.StringIO()
     writer = csv.writer(output)
-    writer.writerow(["date", "V2062815"])
+    writer.writerow(["date", series_id])
     for row in vector["vectorDataPoint"]:
         if (not isinstance(row, dict) or row.get("frequencyCode") != 6
                 or row.get("scalarFactorCode") != 0 or row.get("securityLevelCode") != 0):
             continue
         value = row.get("value")
         if (isinstance(value, bool) or not isinstance(value, (int, float))
-                or not math.isfinite(value) or not 0 <= value <= 100):
+                or not math.isfinite(value)):
+            continue
+        if series_id == "V2062815" and not 0 <= value <= 100:
+            continue
+        if series_id == "V41690973" and value <= 0:
             continue
         writer.writerow([row.get("refPer", ""), value])
-    return parse_observations(output.getvalue(), "V2062815", today)
+    return parse_observations(output.getvalue(), series_id, today)
 
 def transform_observations(observations: list[list], transform: str) -> list[list]:
     if transform == "none":
@@ -223,12 +238,13 @@ def fetch_series(definition: dict, now: datetime) -> dict:
         text = fetch_text(f"https://www.bankofcanada.ca/valet/observations/{definition['id']}/json?{params}")
         observations = parse_bank_observations(text, definition["id"], today)
     elif definition.get("provider") == "statistics_canada":
-        if definition["id"] != "V2062815" or definition.get("vector_id") != 2062815:
+        specification = STATCAN_SERIES.get(definition["id"])
+        if not specification or definition.get("vector_id") != specification["vector_id"]:
             raise SourceError("Série Statistique Canada non prise en charge")
         params = urlencode({"vectorIds": definition["vector_id"], "startRefPeriod": start.isoformat(),
                             "endReferencePeriod": today.isoformat()})
         text = fetch_text(f"https://www150.statcan.gc.ca/t1/wds/rest/getDataFromVectorByReferencePeriodRange?{params}")
-        observations = parse_canada_labour_observations(text, today)
+        observations = parse_statcan_observations(text, definition["id"], today)
     elif definition.get("provider", "fred") == "fred":
         params = urlencode({"id": definition["id"], "cosd": start.isoformat(), "coed": today.isoformat()})
         text = fetch_text(f"https://fred.stlouisfed.org/graph/fredgraph.csv?{params}")
@@ -244,7 +260,7 @@ def usable_previous(point: dict | None, definition: dict, today: date) -> bool:
         return False
     if point.get("provider", "fred") != definition.get("provider", "fred"):
         return False
-    if any(point.get(key) != definition[key] for key in ("quote_symbol", "currency") if key in definition):
+    if any(point.get(key) != definition[key] for key in ("quote_symbol", "currency", "vector_id") if key in definition):
         return False
     value = point.get("value")
     if not isinstance(value, (int, float)) or isinstance(value, bool) or not math.isfinite(value):

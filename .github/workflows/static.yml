@@ -107,7 +107,7 @@ jobs:
           data = json.loads((Path(os.environ["RUNNER_TEMP"]) / "fred-check/macro-data.json").read_text())
           print("Provider coverage:", data["coverage"])
           points = {p["id"]: p for p in data["series"]}
-          for sid in ("DFEDTARL", "DFEDTARU", "CPIAUCSL", "DEXCAUS", "V39079", "PCEPILFE", "GDPC1", "PAYEMS", "UNRATE", "V2062815"):
+          for sid in ("DFEDTARL", "DFEDTARU", "CPIAUCSL", "DEXCAUS", "V39079", "PCEPILFE", "GDPC1", "PAYEMS", "UNRATE", "V2062815", "V41690973", "V108785715", "V108785714", "ICSA", "IC4WSA", "DFII10"):
               assert points[sid]["fetch_status"] == "fresh", f"Provider integration failed for {sid}"
               print(sid, points[sid]["date"], points[sid]["value"], points[sid]["unit"])
           policy = points['V39079']
@@ -118,6 +118,10 @@ jobs:
           assert canada_jobs['provider'] == 'statistics_canada' and canada_jobs['unit'] == '%'
           assert canada_jobs['source_url'].startswith('https://www150.statcan.gc.ca/')
           assert len(canada_jobs['history']) >= 120
+          for sid in ('V41690973', 'V108785715', 'V108785714'):
+              assert points[sid]['provider'] == 'statistics_canada' and len(points[sid]['history']) >= 118
+          assert points['ICSA']['frequency'] == points['IC4WSA']['frequency'] == 'weekly'
+          assert len(points['DFII10']['history']) > 2000
           PY
       - name: Verify world equity data sources on the improvement branch
         if: startsWith(github.ref, 'refs/heads/codex/indices-')

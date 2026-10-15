@@ -62,6 +62,18 @@
       "change_unit": "pt"
     },
     {
+      "id": "DFII10",
+      "title": "Taux réel américain · 10 ans (TIPS)",
+      "category": "Taux",
+      "frequency": "daily",
+      "unit": "%",
+      "decimals": 2,
+      "transform": "none",
+      "max_age_days": 10,
+      "description": "Rendement réel à échéance constante de 10 ans des obligations du Trésor américain indexées sur l’inflation (TIPS). Il s’agit d’une mesure de marché quotidienne, distincte du taux nominal et d’un taux calculé en soustrayant l’inflation courante. Sa hausse augmente, toutes choses égales par ailleurs, le taux d’actualisation réel utilisé pour valoriser les actifs. Les valeurs négatives restent possibles.",
+      "change_unit": "pt"
+    },
+    {
       "id": "CPIAUCSL",
       "title": "Inflation CPI · annuelle",
       "category": "Inflation",
@@ -110,6 +122,48 @@
       "change_unit": "pt"
     },
     {
+      "id": "V41690973",
+      "title": "Inflation Canada · IPC global annuel",
+      "category": "Inflation",
+      "frequency": "monthly",
+      "unit": "%",
+      "decimals": 1,
+      "transform": "yoy",
+      "max_age_days": 100,
+      "provider": "statistics_canada",
+      "vector_id": 41690973,
+      "description": "Variation sur 12 mois de l’indice des prix à la consommation canadien, ensemble des produits, non désaisonnalisé. Calculée à partir des niveaux officiels de Statistique Canada : (IPC / IPC du même mois un an plus tôt − 1) × 100. À comparer au CPI-trim et au CPI-median pour distinguer les variations ponctuelles de la tendance sous-jacente.",
+      "change_unit": "pt"
+    },
+    {
+      "id": "V108785715",
+      "title": "Inflation Canada · CPI-trim annuel",
+      "category": "Inflation",
+      "frequency": "monthly",
+      "unit": "%",
+      "decimals": 1,
+      "transform": "none",
+      "max_age_days": 100,
+      "provider": "statistics_canada",
+      "vector_id": 108785715,
+      "description": "Mesure d’inflation sous-jacente canadienne sur 12 mois publiée par Statistique Canada et suivie par la Banque du Canada. Le CPI-trim exclut les composantes dont les variations mensuelles se situent dans les extrémités de la distribution. Il aide à lire la tendance persistante des prix en atténuant les mouvements extrêmes et peut être révisé.",
+      "change_unit": "pt"
+    },
+    {
+      "id": "V108785714",
+      "title": "Inflation Canada · CPI-median annuel",
+      "category": "Inflation",
+      "frequency": "monthly",
+      "unit": "%",
+      "decimals": 1,
+      "transform": "none",
+      "max_age_days": 100,
+      "provider": "statistics_canada",
+      "vector_id": 108785714,
+      "description": "Mesure d’inflation sous-jacente canadienne sur 12 mois publiée par Statistique Canada et suivie par la Banque du Canada. Le CPI-median utilise la variation située au milieu de la distribution pondérée des variations de prix. La série est déjà exprimée en pourcentage annuel; elle peut être révisée et doit être lue avec l’inflation globale et le CPI-trim.",
+      "change_unit": "pt"
+    },
+    {
       "id": "UNRATE",
       "title": "Taux de chômage · États-Unis",
       "category": "Emploi",
@@ -134,6 +188,30 @@
       "vector_id": 2062815,
       "description": "Taux de chômage canadien désaisonnalisé des personnes de 15 ans et plus, publié dans l’Enquête sur la population active de Statistique Canada. Une hausse peut signaler un ralentissement et modifier les attentes de taux de la Banque du Canada; à lire avec l’emploi et la participation. La variation est exprimée en points de pourcentage depuis le mois précédent. Les populations couvertes diffèrent légèrement de la série américaine, qui commence à 16 ans.",
       "change_unit": "pt"
+    },
+    {
+      "id": "ICSA",
+      "title": "Assurance-chômage US · demandes initiales",
+      "category": "Emploi",
+      "frequency": "weekly",
+      "unit": "demandes",
+      "decimals": 0,
+      "transform": "none",
+      "max_age_days": 21,
+      "description": "Demandes initiales hebdomadaires d’assurance-chômage aux États-Unis, désaisonnalisées. Publiées par le département américain du Travail et relayées par FRED, elles donnent un signal plus fréquent sur les pertes d’emploi que le taux de chômage mensuel. Une semaine peut être volatile; à comparer à la moyenne sur quatre semaines.",
+      "change_unit": "demandes"
+    },
+    {
+      "id": "IC4WSA",
+      "title": "Assurance-chômage US · moyenne de 4 semaines",
+      "category": "Emploi",
+      "frequency": "weekly",
+      "unit": "demandes",
+      "decimals": 0,
+      "transform": "none",
+      "max_age_days": 21,
+      "description": "Moyenne mobile sur quatre semaines des demandes initiales américaines d’assurance-chômage, désaisonnalisée et publiée directement par la source officielle. Elle lisse les variations hebdomadaires pour mieux lire la tendance. Le niveau est un nombre moyen de demandes par semaine, et non un total sur quatre semaines.",
+      "change_unit": "demandes"
     },
     {
       "id": "PAYEMS",
@@ -426,4 +504,3 @@
     }
   ]
 }
-

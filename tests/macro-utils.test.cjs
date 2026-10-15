@@ -173,6 +173,19 @@ test("Canada and US unemployment remain searchable together with correct sources
   assert.doesNotMatch(U.historyCSV(rows[0], "1Y"), /javascript:bad/);
 });
 
+test("Canadian CPI source links remain tied to their actual tables in cards and exports", () => {
+  const input = {schema_version: 2, generated_at: "2026-10-10T16:00:00Z", series:
+    [["V41690973",41690973,18100004],["V108785715",108785715,18100256],["V108785714",108785714,18100256]]
+      .map(([id,vector_id]) => ({...sample(), id, vector_id, provider: "statistics_canada", source_url: "javascript:bad"}))};
+  const normalized = U.normalizeDataset(input, "2026-10-10").series;
+  for (const [i, table] of [18100004,18100256,18100256].entries()) {
+    assert.equal(normalized[i].source_url, "https://www150.statcan.gc.ca/t1/tbl1/fr/tv.action?pid=" + table + "01");
+    assert.equal(normalized[i].source_label, "Statistique Canada");
+    assert.match(U.historyCSV(normalized[i], "1Y"), /statcan\.gc\.ca/);
+    assert.doesNotMatch(U.historyCSV(normalized[i], "1Y"), /javascript:bad/);
+  }
+});
+
 const oddsSample = () => ({schema_version: 1, kind: "rate_odds", generated_at: "2026-10-13T00:56:18Z", decisions: [
   {id: "fed", as_of: "2026-10-13", meeting_date: "2026-10-28", hike: 30, hold: 70, cut: 0, status: "fresh"},
   {id: "canada", as_of: "2026-10-12", meeting_date: "2026-10-28", hike: 28, hold: 72, cut: 0, status: "fresh"},
