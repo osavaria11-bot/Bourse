@@ -3,59 +3,75 @@
   "kind": "news_digest",
   "language": "fr",
   "timezone": "America/Toronto",
-  "edition_date": "2026-10-14",
-  "generated_at": "2026-10-14T13:37:03Z",
-  "editorial_note": "Édition actualisée après la publication du CPI de septembre. Trois sujets approfondis relient résultats, attentes, propos des dirigeants et conséquences financières. Les réactions citées sont des instantanés du 14 octobre : prémarché américain ou début de séance à Amsterdam, jamais des clôtures. « Ma lecture » distingue l’analyse des faits. Les graphiques FRED conservent leur période économique et peuvent précéder les publications du jour.",
+  "edition_date": "2026-10-15",
+  "generated_at": "2026-10-15T11:05:37Z",
+  "editorial_note": "Édition du 15 octobre préparée avant les publications américaines de 8 h 30, heure de Montréal. Le fil conducteur : une demande industrielle forte peut coexister avec des valorisations et un financement sous pression. Les réactions sont datées par séance; « Ma lecture » distingue l’analyse des faits. Les observations FRED conservent leur vraie période économique.",
   "stories": [
     {
-      "topic": "Inflation · taux · devises",
-      "title": "Le CPI surprend à la hausse : le marché revalorise le risque de taux",
-      "summary": "Le CPI publié à 8 h 30 augmente de 0,6 % sur le mois et de 3,7 % sur un an, contre 3,6 % attendu. La surprise importante concerne aussi le sous-jacent : +0,3 % mensuel, contre +0,2 % prévu. L’essence explique plus de la moitié de la hausse globale; le logement accélère également à +0,4 %. L’inflation dépasse donc la seule pompe à essence. Dans la réaction initiale rapportée par Reuters à 9 h 14, les futures Nasdaq perdaient 0,7 %, le rendement du Trésor à 10 ans montait de 10 points de base à 5,314 % et l’indice dollar gagnait 0,55 %. Ces chiffres précèdent l’ouverture américaine.",
-      "impact": "Ma lecture : une surprise inflationniste relève les taux attendus, pénalisant les obligations longues et les multiples de croissance. Un dollar fort peut amortir les pertes en CAD des actions américaines non couvertes. Une surprise baissière soutiendrait généralement obligations et valorisations; si elle résulte d’une contraction de la demande, la baisse des bénéfices pourrait cependant dominer.",
-      "source_label": "BLS · réaction et consensus Reuters",
-      "source_url": "https://www.reuters.com/business/view-hot-september-cpi-sends-rate-hike-bets-soaring-2026-10-14/",
-      "published_date": "2026-10-14"
+      "topic": "IA · crédit · obligations",
+      "title": "La baisse de l’IA touche le crédit; les obligations souveraines retrouvent des acheteurs",
+      "summary": "À la clôture américaine du 14 octobre, le S&P 500 perd 1,1 %, le Nasdaq 100 2 % et l’indice des grandes valeurs de semi-conducteurs 4,3 %, selon Bloomberg. Les obligations de CoreWeave atteignent des niveaux que l’agence associe à la détresse financière; son dirigeant conteste la rationalité du marché. Le mouvement dépasse donc les seules actions. Autre fait marquant : après une hausse initiale provoquée par le CPI, le rendement du Trésor à 10 ans termine à 5,19 %, en baisse de deux points de base sur la journée, avec le retour des acheteurs d’obligations. Le 15 octobre, pendant la séance asiatique, le KOSPI chute de près de 8 % et le Nikkei d’environ 5 %, rapporte Reuters. L’ouverture américaine du 15 reste à venir.",
+      "impact": "Ma lecture : le risque à surveiller est désormais la transmission du crédit aux investissements réels. Si les prêteurs exigent davantage pour financer un centre de données, son rendement économique diminue et le promoteur peut reporter des commandes, même lorsque l’utilisation future paraît prometteuse. Cela toucherait ensuite les fabricants de serveurs, de puces et d’équipements électriques. Une baisse du rendement souverain ne règle pas tout : le coût d’emprunt d’une entreprise peut monter si sa prime de crédit augmente davantage. Je donnerais donc plus de poids à la capacité d’autofinancement, aux échéances de dette et aux contrats rentables qu’à la seule croissance annoncée. Une stabilisation du crédit accompagnée de flux de trésorerie crédibles affaiblirait cette lecture prudente; une contagion des écarts à davantage d’émetteurs la renforcerait.",
+      "source_label": "Bloomberg via The Edge · séance asiatique Reuters",
+      "source_url": "https://theedgemalaysia.com/node/821908",
+      "published_date": "2026-10-15"
     },
     {
-      "topic": "ASML · chaîne de valeur de l’IA",
-      "title": "ASML : demande jusqu’en 2028 et hausses de prix renforcent les perspectives",
-      "summary": "ASML dépasse les attentes de bénéfice avec 4,96 milliards €, malgré des ventes de 11,66 milliards légèrement inférieures aux 11,71 milliards attendus selon Visible Alpha. Sa marge brute de 57,5 % dépasse aussi les attentes. Le point marquant : Christophe Fouquet dit que certains clients envisagent des commandes pour 2029–2030 et que la capacité planifiée pour 2027–2028 ne suffira pas. Le directeur financier précise que les hausses de prix commenceront à se refléter en 2027, pleinement en 2028. ASML relève le plancher de ses ventes annuelles à 44 milliards €, contre 43 auparavant. L’action gagnait plus de 2 % en début de séance à Amsterdam selon Dow Jones.",
-      "impact": "Ma lecture : sa position est solide. Son exclusivité en lithographie EUV lui permet de profiter des investissements de plusieurs fabricants et de relever ses prix. Le marché semble apprécier cette visibilité après les doutes sur l’IA. Je surveillerais la conversion des projets en commandes fermes et les livraisons; des taux élevés peuvent freiner le financement du cycle.",
-      "source_label": "Dow Jones Newswires via MarketScreener · ASML",
-      "source_url": "https://www.marketscreener.com/news/chip-machine-supplier-asml-boosts-guidance-for-third-time-on-surging-ai-demand-3rd-update-ce785dd2da8df422",
-      "published_date": "2026-10-14"
+      "topic": "TSMC · résultats · capacité",
+      "title": "TSMC relève sa croissance, mais la nouvelle capacité coûte des points de marge",
+      "summary": "TSMC publie le 15 octobre un bénéfice net trimestriel de 763,1 milliards de dollars taïwanais, contre 746,3 milliards attendus selon le consensus LSEG cité par Reuters. Il s’agit du bénéfice net publié, établi selon les normes TIFRS, comparé dans la même devise. Le fait décisif dépasse ce léger écart : C.C. Wei relève la croissance des revenus 2026 en dollars américains à environ 44 %, contre un peu plus de 40 % auparavant. Il ne voit aucun ralentissement de la demande d’IA, tout en préparant 2027 avec prudence face aux marchés de consommation sensibles aux prix. Le directeur financier Wendell Huang explique cependant que le démarrage du 2 nanomètres ramène la marge brute à 66,4 %, contre 67,7 % au trimestre précédent. Il prévoit aussi que les usines étrangères dilueront la marge de trois à quatre points dans les prochaines années. Le budget d’investissement 2026 reste de 60 à 64 milliards $ US. À Taipei, l’action a clôturé en baisse de 2 % le 15, avant la publication, selon Reuters : ce recul ne mesure donc pas la réaction aux résultats. Elle conserve néanmoins une hausse de 57 % depuis le début de l’année.",
+      "impact": "Ma lecture : la gravure avancée et l’assemblage CoWoS donnent à TSMC une position centrale auprès de plusieurs concepteurs de puces; sa réussite dépend ainsi de plusieurs clients plutôt que d’un seul produit d’IA. Le financement est également plus solide que chez un promoteur qui doit encore emprunter pour construire : au troisième trimestre, la trésorerie d’exploitation de TSMC couvre plus de deux fois ses investissements, calcul effectué à partir du rapport officiel. Mais une usine supplémentaire apporte d’abord des coûts de démarrage, puis des revenus si les commandes se matérialisent. Je reste constructif sur sa capacité à capter cette demande, avec une exigence accrue sur les rendements du capital investi. La hausse déjà accumulée du cours rend la poursuite des révisions de bénéfices particulièrement importante. L’accélération des ventes doit absorber la dilution des marges et préserver le cash-flow libre. Des annulations de capacité ou une dilution durablement supérieure aux indications du directeur financier fragiliseraient cette thèse; le dépassement du consensus, à lui seul, ne justifie pas n’importe quel prix.",
+      "source_label": "TSMC · communiqué, présentation et conférence; consensus et séance Reuters",
+      "source_url": "https://investor.tsmc.com/english/quarterly-results/2026/q3",
+      "published_date": "2026-10-15"
     },
     {
-      "topic": "Morgan Stanley · qualité des bénéfices",
-      "title": "Morgan Stanley bat le consensus, mais le trading explique une grande part de la surprise",
-      "summary": "Morgan Stanley publie un BPA dilué de 3,03 $ US, contre 2,91 $ attendu selon LSEG. Le trading actions progresse de 41 %, tandis que le revenu fixe recule de 7,3 %. Ted Pick met en avant 232 milliards $ de nouveaux actifs en gestion de patrimoine. Le communiqué précise toutefois que plus de la moitié provient de flux liés aux introductions en Bourse; les flux vers les actifs à honoraires atteignent environ 80 milliards $. Cette distinction compte pour les futurs revenus récurrents. Reuters rapporte une réaction initiale légèrement négative en prémarché, malgré le dépassement du consensus, dans un contexte de hausse des taux et de résultats patrimoniaux un peu sous les attentes.",
-      "impact": "Ma lecture : la franchise de patrimoine apporte des honoraires plus durables que les commissions liées à une poussée de volatilité. Je privilégierais la croissance des actifs facturés et des marges pour juger le résultat. Le trading peut soutenir un trimestre sans assurer le suivant; la réaction du cours reflète aussi le contexte macro, pas uniquement le BPA.",
-      "source_label": "Reuters · communiqué officiel Morgan Stanley",
-      "source_url": "https://www.reuters.com/business/finance/morgan-stanley-profit-rises-equity-trading-strength-2026-10-14/",
-      "published_date": "2026-10-14"
+      "topic": "Pétrole · inflation · Canada",
+      "title": "Le pétrole recule sur un projet d’assouplissement maritime, malgré le risque à Ormuz",
+      "summary": "Le 15 octobre à 7 h 29 UTC, soit 3 h 29 à Montréal, les contrats Brent valent 103,78 $ US le baril, en baisse de 2,2 %, et le WTI 93,75 $, en baisse de 1,4 %, selon Reuters. Washington envisage d’assouplir les restrictions visant certains pétroliers russes pour faciliter le transport de pétrole autorisé et de diesel; cette mesure reste à l’étude. Les attaques contre des navires près du détroit d’Ormuz entretiennent simultanément le risque d’approvisionnement. Le prochain contrôle des stocks américains est encore à venir : l’EIA confirme une publication à midi aujourd’hui, décalée par le congé de lundi.",
+      "impact": "Ma lecture : le marché évalue la possibilité de livrer plus facilement les barils disponibles. Si le fret et le diesel se détendent durablement, les coûts du transport, de la distribution et de nombreuses entreprises industrielles peuvent baisser, ce qui aiderait les marges et réduirait certaines pressions inflationnistes. Au Canada, l’effet est partagé : les producteurs pétroliers subiraient un prix réalisé plus faible, tandis que les utilisateurs de carburant en bénéficieraient; le dollar canadien pourrait aussi perdre une partie du soutien des matières premières. Ce canal ne garantit toutefois pas une baisse du taux directeur, puisque les prix des services et les salaires comptent également. De nouvelles attaques contre les installations énergétiques ou un recul durable des livraisons inverseraient rapidement cette lecture. Je surveillerais les flux physiques et les stocks officiels avant de traiter le repli de ce matin comme une normalisation acquise.",
+      "source_label": "Reuters · calendrier officiel EIA",
+      "source_url": "https://www.reuters.com/business/energy/oil-prices-fall-investors-weigh-supply-outlook-middle-east-tensions-2026-10-15/",
+      "published_date": "2026-10-15"
+    },
+    {
+      "topic": "À 8 h 30 · prix · consommation",
+      "title": "Le prochain test : les coûts ralentissent-ils sans casser les ventes?",
+      "summary": "Le PPI et les ventes au détail de septembre sont attendus le 15 octobre à 8 h 30, heure de Montréal, selon les calendriers du BLS et du Census Bureau. MarketWatch rapporte un consensus de +0,6 % sur le mois pour les prix à la production et de +0,3 % hors alimentation et énergie. Le dernier PPI global publié avait augmenté de 0,4 % en août. Ces attentes ne sont pas des résultats. Pour les ventes, le point utile sera de distinguer la progression des montants dépensés de celle des volumes : une facture d’essence plus élevée peut gonfler les ventes nominales sans amélioration équivalente de la consommation réelle.",
+      "impact": "Ma lecture : la combinaison des deux publications compte davantage qu’un chiffre isolé. Un PPI supérieur aux attentes, accompagné de ventes résistantes, conforterait l’idée d’une inflation persistante et pourrait relever les taux anticipés ainsi que le dollar, tout en comprimant les multiples. Des coûts qui ralentissent avec des ventes encore solides offriraient un scénario plus favorable aux marges et aux obligations. Si les prix et les ventes déçoivent ensemble parce que la demande faiblit, les obligations pourraient gagner alors que les bénéfices des secteurs cycliques seraient révisés à la baisse. Je regarderais les services du PPI qui alimentent l’estimation du PCE, ainsi que les ventes hors catégories les plus volatiles. La réaction des rendements et du crédit permettra de voir quel risque domine. Une baisse de l’inflation annuelle par effet de base ne suffirait pas à établir un ralentissement mensuel durable.",
+      "source_label": "MarketWatch · horaires BLS et Census vérifiés",
+      "source_url": "https://www.marketwatch.com/livecoverage/stock-market-today-dow-seen-steady-while-s-p-500-to-fall-nasdaq-to-sputter-on-ai-fears/card/busy-economic-docket-includes-ppi-retail-sales-HpqwmQYcAXE6Rma7unlB",
+      "published_date": "2026-10-15"
     }
   ],
   "fred_watch": [
     {
       "series_id": "DGS10",
-      "title": "10 ans : distinguer le graphique FRED de la réaction au CPI",
-      "explanation": "Dernier point du fichier : 5,24 % au 9 octobre 2026, contre 5,22 % le 8 octobre. Ce rendement FRED précède le CPI du 14 octobre et ne doit pas être présenté comme un taux du jour. Le mécanisme reste central : quand le rendement monte, les obligations longues perdent davantage de valeur et les bénéfices futurs sont actualisés plus fortement.",
-      "observation_date": "2026-10-09",
+      "title": "10 ans : le graphique s’arrête avant le choc d’inflation",
+      "explanation": "Dernière observation disponible dans le tableau : 5,21 % au 13 octobre 2026, contre 5,24 % le 9 octobre. Il s’agit du rendement à maturité constante, sans transformation. Ce point précède le CPI du 14 et ne remplace pas les instantanés de marché cités plus haut. Pour les obligations longues et l’immobilier, le niveau du taux influence directement la valeur des flux futurs et le coût du refinancement.",
+      "observation_date": "2026-10-13",
       "source_url": "https://fred.stlouisfed.org/series/DGS10"
     },
     {
       "series_id": "BAMLH0A0HYM2",
-      "title": "Crédit : le coût d’emprunt peut monter même sans élargissement des écarts",
-      "explanation": "Au 12 octobre 2026, l’écart de crédit ajusté pour les options est de 3,11 % (311 points de base), inchangé depuis le 9 octobre. Il s’ajoute au taux souverain comparable pour former le coût du financement. Une hausse des rendements publics peut donc renchérir le refinancement même avec un écart stable; cette observation précède la réaction au CPI.",
-      "observation_date": "2026-10-12",
+      "title": "Crédit : 316 points de base, avant la dernière secousse",
+      "explanation": "Au 13 octobre 2026, l’écart ajusté pour les options du haut rendement américain atteint 3,16 %, soit 316 points de base, contre 3,11 % le 12 octobre. Ce niveau non transformé est un écart, pas le rendement total de la dette. L’élargissement de cinq points de base précède le CPI et les tensions rapportées aujourd’hui : le graphique ne permet donc pas encore de mesurer leur propagation.",
+      "observation_date": "2026-10-13",
       "source_url": "https://fred.stlouisfed.org/series/BAMLH0A0HYM2"
     },
     {
-      "series_id": "PCEPILFE",
-      "title": "PCE sous-jacent : pourquoi le CPI ne tranche pas seul la décision de la Fed",
-      "explanation": "En août 2026, le PCE hors alimentation et énergie progresse de 3,01 % sur 12 mois, contre 2,98 % en juillet; la série applique une transformation annuelle aux niveaux de l’indice. Ses pondérations diffèrent du CPI. Le CPI de septembre apporte donc un signal, sans donner directement le prochain PCE : il faut identifier les composantes qui se transmettront au panier suivi par la Fed.",
+      "series_id": "MEDCPIM158SFRBCLE",
+      "title": "Inflation médiane : accélération du rythme mensuel",
+      "explanation": "Pour septembre 2026, le CPI médian augmente à un rythme mensuel annualisé de 2,81 %, contre 2,10 % en août. La série est utilisée telle que publiée; ce n’est ni une inflation sur 12 mois ni une prévision annuelle. Sa remontée suggère une pression au-delà des variations extrêmes, mais un mois ne suffit pas pour établir une tendance persistante.",
+      "observation_date": "2026-09-01",
+      "source_url": "https://fred.stlouisfed.org/series/MEDCPIM158SFRBCLE"
+    },
+    {
+      "series_id": "RRSFS",
+      "title": "Consommation : conserver la différence entre prix et volumes",
+      "explanation": "En août 2026, les ventes au détail réelles atteignent 220 801 millions de dollars de 1982–1984, contre 219 204 millions en juillet, soit +0,73 % calculé sur les niveaux. Le tableau conserve cette série en niveau, sans transformation. Cette progression réelle apporte un point de comparaison aux ventes nominales attendues aujourd’hui; elle ne renseigne pas encore sur les volumes de septembre.",
       "observation_date": "2026-08-01",
-      "source_url": "https://fred.stlouisfed.org/series/PCEPILFE"
+      "source_url": "https://fred.stlouisfed.org/series/RRSFS"
     }
   ]
 }
