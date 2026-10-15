@@ -137,11 +137,15 @@ async function main() {
     const publishedEmerging = load("data/macro-data.json").series.find(row => row.id === "VXEEMCLS");
     const oldEmergingDay = new Date(Date.parse(publishedEmerging.date) - 86400000).toISOString().slice(0, 10);
     Object.assign(emergingQuote, {timestamp: oldEmergingDay + "T14:00:00Z", session_date: oldEmergingDay, market_state: "closed", intraday_history: []});
-    await page.evaluate(() => window.SavyLiveQuotes.refresh());
-    const emergingCard = page.locator('.indicator-card[data-id="VXEEMCLS"]');
+    // A fresh browser has no newer cached quote that the client must preserve.
+    const olderQuoteContext = await liveContext({viewport: {width: 1440, height: 1000}}), olderQuotePage = await olderQuoteContext.newPage();
+    olderQuotePage.on("pageerror", error => errors.push(error.message)); await olderQuotePage.route("https://**", route => route.abort());
+    await olderQuotePage.goto(url); await olderQuotePage.waitForFunction(() => !document.querySelector("#refreshButton").disabled);
+    const emergingCard = olderQuotePage.locator('.indicator-card[data-id="VXEEMCLS"]');
     assert.equal(await emergingCard.locator(".current-value").innerText(), U.formatNumber(publishedEmerging.value, publishedEmerging.decimals) + " " + publishedEmerging.unit,
       "A freshly checked but older Yahoo quote cannot hide a newer official VXEEM observation");
     assert.match(await emergingCard.locator(".publication-fallback").innerText(), /FRED/);
+    await olderQuoteContext.close();
     Object.assign(emergingQuote, originalEmerging); await page.evaluate(() => window.SavyLiveQuotes.refresh());
     const dollar = page.locator('.indicator-card[data-id="DTWEXBGS"]');
     await dollar.locator(".detail-button").click();
