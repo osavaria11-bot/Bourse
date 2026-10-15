@@ -55,6 +55,7 @@ jobs:
           node --check js/intraday-utils.js
           node --check js/macro-utils.js
           node --check js/portfolio-utils.js
+          node --check js/portfolio-heatmap-utils.js
           node --check js/portfolio-intraday-utils.js
           node --check js/portfolio-exposure-utils.js
           node --check js/portfolio-analytics-utils.js
@@ -81,6 +82,7 @@ jobs:
         env:
           SCREENSHOT_LOGS: ${{ startsWith(github.ref, 'refs/heads/codex/portefeuille-') && '1' || '' }}
           MACRO_SCREENSHOT_LOGS: ${{ startsWith(github.ref, 'refs/heads/codex/macro-') && '1' || '' }}
+          HEATMAP_SCREENSHOT_LOGS: ${{ startsWith(github.ref, 'refs/heads/codex/heatmap-') && '1' || '' }}
       - name: Verify the actual published briefing and world market histories
         run: node tests/published-dashboard.cjs
         if: hashFiles('data/market-indices.json') != ''
