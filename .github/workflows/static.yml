@@ -48,6 +48,8 @@ jobs:
       - name: Dashboard regression tests
         run: |
           node --check js/dashboard.js
+          node --check js/yield-curve-utils.js
+          node --check js/yield-curves.js
           node --check js/briefing-audio-utils.js
           node --check js/briefing-audio.js
           node --check js/live-fx.js
@@ -63,6 +65,11 @@ jobs:
           node --check js/portfolio.js
           npm test
           node scripts/validate_intraday_quotes.cjs
+          node - <<'JS'
+          const fs = require('node:fs'), C = require('./js/yield-curve-utils.js');
+          const data = C.normalize(JSON.parse(fs.readFileSync('data/yield-curves.json', 'utf8')));
+          console.log('Validated sovereign yield curves:', data.countries.map(c => ({id: c.id, dates: c.history.length, latest: c.history.at(-1)?.[0], status: c.fetch_status})));
+          JS
       - name: Validate dated earnings data and reviewed messages
         run: |
           python scripts/collect_portfolio_earnings.py --validate-reviewed
@@ -83,6 +90,7 @@ jobs:
           SCREENSHOT_LOGS: ${{ startsWith(github.ref, 'refs/heads/codex/portefeuille-') && '1' || '' }}
           MACRO_SCREENSHOT_LOGS: ${{ startsWith(github.ref, 'refs/heads/codex/macro-') && '1' || '' }}
           HEATMAP_SCREENSHOT_LOGS: ${{ startsWith(github.ref, 'refs/heads/codex/heatmap-') && '1' || '' }}
+          YIELD_SCREENSHOT_LOGS: ${{ startsWith(github.ref, 'refs/heads/codex/yield-') && '1' || '' }}
       - name: Verify the actual published briefing and world market histories
         run: node tests/published-dashboard.cjs
         if: hashFiles('data/market-indices.json') != ''

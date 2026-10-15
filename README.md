@@ -106,6 +106,16 @@ La heatmap des portefeuilles 1, 2 et 3 utilise les seules positions déjà prés
 
 L’échelle rouge/gris/vert est symétrique et plafonne seulement la couleur, jamais le rendement affiché. Une base absente ou une séance antérieure donne N/D, pas zéro. Une valorisation incomplète affiche explicitement une carte partielle, conserve tous les titres dans le sélecteur et ne prétend pas connaître leurs poids exacts. Aucun nouveau service, transmission de positions ni changement aux profils chiffrés. Le calcul et le treemap sont testés dans `tests/portfolio-heatmap-utils.test.cjs`, avec interactions et mobile dans `tests/portfolio-browser.cjs`.
 
+### Courbes de taux souverains
+
+La section **Courbes de taux · États-Unis et Canada** superpose deux dates choisies pour chaque pays, avec dates réellement utilisées, écarts `B − A` en points de base, variations des taux 2 et 10 ans et pentes 10 ans − 2 ans / 10 ans − 3 mois. Le tableau détaillé, le survol, le toucher et les flèches du clavier couvrent toutes les échéances. Les dates sont mémorisées dans le navigateur; les raccourcis 1 mois, 1 an et YTD partent des dernières observations publiées.
+
+`scripts/collect_yield_curves.py` collecte les courbes nominales au pair du **U.S. Treasury** (CSV annuels, 1 mois à 30 ans) et les séries quotidiennes **Banque du Canada / CanDeal DNA** (bons 1/3/6/12 mois, obligations de référence 2/3/5/7/10 ans et long terme). Le long canadien est une émission de référence d’environ 30 ans avec échéance résiduelle variable, et non un taux zéro-coupon à maturité fixe. Les deux pays ont des méthodes distinctes, précisées dans leurs sources. Les échéances sont espacées uniformément dans chaque graphique.
+
+L’historique `data/yield-curves.json` débute en 2016. Une date sans publication utilise une seule observation antérieure par pays, au plus sept jours avant, avec date effective explicite. Aucun taux manquant n’est repris d’une autre séance ou interpolé; il reste N/D et interrompt la ligne. Les rendements négatifs sont admis. Les collectes quotidiennes et macro existantes actualisent ce fichier; les années Treasury anciennes sont revérifiées chaque semaine. Une panne conserve l’historique et l’horodatage de réussite du pays concerné; le navigateur dispose aussi d’un cache daté indépendant.
+
+Les contrats de sources, les dates, les taux, les écarts et les reprises sont contrôlés par `tests/test_yield_curves.py`, `tests/yield-curve-utils.test.cjs` et `tests/yield-curves-browser.cjs`.
+
 ## Indicateurs et transformations
 
 La configuration se trouve dans `data/series.json`. Les fichiers publiés sont :

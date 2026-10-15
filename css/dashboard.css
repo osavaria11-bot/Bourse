@@ -126,6 +126,44 @@ details[open]>summary:after {content:"−"}
 @media(max-width:1100px) {.market-grid {grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:650px) {.market-grid {grid-template-columns:1fr}.market-heading .segmented {max-width:100%;flex-wrap:wrap}}
 .workspace {margin-top:34px;scroll-margin-top:10px}
+.yield-curves {margin-top:24px;padding:22px;scroll-margin-top:16px;min-width:0}
+.yield-date-controls {display:flex;align-items:end;flex-wrap:wrap;gap:12px;margin:18px 0 12px}
+.yield-date-controls label {display:flex;flex-direction:column;gap:6px;font-size:12px;min-width:0}
+.yield-date-controls input {min-height:42px;min-width:0;max-width:100%;width:170px;border:1px solid var(--border);border-radius:8px;padding:8px 10px;color:var(--text);background:var(--bg)}
+.yield-date-controls .segmented {margin-left:auto;flex-wrap:wrap;max-width:100%}
+.yield-date-a {color:var(--gold)}
+.yield-date-b {color:var(--accent)}
+.yield-curve-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:18px;min-width:0}
+.yield-curve-card {min-width:0;padding:18px;border:1px solid var(--border);border-radius:11px;background:var(--bg)}
+.yield-curve-card h3 {font-size:18px;font-weight:600}
+.yield-chart-legend {display:flex;flex-direction:column;gap:4px;font-size:11px;margin-top:10px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.yield-chart-legend>span:before {content:"";display:inline-block;width:23px;margin-right:7px;vertical-align:middle;border-top:2px solid currentColor}
+.yield-chart-legend>.yield-date-a:before {border-top-style:dashed}
+.yield-curve-card>.meta {margin-top:8px;font-size:10px}
+.yield-metrics {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:15px 0}
+.yield-metrics>div {padding:10px;background:var(--surface);border:1px solid var(--border);border-radius:8px;min-width:0}
+.yield-metrics .meta,.yield-metrics strong {display:block;font-size:10px;overflow-wrap:anywhere}
+.yield-metrics strong {font-size:18px;font-weight:600;margin:3px 0;font-variant-numeric:tabular-nums}
+.yield-chart {min-width:0;max-width:100%}
+.yield-chart svg {display:block;width:100%;height:275px;touch-action:pan-y}
+.yield-grid-line {stroke:var(--grid);stroke-width:1}
+.yield-axis {fill:var(--muted);font-size:10px;font-variant-numeric:tabular-nums}
+.yield-line {fill:none;stroke-width:2;stroke-linejoin:round}
+.yield-line.yield-a {stroke:var(--gold);stroke-dasharray:6 4}
+.yield-line.yield-b {stroke:var(--accent)}
+.yield-dot.yield-a {fill:var(--bg);stroke:var(--gold);stroke-width:2}
+.yield-dot.yield-b {fill:var(--accent);stroke:var(--bg);stroke-width:1}
+.yield-marker {stroke:var(--muted);stroke-width:1;stroke-dasharray:3 4;opacity:.65}
+.yield-tooltip {font-size:11px;line-height:1.6;min-height:36px;margin-top:3px;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.yield-table-details,.yield-sources {font-size:12px;color:var(--muted);margin-top:9px}
+.yield-table-details summary,.yield-sources summary {gap:12px;padding:8px 0}
+.yield-table-details table {min-width:390px;font-size:11px;font-variant-numeric:tabular-nums}
+.yield-table-details td,.yield-table-details th:not(:first-child) {text-align:right;white-space:nowrap}
+.yield-sources a {display:block;font-size:11px;margin-top:8px}
+.yield-sources p {margin-top:7px}
+.yield-method-note {margin-top:14px;font-size:11px}
+@media(max-width:950px) {.yield-curve-grid {grid-template-columns:1fr}}
+@media(max-width:600px) {.yield-curves {padding:16px}.yield-curves .section-heading {align-items:flex-start;flex-direction:column}.yield-curve-card {padding:12px}.yield-date-controls {gap:10px}.yield-date-controls label {flex:1 1 145px}.yield-date-controls input {width:100%}.yield-date-controls .segmented {margin-left:0}.yield-metrics strong {font-size:16px}}
 .portfolio {margin-top:24px;padding:22px;scroll-margin-top:16px}
 .portfolio-actions {display:flex;flex-wrap:wrap;gap:8px}
 .portfolio-overview {display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-top:22px}

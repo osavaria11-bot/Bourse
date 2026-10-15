@@ -598,7 +598,7 @@
         $("#updated").classList.add("warning");
       }
     } finally {
-      await Promise.all([loadBriefing(), loadMarkets(), loadOdds(), window.SavyPortfolio?.refresh(), window.SavyLiveFX?.refresh(), window.SavyLiveQuotes?.refresh()]);
+      await Promise.all([loadBriefing(), loadMarkets(), loadOdds(), window.SavyYieldCurves?.refresh(), window.SavyPortfolio?.refresh(), window.SavyLiveFX?.refresh(), window.SavyLiveQuotes?.refresh()]);
       state.loading = false; $("#refreshButton").disabled = false; $("#refreshButton").textContent = "Actualiser";
     }
   }

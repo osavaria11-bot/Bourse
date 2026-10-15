@@ -17,6 +17,7 @@ on:
       - "scripts/collect_portfolio_exposures.py"
       - "scripts/collect_portfolio_earnings.py"
       - "scripts/collect_rate_odds.py"
+      - "scripts/collect_yield_curves.py"
       - "data/securities.json"
       - "data/portfolio-exposures.json"
       - "data/earnings-highlights.json"
@@ -25,6 +26,7 @@ on:
       - "tests/test_portfolio_exposures.py"
       - "tests/test_portfolio_earnings.py"
       - "tests/test_rate_odds.py"
+      - "tests/test_yield_curves.py"
       - ".github/workflows/daily-briefing.yml"
 
 permissions:
@@ -67,6 +69,8 @@ jobs:
         run: python scripts/collect_portfolio_earnings.py
       - name: Refresh next-decision market odds
         run: python scripts/collect_rate_odds.py
+      - name: Refresh official US and Canadian yield curves
+        run: python scripts/collect_yield_curves.py
       - name: Validate refreshed earnings before committing
         run: |
           node - <<'JS'
@@ -78,7 +82,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/macro-data.json data/macro-briefing.json data/market-indices.json data/security-prices.json data/portfolio-exposures.json data/portfolio-earnings.json data/rate-odds.json
+          git add data/macro-data.json data/macro-briefing.json data/market-indices.json data/security-prices.json data/portfolio-exposures.json data/portfolio-earnings.json data/rate-odds.json data/yield-curves.json
           if git diff --cached --quiet; then
             echo "No data changes to commit."
             exit 0
