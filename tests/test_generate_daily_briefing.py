@@ -38,6 +38,57 @@ class CSVTests(unittest.TestCase):
         with self.assertRaises(generator.SourceError):
             generator.parse_observations("DATE,TEST\n2026-09-01,.\n", "TEST", NOW.date())
 
+class NumercoTests(unittest.TestCase):
+    def item(self):
+        return {**definition("URANIUMSPOT"), "provider": "numerco", "frequency": "daily", "unit": "$ US/livre"}
+
+    def test_spot_field_and_observation_dates_are_independent_of_fund_price_and_upload_date(self):
+        payload = {"result": [
+            {"Date": "9-Oct-26", "SpotPrice": 84.125, "ImpliedPrice": 61, "createdAt": "2026-10-10T10:00:00Z"},
+            {"Date": "8-Oct-26", "SpotPrice": "83.75", "ImpliedPrice": 60},
+            {"Date": "11-Oct-26", "SpotPrice": 999},
+        ]}
+        self.assertEqual(generator.parse_numerco_observations(json.dumps(payload), NOW.date()),
+                         [["2026-10-08", 83.75], ["2026-10-09", 84.125]])
+
+    def test_invalid_or_implied_only_prices_never_become_spot_observations(self):
+        rows = [{"Date": "8-Oct-26", "ImpliedPrice": 67},
+                {"Date": "31-Sep-26", "SpotPrice": 80},
+                *[{"Date": "9-Oct-26", "SpotPrice": value} for value in (None, True, 0, -1, "NaN", "inf", "bad")], None]
+        for payload in ("<html>outage</html>", "[]", '{"results": []}', json.dumps({"result": rows})):
+            with self.subTest(payload=payload), self.assertRaises(generator.SourceError):
+                generator.parse_numerco_observations(payload, NOW.date())
+
+    def test_public_history_download_collects_and_attributes_the_registered_series(self):
+        page = 'Parse.serverURL = "' + generator.NUMERCO_API_BASE + '"; Parse.initialize("public-app", "public-js");'
+        payload = json.dumps({"result": [{"Date": "9-Oct-26", "SpotPrice": 84.125}]})
+        with patch.object(generator, "fetch_text", side_effect=[page, payload]) as fetch:
+            result = generator.fetch_series(self.item(), NOW)
+        self.assertEqual((result["date"], result["value"], result["source_label"]), ("2026-10-09", 84.125, "Numerco"))
+        self.assertEqual(result["source_url"], "https://numerco.com/UHistory/")
+        self.assertEqual(fetch.call_args_list[0].args, (generator.NUMERCO_URANIUM_URL,))
+        self.assertEqual(json.loads(fetch.call_args.kwargs["data"]), {"object_type": "UHistory", "only_objectId": False})
+        self.assertEqual(fetch.call_args.kwargs["headers"]["X-Parse-Javascript-Key"], "public-js")
+        with patch.object(generator, "fetch_text", return_value='<html>download unavailable</html>'), self.assertRaises(generator.SourceError):
+            generator.fetch_series(self.item(), NOW)
+
+    def test_outage_keeps_only_same_provider_history_and_original_dates(self):
+        item = self.item()
+        cached = generator.summarize(item, [["2026-10-08", 83.75], ["2026-10-09", 84.125]], NOW)
+        def fetch(item, now):
+            if item["id"] == "TEST": return point()
+            raise generator.SourceError("synthetic outage")
+        for provider, expected in (("numerco", "cached"), ("fred", "unavailable")):
+            with self.subTest(provider=provider):
+                previous = {"series": [{**cached, "provider": provider}]}
+                result = generator.collect_sources([definition(), item], previous, NOW, fetcher=fetch)
+                uranium = result["series"][1]
+                self.assertEqual(uranium["fetch_status"], expected)
+                self.assertEqual(uranium["date"], cached["date"] if provider == "numerco" else None)
+                self.assertEqual(uranium["history"], cached["history"] if provider == "numerco" else [])
+                self.assertEqual(uranium["source_label"], "Numerco")
+                self.assertIn("Numerco", result["data_provider"])
+
 class TransformationTests(unittest.TestCase):
     def test_year_over_year_uses_calendar_not_row_offset(self):
         rows = [["2025-08-01", 100], ["2026-07-01", 108], ["2026-08-01", 110]]
@@ -295,6 +346,9 @@ class ConfigurationTests(unittest.TestCase):
         self.assertEqual(config["series"][ids.index("V39079")]["provider"], "bank_of_canada")
         self.assertEqual(ids[ids.index("DEXCAUS") + 1], "V39079")
         by_id = {item["id"]: item for item in config["series"]}
+        self.assertNotIn("PURANUSDM", by_id)
+        self.assertEqual(by_id["URANIUMSPOT"]["provider"], "numerco")
+        self.assertEqual(by_id["URANIUMSPOT"]["frequency"], "daily")
         self.assertEqual(by_id["V41690973"]["transform"], "yoy")
         for sid in ("V108785715", "V108785714", "ICSA", "IC4WSA", "DFII10"):
             self.assertEqual(by_id[sid]["transform"], "none")

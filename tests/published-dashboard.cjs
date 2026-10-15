@@ -30,6 +30,7 @@ async function main() {
   const browser = await chromium.launch({headless: true});
   try {
     const page = await browser.newPage({viewport: {width: 1440, height: 1000}});
+    await page.addInitScript(() => localStorage.setItem("savy:preferences:v2", JSON.stringify({favorites: ["PURANUSDM"]})));
     const errors = []; page.on("pageerror", error => errors.push(error.message));
     await page.route("https://**", route => route.abort());
     await page.goto("http://127.0.0.1:" + server.address().port);
@@ -76,7 +77,7 @@ async function main() {
     assert.equal(await marketRanges.getByRole("button", {name: "1 jour", exact: true}).getAttribute("aria-pressed"), "true");
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
     if (process.env.SCREENSHOT_LOGS) console.log("SCREENSHOT_MARKETS_MOBILE " + (await page.screenshot()).toString("base64"));
-    const affected = ["DGS10", "INDPRO", "VIXCLS", "NASDAQXAU", "VXEEMCLS", "DTWEXBGS", "DCOILWTICO", "PURANUSDM"];
+    const affected = ["DGS10", "INDPRO", "VIXCLS", "NASDAQXAU", "VXEEMCLS", "DTWEXBGS", "DCOILWTICO", "URANIUMSPOT"];
     for (const id of affected) {
       const point = macro.series.find(row => row.id === id);
       await page.locator("#searchInput").fill(id);
@@ -84,8 +85,15 @@ async function main() {
       await card.scrollIntoViewIfNeeded(); await card.locator("svg").waitFor({state: "visible"});
       assert.equal(await card.locator(".current-value").innerText(), U.formatNumber(point.value, point.decimals) + " " + point.unit, id + " keeps its last published observation when live quotes are unavailable");
       assert.ok((await card.locator(".observation-date").innerText()).includes(U.observationLabel(point.date, point.frequency)));
+      if (id === "URANIUMSPOT") {
+        assert.equal(point.provider, "numerco"); assert.equal(point.frequency, "daily");
+        assert.ok(point.history.length > 2000, "uranium uses a real daily history across ten years");
+        assert.equal(await card.getByRole("button", {name: /Retirer des favoris/}).getAttribute("aria-pressed"), "true");
+        assert.equal(await card.locator(".card-bottom a").getAttribute("href"), "https://numerco.com/UHistory/");
+      }
       assert.equal(await card.locator("path.chart-line").evaluate(node => /NaN|Infinity/.test(node.getAttribute("d"))), false);
       await card.locator(".detail-button").click();
+      if (id === "URANIUMSPOT") assert.equal(await page.locator("#detailSource").innerText(), "Voir la série originale · Numerco ↗");
       for (const range of U.RANGES) {
         await page.locator('#detailRanges [data-range="' + range.key + '"]').click();
         await page.locator("#detailChart svg").waitFor({state: "visible"});

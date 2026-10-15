@@ -187,6 +187,21 @@ test("Canadian CPI source links remain tied to their actual tables in cards and 
   }
 });
 
+test("daily uranium spot retains its own source in cards and CSV instead of being relabelled FRED", () => {
+  const data = {schema_version: 2, generated_at: "2026-10-10T16:00:00Z", series: [
+    {...sample(), id: "URANIUMSPOT", provider: "numerco", frequency: "daily", source_url: "javascript:bad"},
+    {...sample(), id: "PURANUSDM", frequency: "monthly"},
+  ]};
+  const [spot, monthly] = U.normalizeDataset(data, "2026-10-10").series;
+  assert.equal(spot.source_label, "Numerco");
+  assert.equal(spot.source_url, "https://numerco.com/UHistory/");
+  assert.equal(monthly.source_label, "FRED");
+  assert.equal(monthly.source_url, "https://fred.stlouisfed.org/series/PURANUSDM");
+  assert.match(U.snapshotCSV([spot]), /numerco\.com\/UHistory\//);
+  assert.match(U.historyCSV(spot, "1Y"), /numerco\.com\/UHistory\//);
+  assert.doesNotMatch(U.historyCSV(spot, "1Y"), /fred\.stlouisfed|javascript:bad/);
+});
+
 const oddsSample = () => ({schema_version: 1, kind: "rate_odds", generated_at: "2026-10-13T00:56:18Z", decisions: [
   {id: "fed", as_of: "2026-10-13", meeting_date: "2026-10-28", hike: 30, hold: 70, cut: 0, status: "fresh"},
   {id: "canada", as_of: "2026-10-12", meeting_date: "2026-10-28", hike: 28, hold: 72, cut: 0, status: "fresh"},

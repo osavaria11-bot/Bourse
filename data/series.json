@@ -491,15 +491,16 @@
       "change_unit": "$ US/baril"
     },
     {
-      "id": "PURANUSDM",
-      "title": "Uranium · prix mondial",
+      "id": "URANIUMSPOT",
+      "provider": "numerco",
+      "title": "Uranium · prix spot U3O8",
       "category": "Matières premières",
-      "frequency": "monthly",
+      "frequency": "daily",
       "unit": "$ US/livre",
       "decimals": 2,
       "transform": "none",
-      "max_age_days": 105,
-      "description": "Prix mondial mensuel de l’uranium, en dollars américains par livre, publié par le FMI. Ce prix ne représente pas le rendement des actions de producteurs.",
+      "max_age_days": 7,
+      "description": "Prix spot indicatif quotidien de l’oxyde d’uranium U3O8, en dollars américains par livre, publié par Numerco. Chaque observation conserve sa date de cotation.",
       "change_unit": "$ US/livre"
     }
   ]

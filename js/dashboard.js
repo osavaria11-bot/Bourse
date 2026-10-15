@@ -39,7 +39,9 @@
     search: "", category: typeof prefs.category === "string" ? prefs.category : "all",
     range: U.RANGES.some(range => range.key === prefs.range) ? prefs.range : "10Y",
     sort: "recent",
-    favorites: new Set(Array.isArray(prefs.favorites) ? prefs.favorites.filter(id => typeof id === "string" && /^[A-Z0-9]+$/.test(id)) : []),
+    favorites: new Set(Array.isArray(prefs.favorites) ? prefs.favorites
+      .filter(id => typeof id === "string" && /^[A-Z0-9]+$/.test(id))
+      .map(id => id === "PURANUSDM" ? "URANIUMSPOT" : id) : []),
     favoritesOnly: false, theme: prefs.theme === "light" ? "light" : "dark",
     detailId: null, detailRange: "10Y", loading: false,
     marketDataset: null, marketRange: "INTRADAY", marketCached: false,

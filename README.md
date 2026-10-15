@@ -1,6 +1,6 @@
 # SAVY — Tableau macroéconomique
 
-Un tableau de bord en français pour suivre le cycle économique aux États-Unis et au Canada, à partir des observations publiées sur **FRED**, par la **Banque du Canada** et par **Statistique Canada**.
+Un tableau de bord en français pour suivre le cycle économique aux États-Unis et au Canada, à partir des observations publiées sur **FRED**, par la **Banque du Canada** et par **Statistique Canada**, ainsi que le prix spot de l’uranium publié par **Numerco**.
 
 ## Fonctions
 
@@ -57,6 +57,7 @@ Les observations suivent le calendrier de leurs sources. Par exemple, une statis
 - Les quatre indices et les FNB EEM et FEQT sont collectés sur Yahoo Finance. EEM est affiché en dollars US, FEQT en dollars canadiens avec sa cotation `FEQT.NE`, et les indices en points. Les graphiques montrent les cours de clôture, hors dividendes, et ne mélangent pas leurs échelles. Chaque source est vérifiée avec son symbole et la date de séance de sa place boursière; une séance en cours est exclue. La devise CAD de FEQT est également vérifiée. FEQT utilise les mêmes périodes et rendements que les indices; une période antérieure à son historique disponible affiche « Rendement indisponible ».
 - Les indices proposent 1 jour (1 séance), 3 jours (3 séances), 1 semaine (5 séances), 1 mois, 3 mois, YTD, 1 an, 5 ans et 10 ans. Le rendement affiché et l’infobulle utilisent la même clôture de départ que le graphique : `(dernière clôture / clôture de départ - 1) × 100`, en devise locale et hors dividendes. YTD utilise la dernière clôture de l’année précédente. Pour les mois et années, une date de départ sans séance utilise la clôture précédente. La collecte conserve 11 ans pour couvrir cette base sur 10 ans; une base absente, manquante ou vieille de plus de 7 jours produit « Rendement indisponible ».
 - Chaque série dispose de son propre repli : une panne conserve sa dernière observation valide et son horodatage, tout en actualisant les autres séries.
+- L’uranium utilise `URANIUMSPOT`, le prix spot indicatif quotidien de l’U3O8 publié dans l’[historique public Numerco](https://numerco.com/UHistory/), en dollars US par livre. Le collecteur reprend le téléchargement public de cette page et lit uniquement `SpotPrice`, avec la date `Date`, jamais le prix implicite du fonds ni la date de chargement. Dix ans d’observations Numerco remplacent intégralement la moyenne mensuelle FMI/FRED `PURANUSDM`, sans raccord entre les deux séries. Les favoris existants sont transférés. Les collectes macro habituelles actualisent cette série; une panne conserve seulement un historique Numerco, avec sa vraie date et un avertissement.
 - Les données manquantes restent des trous dans les graphiques.
 - Les fichiers JSON sont remplacés de façon atomique. Si toutes les sources échouent sans valeur valide conservée, les fichiers existants restent en place et le workflow échoue.
 - Le navigateur charge les fichiers du site et conserve une copie locale, signalée si elle est utilisée.

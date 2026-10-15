@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Collect FRED, Bank of Canada and Statistics Canada observations, with per-series fallback.
+"""Collect published macro and commodity observations, with per-series fallback.
 
 Only the Python standard library is required. No credentials or browser proxies.
 """
@@ -11,6 +11,7 @@ import io
 import json
 import math
 import os
+import re
 import tempfile
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -27,6 +28,8 @@ HISTORY_YEARS = 10
 BRIEFING_IDS = ["CPIAUCSL", "PCEPILFE", "V41690973", "V108785715", "V108785714", "UNRATE", "V2062815", "ICSA", "IC4WSA", "PAYEMS", "GDPC1", "DFEDTARL", "DFEDTARU", "DGS10", "DFII10", "T10Y2Y", "VIXCLS", "DEXCAUS", "V39079"]
 BANK_POLICY_URL = "https://www.bankofcanada.ca/core-functions/monetary-policy/key-interest-rate/"
 CANADA_LABOUR_URL = "https://www150.statcan.gc.ca/t1/tbl1/fr/tv.action?pid=1410028701"
+NUMERCO_URANIUM_URL = "https://numerco.com/UHistory/"
+NUMERCO_API_BASE = "https://pg-app-yoa7d4wnnpyx68zgkxvc6d17cjk19s.scalabl.cloud/1/"
 STATCAN_SERIES = {
     "V2062815": {"vector_id": 2062815, "product_id": 14100287},
     "V41690973": {"vector_id": 41690973, "product_id": 18100004},
@@ -67,8 +70,9 @@ def atomic_write_json(path: Path, payload: dict, *, compact: bool = False) -> No
         if temporary is not None:
             temporary.unlink(missing_ok=True)
 
-def fetch_text(url: str) -> str:
-    request = Request(url, headers={"User-Agent": "SavyMacroDashboard/3.0", "Accept": "text/csv, application/json"})
+def fetch_text(url: str, *, headers: dict | None = None, data: bytes | None = None) -> str:
+    request = Request(url, data=data, headers={"User-Agent": "SavyMacroDashboard/3.0",
+                      "Accept": "text/csv, application/json, text/html", **(headers or {})})
     for attempt in range(RETRY_ATTEMPTS):
         try:
             with urlopen(request, timeout=TIMEOUT_SECONDS) as response:
@@ -137,6 +141,8 @@ def parse_bank_observations(text: str, series_id: str, today: date) -> list[list
     return parse_observations(output.getvalue(), series_id, today)
 
 def source_metadata(definition: dict) -> dict:
+    if definition.get("provider") == "numerco":
+        return {"source_url": NUMERCO_URANIUM_URL, "source_label": "Numerco"}
     if definition.get("provider") == "bank_of_canada":
         return {"source_url": BANK_POLICY_URL, "source_label": "Banque du Canada"}
     if definition.get("provider") == "statistics_canada":
@@ -146,6 +152,49 @@ def source_metadata(definition: dict) -> dict:
     if "quote_symbol" in definition and "source_url" in definition:
         return {"source_url": definition["source_url"], "source_label": "Yahoo Finance"}
     return {"source_url": f"https://fred.stlouisfed.org/series/{definition['id']}", "source_label": "FRED"}
+
+def parse_numerco_observations(text: str, today: date) -> list[list]:
+    """Read physical U3O8 spot prices, never the fund's separate implied price."""
+    try:
+        payload = json.loads(text)
+    except ValueError as exc:
+        raise SourceError("Numerco : réponse JSON non reconnue") from exc
+    if not isinstance(payload, dict) or not isinstance(payload.get("result"), list):
+        raise SourceError("Numerco : historique spot absent")
+    months = {name: i for i, name in enumerate(
+        ("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"), 1)}
+    by_date = {}
+    for row in payload["result"]:
+        if not isinstance(row, dict):
+            continue
+        match = re.fullmatch(r"(\d{1,2})-([A-Za-z]{3})-(\d{2})", str(row.get("Date", "")))
+        raw_value = row.get("SpotPrice")
+        if not match or isinstance(raw_value, bool) or raw_value is None:
+            continue
+        try:
+            day = date(2000 + int(match[3]), months[match[2]], int(match[1]))
+            value = float(raw_value)
+        except (KeyError, ValueError, TypeError, OverflowError):
+            continue
+        if day <= today and math.isfinite(value) and value > 0:
+            by_date[day.isoformat()] = value
+    if not by_date:
+        raise SourceError("Numerco : aucune observation spot valide")
+    return [[day, value] for day, value in sorted(by_date.items())]
+
+def fetch_numerco_observations(today: date) -> list[list]:
+    # Reproduce the public history page's read-only download. These are its
+    # published browser SDK identifiers; no account or private API key is used.
+    page = fetch_text(NUMERCO_URANIUM_URL)
+    server = re.search(r'Parse\.serverURL\s*=\s*[\'"]([^\'"]+)[\'"]', page)
+    identifiers = re.search(r'Parse\.initialize\(\s*[\'"]([^\'"]+)[\'"]\s*,\s*[\'"]([^\'"]+)[\'"]\s*\)', page)
+    if not server or server[1] != NUMERCO_API_BASE or not identifiers:
+        raise SourceError("Numerco : configuration du téléchargement public modifiée")
+    text = fetch_text(NUMERCO_API_BASE + "functions/retrieveAllObjects", headers={
+        "Content-Type": "application/json", "X-Parse-Application-Id": identifiers[1],
+        "X-Parse-Javascript-Key": identifiers[2],
+    }, data=json.dumps({"object_type": "UHistory", "only_objectId": False}).encode("utf-8"))
+    return parse_numerco_observations(text, today)
 
 def parse_canada_labour_observations(text: str, today: date) -> list[list]:
     """Read the seasonally adjusted unemployment rate, ages 15+, both sexes."""
@@ -231,7 +280,11 @@ def fetch_series(definition: dict, now: datetime) -> dict:
     today = now.date()
     # An extra year is required for year-over-year transformations at the start.
     start = date(today.year - HISTORY_YEARS - 1, 1, 1)
-    if definition.get("provider", "fred") == "bank_of_canada":
+    if definition.get("provider") == "numerco":
+        if definition["id"] != "URANIUMSPOT" or definition.get("transform", "none") != "none":
+            raise SourceError("Série Numerco non prise en charge")
+        observations = fetch_numerco_observations(today)
+    elif definition.get("provider", "fred") == "bank_of_canada":
         if definition["id"] != "V39079":
             raise SourceError("Série Banque du Canada non prise en charge")
         params = urlencode({"start_date": start.isoformat(), "end_date": today.isoformat()})
@@ -304,7 +357,7 @@ def collect_sources(definitions: list[dict], previous: dict | None, now: datetim
         "last_successful_update": now.isoformat() if not errors else (previous or {}).get("last_successful_update"),
         "update_status": status,
         "data_provider": " / ".join(["FRED"] + [label for provider, label in
-            (("bank_of_canada", "Banque du Canada"), ("statistics_canada", "Statistique Canada"))
+            (("bank_of_canada", "Banque du Canada"), ("statistics_canada", "Statistique Canada"), ("numerco", "Numerco"))
             if any(d.get("provider") == provider for d in definitions)]),
         "coverage": {"total": len(points), "fresh": fresh, "cached": available - fresh, "unavailable": len(points) - available},
         "errors": sorted(errors, key=lambda error: error["id"]),

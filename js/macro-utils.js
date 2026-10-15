@@ -46,6 +46,7 @@
         V108785715: [108785715, 18100256], V108785714: [108785714, 18100256],
       }[point.id];
       const statcan = point.provider === "statistics_canada" && statcanSeries && point.vector_id === statcanSeries[0];
+      const uraniumSpot = point.provider === "numerco" && point.id === "URANIUMSPOT";
       series.push({
         ...point, date: day, value, history, fetch_status: fetchStatus,
         title: typeof point.title === "string" ? point.title : point.id,
@@ -56,8 +57,9 @@
         change: validNumber(point.change) ? point.change : null,
         previous_date: isDate(point.previous_date) && point.previous_date <= today ? point.previous_date : null,
         source_url: bankPolicy ? "https://www.bankofcanada.ca/core-functions/monetary-policy/key-interest-rate/" :
-          statcan ? "https://www150.statcan.gc.ca/t1/tbl1/fr/tv.action?pid=" + statcanSeries[1] + "01" : "https://fred.stlouisfed.org/series/" + point.id,
-        source_label: bankPolicy ? "Banque du Canada" : statcan ? "Statistique Canada" : "FRED",
+          statcan ? "https://www150.statcan.gc.ca/t1/tbl1/fr/tv.action?pid=" + statcanSeries[1] + "01" :
+          uraniumSpot ? "https://numerco.com/UHistory/" : "https://fred.stlouisfed.org/series/" + point.id,
+        source_label: bankPolicy ? "Banque du Canada" : statcan ? "Statistique Canada" : uraniumSpot ? "Numerco" : "FRED",
       });
     }
     if (!series.length) throw new Error("Aucun indicateur valide");
