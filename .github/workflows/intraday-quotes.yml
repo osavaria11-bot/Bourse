@@ -101,20 +101,34 @@ jobs:
       - name: Validate generated snapshots
         run: node scripts/validate_intraday_quotes.cjs
       - name: Restore narration for this exact public edition
-        uses: actions/cache@v4
+        id: narration_cache
+        uses: actions/cache/restore@v4
         with:
           path: |
             data/briefing-audio.json
             data/audio
-          key: briefing-audio-v1-${{ hashFiles('data/daily-briefing.json', 'js/briefing-audio-utils.js', 'scripts/generate_briefing_audio.py', 'scripts/requirements-audio.txt') }}
+          key: briefing-audio-v2-${{ hashFiles('data/daily-briefing.json', 'js/briefing-audio-utils.js', 'scripts/generate_briefing_audio.py', 'scripts/requirements-audio.txt') }}
       - name: Generate or reuse natural Canadian French narration
+        id: narration
         continue-on-error: true
         timeout-minutes: 7
         run: |
           if ! python scripts/generate_briefing_audio.py --reuse-only; then
+            if ! command -v ffprobe >/dev/null || ! command -v ffmpeg >/dev/null; then
+              sudo apt-get update -qq
+              sudo apt-get install --no-install-recommends -y ffmpeg
+            fi
             python -m pip install --disable-pip-version-check -r scripts/requirements-audio.txt
             python scripts/generate_briefing_audio.py
           fi
+      - name: Save the complete verified narration
+        if: steps.narration.outcome == 'success' && steps.narration_cache.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            data/briefing-audio.json
+            data/audio
+          key: ${{ steps.narration_cache.outputs.cache-primary-key }}
       - uses: actions/configure-pages@v5
       - name: Package validated source and generated quote data
         run: |

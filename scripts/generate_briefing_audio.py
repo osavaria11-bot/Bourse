@@ -11,6 +11,7 @@ import asyncio
 import hashlib
 import json
 import math
+import shutil
 import subprocess
 import tempfile
 from datetime import datetime, timezone
@@ -96,6 +97,8 @@ async def synthesize(text: str, destination: Path) -> None:
 
 
 async def generate(content: dict, output: Path) -> dict:
+    if not all(shutil.which(binary) for binary in ("ffmpeg", "ffprobe")):
+        raise RuntimeError("FFmpeg and ffprobe must be installed before generating a new narration")
     output.mkdir(parents=True, exist_ok=True)
     audio_directory = output / "audio"
     audio_directory.mkdir(exist_ok=True)
@@ -105,7 +108,8 @@ async def generate(content: dict, output: Path) -> dict:
         lengths = []
         for index, chapter in enumerate(content["chapters"]):
             destination = temporary / f"chapter-{index:02}.mp3"
-            text = content["text"][chapter["start"]:chapter["end"]]
+            # Browser chapter offsets use UTF-16 units, including any emoji.
+            text = content["text"].encode("utf-16-le")[chapter["start"] * 2:chapter["end"] * 2].decode("utf-16-le")
             await synthesize(text, destination)
             lengths.append(duration(destination))
             print(f"Narration chapter {index + 1}/{len(content['chapters'])} generated", flush=True)
