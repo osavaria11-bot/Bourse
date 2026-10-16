@@ -4,8 +4,8 @@
   "language": "fr",
   "timezone": "America/Toronto",
   "edition_date": "2026-10-16",
-  "generated_at": "2026-10-16T11:12:38Z",
-  "editorial_note": "Édition du 16 octobre préparée à 7 h 12, heure de Montréal, avant l’ouverture nord-américaine. Les prix américains à l’importation de septembre, à 8 h 30 (BLS), et la production industrielle de septembre, à 9 h 15 (Fed), restent à venir. Les résultats macro du 15 sont désormais réalisés, non des attentes. Les réactions boursières ci-dessous concernent la clôture du 15 octobre; les dates économiques FRED sont distinctes. « Ma lecture » identifie l’interprétation. Les cours historiques couvrent le 15, sauf META, NU et Sandisk US au 14; le USD/CAD quotidien du 15 est 1,42128, distinct de la cotation indicative en direct.",
+  "generated_at": "2026-10-16T11:17:37Z",
+  "editorial_note": "Édition du 16 octobre préparée à 7 h 17, heure de Montréal, avant l’ouverture nord-américaine. Les prix américains à l’importation de septembre, à 8 h 30 (BLS), et la production industrielle de septembre, à 9 h 15 (Fed), restent à venir. Les résultats macro du 15 sont désormais réalisés, non des attentes. Les réactions boursières ci-dessous concernent la clôture du 15 octobre; les dates économiques FRED sont distinctes. « Ma lecture » identifie l’interprétation. À la collecte de 7 h 15 du 16 octobre, les cours historiques couvrent le 15, sauf FEQT, FCIN et FBAL au 14; le USD/CAD quotidien du 15 est 1,42128, distinct de la cotation indicative en direct.",
   "stories": [
     {
       "topic": "États-Unis · inflation · consommation",
@@ -85,8 +85,8 @@
   ],
   "audio_script": {
     "edition_date": "2026-10-16",
-    "source_generated_at": "2026-10-16T11:12:38Z",
-    "intro": "Bonjour. Voici les nouvelles qui comptent du vendredi seize octobre. Ce briefing est préparé à 7 h 12, heure de Montréal. Les prix américains à l’importation de huit heures trente et la production industrielle de neuf heures quinze ne sont pas encore publiés. Le fil conducteur aujourd’hui : des revenus plus élevés ne veulent pas toujours dire plus de volumes, et une forte demande ne garantit pas un financement rentable. On distingue les faits et ma lecture, avec les clôtures boursières de jeudi.",
+    "source_generated_at": "2026-10-16T11:17:37Z",
+    "intro": "Bonjour. Voici les nouvelles qui comptent du vendredi seize octobre. Ce briefing est préparé à 7 h 17, heure de Montréal. Les prix américains à l’importation de huit heures trente et la production industrielle de neuf heures quinze ne sont pas encore publiés. Le fil conducteur aujourd’hui : des revenus plus élevés ne veulent pas toujours dire plus de volumes, et une forte demande ne garantit pas un financement rentable. On distingue les faits et ma lecture, avec les clôtures boursières de jeudi.",
     "stories": [
       {
         "title": "Le PPI surprend fortement; les ventes résistent surtout en dollars, moins en volume",
@@ -113,4 +113,3 @@
     "outro": "À retenir : surveiller la croissance réelle derrière les dollars facturés, la marge derrière les revenus et le financement derrière les projets d’intelligence artificielle. Les prochaines publications pourront modifier cette lecture. Tu trouveras les sources, les dates exactes et les graphiques dans le briefing écrit de SAVY. Bonne journée."
   }
 }
-
