@@ -1,16 +1,16 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-10-16T20:57:29.936414+00:00",
-  "last_successful_update": "2026-10-16T19:57:53.966129+00:00",
-  "update_status": "partial_data",
+  "generated_at": "2026-10-16T21:37:37.318907+00:00",
+  "last_successful_update": "2026-10-16T21:37:37.318907+00:00",
+  "update_status": "fresh_data",
   "coverage": {
     "total": 41,
-    "fresh": 40,
-    "cached": 1,
+    "fresh": 41,
+    "cached": 0,
     "unavailable": 0
   },
   "data_provider": "FRED / Banque du Canada / Statistique Canada / Numerco",
-  "briefing_paragraph": "Dernières observations publiées — Inflation CPI · annuelle : 3,72 % (période : 2026-09-01); Inflation PCE sous-jacente · annuelle : 3,01 % (période : 2026-08-01); Inflation Canada · IPC global annuel : 3,0 % (période : 2026-08-01); Inflation Canada · CPI-trim annuel : 1,9 % (période : 2026-08-01); Inflation Canada · CPI-median annuel : 2,0 % (période : 2026-08-01); Taux de chômage · États-Unis : 4,20 % (période : 2026-09-01); Taux de chômage · Canada : 6,50 % (période : 2026-09-01); Assurance-chômage US · demandes initiales : 199000 demandes (période : 2026-10-10); Assurance-chômage US · moyenne de 4 semaines : 198500 demandes (période : 2026-10-10); Créations nettes d’emplois · mensuelles : 29 milliers (période : 2026-09-01); Croissance du PIB réel · trimestre annualisé : 2,22 % (période : 2026-04-01); Taux directeur américain · borne inférieure : 3,75 % (période : 2026-10-16); Taux directeur américain · borne supérieure : 4,00 % (période : 2026-10-16); Trésor américain · 10 ans : 5,10 % (période : 2026-10-15); Taux réel américain · 10 ans (TIPS) : 2,78 % (période : 2026-10-15); Courbe des taux · 10 ans – 2 ans : 0,33 pt (période : 2026-10-15); Volatilité anticipée · VIX : 16,46 points (période : 2026-10-15); USD/CAD · dollars canadiens pour 1 $ US : 1,4269 $ CA/$ US (période : 2026-10-09); Taux directeur canadien : 2,25 % (période : 2026-10-15).",
+  "briefing_paragraph": "Dernières observations publiées — Inflation CPI · annuelle : 3,72 % (période : 2026-09-01); Inflation PCE sous-jacente · annuelle : 3,01 % (période : 2026-08-01); Inflation Canada · IPC global annuel : 3,0 % (période : 2026-08-01); Inflation Canada · CPI-trim annuel : 1,9 % (période : 2026-08-01); Inflation Canada · CPI-median annuel : 2,0 % (période : 2026-08-01); Taux de chômage · États-Unis : 4,20 % (période : 2026-09-01); Taux de chômage · Canada : 6,50 % (période : 2026-09-01); Assurance-chômage US · demandes initiales : 199000 demandes (période : 2026-10-10); Assurance-chômage US · moyenne de 4 semaines : 198500 demandes (période : 2026-10-10); Créations nettes d’emplois · mensuelles : 29 milliers (période : 2026-09-01); Croissance du PIB réel · trimestre annualisé : 2,22 % (période : 2026-04-01); Taux directeur américain · borne inférieure : 3,75 % (période : 2026-10-16); Taux directeur américain · borne supérieure : 4,00 % (période : 2026-10-16); Trésor américain · 10 ans : 5,10 % (période : 2026-10-15); Taux réel américain · 10 ans (TIPS) : 2,78 % (période : 2026-10-15); Courbe des taux · 10 ans – 2 ans : 0,35 pt (période : 2026-10-16); Volatilité anticipée · VIX : 16,46 points (période : 2026-10-15); USD/CAD · dollars canadiens pour 1 $ US : 1,4269 $ CA/$ US (période : 2026-10-09); Taux directeur canadien : 2,25 % (période : 2026-10-15).",
   "news_digest_note": "Veille complémentaire. Les données suivent le calendrier de publication de chaque source.",
   "news_sources": [
     {
@@ -38,10 +38,10 @@
     {
       "id": "T10Y2Y",
       "title": "Courbe des taux · 10 ans – 2 ans",
-      "date": "2026-10-15",
-      "value": 0.33,
-      "previous_value": 0.37,
-      "previous_date": "2026-10-14",
+      "date": "2026-10-16",
+      "value": 0.35,
+      "previous_value": 0.33,
+      "previous_date": "2026-10-15",
       "unit": "pt",
       "fetch_status": "fresh"
     },
