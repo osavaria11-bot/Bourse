@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "reviewed_earnings_highlights",
-  "reviewed_at": "2026-10-15T17:27:55Z",
+  "reviewed_at": "2026-10-16T11:12:38Z",
   "reports": {
     "TSM:2026-10-15": {
       "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-15-taiwan-semiconductor-manufacturing-company-limited-stock/",
@@ -20,7 +20,8 @@
         "Élément exceptionnel — Le règlement réglementaire de 1,2 G$ US, non déductible fiscalement, pénalise le bénéfice publié. La direction considère le dossier réglé et les coûts de remédiation intégrés : distinguer cette charge de la rentabilité récurrente.",
         "Marchés — Les revenus de négociation reculent de 5 %, dont 17 % pour le revenu fixe, les devises et les matières premières. Les prêts et dépôts restent solides, mais cette faiblesse limite l’effet positif de la croissance bancaire.",
         "Capital — Le CET1 revient à 10,9 %, contre un minimum réglementaire indiqué de 10 %, après la croissance des prêts, le règlement et l’effet des taux. Les 8,3 G$ US rendus aux actionnaires montrent pourquoi la marge de capital mérite autant d’attention que le BPA."
-      ]
+      ],
+      "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-14-bank-of-america-co-stock/"
     },
     "GS:2026-10-13": {
       "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-the-goldman-sachs-group-inc-stock/",
@@ -39,7 +40,8 @@
         "Médicaments — TREMFYA croît d’environ 68 %, tandis que STELARA recule de 54 % sous la pression des biosimilaires. La capacité des nouvelles franchises à compenser l’érosion des anciens produits reste le test commercial central.",
         "MedTech — La direction reconnaît une performance inférieure à ses attentes, surtout hors États-Unis et chez Abiomed. Elle vise une amélioration au quatrième trimestre, mais les achats hospitaliers et la concurrence en Asie restent des risques d’exécution.",
         "Acquisitions — Le directeur financier chiffre l’effet dilutif de Firefly Bio et Sail Biomedicines à 0,64 $ US par action en 2026 et 1,36 $ US en 2027. Ma lecture : il faut mesurer le progrès opérationnel sans ignorer le coût de construction du portefeuille futur."
-      ]
+      ],
+      "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-johnson-johnson-stock/"
     },
     "JPM:2026-10-13": {
       "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-jpmorgan-chase-co-stock/",
@@ -48,7 +50,8 @@
         "Rentabilité — Les revenus progressent d’environ 8 %, mais les dépenses de 12 %, avec les volumes, les recrutements et les salaires. La croissance commerciale ne se convertit donc pas intégralement en levier opérationnel.",
         "Allocation du capital — Les rachats d’actions se limitent à 1 G$ US; Jamie Dimon privilégie la croissance organique avant les rachats, surtout lorsque les cours sont élevés. Le CET1 descend de 30 points de base à 13,9 %.",
         "Crédit — Le coût du crédit atteint 2,7 G$ US, dont une hausse nette des réserves de 539 M$ US. Ma lecture : suivre la consommation et les pertes sur prêts si les taux réels restent élevés, au-delà du dynamisme des commissions et des marchés."
-      ]
+      ],
+      "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-jpmorgan-chase-co-stock/"
     },
     "UNH:2026-10-13": {
       "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-unitedhealth-group-incorporated-stock/",
@@ -67,7 +70,8 @@
         "Perspectives — La direction maintient environ 50 G$ US de revenu net d’intérêts pour 2026 et prévoit près de 13 G$ US au quatrième trimestre, avec une marge d’intérêt globalement stable. Les volumes et le renouvellement des actifs à taux fixe sont les moteurs annoncés.",
         "Efficacité — Le ratio d’efficacité s’améliore de deux points à 63 % et les charges hors intérêts diminuent de 103 M$ US sur un an. Les économies compensent les dépenses liées à l’activité et soutiennent la progression de la rentabilité.",
         "Crédit — Les pertes nettes sur prêts descendent à 38 points de base. Charlie Scharf ne constate pas encore de dégradation généralisée, mais rappelle que le cycle finira par se détériorer : surveiller les ménages sensibles aux taux et au coût de la vie."
-      ]
+      ],
+      "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-wells-fargo-company-stock/"
     },
     "AAPL:2026-07-30": {
       "source_url": "https://www.marketbeat.com/earnings/reports/2026-7-30-apple-inc-stock/",
@@ -281,3 +285,4 @@
     }
   }
 }
+
