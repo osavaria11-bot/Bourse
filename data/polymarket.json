@@ -2,11 +2,11 @@
   "schema_version": 1,
   "kind": "polymarket_events",
   "provider": "polymarket",
-  "generated_at": "2026-10-17T16:36:05.030418Z",
+  "generated_at": "2026-10-17T16:37:09.107227Z",
   "groups": {
     "finance": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-17T16:36:05.030418Z",
+      "fetched_at": "2026-10-17T16:37:09.107227Z",
       "ranking": "volume",
       "events": [
         {
@@ -82,7 +82,7 @@
     },
     "popular": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-17T16:36:05.030418Z",
+      "fetched_at": "2026-10-17T16:37:09.107227Z",
       "ranking": "volume24hr",
       "events": [
         {
