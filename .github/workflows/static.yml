@@ -56,6 +56,8 @@ jobs:
           node --check js/live-quotes.js
           node --check js/intraday-utils.js
           node --check js/macro-utils.js
+          node --check js/fear-greed-utils.js
+          node --check js/fear-greed.js
           node --check js/portfolio-utils.js
           node --check js/portfolio-heatmap-utils.js
           node --check js/portfolio-intraday-utils.js
@@ -188,9 +190,10 @@ jobs:
           persist-credentials: false
       - name: Setup Pages
         uses: actions/configure-pages@v5
-      - name: Refresh exchange quotes immediately before publishing
+      - name: Refresh exchange quotes and CNN sentiment immediately before publishing
         run: |
           python3 scripts/collect_intraday_quotes.py
+          python3 scripts/collect_fear_greed.py
           node scripts/validate_intraday_quotes.cjs
       - name: Setup Python for natural narration
         uses: actions/setup-python@v6

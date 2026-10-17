@@ -6,6 +6,8 @@ const path = require("node:path");
 const http = require("node:http");
 const root = path.resolve(__dirname, "..");
 const U = require("../js/macro-utils.js");
+const F = require("../js/fear-greed-utils.js");
+const sentiment = F.normalize(JSON.parse(fs.readFileSync(path.join(root, "data/fear-greed.json"), "utf8")));
 const markets = JSON.parse(fs.readFileSync(path.join(root, "data/market-indices.json"), "utf8"));
 const macro = U.normalizeDataset(JSON.parse(fs.readFileSync(path.join(root, "data/macro-data.json"), "utf8")));
 function expectedBaseline(point, range) {
@@ -34,6 +36,15 @@ async function main() {
     const errors = []; page.on("pageerror", error => errors.push(error.message));
     await page.route("https://**", route => route.abort());
     await page.goto("http://127.0.0.1:" + server.address().port);
+    await page.waitForFunction(() => document.getElementById("fearGreedRating").textContent !== "Chargement…");
+    assert.equal(await page.locator("#fearGreedValue").innerText(), U.formatNumber(sentiment.score, 0));
+    if (F.validScore(sentiment.score)) {
+      assert.equal(await page.locator("#fearGreedRating").innerText(), F.RATINGS[sentiment.rating]);
+      assert.equal(await page.locator("#fearGreedMeter").getAttribute("aria-valuenow"), String(sentiment.score));
+    } else {
+      assert.equal(await page.locator("#fearGreedRating").innerText(), "Indisponible");
+      assert.equal(await page.locator("#fearGreedChart").isVisible(), false);
+    }
     await page.waitForSelector('#marketRanges [data-range="INTRADAY"]');
     assert.equal(await page.locator('#marketRanges [data-range="INTRADAY"]').getAttribute("aria-pressed"), "true");
     await page.locator('#marketRanges [data-range="1Y"]').click();

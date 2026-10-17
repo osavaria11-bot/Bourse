@@ -86,11 +86,13 @@ jobs:
       - name: Check quote collector and financial calculations
         run: |
           python -m unittest discover -s tests -p 'test_intraday_quotes.py' -v
+          python -m unittest discover -s tests -p 'test_fear_greed.py' -v
           npm test
       - name: Collect actual exchange quotes without touching daily histories
         id: collect
         run: |
           python scripts/collect_intraday_quotes.py
+          python scripts/collect_fear_greed.py
           python - <<'PY'
           import json, os
           from pathlib import Path

@@ -48,6 +48,25 @@ button {color:var(--text)}
 .kpi .meta {font-size:10px}
 .kpi a.meta {display:inline-block;font-size:10px;margin-top:4px}
 .kpi .change {white-space:normal;overflow-wrap:anywhere}
+.fear-greed {display:grid;grid-template-columns:minmax(190px,.85fr) minmax(250px,1.35fr) minmax(180px,1fr);align-items:center;gap:20px 30px;margin-top:12px;padding:18px 22px;background:var(--surface);border:1px solid var(--border);border-radius:12px}
+.fear-greed>div {min-width:0}
+.fear-greed-heading h2 {font-size:18px;margin:3px 0 4px;letter-spacing:-.025em}
+.fear-greed-heading .eyebrow {font-size:9px}
+.fear-greed-score {display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+#fearGreedValue {font-size:32px;line-height:1;font-weight:650;font-variant-numeric:tabular-nums;letter-spacing:-.04em}
+.fear-greed-total {color:var(--muted);font-size:13px}
+.fear-greed-rating {font-size:12px;font-weight:650;color:var(--gold);text-align:right}
+.fear-greed[data-rating="extreme-fear"] .fear-greed-rating,.fear-greed[data-rating="fear"] .fear-greed-rating {color:#f1aa91}
+:root[data-theme="light"] .fear-greed[data-rating="extreme-fear"] .fear-greed-rating,:root[data-theme="light"] .fear-greed[data-rating="fear"] .fear-greed-rating {color:#a33c24}
+.fear-greed[data-rating="greed"] .fear-greed-rating,.fear-greed[data-rating="extreme-greed"] .fear-greed-rating {color:var(--accent)}
+.fear-greed[data-rating="unavailable"] .fear-greed-rating {color:var(--muted)}
+.fear-greed-meter {position:relative;height:9px;border-radius:20px;background:linear-gradient(90deg,#ce775c 0%,#d8b276 32%,#b4b8a2 50%,#81bbaa 70%,#4ba78d 100%)}
+.fear-greed-marker {position:absolute;left:clamp(3px,var(--fear-score,0%),calc(100% - 3px));top:-4px;width:5px;height:17px;transform:translateX(-50%);border-radius:2px;background:var(--text);box-shadow:0 0 0 2px var(--surface)}
+.fear-greed-scale {display:flex;justify-content:space-between;gap:8px;font-size:9px;color:var(--muted);margin-top:8px}
+.fear-greed-meta .meta {font-size:11px}
+#fearGreedChange {margin-top:5px;color:var(--text)}
+@media(max-width:950px) {.fear-greed {grid-template-columns:minmax(160px,.8fr) minmax(220px,1.2fr);gap:12px 24px}.fear-greed-meta {grid-column:1/-1;display:flex;justify-content:space-between;gap:8px 20px;flex-wrap:wrap}#fearGreedChange {margin-top:0}}
+@media(max-width:580px) {.fear-greed {grid-template-columns:minmax(0,1fr);padding:16px;gap:13px}.fear-greed-heading h2 {font-size:17px}.fear-greed-heading .meta {font-size:11px}.fear-greed-meta {display:block}#fearGreedChange {margin-top:4px}}
 .quote-meta {margin-top:6px;min-width:0;overflow-wrap:anywhere}
 .quote-meta>a {display:inline-block;font-size:11px;margin-top:2px}
 .live-companion {margin-top:10px;padding-top:10px;border-top:1px solid var(--border);min-width:0;overflow-wrap:anywhere}
