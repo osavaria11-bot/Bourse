@@ -1,10 +1,10 @@
 "use strict";
 const test = require("node:test"), assert = require("node:assert/strict"), P = require("../js/polymarket-utils.js"), fixture = require("./polymarket-fixture.cjs");
 const NOW = Date.parse("2026-10-17T17:00:00Z");
-test("five distinct events preserve named scenario prices, including 0 and 100 percent", () => {
+test("eight distinct events preserve named scenario prices, including 0 and 100 percent", () => {
   const raw = fixture(NOW); raw.groups.finance.events[0].outcomes[0].probability = 0; raw.groups.finance.events[0].outcomes[1].probability = 1;
   const next = P.normalize(raw, NOW);
-  assert.equal(next.groups.finance.events.length, 3); assert.equal(next.groups.popular.events.length, 2);
+  assert.equal(next.groups.finance.events.length, 3); assert.equal(next.groups.popular.events.length, 5);
   assert.equal(P.percent(next.groups.finance.events[0].outcomes[0].probability), "0 %");
   assert.equal(P.percent(next.groups.finance.events[0].outcomes[1].probability), "100 %");
   assert.equal(P.label("Yes"), "Oui"); assert.equal(P.label("No"), "Non"); assert.equal(P.label("Company A"), "Company A");

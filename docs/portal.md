@@ -1,6 +1,6 @@
 # SAVY financial portal
 
-The existing static site and GitHub Pages workflows are retained. `portal.js` moves the original live components into six pages before their modules initialise. It never clones a financial chart or changes a stored position. `portal.css` supplies the compact dark/light presentation without a framework, CDN or new production dependency.
+The existing static site and GitHub Pages workflows are retained. `portal.js` moves the original live components into six compact pages and a complete dashboard. It never clones a financial chart or changes a stored position. `portal.css` supplies the compact dark/light presentation without a framework, CDN or new production dependency.
 
 ## Navigation
 
@@ -11,7 +11,10 @@ The existing static site and GitHub Pages workflows are retained. `portal.js` mo
 | Portefeuilles | All three existing portfolios; overview, positions, allocation heatmap and exposures, contributions/risk/movers, earnings, transaction availability |
 | Recherche | Current Finviz selection, strategy rules and data availability, published PDF archives |
 | Immobilier | Current briefing, opportunities and published PDF archives |
-| Polymarket | Existing three Finance and two popular markets with their live collection and cache behavior |
+| Polymarket | Three Finance and five popular political markets with their live collection and cache behavior |
+| Dashboard complet | Rightmost navigation item; all original components on one page, all six market charts, every filtered macro chart and all portfolio panels |
+
+The complete dashboard moves the same live component nodes into its page and restores their exact original positions on exit. No duplicated IDs, separate quotes or extra timers. Period changes and refreshes retain the complete chart grid; returning to a compact section restores its selected chart and comparison setting. Portfolio visibility controls and empty-data gating are preserved. Direct dashboard bookmarks and personal access fragments work together.
 
 Routes use `#view=…&tab=…`. Old `#portfolio`, `#indicators`, `#yieldCurves`, `#weeklyReports`, `#fearGreed` and `#polymarket` bookmarks still work. Browser back/forward and refresh preserve the selected page. Cmd/Ctrl+K opens economic search. Desktop navigation stays at the top; mobile navigation stays at the bottom, including the safe area.
 

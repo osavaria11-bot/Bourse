@@ -23,7 +23,7 @@ def event(eid="1", volume=100, daily=10, **extra):
 
 
 def fetcher(kind, now, excluded):
-    return [poly.parse_event(event(str(i)), now) for i in (range(1, 4) if kind == "finance" else range(4, 6))]
+    return [poly.parse_event(event(str(i)), now) for i in (range(1, 4) if kind == "finance" else range(4, 9))]
 
 
 class PolymarketTests(unittest.TestCase):
@@ -74,11 +74,20 @@ class PolymarketTests(unittest.TestCase):
             self.assertEqual(query["order"], ["volume24hr"])
             self.assertEqual(query["related_tags"], ["false"])
             return [event("1", daily=900), event("9", daily=800, tags=[{"slug":"finance"}]),
-                    event("4", daily=500), event("5", daily=600)]
+                    event("4", daily=500), event("5", daily=600), event("6", daily=400), event("7", daily=300), event("8", daily=200)]
         with patch.object(poly, "fetch_json", side_effect=response):
             data = poly.collect(None, NOW)
         self.assertEqual([e["id"] for e in data["groups"]["finance"]["events"]], ["1", "2", "3"])
-        self.assertEqual([e["id"] for e in data["groups"]["popular"]["events"]], ["5", "4"])
+        self.assertEqual([e["id"] for e in data["groups"]["popular"]["events"]], ["5", "4", "6", "7", "8"])
+
+    def test_old_two_event_snapshot_survives_an_outage_after_increasing_to_five(self):
+        old = poly.collect(None, NOW, fetcher)
+        old["groups"]["popular"]["events"] = old["groups"]["popular"]["events"][:2]
+        failed = lambda *args: (_ for _ in ()).throw(poly.macro.SourceError("offline"))
+        data = poly.collect(old, NOW + timedelta(minutes=5), failed)
+        self.assertEqual(data["groups"]["popular"]["fetch_status"], "cached")
+        self.assertEqual(data["groups"]["popular"]["fetched_at"], poly.iso(NOW))
+        self.assertEqual(len(data["groups"]["popular"]["events"]), 2)
 
     def test_pagination_after_expired_or_invalid_leading_events(self):
         def response(url):

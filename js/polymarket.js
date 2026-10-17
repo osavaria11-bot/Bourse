@@ -38,8 +38,8 @@
     }
     const groups = data ? Object.values(data.groups) : [], count = groups.reduce((sum, group) => sum + group.events.length, 0);
     document.getElementById("polymarketStatus").textContent = !count ? "Les paris sont indisponibles pour le moment." :
-      (copy || groups.some(group => group.fetch_status !== "fresh" || Date.now() - U.parseTimestamp(group.fetched_at) > 1800000) || count < 5 ?
-        "Derniers relevés disponibles · les heures de collecte figurent sur chaque carte." : "3 paris finance par volume total · 2 paris politiques par volume sur 24 h.");
+      (copy || groups.some(group => group.fetch_status !== "fresh" || Date.now() - U.parseTimestamp(group.fetched_at) > 1800000) || count < P.GROUPS.reduce((sum, spec) => sum + spec.count, 0) ?
+        "Derniers relevés disponibles · les heures de collecte figurent sur chaque carte." : "3 paris finance par volume total · 5 paris populaires politiques par volume sur 24 h.");
   }
   try {data = P.normalize(JSON.parse(localStorage.getItem(KEY))); copy = true; render();} catch {data = null;}
   async function refresh() {

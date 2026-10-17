@@ -11,6 +11,7 @@
     recherche: '<circle cx="10" cy="10" r="7"/><path d="m15 15 6 6M7 10h6M10 7v6"/>',
     immobilier: '<path d="M4 21V7l8-4v18M12 10h8v11M7 8v2m0 3v2m0 3v2m9-7v2m0 3v2M2 21h20"/>',
     polymarket: '<path d="M4 20V10h4v10m4 0V4h4v16m4 0v-7M2 20h20"/>',
+    dashboard: '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',
   };
   function el(tag, className, text) {const node = document.createElement(tag); if (className) node.className = className; if (text !== undefined) node.textContent = text; return node;}
   function link(label, page, tab, className = "portal-link") {
@@ -29,11 +30,13 @@
   $(".brand .eyebrow").textContent = "VOTRE PERSPECTIVE FINANCIÈRE";
   $(".header-actions a[href='#portfolio']").remove();
   const nav = el("nav", "portal-nav"); nav.setAttribute("aria-label", "Navigation principale");
+  const mobileLabels = {portefeuilles: "Portef.", recherche: "Rech.", immobilier: "Immo.", polymarket: "Polym.", dashboard: "Tout"};
   for (const [id, config] of Object.entries(R.PAGES)) {
     const item = link("", id); item.dataset.page = id;
     const icon = el("span", "nav-icon"); icon.setAttribute("aria-hidden", "true");
     icon.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' + icons[id] + '</svg>';
-    item.append(icon, el("span", "", config.label)); nav.append(item);
+    item.setAttribute("aria-label", config.label); item.title = config.label;
+    item.append(icon, el("span", "nav-label", config.navLabel || config.label), el("span", "nav-label-mobile", mobileLabels[id] || config.label)); nav.append(item);
   }
   header.insertBefore(nav, $(".header-actions"));
   $(".intro-line").remove();
@@ -119,6 +122,21 @@
   $("footer p").textContent = "SAVY · Votre portail financier";
   method($(".market-section > p:last-child"), "Comprendre les cours et les périodes");
 
+  const dashboard = pane("dashboard", "overview"), dashboardMoves = [];
+  dashboard.append(el("p", "eyebrow", "SAVY / VUE INTÉGRALE"), el("h2", "", "Dashboard complet"),
+    el("p", "meta dashboard-intro", "Tous les graphiques, portefeuilles et dernières analyses sur une seule page, comme dans la vue d’origine."));
+  function syncDashboard(show) {
+    if (show && !dashboardMoves.length) {
+      for (const selector of ["#updated", "#kpis", "#fearGreed", ".policy-odds", "#briefingCard", ".market-section", "#portfolio", "#yieldCurves", "#indicators", ".resources", "#polymarket", "#propertyReport", "#weeklyReports"]) {
+        const node = $(selector); if (!node) continue;
+        const marker = document.createComment("Dashboard component returns here"); node.before(marker);
+        dashboardMoves.push({node, marker}); dashboard.append(node);
+      }
+    } else if (!show && dashboardMoves.length) {
+      for (const {node, marker} of dashboardMoves.splice(0).reverse()) marker.replaceWith(node);
+    }
+  }
+
   const marketTools = el("div", "portal-chart-tools");
   const marketLabel = el("label", "", "Marché"), marketSelect = el("select"); marketSelect.id = "marketSelect"; marketLabel.append(marketSelect);
   marketTools.append(marketLabel); const marketExpand = el("button", "button quiet", "Agrandir ↗"); marketExpand.type = "button"; marketExpand.id = "marketExpand"; marketTools.append(marketExpand);
@@ -142,33 +160,36 @@
   const close = el("button", "button quiet", "Fermer ×"); close.type = "button"; close.id = "closeExpand"; dialogHead.append(dialogTitle, close);
   const dialogBody = el("div", "portal-expand-body"); dialog.append(dialogHead, dialogBody); document.body.append(dialog);
   function expand(node, title, trigger) {
-    if (expanded) dialog.close();
+    if (expanded) {dialog.close(); restoreExpanded();}
     const marker = document.createComment("Expanded component returns here"); node.before(marker);
     expanded = {node, marker, trigger}; dialogTitle.textContent = title; dialogBody.append(node); dialog.showModal(); window.dispatchEvent(new Event("resize"));
   }
   close.addEventListener("click", () => dialog.close());
-  dialog.addEventListener("close", () => {if (expanded) {const {node, marker, trigger} = expanded; marker.replaceWith(node); expanded = null; window.dispatchEvent(new Event("resize")); trigger.focus();}});
+  function restoreExpanded() {if (expanded) {const {node, marker, trigger} = expanded; marker.replaceWith(node); expanded = null; window.dispatchEvent(new Event("resize")); trigger.focus();}}
+  dialog.addEventListener("close", restoreExpanded);
   marketExpand.addEventListener("click", () => expand($(".market-section"), "Marchés · graphique détaillé", marketExpand));
   portfolioExpand.addEventListener("click", () => expand(shared, "Portefeuille · vue détaillée", portfolioExpand));
 
   function syncIndicators() {
+    const all = active.page === "dashboard"; macroTools.hidden = all;
     const cards = [...$("#grid").children], options = document.createDocumentFragment();
     for (const card of cards) {const option = el("option", "", card.querySelector("h3")?.textContent || card.dataset.id); option.value = card.dataset.id; options.append(option);}
     if (!cards.some(card => card.dataset.id === macroId)) macroId = cards[0]?.dataset.id || "";
     macroSelect.replaceChildren(options); macroSelect.value = macroId; macroSelect.disabled = !cards.length;
     macroPage = Math.max(0, Math.min(macroPage, Math.ceil(cards.length / 6) - 1));
-    cards.forEach((card, index) => {card.hidden = compare ? index < macroPage * 6 || index >= (macroPage + 1) * 6 : card.dataset.id !== macroId;});
-    $("#grid").classList.toggle("portal-compare", compare); compareButton.setAttribute("aria-pressed", String(compare));
+    cards.forEach((card, index) => {card.hidden = !all && (compare ? index < macroPage * 6 || index >= (macroPage + 1) * 6 : card.dataset.id !== macroId);});
+    $("#grid").classList.toggle("portal-compare", compare || all); compareButton.setAttribute("aria-pressed", String(compare));
     compareButton.textContent = compare ? "Un seul graphique" : "Comparer les graphiques"; paging.hidden = !compare || cards.length <= 6;
     previous.disabled = macroPage === 0; next.disabled = (macroPage + 1) * 6 >= cards.length;
     macroLabel.hidden = compare;
   }
   function selectMarket(id) {marketId = id; syncMarkets();}
   function syncMarkets() {
+    const all = active.page === "dashboard"; marketTools.hidden = all; watchlist.hidden = all;
     const cards = [...$("#marketGrid").children]; marketSelect.replaceChildren(); watchlist.replaceChildren();
     for (const card of cards) {
       const id = card.dataset.id, title = card.querySelector("h4").textContent;
-      const option = el("option", "", title); option.value = id; marketSelect.append(option); card.hidden = id !== marketId;
+      const option = el("option", "", title); option.value = id; marketSelect.append(option); card.hidden = !all && id !== marketId;
       const row = el("button", "portal-watch-row"); row.type = "button"; row.dataset.market = id; row.setAttribute("aria-pressed", String(id === marketId));
       row.append(el("strong", "", title), el("span", "", card.querySelector(".market-value").textContent), el("span", card.querySelector(".market-return").className, card.querySelector(".market-return").textContent));
       row.addEventListener("click", () => selectMarket(id)); watchlist.append(row);
@@ -221,14 +242,16 @@
     }
   }
   function applyRoute(focus = false) {
-    active = R.route(location.hash); if (dialog.open) dialog.close();
+    active = R.route(location.hash); if (dialog.open) {dialog.close(); restoreExpanded();}
+    const all = active.page === "dashboard"; syncDashboard(all);
     for (const [id, page] of pages) page.hidden = active.page !== id;
-    for (const [id, panel] of panels) panel.hidden = id !== active.page + "/" + active.tab;
+    for (const [id, panel] of panels) panel.hidden = !(all && id.startsWith("portefeuilles/")) && id !== active.page + "/" + active.tab;
     for (const item of nav.children) {if (item.dataset.page === active.page) item.setAttribute("aria-current", "page"); else item.removeAttribute("aria-current");}
     for (const item of document.querySelectorAll(".portal-tabs a")) {if (item.dataset.tab === active.tab && item.closest(".portal-page").dataset.page === active.page) item.setAttribute("aria-current", "page"); else item.removeAttribute("aria-current");}
     document.title = "SAVY · " + R.PAGES[active.page].label;
     document.body.dataset.page = active.page;
-    $("#portfolioManage").hidden = active.tab === "positions";
+    $("#portfolioManage").hidden = all || active.tab === "positions";
+    syncIndicators(); syncMarkets();
     window.scrollTo({top: 0, behavior: "instant"}); window.dispatchEvent(new Event("resize"));
     if (focus) {const panel = pane(active.page, active.tab); panel.tabIndex = -1; panel.focus({preventScroll: true});}
     document.dispatchEvent(new CustomEvent("savy:navigate", {detail: {...active}}));

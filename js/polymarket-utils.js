@@ -3,7 +3,7 @@
   else root.PolymarketUtils = factory(root.MacroUtils);
 })(typeof globalThis !== "undefined" ? globalThis : this, function (U) {
   "use strict";
-  const GROUPS = [{id:"finance", label:"Finance", count:3, ranking:"volume"}, {id:"popular", label:"Populaire · politique", count:2, ranking:"volume24hr"}];
+  const GROUPS = [{id:"finance", label:"Finance", count:3, ranking:"volume"}, {id:"popular", label:"Populaire · politique", count:5, ranking:"volume24hr"}];
   const stamp = value => typeof value === "string" && /T.*(?:Z|[+-]\d{2}:\d{2})$/.test(value) ? U.parseTimestamp(value) : NaN;
   const validNumber = value => U.validNumber(value) && value >= 0;
   function normalizeEvent(row, now) {

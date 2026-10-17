@@ -17,7 +17,7 @@ except ModuleNotFoundError:
 
 ROOT = Path(__file__).resolve().parents[1]
 API = "https://gamma-api.polymarket.com"
-GROUPS = {"finance": ("finance", "volume", 3), "popular": ("politics", "volume24hr", 2)}
+GROUPS = {"finance": ("finance", "volume", 3), "popular": ("politics", "volume24hr", 5)}
 
 
 def iso(value):
@@ -131,7 +131,7 @@ def fetch_group(kind, now, excluded=()):
         for raw in rows:
             event = parse_event(raw, now)
             if event and event["id"] not in excluded:
-                # Politics can cross-list financial events; keep two other topics.
+                # Politics can cross-list financial events; keep five other topics.
                 tags = raw.get("tags") or []
                 if kind == "popular" and any(isinstance(t, dict) and t.get("slug") == "finance" for t in tags):
                     continue
@@ -152,7 +152,7 @@ def cached_events(group, now, count, excluded):
         if group.get("fetch_status") not in ("fresh", "cached") or fetched > now + timedelta(minutes=5):
             return []
         rows, result = group["events"], []
-        if not isinstance(rows, list) or len(rows) != count:
+        if not isinstance(rows, list) or not 1 <= len(rows) <= count:
             return []
         for row in rows:
             slug = row["slug"]

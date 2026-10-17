@@ -5,6 +5,8 @@ test("Old bookmarks and private fragments open the correct section; invalid tabs
   assert.deepEqual(R.route("#yieldCurves"), {page: "marches", tab: "rates"});
   for (const fragment of ["#portfolio", "#portfolio=2", "#positions=synthetic", "#portfolio-key=synthetic"]) assert.equal(R.route(fragment).page, "portefeuilles");
   assert.deepEqual(R.route("#view=marches&tab=unknown"), {page: "marches", tab: "indices"});
+  assert.deepEqual(R.route("#view=dashboard&tab=overview"), {page: "dashboard", tab: "overview"});
+  assert.deepEqual(R.route("#dashboard"), {page: "dashboard", tab: "overview"});
   assert.deepEqual(R.route("#view=toString&tab=__proto__"), {page: "accueil", tab: "overview"});
 });
 test("Navigation and profile refresh keep private access in the fragment and preserve the route", () => {
@@ -16,6 +18,9 @@ test("Navigation and profile refresh keep private access in the fragment and pre
   const refreshed = new URL(R.preserveRoute(initial, next.href));
   assert.equal(refreshed.href, next.href);
   assert.equal(new URLSearchParams(refreshed.hash.slice(1)).get("portfolio"), "2");
+  const dashboard = R.address(refreshed.href, "dashboard", "overview");
+  assert.equal(new URLSearchParams(new URL(dashboard).hash.slice(1)).get("portfolio-key"), "synthetic-test-key");
+  assert.equal(R.preserveRoute(initial, dashboard), dashboard);
 });
 test("Archives accept only dated local report PDFs, sort them and reject duplicates and unsafe paths", () => {
   const valid = {kind: "stocks", date: "2026-10-14", path: "reports/stocks/2026-10-14.pdf"};

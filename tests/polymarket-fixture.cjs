@@ -7,5 +7,5 @@ module.exports = function fixture(now = Date.now()) {
       {label:"Scenario B", probability:.25, market_id:String(id*10+1), ends_at:future}]});
   return {schema_version:1, kind:"polymarket_events", provider:"polymarket", generated_at:fetched,
     groups:{finance:{ranking:"volume", fetch_status:"fresh", fetched_at:fetched, events:[event(1),event(2),event(3)]},
-      popular:{ranking:"volume24hr", fetch_status:"fresh", fetched_at:fetched, events:[event(4),event(5)]}}};
+      popular:{ranking:"volume24hr", fetch_status:"fresh", fetched_at:fetched, events:[event(4),event(5),event(6),event(7),event(8)]}}};
 };

@@ -28,7 +28,8 @@ async function check(browser, engine) {
   await page.waitForFunction(() => document.querySelector("#fearGreedValue").textContent !== "—");
   const home = await page.locator("#kpis").boundingBox();
   assert.ok(home.y + home.height <= 900, "The desktop first screen includes news, sentiment, analyses and macro readings: " + (home.y + home.height));
-  assert.equal(await page.locator(".portal-nav a").count(), 6); await shot("home-dark");
+  assert.equal(await page.locator(".portal-nav a").count(), 7);
+  assert.equal(await page.locator(".portal-nav a").last().getAttribute("data-page"), "dashboard"); await shot("home-dark");
   await page.locator('#kpis .kpi[data-id="VIXCLS"] button').click();
   assert.match(await page.locator('#detailCategory').textContent(), /VIXCLS/); await page.keyboard.press("Escape");
   await page.locator("#themeToggle").click(); assert.equal(await page.locator("html").getAttribute("data-theme"), "light"); await shot("home-light");
@@ -57,6 +58,29 @@ async function check(browser, engine) {
   const first = await page.locator(".indicator-card:visible").first().getAttribute("data-id");
   await page.locator("#macroPaging button").last().click(); assert.notEqual(await page.locator(".indicator-card:visible").first().getAttribute("data-id"), first);
   await page.locator("#macroCompare").click(); await shot("economy");
+  const sentimentNode = await page.locator("#fearGreed").elementHandle();
+  await go("dashboard");
+  assert.equal(await page.locator(".market-card:visible").count(), 6);
+  assert.equal(await page.locator(".indicator-card:visible").count(), count);
+  for (const selector of ["#kpis", "#fearGreed", ".policy-odds", "#briefingCard", "#portfolio", "#yieldCurves", "#indicators", ".resources", "#polymarket", "#propertyReport", "#weeklyReports"]) {
+    assert.equal(await page.locator(selector).isVisible(), true, "Full dashboard shows " + selector);
+    assert.equal(await page.locator(selector).count(), 1, "One live component for " + selector);
+  }
+  assert.equal(await page.evaluate(node=>node===document.getElementById("fearGreed"), sentimentNode), true);
+  await page.locator('#marketRanges [data-range="1M"]').click();
+  assert.equal(await page.locator(".market-card:visible").count(), 6, "Refresh keeps all markets visible");
+  await page.locator('#rangeControls [data-range="1Y"]').click();
+  assert.equal(await page.locator(".indicator-card:visible").count(), count, "Refresh keeps all macro charts visible");
+  await shot("dashboard");
+  await go("marches", "indices"); assert.equal(await page.locator(".market-card:visible").count(), 1);
+  assert.equal(await page.locator("#marketSelect").inputValue(), "FEQT");
+  await go("marches", "economy"); assert.equal(await page.locator(".indicator-card:visible").count(), 1);
+  await go("accueil"); assert.equal(await page.locator("#fearGreed").isVisible(), true);
+  assert.equal(await page.evaluate(node=>node===document.getElementById("fearGreed"), sentimentNode), true);
+  await page.goto(url + "/#view=dashboard&tab=overview"); await page.reload();
+  await page.waitForFunction(()=>document.querySelectorAll(".indicator-card").length>30);
+  assert.equal(await page.locator(".indicator-card:visible").count(), count, "Direct dashboard bookmarks open every chart");
+  await go("accueil"); await sentimentNode.dispose();
   await go("immobilier"); assert.equal(await page.locator('#propertyReportsGrid [data-report-kind="real_estate"]').isVisible(), true);
   await go("recherche"); assert.equal(await page.locator('#weeklyReportsGrid [data-report-kind="stocks"]').isVisible(), true);
   await page.locator(".weekly-stock summary").first().click(); assert.equal(await page.locator(".weekly-stock-details").first().getAttribute("open"), ""); await shot("research");
@@ -78,6 +102,11 @@ async function check(browser, engine) {
   await go("portefeuilles", "allocations"); await page.locator("#portfolioHeatmapTiles button").first().waitFor({state:"visible"});
   await go("portefeuilles", "performance"); assert.equal(await page.locator("#portfolioRisk").isVisible(), true);
   await go("portefeuilles", "transactions"); assert.match(await page.locator("#panel-portefeuilles-transactions").innerText(), /Aucun journal/);
+  await go("dashboard");
+  for (const tab of Object.keys(R.PAGES.portefeuilles.tabs)) assert.equal(await page.locator("#panel-portefeuilles-" + tab).isVisible(), true);
+  assert.equal(await page.locator("#portfolioChart svg").isVisible(), true);
+  await page.locator("#portfolioExpand").click(); assert.equal(await page.locator("#expandDialog #portfolioRisk").isVisible(), true); await page.keyboard.press("Escape");
+  await go("portefeuilles", "positions"); assert.equal(await page.locator("#panel-portefeuilles-allocations").isVisible(), false);
   await go("portefeuilles"); await shot("portfolio");
   const syntheticKey = "synthetic-test-key-never-a-real-credential";
   await page.goto(url + "/#portfolio-key=" + syntheticKey + "&portfolio=2");
@@ -98,7 +127,7 @@ async function check(browser, engine) {
     await go("accueil"); await shot("mobile-" + width);
   }
   assert.deepEqual(errors, []);
-  console.log(engine + ": six sections, compact home, charts/periods/expansion, reports/archives, all portfolio views, keyboard/back/reload, fragment privacy and 375/320px layouts passed.");
+  console.log(engine + ": seven sections, compact home and complete dashboard, charts/periods/expansion, reports/archives, all portfolio views, keyboard/back/reload, fragment privacy and 375/320px layouts passed.");
   await context.close();
 }
 (async()=>{
