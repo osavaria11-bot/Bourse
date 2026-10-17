@@ -120,8 +120,13 @@ async function check(browser, engine) {
       await go(section);
       for (const tab of Object.keys(config.tabs)) {
         if (Object.keys(config.tabs).length > 1) await page.locator('#page-' + section + ' .portal-tabs [data-tab="' + tab + '"]').click();
+        // Measure after the resized page and its chart observers have painted.
+        await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
         const overflow = await page.evaluate(()=>({width:innerWidth, scroll:document.documentElement.scrollWidth,
+          root:{client:document.documentElement.clientWidth,offset:document.documentElement.offsetWidth},body:{client:document.body.clientWidth,scroll:document.body.scrollWidth},viewport:visualViewport?.width,focused:document.activeElement?.id,
+          scrollers:document.documentElement.scrollWidth <= innerWidth ? [] : [...document.querySelectorAll("body *")].filter(n=>n.clientWidth>0 && n.scrollWidth>n.clientWidth+1).slice(0,20).map(n=>({tag:n.tagName,id:n.id,classes:String(n.className),width:n.clientWidth,scroll:n.scrollWidth,overflow:getComputedStyle(n).overflowX})),
           offenders:document.documentElement.scrollWidth <= innerWidth ? [] : [...document.querySelectorAll("body *")].filter(n=>n.getBoundingClientRect().right>innerWidth+.5 && n.getBoundingClientRect().width>0).slice(0,15).map(n=>({tag:n.tagName,id:n.id,classes:String(n.className),text:n.textContent.slice(0,80),parent:n.parentElement?.className,right:n.getBoundingClientRect().right,width:n.getBoundingClientRect().width}))}));
+        if (overflow.scroll > overflow.width) console.log("PORTAL_OVERFLOW_IMAGE " + (await page.screenshot()).toString("base64"));
         assert.equal(overflow.scroll > overflow.width, false, engine + " overflow " + width + " " + section + "/" + tab + " " + JSON.stringify(overflow));
         const nav = await page.locator(".portal-nav").boundingBox(); assert.ok(nav.y >= 700 && nav.y + nav.height <= 813, "iPhone navigation stays on screen");
       }
