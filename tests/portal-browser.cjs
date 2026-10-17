@@ -120,7 +120,9 @@ async function check(browser, engine) {
       await go(section);
       for (const tab of Object.keys(config.tabs)) {
         if (Object.keys(config.tabs).length > 1) await page.locator('#page-' + section + ' .portal-tabs [data-tab="' + tab + '"]').click();
-        assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth > innerWidth), false, engine + " overflow " + width + " " + section + "/" + tab);
+        const overflow = await page.evaluate(()=>({width:innerWidth, scroll:document.documentElement.scrollWidth,
+          offenders:document.documentElement.scrollWidth <= innerWidth ? [] : [...document.querySelectorAll("body *")].filter(n=>n.getBoundingClientRect().right>innerWidth+.5 && n.getBoundingClientRect().width>0).slice(0,15).map(n=>({tag:n.tagName,id:n.id,classes:String(n.className),right:n.getBoundingClientRect().right,width:n.getBoundingClientRect().width}))}));
+        assert.equal(overflow.scroll > overflow.width, false, engine + " overflow " + width + " " + section + "/" + tab + " " + JSON.stringify(overflow));
         const nav = await page.locator(".portal-nav").boundingBox(); assert.ok(nav.y >= 700 && nav.y + nav.height <= 813, "iPhone navigation stays on screen");
       }
     }
