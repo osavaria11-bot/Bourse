@@ -140,6 +140,7 @@ jobs:
         run: |
           mkdir -p _site
           cp index.html 221.png 2121.png _site/
+          node scripts/build_report_archive.cjs
           cp -R css js data reports _site/
       - uses: actions/upload-pages-artifact@v3
         with:

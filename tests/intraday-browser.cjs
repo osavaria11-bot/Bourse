@@ -1,4 +1,5 @@
 "use strict";
+const {componentPage} = require("./portal-navigation.cjs");
 const assert = require("node:assert/strict"), fs = require("node:fs"), http = require("node:http"), path = require("node:path");
 const {chromium} = require(process.env.PLAYWRIGHT_MODULE_PATH || "playwright");
 const U = require("../js/macro-utils.js"), P = require("../js/portfolio-utils.js");
@@ -83,6 +84,7 @@ async function main() {
   }
   async function checkMacroBounds(page, width) {
     await page.setViewportSize({width, height: 1000});
+    await page.locator("#kpis").scrollIntoViewIfNeeded();
     const overflow = await page.locator("#kpis .kpi, #grid .indicator-card").evaluateAll(cards => cards.flatMap(card => {
       const bounds = card.getBoundingClientRect();
       return [...card.querySelectorAll(".kpi-value,.current-value,.change,.meta,.live-companion,a,button")].filter(node => {
@@ -92,12 +94,23 @@ async function main() {
     assert.deepEqual(overflow, [], "Macro content must fit each card at " + width + "px");
     const offsets = await page.locator("#kpis .kpi").evaluateAll(cards => cards.map(card =>
       card.querySelector(".kpi-value").getBoundingClientRect().top - card.getBoundingClientRect().top));
-    assert.ok(Math.max(...offsets) - Math.min(...offsets) < 1, "Summary values must align below their labels at " + width + "px");
+    assert.ok(Math.max(...offsets) - Math.min(...offsets) < 1, "Summary values must align below their labels at " + width + "px: " + JSON.stringify(offsets));
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
+    await page.locator("#indicatorSelect").scrollIntoViewIfNeeded();
+    for (const id of await page.locator("#indicatorSelect option").evaluateAll(options => options.map(option => option.value))) {
+      await page.locator("#indicatorSelect").selectOption(id);
+      const overflow = await page.locator('.indicator-card[data-id="' + id + '"]').evaluate(card => {
+        const bounds = card.getBoundingClientRect();
+        return [...card.querySelectorAll(".current-value,.change,.meta,a,button")].filter(node => {
+          const r = node.getBoundingClientRect(); return r.width && (r.left < bounds.left - 1 || r.right > bounds.right + 1 || node.scrollWidth > node.clientWidth + 1);
+        }).map(node => node.className);
+      });
+      assert.deepEqual(overflow, [], id + " must fit its selected chart at " + width);
+    }
   }
   try {
     const context = await liveContext({viewport: {width: 1440, height: 1000}}, holdings);
-    const page = await context.newPage(), errors = []; page.on("pageerror", error => errors.push(error.message));
+    const page = await componentPage(context,), errors = []; page.on("pageerror", error => errors.push(error.message));
     await page.route("https://**", route => route.request().url().startsWith("https://biquote.io/api/USDCAD") ?
       route.fulfill({status: 200, contentType: "application/json", headers: {"Access-Control-Allow-Origin": "*"}, body: JSON.stringify({symbol: "USDCAD", mid: 1.4, timestamp: new Date(now).toISOString(), marketState: "open"})}) : route.abort());
     await page.goto(url); await page.waitForFunction(() => document.querySelector("#refreshButton").disabled === false && document.querySelectorAll("#portfolioRows tr").length === 2);
@@ -107,6 +120,8 @@ async function main() {
     assert.equal(await page.locator('#portfolioRanges [data-range="INTRADAY"]').getAttribute("aria-pressed"), "true");
     assert.equal(await page.locator("#portfolioChart .chart-benchmark").count(), 1);
     const money = value => new Intl.NumberFormat("fr-CA", {style: "currency", currency: "CAD", maximumFractionDigits: 2}).format(value);
+    await page.locator('#portfolioHeatmap').scrollIntoViewIfNeeded();
+    await page.waitForFunction(() => document.querySelectorAll('#portfolioHeatmapTiles button').length === 2);
     assert.equal(await page.locator("#portfolioValue").innerText(), money(2 * apple * 1.1 * 1.4 + shop * 1.05));
     assert.match(await page.locator("#portfolioStatus").innerText(), /2\/2 cotations en séance/);
     await page.locator("#portfolioPositionsToggle").click();
@@ -138,7 +153,7 @@ async function main() {
     const oldEmergingDay = new Date(Date.parse(publishedEmerging.date) - 86400000).toISOString().slice(0, 10);
     Object.assign(emergingQuote, {timestamp: oldEmergingDay + "T14:00:00Z", session_date: oldEmergingDay, market_state: "closed", intraday_history: []});
     // A fresh browser has no newer cached quote that the client must preserve.
-    const olderQuoteContext = await liveContext({viewport: {width: 1440, height: 1000}}), olderQuotePage = await olderQuoteContext.newPage();
+    const olderQuoteContext = await liveContext({viewport: {width: 1440, height: 1000}}), olderQuotePage = await componentPage(olderQuoteContext,);
     olderQuotePage.on("pageerror", error => errors.push(error.message)); await olderQuotePage.route("https://**", route => route.abort());
     await olderQuotePage.goto(url); await olderQuotePage.waitForFunction(() => !document.querySelector("#refreshButton").disabled);
     const emergingCard = olderQuotePage.locator('.indicator-card[data-id="VXEEMCLS"]');
@@ -176,6 +191,7 @@ async function main() {
     const intradayValue = await page.locator("#portfolioValue").innerText();
     assert.equal(intradayValue, money(2 * apple * 1.1 * 1.4 + shop * 1.05));
     assert.match(await page.locator("#portfolioRiskStatus").innerText(), /clôtures quotidiennes/);
+    await page.locator("#portfolioRisk").scrollIntoViewIfNeeded();
     assert.equal(await page.locator("#portfolioRisk .table-wrap").isVisible(), false, "Intraday risk must explain the period choice without a table of N/D");
     await page.locator('#portfolioRanges [data-range="YTD"]').click();
     assert.ok(await page.locator("#portfolioContributionRows tr").count() === 2);
@@ -201,7 +217,7 @@ async function main() {
       assert.match(await page.locator("#portfolioStatus").innerText(), new RegExp("Portefeuille " + id + ".*lien personnel"));
       assert.equal(await page.locator("#portfolioContent").isVisible(), false);
     }
-    const directContext = await liveContext({viewport: {width: 320, height: 1000}}), direct = await directContext.newPage();
+    const directContext = await liveContext({viewport: {width: 320, height: 1000}}), direct = await componentPage(directContext,);
     direct.on("pageerror", error => errors.push(error.message)); await direct.route("https://**", route => route.abort());
     await direct.goto(A.personalURL(url, personalKey));
     await direct.waitForFunction(() => document.querySelectorAll("#portfolioRows tr").length === 2 && document.querySelector("#portfolioPersonalLink").hidden === false);
@@ -236,6 +252,8 @@ async function main() {
       await relative.focus(); await relative.press('End');
       assert.ok((await direct.locator('#portfolioRelativeChart .chart-tooltip').innerText()).includes('écart ' + await direct.locator('#portfolioRelativeValue').innerText()));
       assert.equal(await direct.locator('#portfolioRows .position-day-change').count(), profiles[id].length);
+      await direct.locator('#portfolioHeatmap').scrollIntoViewIfNeeded();
+      await direct.waitForFunction(expected => document.querySelectorAll('#portfolioHeatmapTiles button').length === expected, profiles[id].length);
       assert.equal(await direct.locator('#portfolioHeatmapTiles button').count(), profiles[id].length);
       assert.equal(await direct.locator('#portfolioHeatmapTitle').innerText(), 'Heatmap · portefeuille ' + id);
       const value = await direct.locator("#portfolioValue").innerText();
@@ -275,6 +293,7 @@ async function main() {
       assert.equal(await direct.locator("#portfolioChart .chart-benchmark").count(), 1);
       assert.match(await direct.locator("#portfolioPeriod").innerText(), /actualisation en attente/);
       assert.equal(await direct.locator("#portfolioValueLabel").innerText(), "DERNIÈRE VALEUR COLLECTÉE · CAD");
+      await direct.locator('#portfolioRisk').scrollIntoViewIfNeeded();
       assert.equal(await direct.locator("#portfolioRisk .table-wrap").isVisible(), false);
     }
     assert.deepEqual(errors, []);

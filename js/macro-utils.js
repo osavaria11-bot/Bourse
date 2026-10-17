@@ -5,13 +5,14 @@
 })(typeof globalThis !== "undefined" ? globalThis : this, function () {
   "use strict";
   const RANGES = [
+    { key: "1D", label: "1 jour" }, { key: "1W", label: "1 semaine" },
     { key: "1M", label: "1 mois" }, { key: "3M", label: "3 mois" },
-    { key: "1Y", label: "1 an" }, { key: "5Y", label: "5 ans" }, { key: "10Y", label: "10 ans" },
+    { key: "6M", label: "6 mois" }, { key: "YTD", label: "YTD" },
+    { key: "1Y", label: "1 an" }, { key: "2Y", label: "2 ans" }, { key: "5Y", label: "5 ans" }, { key: "10Y", label: "10 ans" },
   ];
   const MARKET_RANGES = [
     { key: "1D", label: "1 jour" },
-    { key: "3D", label: "3 jours" }, { key: "1W", label: "1 semaine" },
-    ...RANGES.slice(0, 2), { key: "YTD", label: "YTD" }, ...RANGES.slice(2),
+    { key: "3D", label: "3 jours" }, ...RANGES.filter(item => item.key !== "1D"),
   ];
   const DAY = 86400000;
   const validNumber = value => typeof value === "number" && Number.isFinite(value);
@@ -120,6 +121,8 @@
   }
   function rangeStart(anchor, range) {
     if (!isDate(anchor)) return null;
+    if (range === "YTD") return anchor.slice(0, 4) + "-01-01";
+    if (range === "1D" || range === "1W") return new Date(Date.parse(anchor + "T00:00:00Z") - (range === "1D" ? 1 : 7) * DAY).toISOString().slice(0, 10);
     const months = { "1M": 1, "3M": 3, "6M": 6, "1Y": 12, "2Y": 24, "5Y": 60, "10Y": 120 }[range] || 120;
     const date = new Date(anchor + "T00:00:00Z");
     const day = date.getUTCDate();

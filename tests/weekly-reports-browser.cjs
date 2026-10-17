@@ -1,4 +1,5 @@
 "use strict";
+const {componentPage} = require("./portal-navigation.cjs");
 const {chromium} = require(process.env.PLAYWRIGHT_MODULE_PATH || "playwright");
 const assert = require("node:assert/strict"), fs = require("node:fs"), path = require("node:path"), http = require("node:http"), crypto = require("node:crypto");
 const root = path.resolve(__dirname, ".."), original = JSON.parse(fs.readFileSync(path.join(root, "data/weekly-reports.json"), "utf8"));
@@ -26,12 +27,12 @@ async function main() {
   await new Promise(resolve => server.listen(0, "127.0.0.1", resolve));
   const browser = await chromium.launch({headless:true});
   try {
-    const page = await browser.newPage({viewport:{width:1440,height:1000}}), errors = [];
+    const page = await componentPage(browser,{viewport:{width:1440,height:1000}}), errors = [];
     page.on("pageerror", error => errors.push(error.message)); await page.route("https://**", route => route.abort());
     const url = "http://127.0.0.1:" + server.address().port;
     await page.goto(url + "/#weeklyReports");
     await page.waitForFunction(() => document.querySelectorAll(".weekly-report-document a").length === 2);
-    assert.equal(await page.locator("#weeklyReports").evaluate(node => node.previousElementSibling.id === "polymarket" && node.nextElementSibling.tagName === "FOOTER"), true);
+    assert.equal(await page.locator("#weeklyReports").evaluate(node => node.closest("#page-recherche") !== null), true);
     assert.deepEqual(await page.locator(".weekly-stock").evaluateAll(nodes => nodes.map(node => node.dataset.ticker)), original.reports.stocks.stocks.map(row=>row.ticker));
     assert.ok((await page.locator('[data-report-kind="stocks"] .weekly-report-count').innerText()).includes(original.reports.stocks.stocks.length ? original.reports.stocks.stocks.length + " titre" : "Aucun titre"));
     if (original.reports.real_estate.document_scope === "summary") assert.match(await page.locator('[data-report-kind="real_estate"] .weekly-report-document').innerText(), /synthèse/);
@@ -57,17 +58,19 @@ async function main() {
       await page.setViewportSize({width,height:1000}); await page.locator("#weeklyReportsTitle").scrollIntoViewIfNeeded();
       for (let theme = 0; theme < 2; theme++) {
         assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, "no horizontal overflow at " + width);
-        const cards = await page.locator(".weekly-report").evaluateAll(nodes => nodes.map(node => {const r=node.getBoundingClientRect();return {x:r.x,y:r.y,right:r.right,bottom:r.bottom};}));
-        assert.ok(width > 800 ? cards[1].x >= cards[0].right : cards[1].y >= cards[0].bottom);
-        for (const link of await page.locator(".weekly-report-document a").all()) assert.equal(await link.isVisible(), true);
+        for (const section of ["recherche", "immobilier"]) {
+          await page.locator('.portal-nav [data-page="' + section + '"]').click();
+          assert.equal(await page.locator('#page-' + section + ' .weekly-report-document a').isVisible(), true);
+          assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, "report fits " + width);
+        }
         await page.locator("#themeToggle").click();
       }
     }
-    const empty = await browser.newPage(); await empty.route("https://**", route => route.abort()); await empty.goto(url);
+    const empty = await componentPage(browser,); await empty.route("https://**", route => route.abort()); await empty.goto(url);
     await empty.waitForFunction(() => document.getElementById("weeklyReportsStatus").textContent.includes("indisponibles"));
     assert.equal(await empty.locator(".weekly-report-document a").count(), 0);
     assert.deepEqual(errors, []);
-    console.log("Weekly reports verified: bottom placement, actual dated ranking, correct PDF editions/bytes, safe links, cached outage, stale rejection and desktop/mobile dark/light layouts.");
+    console.log("Weekly reports verified: dedicated page placement, actual dated ranking, correct PDF editions/bytes, safe links, cached outage, stale rejection and desktop/mobile dark/light layouts.");
   } finally {await browser.close();}
 }
 main().catch(error => {console.error(error); process.exitCode=1;}).finally(() => server.close());

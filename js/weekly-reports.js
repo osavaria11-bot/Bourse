@@ -10,11 +10,13 @@
   }
   function render() {
     host.replaceChildren();
+    const propertyHost = document.getElementById("propertyReportsGrid"); propertyHost?.replaceChildren();
     for (const kind of W.KINDS) {
+      const target = kind === "real_estate" && propertyHost ? propertyHost : host;
       const report = data?.reports[kind], card = el("article", "weekly-report card"); card.dataset.reportKind = kind;
       const label = kind === "real_estate" ? "IMMOBILIER · CANADA, QUÉBEC ET MONTÉRÉGIE" : "ACTIONS · RECHERCHE FINVIZ À 24 MOIS";
       card.append(el("p", "eyebrow", label), el("h3", "", report?.title || (kind === "real_estate" ? "Débriefing immobilier" : "Top 5 du screener Finviz")));
-      if (!report) {card.append(el("p", "meta", "L’édition est indisponible pour le moment.")); host.append(card); continue;}
+      if (!report) {card.append(el("p", "meta", "L’édition est indisponible pour le moment.")); target.append(card); continue;}
       const date = el("time", "meta weekly-report-date", "Édition du " + U.observationLabel(report.edition_date)); date.dateTime = report.edition_date;
       card.append(date, el("p", "weekly-report-summary", report.summary));
       if (report.highlights.length) {
@@ -39,7 +41,8 @@
           const badges = el("div", "weekly-stock-badges"); badges.append(el("span", "weekly-stock-rating", row.rating === null ? "N/D" : U.formatNumber(row.rating, 1) + " / 5"));
           if (row.decision) badges.append(el("span", "weekly-stock-decision", row.decision));
           head.append(identity, badges);
-          item.append(head, el("p", "", row.summary), el("p", "weekly-stock-central", row.central_label), el("p", "meta", "Risque : " + row.risk)); list.append(item);
+          const details = el("details", "weekly-stock-details"); details.append(el("summary", "", "Scénario & risque"), el("p", "weekly-stock-central", row.central_label), el("p", "meta", "Risque : " + row.risk));
+          item.append(head, el("p", "", row.summary), details); list.append(item);
         }
         card.append(list, el("p", "meta weekly-report-method", report.method_note));
       }
@@ -47,10 +50,13 @@
       if (report.document_scope === "summary") footer.append(el("p", "meta", "Document : synthèse de l’édition."));
       const link = el("a", "button", report.document.label + " ↗"); link.href = report.document.path; link.target = "_blank"; link.rel = "noopener noreferrer";
       footer.append(link, el("span", "meta", "PDF · " + report.document.pages + " pages · " + Math.ceil(report.document.size_bytes / 1024) + " Ko"));
-      card.append(footer); host.append(card);
+      card.append(footer); target.append(card);
     }
     document.getElementById("weeklyReportsStatus").textContent = W.KINDS.some(kind => data?.reports[kind]) ?
       (copy ? "Dernières éditions conservées sur cet appareil." : "Dernières éditions publiées · documents à ouvrir au bas de chaque résumé.") : "Les rapports sont indisponibles pour le moment.";
+    const status = document.getElementById("propertyReportsStatus");
+    if (status) status.textContent = data?.reports.real_estate ? (copy ? "Dernière édition conservée sur cet appareil." : "Dernière édition publiée · document disponible ci-dessous.") : "Le briefing immobilier est indisponible pour le moment.";
+    window.SavyPortal?.homeReports(data, copy);
   }
   try {data = W.normalize(JSON.parse(localStorage.getItem(KEY))); copy = true; render();} catch { /* Read the published editions. */ }
   async function refresh() {

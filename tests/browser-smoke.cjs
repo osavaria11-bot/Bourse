@@ -1,4 +1,5 @@
 "use strict";
+const {componentPage} = require("./portal-navigation.cjs");
 const audioUtils = require("../js/briefing-audio-utils.js");
 /* Browser fixtures are synthetic and never written to the site's data directory. */
 const assert = require("node:assert/strict");
@@ -100,7 +101,7 @@ async function run() {
   const browser = await chromium.launch({ headless: true, ...(process.env.BROWSER_EXECUTABLE_PATH ? { executablePath: process.env.BROWSER_EXECUTABLE_PATH } : {}) });
   try {
     const context = await browser.newContext({ viewport: { width: 1440, height: 1000 }, acceptDownloads: true });
-    const page = await context.newPage();
+    const page = await componentPage(context,);
     await page.addInitScript(() => {
       const speech = {calls: [], cancelled: 0, current: null,
         getVoices() {return [{lang: "en-US", default: true}, {lang: "fr-CA", name: "Voix française de test"}];},
@@ -112,8 +113,13 @@ async function run() {
     });
     const errors = [];
     page.on("pageerror", error => errors.push(error.message));
-    await page.route("https://**", route => route.request().url().startsWith("https://biquote.io/api/USDCAD") ?
-      route.fulfill({status:200, contentType:"application/json", headers:{"Access-Control-Allow-Origin":"*"}, body:JSON.stringify({symbol:"USDCAD",mid:1.4265,timestamp:new Date().toISOString(),marketState:"open"})}) : route.abort());
+    // A local fetch fixture exercises validation without depending on external HTTPS routing.
+    await page.addInitScript(() => {
+      const originalFetch = window.fetch.bind(window);
+      window.fetch = (input, init) => String(input?.url || input).startsWith("https://biquote.io/api/USDCAD") ?
+        Promise.resolve(new Response(JSON.stringify({symbol:"USDCAD",mid:1.4265,timestamp:new Date().toISOString(),marketState:"open"}), {status:200,headers:{"Content-Type":"application/json"}})) : originalFetch(input, init);
+    });
+    await page.route("https://**", route => route.abort());
     await page.goto(url); await waitCount(page, indicatorCount);
     await page.waitForFunction(() => !document.querySelector("#briefingAudioPlay").disabled);
     const audioPlay = page.locator("#briefingAudioPlay");
@@ -145,7 +151,7 @@ async function run() {
       await page.setViewportSize({width, height: 1000});
       assert.ok(await page.locator("#briefingAudio").evaluate(node => node.scrollWidth <= node.clientWidth + 1), "Audio controls fit at " + width);
     }
-    const noVoiceContext = await browser.newContext(), noVoice = await noVoiceContext.newPage();
+    const noVoiceContext = await browser.newContext(), noVoice = await componentPage(noVoiceContext,);
     await noVoice.addInitScript(() => {
       Object.defineProperty(window, "speechSynthesis", {configurable: true, value: undefined});
       Object.defineProperty(window, "SpeechSynthesisUtterance", {configurable: true, value: undefined});
@@ -156,7 +162,7 @@ async function run() {
     assert.match(await noVoice.locator("#briefingAudioStatus").innerText(), /pas disponible/);
     await noVoiceContext.close();
     naturalAudio = true;
-    const naturalContext = await browser.newContext(), naturalPage = await naturalContext.newPage();
+    const naturalContext = await browser.newContext(), naturalPage = await componentPage(naturalContext,);
     await naturalPage.addInitScript(() => {
       Object.defineProperty(window, "speechSynthesis", {configurable: true, value: undefined});
       Object.defineProperty(window, "SpeechSynthesisUtterance", {configurable: true, value: undefined});
@@ -202,6 +208,7 @@ async function run() {
     assert.match(await page.locator(".odds-card").first().innerText(), /Hausse.*20 %/s);
     const policyKpi = page.locator('#kpis .kpi[data-id="V39079"]');
     assert.match(await policyKpi.locator(".kpi-value").innerText(), /%/);
+    await page.locator("#kpis").scrollIntoViewIfNeeded();
     const desktopPair = await page.evaluate(() => [...document.querySelectorAll('#kpis .kpi[data-id="DEXCAUS"], #kpis .kpi[data-id="V39079"]')].map(node => {
       const rect = node.getBoundingClientRect(); return {top: rect.top, left: rect.left};
     }));
@@ -253,7 +260,7 @@ async function run() {
     assert.match(await feqtCard.locator("a").innerText(), /FNB/);
     assert.equal(await feqtCard.locator("a").getAttribute("href"), "https://finance.yahoo.com/quote/FEQT.NE/");
     const marketRange = page.getByRole("group", {name: "Période des indices boursiers"});
-    assert.equal(await marketRange.getByRole("button").count(), 10);
+    assert.equal(await marketRange.getByRole("button").count(), 12);
     const history = markets.series[0].history;
     const oneMonth = new Date(markets.series[0].date + "T00:00:00Z");
     const anchorDay = oneMonth.getUTCDate(); oneMonth.setUTCDate(1); oneMonth.setUTCMonth(oneMonth.getUTCMonth() - 1);
@@ -403,7 +410,7 @@ async function run() {
     failAllData = true;
     failNews = false;
     const newsContext = await browser.newContext();
-    const newsOnly = await newsContext.newPage();
+    const newsOnly = await componentPage(newsContext,);
     await newsOnly.goto(url);
     await newsOnly.waitForFunction(() => document.querySelector("#updated").textContent.includes("ne sont pas disponibles"));
     await newsOnly.waitForSelector(".news-section");
@@ -412,7 +419,7 @@ async function run() {
     assert.equal(await newsOnly.locator("#marketGrid svg").count(), 0);
     await newsContext.close(); failNews = true;
     const freshContext = await browser.newContext();
-    const empty = await freshContext.newPage();
+    const empty = await componentPage(freshContext,);
     await empty.route("https://**", route => route.abort());
     await empty.goto(url);
     await empty.waitForFunction(() => document.querySelector("#updated").textContent.includes("ne sont pas disponibles"));
@@ -420,7 +427,7 @@ async function run() {
     await empty.waitForFunction(() => !document.querySelector("#refreshButton").disabled);
     assert.equal(await empty.locator("#refreshButton").isEnabled(), true);
     const oddsContext = await browser.newContext({timezoneId: "America/Toronto", viewport: {width: 375, height: 900}});
-    const oddsPage = await oddsContext.newPage();
+    const oddsPage = await componentPage(oddsContext,);
     oddsPage.on("pageerror", error => errors.push(error.message));
     await oddsPage.route("https://**", route => route.abort());
     await oddsPage.clock.setFixedTime(new Date("2026-10-13T02:19:17Z"));

@@ -3,8 +3,9 @@
   else root.PortfolioUtils = factory(root.MacroUtils);
 })(typeof globalThis !== "undefined" ? globalThis : this, function (U) {
   "use strict";
-  const RANGES = [{key: "YTD", label: "YTD"}, {key: "6M", label: "6 mois"}, {key: "3M", label: "3 mois"},
-    {key: "1M", label: "1 mois"}, {key: "1W", label: "1 semaine"}, {key: "3D", label: "3 jours"}];
+  const RANGES = [{key: "1D", label: "1 jour"}, {key: "3D", label: "3 jours"}, {key: "1W", label: "1 semaine"},
+    {key: "1M", label: "1 mois"}, {key: "3M", label: "3 mois"}, {key: "6M", label: "6 mois"}, {key: "YTD", label: "YTD"},
+    {key: "1Y", label: "1 an"}, {key: "2Y", label: "2 ans"}, {key: "5Y", label: "5 ans"}];
   const BENCHMARKS = {FEQT: "FEQT.NE", VBAL: "VBAL.TO", VGRO: "VGRO.TO"};
   function normalizePrices(payload, catalog) {
     if (catalog?.schema_version !== 1 || !Array.isArray(catalog.series) || payload?.kind !== "security_prices" ||
@@ -95,8 +96,8 @@
     if (!history.length) return {history: [], change: null, percent: null, incomplete: true};
     const anchor = history.at(-1)[0];
     let startIndex, requestedStart;
-    if (range === "1W" || range === "3D") {
-      const sessions = range === "1W" ? 5 : 3;
+    const sessions = {"1D": 1, "3D": 3, "1W": 5}[range];
+    if (sessions) {
       startIndex = Math.max(0, history.length - sessions - 1);
       requestedStart = history[startIndex][0];
     } else {
@@ -106,7 +107,7 @@
     }
     const selected = history.slice(startIndex), first = selected[0], last = selected.at(-1);
     const incomplete = first[0] > requestedStart || !U.validNumber(first[1]) || !U.validNumber(last[1]) ||
-      ((range === "1W" || range === "3D") && selected.length < (range === "1W" ? 6 : 4));
+      (Boolean(sessions) && selected.length < sessions + 1);
     const validComparison = !incomplete && first[1] > 0;
     return {history: selected, start: first[0], end: last[0], incomplete,
       change: validComparison ? last[1] - first[1] : null,
@@ -141,11 +142,11 @@
   function performanceFor(positions, data, day, range = "1M") {
     let start = null;
     if (U.isDate(day) && RANGES.some(item => item.key === range)) {
-      if (range === "1W" || range === "3D") {
+      if (["1D", "1W", "3D"].includes(range)) {
         const held = new Set(positions.map(p => p.ticker)), days = new Set();
         for (const security of data.series) if (held.has(security.id)) for (const row of security.history)
           if (row[0] <= day && U.validNumber(row[1])) days.add(row[0]);
-        const sessions = range === "1W" ? 5 : 3, dates = [...days].sort();
+        const sessions = {"1D": 1, "3D": 3, "1W": 5}[range], dates = [...days].sort();
         start = dates.length > sessions ? dates[dates.length - sessions - 1] : null;
       } else start = range === "YTD" ? (Number(day.slice(0, 4)) - 1) + "-12-31" : U.rangeStart(day, range);
     }

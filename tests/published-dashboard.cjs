@@ -1,4 +1,5 @@
 "use strict";
+const {componentPage} = require("./portal-navigation.cjs");
 const {chromium} = require(process.env.PLAYWRIGHT_MODULE_PATH || "playwright");
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
@@ -31,7 +32,7 @@ async function main() {
   await new Promise(resolve => server.listen(0, "127.0.0.1", resolve));
   const browser = await chromium.launch({headless: true});
   try {
-    const page = await browser.newPage({viewport: {width: 1440, height: 1000}});
+    const page = await componentPage(browser,{viewport: {width: 1440, height: 1000}});
     await page.addInitScript(() => localStorage.setItem("savy:preferences:v2", JSON.stringify({favorites: ["PURANUSDM"]})));
     const errors = []; page.on("pageerror", error => errors.push(error.message));
     await page.route("https://**", route => route.abort());
@@ -65,7 +66,7 @@ async function main() {
     assert.equal(await page.locator(".news-section .meta a").count(), headlines);
     assert.equal(await page.locator(".odds-card").count(), 2);
     const marketRanges = page.getByRole("group", {name: "Période des indices boursiers"});
-    assert.equal(await marketRanges.getByRole("button").count(), 10);
+    assert.equal(await marketRanges.getByRole("button").count(), 12);
     for (const range of U.MARKET_RANGES) {
       await marketRanges.getByRole("button", {name: range.label, exact: true}).click();
       assert.equal(await marketRanges.getByRole("button", {name: range.label, exact: true}).getAttribute("aria-pressed"), "true");
@@ -86,7 +87,7 @@ async function main() {
     await page.locator("#marketGrid svg").first().focus();
     assert.match(await page.locator("#marketGrid .chart-tooltip").first().innerText(), /% depuis le/);
     assert.equal(await page.locator("#marketGrid path").evaluateAll(nodes => nodes.some(node => /NaN|Infinity/.test(node.getAttribute("d")))), false);
-    console.log("Published data verified:", headlines, "sourced news stories, 2 policy odds cards, 6 actual market histories and all 9 period selections.");
+    console.log("Published data verified:", headlines, "sourced news stories, 2 policy odds cards, 6 actual market histories and all configured period selections.");
     if (process.env.SCREENSHOT_LOGS) {
       console.log("SCREENSHOT_MARKETS_DESKTOP " + (await page.locator(".market-section").screenshot()).toString("base64"));
     }

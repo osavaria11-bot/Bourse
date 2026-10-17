@@ -144,7 +144,8 @@
       const card = el("article", "kpi");
       card.dataset.id = id;
       const current = headline(point), live = current.live;
-      card.append(el("p", "eyebrow", id === "DGS10" && !live ? "Trésor US · 10 ans" : label));
+      const open = el("button", "eyebrow kpi-open", id === "DGS10" && !live ? "Trésor US · 10 ans" : label);
+      open.type = "button"; open.disabled = !point; open.setAttribute("aria-label", "Voir le graphique : " + label); open.addEventListener("click", () => openDetails(id)); card.append(open);
       const lower = id === "DFEDTARU" ? state.seriesById.get("DFEDTARL") : null;
       const range = current.value !== null && lower && headline(lower).value !== null;
       const valueText = range ? U.formatNumber(lower.value, 2) + "–" + U.formatNumber(current.value, 2) + " %" :
@@ -294,6 +295,7 @@
       if (observer) observer.observe(host);
       else drawChart(host, state.seriesById.get(host.dataset.id), state.range);
     }
+    window.SavyPortal?.syncIndicators();
   }
   function svgEl(tag, attributes = {}, text) {
     const node = document.createElementNS("http://www.w3.org/2000/svg", tag);
@@ -466,7 +468,7 @@
         $("#briefingParagraph").textContent = "Le briefing d’actualité n’a pas pu être chargé. Réessaie avec « Actualiser ».";
         $("#briefingNote").textContent = "Aucun résumé d’actualité vérifié n’est disponible dans ce navigateur.";
         $("#briefingLinks").replaceChildren(); $("#fredWatchList").replaceChildren();
-        window.SavyBriefingAudio?.setBriefing(null); return;
+        window.SavyBriefingAudio?.setBriefing(null); window.SavyPortal?.homeBriefing(null, false); return;
       }
     }
     const today = new Intl.DateTimeFormat("en-CA", {timeZone: "America/Toronto"}).format(new Date());
@@ -501,6 +503,7 @@
     $("#briefingLinks").replaceChildren();
     $("#briefingNote").textContent = (cached ? "Actualisation indisponible : dernière édition vérifiée conservée. " : "") +
       (briefing.editorial_note || "");
+    window.SavyPortal?.homeBriefing(briefing, cached);
   }
 
   function normalizeMarkets(payload) {
@@ -569,6 +572,7 @@
       card.append(host, link); fragment.append(card);
     }
     $("#marketGrid").replaceChildren(fragment);
+    window.SavyPortal?.syncMarkets(); window.SavyPortal?.homeMarkets(data);
   }
   async function loadMarkets() {
     try {
@@ -643,7 +647,7 @@
   });
   document.addEventListener("keydown", event => {
     if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
-      event.preventDefault(); $("#searchInput").focus();
+      event.preventDefault(); window.SavyPortal?.navigate("marches", "economy"); $("#searchInput").focus();
     }
   });
   renderRanges($("#rangeControls"), state.range, setGlobalRange);

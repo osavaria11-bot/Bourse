@@ -1,4 +1,5 @@
 "use strict";
+const {componentPage} = require("./portal-navigation.cjs");
 // Portfolio quantities in this test are synthetic, never the owner's holdings.
 const assert = require("node:assert/strict"), fs = require("node:fs"), path = require("node:path"), http = require("node:http");
 const {chromium} = require(process.env.PLAYWRIGHT_MODULE_PATH || "playwright");
@@ -28,6 +29,8 @@ const catalog = JSON.parse(fs.readFileSync(path.join(root, "data/securities.json
 const rawPrices = JSON.parse(fs.readFileSync(path.join(root, "data/security-prices.json"), "utf8"));
 const prices = P.normalizePrices(rawPrices, catalog);
 async function checkHeatmap(page, positions, range = "1D", portfolio = "1") {
+  await page.locator('#portfolioHeatmap').scrollIntoViewIfNeeded();
+  await page.waitForFunction(() => document.querySelectorAll('#portfolioHeatmapTiles button').length > 0);
   const history = P.historyFor(positions, prices), current = P.valuationAt(positions, prices, history.at(-1)[0]);
   const model = H.model(current, prices, prices, range);
   assert.equal(await page.locator('#portfolioHeatmapTitle').innerText(), 'Heatmap · portefeuille ' + portfolio);
@@ -135,7 +138,7 @@ async function main() {
   }
   try {
     const context = await historicalContext({viewport: {width: 1440, height: 1000}, acceptDownloads: true});
-    const page = await context.newPage(), errors = [];
+    const page = await componentPage(context,), errors = [];
     page.on("pageerror", error => errors.push(error.message)); await page.route("https://**", route => route.abort());
     await page.goto(url + "/#positions=" + fragment);
     await page.waitForFunction(expected => document.querySelectorAll("#portfolioRows tr").length === expected, syntheticPositions.length);
@@ -236,7 +239,7 @@ async function main() {
     }
     assert.match(await page.locator("#portfolioMoversPeriod").innerText(), new RegExp(month.start + ".*" + month.end + ".*1 mois glissant.*CAD"));
     const moverControls = page.getByRole("group", {name: "Période du classement des positions", exact: true});
-    assert.equal(await moverControls.getByRole("button").count(), 6);
+    assert.equal(await moverControls.getByRole("button").count(), P.RANGES.length);
     assert.equal(await moverControls.getByRole("button", {name: "1 mois", exact: true}).getAttribute("aria-pressed"), "true");
     const initialChartPeriod = await page.locator("#portfolioPeriod").innerText();
     for (const range of P.RANGES) {
@@ -246,9 +249,9 @@ async function main() {
       assert.equal(await moverControls.locator('[aria-pressed="true"]').count(), 1);
       assert.equal(await button.evaluate(node => node === document.activeElement), true);
       const ranked = P.performanceFor(syntheticPositions, prices, history.at(-1)[0], range.key);
-      const top = ranked.rows.slice(0, 3), bottom = ranked.rows.slice(-3).reverse();
-      assert.deepEqual(await page.locator("#portfolioBest li").evaluateAll(nodes => nodes.map(n => n.dataset.ticker)), top.map(row => row.ticker));
-      assert.deepEqual(await page.locator("#portfolioWorst li").evaluateAll(nodes => nodes.map(n => n.dataset.ticker)), bottom.map(row => row.ticker));
+      const top = ranked.rows.slice(0, 3), bottom = ranked.rows.filter(row => !top.some(best => best.ticker === row.ticker)).slice(-3).reverse();
+      assert.deepEqual(await page.locator("#portfolioBest li[data-ticker]").evaluateAll(nodes => nodes.map(n => n.dataset.ticker)), top.map(row => row.ticker));
+      assert.deepEqual(await page.locator("#portfolioWorst li[data-ticker]").evaluateAll(nodes => nodes.map(n => n.dataset.ticker)), bottom.map(row => row.ticker));
       for (const [selector, rows] of [["#portfolioBest", top], ["#portfolioWorst", bottom]])
         assert.deepEqual(await page.locator(selector + " .change").allTextContents(), rows.map(row => (row.percent > 0 ? "+" : "") + U.formatNumber(row.percent, 2) + " %"));
       assert.match(await page.locator("#portfolioMoversPeriod").innerText(), new RegExp(ranked.start + ".*" + ranked.end));
@@ -278,7 +281,7 @@ async function main() {
       const selected = P.period(history, range.key);
       const comparison = P.benchmarkFor(selected, prices.series.find(row => row.id === "FEQT"));
       const contributions = F.contributionsFor(syntheticPositions, prices, selected), risk = F.riskFor(syntheticPositions, prices, selected);
-      assert.equal(await page.locator("#portfolioContributionRows tr").count(), 6);
+      assert.equal(await page.locator("#portfolioContributionRows tr").count(), contributions.rows.length);
       assert.deepEqual(await page.locator("#portfolioContributionRows tr").evaluateAll(nodes => nodes.map(node => node.dataset.ticker)), contributions.rows.map(row => row.ticker));
       for (const row of contributions.rows) {
         const cells = await page.locator('#portfolioContributionRows tr[data-ticker="' + row.ticker + '"] td').allTextContents();
@@ -290,6 +293,12 @@ async function main() {
         const cells = await page.locator('#portfolioRiskRows tr[data-metric="' + metric + '"] td').allTextContents();
         assert.equal(cells[0], U.validNumber(portfolio) ? U.formatNumber(portfolio, 2) + unit : "N/D");
         assert.equal(cells[1], U.validNumber(benchmark) ? U.formatNumber(benchmark, 2) + unit : "N/D");
+      }
+      if (selected.incomplete) {
+        assert.equal(await page.locator("#portfolioChart .chart-benchmark").count(), 0);
+        assert.equal(await page.locator("#portfolioBenchmark .portfolio-benchmark-item:nth-child(2) strong").textContent(), "—");
+        assert.match(await page.locator("#portfolioPeriod").innerText(), /historique incomplet/);
+        continue;
       }
       assert.equal(await page.locator("#portfolioChart .chart-benchmark").count(), 1);
       await checkRelative(page, comparison, 'FEQT');
@@ -311,6 +320,7 @@ async function main() {
       assert.match(await page.locator("#portfolioChart .chart-tooltip").innerText(), new RegExp(selected.start + ".*0,00 % depuis le " + selected.start));
       assert.deepEqual(await page.locator("#portfolioBest li").evaluateAll(nodes => nodes.map(n => n.dataset.ticker)), best.map(row => row.ticker));
     }
+    await controls.getByRole("button", {name: "1 mois", exact: true}).click();
     assert.equal(await page.locator("#portfolioChart path").evaluateAll(nodes => nodes.some(n => /NaN|Infinity/.test(n.getAttribute("d")))), false);
     const chart = page.locator("#portfolioChart svg"); await chart.focus(); await chart.press("Home");
     const first = await page.locator("#portfolioChart .chart-tooltip").innerText(); await chart.press("End");
@@ -362,6 +372,7 @@ async function main() {
       assert.equal(await page.locator("#portfolioEarningsItems article").count(), 1);
       assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), "Earnings filters overflow mobile");
       await page.locator("#portfolioEarningsTicker").selectOption("");
+      await page.locator(".portfolio-table").scrollIntoViewIfNeeded();
       assert.ok(await page.locator(".portfolio-table").evaluate(node => node.scrollWidth > node.clientWidth));
       assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
       await toggle.click();
@@ -410,7 +421,7 @@ async function main() {
     assert.match(await page.locator("#portfolioMoversNote").innerText(), /historique ou change manquant/);
     assert.deepEqual(errors, []);
     await context.close(); missingFX = false;
-    const blankContext = await historicalContext(), blank = await blankContext.newPage(); await blank.route("https://**", route => route.abort());
+    const blankContext = await historicalContext(), blank = await componentPage(blankContext,); await blank.route("https://**", route => route.abort());
     await blank.goto(url); await blank.waitForFunction(expected => document.querySelector("#positionTicker").options.length === expected, catalog.series.length);
     assert.equal(await blank.locator("#portfolioContent").isVisible(), false);
     assert.equal(await blank.locator("#portfolioExport").isDisabled(), true);
@@ -439,18 +450,24 @@ async function main() {
     // A new Home Screen context gets access from the start URL, without file imports.
     offline = false; missingFX = false; missingBaseline = false;
     const directContext = await historicalContext({viewport: {width: 375, height: 950}});
-    const direct = await directContext.newPage();
+    const direct = await componentPage(directContext,);
     direct.on("pageerror", error => errors.push(error.message)); await direct.route("https://**", route => route.abort());
     const personalURL = A.personalURL(url + "/?v=synthetic-direct", personalKey);
     await direct.goto(personalURL);
     await direct.waitForFunction(() => document.querySelectorAll("#portfolioRows tr").length === 6);
     assert.equal(await direct.locator('#portfolioRanges button[aria-pressed="true"]').textContent(), 'Intraday');
     assert.deepEqual(await direct.evaluate(() => JSON.parse(localStorage.getItem("savy:private-holdings:v1")).positions), syntheticPositions);
-    assert.equal(direct.url(), personalURL);
+    assert.equal(new URLSearchParams(new URL(direct.url()).hash.slice(1)).get('portfolio-key'), personalKey);
+    assert.equal(await direct.locator('#page-portefeuilles').isVisible(), true);
     assert.match(await direct.locator("#portfolioMessage").innerText(), /chargées automatiquement/);
     assert.equal(await direct.locator("#portfolioPersonalLink").getAttribute("href"), personalURL);
     const manifest = await direct.evaluate(async () => (await fetch(document.querySelector("#savyPersonalManifest").href)).json());
     assert.equal(manifest.start_url, personalURL); assert.equal(manifest.display, "standalone");
+    await direct.locator('.portal-nav [data-page="recherche"]').click();
+    await direct.locator('#refreshButton').click(); await direct.waitForFunction(() => !document.querySelector('#refreshButton').disabled);
+    assert.equal(await direct.locator('#page-recherche').isVisible(), true, 'Profile refresh keeps the current page');
+    assert.equal(new URLSearchParams(new URL(direct.url()).hash.slice(1)).get('portfolio-key'), personalKey);
+    await direct.locator('.portal-nav [data-page="portefeuilles"]').click();
     const cdp = await directContext.newCDPSession(direct), parsedManifest = await cdp.send("Page.getAppManifest");
     assert.deepEqual(parsedManifest.errors, []); assert.equal(JSON.parse(parsedManifest.data).start_url, personalURL);
     await cdp.detach();
@@ -480,7 +497,7 @@ async function main() {
       await direct.locator('#portfolioRanges button').filter({hasText: new RegExp('^' + item.label + '$')}).click();
       const selected = P.period(secondHistory, item.key), expected = P.benchmarkFor(selected, prices.series.find(row => row.id === 'VBAL'), 'VBAL');
       await checkRelative(direct, expected, 'VBAL');
-      assert.equal(await direct.locator('#portfolioBenchmark .portfolio-benchmark-item:nth-child(2) strong').textContent(), (expected.benchmark_percent > 0 ? '+' : '') + U.formatNumber(expected.benchmark_percent, 2) + ' %');
+      assert.equal(await direct.locator('#portfolioBenchmark .portfolio-benchmark-item:nth-child(2) strong').textContent(), U.validNumber(expected.benchmark_percent) ? (expected.benchmark_percent > 0 ? '+' : '') + U.formatNumber(expected.benchmark_percent, 2) + ' %' : '—');
       const risk = F.riskFor(secondSyntheticPositions, prices, selected, 'VBAL');
       const value = risk.portfolio.beta;
       assert.equal(await direct.locator('#portfolioRiskRows tr[data-metric="beta"] td').first().textContent(), U.validNumber(value) ? U.formatNumber(value, 2) : 'N/D');
@@ -533,7 +550,7 @@ async function main() {
     await direct.waitForFunction(() => document.querySelector('#portfolioRows input[aria-label="Quantité XSP"]')?.value === '8,5');
     assert.equal(await direct.locator('#portfolioRanges button[aria-pressed="true"]').textContent(), 'Intraday');
     assert.equal(await direct.locator('#portfolioPositions').isVisible(), true);
-    const secondHomeContext = await historicalContext({viewport: {width: 320, height: 950}}), secondHome = await secondHomeContext.newPage();
+    const secondHomeContext = await historicalContext({viewport: {width: 320, height: 950}}), secondHome = await componentPage(secondHomeContext,);
     secondHome.on('pageerror', error => errors.push(error.message)); await secondHome.route('https://**', route => route.abort()); await secondHome.goto(secondManifest.start_url);
     await secondHome.waitForFunction(() => document.querySelector('#portfolioRows tr[data-ticker="VBAL"]'));
     assert.deepEqual(await secondHome.evaluate(() => JSON.parse(localStorage.getItem('savy:private-holdings:v1:2')).positions), secondSyntheticPositions);
@@ -564,7 +581,7 @@ async function main() {
       await direct.locator('#portfolioRanges button').filter({hasText: new RegExp('^' + item.label + '$')}).click();
       const selected = P.period(thirdHistory, item.key), expected = P.benchmarkFor(selected, prices.series.find(row => row.id === 'VGRO'), 'VGRO');
       await checkRelative(direct, expected, 'VGRO');
-      assert.equal(await direct.locator('#portfolioBenchmark .portfolio-benchmark-item:nth-child(2) strong').textContent(), (expected.benchmark_percent > 0 ? '+' : '') + U.formatNumber(expected.benchmark_percent, 2) + ' %');
+      assert.equal(await direct.locator('#portfolioBenchmark .portfolio-benchmark-item:nth-child(2) strong').textContent(), U.validNumber(expected.benchmark_percent) ? (expected.benchmark_percent > 0 ? '+' : '') + U.formatNumber(expected.benchmark_percent, 2) + ' %' : '—');
       const risk = F.riskFor(thirdSyntheticPositions, prices, selected, 'VGRO'), value = risk.portfolio.beta;
       assert.equal(await direct.locator('#portfolioRiskRows tr[data-metric="beta"] td').first().textContent(), U.validNumber(value) ? U.formatNumber(value, 2) : 'N/D');
       assert.equal(await direct.locator('#portfolioContributionRows tr').count(), F.contributionsFor(thirdSyntheticPositions, prices, selected).rows.length);
@@ -619,7 +636,7 @@ async function main() {
     assert.match(await direct.locator('#portfolioMessage').innerText(), /autre portefeuille/);
     assert.deepEqual(await direct.evaluate(() => JSON.parse(localStorage.getItem('savy:private-holdings:v1:3')).positions), editedThird);
     thirdProfileFixture = goodThirdProfile;
-    const thirdHomeContext = await historicalContext({viewport: {width: 320, height: 950}}), thirdHome = await thirdHomeContext.newPage();
+    const thirdHomeContext = await historicalContext({viewport: {width: 320, height: 950}}), thirdHome = await componentPage(thirdHomeContext,);
     thirdHome.on('pageerror', error => errors.push(error.message)); await thirdHome.route('https://**', route => route.abort()); await thirdHome.goto(thirdManifest.start_url);
     await thirdHome.waitForFunction(() => document.querySelector('#portfolioRows tr[data-ticker="MSFTCDR"]'));
     assert.deepEqual(await thirdHome.evaluate(() => JSON.parse(localStorage.getItem('savy:private-holdings:v1:3')).positions), thirdSyntheticPositions);
@@ -645,7 +662,8 @@ async function main() {
     await direct.waitForFunction(() => !document.querySelector("#refreshButton").disabled);
     await direct.reload(); await direct.waitForFunction(() => document.querySelectorAll("#portfolioRows tr").length === 6);
     assert.equal(await direct.locator('input[aria-label="Quantité SHOP"]').inputValue(), "3");
-    await direct.locator('a[href="#portfolio"]').click(); assert.equal(direct.url(), personalURL);
+    await direct.locator('.portal-nav [data-page="portefeuilles"]').click();
+    assert.equal(new URLSearchParams(new URL(direct.url()).hash.slice(1)).get('portfolio-key'), personalKey);
     assert.ok(await direct.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
     // Only an authenticated new published revision replaces the initial profile.
     const revised = syntheticPositions.map(p => p.ticker === "SHOP" ? {...p, quantity: 4} : p);
@@ -656,7 +674,7 @@ async function main() {
     await direct.waitForFunction(() => document.querySelectorAll("#portfolioRows tr").length === 6);
     assert.equal(await direct.locator('input[aria-label="Quantité SHOP"]').inputValue(), "4");
     profileOffline = false;
-    const homeContext = await historicalContext({viewport: {width: 320, height: 900}}), home = await homeContext.newPage();
+    const homeContext = await historicalContext({viewport: {width: 320, height: 900}}), home = await componentPage(homeContext,);
     home.on("pageerror", error => errors.push(error.message));
     await home.route("https://**", route => route.abort()); await home.goto(manifest.start_url);
     await home.waitForFunction(() => document.querySelectorAll("#portfolioRows tr").length === 6);
@@ -665,7 +683,7 @@ async function main() {
     await home.waitForFunction(() => document.querySelectorAll("#portfolioRows tr").length === 6);
     assert.ok(await home.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
     await homeContext.close();
-    const invalidContext = await historicalContext(), invalid = await invalidContext.newPage();
+    const invalidContext = await historicalContext(), invalid = await componentPage(invalidContext,);
     invalid.on("pageerror", error => errors.push(error.message));
     await invalid.route("https://**", route => route.abort());
     await invalid.goto(A.personalURL(url + "/", crypto.randomBytes(32).toString("base64url")));
@@ -675,7 +693,7 @@ async function main() {
     assert.deepEqual(errors, []);
     await invalidContext.close(); await directContext.close();
     console.log("Direct access checks passed: automatic synthetic holdings in a fresh mobile context, personal manifest start URL, local edits preserved, authenticated revision updates, offline fallback, restore after cleared storage, invalid key rejected, no key sent to the server.");
-    console.log("Portfolio checks passed: 6 private synthetic positions, exact CAD/USD listings including the Sandisk CDR in CAD and fractional US Sandisk in USD, CAD valuation, all six periods, monthly top/bottom 3, both directions of three numeric gain sorts, persistent collapsed/expanded positions, hover and keyboard date/value/percent, edits/import/export, offline cache, missing-baseline/FX protection, empty public view and 320px mobile.");
+    console.log("Portfolio checks passed: 6 private synthetic positions, exact CAD/USD listings including the Sandisk CDR in CAD and fractional US Sandisk in USD, CAD valuation, all configured periods, monthly top/bottom 3, both directions of three numeric gain sorts, persistent collapsed/expanded positions, hover and keyboard date/value/percent, edits/import/export, offline cache, missing-baseline/FX protection, empty public view and 320px mobile.");
     console.log("Portfolio analytics checks passed: per-position contribution in percentage points, paired volatility/drawdown/beta across all periods, short-sample protection, local weekly earnings filters and paired actual/consensus outcomes, PNG export, independent earnings outage/cache handling, missing-FX protection and mobile tables/filters.");
   } finally {await browser.close();}
 }

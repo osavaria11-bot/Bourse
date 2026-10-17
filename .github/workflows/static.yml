@@ -47,6 +47,9 @@ jobs:
         run: python scripts/validate_news_briefing.py
       - name: Dashboard regression tests
         run: |
+          node --check js/portal-utils.js
+          node --check js/portal.js
+          node scripts/build_report_archive.cjs
           node --check js/dashboard.js
           node --check js/yield-curve-utils.js
           node --check js/yield-curves.js
@@ -90,11 +93,12 @@ jobs:
           JS
       - name: Install browser test dependency
         run: npm ci --ignore-scripts --no-audit --no-fund
-      - name: Install Chromium
-        run: npx playwright install --with-deps chromium
+      - name: Install Chromium and WebKit
+        run: npx playwright install --with-deps chromium webkit
       - name: Browser interaction and mobile checks
         run: npm run test:browser
         env:
+          PORTAL_WEBKIT: "1"
           SCREENSHOT_LOGS: ${{ startsWith(github.ref, 'refs/heads/codex/portefeuille-') && '1' || '' }}
           MACRO_SCREENSHOT_LOGS: ${{ startsWith(github.ref, 'refs/heads/codex/macro-') && '1' || '' }}
           HEATMAP_SCREENSHOT_LOGS: ${{ startsWith(github.ref, 'refs/heads/codex/heatmap-') && '1' || '' }}
@@ -240,6 +244,7 @@ jobs:
         run: |
           mkdir -p _site
           cp index.html 221.png 2121.png _site/
+          node scripts/build_report_archive.cjs
           cp -R css js data reports _site/
       - name: Upload site
         uses: actions/upload-pages-artifact@v3

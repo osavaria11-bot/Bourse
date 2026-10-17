@@ -1,0 +1,109 @@
+"use strict";
+// Exercise the portal as a user. No automatic navigation helper and no private owner data.
+const assert = require("node:assert/strict"), fs = require("node:fs"), path = require("node:path"), http = require("node:http");
+const {chromium, webkit} = require(process.env.PLAYWRIGHT_MODULE_PATH || "playwright");
+const root = path.resolve(__dirname, ".."), R = require("../js/portal-utils.js");
+const types = {".html":"text/html", ".js":"text/javascript", ".css":"text/css", ".json":"application/json", ".pdf":"application/pdf", ".png":"image/png"};
+const server = http.createServer((req, res) => {
+  const name = new URL(req.url, "http://localhost").pathname;
+  const file = path.resolve(root, "." + (name === "/" ? "/index.html" : name));
+  if (!file.startsWith(root + path.sep) || !fs.existsSync(file) || !fs.statSync(file).isFile()) {res.writeHead(404); res.end(); return;}
+  res.setHeader("Content-Type", types[path.extname(file)] || "application/octet-stream"); fs.createReadStream(file).pipe(res);
+});
+async function check(browser, engine) {
+  const context = await browser.newContext({viewport: {width: 1440, height: 900}}), page = await context.newPage(), errors = [], requests = [];
+  page.on("pageerror", error => errors.push(error.message)); page.on("request", req => requests.push(req.url()));
+  await page.route("https://**", route => route.abort());
+  const url = "http://127.0.0.1:" + server.address().port;
+  await page.goto(url); await page.waitForFunction(() => document.querySelectorAll("#homeMarkets a").length === 6 && document.querySelectorAll(".indicator-card").length > 30);
+  const go = async (section, tab) => {
+    await page.locator('.portal-nav [data-page="' + section + '"]').click();
+    if (tab) await page.locator('#page-' + section + ' .portal-tabs [data-tab="' + tab + '"]').click();
+    assert.equal(await page.locator(".portal-page:visible").count(), 1);
+    assert.equal(await page.locator('.portal-nav [aria-current="page"]').getAttribute("data-page"), section);
+  };
+  const shot = async name => {if (process.env.QA_SCREENSHOTS_DIR) {fs.mkdirSync(process.env.QA_SCREENSHOTS_DIR, {recursive:true}); await page.screenshot({path:path.join(process.env.QA_SCREENSHOTS_DIR, engine + "-" + name + ".png"),fullPage:true});}};
+  assert.equal(await page.locator("#page-accueil").isVisible(), true);
+  await page.waitForFunction(() => document.querySelectorAll("#homeNews .portal-headline").length > 0);
+  await page.waitForFunction(() => document.querySelector("#fearGreedValue").textContent !== "—");
+  const home = await page.locator("#kpis").boundingBox();
+  assert.ok(home.y + home.height <= 900, "The desktop first screen includes news, sentiment, analyses and macro readings: " + (home.y + home.height));
+  assert.equal(await page.locator(".portal-nav a").count(), 6); await shot("home-dark");
+  await page.locator('#kpis .kpi[data-id="VIXCLS"] button').click();
+  assert.match(await page.locator('#detailCategory').textContent(), /VIXCLS/); await page.keyboard.press("Escape");
+  await page.locator("#themeToggle").click(); assert.equal(await page.locator("html").getAttribute("data-theme"), "light"); await shot("home-light");
+  await page.locator("#homeNews a").first().click(); assert.equal(await page.locator("#briefingCard").isVisible(), true);
+  assert.equal(await page.locator("#briefingAudio").isVisible(), true);
+  await go("marches", "indices");
+  await page.locator("#marketSelect").selectOption("FEQT");
+  await page.locator('#marketRanges [data-range="1M"]').click();
+  assert.equal(await page.locator(".market-card:visible").count(), 1);
+  assert.equal(await page.locator('.market-card[data-id="FEQT"] svg').isVisible(), true);
+  await page.locator("#marketExpand").click(); assert.equal(await page.locator("#expandDialog").evaluate(n=>n.open), true);
+  await page.locator('#expandDialog #marketRanges [data-range="3M"]').click();
+  assert.equal(await page.locator('#expandDialog .market-card[data-id="FEQT"] svg').isVisible(), true);
+  await page.locator("#closeExpand").click();
+  assert.equal(await page.locator('#marketRanges [data-range="3M"]').getAttribute("aria-pressed"), "true"); await shot("markets");
+  await go("marches", "economy");
+  const count = await page.locator(".indicator-card").count(); assert.equal(await page.locator("#indicatorSelect option").count(), count);
+  for (const id of ["DGS10", "VIXCLS", "INDPRO", "NASDAQXAU", "VXEEMCLS", "DTWEXBGS", "DCOILWTICO", "URANIUMSPOT"]) {
+    await page.locator("#indicatorSelect").selectOption(id); assert.equal(await page.locator(".indicator-card:visible").count(), 1);
+    await page.locator('.indicator-card[data-id="' + id + '"] svg').waitFor({state: "visible"});
+  }
+  await page.locator('.indicator-card:visible .detail-button').click();
+  for (const key of ["1D", "1W", "1M", "3M", "6M", "YTD", "1Y", "2Y", "5Y"]) assert.equal(await page.locator('#detailRanges [data-range="' + key + '"]').isVisible(), true);
+  await page.locator('#detailRanges [data-range="6M"]').click(); await page.keyboard.press("Escape");
+  await page.locator("#macroCompare").click(); assert.equal(await page.locator(".indicator-card:visible").count(), 6);
+  const first = await page.locator(".indicator-card:visible").first().getAttribute("data-id");
+  await page.locator("#macroPaging button").last().click(); assert.notEqual(await page.locator(".indicator-card:visible").first().getAttribute("data-id"), first);
+  await page.locator("#macroCompare").click(); await shot("economy");
+  await go("immobilier"); assert.equal(await page.locator('#propertyReportsGrid [data-report-kind="real_estate"]').isVisible(), true);
+  await go("recherche"); assert.equal(await page.locator('#weeklyReportsGrid [data-report-kind="stocks"]').isVisible(), true);
+  await page.locator(".weekly-stock summary").first().click(); assert.equal(await page.locator(".weekly-stock-details").first().getAttribute("open"), ""); await shot("research");
+  await go("recherche", "archives"); assert.ok(await page.locator('#page-recherche .portal-archives a').count() >= 1);
+  for (const anchor of await page.locator(".portal-archives a").all()) {const response = await page.request.get(url + "/" + await anchor.getAttribute("href")); assert.equal(response.status(), 200); assert.match(response.headers()["content-type"], /pdf/);}
+  await go("polymarket"); assert.equal(await page.locator("#polymarket").isVisible(), true); await shot("polymarket");
+  await page.goBack(); assert.equal(await page.locator("#panel-recherche-archives").isVisible(), true); await page.goForward(); assert.equal(await page.locator("#polymarket").isVisible(), true);
+  await page.keyboard.press("Control+k"); assert.equal(await page.locator("#searchInput").evaluate(n=>n===document.activeElement), true);
+
+  // Synthetic import exercises the real private positions path, with no owner holdings.
+  const positions = {positions:[{ticker:"FEQT",quantity:2,average_cost:10}]};
+  await page.goto(url + "/#positions=" + Buffer.from(JSON.stringify(positions)).toString("base64url"));
+  await page.reload();
+  await page.waitForFunction(()=>!document.querySelector("#portfolioContent").hidden);
+  assert.equal(await page.locator("#page-portefeuilles").isVisible(), true); assert.ok(!page.url().includes("positions="));
+  await page.locator('#portfolioRanges [data-range="1M"]').click();
+  await page.locator("#portfolioExpand").click(); assert.equal(await page.locator("#expandDialog #portfolioChart svg").isVisible(), true); await page.keyboard.press("Escape");
+  await go("portefeuilles", "positions"); await page.locator("#portfolioPositionsToggle").click(); assert.equal(await page.locator("#portfolioPositions").isVisible(), true);
+  await go("portefeuilles", "allocations"); await page.locator("#portfolioHeatmapTiles button").first().waitFor({state:"visible"});
+  await go("portefeuilles", "performance"); assert.equal(await page.locator("#portfolioRisk").isVisible(), true);
+  await go("portefeuilles", "transactions"); assert.match(await page.locator("#panel-portefeuilles-transactions").innerText(), /Aucun journal/);
+  await go("portefeuilles"); await shot("portfolio");
+  const syntheticKey = "synthetic-test-key-never-a-real-credential";
+  await page.goto(url + "/#portfolio-key=" + syntheticKey + "&portfolio=2");
+  await page.reload();
+  await go("immobilier", "archives"); assert.equal(new URLSearchParams(new URL(page.url()).hash.slice(1)).get("portfolio-key"), syntheticKey);
+  await page.reload(); assert.equal(await page.locator("#panel-immobilier-archives").isVisible(), true);
+  assert.ok(requests.every(value=>!value.includes(syntheticKey) && !value.includes("positions=")), "Private fragments never reach requests");
+  for (const width of [375, 320]) {
+    await page.setViewportSize({width, height:812});
+    for (const [section, config] of Object.entries(R.PAGES)) {
+      await go(section);
+      for (const tab of Object.keys(config.tabs)) {
+        if (Object.keys(config.tabs).length > 1) await page.locator('#page-' + section + ' .portal-tabs [data-tab="' + tab + '"]').click();
+        assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth > innerWidth), false, engine + " overflow " + width + " " + section + "/" + tab);
+        const nav = await page.locator(".portal-nav").boundingBox(); assert.ok(nav.y >= 700 && nav.y + nav.height <= 813, "iPhone navigation stays on screen");
+      }
+    }
+    await go("accueil"); await shot("mobile-" + width);
+  }
+  assert.deepEqual(errors, []);
+  console.log(engine + ": six sections, compact home, charts/periods/expansion, reports/archives, all portfolio views, keyboard/back/reload, fragment privacy and 375/320px layouts passed.");
+  await context.close();
+}
+(async()=>{
+  await new Promise(resolve=>server.listen(0,"127.0.0.1",resolve));
+  for (const [engine, type] of [["chromium", chromium], ...(process.env.PORTAL_WEBKIT === "1" ? [["webkit", webkit]] : [])]) {
+    const browser = await type.launch({headless:true}); try {await check(browser, engine);} finally {await browser.close();}
+  }
+})().catch(error=>{console.error(error);process.exitCode=1;}).finally(()=>server.close());

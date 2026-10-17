@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "documents": [
+    {
+      "kind": "stocks",
+      "date": "2026-10-14",
+      "path": "reports/stocks/2026-10-14.pdf"
+    },
+    {
+      "kind": "real_estate",
+      "date": "2026-10-12",
+      "path": "reports/real-estate/2026-10-12.pdf"
+    }
+  ]
+}

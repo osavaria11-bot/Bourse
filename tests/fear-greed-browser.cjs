@@ -1,4 +1,5 @@
 "use strict";
+const {componentPage} = require("./portal-navigation.cjs");
 const {chromium} = require(process.env.PLAYWRIGHT_MODULE_PATH || "playwright");
 const assert = require("node:assert/strict"), fs = require("node:fs"), path = require("node:path"), http = require("node:http");
 const root = path.resolve(__dirname, ".."), stamp = new Date().toISOString();
@@ -27,7 +28,7 @@ async function main() {
   await new Promise(resolve => server.listen(0, "127.0.0.1", resolve));
   const browser = await chromium.launch({headless: true});
   try {
-    const page = await browser.newPage({viewport: {width: 1440, height: 1000}}), errors = [];
+    const page = await componentPage(browser,{viewport: {width: 1440, height: 1000}}), errors = [];
     page.on("pageerror", error => errors.push(error.message));
     await page.route("https://**", route => route.abort());
     const url = "http://127.0.0.1:" + server.address().port;
@@ -36,7 +37,7 @@ async function main() {
     assert.equal(await page.locator("#fearGreedRating").innerText(), "Peur extrême");
     assert.equal(await page.getByRole("meter", {name: "Fear & Greed Index de CNN"}).getAttribute("aria-valuenow"), "18");
     assert.equal(await page.locator("#fearGreed a").getAttribute("href"), "https://www.cnn.com/markets/fear-and-greed");
-    assert.equal(await page.locator("#fearGreed").evaluate(node => node.previousElementSibling.id === "kpis" && node.nextElementSibling.classList.contains("policy-odds")), true);
+    assert.equal(await page.locator("#fearGreed").evaluate(node => node.closest("#panel-accueil-overview") !== null), true);
     const overview = await page.locator(".fear-greed-overview").boundingBox(), timeline = await page.locator(".fear-greed-history").boundingBox();
     assert.ok(timeline.x >= overview.x + overview.width, "timeline sits to the right of the gauge on desktop");
     assert.match(await page.locator("#fearGreedHistoryStatus").innerText(), /366 observations/);
@@ -78,19 +79,19 @@ async function main() {
         await page.locator("#themeToggle").click();
       }
     }
-    const fresh = await browser.newPage(); await fresh.route("https://**", route => route.abort());
+    const fresh = await componentPage(browser,); await fresh.route("https://**", route => route.abort());
     fresh.on("pageerror", error => errors.push(error.message)); await fresh.goto(url);
     await fresh.waitForFunction(() => document.getElementById("fearGreedRating").textContent === "Indisponible");
     assert.equal(await fresh.locator("#fearGreedValue").innerText(), "—");
     assert.equal(await fresh.locator("#fearGreedChart").isVisible(), false);
     assert.equal(await fresh.locator("#fearGreedTimeline svg").count(), 0);
     mode = "nohistory";
-    const noHistory = await browser.newPage(); await noHistory.route("https://**", route => route.abort()); await noHistory.goto(url);
+    const noHistory = await componentPage(browser,); await noHistory.route("https://**", route => route.abort()); await noHistory.goto(url);
     await noHistory.waitForFunction(() => document.getElementById("fearGreedValue").textContent === "18");
     assert.equal(await noHistory.locator("#fearGreedTimeline svg").count(), 0);
     assert.match(await noHistory.locator("#fearGreedTimeline").innerText(), /Historique CNN indisponible/);
     mode = "fresh";
-    const touch = await browser.newPage({viewport: {width: 375, height: 1000}, hasTouch: true});
+    const touch = await componentPage(browser,{viewport: {width: 375, height: 1000}, hasTouch: true});
     await touch.route("https://**", route => route.abort()); await touch.goto(url);
     await touch.locator("#fearGreedTimeline svg").waitFor({state: "visible"});
     await touch.locator("#fearGreedTimeline svg").scrollIntoViewIfNeeded();

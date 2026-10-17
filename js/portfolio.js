@@ -67,7 +67,7 @@
     loadView(); setupPositions(); history = prices ? P.historyFor(positions, prices) : [];
     $("#portfolioMessage").textContent = ""; render();
     if (personalKey) await refreshPersonalProfile();
-    else {const fragment = new URLSearchParams(); if (id !== "1") fragment.set("portfolio", id); window.history.replaceState(null, "", location.pathname + location.search + (fragment.size ? "#" + fragment : "#portfolio"));}
+    else {const fragment = new URLSearchParams(); if (id !== "1") fragment.set("portfolio", id); const url = new URL(location.pathname + location.search + (fragment.size ? "#" + fragment : "#portfolio"), location.origin); window.history.replaceState(null, "", window.SavyPortal?.preserveRoute(url.href) || url.href);}
   }
   function el(tag, className, text) {const node = document.createElement(tag); if (className) node.className = className; if (text !== undefined) node.textContent = text; return node;}
   function money(value, currency = "CAD") {return U.validNumber(value) ? new Intl.NumberFormat("fr-CA", {style: "currency", currency, maximumFractionDigits: 2}).format(value) : "—";}
@@ -111,7 +111,7 @@
     const url = A.personalURL(location.href, personalKey, activePortfolio);
     const anchor = $("#portfolioPersonalLink"); anchor.href = url; anchor.hidden = false;
     // Keep the personal fragment so a new Home Screen storage context can open it.
-    window.history.replaceState(null, "", url);
+    window.history.replaceState(null, "", window.SavyPortal?.preserveRoute(url) || url);
     if (manifestURL) URL.revokeObjectURL(manifestURL);
     manifestURL = URL.createObjectURL(new Blob([JSON.stringify(A.homeManifest(url, personalKey, activePortfolio))], {type: "application/manifest+json"}));
     let manifest = $("#savyPersonalManifest");
@@ -198,10 +198,10 @@
         (" · comparaison FEQT indisponible : historique ou base manquants pour cette période".replaceAll("FEQT", benchmarkId)));
   }
   function renderMovers(day, quoteData = prices) {
-    const heading = {YTD: "depuis le début de l’année", "6M": "sur six mois", "3M": "sur trois mois", "1M": "sur un mois", "1W": "sur une semaine", "3D": "sur trois jours"}[moversRange];
+    const heading = {"1D": "sur une séance", "1Y": "sur un an", "2Y": "sur deux ans", "5Y": "sur cinq ans", YTD: "depuis le début de l’année", "6M": "sur six mois", "3M": "sur trois mois", "1M": "sur un mois", "1W": "sur une semaine", "3D": "sur trois jours"}[moversRange];
     $("#portfolioMoversTitle").textContent = "Les meilleures et les pires performances " + heading;
     const performance = P.performanceFor(positions, quoteData, day, moversRange);
-    const periodLabel = {YTD: "YTD", "6M": "6 mois glissants", "3M": "3 mois glissants", "1M": "1 mois glissant", "1W": "5 séances", "3D": "3 séances"}[moversRange];
+    const periodLabel = {"1D": "1 séance", "1Y": "1 an glissant", "2Y": "2 ans glissants", "5Y": "5 ans glissants", YTD: "YTD", "6M": "6 mois glissants", "3M": "3 mois glissants", "1M": "1 mois glissant", "1W": "5 séances", "3D": "3 séances"}[moversRange];
     $("#portfolioMoversPeriod").textContent = (performance.start ? "Du " + performance.start + " au " + performance.end : "Base de comparaison indisponible") + " · " + periodLabel + " · rendement en CAD, change inclus";
     const best = performance.rows.slice(0, 3), bestTickers = new Set(best.map(row => row.ticker));
     const worst = performance.rows.filter(row => !bestTickers.has(row.ticker)).slice(-3).reverse();
@@ -749,6 +749,7 @@
   $("#portfolioHeatmapPosition").addEventListener("change", event => selectHeatmap(event.target.value));
   if (typeof ResizeObserver !== "undefined") new ResizeObserver(() => drawHeatmap()).observe($("#portfolioHeatmapTiles"));
   document.addEventListener("click", event => {
+    if (window.SavyPortal) return;
     if (!profileInitialized) return;
     const anchor = event.target.closest?.("a[href^='#']"), hash = anchor?.getAttribute("href");
     if (!["#portfolio", "#indicators"].includes(hash)) return;
@@ -760,7 +761,7 @@
     button.addEventListener("click", () => {
       moversRange = item.key; saveView();
       for (const other of $("#portfolioMoversRanges").querySelectorAll("button")) other.setAttribute("aria-pressed", String(other === button));
-      const label = {YTD: "depuis le début de l’année", "6M": "sur six mois", "3M": "sur trois mois", "1M": "sur un mois", "1W": "sur une semaine", "3D": "sur trois jours"}[moversRange];
+      const label = {"1D": "sur une séance", "1Y": "sur un an", "2Y": "sur deux ans", "5Y": "sur cinq ans", YTD: "depuis le début de l’année", "6M": "sur six mois", "3M": "sur trois mois", "1M": "sur un mois", "1W": "sur une semaine", "3D": "sur trois jours"}[moversRange];
       $("#portfolioMoversTitle").textContent = "Les meilleures et les pires performances " + label;
       if (prices && history.length) render();
     });

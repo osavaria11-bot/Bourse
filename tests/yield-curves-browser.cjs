@@ -1,4 +1,5 @@
 "use strict";
+const {componentPage} = require("./portal-navigation.cjs");
 // Synthetic public yields; never uses or opens any personal portfolio profile.
 const fs = require("node:fs"), path = require("node:path"), http = require("node:http"), assert = require("node:assert/strict");
 const {chromium} = require(process.env.PLAYWRIGHT_MODULE_PATH || "playwright");
@@ -52,7 +53,7 @@ async function main() {
     }
   }
   try {
-    const context = await browser.newContext({viewport: {width: 1440, height: 1000}}), page = await context.newPage();
+    const context = await browser.newContext({viewport: {width: 1440, height: 1000}}), page = await componentPage(context,);
     page.on("pageerror", error => errors.push(error.message)); await page.route("https://**", route => route.abort());
     await page.goto(base); await page.waitForFunction(() => document.querySelectorAll(".yield-curve-card").length === 2);
     assert.equal(await page.locator("#yieldDateA").inputValue(), "2026-09-14"); assert.equal(await page.locator("#yieldDateB").inputValue(), "2026-10-14");
@@ -102,7 +103,7 @@ async function main() {
     await page.locator("#themeToggle").click(); assert.equal(await page.locator("html").getAttribute("data-theme"), "light");
     await check(page, "2026-09-14", "2026-10-14");
     for (const version of ["v1", "v2"]) {
-      const legacyContext = await browser.newContext(), legacyPage = await legacyContext.newPage(); await legacyPage.route("https://**", route => route.abort());
+      const legacyContext = await browser.newContext(), legacyPage = await componentPage(legacyContext,); await legacyPage.route("https://**", route => route.abort());
       await legacyContext.addInitScript(version => localStorage.setItem("savy:yield-curve-dates:" + version, JSON.stringify({a: "2026-10-09", b: "2026-10-14", ...(version === "v2" ? {c: "2025-10-14", d: "2021-10-14", e: "2016-10-14"} : {})})), version);
       legacyPage.on("pageerror", error => errors.push(error.message)); await legacyPage.goto(base);
       await legacyPage.waitForFunction(() => document.querySelectorAll(".yield-curve-card").length === 2);
@@ -115,7 +116,7 @@ async function main() {
     offline = false; malformed = true; await page.evaluate(() => window.SavyYieldCurves.refresh());
     assert.match(await page.locator("#yieldStatus").innerText(), /Copie conservée/); await check(page, "2026-09-14", "2026-10-14");
     malformed = false; await page.evaluate(() => window.SavyYieldCurves.refresh()); assert.doesNotMatch(await page.locator("#yieldStatus").innerText(), /Copie conservée/);
-    offline = true; const blank = await browser.newContext({viewport: {width: 320, height: 1000}}), empty = await blank.newPage(); await empty.route("https://**", route => route.abort());
+    offline = true; const blank = await browser.newContext({viewport: {width: 320, height: 1000}}), empty = await componentPage(blank,); await empty.route("https://**", route => route.abort());
     empty.on("pageerror", error => errors.push(error.message)); await empty.goto(base); await empty.waitForFunction(() => document.querySelector("#yieldStatus").textContent.includes("Courbes indisponibles"));
     assert.equal(await empty.locator("#yieldDateA").isDisabled(), true); assert.equal(await empty.locator("#yieldCurveGrid svg").count(), 0);
     assert.equal(requests.some(url => /portfolio-key=|positions=/.test(url)), false); assert.deepEqual(errors, []);

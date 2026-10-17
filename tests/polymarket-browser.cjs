@@ -1,4 +1,5 @@
 "use strict";
+const {componentPage} = require("./portal-navigation.cjs");
 const {chromium}=require(process.env.PLAYWRIGHT_MODULE_PATH||"playwright");
 const assert=require("node:assert/strict"),fs=require("node:fs"),path=require("node:path"),http=require("node:http"),fixture=require("./polymarket-fixture.cjs");
 const root=path.resolve(__dirname,".."), initial=fixture(); let mode="fresh";
@@ -24,10 +25,10 @@ async function main(){
   await new Promise(resolve=>server.listen(0,"127.0.0.1",resolve));
   const browser=await chromium.launch({headless:true});
   try {
-    const page=await browser.newPage({viewport:{width:1440,height:1000}}),errors=[],url="http://127.0.0.1:"+server.address().port;
-    page.on("pageerror",e=>errors.push(e.message));await page.route("https://**",r=>r.abort());await page.goto(url);
+    const page=await componentPage(browser,{viewport:{width:1440,height:1000}}),errors=[],url="http://127.0.0.1:"+server.address().port;
+    page.on("pageerror",e=>errors.push(e.message));await page.route("https://**",r=>r.abort());await page.goto(url + "/#polymarket");
     await page.waitForFunction(()=>document.querySelectorAll(".polymarket-card[data-event-id]").length===5);
-    assert.equal(await page.locator("#polymarket").evaluate(n=>n.previousElementSibling.classList.contains("resources")&&n.nextElementSibling.id==="weeklyReports"),true);
+    assert.equal(await page.locator("#polymarket").evaluate(n=>n.closest("#page-polymarket") !== null),true);
     assert.deepEqual(await page.locator(".polymarket-card").evaluateAll(nodes=>nodes.map(n=>n.dataset.group)),["finance","finance","finance","popular","popular"]);
     for(const [i,card]of(await page.locator(".polymarket-card").all()).entries()){
       assert.equal(await card.locator("h3 a").getAttribute("href"),"https://polymarket.com/event/synthetic-event-"+(i+1));
@@ -54,11 +55,11 @@ async function main(){
     mode="offline";await page.reload();
     await page.waitForFunction(()=>document.querySelector(".polymarket-time")?.textContent.includes("conservé"));
     assert.equal(await page.locator(".polymarket-card[data-event-id]").count(),5);
-    const empty=await browser.newPage();await empty.route("https://**",r=>r.abort());await empty.goto(url);
+    const empty=await componentPage(browser,);await empty.route("https://**",r=>r.abort());await empty.goto(url);
     await empty.waitForFunction(()=>document.getElementById("polymarketStatus").textContent.includes("indisponibles"));
     assert.equal(await empty.locator(".polymarket-card h3 a").count(),0);assert.equal(await empty.locator(".polymarket-outcomes").count(),0);
     assert.deepEqual(errors,[]);
-    console.log("Polymarket verified: 3 Finance + 2 Politics, source links and scenarios, bottom placement, five desktop columns, mobile horizontal scrolling, dated outage, partial cache and older snapshot rejection.");
+    console.log("Polymarket verified: 3 Finance + 2 Politics, source links and scenarios, dedicated page placement, five desktop columns, mobile horizontal scrolling, dated outage, partial cache and older snapshot rejection.");
   }finally{await browser.close();}
 }
 main().catch(error=>{console.error(error);process.exitCode=1;}).finally(()=>server.close());
