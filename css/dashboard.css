@@ -85,6 +85,42 @@ button {color:var(--text)}
 #fearGreedHistoryStatus {font-size:10px;margin-top:3px;min-height:16px}
 @media(max-width:700px) {.fear-greed {grid-template-columns:minmax(0,1fr);gap:18px}.fear-greed-history {padding:16px 0 0;border-left:0;border-top:1px solid var(--border)}}
 @media(max-width:580px) {.fear-greed {padding:16px}.fear-greed-heading h2 {font-size:17px}.fear-greed-heading .meta {font-size:11px}#fearGreedChange {margin-top:4px}}
+.weekly-reports {margin-top:28px;padding-top:24px;border-top:1px solid var(--border)}
+.weekly-reports .section-heading {margin-bottom:6px}
+.weekly-reports h2 {font-size:20px}
+.weekly-reports-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:stretch;gap:18px;margin-top:16px}
+.weekly-report {display:flex;flex-direction:column;min-width:0;padding:22px}
+.weekly-report h3 {font-size:20px;letter-spacing:-.025em;margin:7px 0 2px}
+.weekly-report .eyebrow {font-size:9px;line-height:1.7}
+.weekly-report-date {display:block;font-size:11px}
+.weekly-report-summary {font-size:14px;line-height:1.7;margin-top:15px}
+.weekly-report-highlights {padding-left:18px;display:grid;gap:9px;margin:16px 0 0;font-size:13px;line-height:1.65;color:var(--muted)}
+.weekly-report-subtitle {font-size:12px;letter-spacing:.03em;margin:22px 0 10px;font-weight:600}
+.weekly-opportunities {list-style:none;display:grid;gap:10px;padding:0;margin:0 0 20px}
+.weekly-opportunities li {padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:var(--bg)}
+.weekly-opportunities strong,.weekly-opportunities span {display:block}
+.weekly-opportunities strong {font-size:12px;font-weight:600}
+.weekly-opportunities span {font-size:11px;margin:2px 0 5px}
+.weekly-opportunities p {font-size:12px;color:var(--muted);line-height:1.6}
+.weekly-report-count {margin-top:14px;color:var(--accent);font-size:11px}
+.weekly-stock-list {list-style:none;display:grid;gap:0;padding:0;margin:4px 0 12px}
+.weekly-stock {padding:14px 0;border-bottom:1px solid var(--border);min-width:0}
+.weekly-stock-heading {display:flex;justify-content:space-between;align-items:start;gap:8px;flex-wrap:wrap;margin-bottom:7px}
+.weekly-stock-heading>div:first-child {display:flex;gap:8px;align-items:baseline;min-width:0}
+.weekly-stock-heading strong {font-size:12px;overflow-wrap:anywhere}
+.weekly-stock-rank {font-size:10px;color:var(--muted);font-variant-numeric:tabular-nums}
+.weekly-stock-badges {display:flex;align-items:center;gap:8px;font-size:10px;white-space:nowrap}
+.weekly-stock-rating {color:var(--gold)}
+.weekly-stock-decision {padding:2px 6px;border-radius:4px;background:var(--accent-soft);color:var(--accent);font-weight:650;font-size:9px}
+.weekly-stock p {font-size:12px;line-height:1.65}
+.weekly-stock-central {color:var(--accent);font-variant-numeric:tabular-nums;margin:5px 0 3px}
+.weekly-stock .meta {font-size:11px}
+.weekly-report-method {font-size:10px;margin-bottom:18px}
+.weekly-report-document {display:flex;align-items:center;gap:8px 12px;flex-wrap:wrap;margin-top:auto;padding-top:16px;border-top:1px solid var(--border)}
+.weekly-report-document>p {width:100%;font-size:11px}
+.weekly-report-document .button {font-size:12px;color:var(--accent);border-color:var(--accent);background:var(--accent-soft)}
+.weekly-report-document>span {font-size:10px}
+@media(max-width:800px) {.weekly-reports-grid {grid-template-columns:minmax(0,1fr)}.weekly-report {padding:18px}.weekly-reports h2 {font-size:18px}}
 .quote-meta {margin-top:6px;min-width:0;overflow-wrap:anywhere}
 .quote-meta>a {display:inline-block;font-size:11px;margin-top:2px}
 .live-companion {margin-top:10px;padding-top:10px;border-top:1px solid var(--border);min-width:0;overflow-wrap:anywhere}

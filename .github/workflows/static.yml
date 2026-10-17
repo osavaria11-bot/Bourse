@@ -58,6 +58,8 @@ jobs:
           node --check js/macro-utils.js
           node --check js/fear-greed-utils.js
           node --check js/fear-greed.js
+          node --check js/weekly-reports-utils.js
+          node --check js/weekly-reports.js
           node --check js/portfolio-utils.js
           node --check js/portfolio-heatmap-utils.js
           node --check js/portfolio-intraday-utils.js
@@ -66,6 +68,7 @@ jobs:
           node --check js/portfolio-profile-utils.js
           node --check js/portfolio.js
           npm test
+          node scripts/validate_weekly_reports.cjs
           node scripts/validate_intraday_quotes.cjs
           node - <<'JS'
           const fs = require('node:fs'), C = require('./js/yield-curve-utils.js');
@@ -232,7 +235,7 @@ jobs:
         run: |
           mkdir -p _site
           cp index.html 221.png 2121.png _site/
-          cp -R css js data _site/
+          cp -R css js data reports _site/
       - name: Upload site
         uses: actions/upload-pages-artifact@v3
         with:

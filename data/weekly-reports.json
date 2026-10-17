@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "kind": "savy_weekly_reports",
+  "generated_at": "2026-10-17T16:00:00Z",
+  "reports": {
+    "real_estate": {
+      "title": "Débriefing immobilier",
+      "edition_date": "2026-10-12",
+      "document_scope": "summary",
+      "summary": "Une légère détente des taux obligataires ne suffit pas à réévaluer tous les immeubles. L’édition privilégie une souscription prudente, avec un focus sur le Québec et trois pistes d’acquisition en Montérégie.",
+      "highlights": [
+        "Financement : taux directeur à 2,25 %; Canada 5 ans de 3,63 % à 3,60 % et 10 ans de 3,96 % à 3,93 %. Le brief ne préconise pas de réduire les taux de sortie.",
+        "Québec : signal industriel positif, mais emploi en recul de 49 000 en septembre. À Montréal, la vacance industrielle citée est de 5,3 % et celle des bureaux de 15,9 %.",
+        "Montérégie : aucune vente conclue vérifiable trouvée dans cette édition. Les trois biens ci-dessous sont des pistes étudiées au 12 octobre, avec des prix demandés."
+      ],
+      "opportunities": [
+        {"address": "194–220, rue St-Louis", "city": "Saint-Jean-sur-Richelieu", "detail": "11,995 M$ demandés · RNE de 813 487 $ · taux de capitalisation de 6,78 %. Sept locataires."},
+        {"address": "307–311, rue Principale", "city": "Granby", "detail": "1,694 M$ demandés · RNE de 101 278 $ · taux de capitalisation de 5,98 %. Douze logements et un commerce."},
+        {"address": "78–84, rue Saint-Louis", "city": "Longueuil", "detail": "1,490 M$ demandés · RNE de 95 518 $ · taux de capitalisation de 6,41 %. Un logement et cinq commerces."}
+      ],
+      "document": {
+        "path": "reports/real-estate/2026-10-12.pdf",
+        "label": "Ouvrir la synthèse immobilière",
+        "mime_type": "application/pdf",
+        "pages": 2,
+        "size_bytes": 48129,
+        "sha256": "41cdab7ef4baa281e1110121aa5570098809c1e55579bfbde9eb1f3953622423"
+      }
+    },
+    "stocks": {
+      "title": "Top 5 du screener Finviz",
+      "edition_date": "2026-10-14",
+      "reference_date": "2026-10-14",
+      "document_scope": "full",
+      "summary": "Mastercard arrive en tête pour la visibilité de ses flux de trésorerie. Le screener ne retient que quatre candidats dans cette édition : MA, LLY, APH et WMG. Mastercard est le seul BUY au cours de référence.",
+      "highlights": [],
+      "method_note": "Classement et décisions de l’édition du 14 octobre, aux clôtures en USD. Rendements centraux conditionnels sur 24 mois, dividendes modélisés inclus. Cette édition conserve les 13 filtres alors en vigueur; le nouveau screener à 12 filtres s’applique aux prochaines éditions.",
+      "stocks": [
+        {"rank": 1, "ticker": "MA", "company": "Mastercard", "rating": 3.9, "decision": "BUY", "summary": "Réseau mondial de paiements et services à forte marge. Les volumes transfrontaliers, les services et les rachats d’actions soutiennent la thèse.", "central_label": "Scénario central à 24 mois : +29 % USD · +14 %/an", "risk": "Routage des cartes, réglementation et ralentissement de la consommation."},
+        {"rank": 2, "ticker": "LLY", "company": "Eli Lilly", "rating": 3.6, "decision": "HOLD", "summary": "La croissance des traitements du diabète et de l’obésité repose sur la capacité, l’accès aux payeurs et les progrès cliniques. Le prix limite la marge de sécurité.", "central_label": "Scénario central à 24 mois : +27 % USD · +13 %/an", "risk": "Pression sur les prix, concurrence, essais et besoins de capital."},
+        {"rank": 3, "ticker": "APH", "company": "Amphenol", "rating": 3.5, "decision": "HOLD", "summary": "Le contenu croissant des interconnexions IA et les acquisitions soutiennent la croissance. Le repli du cours améliore le potentiel, malgré une prime de valorisation encore élevée.", "central_label": "Scénario central à 24 mois : +25 % USD · +12 %/an", "risk": "Cycle de capex IA, dette d’acquisition et conversion des commandes en cash."},
+        {"rank": 4, "ticker": "WMG", "company": "Warner Music Group", "rating": 3.2, "decision": "HOLD", "summary": "Les droits musicaux, le streaming et les gains de marge portent le scénario. Les licences IA ajoutent une piste de croissance, avec une visibilité encore faible.", "central_label": "Scénario central à 24 mois : +32 % USD · +15 %/an", "risk": "Dette, coût des catalogues, exécution et contribution incertaine de l’IA."}
+      ],
+      "document": {
+        "path": "reports/stocks/2026-10-14.pdf",
+        "label": "Ouvrir le rapport actions complet",
+        "mime_type": "application/pdf",
+        "pages": 16,
+        "size_bytes": 172998,
+        "sha256": "3415a79fde7d9181c20f4b0a5daf13b8f7d91dd36d5bc42385ff0f5753224838"
+      }
+    }
+  }
+}
