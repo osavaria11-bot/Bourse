@@ -41,6 +41,14 @@ async function main() {
     if (F.validScore(sentiment.score)) {
       assert.equal(await page.locator("#fearGreedRating").innerText(), F.RATINGS[sentiment.rating]);
       assert.equal(await page.locator("#fearGreedMeter").getAttribute("aria-valuenow"), String(sentiment.score));
+      if (sentiment.history.length) {
+        for (const range of F.RANGES) {
+          await page.locator('#fearGreedRanges [data-range="' + range.key + '"]').click();
+          const chart = page.locator("#fearGreedTimeline svg"); await chart.focus(); await chart.press("End");
+          assert.equal(await page.locator(".fear-history-tooltip").innerText(), U.observationLabel(sentiment.history.at(-1)[0]) + " · " + U.formatNumber(sentiment.score, 1) + " / 100");
+          assert.equal(await chart.locator(".fear-history-line").evaluate(node => /NaN|Infinity/.test(node.getAttribute("d"))), false);
+        }
+      }
     } else {
       assert.equal(await page.locator("#fearGreedRating").innerText(), "Indisponible");
       assert.equal(await page.locator("#fearGreedChart").isVisible(), false);

@@ -48,10 +48,11 @@ button {color:var(--text)}
 .kpi .meta {font-size:10px}
 .kpi a.meta {display:inline-block;font-size:10px;margin-top:4px}
 .kpi .change {white-space:normal;overflow-wrap:anywhere}
-.fear-greed {display:grid;grid-template-columns:minmax(190px,.85fr) minmax(250px,1.35fr) minmax(180px,1fr);align-items:center;gap:20px 30px;margin-top:12px;padding:18px 22px;background:var(--surface);border:1px solid var(--border);border-radius:12px}
+.fear-greed {display:grid;grid-template-columns:minmax(230px,.85fr) minmax(0,1.5fr);align-items:center;gap:28px;margin-top:12px;padding:18px 22px;background:var(--surface);border:1px solid var(--border);border-radius:12px}
 .fear-greed>div {min-width:0}
 .fear-greed-heading h2 {font-size:18px;margin:3px 0 4px;letter-spacing:-.025em}
 .fear-greed-heading .eyebrow {font-size:9px}
+.fear-greed-reading {margin-top:16px}
 .fear-greed-score {display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
 #fearGreedValue {font-size:32px;line-height:1;font-weight:650;font-variant-numeric:tabular-nums;letter-spacing:-.04em}
 .fear-greed-total {color:var(--muted);font-size:13px}
@@ -63,10 +64,27 @@ button {color:var(--text)}
 .fear-greed-meter {position:relative;height:9px;border-radius:20px;background:linear-gradient(90deg,#ce775c 0%,#d8b276 32%,#b4b8a2 50%,#81bbaa 70%,#4ba78d 100%)}
 .fear-greed-marker {position:absolute;left:clamp(3px,var(--fear-score,0%),calc(100% - 3px));top:-4px;width:5px;height:17px;transform:translateX(-50%);border-radius:2px;background:var(--text);box-shadow:0 0 0 2px var(--surface)}
 .fear-greed-scale {display:flex;justify-content:space-between;gap:8px;font-size:9px;color:var(--muted);margin-top:8px}
+.fear-greed-meta {margin-top:13px}
 .fear-greed-meta .meta {font-size:11px}
 #fearGreedChange {margin-top:5px;color:var(--text)}
-@media(max-width:950px) {.fear-greed {grid-template-columns:minmax(160px,.8fr) minmax(220px,1.2fr);gap:12px 24px}.fear-greed-meta {grid-column:1/-1;display:flex;justify-content:space-between;gap:8px 20px;flex-wrap:wrap}#fearGreedChange {margin-top:0}}
-@media(max-width:580px) {.fear-greed {grid-template-columns:minmax(0,1fr);padding:16px;gap:13px}.fear-greed-heading h2 {font-size:17px}.fear-greed-heading .meta {font-size:11px}.fear-greed-meta {display:block}#fearGreedChange {margin-top:4px}}
+.fear-greed-history {border-left:1px solid var(--border);padding-left:28px}
+.fear-greed-history-heading {display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.fear-greed-history-heading h3 {font-size:12px;font-weight:600;color:var(--muted)}
+.fear-greed-history .segmented button {min-height:32px;padding:5px 9px;font-size:11px}
+.fear-greed-timeline {position:relative;min-height:178px;display:grid;align-items:center}
+.fear-greed-timeline svg {display:block;width:100%;height:178px;touch-action:pan-y;overflow:visible}
+.fear-history-grid {stroke:var(--grid);stroke-width:1}
+.fear-history-neutral {stroke:var(--gold);stroke-dasharray:4 4;opacity:.7}
+.fear-history-label {fill:var(--muted);font-size:10px;font-family:inherit}
+.fear-history-area {fill:var(--accent);opacity:.07}
+.fear-history-line {fill:none;stroke:var(--chart);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.fear-history-dot {fill:var(--chart);stroke:var(--surface);stroke-width:2}
+.fear-history-crosshair {stroke:var(--muted);stroke-width:1;stroke-dasharray:3 3}
+.fear-history-selection[hidden] {display:none}
+.fear-history-tooltip {position:absolute;top:0;max-width:calc(100% - 8px);padding:5px 8px;background:var(--raised);border:1px solid var(--border);border-radius:6px;font-size:11px;font-variant-numeric:tabular-nums;white-space:nowrap;pointer-events:none;box-shadow:var(--shadow)}
+#fearGreedHistoryStatus {font-size:10px;margin-top:3px;min-height:16px}
+@media(max-width:700px) {.fear-greed {grid-template-columns:minmax(0,1fr);gap:18px}.fear-greed-history {padding:16px 0 0;border-left:0;border-top:1px solid var(--border)}}
+@media(max-width:580px) {.fear-greed {padding:16px}.fear-greed-heading h2 {font-size:17px}.fear-greed-heading .meta {font-size:11px}#fearGreedChange {margin-top:4px}}
 .quote-meta {margin-top:6px;min-width:0;overflow-wrap:anywhere}
 .quote-meta>a {display:inline-block;font-size:11px;margin-top:2px}
 .live-companion {margin-top:10px;padding-top:10px;border-top:1px solid var(--border);min-width:0;overflow-wrap:anywhere}

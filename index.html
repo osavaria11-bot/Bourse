@@ -8,10 +8,10 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-title" content="SAVY" />
   <title>SAVY — Tableau macroéconomique</title>
-  <link rel="stylesheet" href="css/dashboard.css?v=20261017-fear-greed" />
+  <link rel="stylesheet" href="css/dashboard.css?v=20261017-fear-timeline" />
   <script src="js/macro-utils.js?v=20261015-uranium-spot" defer></script>
-  <script src="js/fear-greed-utils.js?v=20261017-fear-greed" defer></script>
-  <script src="js/fear-greed.js?v=20261017-fear-greed" defer></script>
+  <script src="js/fear-greed-utils.js?v=20261017-fear-timeline" defer></script>
+  <script src="js/fear-greed.js?v=20261017-fear-timeline" defer></script>
   <script src="js/yield-curve-utils.js?v=20261015-yield-presets" defer></script>
   <script src="js/yield-curves.js?v=20261015-yield-presets" defer></script>
   <script src="js/intraday-utils.js?v=20261014-refresh-status" defer></script>
@@ -39,9 +39,17 @@
     <p id="updated" class="update-status" role="status" aria-live="polite">Chargement des données publiées…</p>
     <section id="kpis" class="kpi-grid" aria-label="Indicateurs clés"></section>
     <section id="fearGreed" class="fear-greed" aria-labelledby="fearGreedTitle">
+      <div class="fear-greed-overview">
       <div class="fear-greed-heading"><p class="eyebrow">SENTIMENT DU MARCHÉ AMÉRICAIN</p><h2 id="fearGreedTitle">Fear &amp; Greed Index</h2><a class="meta" href="https://www.cnn.com/markets/fear-and-greed" target="_blank" rel="noopener noreferrer">Voir l’indice CNN ↗</a></div>
       <div class="fear-greed-reading"><div class="fear-greed-score"><p><span id="fearGreedValue">—</span><span class="fear-greed-total"> / 100</span></p><span id="fearGreedRating" class="fear-greed-rating">Chargement…</span></div><div id="fearGreedChart" hidden><div id="fearGreedMeter" class="fear-greed-meter" role="meter" aria-label="Fear &amp; Greed Index de CNN" aria-valuemin="0" aria-valuemax="100"><span class="fear-greed-marker" aria-hidden="true"></span></div><div class="fear-greed-scale" aria-hidden="true"><span>0 · Peur extrême</span><span>50</span><span>100 · Avidité extrême</span></div></div></div>
       <div class="fear-greed-meta"><p id="fearGreedStatus" class="meta" role="status">Chargement de la dernière publication CNN…</p><p id="fearGreedChange" class="meta" hidden></p></div>
+      </div>
+      <div class="fear-greed-history" aria-labelledby="fearGreedHistoryTitle">
+        <div class="fear-greed-history-heading"><h3 id="fearGreedHistoryTitle">Historique</h3><div id="fearGreedRanges" class="segmented" role="group" aria-label="Période du Fear &amp; Greed"><button type="button" data-range="1M" aria-pressed="false">1 mois</button><button type="button" data-range="3M" aria-pressed="false">3 mois</button><button type="button" data-range="1Y" aria-pressed="true">1 an</button></div></div>
+        <div id="fearGreedTimeline" class="fear-greed-timeline"><p class="meta">Chargement de l’historique CNN…</p></div>
+        <p id="fearGreedHistoryStatus" class="meta"></p>
+        <p id="fearGreedHistoryHint" class="sr-only">Survole ou touche la courbe pour lire une date. Au clavier, utilise les flèches gauche et droite, Début et Fin.</p>
+      </div>
     </section>
     <section class="policy-odds" aria-labelledby="oddsTitle">
       <div class="policy-odds-heading"><div><p class="eyebrow">PROCHAINES DÉCISIONS</p><h2 id="oddsTitle">Ce que le marché anticipe</h2></div><p class="meta">Probabilités implicites des swaps au jour le jour, datées et révisables.</p></div>

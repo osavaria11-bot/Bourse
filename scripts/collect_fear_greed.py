@@ -5,7 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 import math
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 try:
@@ -40,40 +40,91 @@ def parse_index(point, now):
             "previous_close": point.get("previous_close") if valid_score(point.get("previous_close")) else None}
 
 
+def parse_history(rows, point):
+    """Keep genuine daily scores, with the latest publication on its UTC date."""
+    by_date = {}
+    end = point["timestamp"][:10]
+    for row in rows if isinstance(rows, list) else []:
+        if not isinstance(row, (list, tuple)) or len(row) != 2 or not valid_score(row[1]):
+            continue
+        try:
+            day = date.fromisoformat(row[0]).isoformat()
+        except (TypeError, ValueError):
+            continue
+        if day == row[0] and "2000-01-01" <= day <= end:
+            by_date[day] = row[1]
+    if by_date:
+        by_date[end] = point["score"]
+    return [[day, score] for day, score in sorted(by_date.items())]
+
+
+def cnn_history(payload, point, now):
+    historical = payload.get("fear_and_greed_historical")
+    rows = historical.get("data") if isinstance(historical, dict) else None
+    observations = []
+    for row in rows if isinstance(rows, list) else []:
+        if not isinstance(row, dict) or not valid_score(row.get("y")):
+            continue
+        stamp = row.get("x")
+        if not isinstance(stamp, (int, float)) or isinstance(stamp, bool) or not math.isfinite(stamp):
+            continue
+        try:
+            published = datetime.fromtimestamp(stamp / 1000, timezone.utc)
+        except (ValueError, OverflowError, OSError):
+            continue
+        if published.year >= 2000 and published <= now + timedelta(minutes=5):
+            observations.append((stamp, published.date().isoformat(), row["y"]))
+    # CNN can include a close and a later intraday score on the same date.
+    return parse_history([[day, score] for _, day, score in sorted(observations, key=lambda row: row[0])], point)
+
+
 def fetch_index(now):
     text = macro.fetch_text(DATA_URL, headers={"Referer": SOURCE_URL})
     try:
         payload = json.loads(text)
     except ValueError as exc:
         raise macro.SourceError("CNN : réponse JSON non reconnue") from exc
-    return parse_index(payload.get("fear_and_greed") if isinstance(payload, dict) else None, now)
+    point = parse_index(payload.get("fear_and_greed") if isinstance(payload, dict) else None, now)
+    return {**point, "history": cnn_history(payload, point, now)}
 
 
 def collect(previous, now, fetcher=fetch_index):
     base = {"schema_version": 1, "kind": "cnn_fear_and_greed", "provider": "cnn",
             "generated_at": now.isoformat().replace("+00:00", "Z"),
             "source_label": "CNN", "source_url": SOURCE_URL}
+    cached = None
+    if (isinstance(previous, dict) and previous.get("schema_version") == 1
+            and previous.get("kind") == base["kind"] and previous.get("provider") == "cnn"
+            and previous.get("fetch_status") in ("fresh", "cached")
+            and previous.get("source_url") == SOURCE_URL):
+        try:
+            point = parse_index(previous, now)
+            fetched = datetime.fromisoformat(previous["last_successful_fetch"].replace("Z", "+00:00"))
+            published = datetime.fromisoformat(point["timestamp"].replace("Z", "+00:00"))
+            if fetched.tzinfo is None or fetched > now + timedelta(minutes=5) or published > fetched + timedelta(minutes=5):
+                raise ValueError("Invalid fetch time")
+            cached = {**point, "history": parse_history(previous.get("history"), point),
+                      "last_successful_fetch": previous["last_successful_fetch"]}
+        except (macro.SourceError, KeyError, AttributeError, TypeError, ValueError):
+            pass
     try:
-        point = parse_index(fetcher(now), now)
-        return {**base, **point, "fetch_status": "fresh", "last_successful_fetch": base["generated_at"]}
+        raw = fetcher(now)
+        point = parse_index(raw, now)
+        history = parse_history(raw.get("history"), point)
+        history_status = "fresh" if history else "unavailable"
+        if not history and cached:
+            history = parse_history(cached["history"], point)
+            history_status = "cached" if history else "unavailable"
+        return {**base, **point, "history": history, "history_status": history_status,
+                "fetch_status": "fresh", "last_successful_fetch": base["generated_at"]}
     except macro.SourceError as exc:
         error = str(exc)[:180]
-        if (isinstance(previous, dict) and previous.get("schema_version") == 1
-                and previous.get("kind") == base["kind"] and previous.get("provider") == "cnn"
-                and previous.get("fetch_status") in ("fresh", "cached")
-                and previous.get("source_url") == SOURCE_URL):
-            try:
-                point = parse_index(previous, now)
-                fetched = datetime.fromisoformat(previous["last_successful_fetch"].replace("Z", "+00:00"))
-                published = datetime.fromisoformat(point["timestamp"].replace("Z", "+00:00"))
-                if fetched.tzinfo is None or fetched > now + timedelta(minutes=5) or published > fetched + timedelta(minutes=5):
-                    raise ValueError("Invalid fetch time")
-                return {**base, **point, "fetch_status": "cached", "error": error,
-                        "last_successful_fetch": previous["last_successful_fetch"]}
-            except (macro.SourceError, KeyError, AttributeError, TypeError, ValueError):
-                pass
+        if cached:
+            return {**base, **cached, "fetch_status": "cached", "error": error,
+                    "history_status": "cached" if cached["history"] else "unavailable"}
         return {**base, "score": None, "rating": None, "timestamp": None, "previous_close": None,
-                "fetch_status": "unavailable", "last_successful_fetch": None, "error": error}
+                "history": [], "history_status": "unavailable", "fetch_status": "unavailable",
+                "last_successful_fetch": None, "error": error}
 
 
 def main():
