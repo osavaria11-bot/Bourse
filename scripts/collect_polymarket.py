@@ -123,6 +123,7 @@ def fetch_group(kind, now, excluded=()):
     candidates = {}
     for page in range(4):
         query = urlencode({"tag_id": tag["id"], "active": "true", "closed": "false", "archived": "false",
+                           "related_tags": "true" if kind == "finance" else "false",
                            "order": order, "ascending": "false", "limit": 20, "offset": page * 20})
         rows = fetch_json(API + "/events?" + query)
         if not isinstance(rows, list):

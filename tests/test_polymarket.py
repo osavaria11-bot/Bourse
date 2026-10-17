@@ -69,8 +69,10 @@ class PolymarketTests(unittest.TestCase):
             self.assertEqual(query["ascending"], ["false"])
             if query["tag_id"] == ["120"]:
                 self.assertEqual(query["order"], ["volume"])
+                self.assertEqual(query["related_tags"], ["true"])
                 return [event("1", 500, 1), event("1", 500, 1), event("2", 400, 999), event("3", 300, 1000)]
             self.assertEqual(query["order"], ["volume24hr"])
+            self.assertEqual(query["related_tags"], ["false"])
             return [event("1", daily=900), event("9", daily=800, tags=[{"slug":"finance"}]),
                     event("4", daily=500), event("5", daily=600)]
         with patch.object(poly, "fetch_json", side_effect=response):

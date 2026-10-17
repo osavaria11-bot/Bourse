@@ -2,11 +2,11 @@
   "schema_version": 1,
   "kind": "polymarket_events",
   "provider": "polymarket",
-  "generated_at": "2026-10-17T16:34:24.758207Z",
+  "generated_at": "2026-10-17T16:36:05.030418Z",
   "groups": {
     "finance": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-17T16:34:24.758207Z",
+      "fetched_at": "2026-10-17T16:36:05.030418Z",
       "ranking": "volume",
       "events": [
         {
@@ -33,6 +33,29 @@
           ]
         },
         {
+          "id": "606422",
+          "slug": "fed-decision-in-october-20260617190323537",
+          "title": "Fed Decision in October?",
+          "url": "https://polymarket.com/event/fed-decision-in-october-20260617190323537",
+          "volume": 44896154.94620698,
+          "volume_24h": 603068.8163180001,
+          "ends_at": "2026-10-29T03:59:00Z",
+          "outcomes": [
+            {
+              "label": "No change",
+              "probability": 0.865,
+              "market_id": "2589812",
+              "ends_at": "2026-10-29T03:59:00Z"
+            },
+            {
+              "label": "25 bps increase",
+              "probability": 0.135,
+              "market_id": "2589813",
+              "ends_at": "2026-10-29T03:59:00Z"
+            }
+          ]
+        },
+        {
           "id": "86832",
           "slug": "which-companies-will-be-acquired-before-2027",
           "title": "Which companies will be acquired before 2027?",
@@ -54,35 +77,12 @@
               "ends_at": "2027-01-01T04:59:00Z"
             }
           ]
-        },
-        {
-          "id": "79041",
-          "slug": "largest-company-end-of-december-2026",
-          "title": "Largest Company end of December 2026?",
-          "url": "https://polymarket.com/event/largest-company-end-of-december-2026",
-          "volume": 8562157.418342,
-          "volume_24h": 23022.482807,
-          "ends_at": "2027-01-01T04:59:00Z",
-          "outcomes": [
-            {
-              "label": "NVIDIA",
-              "probability": 0.705,
-              "market_id": "676739",
-              "ends_at": "2027-01-01T04:59:00Z"
-            },
-            {
-              "label": "Apple",
-              "probability": 0.281,
-              "market_id": "676741",
-              "ends_at": "2027-01-01T04:59:00Z"
-            }
-          ]
         }
       ]
     },
     "popular": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-17T16:34:24.758207Z",
+      "fetched_at": "2026-10-17T16:36:05.030418Z",
       "ranking": "volume24hr",
       "events": [
         {
@@ -96,13 +96,13 @@
           "outcomes": [
             {
               "label": "October 17",
-              "probability": 0.9915,
+              "probability": 0.991,
               "market_id": "5686981",
               "ends_at": "2026-10-18T03:59:00Z"
             },
             {
               "label": "October 18",
-              "probability": 0.959,
+              "probability": 0.9575,
               "market_id": "5715908",
               "ends_at": "2026-10-19T03:59:00Z"
             }
