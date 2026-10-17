@@ -1,0 +1,11 @@
+# Polymarket row
+
+The row above the weekly reports shows three distinct open Finance events ranked by **total event trading volume**, then two distinct Politics events ranked by **24-hour event trading volume**. Finance cross-listings are excluded from Politics. Volumes are cumulative turnover in US dollars, not open interest. The five cards stay on one line; smaller screens scroll inside the row.
+
+`scripts/collect_polymarket.py` reads the public, unauthenticated [Gamma API](https://docs.polymarket.com/api-reference/events/list-events). It resolves the official Finance and Politics tag IDs by slug, queries active, non-archived, non-closed events in descending volume order, and skips expired events or markets that are closed, resolved, disputed, or not accepting orders. Pagination continues when necessary to fill a group. No wallet, orders, credentials or private user data are used.
+
+For multi-market events, each displayed scenario is paired with its own **Yes** price and `groupItemTitle` (or full question); the two largest valid Yes prices are shown. They are not added or rescaled: acquisition events, for example, can have several independent outcomes. A single-market event displays its original named outcomes, including Yes/No in the correct API order. Titles remain in the source language.
+
+`data/polymarket.json` is collected during the existing quote refresh workflow, daily collection and full publication. The browser reloads the published file every five minutes, on return to the tab and with Actualiser. Each group has its actual fetch date. An outage preserves a still-valid dated group, while an unavailable group has no fabricated prices. The browser also expires events/scenarios and retains newer local snapshots if the deployment file is older. A preserved snapshot cannot establish that a market remains open after its original collection; the dated label makes that limit visible.
+
+Validation: Python tests cover API parsing, rankings, market resolution, pagination and per-group fallback; JS tests cover schema, expiry, safe links and merging; the browser suite checks five desktop columns, horizontal mobile scrolling, placement, dated outages and source links. `node scripts/validate_polymarket.cjs` validates the published snapshot.

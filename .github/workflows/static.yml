@@ -58,6 +58,8 @@ jobs:
           node --check js/macro-utils.js
           node --check js/fear-greed-utils.js
           node --check js/fear-greed.js
+          node --check js/polymarket-utils.js
+          node --check js/polymarket.js
           node --check js/weekly-reports-utils.js
           node --check js/weekly-reports.js
           node --check js/portfolio-utils.js
@@ -69,6 +71,7 @@ jobs:
           node --check js/portfolio.js
           npm test
           node scripts/validate_weekly_reports.cjs
+          node scripts/validate_polymarket.cjs
           node scripts/validate_intraday_quotes.cjs
           node - <<'JS'
           const fs = require('node:fs'), C = require('./js/yield-curve-utils.js');
@@ -193,10 +196,12 @@ jobs:
           persist-credentials: false
       - name: Setup Pages
         uses: actions/configure-pages@v5
-      - name: Refresh exchange quotes and CNN sentiment immediately before publishing
+      - name: Refresh exchange quotes, sentiment and Polymarket before publishing
         run: |
           python3 scripts/collect_intraday_quotes.py
           python3 scripts/collect_fear_greed.py
+          python3 scripts/collect_polymarket.py
+          node scripts/validate_polymarket.cjs
           node scripts/validate_intraday_quotes.cjs
       - name: Setup Python for natural narration
         uses: actions/setup-python@v6

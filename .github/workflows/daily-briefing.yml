@@ -19,6 +19,7 @@ on:
       - "scripts/collect_rate_odds.py"
       - "scripts/collect_yield_curves.py"
       - "scripts/collect_fear_greed.py"
+      - "scripts/collect_polymarket.py"
       - "data/securities.json"
       - "data/portfolio-exposures.json"
       - "data/earnings-highlights.json"
@@ -29,6 +30,7 @@ on:
       - "tests/test_rate_odds.py"
       - "tests/test_yield_curves.py"
       - "tests/test_fear_greed.py"
+      - "tests/test_polymarket.py"
       - ".github/workflows/daily-briefing.yml"
 
 permissions:
@@ -63,6 +65,8 @@ jobs:
         run: python scripts/generate_daily_briefing.py
       - name: Refresh CNN Fear and Greed Index
         run: python scripts/collect_fear_greed.py
+      - name: Refresh open Polymarket events
+        run: python scripts/collect_polymarket.py
       - name: Refresh world equity charts
         run: python scripts/collect_market_indices.py
       - name: Refresh security prices and USD/CAD
@@ -86,7 +90,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/macro-data.json data/macro-briefing.json data/market-indices.json data/security-prices.json data/portfolio-exposures.json data/portfolio-earnings.json data/rate-odds.json data/yield-curves.json data/fear-greed.json
+          git add data/macro-data.json data/macro-briefing.json data/market-indices.json data/security-prices.json data/portfolio-exposures.json data/portfolio-earnings.json data/rate-odds.json data/yield-curves.json data/fear-greed.json data/polymarket.json
           if git diff --cached --quiet; then
             echo "No data changes to commit."
             exit 0

@@ -105,6 +105,27 @@ button {color:var(--text)}
 .weekly-report-count {margin-top:14px;color:var(--accent);font-size:11px}
 .weekly-stock-list {list-style:none;display:grid;gap:0;padding:0;margin:4px 0 12px}
 .weekly-stock {padding:14px 0;border-bottom:1px solid var(--border);min-width:0}
+.polymarket {margin:32px 0 36px;min-width:0}
+.polymarket .section-heading {gap:12px;flex-wrap:wrap}
+.polymarket-row {display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin:14px 0 10px;padding:3px 1px 12px;overflow-x:auto;scroll-snap-type:x proximity;scroll-padding:2px}
+.polymarket-row:focus-visible {outline:2px solid var(--accent);outline-offset:4px}
+.polymarket-card {padding:18px 16px;display:flex;flex-direction:column;min-width:0;scroll-snap-align:start}
+.polymarket-category {font-size:9px;letter-spacing:.08em;color:var(--accent);margin-bottom:10px}
+.polymarket-card[data-group="popular"] .polymarket-category {color:var(--gold)}
+.polymarket-card h3 {font-size:14px;line-height:1.55;letter-spacing:-.015em;min-height:4.65em;margin-bottom:16px;overflow-wrap:anywhere}
+.polymarket-card h3 a {color:var(--text)}
+.polymarket-outcomes {list-style:none;display:grid;gap:8px;margin:0 0 20px;padding:0}
+.polymarket-outcomes li {display:flex;align-items:baseline;justify-content:space-between;gap:8px;font-size:11px}
+.polymarket-outcomes span {min-width:0;overflow-wrap:anywhere;color:var(--muted)}
+.polymarket-outcomes strong {font-size:17px;color:var(--accent);white-space:nowrap;font-variant-numeric:tabular-nums;font-weight:600}
+.polymarket-card-footer {margin-top:auto;padding-top:12px;border-top:1px solid var(--border)}
+.polymarket-volume {font-size:15px;font-weight:600;font-variant-numeric:tabular-nums}
+.polymarket-card-footer .meta {font-size:10px}
+.polymarket-time {display:block;margin-top:9px}
+.polymarket-note {font-size:10px}
+.polymarket-note span {display:none}
+@media(max-width:1100px) {.polymarket-row {grid-template-columns:repeat(5,minmax(235px,1fr))}.polymarket-note span {display:inline}}
+@media(max-width:600px) {.polymarket h2 {font-size:18px}.polymarket-row {grid-template-columns:repeat(5,minmax(245px,1fr))}}
 .weekly-stock-heading {display:flex;justify-content:space-between;align-items:start;gap:8px;flex-wrap:wrap;margin-bottom:7px}
 .weekly-stock-heading>div:first-child {display:flex;gap:8px;align-items:baseline;min-width:0}
 .weekly-stock-heading strong {font-size:12px;overflow-wrap:anywhere}

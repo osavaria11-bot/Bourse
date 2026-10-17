@@ -1,0 +1,137 @@
+{
+  "schema_version": 1,
+  "kind": "polymarket_events",
+  "provider": "polymarket",
+  "generated_at": "2026-10-17T16:31:19.759287Z",
+  "groups": {
+    "finance": {
+      "fetch_status": "fresh",
+      "fetched_at": "2026-10-17T16:31:19.759287Z",
+      "ranking": "volume",
+      "events": [
+        {
+          "id": "51456",
+          "slug": "how-many-fed-rate-cuts-in-2026",
+          "title": "How many Fed rate cuts in 2026?",
+          "url": "https://polymarket.com/event/how-many-fed-rate-cuts-in-2026",
+          "volume": 54456718.28712499,
+          "volume_24h": 164596.054784,
+          "ends_at": "2027-01-01T04:59:00Z",
+          "outcomes": [
+            {
+              "label": "0 (0 bps)",
+              "probability": 0.9685,
+              "market_id": "616902",
+              "ends_at": "2027-01-01T04:59:00Z"
+            },
+            {
+              "label": "1 (25 bps)",
+              "probability": 0.009,
+              "market_id": "616903",
+              "ends_at": "2027-01-01T04:59:00Z"
+            }
+          ]
+        },
+        {
+          "id": "86832",
+          "slug": "which-companies-will-be-acquired-before-2027",
+          "title": "Which companies will be acquired before 2027?",
+          "url": "https://polymarket.com/event/which-companies-will-be-acquired-before-2027",
+          "volume": 18379622.50213607,
+          "volume_24h": 4297.176491,
+          "ends_at": "2027-01-01T04:59:00Z",
+          "outcomes": [
+            {
+              "label": "Perplexity AI",
+              "probability": 0.105,
+              "market_id": "700396",
+              "ends_at": "2027-01-01T04:59:00Z"
+            },
+            {
+              "label": "PayPal",
+              "probability": 0.1,
+              "market_id": "1544502",
+              "ends_at": "2027-01-01T04:59:00Z"
+            }
+          ]
+        },
+        {
+          "id": "79041",
+          "slug": "largest-company-end-of-december-2026",
+          "title": "Largest Company end of December 2026?",
+          "url": "https://polymarket.com/event/largest-company-end-of-december-2026",
+          "volume": 8562157.418342,
+          "volume_24h": 23022.482807,
+          "ends_at": "2027-01-01T04:59:00Z",
+          "outcomes": [
+            {
+              "label": "NVIDIA",
+              "probability": 0.705,
+              "market_id": "676739",
+              "ends_at": "2027-01-01T04:59:00Z"
+            },
+            {
+              "label": "Apple",
+              "probability": 0.281,
+              "market_id": "676741",
+              "ends_at": "2027-01-01T04:59:00Z"
+            }
+          ]
+        }
+      ]
+    },
+    "popular": {
+      "fetch_status": "fresh",
+      "fetched_at": "2026-10-17T16:31:19.759287Z",
+      "ranking": "volume24hr",
+      "events": [
+        {
+          "id": "1038648",
+          "slug": "us-iran-ceasefire-continues-throughptptpt",
+          "title": "US-Iran ceasefire continues through...?",
+          "url": "https://polymarket.com/event/us-iran-ceasefire-continues-throughptptpt",
+          "volume": 15502740.988768999,
+          "volume_24h": 1384292.5363189997,
+          "ends_at": "2026-10-31T23:59:00Z",
+          "outcomes": [
+            {
+              "label": "October 17",
+              "probability": 0.9915,
+              "market_id": "5686981",
+              "ends_at": "2026-10-18T03:59:00Z"
+            },
+            {
+              "label": "October 18",
+              "probability": 0.959,
+              "market_id": "5715908",
+              "ends_at": "2026-10-19T03:59:00Z"
+            }
+          ]
+        },
+        {
+          "id": "31875",
+          "slug": "republican-presidential-nominee-2028",
+          "title": "Republican Presidential Nominee 2028",
+          "url": "https://polymarket.com/event/republican-presidential-nominee-2028",
+          "volume": 712609530.6707311,
+          "volume_24h": 665993.111516,
+          "ends_at": "2028-11-08T04:59:00Z",
+          "outcomes": [
+            {
+              "label": "J.D. Vance",
+              "probability": 0.471,
+              "market_id": "561974",
+              "ends_at": "2028-11-08T04:59:00Z"
+            },
+            {
+              "label": "Marco Rubio",
+              "probability": 0.1335,
+              "market_id": "561975",
+              "ends_at": "2028-11-08T04:59:00Z"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

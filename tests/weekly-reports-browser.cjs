@@ -31,7 +31,7 @@ async function main() {
     const url = "http://127.0.0.1:" + server.address().port;
     await page.goto(url + "/#weeklyReports");
     await page.waitForFunction(() => document.querySelectorAll(".weekly-report-document a").length === 2);
-    assert.equal(await page.locator("#weeklyReports").evaluate(node => node.previousElementSibling.classList.contains("resources") && node.nextElementSibling.tagName === "FOOTER"), true);
+    assert.equal(await page.locator("#weeklyReports").evaluate(node => node.previousElementSibling.id === "polymarket" && node.nextElementSibling.tagName === "FOOTER"), true);
     assert.deepEqual(await page.locator(".weekly-stock").evaluateAll(nodes => nodes.map(node => node.dataset.ticker)), original.reports.stocks.stocks.map(row=>row.ticker));
     assert.ok((await page.locator('[data-report-kind="stocks"] .weekly-report-count').innerText()).includes(original.reports.stocks.stocks.length ? original.reports.stocks.stocks.length + " titre" : "Aucun titre"));
     if (original.reports.real_estate.document_scope === "summary") assert.match(await page.locator('[data-report-kind="real_estate"] .weekly-report-document').innerText(), /synthèse/);
