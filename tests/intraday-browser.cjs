@@ -6,7 +6,8 @@ const U = require("../js/macro-utils.js"), P = require("../js/portfolio-utils.js
 const A = require("../js/portfolio-profile-utils.js"), crypto = require("node:crypto");
 const root = path.resolve(__dirname, ".."), load = file => JSON.parse(fs.readFileSync(path.join(root, file), "utf8"));
 const prices = P.normalizePrices(load("data/security-prices.json"), load("data/securities.json"));
-const now = Date.now(), day = new Intl.DateTimeFormat("en-CA", {timeZone: "America/Toronto"}).format(now);
+// Keep the synthetic 55-minute-old trade within the simulated trading day, even around midnight.
+const day = new Intl.DateTimeFormat("en-CA", {timeZone: "America/Toronto"}).format(Date.now()), now = Date.parse(day + "T17:00:00Z");
 const holdings = [{ticker: "AAPL", currency: "USD", quantity: 2, average_cost: 100}, {ticker: "SHOP", currency: "CAD", quantity: 1, average_cost: 50}];
 const apple = prices.series.find(p => p.id === "AAPL").value, shop = prices.series.find(p => p.id === "SHOP").value;
 const spx = load("data/market-indices.json").series.find(p => p.id === "SPX");
@@ -68,7 +69,8 @@ async function main() {
   const browser = await chromium.launch({headless: true}), url = "http://127.0.0.1:" + server.address().port;
   async function liveContext(options, positions) {
     const context = await browser.newContext(options);
-    await context.addInitScript(({positions, timestamp}) => {
+    await context.addInitScript(({positions, timestamp, testNow}) => {
+      Date.now = () => testNow;
       if (positions) localStorage.setItem("savy:private-holdings:v1", JSON.stringify({schema_version: 1, positions}));
       if (!localStorage.getItem("savy:preferences:v2")) localStorage.setItem("savy:preferences:v2", JSON.stringify({sort: "name"}));
       for (const suffix of ["", ":2", ":3"]) {
@@ -79,7 +81,7 @@ async function main() {
       window.fetch = (input, init) => String(input?.url || input).startsWith("https://biquote.io/api/USDCAD") ?
         Promise.resolve(new Response(JSON.stringify({symbol: "USDCAD", mid: 1.4, timestamp, marketState: "open"}),
           {status: 200, headers: {"Content-Type": "application/json"}})) : originalFetch(input, init);
-    }, {positions, timestamp: new Date(now).toISOString()});
+    }, {positions, timestamp: new Date(now).toISOString(), testNow: now});
     return context;
   }
   async function checkMacroBounds(page, width) {

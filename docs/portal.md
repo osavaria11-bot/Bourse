@@ -1,6 +1,6 @@
 # SAVY financial portal
 
-The existing static site and GitHub Pages workflows are retained. `portal.js` moves the original live components into six compact pages and a complete dashboard. It never clones a financial chart or changes a stored position. `portal.css` supplies the compact dark/light presentation without a framework, CDN or new production dependency.
+The existing static site and GitHub Pages workflows are retained. `portal.js` moves the original live components into the compact pages and a complete dashboard. It never clones a financial chart or changes a stored position. `portal.css` supplies the compact dark/light presentation without a framework, CDN or new production dependency.
 
 ## Navigation
 
@@ -12,11 +12,14 @@ The existing static site and GitHub Pages workflows are retained. `portal.js` mo
 | Recherche | Current Finviz selection, strategy rules and data availability, published PDF archives |
 | Immobilier | Current briefing, opportunities and published PDF archives |
 | Polymarket | Three Finance and five popular political markets with their live collection and cache behavior |
+| Analyse FNB | Interactive comparison of the 11 ETF portfolios, ratios, risk/return compass and investment growth; independent chart selections and 5% CGL.C where held |
 | Dashboard complet | Rightmost navigation item; all original components on one page, all six market charts, every filtered macro chart and all portfolio panels |
 
 The complete dashboard moves the same live component nodes into its page and restores their exact original positions on exit. No duplicated IDs, separate quotes or extra timers. Period changes and refreshes retain the complete chart grid; returning to a compact section restores its selected chart and comparison setting. Portfolio visibility controls and empty-data gating are preserved. Direct dashboard bookmarks and personal access fragments work together.
 
 Routes use `#view=…&tab=…`. Old `#portfolio`, `#indicators`, `#yieldCurves`, `#weeklyReports`, `#fearGreed` and `#polymarket` bookmarks still work. Browser back/forward and refresh preserve the selected page. Cmd/Ctrl+K opens economic search. Desktop navigation stays at the top; mobile navigation stays at the bottom, including the safe area.
+
+The FNB report is available at `#view=analyses&tab=overview` (`FNB` in mobile navigation). Its self-contained file, `reports/portefeuilles-fnb.html`, is loaded once when the tab first opens. Returning to the tab preserves the selections. The full-screen link opens the same report independently. Existing portfolio holdings, market data and collection workflows are unchanged.
 
 Personal access keys remain exclusively in URL fragments and existing local storage. Navigation preserves the key and selected portfolio. Profile refresh retains the current page instead of resetting it. Personal Home Screen manifest and export formats are unchanged. Import fragments are removed after import, as before.
 

@@ -104,3 +104,10 @@ body.savy-portal {font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",
 @media(max-width:900px) {.portal-nav a {flex:1 1 0;min-width:0}.portal-nav a[data-page="dashboard"] {margin-left:0}.nav-label {display:none}.nav-label-mobile {display:block}}
 @media(max-width:650px) {.savy-portal[data-page="dashboard"] .market-grid {grid-template-columns:minmax(0,1fr)}}
 @media(max-width:600px) {.portal-tabs {flex-wrap:wrap;gap:0 16px;overflow:visible}.portal-tabs a {padding-bottom:10px}}
+
+/* The FNB report loads only when its tab is opened and retains its own controls. */
+.portal-report-frame {display:block;width:100%;height:max(640px,calc(100dvh - 185px));border:1px solid var(--border);border-radius:8px;background:#fff}
+#panel-analyses-overview>.portal-section-heading {margin-top:0;margin-bottom:16px;align-items:center;flex-wrap:wrap}
+#panel-analyses-overview h2 {margin-top:3px;font-size:24px}
+@media(min-width:901px) and (max-width:1100px) {.portal-nav a {padding-left:6px;padding-right:6px;font-size:11px}}
+@media(max-width:600px) {.portal-report-frame {height:max(560px,calc(100dvh - 220px))}#panel-analyses-overview h2 {font-size:21px}}

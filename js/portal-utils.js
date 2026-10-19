@@ -10,6 +10,7 @@
     recherche: {label: "Recherche", tabs: {latest: "Sélection Finviz", strategies: "Stratégies", archives: "Archives"}},
     immobilier: {label: "Immobilier", tabs: {latest: "Dernier briefing", archives: "Archives"}},
     polymarket: {label: "Polymarket", tabs: {overview: "Marchés suivis"}},
+    analyses: {label: "Analyse FNB", tabs: {overview: "Les 11 portefeuilles"}},
     dashboard: {label: "Dashboard complet", navLabel: "Dashboard", tabs: {overview: "Tous les blocs"}},
   };
   const ALIASES = {portfolio: ["portefeuilles", "overview"], indicators: ["marches", "economy"], yieldCurves: ["marches", "rates"],

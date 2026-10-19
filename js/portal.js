@@ -11,6 +11,7 @@
     recherche: '<circle cx="10" cy="10" r="7"/><path d="m15 15 6 6M7 10h6M10 7v6"/>',
     immobilier: '<path d="M4 21V7l8-4v18M12 10h8v11M7 8v2m0 3v2m0 3v2m9-7v2m0 3v2M2 21h20"/>',
     polymarket: '<path d="M4 20V10h4v10m4 0V4h4v16m4 0v-7M2 20h20"/>',
+    analyses: '<path d="M3 3v18h18"/><circle cx="8" cy="15" r="2"/><circle cx="13" cy="9" r="2"/><circle cx="19" cy="5" r="2"/>',
     dashboard: '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>',
   };
   function el(tag, className, text) {const node = document.createElement(tag); if (className) node.className = className; if (text !== undefined) node.textContent = text; return node;}
@@ -30,7 +31,7 @@
   $(".brand .eyebrow").textContent = "VOTRE PERSPECTIVE FINANCIÈRE";
   $(".header-actions a[href='#portfolio']").remove();
   const nav = el("nav", "portal-nav"); nav.setAttribute("aria-label", "Navigation principale");
-  const mobileLabels = {portefeuilles: "Portef.", recherche: "Rech.", immobilier: "Immo.", polymarket: "Polym.", dashboard: "Tout"};
+  const mobileLabels = {portefeuilles: "Portef.", recherche: "Rech.", immobilier: "Immo.", polymarket: "Polym.", analyses: "FNB", dashboard: "Tout"};
   for (const [id, config] of Object.entries(R.PAGES)) {
     const item = link("", id); item.dataset.page = id;
     const icon = el("span", "nav-icon"); icon.setAttribute("aria-hidden", "true");
@@ -121,6 +122,16 @@
   main.append($("footer"));
   $("footer p").textContent = "SAVY · Votre portail financier";
   method($(".market-section > p:last-child"), "Comprendre les cours et les périodes");
+
+  const fundAnalysis = pane("analyses", "overview"), fundHeading = el("div", "portal-section-heading"), fundTitle = el("div");
+  fundTitle.append(el("p", "eyebrow", "PORTEFEUILLES / ANALYSE COMPARATIVE"), el("h2", "", "Les 11 portefeuilles de FNB"));
+  const fundFullScreen = el("a", "button quiet", "Ouvrir en plein écran ↗");
+  fundFullScreen.href = "reports/portefeuilles-fnb.html"; fundFullScreen.target = "_blank"; fundFullScreen.rel = "noopener noreferrer";
+  fundHeading.append(fundTitle, fundFullScreen);
+  const fundFrame = el("iframe", "portal-report-frame"); fundFrame.id = "fundAnalysisFrame";
+  fundFrame.title = "Analyse des 11 portefeuilles FNB : ratios, boussole et évolution des placements";
+  fundFrame.addEventListener("load", () => fundFrame.contentDocument?.documentElement.classList.add("in-dashboard"));
+  fundAnalysis.append(fundHeading, fundFrame);
 
   const dashboard = pane("dashboard", "overview"), dashboardMoves = [];
   dashboard.append(el("p", "eyebrow", "SAVY / VUE INTÉGRALE"), el("h2", "", "Dashboard complet"),
@@ -250,6 +261,7 @@
     for (const item of document.querySelectorAll(".portal-tabs a")) {if (item.dataset.tab === active.tab && item.closest(".portal-page").dataset.page === active.page) item.setAttribute("aria-current", "page"); else item.removeAttribute("aria-current");}
     document.title = "SAVY · " + R.PAGES[active.page].label;
     document.body.dataset.page = active.page;
+    if (active.page === "analyses" && !fundFrame.hasAttribute("src")) fundFrame.src = "reports/portefeuilles-fnb.html";
     $("#portfolioManage").hidden = all || active.tab === "positions";
     syncIndicators(); syncMarkets();
     window.scrollTo({top: 0, behavior: "instant"}); window.dispatchEvent(new Event("resize"));

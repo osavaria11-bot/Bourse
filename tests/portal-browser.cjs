@@ -28,8 +28,19 @@ async function check(browser, engine) {
   await page.waitForFunction(() => document.querySelector("#fearGreedValue").textContent !== "—");
   const home = await page.locator("#kpis").boundingBox();
   assert.ok(home.y + home.height <= 900, "The desktop first screen includes news, sentiment, analyses and macro readings: " + (home.y + home.height));
-  assert.equal(await page.locator(".portal-nav a").count(), 7);
+  assert.equal(await page.locator(".portal-nav a").count(), 8);
   assert.equal(await page.locator(".portal-nav a").last().getAttribute("data-page"), "dashboard"); await shot("home-dark");
+  assert.equal(await page.locator("#fundAnalysisFrame").getAttribute("src"), null, "The report is not loaded on Home");
+  await go("analyses");
+  const fundReport = page.frameLocator("#fundAnalysisFrame");
+  await fundReport.locator('html[data-ready="true"]').waitFor();
+  assert.equal(await fundReport.locator("#riskSvg .risk-point:visible").count(), 6);
+  await fundReport.locator("#risk-series-6").check();
+  assert.equal(await fundReport.locator("#riskSvg .risk-point:visible").count(), 7);
+  assert.equal(await fundReport.locator("#growthSvg .wealth-line:visible").count(), 6, "Each report chart keeps its own selection");
+  await go("accueil"); await go("analyses");
+  assert.equal(await fundReport.locator("#risk-series-6").isChecked(), true, "Returning preserves report choices");
+  await go("accueil");
   await page.locator('#kpis .kpi[data-id="VIXCLS"] button').click();
   assert.match(await page.locator('#detailCategory').textContent(), /VIXCLS/); await page.keyboard.press("Escape");
   await page.locator("#themeToggle").click(); assert.equal(await page.locator("html").getAttribute("data-theme"), "light"); await shot("home-light");
@@ -134,7 +145,7 @@ async function check(browser, engine) {
     await go("accueil"); await shot("mobile-" + width);
   }
   assert.deepEqual(errors, []);
-  console.log(engine + ": seven sections, compact home and complete dashboard, charts/periods/expansion, reports/archives, all portfolio views, keyboard/back/reload, fragment privacy and 375/320px layouts passed.");
+  console.log(engine + ": eight sections, compact home and complete dashboard, charts/periods/expansion, reports/archives, all portfolio views, keyboard/back/reload, fragment privacy and 375/320px layouts passed.");
   await context.close();
 }
 (async()=>{
