@@ -18,3 +18,7 @@
 .chart svg circle[stroke="#fff"]{stroke:var(--surface)}
 .plot-tip{color:#fff}
 .in-dashboard .wrap{max-width:none;padding:0 0 12px}
+/* The dark VEQT series also stays visible on the dark SAVY surface. */
+:root:not([data-theme="light"]) .chart svg [fill="#142333"]{fill:var(--text)}
+:root:not([data-theme="light"]) .chart svg [stroke="#142333"]{stroke:var(--text)}
+:root:not([data-theme="light"]) .dot[style*="#142333"]{background:var(--text)!important}
