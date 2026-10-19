@@ -111,15 +111,11 @@
   const research = pane("recherche", "latest"), plan = el("section", "research-plan"); plan.id = "researchPlan";
   const planHeading = el("div", "portal-section-heading"), planTitle = el("div");
   planTitle.append(el("p", "eyebrow", "RECHERCHE / FINVIZ"), el("h2", "", "Recherche & suivi"));
-  planHeading.append(planTitle, el("span", "meta", "Deux rendez-vous · mêmes automatisations")); plan.append(planHeading);
+  planHeading.append(planTitle, el("span", "meta", "Deux volets · une seule livraison")); plan.append(planHeading);
   const schedule = el("div", "research-schedule");
-  const nextResearch = new Date(); nextResearch.setUTCHours(22, 0, 0, 0);
-  nextResearch.setUTCDate(nextResearch.getUTCDate() + (3 - nextResearch.getUTCDay() + 7) % 7);
-  if (+nextResearch <= Date.now()) nextResearch.setUTCDate(nextResearch.getUTCDate() + 7);
-  const researchTime = new Intl.DateTimeFormat("fr-CA", {timeZone:"America/Toronto",weekday:"long",hour:"numeric",minute:"2-digit"}).format(nextResearch).replace(/^./, letter => letter.toLocaleUpperCase("fr"));
   for (const [step, title, time, note, detail] of [
-    ["1 · RECHERCHE", "Top 5 du screener Finviz", researchTime, "22 h UTC · horaire existant", "Admissibles, classement et instructions de rééquilibrage."],
-    ["2 · SUIVI", "Suivi des portefeuilles Finviz", "Jeudi · 16 h 30", "Heure de Toronto · après clôture", "Valorisation, exécution des instructions publiées et comparaison à SPY."],
+    ["1 · RECHERCHE", "Top 5 du screener Finviz", "Mercredi · 22 h", "Heure de Toronto · tâche hebdomadaire unique", "Admissibles, classement et instructions pour la prochaine clôture admissible."],
+    ["2 · SUIVI", "Suivi des portefeuilles Finviz", "Mercredi · 22 h", "Même livraison · heure de Toronto", "Valeurs à la dernière clôture, rendements A/B/SPY et instructions en attente."],
   ]) {
     const card = el("article", "research-schedule-card");
     card.append(el("span", "eyebrow", step), el("h3", "", title), el("strong", "research-time", time), el("span", "meta", note), el("p", "meta", detail)); schedule.append(card);
@@ -131,7 +127,7 @@
   for (const [title, allocation, rule] of [["Top 5 pondéré", "30 % · 25 % · 20 % · 15 % · 10 %", "Pondération selon le classement hebdomadaire."], ["Autres titres admissibles", "Équipondération", "Répartition égale entre les autres titres de la sélection."]]) {
     const article = el("article"); article.append(el("h3", "", title), el("strong", "", allocation), el("p", "meta", rule)); strategyList.append(article);
   }
-  strategies.append(strategyList, el("p", "meta", "Rééquilibrage simulé à la clôture du jeudi avec le dernier classement publié avant la séance. Base initiale : 10 000 USD par portefeuille au 30 septembre 2026. Le suivi automatisé conserve son état et son classeur existants; aucun historique de valorisation n’est encore publié sur ce site."));
+  strategies.append(strategyList, el("p", "meta", "Recherche et suivi sont livrés ensemble le mercredi à 22 h, heure de Toronto. Rééquilibrage simulé à la clôture du jeudi avec le dernier classement publié avant cette clôture, ou à la séance ouverte suivante en cas de congé. Base initiale : 10 000 USD par portefeuille au 30 septembre 2026. Chaque nouvelle édition reprend le suivi A/B/SPY dans son résumé et son PDF, avec la date réelle des valeurs. L’état et le classeur existants conservent leurs historiques."));
   plan.append(strategies);
   for (const [page, kind] of [["recherche", "stocks"], ["immobilier", "real_estate"]]) {
     const panel = pane(page, "archives"); panel.append(el("h2", "", "Les éditions précédentes"));

@@ -9,7 +9,7 @@ The existing static site and GitHub Pages workflows are retained. `portal.js` mo
 | Accueil | Market summary, three sourced headlines, CNN sentiment and history, latest reports, macro readings; full news and audio in a secondary view |
 | Marchés | Six market charts, all economic series, policy odds and sovereign curves, original resources |
 | Portefeuilles | All three existing portfolios; overview, positions, allocation heatmap and exposures, contributions/risk/movers, earnings, transaction availability |
-| Recherche | Research & tracking together: the existing Wednesday Finviz research and Thursday portfolio tracking schedules, current selection and simulation rules; published PDF archives |
+| Recherche | Finviz research and portfolio tracking together: one Wednesday 22:00 America/Toronto delivery, current selection and simulation rules; published PDF archives |
 | Immobilier | Current briefing, opportunities and published PDF archives |
 | Polymarket | Three Finance, five popular political markets and two popular events across all topics; ten distinct markets, five columns on desktop and a compact responsive grid |
 | Analyse FNB | Interactive comparison of the 11 ETF portfolios, ratios, risk/return compass and investment growth; independent chart selections and 5% CGL.C where held |
@@ -35,7 +35,7 @@ VIX and US 10-year headline quotes retain their existing Yahoo mappings (`^VIX`,
 
 `data/weekly-reports.json` remains the report source. The two report kinds are displayed on their respective pages; detailed stock scenarios are expandable and the complete PDFs remain accessible. `scripts/build_report_archive.cjs` enumerates only dated PDFs actually present under `reports/stocks` and `reports/real-estate`. Both existing publishing paths rebuild this manifest, so future report files appear without editing the interface.
 
-The current project has no dated transaction ledger or strategy-return ledger. These views explicitly report unavailable history; current holdings, costs, reconstructed performance and reports are retained. Strategy allocation rules are descriptive only, not synthetic performance. A report containing fewer than five admissible stocks keeps its actual count.
+The site does not reconstruct a Finviz transaction/return ledger from allocation rules. Dated A/B/SPY simulation snapshots come from the weekly publisher's existing state and workbook, with their public summary in report highlights and the full comparison in the PDF. No private state file is exposed. Personal portfolio records and the separate permanent FNB ledger retain their own methods and histories. A report containing fewer than five admissible stocks keeps its actual count.
 
 ## Validation
 
@@ -47,7 +47,7 @@ Natural narration uses `fr-CA-AntoineNeural`. The voice participates in the cont
 
 ## Research presentation
 
-`Recherche & suivi` combines the former selection and strategies subviews. Legacy `tab=strategies` bookmarks resolve to the shared section. The existing automation schedules are retained exactly: weekly research on Wednesday at 22:00 UTC (converted to Toronto time in the UI), portfolio tracking on Thursday at 16:30 America/Toronto. This presentation change neither creates nor updates an automation. It does not publish private task IDs, Library IDs, or simulation files. The existing research PDF/data publication path remains `data/weekly-reports.json` and `reports/stocks/`.
+`Recherche & suivi` combines the former selection and strategies subviews. Legacy `tab=strategies` bookmarks resolve to the shared section. The user combined research and tracking into one existing task, every Wednesday at 22:00 America/Toronto. The interface shows that local schedule for both parts; it does not convert 22:00 UTC or advertise a separate Thursday task. Thursday closing prices remain the simulated execution rule, distinct from the Wednesday report and valuation time. The publisher includes dated A/B/SPY results in the stock report summary/highlights and full PDF. The morning briefing reads these published files and covers each new edition, normally Thursday morning, with its actual dates and a link to the same PDF. The shared publication contract is `docs/weekly-reports.md`; no additional task, private task ID, Library ID or simulation-state file is published. The existing PDF/data path remains `data/weekly-reports.json` and `reports/stocks/`.
 
 `data/fnb-catalog.json` supplies the verified issuer fund name, a two-word French description and its source link for every FNB and comparator. `scripts/label_fnb_funds.cjs` enriches the individual cards, complete card grid, comparator rows and source table. The overview rebuild calls the helper so later report refreshes retain those labels. Financial results and holdings are unchanged.
 

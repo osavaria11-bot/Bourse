@@ -203,8 +203,9 @@ async function check(browser, engine) {
   await go("recherche"); assert.equal(await page.locator('#weeklyReportsGrid [data-report-kind="stocks"]').isVisible(), true);
   assert.equal(await page.locator("#researchPlan").isVisible(),true);
   assert.equal(await page.locator("#researchPlan .research-schedule-card").count(),2);
-  assert.match(await page.locator("#researchPlan").innerText(),/22 h UTC/);
-  assert.match(await page.locator("#researchPlan").innerText(),/16 h 30/);
+  assert.deepEqual(await page.locator("#researchPlan .research-time").allTextContents(), ["Mercredi · 22 h", "Mercredi · 22 h"]);
+  assert.match(await page.locator("#researchPlan").innerText(),/une seule livraison.*Toronto/s);
+  assert.doesNotMatch(await page.locator("#researchPlan").innerText(),/22 h UTC|16 h 30/);
   assert.equal(await page.locator('#page-recherche [data-tab="strategies"]').count(),0);
   await page.locator("#researchStrategies summary").click();
   assert.match(await page.locator("#researchStrategies").innerText(),/30 % · 25 % · 20 % · 15 % · 10 %/);
