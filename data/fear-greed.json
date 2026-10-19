@@ -2,12 +2,12 @@
   "schema_version": 1,
   "kind": "cnn_fear_and_greed",
   "provider": "cnn",
-  "generated_at": "2026-10-19T17:10:49.632617Z",
+  "generated_at": "2026-10-19T21:32:49.653607Z",
   "source_label": "CNN",
   "source_url": "https://www.cnn.com/markets/fear-and-greed",
-  "score": 24.8830357142857,
+  "score": 23.1071428571429,
   "rating": "extreme fear",
-  "timestamp": "2026-10-19T17:08:30Z",
+  "timestamp": "2026-10-19T21:14:34Z",
   "previous_close": 17.9383219954649,
   "history": [
     [
@@ -1008,10 +1008,10 @@
     ],
     [
       "2026-10-19",
-      24.8830357142857
+      23.1071428571429
     ]
   ],
   "history_status": "fresh",
   "fetch_status": "fresh",
-  "last_successful_fetch": "2026-10-19T17:10:49.632617Z"
+  "last_successful_fetch": "2026-10-19T21:32:49.653607Z"
 }
