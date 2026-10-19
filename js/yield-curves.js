@@ -45,12 +45,13 @@
       const legend = el("div", "yield-chart-legend");
       for (const curve of model.curves) legend.append(el("span", "yield-date-" + curve.key, curve.label + " · " + dateLabel(curve.snapshot, curve.requested)));
       card.append(legend);
-      const warning = el("p", "meta"), missing = model.rows.filter(row => Object.values(row.values).some(value => value === null)).map(row => row.label);
+      const warning = el("p", "meta"), publication = C.publication(country), missing = model.rows.filter(row => Object.values(row.values).some(value => value === null)).map(row => row.label);
       warning.textContent = (model.curves.some(curve => !curve.snapshot) ? "Comparaison incomplète. " : model.a.date === model.b.date ? "A et B utilisent la même séance. " : "") +
         (missing.length ? "N/D : " + missing.join(", ") + ". " : "") +
+        (publication.waiting ? publication.label + " · " : "") +
         (country.fetch_status !== "fresh" || cached ? "Copie conservée · " : "Vérifié · ") +
         (country.last_successful_fetch ? U.timestampLabel(country.last_successful_fetch) : "source indisponible");
-      if (!model.a || !model.b || missing.length || cached || country.fetch_status !== "fresh") warning.classList.add("warning"); card.append(warning);
+      if (!model.a || !model.b || missing.length || cached || publication.waiting || country.fetch_status !== "fresh") warning.classList.add("warning"); card.append(warning);
       const metrics = el("div", "yield-metrics");
       for (const key of ["2Y", "10Y"]) {
         const row = model.rows.find(item => item.key === key), metric = el("div");
@@ -83,7 +84,7 @@
     $("#yieldCurveGrid").replaceChildren(fragment);
     const oldCollection = Date.now() - U.parseTimestamp(data.generated_at) > 36 * 3600000;
     $("#yieldStatus").textContent = (cached ? "Copie conservée dans ce navigateur · " : "") + "Vérification du " + U.timestampLabel(data.generated_at) + (oldCollection ? " · collecte ancienne" : "") + " · " + (followLatest ? "Dernières publications suivies" : "Dates fixes") + " · " + data.countries.map(country => country.id + " : " + (country.history.at(-1)?.[0] || "indisponible")).join(" · ");
-    $("#yieldStatus").classList.toggle("warning", cached || oldCollection || data.countries.some(country => country.fetch_status !== "fresh"));
+    $("#yieldStatus").classList.toggle("warning", cached || oldCollection || data.countries.some(country => country.fetch_status !== "fresh" || C.publication(country).waiting));
     drawCharts();
     if (focusedCountry) $("#yieldChart" + focusedCountry + " svg")?.focus({preventScroll: true});
   }

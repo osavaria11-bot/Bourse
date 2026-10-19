@@ -10,6 +10,10 @@ on:
       timezone: "America/Toronto"
     - cron: "37 14 * * 1-5"
       timezone: "America/Toronto"
+    # Treasury closing curves are normally published by 18:00 Eastern.
+    # Retry later too, without creating another competing data workflow.
+    - cron: "47 18,21 * * 1-5"
+      timezone: "America/Toronto"
   workflow_dispatch:
 
 permissions:

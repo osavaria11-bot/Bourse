@@ -88,6 +88,7 @@ jobs:
           python -m unittest discover -s tests -p 'test_intraday_quotes.py' -v
           python -m unittest discover -s tests -p 'test_fear_greed.py' -v
           python -m unittest discover -s tests -p 'test_polymarket.py' -v
+          python -m unittest discover -s tests -p 'test_interest_rates.py' -v
           npm test
       - name: Collect actual exchange quotes without touching daily histories
         id: collect
@@ -97,6 +98,7 @@ jobs:
           python scripts/collect_polymarket.py
           python scripts/collect_rate_odds.py
           python scripts/collect_yield_curves.py
+          python scripts/refresh_interest_rates.py --published-baseline https://osavaria11-bot.github.io/Bourse/data/macro-data.json
           python - <<'PY'
           import json, os
           from pathlib import Path

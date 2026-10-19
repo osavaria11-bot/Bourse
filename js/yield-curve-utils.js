@@ -11,6 +11,12 @@
       tenors: [["1M", "1 mois", 1, "TB.CDN.30D.MID"], ["3M", "3 mois", 3, "TB.CDN.90D.MID"], ["6M", "6 mois", 6, "TB.CDN.180D.MID"], ["1Y", "1 an", 12, "TB.CDN.1Y.MID"], ["2Y", "2 ans", 24, "BD.CDN.2YR.DQ.YLD"], ["3Y", "3 ans", 36, "BD.CDN.3YR.DQ.YLD"], ["5Y", "5 ans", 60, "BD.CDN.5YR.DQ.YLD"], ["7Y", "7 ans", 84, "BD.CDN.7YR.DQ.YLD"], ["10Y", "10 ans", 120, "BD.CDN.10YR.DQ.YLD"], ["LONG", "Long", 360, "BD.CDN.LONG.DQ.YLD"]]}
   };
   function localDay(now = Date.now()) {return new Intl.DateTimeFormat("en-CA", {timeZone: "America/Toronto"}).format(now);}
+  function publication(country, now = Date.now()) {
+    const today = localDay(now), latest = country?.history?.filter(row => row.slice(1).some(U.validNumber)).at(-1)?.[0] || null;
+    const waiting = Boolean(latest && latest < today && ![0, 6].includes(new Date(today + "T12:00:00Z").getUTCDay()));
+    return {today, latest, waiting, label: !latest ? "Aucune courbe publiée" : waiting ?
+      "Publication du " + today + " en attente · dernière courbe : " + latest : "Dernière courbe publiée : " + latest};
+  }
   function normalize(payload, now = Date.now()) {
     const generated = U.parseTimestamp(payload?.generated_at), today = localDay(now);
     if (payload?.schema_version !== 1 || payload.kind !== "sovereign_yield_curves" || payload.unit !== "percent" || payload.timezone !== "America/Toronto" || payload.history_start !== START ||
@@ -96,5 +102,5 @@
     }
     return {...base, curves, rows};
   }
-  return {START, CONTRACTS, DATE_KEYS, localDay, normalize, snapshot, basisPoints, comparison, multiComparison, defaults};
+  return {START, CONTRACTS, DATE_KEYS, localDay, publication, normalize, snapshot, basisPoints, comparison, multiComparison, defaults};
 });

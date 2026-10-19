@@ -413,6 +413,12 @@ def main() -> None:
         legacy = read_json(args.output_dir / "macro-briefing.json") or read_json(args.output_dir / "daily-briefing.json")
         previous = migrate_previous(definitions, legacy)
     dataset = collect_sources(definitions, previous, datetime.now(timezone.utc))
+    if any(p["id"] in ["DGS10", "DFII10", "T10Y2Y", "T10Y3M", "V39079"] for p in dataset["series"]):
+        try:
+            from scripts.refresh_interest_rates import enrich
+        except ModuleNotFoundError:
+            from refresh_interest_rates import enrich
+        dataset = enrich(dataset, datetime.now(timezone.utc), fetch_text, previous)
     briefing = build_briefing(dataset)
     # Validate both documents before replacing either previous file.
     json.dumps(dataset, allow_nan=False)
@@ -423,6 +429,8 @@ def main() -> None:
     print(f"Collecte : {dataset['coverage']}; statut : {dataset['update_status']}")
     for error in dataset["errors"]:
         print(f"::warning::{error['id']}: {error['message']}")
+    for source, message in dataset.get("interest_rate_check", {}).get("errors", {}).items():
+        print(f"::warning::Interest-rate publication {source}: {message}")
 
 if __name__ == "__main__":
     main()

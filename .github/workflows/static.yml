@@ -215,6 +215,7 @@ jobs:
           python3 scripts/collect_polymarket.py
           python3 scripts/collect_rate_odds.py
           python3 scripts/collect_yield_curves.py
+          python3 scripts/refresh_interest_rates.py --published-baseline https://osavaria11-bot.github.io/Bourse/data/macro-data.json
           node scripts/validate_polymarket.cjs
           node scripts/validate_intraday_quotes.cjs
       - name: Setup Python for natural narration

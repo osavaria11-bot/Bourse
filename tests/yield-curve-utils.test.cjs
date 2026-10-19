@@ -92,3 +92,12 @@ test("the newest country is not held back by another country's publication lag",
   assert.equal(C.snapshot(data.countries[0], C.defaults(data).b).date, "2026-10-14");
   assert.equal(C.snapshot(data.countries[1], C.defaults(data).b).date, "2026-10-13");
 });
+test("publication warnings distinguish today's check from the last actual curve", () => {
+  const country = C.normalize(fixture(), NOW).countries[1], before = structuredClone(country);
+  const report = C.publication(country, NOW);
+  assert.equal(report.waiting, true); assert.equal(report.today, "2026-10-15"); assert.equal(report.latest, "2026-10-14");
+  assert.match(report.label, /2026-10-15 en attente.*2026-10-14/);
+  assert.equal(C.publication(country, Date.parse("2026-10-14T23:00:00Z")).waiting, false);
+  assert.equal(C.publication(country, Date.parse("2026-10-18T18:00:00Z")).waiting, false);
+  assert.deepEqual(country, before);
+});

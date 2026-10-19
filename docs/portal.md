@@ -29,7 +29,7 @@ Indices retain one selected chart by default; “Voir tous les indices” displa
 
 Six-month and two-year market ranges and one-day/one-year/two-year/five-year portfolio choices use the existing period calculations. One-day portfolio comparisons use one completed session. Insufficient history still yields unavailable returns; no backfilled prices or invented performance. Macro short ranges use calendar dates anchored to the latest observation, with a visible insufficient-data state where necessary.
 
-VIX and US 10-year headline quotes retain their existing Yahoo mappings (`^VIX`, `^TNX`); FRED histories remain distinct and labelled. FEQT retains `FEQT.NE` in CAD and the validated five-minute session history. Deployment refreshes quotes, decision odds and both official yield curves in both publication paths; the source-controlled snapshot can be older than the published snapshot.
+VIX and US 10-year headline quotes retain their existing Yahoo mappings (`^VIX`, `^TNX`); historical series remain distinct and labelled. FRED's nominal/real US 10-year yields and Treasury spreads are completed from dated primary Treasury publications when available sooner. The Canadian policy decision is verified separately from its historical daily observations. The interface distinguishes the check timestamp, actual observation date and a pending current-day curve publication. FEQT retains `FEQT.NE` in CAD and the validated five-minute session history. Deployment refreshes quotes, decision odds, both official yield curves and interest-rate completions in both publication paths; the source-controlled snapshot can be older than the published snapshot.
 
 ## Reports and unavailable records
 

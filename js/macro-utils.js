@@ -48,8 +48,17 @@
       }[point.id];
       const statcan = point.provider === "statistics_canada" && statcanSeries && point.vector_id === statcanSeries[0];
       const uraniumSpot = point.provider === "numerco" && point.id === "URANIUMSPOT";
+      const treasuryKind = {DGS10: "nominal", DFII10: "real", T10Y2Y: "nominal", T10Y3M: "nominal"}[point.id];
+      const treasuryURL = treasuryKind && "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_" + (treasuryKind === "real" ? "real_" : "") + "yield_curve";
+      const primary = point.observation_source, policy = point.current_policy;
+      const checked = item => Number.isFinite(parseTimestamp(item)) && parseTimestamp(item) <= parseTimestamp(payload.generated_at) + 300000;
+      const treasury = treasuryKind && primary?.id === "us_treasury_" + treasuryKind && primary.source_url === treasuryURL && primary.date === day && checked(primary.checked_at);
+      const currentPolicy = bankPolicy && policy?.value === value && isDate(policy.decision_date) && isDate(policy.effective_date) &&
+        policy.decision_date <= policy.effective_date && policy.effective_date <= today && checked(policy.verified_at) &&
+        policy.source_url === "https://www.bankofcanada.ca/core-functions/monetary-policy/key-interest-rate/" ? policy : null;
       series.push({
         ...point, date: day, value, history, fetch_status: fetchStatus,
+        observation_source: treasury ? primary : null, current_policy: currentPolicy,
         title: typeof point.title === "string" ? point.title : point.id,
         category: typeof point.category === "string" ? point.category : "Autres",
         unit: typeof point.unit === "string" ? point.unit : "",
@@ -59,8 +68,8 @@
         previous_date: isDate(point.previous_date) && point.previous_date <= today ? point.previous_date : null,
         source_url: bankPolicy ? "https://www.bankofcanada.ca/core-functions/monetary-policy/key-interest-rate/" :
           statcan ? "https://www150.statcan.gc.ca/t1/tbl1/fr/tv.action?pid=" + statcanSeries[1] + "01" :
-          uraniumSpot ? "https://numerco.com/UHistory/" : "https://fred.stlouisfed.org/series/" + point.id,
-        source_label: bankPolicy ? "Banque du Canada" : statcan ? "Statistique Canada" : uraniumSpot ? "Numerco" : "FRED",
+          uraniumSpot ? "https://numerco.com/UHistory/" : treasury ? treasuryURL : "https://fred.stlouisfed.org/series/" + point.id,
+        source_label: bankPolicy ? "Banque du Canada" : statcan ? "Statistique Canada" : uraniumSpot ? "Numerco" : treasury ? "FRED / U.S. Treasury" : "FRED",
       });
     }
     if (!series.length) throw new Error("Aucun indicateur valide");
@@ -89,6 +98,15 @@
       timeZone: "America/Toronto", year: "numeric", month: "short",
       day: "numeric", hour: "2-digit", minute: "2-digit",
     }).format(stamp) + " (heure de Montréal)";
+  }
+  function ratePublicationNote(point, now = Date.now()) {
+    const today = new Intl.DateTimeFormat("en-CA", {timeZone: "America/Toronto"}).format(now);
+    if (point?.current_policy && Number.isFinite(parseTimestamp(point.current_policy.verified_at)) &&
+        new Intl.DateTimeFormat("en-CA", {timeZone: "America/Toronto"}).format(parseTimestamp(point.current_policy.verified_at)) === today)
+      return "Taux en vigueur · vérifié le " + timestampLabel(point.current_policy.verified_at);
+    if (!["DGS10", "DFII10", "T10Y2Y", "T10Y3M", "V39079", "DFEDTARU", "DFEDTARL", "BAMLH0A0HYM2"].includes(point?.id) || !point.date || point.date >= today) return "";
+    return [0, 6].includes(new Date(today + "T12:00:00Z").getUTCDay()) ? "Dernière séance publiée · " + observationLabel(point.date) :
+      "Publication du " + observationLabel(today) + " en attente · dernière observation : " + observationLabel(point.date);
   }
   function changeLabel(point) {
     if (!validNumber(point.change) || !point.previous_date) return { text: "Comparaison non disponible", direction: "flat" };
@@ -223,6 +241,6 @@
         Math.abs(row.hike + row.hold + row.cut - 100) > 1) return null;
     return {row, age, sourceDayAhead: row.as_of > today};
   }
-  return { RANGES, MARKET_RANGES, isDate, validNumber, parseTimestamp, normalizeDataset, formatNumber, observationLabel, timestampLabel, changeLabel, filterSeries, rangeStart, visibleHistory, marketPeriod, niceExtent, nearestPoint, csvCell, toCSV, snapshotCSV, historyCSV, ageDays, rateOddsFor };
+  return { RANGES, MARKET_RANGES, isDate, validNumber, parseTimestamp, normalizeDataset, formatNumber, observationLabel, timestampLabel, ratePublicationNote, changeLabel, filterSeries, rangeStart, visibleHistory, marketPeriod, niceExtent, nearestPoint, csvCell, toCSV, snapshotCSV, historyCSV, ageDays, rateOddsFor };
 });
 

@@ -202,6 +202,34 @@ test("daily uranium spot retains its own source in cards and CSV instead of bein
   assert.doesNotMatch(U.historyCSV(spot, "1Y"), /fred\.stlouisfed|javascript:bad/);
 });
 
+test("dated Treasury completions accept only the registered series, source and observation date", () => {
+  const source_url = "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve";
+  const point = {...sample(), id: "DGS10", observation_source: {id: "us_treasury_nominal", source_url, date: "2026-10-09", checked_at: "2026-10-09T23:00:00Z"}};
+  const normalize = p => U.normalizeDataset({schema_version: 2, generated_at: "2026-10-09T23:00:00Z", series: [p]}, "2026-10-09").series[0];
+  assert.equal(normalize(point).source_url, source_url);
+  assert.equal(normalize(point).source_label, "FRED / U.S. Treasury");
+  for (const edit of [{source_url: "https://example.com"}, {date: "2026-10-08"}, {id: "us_treasury_real"}, {checked_at: "2026-10-10T23:00:00Z"}]) {
+    const result = normalize({...point, observation_source: {...point.observation_source, ...edit}});
+    assert.equal(result.source_label, "FRED"); assert.equal(result.observation_source, null);
+  }
+  assert.equal(normalize({...point, id: "VIXCLS"}).source_label, "FRED");
+});
+test("policy verification and publication delays stay distinct from true observation dates", () => {
+  const now = Date.parse("2026-10-19T23:30:00Z"), original = {...sample(), id: "V39079", provider: "bank_of_canada", value: 2.25, date: "2026-10-16",
+    current_policy: {value: 2.25, decision_date: "2026-09-02", effective_date: "2026-09-02", verified_at: "2026-10-19T23:00:00Z", source_url: "https://www.bankofcanada.ca/core-functions/monetary-policy/key-interest-rate/"}};
+  const normalize = p => U.normalizeDataset({schema_version: 2, generated_at: "2026-10-19T23:00:00Z", series: [p]}, "2026-10-19").series[0];
+  const point = normalize(original);
+  assert.match(U.ratePublicationNote(point, now), /Taux en vigueur.*19 oct/);
+  assert.equal(point.date, "2026-10-16");
+  for (const edit of [{value: 2.5}, {effective_date: "2026-10-20"}, {verified_at: "2026-10-20T23:00:00Z"}]) {
+    assert.equal(normalize({...original, current_policy: {...original.current_policy, ...edit}}).current_policy, null);
+  }
+  assert.match(U.ratePublicationNote({...point, current_policy: null}, now), /Publication.*19 oct.*en attente.*16 oct/);
+  assert.equal(U.ratePublicationNote({...sample(), id: "CPIAUCSL"}, now), "");
+  assert.equal(U.ratePublicationNote({...sample(), id: "DGS10", date: "2026-10-19"}, now), "");
+  assert.match(U.ratePublicationNote({...sample(), id: "DGS10"}, Date.parse("2026-10-18T18:00:00Z")), /Dernière séance publiée/);
+});
+
 const oddsSample = () => ({schema_version: 1, kind: "rate_odds", generated_at: "2026-10-13T00:56:18Z", decisions: [
   {id: "fed", as_of: "2026-10-13", meeting_date: "2026-10-28", hike: 30, hold: 70, cut: 0, status: "fresh"},
   {id: "canada", as_of: "2026-10-12", meeting_date: "2026-10-28", hike: 28, hold: 72, cut: 0, status: "fresh"},
