@@ -107,6 +107,7 @@ body.savy-portal {font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",
 
 /* The FNB report loads only when its tab is opened and retains its own controls. */
 .portal-report-frame {display:block;width:100%;height:max(640px,calc(100dvh - 185px));border:1px solid var(--border);border-radius:8px;background:#fff}
+#page-analyses>.portal-tabs {display:none}
 #panel-analyses-overview>.portal-section-heading {margin-top:0;margin-bottom:16px;align-items:center;flex-wrap:wrap}
 #panel-analyses-overview h2 {margin-top:3px;font-size:24px}
 @media(min-width:901px) and (max-width:1100px) {.portal-nav a {padding-left:6px;padding-right:6px;font-size:11px}}

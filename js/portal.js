@@ -124,9 +124,9 @@
   method($(".market-section > p:last-child"), "Comprendre les cours et les périodes");
 
   const fundAnalysis = pane("analyses", "overview"), fundHeading = el("div", "portal-section-heading"), fundTitle = el("div");
-  fundTitle.append(el("p", "eyebrow", "PORTEFEUILLES / ANALYSE COMPARATIVE"), el("h2", "", "Les 11 portefeuilles de FNB"));
+  fundTitle.append(el("h2", "", "Portefeuilles FNB"));
   const fundFullScreen = el("a", "button quiet", "Ouvrir en plein écran ↗");
-  fundFullScreen.href = "reports/portefeuilles-fnb.html?v=20261019-noms"; fundFullScreen.target = "_blank"; fundFullScreen.rel = "noopener noreferrer";
+  fundFullScreen.href = "reports/portefeuilles-fnb.html?v=20261019-dashboard"; fundFullScreen.target = "_blank"; fundFullScreen.rel = "noopener noreferrer";
   fundHeading.append(fundTitle, fundFullScreen);
   const fundFrame = el("iframe", "portal-report-frame"); fundFrame.id = "fundAnalysisFrame";
   fundFrame.title = "Analyse des 11 portefeuilles FNB : ratios, boussole et évolution des placements";
@@ -261,7 +261,7 @@
     for (const item of document.querySelectorAll(".portal-tabs a")) {if (item.dataset.tab === active.tab && item.closest(".portal-page").dataset.page === active.page) item.setAttribute("aria-current", "page"); else item.removeAttribute("aria-current");}
     document.title = "SAVY · " + R.PAGES[active.page].label;
     document.body.dataset.page = active.page;
-    if (active.page === "analyses" && !fundFrame.hasAttribute("src")) fundFrame.src = "reports/portefeuilles-fnb.html?v=20261019-noms";
+    if (active.page === "analyses" && !fundFrame.hasAttribute("src")) fundFrame.src = "reports/portefeuilles-fnb.html?v=20261019-dashboard";
     $("#portfolioManage").hidden = all || active.tab === "positions";
     syncIndicators(); syncMarkets();
     window.scrollTo({top: 0, behavior: "instant"}); window.dispatchEvent(new Event("resize"));

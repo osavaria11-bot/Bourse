@@ -34,7 +34,7 @@ async function check(browser, engine) {
   await go("analyses");
   const fundReport = page.frameLocator("#fundAnalysisFrame");
   await fundReport.locator('html[data-ready="true"]').waitFor();
-  const fundNames = ["Horizon", "Équilibre", "Tempo", "Latitude", "Élan", "Synergie", "Conviction", "Dynamique 110", "Audace 120", "Harmonie", "Expansion"];
+  const fundNames = ["Horizon", "Équilibre", "Tempo", "Latitude", "Élan", "Synergie", "Conviction", "Dynamique 110", "Audace 120", "60/40", "80/20"];
   for (const [index, name] of fundNames.entries()) {
     const id = String(index + 1);
     assert.equal(await fundReport.locator('[data-fiche="' + id + '"] h3').textContent(), "SAVY " + name);
@@ -43,12 +43,36 @@ async function check(browser, engine) {
       assert.ok((await fundReport.locator('#' + chart + '-series-' + id).getAttribute("aria-label")).includes("SAVY " + name));
     }
   }
-  assert.ok((await fundReport.locator('#statsBody [data-open-portfolio="2"]').textContent()).includes("SAVY Équilibre"));
-  assert.ok((await fundReport.locator('#growthReadout [data-portfolio="11"]').textContent()).includes("Expansion"));
+  assert.ok((await fundReport.locator('#statsBody [data-open-portfolio="2"]').textContent()).includes("Équilibre"));
+  assert.ok((await fundReport.locator('#growthReadout [data-portfolio="11"]').textContent()).includes("80/20"));
   assert.equal(await fundReport.locator("#riskSvg .risk-point:visible").count(), 6);
+  for (const ticker of ["VBAL", "VGRO", "VEQT"]) {
+    assert.equal(await fundReport.locator('#compass .benchmark-controls [data-series="' + ticker + '"]').isVisible(), true);
+    assert.equal(await fundReport.locator('#capital .benchmark-controls [data-series="' + ticker + '"]').isVisible(), true);
+  }
+  await fundReport.locator("#compass .chart-chooser summary").click();
   await fundReport.locator("#risk-series-6").check();
+  await fundReport.locator("#compass .chart-chooser summary").click();
   assert.equal(await fundReport.locator("#riskSvg .risk-point:visible").count(), 7);
   assert.equal(await fundReport.locator("#growthSvg .wealth-line:visible").count(), 6, "Each report chart keeps its own selection");
+  await fundReport.locator("#summaryFocus").selectOption("10");
+  await fundReport.locator("#referenceSelect").selectOption("VBAL");
+  assert.equal(await fundReport.locator("#summaryMetrics .kpi").nth(3).locator("strong").textContent(), "0,94");
+  await fundReport.locator('#compass .benchmark-controls [data-series="VGRO"]').uncheck();
+  assert.equal(await fundReport.locator('#capital .benchmark-controls [data-series="VGRO"]').isChecked(), true);
+  await fundReport.locator('#compass .benchmark-controls [data-series="VGRO"]').check();
+  await fundReport.locator("#capitalInput").fill("12 500,50");
+  assert.equal(await fundReport.locator("#capitalError").isVisible(), false);
+  await fundReport.locator('.nav [data-tab="exposures"]').click();
+  assert.equal(await fundReport.locator("#exposures").isVisible(), true);
+  assert.equal(await fundReport.locator("#overview").isVisible(), false);
+  await fundReport.locator("#sectorFocus").selectOption("11");
+  assert.equal(await fundReport.locator("#geoValues tr").count(), 7);
+  await fundReport.locator('.nav [data-tab="portfolios"]').click();
+  await fundReport.locator("#ficheFocus").selectOption("10");
+  assert.equal(await fundReport.locator('[data-fiche="10"]').isVisible(), true);
+  assert.ok((await fundReport.locator('[data-fiche="10"] .asset-mix').textContent()).includes("Actions"));
+  await fundReport.locator('.nav [data-tab="overview"]').click();
   await go("accueil"); await go("analyses");
   assert.equal(await fundReport.locator("#risk-series-6").isChecked(), true, "Returning preserves report choices");
   await go("accueil");
