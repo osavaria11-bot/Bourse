@@ -23,7 +23,7 @@ def event(eid="1", volume=100, daily=10, **extra):
 
 
 def fetcher(kind, now, excluded):
-    return [poly.parse_event(event(str(i)), now) for i in (range(1, 4) if kind == "finance" else range(4, 9))]
+    return [poly.parse_event(event(str(i)), now) for i in {"finance":range(1,4),"popular":range(4,9),"trending":range(9,11)}[kind]]
 
 
 class PolymarketTests(unittest.TestCase):
@@ -67,6 +67,9 @@ class PolymarketTests(unittest.TestCase):
             self.assertEqual(query["active"], ["true"])
             self.assertEqual(query["closed"], ["false"])
             self.assertEqual(query["ascending"], ["false"])
+            if "tag_id" not in query:
+                self.assertEqual(query["order"], ["volume24hr"])
+                return [event("1",daily=900), event("4",daily=800), event("10",daily=700,tags=[{"slug":"sports"}]), event("11",daily=600)]
             if query["tag_id"] == ["120"]:
                 self.assertEqual(query["order"], ["volume"])
                 self.assertEqual(query["related_tags"], ["true"])
@@ -79,6 +82,7 @@ class PolymarketTests(unittest.TestCase):
             data = poly.collect(None, NOW)
         self.assertEqual([e["id"] for e in data["groups"]["finance"]["events"]], ["1", "2", "3"])
         self.assertEqual([e["id"] for e in data["groups"]["popular"]["events"]], ["5", "4", "6", "7", "8"])
+        self.assertEqual([e["id"] for e in data["groups"]["trending"]["events"]], ["10", "11"])
 
     def test_old_two_event_snapshot_survives_an_outage_after_increasing_to_five(self):
         old = poly.collect(None, NOW, fetcher)

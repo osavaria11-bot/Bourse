@@ -1,0 +1,127 @@
+{
+  "schema_version": 1,
+  "kind": "fnb_labels",
+  "verified_on": "2026-10-19",
+  "funds": {
+    "CGL.C": {
+      "name": "iShares Gold Bullion ETF",
+      "description": "Or physique",
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/241528/ishares-gold-bullion-etf"
+    },
+    "FCIV": {
+      "name": "Fidelity International Value ETF",
+      "description": "Valeur internationale",
+      "source_url": "https://www.fidelity.ca/en/products/etfs/fciv/"
+    },
+    "FCMO": {
+      "name": "Fidelity U.S. Momentum ETF",
+      "description": "Momentum américain",
+      "source_url": "https://www.fidelity.ca/en/products/etfs/fcmo/"
+    },
+    "FCUL": {
+      "name": "Fidelity U.S. Low Volatility ETF",
+      "description": "Faible volatilité",
+      "source_url": "https://www.fidelity.ca/en/products/etfs/fcul/"
+    },
+    "FCUQ": {
+      "name": "Fidelity U.S. High Quality ETF",
+      "description": "Qualité américaine",
+      "source_url": "https://www.fidelity.ca/en/products/etfs/fcuq/"
+    },
+    "FEQT": {
+      "name": "Fidelity All-in-One Equity ETF",
+      "description": "Actions mondiales",
+      "source_url": "https://www.fidelity.ca/en/products/etfs/feqt/"
+    },
+    "FINN": {
+      "name": "Fidelity Global Innovators ETF",
+      "description": "Innovation mondiale",
+      "source_url": "https://www.fidelity.ca/en/products/etfs/finn/"
+    },
+    "RUD": {
+      "name": "RBC Quant U.S. Dividend Leaders ETF",
+      "description": "Dividendes américains",
+      "source_url": "https://www.rbcgam.com/en/ca/products/etfs/RUD/detail"
+    },
+    "VCN": {
+      "name": "Vanguard FTSE Canada All Cap Index ETF",
+      "description": "Actions canadiennes",
+      "source_url": "https://www.vanguard.ca/en/product/etf/equity/9561/vanguard-ftse-canada-all-cap-index-etf"
+    },
+    "VDY": {
+      "name": "Vanguard FTSE Canadian High Dividend Yield Index ETF",
+      "description": "Dividendes canadiens",
+      "source_url": "https://www.vanguard.ca/en/product/etf/equity/9560/vanguard-ftse-canadian-high-dividend-yield-index-etf"
+    },
+    "VEE": {
+      "name": "Vanguard FTSE Emerging Markets All Cap Index ETF",
+      "description": "Marchés émergents",
+      "source_url": "https://fund-docs.vanguard.com/VEE_FTSE_Emerging_Markets_All_Cap_Index_ETF_9556_FS_EN_CA.pdf"
+    },
+    "VMO": {
+      "name": "Vanguard Global Momentum Factor ETF",
+      "description": "Momentum mondial",
+      "source_url": "https://www.vanguard.ca/en/product/etf/equity/9835/vanguard-global-momentum-factor-etf"
+    },
+    "XEF": {
+      "name": "iShares Core MSCI EAFE IMI Index ETF",
+      "description": "Actions internationales",
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/251421/ishares-msci-eafe-imi-index-etf"
+    },
+    "XMI": {
+      "name": "iShares MSCI Min Vol EAFE Index ETF",
+      "description": "International défensif",
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239625/ishares-msci-eafe-minimum-volatility-index-etf"
+    },
+    "ZEB": {
+      "name": "BMO Equal Weight Banks Index ETF",
+      "description": "Banques canadiennes",
+      "source_url": "https://www.bmoetfs.ca/etfs/zeb-bmo-equal-weight-banks-index-etf"
+    },
+    "ZEO": {
+      "name": "BMO Equal Weight Oil & Gas Index ETF",
+      "description": "Énergie canadienne",
+      "source_url": "https://www.bmoetfs.ca/etfs/zeo-bmo-equal-weight-oil-gas-index-etf"
+    },
+    "ZLB": {
+      "name": "BMO Low Volatility Canadian Equity ETF",
+      "description": "Canada défensif",
+      "source_url": "https://www.bmoetfs.ca/etfs/zlb-bmo-low-volatility-canadian-equity-etf"
+    },
+    "ZNQ": {
+      "name": "BMO Nasdaq 100 Equity Index ETF",
+      "description": "Nasdaq 100",
+      "source_url": "https://www.bmoetfs.ca/etfs/znq-bmo-nasdaq-100-equity-index-etf"
+    },
+    "ZAG": {
+      "name": "BMO Aggregate Bond Index ETF",
+      "description": "Obligations canadiennes",
+      "source_url": "https://www.bmoetfs.ca/etfs/zag-bmo-aggregate-bond-index-etf"
+    },
+    "FBAL": {
+      "name": "Fidelity All-in-One Balanced ETF",
+      "description": "Allocation équilibrée",
+      "source_url": "https://www.fidelity.ca/en/products/etfs/fbal/"
+    },
+    "FGRO": {
+      "name": "Fidelity All-in-One Growth ETF",
+      "description": "Allocation croissance",
+      "source_url": "https://www.fidelity.ca/en/products/etfs/fgro/"
+    },
+    "VBAL": {
+      "name": "Vanguard Balanced ETF Portfolio",
+      "description": "Allocation équilibrée",
+      "source_url": "https://www.vanguard.ca/en/product/etf/asset-allocation/9578/vanguard-balanced-etf-portfolio"
+    },
+    "VGRO": {
+      "name": "Vanguard Growth ETF Portfolio",
+      "description": "Allocation croissance",
+      "source_url": "https://www.vanguard.ca/en/product/etf/asset-allocation/9579/vanguard-growth-etf-portfolio"
+    },
+    "VEQT": {
+      "name": "Vanguard All-Equity ETF Portfolio",
+      "description": "Actions mondiales",
+      "source_url": "https://www.vanguard.ca/en/product/etf/asset-allocation/9692/vanguard-all-equity-etf-portfolio"
+    }
+  }
+}

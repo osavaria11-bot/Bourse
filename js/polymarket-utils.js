@@ -3,7 +3,8 @@
   else root.PolymarketUtils = factory(root.MacroUtils);
 })(typeof globalThis !== "undefined" ? globalThis : this, function (U) {
   "use strict";
-  const GROUPS = [{id:"finance", label:"Finance", count:3, ranking:"volume"}, {id:"popular", label:"Populaire · politique", count:5, ranking:"volume24hr"}];
+  const GROUPS = [{id:"finance", label:"Finance", count:3, ranking:"volume"}, {id:"popular", label:"Populaire · politique", count:5, ranking:"volume24hr"},
+    {id:"trending", label:"Populaire · tous thèmes", count:2, ranking:"volume24hr"}];
   const stamp = value => typeof value === "string" && /T.*(?:Z|[+-]\d{2}:\d{2})$/.test(value) ? U.parseTimestamp(value) : NaN;
   const validNumber = value => U.validNumber(value) && value >= 0;
   function normalizeEvent(row, now) {
@@ -25,7 +26,8 @@
         !Number.isFinite(generated) || generated < Date.UTC(2000, 0) || generated > now + 300000 || !payload.groups) throw new Error("Données Polymarket invalides");
     const groups = {}, seen = new Set();
     for (const spec of GROUPS) {
-      const raw = payload.groups[spec.id], fetched = stamp(raw?.fetched_at);
+      // Old eight-card caches remain usable while the two new markets load.
+      const raw = payload.groups[spec.id] || (spec.id === "trending" ? {ranking:spec.ranking,fetch_status:"unavailable",fetched_at:null,events:[]} : null), fetched = stamp(raw?.fetched_at);
       if (!raw || raw.ranking !== spec.ranking || !["fresh", "cached", "unavailable"].includes(raw.fetch_status) || !Array.isArray(raw.events) || raw.events.length > spec.count) throw new Error("Sélection Polymarket invalide");
       if (raw.fetch_status === "unavailable") {
         if (raw.events.length || raw.fetched_at !== null) throw new Error("Disponibilité Polymarket incohérente");
@@ -53,8 +55,10 @@
       }
     }
     // A changed Finance selection can overlap a retained Politics snapshot.
-    const finance = new Set(next.groups.finance.events.map(event => event.id));
-    next.groups.popular.events = next.groups.popular.events.filter(event => !finance.has(event.id));
+    const seen = new Set();
+    for (const spec of GROUPS) next.groups[spec.id].events = next.groups[spec.id].events.filter(event => {
+      if (seen.has(event.id)) return false; seen.add(event.id); return true;
+    });
     return next;
   }
   const label = value => value === "Yes" ? "Oui" : value === "No" ? "Non" : value;

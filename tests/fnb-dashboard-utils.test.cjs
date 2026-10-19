@@ -25,3 +25,8 @@ test("identical or constant reference series cannot produce infinite displayed r
 test("French capital entry supports spaces, comma decimals and CAD without accepting invalid amounts", () => {
   for (const [raw, expected] of [["10 000",10000],["12 500,50 $",12500.5],["CAD 5\u202f000",5000],["10000.25",10000.25],["abc",null],["0",null],["-100",null],["1e9",null]]) assert.equal(parseCapital(raw), expected, raw);
 });
+
+test("fund labels cover every portfolio holding and comparator without changing numeric data", () => {
+  const tickers=new Set([...D.funds,...D.order.filter(k=>!D.custom_order.includes(k)),...Object.values(D.results).flatMap(row=>Object.keys(row.weights||{}))]);
+  for(const ticker of tickers){assert.ok(D.fund_labels[ticker]?.name,ticker);assert.equal(D.fund_labels[ticker].description.trim().split(/\s+/).length,2,ticker);assert.match(D.fund_labels[ticker].source_url,/^https:\/\//);}
+});

@@ -107,12 +107,12 @@ button {color:var(--text)}
 .weekly-stock {padding:14px 0;border-bottom:1px solid var(--border);min-width:0}
 .polymarket {margin:32px 0 36px;min-width:0}
 .polymarket .section-heading {gap:12px;flex-wrap:wrap}
-.polymarket-row {display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:12px;margin:14px 0 10px;padding:3px 1px 12px;overflow-x:auto;scroll-snap-type:x proximity;scroll-padding:2px}
+.polymarket-row {display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin:14px 0 10px;padding:3px 1px 10px}
 .polymarket-row:focus-visible {outline:2px solid var(--accent);outline-offset:4px}
-.polymarket-card {padding:18px 16px;display:flex;flex-direction:column;min-width:0;scroll-snap-align:start}
+.polymarket-card {padding:13px 12px;display:flex;flex-direction:column;min-width:0}
 .polymarket-category {font-size:9px;letter-spacing:.08em;color:var(--accent);margin-bottom:10px}
 .polymarket-card[data-group="popular"] .polymarket-category {color:var(--gold)}
-.polymarket-card h3 {font-size:14px;line-height:1.55;letter-spacing:-.015em;min-height:4.65em;margin-bottom:16px;overflow-wrap:anywhere}
+.polymarket-card h3 {font-size:13px;line-height:1.35;letter-spacing:-.015em;min-height:4.05em;margin-bottom:10px;overflow-wrap:anywhere}
 .polymarket-card h3 a {color:var(--text)}
 .polymarket-outcomes {list-style:none;display:grid;gap:8px;margin:0 0 20px;padding:0}
 .polymarket-outcomes li {display:flex;align-items:baseline;justify-content:space-between;gap:8px;font-size:11px}
@@ -124,8 +124,8 @@ button {color:var(--text)}
 .polymarket-time {display:block;margin-top:9px}
 .polymarket-note {font-size:10px}
 .polymarket-note span {display:none}
-@media(max-width:1100px) {.polymarket-row {grid-template-columns:repeat(8,minmax(235px,1fr))}.polymarket-note span {display:inline}}
-@media(max-width:600px) {.polymarket h2 {font-size:18px}.polymarket-row {grid-template-columns:repeat(8,minmax(245px,1fr))}}
+@media(max-width:1000px) {.polymarket-row {grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:650px) {.polymarket h2 {font-size:18px}.polymarket-row {grid-template-columns:repeat(2,minmax(0,1fr))}.polymarket-card {padding:10px}.polymarket-card h3 {font-size:12px}}
 .weekly-stock-heading {display:flex;justify-content:space-between;align-items:start;gap:8px;flex-wrap:wrap;margin-bottom:7px}
 .weekly-stock-heading>div:first-child {display:flex;gap:8px;align-items:baseline;min-width:0}
 .weekly-stock-heading strong {font-size:12px;overflow-wrap:anywhere}
@@ -511,3 +511,6 @@ th:last-child,td:last-child {text-align:right}
   dialog {padding:18px}.dialog-header h2 {font-size:18px}.dialog-header .button {font-size:11px;padding:7px 9px}
 }
 @media(prefers-reduced-motion:no-preference) {.button,.card {transition:border-color .15s,background-color .15s}}
+
+.polymarket-card[data-group="trending"] .polymarket-category{color:var(--accent)}
+.polymarket-card h3 a{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}

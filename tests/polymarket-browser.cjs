@@ -27,9 +27,9 @@ async function main(){
   try {
     const page=await componentPage(browser,{viewport:{width:1440,height:1000}}),errors=[],url="http://127.0.0.1:"+server.address().port;
     page.on("pageerror",e=>errors.push(e.message));await page.route("https://**",r=>r.abort());await page.goto(url + "/#polymarket");
-    await page.waitForFunction(()=>document.querySelectorAll(".polymarket-card[data-event-id]").length===8);
+    await page.waitForFunction(()=>document.querySelectorAll(".polymarket-card[data-event-id]").length===10);
     assert.equal(await page.locator("#polymarket").evaluate(n=>n.closest("#page-polymarket") !== null),true);
-    assert.deepEqual(await page.locator(".polymarket-card").evaluateAll(nodes=>nodes.map(n=>n.dataset.group)),["finance","finance","finance","popular","popular","popular","popular","popular"]);
+    assert.deepEqual(await page.locator(".polymarket-card").evaluateAll(nodes=>nodes.map(n=>n.dataset.group)),["finance","finance","finance","popular","popular","popular","popular","popular","trending","trending"]);
     for(const [i,card]of(await page.locator(".polymarket-card").all()).entries()){
       assert.equal(await card.locator("h3 a").getAttribute("href"),"https://polymarket.com/event/synthetic-event-"+(i+1));
       assert.equal(await card.locator("h3 a").getAttribute("target"),"_blank");
@@ -41,25 +41,27 @@ async function main(){
       for(let theme=0;theme<2;theme++){
         assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,"page overflow at "+width);
         const layout=await page.locator("#polymarketRow").evaluate(n=>({width:n.clientWidth,scroll:n.scrollWidth,tops:[...n.children].map(x=>x.offsetTop)}));
-        assert.equal(new Set(layout.tops).size,1,"all eight cards on one line");
-        assert.equal(layout.scroll>layout.width,width<=1100,"scroll within row on small screens");
+        const columns=width>1000?5:width>650?3:2;
+        assert.equal(new Set(layout.tops).size,Math.ceil(10/columns),"responsive grid rows at "+width);
+        assert.equal(layout.tops.filter(top=>top===layout.tops[0]).length,columns,"cards per row at "+width);
+        assert.equal(layout.scroll>layout.width,false,"no horizontal scrolling is needed at "+width);
         await page.locator("#themeToggle").click();
       }
     }
     for(const nextMode of ["older","partial","invalid"]){
       mode=nextMode;await page.locator("#refreshButton").click();
       await page.waitForFunction(()=>document.getElementById("polymarketStatus").textContent.includes("Derniers"));
-      assert.equal(await page.locator(".polymarket-card[data-event-id]").count(),8);
+      assert.equal(await page.locator(".polymarket-card[data-event-id]").count(),10);
       assert.match(await page.locator(".polymarket-card").first().locator(".polymarket-outcomes").innerText(),/65 %/);
     }
     mode="offline";await page.reload();
     await page.waitForFunction(()=>document.querySelector(".polymarket-time")?.textContent.includes("conservé"));
-    assert.equal(await page.locator(".polymarket-card[data-event-id]").count(),8);
+    assert.equal(await page.locator(".polymarket-card[data-event-id]").count(),10);
     const empty=await componentPage(browser,);await empty.route("https://**",r=>r.abort());await empty.goto(url);
     await empty.waitForFunction(()=>document.getElementById("polymarketStatus").textContent.includes("indisponibles"));
     assert.equal(await empty.locator(".polymarket-card h3 a").count(),0);assert.equal(await empty.locator(".polymarket-outcomes").count(),0);
     assert.deepEqual(errors,[]);
-    console.log("Polymarket verified: 3 Finance + 5 Politics, source links and scenarios, dedicated page placement, eight desktop columns, mobile horizontal scrolling, dated outage, partial cache and older snapshot rejection.");
+    console.log("Polymarket verified: 3 Finance + 5 Politics + 2 broad popular events, source links and scenarios, dedicated page placement, five desktop columns, compact responsive rows, dated outage, partial cache and older snapshot rejection.");
   }finally{await browser.close();}
 }
 main().catch(error=>{console.error(error);process.exitCode=1;}).finally(()=>server.close());

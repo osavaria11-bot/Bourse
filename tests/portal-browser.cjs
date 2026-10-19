@@ -65,6 +65,21 @@ async function check(browser, engine) {
     assert.equal(await fundReport.locator('[data-fiche="'+id+'"] .holdings-section tbody tr').count(), 10);
     assert.ok((await fundReport.locator('[data-fiche="'+id+'"] .holdings-count').textContent()).includes("sociétés"));
   }
+  assert.equal(await fundReport.locator('[data-fiche="1"] [data-fund="FEQT"] .fund-name').textContent(),"Fidelity All-in-One Equity ETF");
+  assert.equal(await fundReport.locator('[data-fiche="1"] [data-fund="FEQT"] .fund-description').textContent(),"Actions mondiales");
+  assert.equal(await fundReport.locator('.source-table [data-fund] .fund-name').count(),24);
+  await fundReport.locator('.nav [data-tab="portfolios"]').click();
+  await fundReport.locator("#ficheFocus").selectOption("all");
+  assert.equal(await fundReport.locator(".portfolio-card:visible").count(),11);
+  assert.ok(await fundReport.locator('.portfolio-card:visible [data-fund] .fund-name').count()>40);
+  await shot("fnb-fund-grid");
+  for(const width of [768,320]) {
+    await page.setViewportSize({width,height:900});
+    assert.ok(await fundReport.locator('html').evaluate(n=>n.scrollWidth<=n.clientWidth),"Fund identities fit at "+width);
+  }
+  await shot("fnb-fund-grid-mobile");
+  await page.setViewportSize({width:1440,height:900});
+
   await fundReport.locator('.nav [data-tab="overview"]').click();
   const fundNames = ["Horizon", "Équilibre", "Tempo", "Latitude", "Élan", "Synergie", "Conviction", "Dynamique 110", "Audace 120", "60/40", "80/20"];
   for (const [index, name] of fundNames.entries()) {
@@ -183,6 +198,14 @@ async function check(browser, engine) {
   await go("accueil"); await sentimentNode.dispose();
   await go("immobilier"); assert.equal(await page.locator('#propertyReportsGrid [data-report-kind="real_estate"]').isVisible(), true);
   await go("recherche"); assert.equal(await page.locator('#weeklyReportsGrid [data-report-kind="stocks"]').isVisible(), true);
+  assert.equal(await page.locator("#researchPlan").isVisible(),true);
+  assert.equal(await page.locator("#researchPlan .research-schedule-card").count(),2);
+  assert.match(await page.locator("#researchPlan").innerText(),/22 h UTC/);
+  assert.match(await page.locator("#researchPlan").innerText(),/16 h 30/);
+  assert.equal(await page.locator('#page-recherche [data-tab="strategies"]').count(),0);
+  await page.locator("#researchStrategies summary").click();
+  assert.match(await page.locator("#researchStrategies").innerText(),/30 % · 25 % · 20 % · 15 % · 10 %/);
+  await page.locator("#researchStrategies summary").click();
   await page.locator(".weekly-stock summary").first().click(); assert.equal(await page.locator(".weekly-stock-details").first().getAttribute("open"), ""); await shot("research");
   await go("recherche", "archives"); assert.ok(await page.locator('#page-recherche .portal-archives a').count() >= 1);
   for (const anchor of await page.locator(".portal-archives a").all()) {const response = await page.request.get(url + "/" + await anchor.getAttribute("href")); assert.equal(response.status(), 200); assert.match(response.headers()["content-type"], /pdf/);}

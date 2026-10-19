@@ -22,3 +22,11 @@
 :root:not([data-theme="light"]) .chart svg [fill="#142333"]{fill:var(--text)}
 :root:not([data-theme="light"]) .chart svg [stroke="#142333"]{stroke:var(--text)}
 :root:not([data-theme="light"]) .dot[style*="#142333"]{background:var(--text)!important}
+
+/* Recognizable fund identities in individual cards and the complete card grid. */
+[data-fund]{white-space:normal;text-align:left;min-width:170px}
+.fund-ticker{display:block;font-size:12px;font-weight:700;color:var(--text)}
+.fund-name{display:block;font-size:10px;font-weight:450;line-height:1.35;color:var(--muted);white-space:normal;max-width:430px;margin-top:2px}
+a.fund-name{text-decoration:none}a.fund-name:hover{text-decoration:underline;color:var(--accent)}
+.fund-description{display:block;font-size:10px;color:var(--accent);font-weight:550;line-height:1.4;margin-top:2px}
+.all-table .fund-name,.ratios-table .fund-name{max-width:190px;font-size:9px}.all-table .fund-description,.ratios-table .fund-description{font-size:9px}

@@ -108,13 +108,31 @@
   property.append(el("p", "eyebrow", "IMMOBILIER / ÉDITION HEBDOMADAIRE"), el("h2", "", "Le briefing immobilier"));
   const propertyStatus = el("p", "meta"); propertyStatus.id = "propertyReportsStatus"; propertyStatus.setAttribute("role", "status"); property.append(propertyStatus);
   const propertyGrid = el("div", "weekly-reports-grid"); propertyGrid.id = "propertyReportsGrid"; property.append(propertyGrid); pane("immobilier", "latest").append(property);
-  const strategies = pane("recherche", "strategies");
-  strategies.append(el("p", "eyebrow", "RECHERCHE / SUIVI DES STRATÉGIES"), el("h2", "", "Deux approches, un suivi"));
+  const research = pane("recherche", "latest"), plan = el("section", "research-plan"); plan.id = "researchPlan";
+  const planHeading = el("div", "portal-section-heading"), planTitle = el("div");
+  planTitle.append(el("p", "eyebrow", "RECHERCHE / FINVIZ"), el("h2", "", "Recherche & suivi"));
+  planHeading.append(planTitle, el("span", "meta", "Deux rendez-vous · mêmes automatisations")); plan.append(planHeading);
+  const schedule = el("div", "research-schedule");
+  const nextResearch = new Date(); nextResearch.setUTCHours(22, 0, 0, 0);
+  nextResearch.setUTCDate(nextResearch.getUTCDate() + (3 - nextResearch.getUTCDay() + 7) % 7);
+  if (+nextResearch <= Date.now()) nextResearch.setUTCDate(nextResearch.getUTCDate() + 7);
+  const researchTime = new Intl.DateTimeFormat("fr-CA", {timeZone:"America/Toronto",weekday:"long",hour:"numeric",minute:"2-digit"}).format(nextResearch).replace(/^./, letter => letter.toLocaleUpperCase("fr"));
+  for (const [step, title, time, note, detail] of [
+    ["1 · RECHERCHE", "Top 5 du screener Finviz", researchTime, "22 h UTC · horaire existant", "Admissibles, classement et instructions de rééquilibrage."],
+    ["2 · SUIVI", "Suivi des portefeuilles Finviz", "Jeudi · 16 h 30", "Heure de Toronto · après clôture", "Valorisation, exécution des instructions publiées et comparaison à SPY."],
+  ]) {
+    const card = el("article", "research-schedule-card");
+    card.append(el("span", "eyebrow", step), el("h3", "", title), el("strong", "research-time", time), el("span", "meta", note), el("p", "meta", detail)); schedule.append(card);
+  }
+  plan.append(schedule); research.prepend(plan);
+  const strategies = el("details", "portal-method research-rules"); strategies.id = "researchStrategies";
+  strategies.append(el("summary", "", "Règles des deux portefeuilles simulés"));
   const strategyList = el("div", "portal-strategies");
   for (const [title, allocation, rule] of [["Top 5 pondéré", "30 % · 25 % · 20 % · 15 % · 10 %", "Pondération selon le classement hebdomadaire."], ["Autres titres admissibles", "Équipondération", "Répartition égale entre les autres titres de la sélection."]]) {
-    const article = el("article"); article.append(el("h3", "", title), el("strong", "", allocation), el("p", "meta", rule + " Achats et ventes à la clôture."), el("p", "portal-empty", "Historique de performance indisponible.")); strategyList.append(article);
+    const article = el("article"); article.append(el("h3", "", title), el("strong", "", allocation), el("p", "meta", rule)); strategyList.append(article);
   }
-  strategies.append(strategyList, el("p", "meta", "Règles de suivi demandées. Aucun journal daté de transactions des stratégies n’est disponible dans les données publiées : les rapports seuls ne permettent pas de reconstituer un rendement fiable. Les sélections et leurs analyses restent accessibles dans Sélection Finviz et Archives."));
+  strategies.append(strategyList, el("p", "meta", "Rééquilibrage simulé à la clôture du jeudi avec le dernier classement publié avant la séance. Base initiale : 10 000 USD par portefeuille au 30 septembre 2026. Le suivi automatisé conserve son état et son classeur existants; aucun historique de valorisation n’est encore publié sur ce site."));
+  plan.append(strategies);
   for (const [page, kind] of [["recherche", "stocks"], ["immobilier", "real_estate"]]) {
     const panel = pane(page, "archives"); panel.append(el("h2", "", "Les éditions précédentes"));
     const list = el("div", "portal-archives"); list.dataset.archiveKind = kind; list.append(el("p", "meta", "Chargement des documents publiés…")); panel.append(list);
@@ -126,7 +144,7 @@
   const fundAnalysis = pane("analyses", "overview"), fundHeading = el("div", "portal-section-heading"), fundTitle = el("div");
   fundTitle.append(el("h2", "", "Portefeuilles FNB"));
   const fundFullScreen = el("a", "button quiet", "Ouvrir en plein écran ↗");
-  fundFullScreen.href = "reports/portefeuilles-fnb.html?v=20261019-task1"; fundFullScreen.target = "_blank"; fundFullScreen.rel = "noopener noreferrer";
+  fundFullScreen.href = "reports/portefeuilles-fnb.html?v=20261019-task2"; fundFullScreen.target = "_blank"; fundFullScreen.rel = "noopener noreferrer";
   fundHeading.append(fundTitle, fundFullScreen);
   const fundFrame = el("iframe", "portal-report-frame"); fundFrame.id = "fundAnalysisFrame";
   fundFrame.title = "Analyse des 11 portefeuilles FNB : ratios, boussole et évolution des placements";
@@ -253,7 +271,7 @@
     for (const item of document.querySelectorAll(".portal-tabs a")) {if (item.dataset.tab === active.tab && item.closest(".portal-page").dataset.page === active.page) item.setAttribute("aria-current", "page"); else item.removeAttribute("aria-current");}
     document.title = "SAVY · " + R.PAGES[active.page].label;
     document.body.dataset.page = active.page;
-    if (active.page === "analyses" && !fundFrame.hasAttribute("src")) fundFrame.src = "reports/portefeuilles-fnb.html?v=20261019-task1";
+    if (active.page === "analyses" && !fundFrame.hasAttribute("src")) fundFrame.src = "reports/portefeuilles-fnb.html?v=20261019-task2";
     $("#portfolioManage").hidden = all || active.tab === "positions";
     syncIndicators(); syncMarkets();
     window.scrollTo({top: 0, behavior: "instant"}); window.dispatchEvent(new Event("resize"));

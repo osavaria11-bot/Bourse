@@ -17,7 +17,8 @@ except ModuleNotFoundError:
 
 ROOT = Path(__file__).resolve().parents[1]
 API = "https://gamma-api.polymarket.com"
-GROUPS = {"finance": ("finance", "volume", 3), "popular": ("politics", "volume24hr", 5)}
+GROUPS = {"finance": ("finance", "volume", 3), "popular": ("politics", "volume24hr", 5),
+          "trending": (None, "volume24hr", 2)}
 
 
 def iso(value):
@@ -117,14 +118,16 @@ def fetch_json(url):
 
 def fetch_group(kind, now, excluded=()):
     tag_slug, order, count = GROUPS[kind]
-    tag = fetch_json(API + "/tags/slug/" + tag_slug)
-    if not isinstance(tag, dict) or tag.get("slug") != tag_slug or not str(tag.get("id", "")).isdigit():
+    tag = fetch_json(API + "/tags/slug/" + tag_slug) if tag_slug else None
+    if tag_slug and (not isinstance(tag, dict) or tag.get("slug") != tag_slug or not str(tag.get("id", "")).isdigit()):
         raise macro.SourceError("Polymarket : catégorie introuvable")
     candidates = {}
     for page in range(4):
-        query = urlencode({"tag_id": tag["id"], "active": "true", "closed": "false", "archived": "false",
-                           "related_tags": "true" if kind == "finance" else "false",
-                           "order": order, "ascending": "false", "limit": 20, "offset": page * 20})
+        params = {"active": "true", "closed": "false", "archived": "false",
+                  "order": order, "ascending": "false", "limit": 20, "offset": page * 20}
+        if tag:
+            params.update({"tag_id": tag["id"], "related_tags": "true" if kind == "finance" else "false"})
+        query = urlencode(params)
         rows = fetch_json(API + "/events?" + query)
         if not isinstance(rows, list):
             raise macro.SourceError("Polymarket : liste d’événements invalide")

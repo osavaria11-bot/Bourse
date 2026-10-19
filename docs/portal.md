@@ -9,9 +9,9 @@ The existing static site and GitHub Pages workflows are retained. `portal.js` mo
 | Accueil | Market summary, three sourced headlines, CNN sentiment and history, latest reports, macro readings; full news and audio in a secondary view |
 | Marchés | Six market charts, all economic series, policy odds and sovereign curves, original resources |
 | Portefeuilles | All three existing portfolios; overview, positions, allocation heatmap and exposures, contributions/risk/movers, earnings, transaction availability |
-| Recherche | Current Finviz selection, strategy rules and data availability, published PDF archives |
+| Recherche | Research & tracking together: the existing Wednesday Finviz research and Thursday portfolio tracking schedules, current selection and simulation rules; published PDF archives |
 | Immobilier | Current briefing, opportunities and published PDF archives |
-| Polymarket | Three Finance and five popular political markets with their live collection and cache behavior |
+| Polymarket | Three Finance, five popular political markets and two popular events across all topics; ten distinct markets, five columns on desktop and a compact responsive grid |
 | Analyse FNB | Interactive comparison of the 11 ETF portfolios, ratios, risk/return compass and investment growth; independent chart selections and 5% CGL.C where held |
 | Dashboard complet | Rightmost navigation item; all original components on one page, all six market charts, every filtered macro chart and all portfolio panels |
 
@@ -44,3 +44,11 @@ Run `npm test`, Python collector tests and `npm run test:browser`. `PORTAL_WEBKI
 Yield-curve presets follow the latest available publication by default. The common requested B date uses the newest country; each country shows its own actual observation date without filling missing maturities. Changing A/B or swapping fixes the dates for historical comparisons. “Suivre les dernières publications” restores automatic updates and the chosen preset; this mode is persisted independently from the date pair. Cached decision odds retain their source dates and expire through the existing validation rules.
 
 Natural narration uses `fr-CA-AntoineNeural`. The voice participates in the content-addressed audio/cache key; the player rejects former voice manifests. Device fallback prioritizes known male French voices while retaining the existing play/pause/seek/speed controls.
+
+## Research presentation
+
+`Recherche & suivi` combines the former selection and strategies subviews. Legacy `tab=strategies` bookmarks resolve to the shared section. The existing automation schedules are retained exactly: weekly research on Wednesday at 22:00 UTC (converted to Toronto time in the UI), portfolio tracking on Thursday at 16:30 America/Toronto. This presentation change neither creates nor updates an automation. It does not publish private task IDs, Library IDs, or simulation files. The existing research PDF/data publication path remains `data/weekly-reports.json` and `reports/stocks/`.
+
+`data/fnb-catalog.json` supplies the verified issuer fund name, a two-word French description and its source link for every FNB and comparator. `scripts/label_fnb_funds.cjs` enriches the individual cards, complete card grid, comparator rows and source table. The overview rebuild calls the helper so later report refreshes retain those labels. Financial results and holdings are unchanged.
+
+The new Polymarket `trending` group selects two additional open events across all topics by 24-hour volume, excluding IDs already used by Finance and Politics. Older eight-market snapshots remain usable, with the extra cards marked unavailable until a valid collection arrives. Existing refresh workflows collect the expanded snapshot without an additional schedule.

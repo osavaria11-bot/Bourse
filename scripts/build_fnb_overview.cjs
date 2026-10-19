@@ -44,4 +44,5 @@ html=html.replace(/(<article\b[^>]*data-fiche="(\d+)"[^>]*>)([\s\S]*?)(<\/articl
 html=html.replace(/fnb-dashboard\.(js|css)\?v=[^"']+/g,'fnb-dashboard.$1?v=20261019-ensemble');
 html=html.replace(dataPattern,(_,open,body,close)=>open+JSON.stringify(D).replace(/</g,"\\u003c")+close);
 fs.writeFileSync(reportPath,html);
+require("./label_fnb_funds.cjs");
 console.log("Overview rebuilt:",D.custom_order.length,"portfolios,",D.preference_ranking.entries.length,"ranked,",Object.keys(snapshot.funds).length,"source funds.");

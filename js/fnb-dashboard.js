@@ -30,6 +30,7 @@ const SavyFnb = (() => {
     const money = v => new Intl.NumberFormat("fr-CA", {style:"currency", currency:"CAD", currencyDisplay:"narrowSymbol", maximumFractionDigits:0}).format(v);
     const short = k => custom.includes(k) ? "Nº " + k : k;
     const name = k => custom.includes(k) ? short(k) + " · " + R[k].short_name : k;
+    const fundNote = k => D.fund_labels?.[k] ? '<span class="fund-name">' + escape(D.fund_labels[k].name) + '</span><span class="fund-description">' + escape(D.fund_labels[k].description) + '</span>' : "";
     const dot = k => '<span class="dot" style="background:' + R[k].color + '"></span>';
     const text = (x, y, s, attrs = "") => `<text x="${x}" y="${y}" ${attrs}>${escape(s)}</text>`;
     const line = (x1, y1, x2, y2, attrs = "") => `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="var(--grid)" ${attrs}/>`;
@@ -114,7 +115,7 @@ const SavyFnb = (() => {
       let order=custom.filter(k=>$("tableScope").value==="all"||chosen.has(k));
       if(sortKey)order.sort((a,b)=>((metric(a,sortKey)??-Infinity)-(metric(b,sortKey)??-Infinity))*(descending?-1:1));
       order.push(...benchmarks.filter(k=>chosen.has(k)));
-      $("statsBody").innerHTML=order.map(k=>`<tr class="${benchmarks.includes(k)?'benchmark':''}"><th scope="row">${custom.includes(k)?`<button class="stats-open" data-open-portfolio="${k}">`:''}${dot(k)}${escape(name(k))}${custom.includes(k)?'</button>':''}</th>${keys.map(key=>`<td>${key==='end'?money(R[k].end*capital/10000):['beta','sharpe','information'].includes(key)?number(metric(k,key)):pct(metric(k,key),key==='mer'?2:1)}</td>`).join("")}</tr>`).join("");
+      $("statsBody").innerHTML=order.map(k=>`<tr class="${benchmarks.includes(k)?'benchmark':''}"><th scope="row">${custom.includes(k)?`<button class="stats-open" data-open-portfolio="${k}">`:''}${dot(k)}${escape(name(k))}${custom.includes(k)?'</button>':fundNote(k)}</th>${keys.map(key=>`<td>${key==='end'?money(R[k].end*capital/10000):['beta','sharpe','information'].includes(key)?number(metric(k,key)):pct(metric(k,key),key==='mer'?2:1)}</td>`).join("")}</tr>`).join("");
       document.querySelectorAll("[data-sort]").forEach(n=>n.closest("th").setAttribute("aria-sort",n.dataset.sort===sortKey?(descending?"descending":"ascending"):"none"));
       renderAllPortfolios();
     }
@@ -126,7 +127,7 @@ const SavyFnb = (() => {
       let order=[...custom];
       if(allSort)order.sort((a,b)=>{const va=allSort==="rank"?(ranking.get(a)??99):allSort==="stocks"?(D.lookthrough?.results[a]?.stock_count??0):metric(a,allSort),vb=allSort==="rank"?(ranking.get(b)??99):allSort==="stocks"?(D.lookthrough?.results[b]?.stock_count??0):metric(b,allSort);return((va??-Infinity)-(vb??-Infinity))*(allDescending?-1:1);});
       order.push(...selected);
-      body.innerHTML=order.map(k=>{const own=custom.includes(k),holdings=D.lookthrough?.results[k];return `<tr class="${own?'':'benchmark'}"><td class="rank-cell">${ranking.has(k)?ranking.get(k):'—'}</td><th scope="row">${own?`<button class="stats-open" data-open-portfolio="${k}">`:''}${dot(k)}${escape(name(k))}${own?'</button>':''}</th>${keys.map(key=>`<td>${['beta','sharpe','information'].includes(key)?number(metric(k,key)):pct(metric(k,key),key==='mer'?2:1)}</td>`).join('')}<td>${holdings?'≈ '+number(holdings.stock_count,0):'—'}</td><td>${holdings?pct(holdings.top10_weight):'—'}</td></tr>`;}).join("");
+      body.innerHTML=order.map(k=>{const own=custom.includes(k),holdings=D.lookthrough?.results[k];return `<tr class="${own?'':'benchmark'}"><td class="rank-cell">${ranking.has(k)?ranking.get(k):'—'}</td><th scope="row">${own?`<button class="stats-open" data-open-portfolio="${k}">`:''}${dot(k)}${escape(name(k))}${own?'</button>':fundNote(k)}</th>${keys.map(key=>`<td>${['beta','sharpe','information'].includes(key)?number(metric(k,key)):pct(metric(k,key),key==='mer'?2:1)}</td>`).join('')}<td>${holdings?'≈ '+number(holdings.stock_count,0):'—'}</td><td>${holdings?pct(holdings.top10_weight):'—'}</td></tr>`;}).join("");
       document.querySelectorAll("[data-all-sort]").forEach(n=>n.closest("th").setAttribute("aria-sort",n.dataset.allSort===allSort?(allDescending?"descending":"ascending"):"none"));
     }
     function drawGeo() {
