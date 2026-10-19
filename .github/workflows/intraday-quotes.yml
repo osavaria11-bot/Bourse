@@ -18,12 +18,14 @@ permissions:
 # Quote orchestration has its own queue. A scheduled run whose source has not
 # passed full validation must never displace a pending full Pages deployment.
 concurrency:
-  group: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.conclusion != 'success' && format('quotes-skipped-{0}', github.run_id) || format('intraday-{0}', github.ref) }}
+  group: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.conclusion != 'success' && github.event.workflow_run.conclusion != 'failure' && format('quotes-skipped-{0}', github.run_id) || format('intraday-{0}', github.ref) }}
   cancel-in-progress: false
 
 jobs:
   source:
-    if: github.ref == 'refs/heads/main' && (github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success')
+    # A failed full deployment can recover immediately, including weekends.
+    # Cancelled runs remain cancelled. The source gate still blocks quote publication.
+    if: github.ref == 'refs/heads/main' && (github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' || github.event.workflow_run.conclusion == 'failure')
     runs-on: ubuntu-latest
     permissions:
       contents: read
