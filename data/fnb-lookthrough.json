@@ -1,0 +1,1551 @@
+{
+  "retrieved_at": "2026-10-19",
+  "method": "Poids cibles des FNB × poids officiels des actions. Classes et doublons regroupés par émetteur; nombre estimatif. Or, obligations, crypto, liquidités et dérivés exclus.",
+  "results": {
+    "1": {
+      "stock_count": 819,
+      "top10": [
+        {
+          "id": "royalbankcanada",
+          "name": "Banque Royale du Canada",
+          "weight": 0.04821017500000001,
+          "contributions": {
+            "FEQT": 0.0076,
+            "FINN": 0.00109,
+            "VDY": 0.039520175000000005
+          }
+        },
+        {
+          "id": "nvidia",
+          "name": "NVIDIA",
+          "weight": 0.0374,
+          "contributions": {
+            "FEQT": 0.00924,
+            "FINN": 0.01007,
+            "FCUQ": 0.014980000000000002,
+            "FCMO": 0.00311
+          }
+        },
+        {
+          "id": "apple",
+          "name": "Apple",
+          "weight": 0.033925000000000004,
+          "contributions": {
+            "FEQT": 0.01068,
+            "FINN": 0.00555,
+            "FCUQ": 0.014660000000000001,
+            "FCMO": 0.0030350000000000004
+          }
+        },
+        {
+          "id": "torontodominionbank",
+          "name": "Banque TD",
+          "weight": 0.033269425,
+          "contributions": {
+            "FEQT": 0.0054800000000000005,
+            "VDY": 0.027789425
+          }
+        },
+        {
+          "id": "microsoft",
+          "name": "Microsoft",
+          "weight": 0.029540000000000004,
+          "contributions": {
+            "FEQT": 0.007040000000000001,
+            "FINN": 0.00858,
+            "FCUQ": 0.01154,
+            "FCMO": 0.00238
+          }
+        },
+        {
+          "id": "bankmontreal",
+          "name": "Banque de Montréal",
+          "weight": 0.020412649999999997,
+          "contributions": {
+            "FEQT": 0.0034400000000000003,
+            "VDY": 0.01697265
+          }
+        },
+        {
+          "id": "banknovascotia",
+          "name": "Banque Scotia",
+          "weight": 0.019095474999999997,
+          "contributions": {
+            "FEQT": 0.003,
+            "VDY": 0.016095474999999998
+          }
+        },
+        {
+          "id": "canadianimperialbankcommerce",
+          "name": "Banque CIBC",
+          "weight": 0.017494175,
+          "contributions": {
+            "FEQT": 0.0029600000000000004,
+            "VDY": 0.014534175
+          }
+        },
+        {
+          "id": "enbridge",
+          "name": "Enbridge",
+          "weight": 0.017430675,
+          "contributions": {
+            "FEQT": 0.0026000000000000003,
+            "VDY": 0.014830675
+          }
+        },
+        {
+          "id": "alphabet",
+          "name": "Alphabet",
+          "weight": 0.016980000000000002,
+          "contributions": {
+            "FEQT": 0.0037599999999999995,
+            "FINN": 0.00966,
+            "FCUQ": 0.00282,
+            "FCMO": 0.0007400000000000001
+          }
+        }
+      ],
+      "top10_weight": 0.27375757500000003,
+      "equity_covered": 0.9722347999999991,
+      "date_min": "2026-06-30",
+      "date_max": "2026-10-16",
+      "sources": [
+        {
+          "fund": "FEQT",
+          "date": "2026-06-30",
+          "url": "https://www.fidelity.ca/en/products/etfs/feqt/"
+        },
+        {
+          "fund": "FINN",
+          "date": "2026-06-30",
+          "url": "https://www.fidelity.ca/en/products/etfs/finn/"
+        },
+        {
+          "fund": "VDY",
+          "date": "2026-09-30",
+          "url": "https://www.vanguard.ca/en/product/etf/equity/9560/vanguard-ftse-canadian-high-dividend-yield-index-etf"
+        },
+        {
+          "fund": "FCUQ",
+          "date": "2026-10-16",
+          "url": "https://www.fidelity.ca/en/products/etfs/fcuq/"
+        },
+        {
+          "fund": "FCMO",
+          "date": "2026-10-16",
+          "url": "https://www.fidelity.ca/en/products/etfs/fcmo/"
+        }
+      ],
+      "estimated": true
+    },
+    "2": {
+      "stock_count": 5657,
+      "top10": [
+        {
+          "id": "apple",
+          "name": "Apple",
+          "weight": 0.02716,
+          "contributions": {
+            "FEQT": 0.0066749999999999995,
+            "FINN": 0.008324999999999999,
+            "FCUL": 0.01216
+          }
+        },
+        {
+          "id": "microsoft",
+          "name": "Microsoft",
+          "weight": 0.026910000000000003,
+          "contributions": {
+            "FEQT": 0.0044,
+            "FINN": 0.01287,
+            "FCUL": 0.009640000000000001
+          }
+        },
+        {
+          "id": "royalbankcanada",
+          "name": "Banque Royale du Canada",
+          "weight": 0.025508070000000004,
+          "contributions": {
+            "FEQT": 0.00475,
+            "FINN": 0.001635,
+            "ZLB": 0.0033150000000000002,
+            "VDY": 0.015808070000000004
+          }
+        },
+        {
+          "id": "nvidia",
+          "name": "NVIDIA",
+          "weight": 0.02088,
+          "contributions": {
+            "FEQT": 0.005775,
+            "FINN": 0.015104999999999999
+          }
+        },
+        {
+          "id": "alphabet",
+          "name": "Alphabet",
+          "weight": 0.01966,
+          "contributions": {
+            "FEQT": 0.0023499999999999997,
+            "FINN": 0.01449,
+            "FCUL": 0.00282
+          }
+        },
+        {
+          "id": "amazon",
+          "name": "Amazon",
+          "weight": 0.019545,
+          "contributions": {
+            "FEQT": 0.002125,
+            "FINN": 0.01536,
+            "FCUL": 0.00206
+          }
+        },
+        {
+          "id": "torontodominionbank",
+          "name": "Banque TD",
+          "weight": 0.018065770000000002,
+          "contributions": {
+            "FEQT": 0.003425,
+            "ZLB": 0.003525,
+            "VDY": 0.01111577
+          }
+        },
+        {
+          "id": "taiwansemiconductormanufacturing",
+          "name": "Taiwan Semiconductor (TSMC)",
+          "weight": 0.015814755,
+          "contributions": {
+            "FINN": 0.00801,
+            "VEE": 0.007804755
+          }
+        },
+        {
+          "id": "banknovascotia",
+          "name": "Banque Scotia",
+          "weight": 0.012258189999999999,
+          "contributions": {
+            "FEQT": 0.001875,
+            "ZLB": 0.003945,
+            "VDY": 0.00643819
+          }
+        },
+        {
+          "id": "bankmontreal",
+          "name": "Banque de Montréal",
+          "weight": 0.011654059999999999,
+          "contributions": {
+            "FEQT": 0.00215,
+            "ZLB": 0.002715,
+            "VDY": 0.0067890599999999995
+          }
+        }
+      ],
+      "top10_weight": 0.197455845,
+      "equity_covered": 0.9777653650000033,
+      "date_min": "2026-06-30",
+      "date_max": "2026-10-16",
+      "sources": [
+        {
+          "fund": "FEQT",
+          "date": "2026-06-30",
+          "url": "https://www.fidelity.ca/en/products/etfs/feqt/"
+        },
+        {
+          "fund": "FINN",
+          "date": "2026-06-30",
+          "url": "https://www.fidelity.ca/en/products/etfs/finn/"
+        },
+        {
+          "fund": "FCUL",
+          "date": "2026-10-16",
+          "url": "https://www.fidelity.ca/en/products/etfs/fcul/"
+        },
+        {
+          "fund": "ZLB",
+          "date": "2026-10-16",
+          "url": "https://www.bmoetfs.ca/etfs/zlb-bmo-low-volatility-canadian-equity-etf"
+        },
+        {
+          "fund": "VDY",
+          "date": "2026-09-30",
+          "url": "https://www.vanguard.ca/en/product/etf/equity/9560/vanguard-ftse-canadian-high-dividend-yield-index-etf"
+        },
+        {
+          "fund": "FCIV",
+          "date": "2026-10-16",
+          "url": "https://www.fidelity.ca/en/products/etfs/fciv/"
+        },
+        {
+          "fund": "VEE",
+          "date": "2026-09-30",
+          "url": "https://fund-docs.vanguard.com/VEE_FTSE_Emerging_Markets_All_Cap_Index_ETF_9556_FS_EN_CA.pdf"
+        }
+      ],
+      "estimated": true
+    },
+    "3": {
+      "stock_count": 5591,
+      "top10": [
+        {
+          "id": "apple",
+          "name": "Apple",
+          "weight": 0.025285000000000002,
+          "contributions": {
+            "FEQT": 0.004005,
+            "FCUL": 0.02128
+          }
+        },
+        {
+          "id": "taiwansemiconductormanufacturing",
+          "name": "Taiwan Semiconductor (TSMC)",
+          "weight": 0.023414264999999997,
+          "contributions": {
+            "VEE": 0.023414264999999997
+          }
+        },
+        {
+          "id": "microsoft",
+          "name": "Microsoft",
+          "weight": 0.01951,
+          "contributions": {
+            "FEQT": 0.00264,
+            "FCUL": 0.01687
+          }
+        },
+        {
+          "id": "linde",
+          "name": "Linde plc",
+          "weight": 0.017854999999999996,
+          "contributions": {
+            "FEQT": 0.0009149999999999999,
+            "FCUL": 0.016939999999999997
+          }
+        },
+        {
+          "id": "southern",
+          "name": "Southern Co.",
+          "weight": 0.016779999999999996,
+          "contributions": {
+            "FEQT": 0.0008549999999999999,
+            "FCUL": 0.015924999999999998
+          }
+        },
+        {
+          "id": "welltower",
+          "name": "WELLTOWER INC",
+          "weight": 0.01645,
+          "contributions": {
+            "FCUL": 0.01645
+          }
+        },
+        {
+          "id": "dukeenergynew",
+          "name": "DUKE ENERGY CORP NEW",
+          "weight": 0.015854999999999998,
+          "contributions": {
+            "FCUL": 0.015854999999999998
+          }
+        },
+        {
+          "id": "realtyincomereit",
+          "name": "Realty Income Corporation REIT",
+          "weight": 0.015215,
+          "contributions": {
+            "FEQT": 0.000795,
+            "FCUL": 0.014419999999999999
+          }
+        },
+        {
+          "id": "royalbankcanada",
+          "name": "Banque Royale du Canada",
+          "weight": 0.014986842,
+          "contributions": {
+            "FEQT": 0.0028499999999999997,
+            "ZLB": 0.0026520000000000003,
+            "VDY": 0.009484842
+          }
+        },
+        {
+          "id": "vylor",
+          "name": "VYLOR INC",
+          "weight": 0.014839999999999999,
+          "contributions": {
+            "FCUL": 0.014839999999999999
+          }
+        }
+      ],
+      "top10_weight": 0.180191107,
+      "equity_covered": 0.9808324870000003,
+      "date_min": "2026-06-30",
+      "date_max": "2026-10-16",
+      "sources": [
+        {
+          "fund": "FEQT",
+          "date": "2026-06-30",
+          "url": "https://www.fidelity.ca/en/products/etfs/feqt/"
+        },
+        {
+          "fund": "FCUL",
+          "date": "2026-10-16",
+          "url": "https://www.fidelity.ca/en/products/etfs/fcul/"
+        },
+        {
+          "fund": "ZLB",
+          "date": "2026-10-16",
+          "url": "https://www.bmoetfs.ca/etfs/zlb-bmo-low-volatility-canadian-equity-etf"
+        },
+        {
+          "fund": "VDY",
+          "date": "2026-09-30",
+          "url": "https://www.vanguard.ca/en/product/etf/equity/9560/vanguard-ftse-canadian-high-dividend-yield-index-etf"
+        },
+        {
+          "fund": "FCIV",
+          "date": "2026-10-16",
+          "url": "https://www.fidelity.ca/en/products/etfs/fciv/"
+        },
+        {
+          "fund": "VEE",
+          "date": "2026-09-30",
+          "url": "https://fund-docs.vanguard.com/VEE_FTSE_Emerging_Markets_All_Cap_Index_ETF_9556_FS_EN_CA.pdf"
+        }
+      ],
+      "estimated": true
+    },
+    "4": {
+      "stock_count": 5817,
+      "top10": [
+        {
+          "id": "royalbankcanada",
+          "name": "Banque Royale du Canada",
+          "weight": 0.024963070000000004,
+          "contributions": {
+            "FEQT": 0.00475,
+            "FINN": 0.00109,
+            "ZLB": 0.0033150000000000002,
+            "VDY": 0.015808070000000004
+          }
+        },
+        {
+          "id": "apple",
+          "name": "Apple",
+          "weight": 0.021345,
+          "contributions": {
+            "FEQT": 0.0066749999999999995,
+            "FINN": 0.00555,
+            "FCUL": 0.00912
+          }
+        },
+        {
+          "id": "microsoft",
+          "name": "Microsoft",
+          "weight": 0.020210000000000002,
+          "contributions": {
+            "FEQT": 0.0044,
+            "FINN": 0.00858,
+            "FCUL": 0.0072299999999999994
+          }
+        },
+        {
+          "id": "torontodominionbank",
+          "name": "Banque TD",
+          "weight": 0.018065770000000002,
+          "contributions": {
+            "FEQT": 0.003425,
+            "ZLB": 0.003525,
+            "VDY": 0.01111577
+          }
+        },
+        {
+          "id": "nvidia",
+          "name": "NVIDIA",
+          "weight": 0.015845,
+          "contributions": {
+            "FEQT": 0.005775,
+            "FINN": 0.01007
+          }
+        },
+        {
+          "id": "alphabet",
+          "name": "Alphabet",
+          "weight": 0.014124999999999999,
+          "contributions": {
+            "FEQT": 0.0023499999999999997,
+            "FINN": 0.00966,
+            "FCUL": 0.0021149999999999997
+          }
+        },
+        {
+          "id": "amazon",
+          "name": "Amazon",
+          "weight": 0.01391,
+          "contributions": {
+            "FEQT": 0.002125,
+            "FINN": 0.01024,
+            "FCUL": 0.001545
+          }
+        },
+        {
+          "id": "taiwansemiconductormanufacturing",
+          "name": "Taiwan Semiconductor (TSMC)",
+          "weight": 0.013144755,
+          "contributions": {
+            "FINN": 0.005340000000000001,
+            "VEE": 0.007804755
+          }
+        },
+        {
+          "id": "banknovascotia",
+          "name": "Banque Scotia",
+          "weight": 0.012258189999999999,
+          "contributions": {
+            "FEQT": 0.001875,
+            "ZLB": 0.003945,
+            "VDY": 0.00643819
+          }
+        },
+        {
+          "id": "bankmontreal",
+          "name": "Banque de Montréal",
+          "weight": 0.011654059999999999,
+          "contributions": {
+            "FEQT": 0.00215,
+            "ZLB": 0.002715,
+            "VDY": 0.0067890599999999995
+          }
+        }
+      ],
+      "top10_weight": 0.16552084500000003,
+      "equity_covered": 0.9279753650000027,
+      "date_min": "2026-06-30",
+      "date_max": "2026-10-16",
+      "sources": [
+        {
+          "fund": "FEQT",
+          "date": "2026-06-30",
+          "url": "https://www.fidelity.ca/en/products/etfs/feqt/"
+        },
+        {
+          "fund": "FINN",
+          "date": "2026-06-30",
+          "url": "https://www.fidelity.ca/en/products/etfs/finn/"
+        },
+        {
+          "fund": "FCUL",
+          "date": "2026-10-16",
+          "url": "https://www.fidelity.ca/en/products/etfs/fcul/"
+        },
+        {
+          "fund": "ZLB",
+          "date": "2026-10-16",
+          "url": "https://www.bmoetfs.ca/etfs/zlb-bmo-low-volatility-canadian-equity-etf"
+        },
+        {
+          "fund": "VDY",
+          "date": "2026-09-30",
+          "url": "https://www.vanguard.ca/en/product/etf/equity/9560/vanguard-ftse-canadian-high-dividend-yield-index-etf"
+        },
+        {
+          "fund": "FCIV",
+          "date": "2026-10-16",
+          "url": "https://www.fidelity.ca/en/products/etfs/fciv/"
+        },
+        {
+          "fund": "VEE",
+          "date": "2026-09-30",
+          "url": "https://fund-docs.vanguard.com/VEE_FTSE_Emerging_Markets_All_Cap_Index_ETF_9556_FS_EN_CA.pdf"
+        },
+        {
+          "fund": "XMI",
+          "date": "2026-10-16",
+          "url": "https://www.blackrock.com/ca/investors/en/products/239625/ishares-msci-eafe-minimum-volatility-index-etf"
+        },
+        {
+          "fund": "CGL.C",
+          "date": "2026-10-16",
+          "url": "https://www.blackrock.com/ca/investors/en/products/241528/ishares-gold-bullion-etf"
+        }
+      ],
+      "estimated": true
+    },
+    "5": {
+      "stock_count": 5691,
+      "top10": [
+        {
+          "id": "apple",
+          "name": "Apple",
+          "weight": 0.026245000000000004,
+          "contributions": {
+            "FEQT": 0.0066749999999999995,
+            "FINN": 0.00555,
+            "FCUL": 0.00608,
+            "ZNQ": 0.007940000000000001
+          }
+        },
+        {
+          "id": "royalbankcanada",
+          "name": "Banque Royale du Canada",
+          "weight": 0.024963070000000004,
+          "contributions": {
+            "FEQT": 0.00475,
+            "FINN": 0.00109,
+            "ZLB": 0.0033150000000000002,
+            "VDY": 0.015808070000000004
+          }
+        },
+        {
+          "id": "microsoft",
+          "name": "Microsoft",
+          "weight": 0.024020000000000003,
+          "contributions": {
+            "FEQT": 0.0044,
+            "FINN": 0.00858,
+            "FCUL": 0.0048200000000000005,
+            "ZNQ": 0.00622
+          }
+        },
+        {
+          "id": "nvidia",
+          "name": "NVIDIA",
+          "weight": 0.024015,
+          "contributions": {
+            "FEQT": 0.005775,
+            "FINN": 0.01007,
+            "ZNQ": 0.00817
+          }
+        },
+        {
+          "id": "alphabet",
+          "name": "Alphabet",
+          "weight": 0.019530000000000002,
+          "contributions": {
+            "FEQT": 0.0023499999999999997,
+            "FINN": 0.00966,
+            "FCUL": 0.00141,
+            "ZNQ": 0.006110000000000001
+          }
+        },
+        {
+          "id": "torontodominionbank",
+          "name": "Banque TD",
+          "weight": 0.018065770000000002,
+          "contributions": {
+            "FEQT": 0.003425,
+            "ZLB": 0.003525,
+            "VDY": 0.01111577
+          }
+        },
+        {
+          "id": "amazon",
+          "name": "Amazon",
+          "weight": 0.017665,
+          "contributions": {
+            "FEQT": 0.002125,
+            "FINN": 0.01024,
+            "FCUL": 0.00103,
+            "ZNQ": 0.00427
+          }
+        },
+        {
+          "id": "taiwansemiconductormanufacturing",
+          "name": "Taiwan Semiconductor (TSMC)",
+          "weight": 0.013144755,
+          "contributions": {
+            "FINN": 0.005340000000000001,
+            "VEE": 0.007804755
+          }
+        },
+        {
+          "id": "banknovascotia",
+          "name": "Banque Scotia",
+          "weight": 0.012258189999999999,
+          "contributions": {
+            "FEQT": 0.001875,
+            "ZLB": 0.003945,
+            "VDY": 0.00643819
+          }
+        },
+        {
+          "id": "bankmontreal",
+          "name": "Banque de Montréal",
+          "weight": 0.011654059999999999,
+          "contributions": {
+            "FEQT": 0.00215,
+            "ZLB": 0.002715,
+            "VDY": 0.0067890599999999995
+          }
+        }
+      ],
+      "top10_weight": 0.191560845,
+      "equity_covered": 0.9285303650000032,
+      "date_min": "2026-06-30",
+      "date_max": "2026-10-16",
+      "sources": [
+        {
+          "fund": "FEQT",
+          "date": "2026-06-30",
+          "url": "https://www.fidelity.ca/en/products/etfs/feqt/"
+        },
+        {
+          "fund": "FINN",
+          "date": "2026-06-30",
+          "url": "https://www.fidelity.ca/en/products/etfs/finn/"
+        },
+        {
+          "fund": "FCUL",
+          "date": "2026-10-16",
+          "url": "https://www.fidelity.ca/en/products/etfs/fcul/"
+        },
+        {
+          "fund": "ZLB",
+          "date": "2026-10-16",
+          "url": "https://www.bmoetfs.ca/etfs/zlb-bmo-low-volatility-canadian-equity-etf"
+        },
+        {
+          "fund": "VDY",
+          "date": "2026-09-30",
+          "url": "https://www.vanguard.ca/en/product/etf/equity/9560/vanguard-ftse-canadian-high-dividend-yield-index-etf"
+        },
+        {
+          "fund": "FCIV",
+          "date": "2026-10-16",
+          "url": "https://www.fidelity.ca/en/products/etfs/fciv/"
+        },
+        {
+          "fund": "VEE",
+          "date": "2026-09-30",
+          "url": "https://fund-docs.vanguard.com/VEE_FTSE_Emerging_Markets_All_Cap_Index_ETF_9556_FS_EN_CA.pdf"
+        },
+        {
+          "fund": "CGL.C",
+          "date": "2026-10-16",
+          "url": "https://www.blackrock.com/ca/investors/en/products/241528/ishares-gold-bullion-etf"
+        },
+        {
+          "fund": "ZNQ",
+          "date": "2026-10-16",
+          "url": "https://www.bmoetfs.ca/etfs/znq-bmo-nasdaq-100-equity-index-etf"
+        }
+      ],
+      "estimated": true
+    },
+    "6": {
+      "stock_count": 595,
+      "top10": [
+        {
+          "id": "nvidia",
+          "name": "NVIDIA",
+          "weight": 0.0304328848194029,
+          "contributions": {
+            "ZNQ": 0.0214871,
+            "RUD": 0.0089457848194029
+          }
+        },
+        {
+          "id": "apple",
+          "name": "Apple",
+          "weight": 0.0297962182576249,
+          "contributions": {
+            "ZNQ": 0.0208822,
+            "RUD": 0.008914018257624902
+          }
+        },
+        {
+          "id": "alphabet",
+          "name": "Alphabet",
+          "weight": 0.021687497607591102,
+          "contributions": {
+            "ZNQ": 0.0160693,
+            "RUD": 0.005618197607591101
+          }
+        },
+        {
+          "id": "microsoft",
+          "name": "Microsoft",
+          "weight": 0.021230277111245,
+          "contributions": {
+            "ZNQ": 0.0163586,
+            "RUD": 0.004871677111245
+          }
+        },
+        {
+          "id": "tcenergy",
+          "name": "TC Énergie",
+          "weight": 0.014792349,
+          "contributions": {
+            "ZLB": 0.0037136,
+            "VDY": 0.0018355489999999997,
+            "ZEO": 0.0092432
+          }
+        },
+        {
+          "id": "microntechnology",
+          "name": "Micron Technology",
+          "weight": 0.013936276168280201,
+          "contributions": {
+            "ZNQ": 0.011414200000000001,
+            "RUD": 0.0025220761682802
+          }
+        },
+        {
+          "id": "suncorenergy",
+          "name": "Suncor Énergie",
+          "weight": 0.0133283181,
+          "contributions": {
+            "VDY": 0.0024527181,
+            "ZEO": 0.0108756
+          }
+        },
+        {
+          "id": "royalbankcanada",
+          "name": "Banque Royale du Canada",
+          "weight": 0.013041377100000001,
+          "contributions": {
+            "ZLB": 0.0046631,
+            "VDY": 0.008378277100000001
+          }
+        },
+        {
+          "id": "canadiannaturalresources",
+          "name": "Canadian Natural Resources",
+          "weight": 0.012940321,
+          "contributions": {
+            "VDY": 0.002923321,
+            "ZEO": 0.010017
+          }
+        },
+        {
+          "id": "enbridge",
+          "name": "Enbridge",
+          "weight": 0.0121541031,
+          "contributions": {
+            "VDY": 0.0031441030999999997,
+            "ZEO": 0.00901
+          }
+        }
+      ],
+      "top10_weight": 0.1833396222641441,
+      "equity_covered": 0.9466362963054378,
+      "date_min": "2026-09-30",
+      "date_max": "2026-10-16",
+      "sources": [
+        {
+          "fund": "ZLB",
+          "date": "2026-10-16",
+          "url": "https://www.bmoetfs.ca/etfs/zlb-bmo-low-volatility-canadian-equity-etf"
+        },
+        {
+          "fund": "VDY",
+          "date": "2026-09-30",
+          "url": "https://www.vanguard.ca/en/product/etf/equity/9560/vanguard-ftse-canadian-high-dividend-yield-index-etf"
+        },
+        {
+          "fund": "FCIV",
+          "date": "2026-10-16",
+          "url": "https://www.fidelity.ca/en/products/etfs/fciv/"
+        },
+        {
+          "fund": "XMI",
+          "date": "2026-10-16",
+          "url": "https://www.blackrock.com/ca/investors/en/products/239625/ishares-msci-eafe-minimum-volatility-index-etf"
+        },
+        {
+          "fund": "CGL.C",
+          "date": "2026-10-16",
+          "url": "https://www.blackrock.com/ca/investors/en/products/241528/ishares-gold-bullion-etf"
+        },
+        {
+          "fund": "ZNQ",
+          "date": "2026-10-16",
+          "url": "https://www.bmoetfs.ca/etfs/znq-bmo-nasdaq-100-equity-index-etf"
+        },
+        {
+          "fund": "ZEO",
+          "date": "2026-10-16",
+          "url": "https://1a48a761-fbab-4d1f-8302-ed4f7cabbcee-funds-sites.livedoc.transmissionmedia.ca/etf-pdf?__accept=text/html&documentType=pdf&exportType=&locale=en-US&profileId=ZEO-a"
+        },
+        {
+          "fund": "RUD",
+          "date": "2026-10-16",
+          "url": "https://www.rbcgam.com/en/ca/products/etfs/RUD/detail"
+        }
+      ],
+      "estimated": true
+    },
+    "7": {
+      "stock_count": 578,
+      "top10": [
+        {
+          "id": "royalbankcanada",
+          "name": "Banque Royale du Canada",
+          "weight": 0.042503838300000006,
+          "contributions": {
+            "FINN": 0.002071,
+            "VDY": 0.026715638300000004,
+            "ZEB": 0.0137172
+          }
+        },
+        {
+          "id": "nvidia",
+          "name": "NVIDIA",
+          "weight": 0.035320610625586196,
+          "contributions": {
+            "FINN": 0.019133,
+            "RUD": 0.0161876106255862
+          }
+        },
+        {
+          "id": "torontodominionbank",
+          "name": "Banque TD",
+          "weight": 0.0332336513,
+          "contributions": {
+            "VDY": 0.0187856513,
+            "ZEB": 0.014447999999999999
+          }
+        },
+        {
+          "id": "alphabet",
+          "name": "Alphabet",
+          "weight": 0.0285202623375458,
+          "contributions": {
+            "FINN": 0.018354,
+            "RUD": 0.010166262337545803
+          }
+        },
+        {
+          "id": "apple",
+          "name": "Apple",
+          "weight": 0.026675128275702203,
+          "contributions": {
+            "FINN": 0.010545,
+            "RUD": 0.0161301282757022
+          }
+        },
+        {
+          "id": "bankmontreal",
+          "name": "Banque de Montréal",
+          "weight": 0.025375511400000002,
+          "contributions": {
+            "VDY": 0.0114735114,
+            "ZEB": 0.013902000000000001
+          }
+        },
+        {
+          "id": "banknovascotia",
+          "name": "Banque Scotia",
+          "weight": 0.025143741100000002,
+          "contributions": {
+            "VDY": 0.0108805411,
+            "ZEB": 0.014263200000000002
+          }
+        },
+        {
+          "id": "microsoft",
+          "name": "Microsoft",
+          "weight": 0.02511741572511,
+          "contributions": {
+            "FINN": 0.016302,
+            "RUD": 0.00881541572511
+          }
+        },
+        {
+          "id": "canadianimperialbankcommerce",
+          "name": "Banque CIBC",
+          "weight": 0.0237607023,
+          "contributions": {
+            "VDY": 0.009825102300000001,
+            "ZEB": 0.0139356
+          }
+        },
+        {
+          "id": "amazon",
+          "name": "Amazon",
+          "weight": 0.019456,
+          "contributions": {
+            "FINN": 0.019456
+          }
+        }
+      ],
+      "top10_weight": 0.28510686136394425,
+      "equity_covered": 0.9442739634098402,
+      "date_min": "2026-06-30",
+      "date_max": "2026-10-16",
+      "sources": [
+        {
+          "fund": "FINN",
+          "date": "2026-06-30",
+          "url": "https://www.fidelity.ca/en/products/etfs/finn/"
+        },
+        {
+          "fund": "VDY",
+          "date": "2026-09-30",
+          "url": "https://www.vanguard.ca/en/product/etf/equity/9560/vanguard-ftse-canadian-high-dividend-yield-index-etf"
+        },
+        {
+          "fund": "FCIV",
+          "date": "2026-10-16",
+          "url": "https://www.fidelity.ca/en/products/etfs/fciv/"
+        },
+        {
+          "fund": "XMI",
+          "date": "2026-10-16",
+          "url": "https://www.blackrock.com/ca/investors/en/products/239625/ishares-msci-eafe-minimum-volatility-index-etf"
+        },
+        {
+          "fund": "CGL.C",
+          "date": "2026-10-16",
+          "url": "https://www.blackrock.com/ca/investors/en/products/241528/ishares-gold-bullion-etf"
+        },
+        {
+          "fund": "ZEO",
+          "date": "2026-10-16",
+          "url": "https://1a48a761-fbab-4d1f-8302-ed4f7cabbcee-funds-sites.livedoc.transmissionmedia.ca/etf-pdf?__accept=text/html&documentType=pdf&exportType=&locale=en-US&profileId=ZEO-a"
+        },
+        {
+          "fund": "ZEB",
+          "date": "2026-10-16",
+          "url": "https://1a48a761-fbab-4d1f-8302-ed4f7cabbcee-funds-sites.livedoc.transmissionmedia.ca/etf-pdf?__accept=text/html&documentType=pdf&exportType=&locale=en-US&profileId=ZEB-a"
+        },
+        {
+          "fund": "RUD",
+          "date": "2026-10-16",
+          "url": "https://www.rbcgam.com/en/ca/products/etfs/RUD/detail"
+        }
+      ],
+      "estimated": true
+    },
+    "8": {
+      "stock_count": 8452,
+      "top10": [
+        {
+          "id": "royalbankcanada",
+          "name": "Banque Royale du Canada",
+          "weight": 0.02840865,
+          "contributions": {
+            "FEQT": 0.0076,
+            "FINN": 0.00109,
+            "VCN": 0.01971865
+          }
+        },
+        {
+          "id": "torontodominionbank",
+          "name": "Banque TD",
+          "weight": 0.019412505,
+          "contributions": {
+            "FEQT": 0.0054800000000000005,
+            "VMO": 0.000066855,
+            "VCN": 0.01386565
+          }
+        },
+        {
+          "id": "nvidia",
+          "name": "NVIDIA",
+          "weight": 0.019395005,
+          "contributions": {
+            "FEQT": 0.00924,
+            "FINN": 0.01007,
+            "VMO": 0.00008500499999999999
+          }
+        },
+        {
+          "id": "apple",
+          "name": "Apple",
+          "weight": 0.01623,
+          "contributions": {
+            "FEQT": 0.01068,
+            "FINN": 0.00555
+          }
+        },
+        {
+          "id": "microsoft",
+          "name": "Microsoft",
+          "weight": 0.015620000000000002,
+          "contributions": {
+            "FEQT": 0.007040000000000001,
+            "FINN": 0.00858
+          }
+        },
+        {
+          "id": "shopify",
+          "name": "Shopify",
+          "weight": 0.015130349999999999,
+          "contributions": {
+            "FEQT": 0.00132,
+            "FINN": 0.0008,
+            "VCN": 0.013010349999999999
+          }
+        },
+        {
+          "id": "alphabet",
+          "name": "Alphabet",
+          "weight": 0.014734105,
+          "contributions": {
+            "FEQT": 0.0037599999999999995,
+            "FINN": 0.00966,
+            "VMO": 0.0013141049999999999
+          }
+        },
+        {
+          "id": "amazon",
+          "name": "Amazon",
+          "weight": 0.013640000000000001,
+          "contributions": {
+            "FEQT": 0.0034000000000000002,
+            "FINN": 0.01024
+          }
+        },
+        {
+          "id": "taiwansemiconductormanufacturing",
+          "name": "Taiwan Semiconductor (TSMC)",
+          "weight": 0.013144755,
+          "contributions": {
+            "FINN": 0.005340000000000001,
+            "VEE": 0.007804755
+          }
+        },
+        {
+          "id": "bankmontreal",
+          "name": "Banque de Montréal",
+          "weight": 0.011908525,
+          "contributions": {
+            "FEQT": 0.0034400000000000003,
+            "VCN": 0.008468525
+          }
+        }
+      ],
+      "top10_weight": 0.16762389500000002,
+      "equity_covered": 0.9680413500000157,
+      "date_min": "2026-06-30",
+      "date_max": "2026-10-16",
+      "sources": [
+        {
+          "fund": "FEQT",
+          "date": "2026-06-30",
+          "url": "https://www.fidelity.ca/en/products/etfs/feqt/"
+        },
+        {
+          "fund": "FINN",
+          "date": "2026-06-30",
+          "url": "https://www.fidelity.ca/en/products/etfs/finn/"
+        },
+        {
+          "fund": "VEE",
+          "date": "2026-09-30",
+          "url": "https://fund-docs.vanguard.com/VEE_FTSE_Emerging_Markets_All_Cap_Index_ETF_9556_FS_EN_CA.pdf"
+        },
+        {
+          "fund": "XEF",
+          "date": "2026-10-16",
+          "url": "https://www.blackrock.com/ca/investors/en/products/251421/ishares-msci-eafe-imi-index-etf"
+        },
+        {
+          "fund": "VMO",
+          "date": "2026-06-30",
+          "url": "https://www.vanguard.ca/en/product/etf/equity/9835/vanguard-global-momentum-factor-etf"
+        },
+        {
+          "fund": "VCN",
+          "date": "2026-09-30",
+          "url": "https://www.vanguard.ca/en/product/etf/equity/9561/vanguard-ftse-canada-all-cap-index-etf"
+        }
+      ],
+      "estimated": true
+    },
+    "9": {
+      "stock_count": 8452,
+      "top10": [
+        {
+          "id": "nvidia",
+          "name": "NVIDIA",
+          "weight": 0.023331674999999996,
+          "contributions": {
+            "FEQT": 0.008084999999999998,
+            "FINN": 0.015104999999999999,
+            "VMO": 0.000141675
+          }
+        },
+        {
+          "id": "royalbankcanada",
+          "name": "Banque Royale du Canada",
+          "weight": 0.02011619,
+          "contributions": {
+            "FEQT": 0.00665,
+            "FINN": 0.001635,
+            "VCN": 0.01183119
+          }
+        },
+        {
+          "id": "alphabet",
+          "name": "Alphabet",
+          "weight": 0.019970175000000003,
+          "contributions": {
+            "FEQT": 0.0032899999999999995,
+            "FINN": 0.01449,
+            "VMO": 0.002190175
+          }
+        },
+        {
+          "id": "microsoft",
+          "name": "Microsoft",
+          "weight": 0.01903,
+          "contributions": {
+            "FEQT": 0.00616,
+            "FINN": 0.01287
+          }
+        },
+        {
+          "id": "amazon",
+          "name": "Amazon",
+          "weight": 0.018335,
+          "contributions": {
+            "FEQT": 0.002975,
+            "FINN": 0.01536
+          }
+        },
+        {
+          "id": "apple",
+          "name": "Apple",
+          "weight": 0.017669999999999998,
+          "contributions": {
+            "FEQT": 0.009345,
+            "FINN": 0.008324999999999999
+          }
+        },
+        {
+          "id": "taiwansemiconductormanufacturing",
+          "name": "Taiwan Semiconductor (TSMC)",
+          "weight": 0.015814755,
+          "contributions": {
+            "FINN": 0.00801,
+            "VEE": 0.007804755
+          }
+        },
+        {
+          "id": "torontodominionbank",
+          "name": "Banque TD",
+          "weight": 0.013225814999999998,
+          "contributions": {
+            "FEQT": 0.004795,
+            "VMO": 0.000111425,
+            "VCN": 0.00831939
+          }
+        },
+        {
+          "id": "shopify",
+          "name": "Shopify",
+          "weight": 0.010161209999999999,
+          "contributions": {
+            "FEQT": 0.001155,
+            "FINN": 0.0012,
+            "VCN": 0.007806209999999999
+          }
+        },
+        {
+          "id": "bankmontreal",
+          "name": "Banque de Montréal",
+          "weight": 0.008091115,
+          "contributions": {
+            "FEQT": 0.0030099999999999997,
+            "VCN": 0.005081115
+          }
+        }
+      ],
+      "top10_weight": 0.16574593500000004,
+      "equity_covered": 0.9702669400000175,
+      "date_min": "2026-06-30",
+      "date_max": "2026-10-16",
+      "sources": [
+        {
+          "fund": "FEQT",
+          "date": "2026-06-30",
+          "url": "https://www.fidelity.ca/en/products/etfs/feqt/"
+        },
+        {
+          "fund": "FINN",
+          "date": "2026-06-30",
+          "url": "https://www.fidelity.ca/en/products/etfs/finn/"
+        },
+        {
+          "fund": "VEE",
+          "date": "2026-09-30",
+          "url": "https://fund-docs.vanguard.com/VEE_FTSE_Emerging_Markets_All_Cap_Index_ETF_9556_FS_EN_CA.pdf"
+        },
+        {
+          "fund": "XEF",
+          "date": "2026-10-16",
+          "url": "https://www.blackrock.com/ca/investors/en/products/251421/ishares-msci-eafe-imi-index-etf"
+        },
+        {
+          "fund": "VMO",
+          "date": "2026-06-30",
+          "url": "https://www.vanguard.ca/en/product/etf/equity/9835/vanguard-global-momentum-factor-etf"
+        },
+        {
+          "fund": "VCN",
+          "date": "2026-09-30",
+          "url": "https://www.vanguard.ca/en/product/etf/equity/9561/vanguard-ftse-canada-all-cap-index-etf"
+        }
+      ],
+      "estimated": true
+    },
+    "10": {
+      "stock_count": 809,
+      "top10": [
+        {
+          "id": "royalbankcanada",
+          "name": "Banque Royale du Canada",
+          "weight": 0.024068070000000004,
+          "contributions": {
+            "FBAL": 0.00826,
+            "VDY": 0.015808070000000004
+          }
+        },
+        {
+          "id": "apple",
+          "name": "Apple",
+          "weight": 0.01963,
+          "contributions": {
+            "FBAL": 0.011689999999999999,
+            "ZNQ": 0.007940000000000001
+          }
+        },
+        {
+          "id": "nvidia",
+          "name": "NVIDIA",
+          "weight": 0.01832,
+          "contributions": {
+            "FBAL": 0.01015,
+            "ZNQ": 0.00817
+          }
+        },
+        {
+          "id": "torontodominionbank",
+          "name": "Banque TD",
+          "weight": 0.01706577,
+          "contributions": {
+            "FBAL": 0.00595,
+            "VDY": 0.01111577
+          }
+        },
+        {
+          "id": "microsoft",
+          "name": "Microsoft",
+          "weight": 0.01392,
+          "contributions": {
+            "FBAL": 0.0077,
+            "ZNQ": 0.00622
+          }
+        },
+        {
+          "id": "enbridge",
+          "name": "Enbridge",
+          "weight": 0.01298227,
+          "contributions": {
+            "FBAL": 0.0028,
+            "VDY": 0.00593227,
+            "ZEO": 0.00425
+          }
+        },
+        {
+          "id": "canadiannaturalresources",
+          "name": "Canadian Natural Resources",
+          "weight": 0.012270699999999999,
+          "contributions": {
+            "FBAL": 0.0020299999999999997,
+            "VDY": 0.0055157,
+            "ZEO": 0.004725
+          }
+        },
+        {
+          "id": "suncorenergy",
+          "name": "Suncor Énergie",
+          "weight": 0.01143777,
+          "contributions": {
+            "FBAL": 0.0016799999999999999,
+            "VDY": 0.00462777,
+            "ZEO": 0.00513
+          }
+        },
+        {
+          "id": "bankmontreal",
+          "name": "Banque de Montréal",
+          "weight": 0.01049906,
+          "contributions": {
+            "FBAL": 0.0037099999999999998,
+            "VDY": 0.0067890599999999995
+          }
+        },
+        {
+          "id": "alphabet",
+          "name": "Alphabet",
+          "weight": 0.01024,
+          "contributions": {
+            "FBAL": 0.00413,
+            "ZNQ": 0.006110000000000001
+          }
+        }
+      ],
+      "top10_weight": 0.15043364,
+      "equity_covered": 0.6513169200000041,
+      "date_min": "2026-06-30",
+      "date_max": "2026-10-16",
+      "sources": [
+        {
+          "fund": "FBAL",
+          "date": "2026-06-30",
+          "url": "https://www.fidelity.ca/en/products/etfs/fbal/"
+        },
+        {
+          "fund": "ZNQ",
+          "date": "2026-10-16",
+          "url": "https://www.bmoetfs.ca/etfs/znq-bmo-nasdaq-100-equity-index-etf"
+        },
+        {
+          "fund": "VDY",
+          "date": "2026-09-30",
+          "url": "https://www.vanguard.ca/en/product/etf/equity/9560/vanguard-ftse-canadian-high-dividend-yield-index-etf"
+        },
+        {
+          "fund": "ZEO",
+          "date": "2026-10-16",
+          "url": "https://1a48a761-fbab-4d1f-8302-ed4f7cabbcee-funds-sites.livedoc.transmissionmedia.ca/etf-pdf?__accept=text/html&documentType=pdf&exportType=&locale=en-US&profileId=ZEO-a"
+        },
+        {
+          "fund": "CGL.C",
+          "date": "2026-10-16",
+          "url": "https://www.blackrock.com/ca/investors/en/products/241528/ishares-gold-bullion-etf"
+        }
+      ],
+      "estimated": true
+    },
+    "11": {
+      "stock_count": 1000,
+      "top10": [
+        {
+          "id": "royalbankcanada",
+          "name": "Banque Royale du Canada",
+          "weight": 0.03610891200000001,
+          "contributions": {
+            "FGRO": 0.009616999999999999,
+            "FINN": 0.001199,
+            "VDY": 0.025292912000000004
+          }
+        },
+        {
+          "id": "torontodominionbank",
+          "name": "Banque TD",
+          "weight": 0.024688232,
+          "contributions": {
+            "FGRO": 0.0069029999999999985,
+            "VDY": 0.017785232
+          }
+        },
+        {
+          "id": "nvidia",
+          "name": "NVIDIA",
+          "weight": 0.022817999999999998,
+          "contributions": {
+            "FGRO": 0.011741,
+            "FINN": 0.011077
+          }
+        },
+        {
+          "id": "apple",
+          "name": "Apple",
+          "weight": 0.019674999999999998,
+          "contributions": {
+            "FGRO": 0.013569999999999999,
+            "FINN": 0.006105
+          }
+        },
+        {
+          "id": "microsoft",
+          "name": "Microsoft",
+          "weight": 0.018347000000000002,
+          "contributions": {
+            "FGRO": 0.008909,
+            "FINN": 0.009438
+          }
+        },
+        {
+          "id": "amazon",
+          "name": "Amazon",
+          "weight": 0.01563,
+          "contributions": {
+            "FGRO": 0.004366,
+            "FINN": 0.011264000000000001
+          }
+        },
+        {
+          "id": "alphabet",
+          "name": "Alphabet",
+          "weight": 0.015404999999999999,
+          "contributions": {
+            "FGRO": 0.004779,
+            "FINN": 0.010626
+          }
+        },
+        {
+          "id": "bankmontreal",
+          "name": "Banque de Montréal",
+          "weight": 0.015228496,
+          "contributions": {
+            "FGRO": 0.004366,
+            "VDY": 0.010862496
+          }
+        },
+        {
+          "id": "banknovascotia",
+          "name": "Banque Scotia",
+          "weight": 0.014077103999999998,
+          "contributions": {
+            "FGRO": 0.003776,
+            "VDY": 0.010301103999999998
+          }
+        },
+        {
+          "id": "canadianimperialbankcommerce",
+          "name": "Banque CIBC",
+          "weight": 0.013077872,
+          "contributions": {
+            "FGRO": 0.003776,
+            "VDY": 0.009301872000000001
+          }
+        }
+      ],
+      "top10_weight": 0.19505561600000001,
+      "equity_covered": 0.8293840719999976,
+      "date_min": "2026-06-30",
+      "date_max": "2026-10-16",
+      "sources": [
+        {
+          "fund": "FGRO",
+          "date": "2026-06-30",
+          "url": "https://www.fidelity.ca/en/products/etfs/fgro/"
+        },
+        {
+          "fund": "FINN",
+          "date": "2026-06-30",
+          "url": "https://www.fidelity.ca/en/products/etfs/finn/"
+        },
+        {
+          "fund": "VDY",
+          "date": "2026-09-30",
+          "url": "https://www.vanguard.ca/en/product/etf/equity/9560/vanguard-ftse-canadian-high-dividend-yield-index-etf"
+        },
+        {
+          "fund": "XMI",
+          "date": "2026-10-16",
+          "url": "https://www.blackrock.com/ca/investors/en/products/239625/ishares-msci-eafe-minimum-volatility-index-etf"
+        },
+        {
+          "fund": "CGL.C",
+          "date": "2026-10-16",
+          "url": "https://www.blackrock.com/ca/investors/en/products/241528/ishares-gold-bullion-etf"
+        }
+      ],
+      "estimated": true
+    }
+  }
+}

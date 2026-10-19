@@ -34,6 +34,30 @@ async function check(browser, engine) {
   await go("analyses");
   const fundReport = page.frameLocator("#fundAnalysisFrame");
   await fundReport.locator('html[data-ready="true"]').waitFor();
+  assert.equal(await fundReport.locator('.nav [data-tab]').first().textContent(), "Vue d’ensemble");
+  assert.equal(await fundReport.locator("#allPortfolios").isVisible(), true);
+  assert.equal(await fundReport.locator("#allPortfolioBody tr").count(), 14);
+  assert.equal(await fundReport.locator("#allPortfolioBody [data-open-portfolio]").count(), 11);
+  assert.equal(await fundReport.locator("[data-preference]").count(), 9);
+  assert.equal(await fundReport.locator('[data-preference="5"]').first().textContent().then(t=>t.includes("Élan")), true);
+  assert.equal(await fundReport.locator('[data-preference="10"], [data-preference="11"]').count(), 0);
+  await fundReport.locator("#referenceSelect").selectOption("VBAL");
+  assert.equal(await fundReport.locator('#allPortfolioBody tr').filter({has:fundReport.locator('[data-open-portfolio="10"]')}).locator('td').nth(3).textContent(), "0,94");
+  await fundReport.locator("#referenceSelect").selectOption("VEQT");
+  await fundReport.locator('[data-overview-benchmark="FBAL"]').check();
+  assert.equal(await fundReport.locator("#allPortfolioBody tr").count(), 15);
+  await fundReport.locator('[data-overview-benchmark="FBAL"]').uncheck();
+  await fundReport.locator('[data-all-sort="cagr"]').click();
+  assert.equal(await fundReport.locator("#allPortfolioBody [data-open-portfolio]").first().getAttribute("data-open-portfolio"), "7");
+  await fundReport.locator('[data-all-sort="rank"]').click();
+  assert.equal(await fundReport.locator("#allPortfolioBody [data-open-portfolio]").first().getAttribute("data-open-portfolio"), "5");
+  await fundReport.locator('#allPortfolioBody [data-open-portfolio="2"]').click();
+  assert.equal(await fundReport.locator('[data-fiche="2"] .holdings-section').isVisible(), true);
+  for (let id=1;id<=11;id++) {
+    assert.equal(await fundReport.locator('[data-fiche="'+id+'"] .holdings-section tbody tr').count(), 10);
+    assert.ok((await fundReport.locator('[data-fiche="'+id+'"] .holdings-count').textContent()).includes("sociétés"));
+  }
+  await fundReport.locator('.nav [data-tab="overview"]').click();
   const fundNames = ["Horizon", "Équilibre", "Tempo", "Latitude", "Élan", "Synergie", "Conviction", "Dynamique 110", "Audace 120", "60/40", "80/20"];
   for (const [index, name] of fundNames.entries()) {
     const id = String(index + 1);

@@ -32,7 +32,7 @@ const SavyFnb = (() => {
     const text = (x, y, s, attrs = "") => `<text x="${x}" y="${y}" ${attrs}>${escape(s)}</text>`;
     const line = (x1, y1, x2, y2, attrs = "") => `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#E5EBF0" ${attrs}/>`;
     const svg = (body, W, H, title) => `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${escape(title)}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" fill="#fff"/>${body}</svg>`;
-    let capital = 10000, reference = "VEQT", summary = "2", focus = "2", axis = "vol", month = D.dates.length, sortKey = null, descending = true, activeView = "overview";
+    let capital = 10000, reference = "VEQT", summary = "2", focus = "2", axis = "vol", month = D.dates.length, sortKey = null, descending = true, activeView = "allPortfolios", allSort = null, allDescending = true;
     const relative = k => relativeMetrics(R[k], R[reference], D.assumptions.risk_free);
     const metric = (k, key) => ["beta", "treynor", "information", "tracking_error", "vol_diff", "cagr_gap"].includes(key) ? relative(k)[key] : R[k][key];
     const selectedIds = chart => [...document.querySelectorAll('#' + (chart === "risk" ? "compass" : "capital") + ' [data-series]:checked')].map(n => n.dataset.series);
@@ -114,6 +114,18 @@ const SavyFnb = (() => {
       order.push(...benchmarks.filter(k=>chosen.has(k)));
       $("statsBody").innerHTML=order.map(k=>`<tr class="${benchmarks.includes(k)?'benchmark':''}"><th scope="row">${custom.includes(k)?`<button class="stats-open" data-open-portfolio="${k}">`:''}${dot(k)}${escape(name(k))}${custom.includes(k)?'</button>':''}</th>${keys.map(key=>`<td>${key==='end'?money(R[k].end*capital/10000):['beta','sharpe','information'].includes(key)?number(metric(k,key)):pct(metric(k,key),key==='mer'?2:1)}</td>`).join("")}</tr>`).join("");
       document.querySelectorAll("[data-sort]").forEach(n=>n.closest("th").setAttribute("aria-sort",n.dataset.sort===sortKey?(descending?"descending":"ascending"):"none"));
+      renderAllPortfolios();
+    }
+    function renderAllPortfolios() {
+      const body=$("allPortfolioBody");if(!body)return;
+      const ranking=new Map((D.preference_ranking?.entries||[]).map(e=>[e.id,e.rank]));
+      const selected=[...document.querySelectorAll("[data-overview-benchmark]:checked")].map(n=>n.dataset.overviewBenchmark);
+      const keys=["cagr","vol","beta","sharpe","information","treynor","tracking_error","vol_diff","max_drawdown","mer"];
+      let order=[...custom];
+      if(allSort)order.sort((a,b)=>{const va=allSort==="rank"?(ranking.get(a)??99):allSort==="stocks"?(D.lookthrough?.results[a]?.stock_count??0):metric(a,allSort),vb=allSort==="rank"?(ranking.get(b)??99):allSort==="stocks"?(D.lookthrough?.results[b]?.stock_count??0):metric(b,allSort);return((va??-Infinity)-(vb??-Infinity))*(allDescending?-1:1);});
+      order.push(...selected);
+      body.innerHTML=order.map(k=>{const own=custom.includes(k),holdings=D.lookthrough?.results[k];return `<tr class="${own?'':'benchmark'}"><td class="rank-cell">${ranking.has(k)?ranking.get(k):'—'}</td><th scope="row">${own?`<button class="stats-open" data-open-portfolio="${k}">`:''}${dot(k)}${escape(name(k))}${own?'</button>':''}</th>${keys.map(key=>`<td>${['beta','sharpe','information'].includes(key)?number(metric(k,key)):pct(metric(k,key),key==='mer'?2:1)}</td>`).join('')}<td>${holdings?'≈ '+number(holdings.stock_count,0):'—'}</td><td>${holdings?pct(holdings.top10_weight):'—'}</td></tr>`;}).join("");
+      document.querySelectorAll("[data-all-sort]").forEach(n=>n.closest("th").setAttribute("aria-sort",n.dataset.allSort===allSort?(allDescending?"descending":"ascending"):"none"));
     }
     function drawGeo() {
       const W=Math.max(320,width("geoSvg")),H=168,l=12,r=12,bar=W-l-r,colors=["#285E96","#3C8F81","#81A4BA","#9A89BD","#C09B48","#A67BA2","#576979"];let body="";
@@ -128,8 +140,8 @@ const SavyFnb = (() => {
       document.querySelectorAll("[data-exposure-name]").forEach(n=>{n.textContent=name(focus);});drawGeo();
     }
     function switchView(id) {
-      if(!["overview","exposures","portfolios","methods"].includes(id))id="overview";activeView=id;
-      document.querySelector(".dashboard-toolbar").hidden=!["overview","exposures"].includes(id);
+      if(!["allPortfolios","overview","exposures","portfolios","methods"].includes(id))id="allPortfolios";activeView=id;
+      document.querySelector(".dashboard-toolbar").hidden=!["allPortfolios","overview","exposures"].includes(id);
       $("summaryFocus").closest(".field").hidden=id!=="overview";
       document.querySelectorAll("[data-dashboard-view]").forEach(n=>{n.hidden=n.id!==id;});
       document.querySelectorAll(".nav [data-tab]").forEach(n=>{const on=n.dataset.tab===id;n.classList.toggle("active",on);if(on)n.setAttribute("aria-current","page");else n.removeAttribute("aria-current");});
@@ -148,6 +160,7 @@ const SavyFnb = (() => {
       if(target.dataset.preset)setPreset(target.dataset.preset,target.closest("#compass")?"risk":"growth");
       if(target.hasAttribute("data-copy-risk")){const chosen=selectedIds("risk");$("capital").querySelectorAll("[data-series]").forEach(n=>{n.checked=chosen.includes(n.dataset.series);});refreshCharts();}
       if(target.dataset.sort){descending=sortKey===target.dataset.sort?!descending:true;sortKey=target.dataset.sort;statsRows();}
+      if(target.dataset.allSort){allDescending=allSort===target.dataset.allSort?!allDescending:target.dataset.allSort!=="rank";allSort=target.dataset.allSort;renderAllPortfolios();}
       if(target.dataset.openPortfolio)openPortfolio(target.dataset.openPortfolio);
       if(target.matches(".risk-point")){const k=target.dataset.portfolio,q=R[k];$("riskDetail").innerHTML=`<b>${escape(name(k))}</b> · ${pct(q.cagr)} rendement · ${pct(q.vol)} vol. · Sharpe ${number(q.sharpe)} ${custom.includes(k)?`<button data-open-portfolio="${k}">Fiche ↗</button>`:''}`;}
       if(target.id==="metricsCsv"){const keys=["cagr","vol","beta","sharpe","information","treynor","tracking_error","vol_diff","max_drawdown","mer","end"];download("SAVY_Ratios.csv",csv([["Référence",reference],["Portefeuille",...keys],...ids.map(k=>[name(k),...keys.map(key=>key==="end"?R[k].end*capital/10000:metric(k,key))])]),"text/csv;charset=utf-8");}
@@ -161,6 +174,7 @@ const SavyFnb = (() => {
     document.addEventListener("change",event=>{
       const el=event.target;
       if(el.matches("[data-series]"))refreshCharts();
+      if(el.matches("[data-overview-benchmark]"))renderAllPortfolios();
       if(el.id==="summaryFocus"){summary=el.value;drawSummary();}
       if(el.id==="referenceSelect"){reference=el.value;for(const section of ["compass","capital"])$(section).querySelector('[data-series="'+reference+'"]').checked=true;drawSummary();refreshCharts();drawSector();$("riskDetail").textContent="Pointillés : "+reference;}
       if(el.id==="tableScope")statsRows();
@@ -175,7 +189,7 @@ const SavyFnb = (() => {
       const rect=panel.getBoundingClientRect();panel.style.left=Math.min(0,window.innerWidth-12-rect.right)+"px";
     },true);
     if(typeof ResizeObserver!=="undefined"){const widths=new Map();let timer;const observer=new ResizeObserver(entries=>{let changed=false;for(const e of entries)if(e.contentRect.width>0&&Math.abs((widths.get(e.target)||0)-e.contentRect.width)>1){widths.set(e.target,e.contentRect.width);changed=true;}if(changed){cancelAnimationFrame(timer);timer=requestAnimationFrame(()=>{if(activeView==="overview"){drawRisk();drawGrowth();}else if(activeView==="exposures")drawGeo();});}});["riskSvg","growthSvg","geoSvg"].forEach(id=>observer.observe($(id)));}
-    document.documentElement.classList.remove("no-js");drawSummary();syncSelection();statsRows();drawRisk();drawGrowth();drawSector();switchView("overview");document.documentElement.dataset.ready="true";
+    document.documentElement.classList.remove("no-js");drawSummary();syncSelection();statsRows();drawRisk();drawGrowth();drawSector();switchView("allPortfolios");document.documentElement.dataset.ready="true";
   }
   return {relativeMetrics,parseCapital,start};
 })();
