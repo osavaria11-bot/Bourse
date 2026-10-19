@@ -27,6 +27,6 @@ test("French capital entry supports spaces, comma decimals and CAD without accep
 });
 
 test("fund labels cover every portfolio holding and comparator without changing numeric data", () => {
-  const tickers=new Set([...D.funds,...D.order.filter(k=>!D.custom_order.includes(k)),...Object.values(D.results).flatMap(row=>Object.keys(row.weights||{}))]);
+  const tickers=new Set([...D.funds,...D.benchmark_order,...Object.values(D.results).flatMap(row=>Object.keys(row.weights||{}))]);
   for(const ticker of tickers){assert.ok(D.fund_labels[ticker]?.name,ticker);assert.equal(D.fund_labels[ticker].description.trim().split(/\s+/).length,2,ticker);assert.match(D.fund_labels[ticker].source_url,/^https:\/\//);}
 });

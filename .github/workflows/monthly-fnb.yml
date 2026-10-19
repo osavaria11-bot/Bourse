@@ -1,0 +1,98 @@
+name: Monthly FNB optimization
+
+on:
+  schedule:
+    # First execution on the 1st; cheap daily checks retry incomplete issuer releases.
+    - cron: "37 7 * * *"
+      timezone: "America/Toronto"
+  workflow_dispatch:
+  push:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/monthly-fnb.yml"
+      - "scripts/monthly_fnb.py"
+      - "scripts/fnb_sources.py"
+      - "scripts/build_monthly_fnb.cjs"
+      - "scripts/requirements-fnb.txt"
+      - "data/fnb-model.json"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: macro-data-refresh
+  cancel-in-progress: false
+
+jobs:
+  research:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - name: Checkout current main
+        uses: actions/checkout@v6
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: "24"
+      - name: Check monthly publication and preserved data
+        id: due
+        run: |
+          python scripts/monthly_fnb.py --check
+          echo "due=$(python scripts/monthly_fnb.py --due)" >> "$GITHUB_OUTPUT"
+      - name: Install numerical research dependencies
+        if: steps.due.outputs.due == 'true'
+        run: python -m pip install --requirement scripts/requirements-fnb.txt
+      - name: Verify financial research and source guards
+        run: python -m unittest discover -s tests -p 'test_monthly_fnb.py' -v
+      - name: Research using fresh issuer data
+        if: steps.due.outputs.due == 'true'
+        id: optimize
+        continue-on-error: true
+        run: python scripts/monthly_fnb.py
+      - name: Validate generated financial data
+        if: steps.optimize.outcome == 'success'
+        run: |
+          python scripts/monthly_fnb.py --check
+          node --test tests/fnb-dashboard-utils.test.cjs tests/fnb-holdings-utils.test.cjs
+      - name: Preserve immutable snapshots and publish the complete update
+        if: steps.optimize.outcome == 'success' || steps.optimize.outcome == 'failure'
+        env:
+          RESEARCH_OUTCOME: ${{ steps.optimize.outcome }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if [ "$RESEARCH_OUTCOME" = 'success' ]; then
+            git add data/fnb-analysis.json data/fnb-holdings.json data/fnb-lookthrough.json data/fnb-history data/fnb-status.json reports/portefeuilles-fnb.html reports/fnb-history
+            git diff --cached --name-only --diff-filter=M -- data/fnb-history/ reports/fnb-history/ | python -c 'import sys; paths=[p.strip() for p in sys.stdin if p.strip() and not p.strip().endswith("/index.json")]; assert not paths, "Refusing to overwrite immutable archives: " + str(paths)'
+          else
+            # Only retry status may change on failure, never a partial analysis.
+            git add data/fnb-status.json
+            echo "::warning::ETF sources incomplete. Last validated analysis preserved; automatic retry tomorrow."
+          fi
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "chore: publish monthly FNB research and source status"
+          git pull --rebase origin main
+          git push origin HEAD:main
+      - name: Monthly research summary
+        if: always()
+        env:
+          DUE: ${{ steps.due.outputs.due }}
+          RESEARCH_OUTCOME: ${{ steps.optimize.outcome }}
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          status = json.loads(Path('data/fnb-status.json').read_text())
+          message = f"SAVY FNB: {status['status']} · latest validated month {status.get('month', 'none')}. "
+          message += "Allocations unchanged; monthly archives immutable. "
+          message += "This month already published; no duplicate research." if os.environ['DUE'] == 'false' else "Next attempt is automatic if a source is incomplete."
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as f: f.write(message + '\n')
+          PY

@@ -5,6 +5,7 @@ const root=path.resolve(__dirname,".."),reportPath=path.join(root,"reports/porte
 let html=fs.readFileSync(reportPath,"utf8");
 const dataPattern=/(<script[^>]*id="analysis"[^>]*>)([\s\S]*?)(<\/script>)/;
 const D=JSON.parse(html.match(dataPattern)[2]),snapshot=JSON.parse(fs.readFileSync(path.join(root,"data/fnb-holdings.json"),"utf8"));
+if(D.optimization){require("./build_monthly_fnb.cjs");process.exit(0);}
 const results=Object.fromEntries(D.custom_order.map(k=>[k,consolidate(D.results[k].weights,snapshot.funds)]));
 const lookthrough={retrieved_at:snapshot.retrieved_at,method:"Poids cibles des FNB × poids officiels des actions. Classes et doublons regroupés par émetteur; nombre estimatif. Or, obligations, crypto, liquidités et dérivés exclus.",results};
 fs.writeFileSync(path.join(root,"data/fnb-lookthrough.json"),JSON.stringify(lookthrough,null,2)+"\n");
