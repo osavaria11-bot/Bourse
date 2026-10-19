@@ -2,11 +2,11 @@
   "schema_version": 1,
   "kind": "polymarket_events",
   "provider": "polymarket",
-  "generated_at": "2026-10-19T17:04:54.363604Z",
+  "generated_at": "2026-10-19T17:10:49.884914Z",
   "groups": {
     "finance": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-19T17:04:54.363604Z",
+      "fetched_at": "2026-10-19T17:10:49.884914Z",
       "ranking": "volume",
       "events": [
         {
@@ -14,8 +14,8 @@
           "slug": "how-many-fed-rate-cuts-in-2026",
           "title": "How many Fed rate cuts in 2026?",
           "url": "https://polymarket.com/event/how-many-fed-rate-cuts-in-2026",
-          "volume": 54513628.211127,
-          "volume_24h": 18965.268833000002,
+          "volume": 54513629.971126996,
+          "volume_24h": 18971.273833,
           "ends_at": "2027-01-01T04:59:00Z",
           "outcomes": [
             {
@@ -37,8 +37,8 @@
           "slug": "fed-decision-in-october-20260617190323537",
           "title": "Fed Decision in October?",
           "url": "https://polymarket.com/event/fed-decision-in-october-20260617190323537",
-          "volume": 49569839.205177,
-          "volume_24h": 4149613.2343309997,
+          "volume": 49571124.57964,
+          "volume_24h": 4117869.1096409997,
           "ends_at": "2026-10-29T03:59:00Z",
           "outcomes": [
             {
@@ -82,7 +82,7 @@
     },
     "popular": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-19T17:04:54.363604Z",
+      "fetched_at": "2026-10-19T17:10:49.884914Z",
       "ranking": "volume24hr",
       "events": [
         {
@@ -90,19 +90,19 @@
           "slug": "us-iran-ceasefire-continues-throughptptpt",
           "title": "US-Iran ceasefire continues through...?",
           "url": "https://polymarket.com/event/us-iran-ceasefire-continues-throughptptpt",
-          "volume": 17830787.757549997,
-          "volume_24h": 1391056.325137,
+          "volume": 17857226.451184,
+          "volume_24h": 1415071.476233,
           "ends_at": "2026-10-31T23:59:00Z",
           "outcomes": [
             {
               "label": "October 22",
-              "probability": 0.736,
+              "probability": 0.6695,
               "market_id": "5686979",
               "ends_at": "2026-10-23T03:59:00Z"
             },
             {
               "label": "October 24",
-              "probability": 0.715,
+              "probability": 0.64,
               "market_id": "5686977",
               "ends_at": "2026-10-25T03:59:00Z"
             }
@@ -113,8 +113,8 @@
           "slug": "republican-presidential-nominee-2028",
           "title": "Republican Presidential Nominee 2028",
           "url": "https://polymarket.com/event/republican-presidential-nominee-2028",
-          "volume": 713615128.792687,
-          "volume_24h": 868497.901271,
+          "volume": 713615163.754542,
+          "volume_24h": 868478.741176,
           "ends_at": "2028-11-08T04:59:00Z",
           "outcomes": [
             {
@@ -136,8 +136,8 @@
           "slug": "next-french-presidential-election",
           "title": "Next French Presidential Election",
           "url": "https://polymarket.com/event/next-french-presidential-election",
-          "volume": 153841140.194139,
-          "volume_24h": 808770.567936,
+          "volume": 153858256.46413898,
+          "volume_24h": 744767.838283,
           "ends_at": "2027-04-19T03:59:00Z",
           "outcomes": [
             {
@@ -159,8 +159,8 @@
           "slug": "who-will-be-the-next-prime-minister-of-israel-after-the-next-election",
           "title": "Prime Minister of Israel after the next election?",
           "url": "https://polymarket.com/event/who-will-be-the-next-prime-minister-of-israel-after-the-next-election",
-          "volume": 48896369.739912,
-          "volume_24h": 568918.6903299999,
+          "volume": 48898080.982618004,
+          "volume_24h": 566473.132816,
           "ends_at": "2026-10-28T03:59:00Z",
           "outcomes": [
             {
@@ -182,8 +182,8 @@
           "slug": "elon-musk-of-tweets-october-13-october-20-2026",
           "title": "Elon Musk # tweets October 13 - October 20, 2026?",
           "url": "https://polymarket.com/event/elon-musk-of-tweets-october-13-october-20-2026",
-          "volume": 1759329.589304,
-          "volume_24h": 414880.966652,
+          "volume": 1764720.814599,
+          "volume_24h": 415988.608605,
           "ends_at": "2026-10-20T16:00:00Z",
           "outcomes": [
             {
@@ -194,7 +194,7 @@
             },
             {
               "label": "360-379",
-              "probability": 0.2325,
+              "probability": 0.232,
               "market_id": "5479392",
               "ends_at": "2026-10-20T16:00:00Z"
             }
@@ -204,7 +204,7 @@
     },
     "trending": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-19T17:04:54.363604Z",
+      "fetched_at": "2026-10-19T17:10:49.884914Z",
       "ranking": "volume24hr",
       "events": [
         {
@@ -217,14 +217,14 @@
           "ends_at": "2026-10-20T00:15:00Z",
           "outcomes": [
             {
-              "label": "Both Teams to Score Points - 1Q",
-              "probability": 0.57,
-              "market_id": "5639111",
+              "label": "Both Teams to Score Points - 2Q",
+              "probability": 0.59,
+              "market_id": "5639112",
               "ends_at": "2026-10-20T00:15:00Z"
             },
             {
               "label": "Both Teams to Score Points - 4Q",
-              "probability": 0.54,
+              "probability": 0.59,
               "market_id": "5639114",
               "ends_at": "2026-10-20T00:15:00Z"
             }
@@ -241,13 +241,13 @@
           "outcomes": [
             {
               "label": "Harry Kane",
-              "probability": 0.6895,
+              "probability": 0.6875,
               "market_id": "608547",
               "ends_at": "2027-01-01T04:59:00Z"
             },
             {
               "label": "Lamine Yamal",
-              "probability": 0.2435,
+              "probability": 0.2315,
               "market_id": "608545",
               "ends_at": "2027-01-01T04:59:00Z"
             }
