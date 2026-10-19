@@ -20,6 +20,8 @@ const SavyFnb = (() => {
     return Number.isFinite(value) && value >= 1 && value <= 1e9 ? value : null;
   }
   function start(document) {
+    try {document.documentElement.dataset.theme = window.parent !== window ? window.parent.document.documentElement.dataset.theme : JSON.parse(localStorage.getItem("savy:preferences:v2") || "{}").theme || "dark";} catch {document.documentElement.dataset.theme = "dark";}
+
     const D = JSON.parse(document.getElementById("analysis").textContent), R = D.results;
     const ids = D.order, custom = D.custom_order, benchmarks = ["VBAL", "VGRO", "VEQT", "FBAL", "FGRO", "FEQT"];
     const $ = id => document.getElementById(id), escape = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -30,8 +32,8 @@ const SavyFnb = (() => {
     const name = k => custom.includes(k) ? short(k) + " · " + R[k].short_name : k;
     const dot = k => '<span class="dot" style="background:' + R[k].color + '"></span>';
     const text = (x, y, s, attrs = "") => `<text x="${x}" y="${y}" ${attrs}>${escape(s)}</text>`;
-    const line = (x1, y1, x2, y2, attrs = "") => `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="#E5EBF0" ${attrs}/>`;
-    const svg = (body, W, H, title) => `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${escape(title)}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" fill="#fff"/>${body}</svg>`;
+    const line = (x1, y1, x2, y2, attrs = "") => `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="var(--grid)" ${attrs}/>`;
+    const svg = (body, W, H, title) => `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${escape(title)}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" fill="var(--surface)"/>${body}</svg>`;
     let capital = 10000, reference = "VEQT", summary = "2", focus = "2", axis = "vol", month = D.dates.length, sortKey = null, descending = true, activeView = "allPortfolios", allSort = null, allDescending = true;
     const relative = k => relativeMetrics(R[k], R[reference], D.assumptions.risk_free);
     const metric = (k, key) => ["beta", "treynor", "information", "tracking_error", "vol_diff", "cagr_gap"].includes(key) ? relative(k)[key] : R[k][key];
@@ -65,7 +67,7 @@ const SavyFnb = (() => {
       const low = Math.min(...vals), high = Math.max(...vals), pad = (high - low) * .16 || .1;
       const xmin = Math.max(0, low - pad), xmax = high + pad, ymin = Math.min(...ids.map(k => R[k].cagr)) - .025, ymax = Math.max(...ids.map(k => R[k].cagr)) + .025;
       const x = v => p.l + (v - xmin) / (xmax - xmin) * w, y = v => H - p.b - (v - ymin) / (ymax - ymin) * h;
-      let body = text(p.l, 13, "Rendement annualisé", 'fill="#637B8B" font-size="10"');
+      let body = text(p.l, 13, "Rendement annualisé", 'fill="var(--muted)" font-size="10"');
       for (let i = 0; i <= 4; i++) {const v = ymin + i / 4 * (ymax - ymin); body += line(p.l,y(v),W-p.r,y(v)) + text(p.l-7,y(v)+4,pct(v,0),'text-anchor="end"');}
       for (let i = 0; i <= 4; i++) {const v = xmin + i / 4 * (xmax - xmin);body += text(x(v),H-p.b+20,axis === "vol" ? pct(v,1) : number(v,2),'text-anchor="middle"');}
       const rx = x(axis === "vol" ? R[reference].vol : 1), ry = y(R[reference].cagr);
@@ -82,7 +84,7 @@ const SavyFnb = (() => {
         }
         if (chosen.has(k)) boxes.push({x:xx+best[0],y:yy+best[1]-10,w:tw,h:13});
         const desc = name(k) + " · rendement " + pct(q.cagr) + " · volatilité " + pct(q.vol) + " · bêta / " + reference + " " + number(relative(k).beta);
-        body += `<g class="risk-point" data-portfolio="${k}" tabindex="0" role="button" aria-label="${escape(desc)}"><title>${escape(desc)}</title><circle cx="${xx}" cy="${yy}" r="5" fill="${q.color}" stroke="#fff" stroke-width="1.5"/>${text(xx+best[0],yy+best[1],label,`fill="${q.color}" font-weight="700"`)}</g>`;
+        body += `<g class="risk-point" data-portfolio="${k}" tabindex="0" role="button" aria-label="${escape(desc)}"><title>${escape(desc)}</title><circle cx="${xx}" cy="${yy}" r="5" fill="${q.color}" stroke="var(--surface)" stroke-width="1.5"/>${text(xx+best[0],yy+best[1],label,`fill="${q.color}" font-weight="700"`)}</g>`;
       }
       $("riskSvg").innerHTML = svg(body,W,H,"Boussole risque et rendement");
     }
@@ -166,7 +168,7 @@ const SavyFnb = (() => {
       if(target.id==="metricsCsv"){const keys=["cagr","vol","beta","sharpe","information","treynor","tracking_error","vol_diff","max_drawdown","mer","end"];download("SAVY_Ratios.csv",csv([["Référence",reference],["Portefeuille",...keys],...ids.map(k=>[name(k),...keys.map(key=>key==="end"?R[k].end*capital/10000:metric(k,key))])]),"text/csv;charset=utf-8");}
       if(target.id==="monthlyCsv")download("SAVY_Rendements_Mensuels.csv",csv([["Mois",...ids.map(name)],...D.dates.map((date,i)=>[date,...ids.map(k=>R[k].monthly[i])])]),"text/csv;charset=utf-8");
       if(target.id==="analysisJson")download("SAVY_Analyse.json",JSON.stringify({...D,interface_state:{reference,capital,risk_selected:selectedIds("risk"),growth_selected:selectedIds("growth")}},null,2),"application/json");
-      if(target.id==="riskDownload"||target.id==="growthDownload"){const chart=target.id==="riskDownload"?"risk":"growth",chosen=new Set(selectedIds(chart)),node=$(chart==="risk"?"riskSvg":"growthSvg").querySelector("svg").cloneNode(true);node.setAttribute("style","font:11px Arial,sans-serif;fill:#536F80");node.querySelectorAll("[data-portfolio]").forEach(n=>{if(!chosen.has(n.dataset.portfolio))n.remove();else n.setAttribute("display","inline");});download("SAVY_"+chart+".svg",node.outerHTML,"image/svg+xml;charset=utf-8");}
+      if(target.id==="riskDownload"||target.id==="growthDownload"){const chart=target.id==="riskDownload"?"risk":"growth",chosen=new Set(selectedIds(chart)),node=$(chart==="risk"?"riskSvg":"growthSvg").querySelector("svg").cloneNode(true);const original=$(chart==="risk"?"riskSvg":"growthSvg").querySelector("svg"), originals=[original,...original.querySelectorAll("*")], copies=[node,...node.querySelectorAll("*")];copies.forEach((copy,i)=>{const style=window.getComputedStyle(originals[i]);for(const key of ["fill","stroke","stroke-width","stroke-dasharray","font-family","font-size","font-weight"])copy.style.setProperty(key,style.getPropertyValue(key));});node.querySelectorAll("[data-portfolio]").forEach(n=>{if(!chosen.has(n.dataset.portfolio))n.remove();else n.setAttribute("display","inline");});download("SAVY_"+chart+".svg",node.outerHTML,"image/svg+xml;charset=utf-8");}
       if(target.id==="printReport")window.print();
     });
     document.addEventListener("keydown",event=>{if(event.target.matches?.(".risk-point")&&["Enter"," "].includes(event.key)){event.preventDefault();event.target.dispatchEvent(new MouseEvent("click",{bubbles:true}));}});

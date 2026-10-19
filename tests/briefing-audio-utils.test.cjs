@@ -92,7 +92,7 @@ function manifestFor(b) {
   const n = U.narration(b);
   return {schema_version: 1, kind: "briefing_audio", text: n.text,
     src: "data/audio/briefing-" + "a".repeat(24) + ".mp3", duration: n.chapters.length * 20,
-    voice_label: "Sylvie · Français (Canada)",
+    voice: "fr-CA-AntoineNeural", voice_label: "Antoine · Français (Canada)",
     chapters: n.chapters.map((chapter, index) => ({...chapter, time_start: index * 20, time_end: (index + 1) * 20}))};
 }
 class Media extends EventTarget {
@@ -149,4 +149,11 @@ test("A late MP3 preserves current speech and becomes active on the next resume"
 });
 test("High quality French voices are preferred for device fallback", () => {
   assert.equal(U.preferredVoice([{lang: "fr-CA", name: "Basic"}, {lang: "fr-FR", name: "Thomas (Premium)"}]).name, "Thomas (Premium)");
+});
+
+test("male French voices take priority and old female narration is not reused", () => {
+  const male = {lang:"fr-CA", name:"Microsoft Antoine Online (Natural)"};
+  assert.equal(U.preferredVoice([{lang:"fr-CA", name:"Microsoft Sylvie Online (Natural)", default:true}, male]), male);
+  const b = oralEdition(), n = U.narration(b), old = manifestFor(b); old.voice = "fr-CA-SylvieNeural";
+  assert.equal(U.audioManifest(old, n), null);
 });

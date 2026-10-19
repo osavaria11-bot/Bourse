@@ -3,6 +3,8 @@
   const C = window.YieldCurveUtils, U = window.MacroUtils, $ = selector => document.querySelector(selector);
   const CACHE = "savy:yield-curves:v1", PREFS = "savy:yield-curve-dates:v2", LEGACY_PREFS = "savy:yield-curve-dates:v1";
   let data = null, cached = false, dates = null, pending = null, models = [];
+  let followLatest = true, preset = "1M";
+  const MODE_PREFS = "savy:yield-curve-mode:v1";
   const selected = new Map();
   function stored(key) {try {return JSON.parse(localStorage.getItem(key));} catch {return null;}}
   function save(key, value) {try {localStorage.setItem(key, JSON.stringify(value));} catch { /* Current view remains usable. */ }}
@@ -13,7 +15,7 @@
   function validDates(value) {return value && value.a && value.b && Object.keys(value).every(key => C.DATE_KEYS.includes(key) && U.isDate(value[key]) && value[key] >= C.START && value[key] <= C.localDay());}
   function savedDates(value) {const pair = value && {a: value.a, b: value.b}; return validDates(pair) ? pair : null;}
   function enableControls(enabled) {
-    for (const node of document.querySelectorAll(".yield-date-controls input,.yield-date-controls button")) node.disabled = !enabled;
+    for (const node of document.querySelectorAll(".yield-date-controls input,.yield-date-controls button,#yieldFollowLatest")) node.disabled = !enabled;
   }
   function applyDates(value, persist = true) {
     if (!validDates(value)) {
@@ -23,7 +25,9 @@
     }
     dates = {...value}; $("#yieldDateError").hidden = true;
     for (const [key, id] of [["a", "#yieldDateA"], ["b", "#yieldDateB"]]) {$(id).value = dates[key]; $(id).setAttribute("aria-invalid", "false");}
-    if (persist) save(PREFS, dates);
+    if (persist) {save(PREFS, dates); save(MODE_PREFS, {followLatest, preset});}
+    $("#yieldFollowLatest").checked = followLatest;
+    for (const button of document.querySelectorAll("[data-yield-preset]")) button.setAttribute("aria-pressed", String(followLatest && button.dataset.yieldPreset === preset));
     render(); return true;
   }
   function dateLabel(snapshot, requested) {
@@ -77,8 +81,9 @@
       sources.append(el("p", "meta", "Échéances espacées uniformément sur l’axe horizontal. Les lignes relient les taux publiés; aucun taux manquant n’est estimé.")); card.append(sources); fragment.append(card);
     }
     $("#yieldCurveGrid").replaceChildren(fragment);
-    $("#yieldStatus").textContent = (cached ? "Copie conservée dans ce navigateur · " : "") + "Collecte du " + U.timestampLabel(data.generated_at) + " · historique depuis 2016 · " + data.countries.map(country => country.id + " : " + (country.history.at(-1)?.[0] || "indisponible")).join(" · ");
-    $("#yieldStatus").classList.toggle("warning", cached || data.countries.some(country => country.fetch_status !== "fresh"));
+    const oldCollection = Date.now() - U.parseTimestamp(data.generated_at) > 36 * 3600000;
+    $("#yieldStatus").textContent = (cached ? "Copie conservée dans ce navigateur · " : "") + "Vérification du " + U.timestampLabel(data.generated_at) + (oldCollection ? " · collecte ancienne" : "") + " · " + (followLatest ? "Dernières publications suivies" : "Dates fixes") + " · " + data.countries.map(country => country.id + " : " + (country.history.at(-1)?.[0] || "indisponible")).join(" · ");
+    $("#yieldStatus").classList.toggle("warning", cached || oldCollection || data.countries.some(country => country.fetch_status !== "fresh"));
     drawCharts();
     if (focusedCountry) $("#yieldChart" + focusedCountry + " svg")?.focus({preventScroll: true});
   }
@@ -129,6 +134,7 @@
   async function refresh() {
     if (pending) return pending;
     pending = (async () => {
+      const previousData = data || stored(CACHE);
       const controller = new AbortController(), timer = setTimeout(() => controller.abort(), 15000);
       try {
         const response = await fetch("data/yield-curves.json?v=" + Date.now(), {cache: "no-store", signal: controller.signal});
@@ -145,15 +151,35 @@
       if (!dates) {
         const saved = stored(PREFS), legacy = stored(LEGACY_PREFS), defaults = C.defaults(data);
         if (!defaults) {enableControls(false); $("#yieldStatus").textContent = "Aucune observation collectée."; return;}
-        applyDates(savedDates(saved) || savedDates(legacy) || defaults);
+        const mode = stored(MODE_PREFS);
+        if (mode && typeof mode.followLatest === "boolean") {
+          followLatest = mode.followLatest;
+          if ([...document.querySelectorAll("[data-yield-preset]")].some(button => button.dataset.yieldPreset === mode.preset)) preset = mode.preset;
+        } else {
+          // Old saved date pairs could silently freeze the current curve indefinitely.
+          // Keep explicitly selected historical comparisons; migrate prior current dates to tracking.
+          const pair = savedDates(saved) || savedDates(legacy);
+          const source = previousData || data, bases = [source];
+          const latest = source?.countries?.map(country => country.history?.at(-1)?.[0]).filter(Boolean).sort() || [];
+          // Previous releases anchored B to the earlier country. Recognize those presets too.
+          if (pair && pair.b === latest[0]) bases.push({...source, countries: source.countries.map(country => ({...country, history: country.history.filter(row => row[0] <= pair.b)}))});
+          const inferred = [...document.querySelectorAll("[data-yield-preset]")].map(button => button.dataset.yieldPreset).find(key => {
+            return bases.some(base => {try {const test = C.defaults(base, key); return pair && pair.a === test?.a && pair.b === test?.b;} catch {return false;}});
+          });
+          followLatest = !pair || Boolean(inferred);
+          if (inferred) preset = inferred;
+        }
+        applyDates(followLatest ? C.defaults(data, preset) : savedDates(saved) || savedDates(legacy) || defaults);
       }
+      else if (followLatest) applyDates(C.defaults(data, preset));
       else render();
     })();
     try {await pending;} finally {pending = null;}
   }
-  for (const id of ["#yieldDateA", "#yieldDateB"]) $(id).addEventListener("change", () => applyDates({...dates, a: $("#yieldDateA").value, b: $("#yieldDateB").value}));
-  $("#yieldSwap").addEventListener("click", () => {if (dates) applyDates({...dates, a: dates.b, b: dates.a});});
-  for (const button of document.querySelectorAll("[data-yield-preset]")) button.addEventListener("click", () => {if (data) applyDates({...dates, ...C.defaults(data, button.dataset.yieldPreset)});});
+  for (const id of ["#yieldDateA", "#yieldDateB"]) $(id).addEventListener("change", () => {const before = followLatest; followLatest = false; if (!applyDates({a: $("#yieldDateA").value, b: $("#yieldDateB").value})) followLatest = before;});
+  $("#yieldSwap").addEventListener("click", () => {if (dates) {followLatest = false; applyDates({a: dates.b, b: dates.a});}});
+  for (const button of document.querySelectorAll("[data-yield-preset]")) button.addEventListener("click", () => {if (data) {preset = button.dataset.yieldPreset; followLatest = true; applyDates(C.defaults(data, preset));}});
+  $("#yieldFollowLatest").addEventListener("change", event => {followLatest = event.target.checked; if (data && dates) applyDates(followLatest ? C.defaults(data, preset) : dates);});
   if (typeof ResizeObserver !== "undefined") new ResizeObserver(() => drawCharts()).observe($("#yieldCurveGrid"));
   enableControls(false); window.SavyYieldCurves = {refresh};
 })();

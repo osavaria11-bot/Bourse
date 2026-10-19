@@ -33,7 +33,7 @@
       state.state === "error" ? "La lecture s’est interrompue. Relance-la avec le bouton de lecture." : state.state === "ended" ? "Briefing terminé." :
       state.natural ? "Voix naturelle · Français canadien" : "Français · voix de l’appareil";
     $("briefingAudioStatus").textContent = status;
-    $("briefingAudioNote").textContent = state.natural ? "Sylvie · voix de synthèse en français canadien. " +
+    $("briefingAudioNote").textContent = state.natural ? state.voice + " · voix masculine naturelle. " +
       (state.adapted ? "Une version écrite spécialement pour l’écoute." : "Le briefing et son analyse en audio.") :
       "La voix de l’appareil prend le relais lorsque l’audio naturel n’est pas disponible. Garde cette page ouverte pendant l’écoute.";
   }

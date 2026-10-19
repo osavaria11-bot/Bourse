@@ -98,9 +98,9 @@ async function main() {
       card.querySelector(".kpi-value").getBoundingClientRect().top - card.getBoundingClientRect().top));
     assert.ok(Math.max(...offsets) - Math.min(...offsets) < 1, "Summary values must align below their labels at " + width + "px: " + JSON.stringify(offsets));
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
-    await page.locator("#indicatorSelect").scrollIntoViewIfNeeded();
-    for (const id of await page.locator("#indicatorSelect option").evaluateAll(options => options.map(option => option.value))) {
-      await page.locator("#indicatorSelect").selectOption(id);
+    await page.locator("#grid").scrollIntoViewIfNeeded();
+    for (const id of await page.locator(".indicator-card").evaluateAll(cards => cards.map(card => card.dataset.id))) {
+      await page.locator('.indicator-card[data-id="' + id + '"]').scrollIntoViewIfNeeded();
       const overflow = await page.locator('.indicator-card[data-id="' + id + '"]').evaluate(card => {
         const bounds = card.getBoundingClientRect();
         return [...card.querySelectorAll(".current-value,.change,.meta,a,button")].filter(node => {

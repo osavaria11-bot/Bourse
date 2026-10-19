@@ -2,7 +2,7 @@
   "use strict";
   const R = window.SavyPortalUtils, U = window.MacroUtils, $ = selector => document.querySelector(selector);
   const main = $("main"), pages = new Map(), panels = new Map();
-  let active = R.route(location.hash), marketId = "SPX", macroId = "VIXCLS", compare = false, macroPage = 0;
+  let active = R.route(location.hash), marketId = "SPX", allMarkets = false;
   let expanded = null, marketData = null;
   const icons = {
     accueil: '<path d="m3 10 9-7 9 7v11h-6v-8H9v8H3z"/>',
@@ -126,11 +126,16 @@
   const fundAnalysis = pane("analyses", "overview"), fundHeading = el("div", "portal-section-heading"), fundTitle = el("div");
   fundTitle.append(el("h2", "", "Portefeuilles FNB"));
   const fundFullScreen = el("a", "button quiet", "Ouvrir en plein écran ↗");
-  fundFullScreen.href = "reports/portefeuilles-fnb.html?v=20261019-ensemble"; fundFullScreen.target = "_blank"; fundFullScreen.rel = "noopener noreferrer";
+  fundFullScreen.href = "reports/portefeuilles-fnb.html?v=20261019-task1"; fundFullScreen.target = "_blank"; fundFullScreen.rel = "noopener noreferrer";
   fundHeading.append(fundTitle, fundFullScreen);
   const fundFrame = el("iframe", "portal-report-frame"); fundFrame.id = "fundAnalysisFrame";
   fundFrame.title = "Analyse des 11 portefeuilles FNB : ratios, boussole et évolution des placements";
-  fundFrame.addEventListener("load", () => fundFrame.contentDocument?.documentElement.classList.add("in-dashboard"));
+  function syncReportTheme() {
+    const root = fundFrame.contentDocument?.documentElement;
+    if (root) {root.classList.add("in-dashboard"); root.dataset.theme = document.documentElement.dataset.theme;}
+  }
+  fundFrame.addEventListener("load", syncReportTheme);
+  new MutationObserver(syncReportTheme).observe(document.documentElement, {attributes: true, attributeFilter: ["data-theme"]});
   fundAnalysis.append(fundHeading, fundFrame);
 
   const dashboard = pane("dashboard", "overview"), dashboardMoves = [];
@@ -150,20 +155,13 @@
 
   const marketTools = el("div", "portal-chart-tools");
   const marketLabel = el("label", "", "Marché"), marketSelect = el("select"); marketSelect.id = "marketSelect"; marketLabel.append(marketSelect);
-  marketTools.append(marketLabel); const marketExpand = el("button", "button quiet", "Agrandir ↗"); marketExpand.type = "button"; marketExpand.id = "marketExpand"; marketTools.append(marketExpand);
+  const marketAll = el("button", "button quiet", "Voir tous les indices"); marketAll.type = "button"; marketAll.id = "marketShowAll"; marketAll.setAttribute("aria-pressed", "false");
+  marketAll.addEventListener("click", () => {allMarkets = !allMarkets; syncMarkets(); window.dispatchEvent(new Event("resize"));});
+  marketTools.append(marketLabel, marketAll); const marketExpand = el("button", "button quiet", "Agrandir ↗"); marketExpand.type = "button"; marketExpand.id = "marketExpand"; marketTools.append(marketExpand);
   $("#marketGrid").before(marketTools);
   const marketLayout = el("div", "portal-market-layout"); $("#marketGrid").before(marketLayout);
   const watchlist = el("div", "portal-market-watchlist"); watchlist.id = "marketWatchlist"; watchlist.setAttribute("aria-label", "Choisir un marché"); marketLayout.append(watchlist, $("#marketGrid"));
   marketSelect.addEventListener("change", () => selectMarket(marketSelect.value));
-  const macroTools = el("div", "portal-chart-tools");
-  const macroLabel = el("label", "", "Indicateur"), macroSelect = el("select"); macroSelect.id = "indicatorSelect"; macroLabel.append(macroSelect);
-  const compareButton = el("button", "button quiet", "Comparer les graphiques"); compareButton.type = "button"; compareButton.id = "macroCompare"; compareButton.setAttribute("aria-pressed", "false");
-  const paging = el("div", "portal-paging"); paging.id = "macroPaging";
-  const previous = el("button", "button quiet", "← Précédents"), next = el("button", "button quiet", "Suivants →"); previous.type = next.type = "button";
-  paging.append(previous, next); macroTools.append(macroLabel, compareButton, paging); $("#grid").before(macroTools);
-  macroSelect.addEventListener("change", () => {macroId = macroSelect.value; syncIndicators();});
-  compareButton.addEventListener("click", () => {compare = !compare; macroPage = 0; syncIndicators();});
-  previous.addEventListener("click", () => {macroPage--; syncIndicators();}); next.addEventListener("click", () => {macroPage++; syncIndicators();});
   const portfolioExpand = el("button", "button quiet", "Agrandir ↗"); portfolioExpand.type = "button"; portfolioExpand.id = "portfolioExpand"; $(".portfolio-period-controls").append(portfolioExpand);
 
   const dialog = el("dialog", "portal-expand"); dialog.id = "expandDialog"; dialog.setAttribute("aria-labelledby", "expandTitle");
@@ -182,21 +180,15 @@
   portfolioExpand.addEventListener("click", () => expand(shared, "Portefeuille · vue détaillée", portfolioExpand));
 
   function syncIndicators() {
-    const all = active.page === "dashboard"; macroTools.hidden = all;
-    const cards = [...$("#grid").children], options = document.createDocumentFragment();
-    for (const card of cards) {const option = el("option", "", card.querySelector("h3")?.textContent || card.dataset.id); option.value = card.dataset.id; options.append(option);}
-    if (!cards.some(card => card.dataset.id === macroId)) macroId = cards[0]?.dataset.id || "";
-    macroSelect.replaceChildren(options); macroSelect.value = macroId; macroSelect.disabled = !cards.length;
-    macroPage = Math.max(0, Math.min(macroPage, Math.ceil(cards.length / 6) - 1));
-    cards.forEach((card, index) => {card.hidden = !all && (compare ? index < macroPage * 6 || index >= (macroPage + 1) * 6 : card.dataset.id !== macroId);});
-    $("#grid").classList.toggle("portal-compare", compare || all); compareButton.setAttribute("aria-pressed", String(compare));
-    compareButton.textContent = compare ? "Un seul graphique" : "Comparer les graphiques"; paging.hidden = !compare || cards.length <= 6;
-    previous.disabled = macroPage === 0; next.disabled = (macroPage + 1) * 6 >= cards.length;
-    macroLabel.hidden = compare;
+    for (const card of $("#grid").children) card.hidden = false;
+    $("#grid").classList.add("portal-compare", "portal-macro-all");
   }
-  function selectMarket(id) {marketId = id; syncMarkets();}
+  function selectMarket(id) {marketId = id; allMarkets = false; syncMarkets();}
   function syncMarkets() {
-    const all = active.page === "dashboard"; marketTools.hidden = all; watchlist.hidden = all;
+    const dashboard = active.page === "dashboard", all = dashboard || allMarkets;
+    marketTools.hidden = dashboard; watchlist.hidden = all; marketLabel.hidden = all;
+    marketLayout.classList.toggle("portal-all-markets", all);
+    marketAll.setAttribute("aria-pressed", String(allMarkets)); marketAll.textContent = allMarkets ? "Revenir à la sélection" : "Voir tous les indices";
     const cards = [...$("#marketGrid").children]; marketSelect.replaceChildren(); watchlist.replaceChildren();
     for (const card of cards) {
       const id = card.dataset.id, title = card.querySelector("h4").textContent;
@@ -261,7 +253,7 @@
     for (const item of document.querySelectorAll(".portal-tabs a")) {if (item.dataset.tab === active.tab && item.closest(".portal-page").dataset.page === active.page) item.setAttribute("aria-current", "page"); else item.removeAttribute("aria-current");}
     document.title = "SAVY · " + R.PAGES[active.page].label;
     document.body.dataset.page = active.page;
-    if (active.page === "analyses" && !fundFrame.hasAttribute("src")) fundFrame.src = "reports/portefeuilles-fnb.html?v=20261019-ensemble";
+    if (active.page === "analyses" && !fundFrame.hasAttribute("src")) fundFrame.src = "reports/portefeuilles-fnb.html?v=20261019-task1";
     $("#portfolioManage").hidden = all || active.tab === "positions";
     syncIndicators(); syncMarkets();
     window.scrollTo({top: 0, behavior: "instant"}); window.dispatchEvent(new Event("resize"));

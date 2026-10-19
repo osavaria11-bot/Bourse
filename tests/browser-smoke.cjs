@@ -62,7 +62,7 @@ const server = http.createServer((request, response) => {
     response.writeHead(200, {"Content-Type": "application/json"});
     response.end(JSON.stringify({schema_version: 1, kind: "briefing_audio", text: n.text,
       src: "data/audio/briefing-" + "a".repeat(24) + ".mp3", duration: n.chapters.length * 20,
-      voice_label: "Sylvie · Français (Canada)",
+      voice: "fr-CA-AntoineNeural", voice_label: "Antoine · Français (Canada)",
       chapters: n.chapters.map((chapter, index) => ({...chapter, time_start: index * 20, time_end: (index + 1) * 20}))}));
     return;
   }
@@ -177,7 +177,7 @@ async function run() {
     await naturalPage.goto(url); await waitCount(naturalPage, indicatorCount);
     await naturalPage.waitForFunction(() => window.SavyBriefingAudio?.snapshot().natural);
     assert.match(await naturalPage.locator("#briefingAudioStatus").innerText(), /Voix naturelle/);
-    assert.match(await naturalPage.locator("#briefingAudioNote").innerText(), /Sylvie/);
+    assert.match(await naturalPage.locator("#briefingAudioNote").innerText(), /Antoine/);
     assert.equal(await naturalPage.evaluate(() => window.__savyNaturalTest.plays), 0, "Natural audio never autoplays");
     await naturalPage.locator("#briefingAudioPlay").click();
     assert.equal(await naturalPage.evaluate(() => window.SavyBriefingAudio.snapshot().engine), "neural");
@@ -447,13 +447,14 @@ async function run() {
     eveningOdds.decisions[0].as_of = "2026-10-14";
     await oddsPage.reload();
     await oddsPage.waitForFunction(() => document.querySelectorAll(".odds-card").length === 2);
-    assert.equal(await fedOdds.locator(".odds-bars").count(), 0, "A genuine future source date must remain hidden");
-    assert.match(await fedOdds.innerText(), /Cotes à jour indisponibles/);
+    assert.equal(await fedOdds.locator(".odds-bars").count(), 1, "Keep the prior valid observation when the new source date is invalid");
+    assert.match(await fedOdds.innerText(), /cotes du 2026-10-13.*dernière valeur conservée/);
+    assert.doesNotMatch(await fedOdds.innerText(), /cotes du 2026-10-14/);
     assert.equal(await canadaOdds.locator(".odds-line").count(), 3, "One invalid bank must not hide the other");
     eveningOdds.decisions[0].as_of = "2026-10-12"; eveningOdds.decisions[0].status = "cached";
     await oddsPage.reload();
     await oddsPage.waitForFunction(() => document.querySelectorAll(".odds-bars").length === 2);
-    assert.match(await fedOdds.innerText(), /cotes du 2026-10-12 · dernière valeur conservée/);
+    assert.match(await fedOdds.innerText(), /cotes du 2026-10-13.*dernière valeur conservée/);
     await oddsContext.close();
     assert.deepEqual(errors, []);
     console.log("Browser checks passed: " + indicatorCount + " macro cards, live FX, both policy rates and meeting odds, Quebec evening UTC odds rollover, sourced selective briefing, offline preservation and 320px mobile.");

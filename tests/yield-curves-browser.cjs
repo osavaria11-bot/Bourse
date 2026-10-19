@@ -111,6 +111,15 @@ async function main() {
       assert.deepEqual(await legacyPage.evaluate(() => JSON.parse(localStorage.getItem("savy:yield-curve-dates:v2"))), {a: "2026-10-09", b: "2026-10-14"});
       assert.equal(await legacyPage.locator("#yieldDateC,#yieldDateD,#yieldDateE").count(), 0); await legacyContext.close();
     }
+    const trackingContext = await browser.newContext(), trackingPage = await componentPage(trackingContext);
+    await trackingContext.addInitScript(payload => {
+      localStorage.setItem("savy:yield-curves:v1", JSON.stringify(payload));
+      localStorage.setItem("savy:yield-curve-dates:v2", JSON.stringify({a:"2026-09-14",b:"2026-10-14"}));
+    }, {...fixture,countries:fixture.countries.map((country,index)=>index?country:{...country,history:[...country.history,["2026-10-15",...country.history.at(-1).slice(1)]]})});
+    await trackingPage.route("https://**", route=>route.abort());
+    await trackingPage.goto(base); await trackingPage.waitForFunction(()=>document.querySelectorAll(".yield-curve-card").length===2);
+    assert.equal(await trackingPage.locator("#yieldFollowLatest").isChecked(),true,"Legacy presets migrate to automatic tracking even when countries published on different dates");
+    await trackingContext.close();
     offline = true; await page.evaluate(() => window.SavyYieldCurves.refresh());
     assert.match(await page.locator("#yieldStatus").innerText(), /Copie conservée/); await check(page, "2026-09-14", "2026-10-14");
     offline = false; malformed = true; await page.evaluate(() => window.SavyYieldCurves.refresh());
@@ -120,6 +129,27 @@ async function main() {
     empty.on("pageerror", error => errors.push(error.message)); await empty.goto(base); await empty.waitForFunction(() => document.querySelector("#yieldStatus").textContent.includes("Courbes indisponibles"));
     assert.equal(await empty.locator("#yieldDateA").isDisabled(), true); assert.equal(await empty.locator("#yieldCurveGrid svg").count(), 0);
     assert.equal(requests.some(url => /portfolio-key=|positions=/.test(url)), false); assert.deepEqual(errors, []);
+    offline = false;
+    await page.locator('[data-yield-preset="1M"]').click();
+    const addDay = day => fixture.countries[0].history.push([day, ...fixture.countries[0].history.at(-1).slice(1).map(v=>v===null?null:v+.01)]);
+    addDay("2026-10-15");
+    await page.evaluate(() => window.SavyYieldCurves.refresh());
+    assert.equal(await page.locator("#yieldDateB").inputValue(), "2026-10-15", "Automatic comparison advances on a new publication");
+    assert.equal(await page.locator("#yieldFollowLatest").isChecked(), true);
+    assert.match(await page.locator('[data-yield-country="CA"] .yield-chart-legend').innerText(), /2026-10-14 \(demandé : 2026-10-15\)/);
+    await setDates(page, "2026-09-14", "2026-10-14");
+    assert.equal(await page.locator("#yieldFollowLatest").isChecked(), false);
+    addDay("2026-10-16");
+    await page.evaluate(() => window.SavyYieldCurves.refresh());
+    assert.equal(await page.locator("#yieldDateB").inputValue(), "2026-10-14", "Manual historical dates stay fixed");
+    await page.reload(); await page.waitForFunction(() => document.querySelectorAll(".yield-curve-card").length === 2);
+    assert.equal(await page.locator("#yieldDateB").inputValue(), "2026-10-14");
+    await page.locator("#yieldFollowLatest").check();
+    assert.equal(await page.locator("#yieldDateB").inputValue(), "2026-10-16");
+    await page.reload(); await page.waitForFunction(() => document.querySelectorAll(".yield-curve-card").length === 2);
+    assert.equal(await page.locator("#yieldFollowLatest").isChecked(), true);
+    assert.equal(await page.locator("#yieldDateB").inputValue(), "2026-10-16");
+    assert.deepEqual(errors, []);
     await context.close(); await blank.close();
     console.log("Yield curve browser checks passed: only A/B with all nine presets, prior saved dates migrated, exact tables and basis points, real observation dates on weekends, missing-tenor gaps, keyboard/pointer controls, swapped dates, invalid/no-history dates, both themes, independent offline/cache handling and all presets accessible at 320/375/768px.");
   } finally {await browser.close(); server.close();}

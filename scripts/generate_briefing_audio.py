@@ -18,7 +18,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-VOICE = "fr-CA-SylvieNeural"
+VOICE = "fr-CA-AntoineNeural"
 RATE = "-3%"
 
 
@@ -131,7 +131,7 @@ async def generate(content: dict, output: Path) -> dict:
             raise ValueError("Narration size outside expected limits")
         manifest = {"schema_version": 1, "kind": "briefing_audio", "edition_date": content["edition_date"],
                     "generated_at": datetime.now(timezone.utc).isoformat(), "voice": VOICE, "rate": RATE,
-                    "voice_label": "Sylvie · Français (Canada)", "src": "data/audio/" + filename,
+                    "voice_label": "Antoine · Français (Canada)", "src": "data/audio/" + filename,
                     "text": content["text"], "adapted": content.get("adapted", False), "duration": total,
                     "audio_sha256": digest(audio_bytes), "chapters": timings}
         # Publish the complete audio before its manifest, both atomically.

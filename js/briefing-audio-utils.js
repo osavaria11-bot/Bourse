@@ -58,12 +58,13 @@
   }
   function preferredVoice(voices) {
     const french = (voices || []).filter(voice => /^fr(?:[-_]|$)/i.test(voice.lang || ""));
-    const score = voice => (/neural|natural|premium|enhanced|amélior|superieur|supérieur/i.test(voice.name || "") ? 100 : 0) +
+    const score = voice => (/\b(antoine|jean|thierry|thomas|henri|rémy|remy|claude|mathieu|nicolas|fabrice)\b/i.test(voice.name || "") ? 1000 : 0) +
+      (/neural|natural|premium|enhanced|amélior|superieur|supérieur/i.test(voice.name || "") ? 100 : 0) +
       (/^fr[-_]CA$/i.test(voice.lang) ? 20 : 0) + (voice.default ? 5 : 0);
     return french.sort((a, b) => score(b) - score(a))[0] || null;
   }
   function audioManifest(value, content) {
-    if (!content || !value || value.schema_version !== 1 || value.kind !== "briefing_audio" || value.text !== content.text ||
+    if (!content || !value || value.schema_version !== 1 || value.kind !== "briefing_audio" || value.voice !== "fr-CA-AntoineNeural" || value.text !== content.text ||
         !/^data\/audio\/briefing-[a-f0-9]{24}\.mp3$/.test(value.src || "") ||
         !Number.isFinite(value.duration) || value.duration <= 0 || value.duration > 7200 ||
         !Array.isArray(value.chapters) || value.chapters.length !== content.chapters.length) return null;

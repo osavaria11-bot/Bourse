@@ -67,11 +67,13 @@
     if (!available.length) return null;
     const last = available.map(country => country.history.filter(row => row.slice(1).some(U.validNumber)).at(-1)?.[0]).filter(Boolean);
     if (!last.length) return null;
-    const b = last.sort()[0];
+    // Use the newest published curve, even if the other country is one session behind.
+    // snapshot() shows the effective date independently for each country.
+    const b = last.sort().at(-1);
     if (preset === "1D" || preset === "1W") {
       const boundary = new Date(Date.parse(b) - (preset === "1D" ? 1 : 7) * 86400000).toISOString().slice(0, 10);
       // A daily comparison uses the previous published session, including holidays.
-      const previous = preset === "1D" ? available.map(country => snapshot(country, boundary)?.date).filter(Boolean).sort()[0] : null;
+      const previous = preset === "1D" ? available.map(country => snapshot(country, boundary)?.date).filter(Boolean).sort().at(-1) : null;
       return {b, a: previous || boundary};
     }
     return {b, a: preset === "YTD" ? (Number(b.slice(0, 4)) - 1) + "-12-31" : U.rangeStart(b, preset)};

@@ -9,18 +9,18 @@
   <meta name="apple-mobile-web-app-title" content="SAVY" />
   <title>SAVY — Tableau macroéconomique</title>
   <link rel="stylesheet" href="css/dashboard.css?v=20261017-poly8" />
-  <link rel="stylesheet" href="css/portal.css?v=20261019-dashboard" />
+  <link rel="stylesheet" href="css/portal.css?v=20261019-task1" />
   <script src="js/macro-utils.js?v=20261017-portal" defer></script>
   <script src="js/portal-utils.js?v=20261019-fnb" defer></script>
-  <script src="js/portal.js?v=20261019-ensemble" defer></script>
+  <script src="js/portal.js?v=20261019-task1" defer></script>
   <script src="js/fear-greed-utils.js?v=20261017-fear-timeline" defer></script>
   <script src="js/fear-greed.js?v=20261017-fear-timeline" defer></script>
   <script src="js/polymarket-utils.js?v=20261017-poly8" defer></script>
   <script src="js/polymarket.js?v=20261017-poly8" defer></script>
   <script src="js/weekly-reports-utils.js?v=20261017-weekly-reports" defer></script>
   <script src="js/weekly-reports.js?v=20261017-portal" defer></script>
-  <script src="js/yield-curve-utils.js?v=20261015-yield-presets" defer></script>
-  <script src="js/yield-curves.js?v=20261015-yield-presets" defer></script>
+  <script src="js/yield-curve-utils.js?v=20261019-task1" defer></script>
+  <script src="js/yield-curves.js?v=20261019-task1" defer></script>
   <script src="js/intraday-utils.js?v=20261014-refresh-status" defer></script>
   <script src="js/live-quotes.js?v=20261012-availability" defer></script>
   <script src="js/live-fx.js?v=20261012-availability" defer></script>
@@ -31,9 +31,9 @@
   <script src="js/portfolio-analytics-utils.js?v=20261015-earnings-insights" defer></script>
   <script src="js/portfolio-profile-utils.js?v=20261012-portfolio-3" defer></script>
   <script src="js/portfolio.js?v=20261017-portal" defer></script>
-  <script src="js/briefing-audio-utils.js?v=20261015-natural-voice" defer></script>
-  <script src="js/briefing-audio.js?v=20261015-natural-voice" defer></script>
-  <script src="js/dashboard.js?v=20261017-portal" defer></script>
+  <script src="js/briefing-audio-utils.js?v=20261019-task1" defer></script>
+  <script src="js/briefing-audio.js?v=20261019-task1" defer></script>
+  <script src="js/dashboard.js?v=20261019-task1" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#indicators">Aller aux indicateurs</a>
@@ -149,6 +149,7 @@
     </section>
     <section id="yieldCurves" class="yield-curves card" aria-labelledby="yieldCurvesTitle">
       <div class="section-heading"><div><p class="eyebrow">LE MARCHÉ OBLIGATAIRE</p><h2 id="yieldCurvesTitle">Courbes de taux · États-Unis et Canada</h2></div><span class="meta">Taux nominaux · données quotidiennes publiées</span></div>
+      <label class="yield-follow-latest"><input id="yieldFollowLatest" type="checkbox" checked /> Suivre les dernières publications</label>
       <div class="yield-date-controls"><label for="yieldDateA"><span class="yield-date-a">Date A · comparaison</span><input id="yieldDateA" type="date" /></label><button id="yieldSwap" class="button quiet" type="button" aria-label="Inverser les deux dates">⇄ Inverser</button><label for="yieldDateB"><span class="yield-date-b">Date B · référence</span><input id="yieldDateB" type="date" /></label><div id="yieldPresets" class="segmented" role="group" aria-label="Comparer les courbes avec une période prédéfinie"><button type="button" data-yield-preset="1D">1 jour</button><button type="button" data-yield-preset="1W">1 semaine</button><button type="button" data-yield-preset="1M">1 mois</button><button type="button" data-yield-preset="3M">3 mois</button><button type="button" data-yield-preset="6M">6 mois</button><button type="button" data-yield-preset="1Y">1 an</button><button type="button" data-yield-preset="2Y">2 ans</button><button type="button" data-yield-preset="5Y">5 ans</button><button type="button" data-yield-preset="YTD">YTD</button></div></div>
       <p id="yieldStatus" class="meta" role="status">Chargement des courbes de taux…</p>
       <p id="yieldDateError" class="meta warning" role="alert" hidden></p>

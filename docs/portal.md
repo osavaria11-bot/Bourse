@@ -15,21 +15,21 @@ The existing static site and GitHub Pages workflows are retained. `portal.js` mo
 | Analyse FNB | Interactive comparison of the 11 ETF portfolios, ratios, risk/return compass and investment growth; independent chart selections and 5% CGL.C where held |
 | Dashboard complet | Rightmost navigation item; all original components on one page, all six market charts, every filtered macro chart and all portfolio panels |
 
-The complete dashboard moves the same live component nodes into its page and restores their exact original positions on exit. No duplicated IDs, separate quotes or extra timers. Period changes and refreshes retain the complete chart grid; returning to a compact section restores its selected chart and comparison setting. Portfolio visibility controls and empty-data gating are preserved. Direct dashboard bookmarks and personal access fragments work together.
+The complete dashboard moves the same live component nodes into its page and restores their exact original positions on exit. No duplicated IDs, separate quotes or extra timers. Period changes and refreshes retain the complete chart grid; returning to a compact section restores its selected market and full-view setting. Portfolio visibility controls and empty-data gating are preserved. Direct dashboard bookmarks and personal access fragments work together.
 
 Routes use `#view=…&tab=…`. Old `#portfolio`, `#indicators`, `#yieldCurves`, `#weeklyReports`, `#fearGreed` and `#polymarket` bookmarks still work. Browser back/forward and refresh preserve the selected page. Cmd/Ctrl+K opens economic search. Desktop navigation stays at the top; mobile navigation stays at the bottom, including the safe area.
 
-The FNB report is available at `#view=analyses&tab=overview` (`FNB` in mobile navigation). Its self-contained file, `reports/portefeuilles-fnb.html`, is loaded once when the tab first opens. Returning to the tab preserves the selections. The full-screen link opens the same report independently. Existing portfolio holdings, market data and collection workflows are unchanged.
+The FNB report is available at `#view=analyses&tab=overview` (`FNB` in mobile navigation). Its self-contained file, `reports/portefeuilles-fnb.html`, is loaded once when the tab first opens. Returning to the tab preserves the selections. The full-screen link opens the same report independently. The report follows the same light/dark SAVY palette, including when the parent theme changes; all report selections and calculations are retained.
 
 Personal access keys remain exclusively in URL fragments and existing local storage. Navigation preserves the key and selected portfolio. Profile refresh retains the current page instead of resetting it. Personal Home Screen manifest and export formats are unchanged. Import fragments are removed after import, as before.
 
 ## Charts and data
 
-Indices and economic series default to one selected chart. The economic comparison view paginates six charts at a time; all filtered series remain available. Existing favorites, filters, sorting, CSV exports, source links, pointer/keyboard chart readings and refresh handlers are preserved. An expanded market/portfolio view moves the actual component into a native dialog and restores it on close, retaining live controls and updates.
+Indices retain one selected chart by default; “Voir tous les indices” displays all six and returns to that selection. The economy page displays all 41 indicators in one compact grid, with no chart subviews or pagination. Category/search/favorite filters remain optional and do not split the page; each new session begins with all categories. Existing favorites, filters, sorting, CSV exports, source links, pointer/keyboard chart readings and refresh handlers are preserved. An expanded market/portfolio view moves the actual component into a native dialog and restores it on close, retaining live controls and updates.
 
 Six-month and two-year market ranges and one-day/one-year/two-year/five-year portfolio choices use the existing period calculations. One-day portfolio comparisons use one completed session. Insufficient history still yields unavailable returns; no backfilled prices or invented performance. Macro short ranges use calendar dates anchored to the latest observation, with a visible insufficient-data state where necessary.
 
-VIX and US 10-year headline quotes retain their existing Yahoo mappings (`^VIX`, `^TNX`); FRED histories remain distinct and labelled. FEQT retains `FEQT.NE` in CAD and the validated five-minute session history. Deployment refreshes quotes; the source-controlled snapshot can be older than the published snapshot.
+VIX and US 10-year headline quotes retain their existing Yahoo mappings (`^VIX`, `^TNX`); FRED histories remain distinct and labelled. FEQT retains `FEQT.NE` in CAD and the validated five-minute session history. Deployment refreshes quotes, decision odds and both official yield curves in both publication paths; the source-controlled snapshot can be older than the published snapshot.
 
 ## Reports and unavailable records
 
@@ -40,3 +40,7 @@ The current project has no dated transaction ledger or strategy-return ledger. T
 ## Validation
 
 Run `npm test`, Python collector tests and `npm run test:browser`. `PORTAL_WEBKIT=1` additionally runs the portal suite in WebKit for iPhone layouts; GitHub validation installs and runs both Chromium and WebKit. Existing component suites reach controls through real portal links using `tests/portal-navigation.cjs`. The independent `portal-browser.cjs` suite does not use that helper and checks routing, first-screen desktop content, all sections, all mobile subviews, expansion, archives, private fragments and no horizontal overflow at 375/320 px. All portfolio test positions and keys are synthetic.
+
+Yield-curve presets follow the latest available publication by default. The common requested B date uses the newest country; each country shows its own actual observation date without filling missing maturities. Changing A/B or swapping fixes the dates for historical comparisons. “Suivre les dernières publications” restores automatic updates and the chosen preset; this mode is persisted independently from the date pair. Cached decision odds retain their source dates and expire through the existing validation rules.
+
+Natural narration uses `fr-CA-AntoineNeural`. The voice participates in the content-addressed audio/cache key; the player rejects former voice manifests. Device fallback prioritizes known male French voices while retaining the existing play/pause/seek/speed controls.

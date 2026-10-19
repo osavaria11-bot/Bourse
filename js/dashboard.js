@@ -5,6 +5,8 @@
   const CACHE_KEY = "savy:macro-data:v2";
   const NEWS_CACHE_KEY = "savy:news-digest:v5";
   const MARKET_CACHE_KEY = "savy:market-indices:v1";
+  const ODDS_CACHE_KEY = "savy:rate-odds:v1";
+  let oddsDataset = null;
   const MARKET_INDICATORS = {
     VIXCLS: {id: "VIXCLS", symbol: "^VIX", unit: "points"},
     NASDAQXAU: {id: "NASDAQXAU", symbol: "^XAU", unit: "points"},
@@ -36,7 +38,7 @@
   const prefs = readStored(PREFS_KEY, {}) || {};
   const state = {
     dataset: null, seriesById: new Map(), visible: [], origin: "published",
-    search: "", category: typeof prefs.category === "string" ? prefs.category : "all",
+    search: "", category: "all",
     range: U.RANGES.some(range => range.key === prefs.range) ? prefs.range : "10Y",
     sort: "recent",
     favorites: new Set(Array.isArray(prefs.favorites) ? prefs.favorites
@@ -159,7 +161,7 @@
     }
     $("#kpis").replaceChildren(fragment);
   }
-  function renderOdds(dataset) {
+  function renderOdds(dataset, cached = false) {
     const host = $("#rateOdds"), fragment = document.createDocumentFragment();
     for (const key of ["fed", "canada"]) {
       const odds = U.rateOddsFor(dataset, key), row = odds?.row;
@@ -171,7 +173,7 @@
       if (odds) {
         card.append(el("p", "meta" + (odds.age > 2 || row.status !== "fresh" ? " warning" : ""),
           "Décision : " + row.meeting_date + " · cotes du " + row.as_of + (odds.sourceDayAhead ? " (date du fournisseur)" : "") +
-          (row.status !== "fresh" ? " · dernière valeur conservée" : "")));
+          (cached || row.status !== "fresh" ? " · dernière valeur conservée" : "")));
         const list = el("div", "odds-bars");
         for (const [label, value] of [["Hausse", row.hike], ["Maintien", row.hold], ["Baisse", row.cut]]) {
           const line = el("div", "odds-line"), track = el("span", "odds-track"), fill = el("span", "odds-fill");
@@ -185,8 +187,18 @@
     host.replaceChildren(fragment);
   }
   async function loadOdds() {
-    try {renderOdds(await fetchJSON("data/rate-odds.json"));}
-    catch {renderOdds(null);}
+    try {
+      const next = await fetchJSON("data/rate-odds.json");
+      if (!next || next.schema_version !== 1 || next.kind !== "rate_odds" || !Array.isArray(next.decisions) || !Number.isFinite(U.parseTimestamp(next.generated_at)) || U.parseTimestamp(next.generated_at) > Date.now() + 300000) throw new Error("Cotes invalides");
+      const previous = oddsDataset || readStored(ODDS_CACHE_KEY, null);
+      if (previous && U.parseTimestamp(previous.generated_at) > U.parseTimestamp(next.generated_at)) {oddsDataset = previous; renderOdds(previous, true); return;}
+      // Keep newer dated observations if a delayed publication serves an older snapshot.
+      oddsDataset = {...next, decisions: ["fed", "canada"].map(id => {
+        const current = U.rateOddsFor(previous, id), incoming = U.rateOddsFor(next, id);
+        return current && (!incoming || current.row.as_of > incoming.row.as_of) ? {...current.row, status: "cached"} : next.decisions.find(row => row?.id === id);
+      }).filter(Boolean)};
+      writeStored(ODDS_CACHE_KEY, oddsDataset); renderOdds(oddsDataset);
+    } catch {renderOdds(oddsDataset || readStored(ODDS_CACHE_KEY, null), true);}
   }
   function renderCategories() {
     const categories = [...new Set(state.dataset.series.map(point => point.category))];

@@ -205,6 +205,8 @@ jobs:
           python3 scripts/collect_intraday_quotes.py
           python3 scripts/collect_fear_greed.py
           python3 scripts/collect_polymarket.py
+          python3 scripts/collect_rate_odds.py
+          python3 scripts/collect_yield_curves.py
           node scripts/validate_polymarket.cjs
           node scripts/validate_intraday_quotes.cjs
       - name: Setup Python for natural narration

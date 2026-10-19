@@ -72,7 +72,7 @@ test("one-day comparisons skip weekends and holidays without comparing the lates
   for (const country of data.countries) country.history.pop();
   assert.deepEqual(C.defaults(data, "1D"), {a: "2026-10-09", b: "2026-10-13"});
   data.countries[1].history.pop();
-  assert.deepEqual(C.defaults(data, "1D"), {a: "2026-10-08", b: "2026-10-09"});
+  assert.deepEqual(C.defaults(data, "1D"), {a: "2026-10-09", b: "2026-10-13"});
 });
 test("two dated curves preserve per-tenor values and B minus A; removed dates are rejected", () => {
   const country = C.normalize(fixture(), NOW).countries[0], dates = {a: "2026-10-09", b: "2026-10-14"};
@@ -83,4 +83,12 @@ test("two dated curves preserve per-tenor values and B minus A; removed dates ar
   const swapped = C.multiComparison(country, {a: dates.b, b: dates.a});
   assert.ok(Math.abs(swapped.rows[0].changes.a + result.rows[0].changes.a) < 1e-9);
   for (const key of ["c", "d", "e"]) assert.throws(() => C.multiComparison(country, {...dates, [key]: "2026-10-13"}));
+});
+
+test("the newest country is not held back by another country's publication lag", () => {
+  const data = C.normalize(fixture(), NOW);
+  data.countries[1].history.pop();
+  assert.equal(C.defaults(data).b, "2026-10-14");
+  assert.equal(C.snapshot(data.countries[0], C.defaults(data).b).date, "2026-10-14");
+  assert.equal(C.snapshot(data.countries[1], C.defaults(data).b).date, "2026-10-13");
 });

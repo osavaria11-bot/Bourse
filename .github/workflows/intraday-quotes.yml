@@ -95,6 +95,8 @@ jobs:
           python scripts/collect_intraday_quotes.py
           python scripts/collect_fear_greed.py
           python scripts/collect_polymarket.py
+          python scripts/collect_rate_odds.py
+          python scripts/collect_yield_curves.py
           python - <<'PY'
           import json, os
           from pathlib import Path
