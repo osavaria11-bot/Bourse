@@ -1,30 +1,29 @@
 {
   "schema_version": 1,
   "kind": "savy_weekly_reports",
-  "generated_at": "2026-10-17T16:00:00Z",
+  "generated_at": "2026-10-19T11:38:54Z",
   "reports": {
     "real_estate": {
       "title": "Débriefing immobilier",
-      "edition_date": "2026-10-12",
-      "document_scope": "summary",
-      "summary": "Une légère détente des taux obligataires ne suffit pas à réévaluer tous les immeubles. L’édition privilégie une souscription prudente, avec un focus sur le Québec et trois pistes d’acquisition en Montérégie.",
+      "edition_date": "2026-10-19",
+      "document_scope": "full",
+      "summary": "La détente obligataire reste modeste et ne justifie pas de payer davantage. Les nouveaux repères du T3 renforcent la discipline de financement; la construction diverge entre Montréal et Québec. Aucune nouvelle occasion montérégienne suffisamment documentée n’est retenue cette semaine.",
       "highlights": [
-        "Financement : taux directeur à 2,25 %; Canada 5 ans de 3,63 % à 3,60 % et 10 ans de 3,96 % à 3,93 %. Le brief ne préconise pas de réduire les taux de sortie.",
-        "Québec : signal industriel positif, mais emploi en recul de 49 000 en septembre. À Montréal, la vacance industrielle citée est de 5,3 % et celle des bureaux de 15,9 %.",
-        "Montérégie : aucune vente conclue vérifiable trouvée dans cette édition. Les trois biens ci-dessous sont des pistes étudiées au 12 octobre, avec des prix demandés."
+        "Financement : au 15 octobre, Canada 5 ans à 3,53 % (-7 pb depuis le 8) et 10 ans à 3,83 % (-10 pb). Taux directeur à 2,25 %. Marges d’enquête, admissibilité et soumissions ne sont pas confondues.",
+        "Québec : publication SCHL du 16 octobre; mises en chantier réelles de septembre à -51 % sur un an à Montréal et +96 % à Québec. Tous modes d’occupation, pas uniquement le locatif.",
+        "Valorisation : nouveaux repères sectoriels Avison Young T3; ils ne mesurent pas une variation hebdomadaire et ne sont pas comparables à une moyenne toutes propriétés d’un autre fournisseur.",
+        "Montérégie : aucune nouvelle vente conclue suffisamment recoupée depuis le 12 octobre. Les trois comparables historiques sont datés et séparés des prix demandés.",
+        "Acquisitions : aucune nouvelle occasion validée. Le RNE du courtier au 194–220 St-Louis est désormais de 816 375 $, sans validation des baux ou des réserves; ce dossier n’est pas une nouvelle inscription de la semaine.",
+        "Rectifications : Granby est en Estrie. À 75 % de levier et 5,5 % sur 30 ans, ce dossier reste positif avant réserve, mais son DSCR de 1,18× échoue au seuil de 1,25×."
       ],
-      "opportunities": [
-        {"address": "194–220, rue St-Louis", "city": "Saint-Jean-sur-Richelieu", "detail": "11,995 M$ demandés · RNE de 813 487 $ · taux de capitalisation de 6,78 %. Sept locataires."},
-        {"address": "307–311, rue Principale", "city": "Granby", "detail": "1,694 M$ demandés · RNE de 101 278 $ · taux de capitalisation de 5,98 %. Douze logements et un commerce."},
-        {"address": "78–84, rue Saint-Louis", "city": "Longueuil", "detail": "1,490 M$ demandés · RNE de 95 518 $ · taux de capitalisation de 6,41 %. Un logement et cinq commerces."}
-      ],
+      "opportunities": [],
       "document": {
-        "path": "reports/real-estate/2026-10-12.pdf",
-        "label": "Ouvrir la synthèse immobilière",
+        "path": "reports/real-estate/2026-10-19.pdf",
+        "label": "Ouvrir le rapport immobilier complet - 19 octobre 2026",
         "mime_type": "application/pdf",
-        "pages": 2,
-        "size_bytes": 48129,
-        "sha256": "41cdab7ef4baa281e1110121aa5570098809c1e55579bfbde9eb1f3953622423"
+        "pages": 6,
+        "size_bytes": 67271,
+        "sha256": "0307c0cf787b286b3779262a1d7a976f18026cbb43b5e01aa527e3b69b828053"
       }
     },
     "stocks": {
