@@ -6,8 +6,9 @@ const U = require("../js/macro-utils.js"), P = require("../js/portfolio-utils.js
 const A = require("../js/portfolio-profile-utils.js"), crypto = require("node:crypto");
 const root = path.resolve(__dirname, ".."), load = file => JSON.parse(fs.readFileSync(path.join(root, file), "utf8"));
 const prices = P.normalizePrices(load("data/security-prices.json"), load("data/securities.json"));
-// Keep the synthetic 55-minute-old trade within the simulated trading day, even around midnight.
-const day = new Intl.DateTimeFormat("en-CA", {timeZone: "America/Toronto"}).format(Date.now()), now = Date.parse(day + "T17:00:00Z");
+// Keep the synthetic trade within the simulated day and after real collected data.
+// Fixing the clock at 13:00 Toronto made later data look future-dated to validation.
+const day = new Intl.DateTimeFormat("en-CA", {timeZone: "America/Toronto"}).format(Date.now()), now = Math.max(Date.now(), Date.parse(day + "T17:00:00Z"));
 const holdings = [{ticker: "AAPL", currency: "USD", quantity: 2, average_cost: 100}, {ticker: "SHOP", currency: "CAD", quantity: 1, average_cost: 50}];
 const apple = prices.series.find(p => p.id === "AAPL").value, shop = prices.series.find(p => p.id === "SHOP").value;
 const spx = load("data/market-indices.json").series.find(p => p.id === "SPX");
