@@ -25,6 +25,9 @@ jobs:
   source:
     if: github.ref == 'refs/heads/main' && (github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success')
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: write
     outputs:
       sha: ${{ steps.commit.outputs.sha }}
       ready: ${{ steps.validated.outputs.ready }}
@@ -45,14 +48,10 @@ jobs:
           SOURCE_SHA: ${{ steps.commit.outputs.sha }}
         with:
           script: |
-            const {data} = await github.rest.actions.listWorkflowRuns({
-              owner: context.repo.owner, repo: context.repo.repo,
-              workflow_id: 'static.yml', head_sha: process.env.SOURCE_SHA,
-              status: 'success', per_page: 5
+            const ready = await require('./scripts/ensure_validated_source.cjs')({
+              github, context, core, sourceSha: process.env.SOURCE_SHA
             });
-            const ready = data.workflow_runs.some(run => run.head_sha === process.env.SOURCE_SHA);
             core.setOutput('ready', ready ? 'true' : 'false');
-            core.info(ready ? 'Exact source already validated.' : 'Waiting for full source validation; published site kept.');
 
   refresh:
     needs: source
