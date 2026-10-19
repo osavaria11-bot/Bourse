@@ -48,8 +48,8 @@ async function check(browser, engine) {
   assert.equal(await fundReport.locator("#allPortfolios").isVisible(), true);
   assert.equal(await fundReport.locator("#allPortfolioBody tr").count(), 15);
   assert.equal(await fundReport.locator("#allPortfolioBody [data-open-portfolio]").count(), 12);
-  assert.equal(await fundReport.locator("#monthlyTitle").isVisible(),true);
-  assert.equal(await fundReport.locator("[data-preference]").count(), 9);
+  assert.equal(await fundReport.locator("#monthlyTitle").count(),0);
+  assert.equal(await fundReport.locator("[data-preference]").count(), 10);
   assert.equal(await fundReport.locator('[data-preference="5"]').first().textContent().then(t=>t.includes("Élan")), true);
   assert.equal(await fundReport.locator('[data-preference="10"], [data-preference="11"]').count(), 0);
   await fundReport.locator("#referenceSelect").selectOption("VBAL");

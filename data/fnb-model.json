@@ -11,7 +11,7 @@
       "equity_eligible": false,
       "max_weight": 0.35,
       "mer": 0.0055,
-      "quote_symbol": "CGL.C.TO",
+      "quote_symbol": "CGL-C.TO",
       "provider": "ishares",
       "product": "241528/ishares-gold-bullion-etf"
     },
@@ -32,11 +32,11 @@
       "description": "Momentum américain",
       "source_url": "https://www.fidelity.ca/en/products/etfs/fcmo/",
       "currency": "CAD",
-      "exchange": "TSX",
+      "exchange": "Cboe Canada",
       "equity_eligible": true,
       "max_weight": 0.35,
       "mer": 0.0038,
-      "quote_symbol": "FCMO.TO",
+      "quote_symbol": "FCMO.NE",
       "provider": "fidelity"
     },
     "FCUL": {
@@ -44,11 +44,11 @@
       "description": "Faible volatilité",
       "source_url": "https://www.fidelity.ca/en/products/etfs/fcul/",
       "currency": "CAD",
-      "exchange": "TSX",
+      "exchange": "Cboe Canada",
       "equity_eligible": true,
       "max_weight": 0.35,
       "mer": 0.0038,
-      "quote_symbol": "FCUL.TO",
+      "quote_symbol": "FCUL.NE",
       "provider": "fidelity"
     },
     "FCUQ": {
@@ -246,11 +246,11 @@
       "description": "Allocation équilibrée",
       "source_url": "https://www.fidelity.ca/en/products/etfs/fbal/",
       "currency": "CAD",
-      "exchange": "TSX",
+      "exchange": "Cboe Canada",
       "equity_eligible": false,
       "max_weight": 0.35,
       "mer": 0.004,
-      "quote_symbol": "FBAL.TO",
+      "quote_symbol": "FBAL.NE",
       "provider": "fidelity"
     },
     "FGRO": {
@@ -258,11 +258,11 @@
       "description": "Allocation croissance",
       "source_url": "https://www.fidelity.ca/en/products/etfs/fgro/",
       "currency": "CAD",
-      "exchange": "TSX",
+      "exchange": "Cboe Canada",
       "equity_eligible": false,
       "max_weight": 0.35,
       "mer": 0.0042,
-      "quote_symbol": "FGRO.TO",
+      "quote_symbol": "FGRO.NE",
       "provider": "fidelity"
     },
     "VBAL": {

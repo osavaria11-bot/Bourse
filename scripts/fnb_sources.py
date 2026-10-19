@@ -62,8 +62,12 @@ def previous_month(day):
 
 
 def last_trading_day(month):
+    return previous_trading_day(month_end(month))
+
+
+def previous_trading_day(day):
     """TSX/Cboe Canada equity calendar, including observed Christmas/Boxing Day."""
-    day = month_end(month); y = day.year
+    y = day.year
     def nth_monday(m, n):
         first = date(y, m, 1)
         return first + timedelta(days=(7 - first.weekday()) % 7 + 7 * (n - 1))
@@ -76,7 +80,7 @@ def last_trading_day(month):
     ell = (32 + 2 * e + 2 * i - h - k) % 7
     m = (a + 11 * h + 22 * ell) // 451
     easter = date(y, (h + ell - 7 * m + 114) // 31, (h + ell - 7 * m + 114) % 31 + 1)
-    holidays = {nth_monday(2, 3), easter - timedelta(days=2), nth_monday(9, 1), nth_monday(10, 2)}
+    holidays = {nth_monday(2, 3), easter - timedelta(days=2), nth_monday(8, 1), nth_monday(9, 1), nth_monday(10, 2)}
     victoria = date(y, 5, 24)
     holidays.add(victoria - timedelta(days=victoria.weekday()))
     for actual in [date(y, 1, 1), date(y, 7, 1), date(y, 12, 25), date(y, 12, 26)]:

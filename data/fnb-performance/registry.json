@@ -1,0 +1,331 @@
+{
+  "schema_version": 1,
+  "accounts": [
+    {
+      "id": "savy-1",
+      "name": "SAVY Horizon",
+      "color": "#2457A7",
+      "kind": "portfolio",
+      "launch_date": "2026-10-19",
+      "capital": 10000.0,
+      "currency": "CAD",
+      "weights": {
+        "FCMO": 0.05,
+        "FCUQ": 0.2,
+        "FEQT": 0.4,
+        "FINN": 0.1,
+        "VDY": 0.25
+      },
+      "definition_source": "data/fnb-history/2026-10.json",
+      "published_at": null,
+      "method": "buy_hold_fractional_ex_date_close_v1",
+      "definition_sha256": "32f7566cb62a83901736cdd544ce499784c991aac0b6a3019796871125bfa153"
+    },
+    {
+      "id": "savy-2",
+      "name": "SAVY Équilibre",
+      "color": "#0E7B70",
+      "kind": "portfolio",
+      "launch_date": "2026-10-19",
+      "capital": 10000.0,
+      "currency": "CAD",
+      "weights": {
+        "FCIV": 0.1,
+        "FCUL": 0.2,
+        "FEQT": 0.25,
+        "FINN": 0.15,
+        "VDY": 0.1,
+        "VEE": 0.05,
+        "ZLB": 0.15
+      },
+      "definition_source": "data/fnb-history/2026-10.json",
+      "published_at": null,
+      "method": "buy_hold_fractional_ex_date_close_v1",
+      "definition_sha256": "e7c5d6371703f4a4ac216342d7d61861e531d3a248f472ad73d1794a8386fae6"
+    },
+    {
+      "id": "savy-3",
+      "name": "SAVY Tempo",
+      "color": "#7A8896",
+      "kind": "portfolio",
+      "launch_date": "2026-10-19",
+      "capital": 10000.0,
+      "currency": "CAD",
+      "weights": {
+        "FCIV": 0.17,
+        "FCUL": 0.35,
+        "FEQT": 0.15,
+        "VDY": 0.06,
+        "VEE": 0.15,
+        "ZLB": 0.12
+      },
+      "definition_source": "data/fnb-history/2026-10.json",
+      "published_at": null,
+      "method": "buy_hold_fractional_ex_date_close_v1",
+      "definition_sha256": "a81532a321c6a580587667379829fb2cf3115e430939680a4db3339a123c95e1"
+    },
+    {
+      "id": "savy-4",
+      "name": "SAVY Latitude",
+      "color": "#7C5AB8",
+      "kind": "portfolio",
+      "launch_date": "2026-10-19",
+      "capital": 10000.0,
+      "currency": "CAD",
+      "weights": {
+        "CGL.C": 0.05,
+        "FCIV": 0.1,
+        "FCUL": 0.15,
+        "FEQT": 0.25,
+        "FINN": 0.1,
+        "VDY": 0.1,
+        "VEE": 0.05,
+        "XMI": 0.05,
+        "ZLB": 0.15
+      },
+      "definition_source": "data/fnb-history/2026-10.json",
+      "published_at": null,
+      "method": "buy_hold_fractional_ex_date_close_v1",
+      "definition_sha256": "f5bcf979010c9e65a7357f3d26d0f212249f99ba483cdde0d9909b759ec3a56a"
+    },
+    {
+      "id": "savy-5",
+      "name": "SAVY Élan",
+      "color": "#B86A18",
+      "kind": "portfolio",
+      "launch_date": "2026-10-19",
+      "capital": 10000.0,
+      "currency": "CAD",
+      "weights": {
+        "CGL.C": 0.05,
+        "FCIV": 0.1,
+        "FCUL": 0.1,
+        "FEQT": 0.25,
+        "FINN": 0.1,
+        "VDY": 0.1,
+        "VEE": 0.05,
+        "ZLB": 0.15,
+        "ZNQ": 0.1
+      },
+      "definition_source": "data/fnb-history/2026-10.json",
+      "published_at": null,
+      "method": "buy_hold_fractional_ex_date_close_v1",
+      "definition_sha256": "07a14ec7b990c52411d4f18f5f33e1550a51b7003d5ebe7e8162349ef71a45b0"
+    },
+    {
+      "id": "savy-6",
+      "name": "SAVY Synergie",
+      "color": "#498326",
+      "kind": "portfolio",
+      "launch_date": "2026-10-19",
+      "capital": 10000.0,
+      "currency": "CAD",
+      "weights": {
+        "CGL.C": 0.05,
+        "FCIV": 0.106,
+        "RUD": 0.105,
+        "VDY": 0.053,
+        "XMI": 0.106,
+        "ZEO": 0.106,
+        "ZLB": 0.211,
+        "ZNQ": 0.263
+      },
+      "definition_source": "data/fnb-history/2026-10.json",
+      "published_at": null,
+      "method": "buy_hold_fractional_ex_date_close_v1",
+      "definition_sha256": "b23a28ed11758e814671a483f378087b004808ff00bce65ce6675f22968f8a98"
+    },
+    {
+      "id": "savy-7",
+      "name": "SAVY Conviction",
+      "color": "#BD4147",
+      "kind": "portfolio",
+      "launch_date": "2026-10-19",
+      "capital": 10000.0,
+      "currency": "CAD",
+      "weights": {
+        "CGL.C": 0.05,
+        "FCIV": 0.127,
+        "FINN": 0.19,
+        "RUD": 0.19,
+        "VDY": 0.169,
+        "XMI": 0.116,
+        "ZEB": 0.084,
+        "ZEO": 0.074
+      },
+      "definition_source": "data/fnb-history/2026-10.json",
+      "published_at": null,
+      "method": "buy_hold_fractional_ex_date_close_v1",
+      "definition_sha256": "0c2862ff603ee8b9c1f235824516c19566054d9ad4bda4d166f94b862932c330"
+    },
+    {
+      "id": "savy-8",
+      "name": "SAVY Dynamique 110",
+      "color": "#238CA7",
+      "kind": "portfolio",
+      "launch_date": "2026-10-19",
+      "capital": 10000.0,
+      "currency": "CAD",
+      "weights": {
+        "FEQT": 0.4,
+        "FINN": 0.1,
+        "VCN": 0.25,
+        "VEE": 0.05,
+        "VMO": 0.15,
+        "XEF": 0.05
+      },
+      "definition_source": "data/fnb-history/2026-10.json",
+      "published_at": null,
+      "method": "buy_hold_fractional_ex_date_close_v1",
+      "definition_sha256": "57853204eb9b5fd1ef9f37c38825ebe4fbcfae86ce78c71314fd041a3099ce18"
+    },
+    {
+      "id": "savy-9",
+      "name": "SAVY Audace 120",
+      "color": "#B33A87",
+      "kind": "portfolio",
+      "launch_date": "2026-10-19",
+      "capital": 10000.0,
+      "currency": "CAD",
+      "weights": {
+        "FEQT": 0.35,
+        "FINN": 0.15,
+        "VCN": 0.15,
+        "VEE": 0.05,
+        "VMO": 0.25,
+        "XEF": 0.05
+      },
+      "definition_source": "data/fnb-history/2026-10.json",
+      "published_at": null,
+      "method": "buy_hold_fractional_ex_date_close_v1",
+      "definition_sha256": "f5b73eb8687be15051adc490d3b218e9d7acd50309ac67915ff2a573034ae96e"
+    },
+    {
+      "id": "savy-10",
+      "name": "SAVY 60/40",
+      "color": "#596B1C",
+      "kind": "portfolio",
+      "launch_date": "2026-10-19",
+      "capital": 10000.0,
+      "currency": "CAD",
+      "weights": {
+        "CGL.C": 0.05,
+        "FBAL": 0.7,
+        "VDY": 0.1,
+        "ZEO": 0.05,
+        "ZNQ": 0.1
+      },
+      "definition_source": "data/fnb-history/2026-10.json",
+      "published_at": null,
+      "method": "buy_hold_fractional_ex_date_close_v1",
+      "definition_sha256": "f27fd9b5e239010f1b4222872ab320bfcd8b031b2886253894179aea64e3800c"
+    },
+    {
+      "id": "savy-11",
+      "name": "SAVY 80/20",
+      "color": "#C05B30",
+      "kind": "portfolio",
+      "launch_date": "2026-10-19",
+      "capital": 10000.0,
+      "currency": "CAD",
+      "weights": {
+        "CGL.C": 0.05,
+        "FGRO": 0.59,
+        "FINN": 0.11,
+        "VDY": 0.16,
+        "XMI": 0.09
+      },
+      "definition_source": "data/fnb-history/2026-10.json",
+      "published_at": null,
+      "method": "buy_hold_fractional_ex_date_close_v1",
+      "definition_sha256": "180a22880cf2407d598afeae826526419d1048d6a26525ea6340583fc4b39c46"
+    },
+    {
+      "id": "FEQT",
+      "name": "Fidelity tout-en-un",
+      "color": "#64748B",
+      "kind": "benchmark",
+      "launch_date": "2026-10-19",
+      "capital": 10000.0,
+      "currency": "CAD",
+      "weights": {
+        "FEQT": 1
+      },
+      "definition_source": "data/fnb-history/2026-10.json",
+      "published_at": null,
+      "method": "buy_hold_fractional_ex_date_close_v1",
+      "definition_sha256": "f7b57cd76df2583c3e17da8d44ea5fe4d8039976fa9832537a9f767b7dfa4025"
+    },
+    {
+      "id": "VEQT",
+      "name": "Référence commune",
+      "color": "#142333",
+      "kind": "benchmark",
+      "launch_date": "2026-10-19",
+      "capital": 10000.0,
+      "currency": "CAD",
+      "weights": {
+        "VEQT": 1
+      },
+      "definition_source": "data/fnb-history/2026-10.json",
+      "published_at": null,
+      "method": "buy_hold_fractional_ex_date_close_v1",
+      "definition_sha256": "ce2c06f1ca5fe6db4e22868e2636c9fce1997d66c8b934d95f6c0f170f13c4b2"
+    },
+    {
+      "id": "VGRO",
+      "name": "Vanguard croissance",
+      "color": "#73844F",
+      "kind": "benchmark",
+      "launch_date": "2026-10-19",
+      "capital": 10000.0,
+      "currency": "CAD",
+      "weights": {
+        "VGRO": 1
+      },
+      "definition_source": "data/fnb-history/2026-10.json",
+      "published_at": null,
+      "method": "buy_hold_fractional_ex_date_close_v1",
+      "definition_sha256": "47da692f9dfaf29f715e2a56a42adb2ddcb8c1e5eb09502ed9603781c50afaa3"
+    },
+    {
+      "id": "VBAL",
+      "name": "Vanguard équilibré",
+      "color": "#6B6BB3",
+      "kind": "benchmark",
+      "launch_date": "2026-10-19",
+      "capital": 10000.0,
+      "currency": "CAD",
+      "weights": {
+        "VBAL": 1
+      },
+      "definition_source": "data/fnb-history/2026-10.json",
+      "published_at": null,
+      "method": "buy_hold_fractional_ex_date_close_v1",
+      "definition_sha256": "6a5db53001f01c3c11e1fd942535c93665523c8be87dcba379f35ae6b39514e6"
+    },
+    {
+      "id": "proposal-2026-10",
+      "name": "SAVY Actions · 2026-10",
+      "color": "#9ce3cb",
+      "kind": "portfolio",
+      "launch_date": "2026-10-19",
+      "capital": 10000.0,
+      "currency": "CAD",
+      "weights": {
+        "FCUL": 0.194,
+        "FCUQ": 0.066,
+        "VDY": 0.098,
+        "VEE": 0.085,
+        "XMI": 0.257,
+        "ZEO": 0.05,
+        "ZLB": 0.136,
+        "ZNQ": 0.114
+      },
+      "definition_source": "data/fnb-history/2026-10.json",
+      "published_at": "2026-10-19T17:23:36-04:00",
+      "method": "buy_hold_fractional_ex_date_close_v1",
+      "definition_sha256": "2376525d92dc65c0d80dda8a370b3dcd42c8804a7acedb0dcd5f15f4e07d1420"
+    }
+  ]
+}

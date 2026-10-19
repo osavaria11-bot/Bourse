@@ -5,7 +5,7 @@ on:
     branches: ["main", "codex/**"]
   workflow_dispatch:
   workflow_run:
-    workflows: ["Daily briefing", "Fresh macro releases", "Monthly FNB optimization"]
+    workflows: ["Daily briefing", "Fresh macro releases", "Monthly FNB optimization", "Daily FNB performance"]
     types: [completed]
     branches: ["main"]
 
@@ -48,8 +48,11 @@ jobs:
       - name: Validate monthly FNB data and preserved histories
         run: |
           python scripts/monthly_fnb.py --check
+          python scripts/daily_fnb.py --check
           node --check scripts/build_monthly_fnb.cjs
           node --check js/fnb-dashboard.js
+          node --check js/fnb-performance.js
+          node --check js/fnb-performance-utils.js
       - name: Dashboard regression tests
         run: |
           node --check js/portal-utils.js

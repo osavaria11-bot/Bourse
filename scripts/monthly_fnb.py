@@ -392,6 +392,7 @@ def main(argv=None):
             write(stage / "data/fnb-analysis.json", d)
             subprocess.run(["node", str(root / "scripts/build_monthly_fnb.cjs"), str(stage)], cwd=root, check=True)
             rendered = (stage / "reports/portefeuilles-fnb.html").read_text()
+            d["preference_ranking"] = read(stage / "data/fnb-analysis.json")["preference_ranking"]
         # Snapshot names are month-unique; reruns never append duplicate recommendations.
         write(archive, d)
         write(root / "data/fnb-analysis.json", d)

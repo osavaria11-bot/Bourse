@@ -196,6 +196,16 @@ Les tests de navigateur utilisent des positions synthétiques et les historiques
 
 Les branches `codex/**` vérifient également les exports réels FRED dans un répertoire temporaire. Les workflows sont dans `.github/workflows/`.
 
+### Suivi permanent des portefeuilles FNB
+
+`scripts/daily_fnb.py` enregistre 10 000 $ CA pour chacun des 11 portefeuilles initiaux, la proposition d’octobre 2026 et FEQT/VEQT/VGRO/VBAL, aux clôtures du 19 octobre 2026. Les définitions et pondérations initiales sont figées dans `data/fnb-performance/registry.json`. Chaque séance complète possède son fichier immuable dans `data/fnb-performance/days/`, avec prix, distributions, fractionnements, quantités, valeurs et empreinte liée à la séance précédente. `data/fnb-performance.json` est une vue dérivée pour le site, jamais la source des quantités à investir. Supprimer le registre alors qu’un historique existe provoque une erreur, sans réinitialisation.
+
+Le modèle conserve les parts et laisse dériver les poids. Les distributions en espèces sont réinvesties théoriquement en parts fractionnaires à la clôture de la date ex-distribution. Les fractionnements modifient les quantités, sans rendement artificiel. Les clôtures et événements Yahoo sont rapprochés des rendements de clôtures ajustées. Une observation manquante est complétée par les historiques nominaux et ajustés datés de TMX Money, après vérification de l’identité CAD du FNB; aucun dernier cours ancien n’est substitué à une clôture manquante. Les ajustements rétrospectifs de fractionnement sont annulés pour retrouver les prix nominaux. Les frais internes sont inclus dans les cours, mais aucun courtage, fiscalité personnelle ni écart d’exécution n’est simulé. Une séance manquante, une correction d’un prix déjà accepté ou des événements incohérents bloquent l’ajout et préservent le dernier registre valide.
+
+Le workflow `Daily FNB performance` s’exécute à 18 h 37, 21 h 37 et 7 h 47, heure de Toronto, avec un délai minimum de deux heures après la clôture normale. Il reprend les séances manquées et détecte automatiquement les nouvelles archives mensuelles, sans modifier les comptes existants. Une nouvelle proposition commence à la première clôture après publication (le jour même avant la fermeture, y compris la séance écourtée du 24 décembre). Les périodes historiques de backtest et le suivi prospectif restent séparés. Les comparaisons et classements utilisent la même date de lancement; les benchmarks sont rebasés à 10 000 $ pour le groupe sélectionné. Les semaines et mois sont glissants, non annualisés, et restent indisponibles avant une fenêtre complète.
+
+Contrôles locaux : `python scripts/daily_fnb.py --check`, `python -m unittest discover -s tests -p 'test_daily_fnb.py'`, `node --test tests/fnb-performance-utils.test.cjs`. Le workflow de publication vérifie le registre et déploie aussi les mises à jour du workflow quotidien.
+
 
 ### Trois portefeuilles indépendants
 
