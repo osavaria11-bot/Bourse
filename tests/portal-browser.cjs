@@ -34,6 +34,17 @@ async function check(browser, engine) {
   await go("analyses");
   const fundReport = page.frameLocator("#fundAnalysisFrame");
   await fundReport.locator('html[data-ready="true"]').waitFor();
+  const fundNames = ["Horizon", "Équilibre", "Tempo", "Latitude", "Élan", "Synergie", "Conviction", "Dynamique 110", "Audace 120", "Harmonie", "Expansion"];
+  for (const [index, name] of fundNames.entries()) {
+    const id = String(index + 1);
+    assert.equal(await fundReport.locator('[data-fiche="' + id + '"] h3').textContent(), "SAVY " + name);
+    assert.ok((await fundReport.locator('#ficheFocus option[value="' + id + '"]').textContent()).includes("SAVY " + name));
+    for (const chart of ["risk", "growth"]) {
+      assert.ok((await fundReport.locator('#' + chart + '-series-' + id).getAttribute("aria-label")).includes("SAVY " + name));
+    }
+  }
+  assert.ok((await fundReport.locator('#statsBody [data-open-portfolio="2"]').textContent()).includes("SAVY Équilibre"));
+  assert.ok((await fundReport.locator('#growthReadout [data-portfolio="11"]').textContent()).includes("Expansion"));
   assert.equal(await fundReport.locator("#riskSvg .risk-point:visible").count(), 6);
   await fundReport.locator("#risk-series-6").check();
   assert.equal(await fundReport.locator("#riskSvg .risk-point:visible").count(), 7);
