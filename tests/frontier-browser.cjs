@@ -28,10 +28,10 @@ async function check(browser,engine){
  await page.evaluate(({key,value})=>localStorage.setItem(key,JSON.stringify(value)),{key:legacyKey.replace(":v2:",":v3:"),value:{...legacy,ids:E.optimization.eligible_funds,weights:previousWeights}});
  await page.reload();await page.locator('.nav [data-tab="frontier"]').click();await page.waitForSelector('#frontier[data-ready="true"]',{timeout:90000});await valid(.35);assert.ok(Math.abs((await weights())["CGL.C"]-.05)<1e-8,"Existing gold allocations are reduced to the new 5% limit");
 
- assert.ok((await page.locator('#frontierDates').textContent()).includes('2025-10 → 2026-09'));
+ const p=U.prepare(E,{cap:.35});
+ assert.ok((await page.locator('#frontierDates').textContent()).includes(p.dates.validation[0]+' → '+p.dates.validation.at(-1)));
  await page.locator('#frontierMaxSharpe').click();const sr=JSON.parse(await page.locator('#frontier').getAttribute('data-metrics'));await page.locator('#frontierMaxIR').click();const ir=JSON.parse(await page.locator('#frontier').getAttribute('data-metrics'));
  assert.ok(sr.sharpe>ir.sharpe);assert.ok(ir.information>sr.information);await valid(.35);
- const p=U.prepare(E,{cap:.35});
  const actual=await weights(),metrics=U.metrics(p.fit,p.ids.map(id=>actual[id]));assert.ok(Math.abs(metrics.information-ir.information)<1e-10);
  await page.locator('#frontierBalanced').click();await page.locator('#frontierPriority').fill('80');assert.equal(await page.locator('#frontierBalanced').getAttribute('aria-pressed'),'true');await valid(.35);
  await page.locator("#frontierShowZeros").check();

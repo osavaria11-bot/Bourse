@@ -7,11 +7,18 @@ on:
       - "data/fnb-frontier-model.json"
       - "scripts/collect_frontier_universe.py"
       - "scripts/fnb_sources.py"
+      - "scripts/build_frontier_monthly.cjs"
+      - "js/fnb-frontier-utils.js"
+      - "tests/frontier-monthly-utils.test.cjs"
       - ".github/workflows/frontier-universe.yml"
   schedule:
     - cron: "55 7 * * *"
       timezone: "America/Toronto"
   workflow_dispatch:
+  workflow_run:
+    workflows: ["Monthly FNB optimization"]
+    types: [completed]
+    branches: ["main"]
 
 permissions:
   contents: write
@@ -22,6 +29,7 @@ concurrency:
 
 jobs:
   sources:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -41,15 +49,20 @@ jobs:
         run: python -m pip install --disable-pip-version-check -r scripts/requirements-fnb.txt
       - name: Verify and render the extended laboratory
         run: |
-          node --test tests/fnb-frontier-utils.test.cjs
+          node --test tests/fnb-frontier-utils.test.cjs tests/frontier-monthly-utils.test.cjs
           node scripts/check_frontier_solution.cjs | python scripts/check_frontier_solution.py
           python -m unittest discover -s tests -p "test_frontier_universe.py" -v
           node scripts/build_monthly_fnb.cjs
+      - name: Archive efficient portfolios and comparable monthly changes
+        run: |
+          node scripts/build_frontier_monthly.cjs
+          node scripts/build_frontier_monthly.cjs --check
       - name: Preserve complete sourced extension
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/fnb-frontier-universe.json reports/portefeuilles-fnb.html data/fnb-analysis.json
+          git add data/fnb-frontier-universe.json reports/portefeuilles-fnb.html data/fnb-analysis.json data/fnb-frontier-monthly.json data/fnb-frontier-history
+          git diff --cached --name-only --diff-filter=M -- data/fnb-frontier-history/ | python -c 'import sys; paths=[p.strip() for p in sys.stdin if p.strip() and not p.strip().endswith("/index.json")]; assert not paths, "Refusing to overwrite frontier archives: " + str(paths)'
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "data: publish verified expanded FNB frontier universe"
           git pull --rebase origin "${{ github.ref_name }}"

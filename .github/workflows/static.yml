@@ -55,6 +55,7 @@ jobs:
         run: |
           python scripts/monthly_fnb.py --check
           python scripts/daily_fnb.py --check
+          node scripts/build_frontier_monthly.cjs --check
           node --check scripts/build_monthly_fnb.cjs
           node --check js/fnb-dashboard.js
           node --check js/fnb-performance.js
