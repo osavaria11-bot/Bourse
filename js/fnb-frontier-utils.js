@@ -36,6 +36,14 @@
   const d=JSON.parse(JSON.stringify(data));
   d.optimization.eligible_funds=d.optimization.eligible_funds.filter(id=>id!=="VEQT"&&id!=="XEQT");
   if(d.universe.returns.RUD&&d.universe.equity.RUD>=.92&&!d.optimization.eligible_funds.includes("RUD"))d.optimization.eligible_funds.push("RUD");
+  // The interactive laboratory also includes the sourced gold and multi-asset funds.
+  // Their actual asset mix is retained; monthly equity-only research is untouched.
+  for(const id of ["FEQT","CGL.C"]){
+   if(!Array.isArray(d.universe.returns[id])||d.universe.returns[id].length!==d.dates.length||!d.source_urls[id]||!d.source_dates[id])throw Error("Source datée manquante pour "+id);
+   if(!d.optimization.eligible_funds.includes(id))d.optimization.eligible_funds.push(id);
+  }
+  d.fund_labels.FEQT.description="Actions mondiales · crypto incluse";
+  d.fund_labels["CGL.C"].description="Or physique · CAD non couvert";
   d.frontier_caps=Object.fromEntries(d.optimization.eligible_funds.map(id=>[id,id==="FINN"?.15:["ZEB","ZEO","XIT"].includes(id)?.05:.35]));
   if(extra){
    if(extra.as_of!==d.assumptions.as_of||JSON.stringify(extra.dates)!==JSON.stringify(d.dates))throw Error("Les nouveaux FNB n’ont pas les mêmes mois que l’analyse. Actualisation nécessaire.");
@@ -70,7 +78,8 @@
     add(values.map((v,i)=>(lower-v)*eq[i]),0,group.key+" "+k+" minimum");
    });
   }
-  return {rows,bounds,labels,caps,equity:eq,geo:ids.map(id=>u.geo[id]),sector:ids.map(id=>u.sector[id]),refGeo:u.ref_geo,refSector:u.ref_sector,geoTolerance:settings.geo_tolerance??.1,sectorTolerance:settings.sector_tolerance??.1,sectorCap:settings.sector_cap??.35,unknownCap:settings.unknown_geography_cap??.05};
+  const assets=Object.fromEntries(["equity","bond","cash","crypto","gold"].map(key=>[key,ids.map(id=>Math.max(0,u[key]?.[id]??(key==="cash"?1-u.equity[id]:0)))]));
+  return {rows,bounds,labels,caps,assets,equity:eq,geo:ids.map(id=>u.geo[id]),sector:ids.map(id=>u.sector[id]),refGeo:u.ref_geo,refSector:u.ref_sector,geoTolerance:settings.geo_tolerance??.1,sectorTolerance:settings.sector_tolerance??.1,sectorCap:settings.sector_cap??.35,unknownCap:settings.unknown_geography_cap??.05};
  }
  function feasible(w,limits,tol=2e-8){
   return weightsOK(w,1)&&(!limits||limits.rows.every((r,i)=>dot(r,w)<=limits.bounds[i]+tol));
@@ -154,9 +163,11 @@
  }
  function exposures(prepared,w){
   const L=prepared.limits;if(!L)return null;const total=dot(w,L.equity);
+  if(total<=EPS)throw Error("La diversification exige une poche actions positive");
+  const assets=Object.fromEntries(Object.entries(L.assets).map(([key,values])=>[key,dot(w,values)]));
   const mix=key=>L[key][0].map((_,k)=>w.reduce((s,v,i)=>s+v*L.equity[i]*L[key][i][k],0)/total);
   const geo=mix("geo"),sector=mix("sector");
-  return {geo,sector,maxGeoGap:Math.max(...geo.map((v,i)=>Math.abs(v-L.refGeo[i]))),maxSectorGap:Math.max(...sector.map((v,i)=>Math.abs(v-L.refSector[i]))),maxSector:Math.max(...sector),valid:feasible(w,L),equity:total};
+  return {geo,sector,assets,maxGeoGap:Math.max(...geo.map((v,i)=>Math.abs(v-L.refGeo[i]))),maxSectorGap:Math.max(...sector.map((v,i)=>Math.abs(v-L.refSector[i]))),maxSector:Math.max(...sector),valid:feasible(w,L),equity:total};
  }
 
  function prepare(data,options={}){

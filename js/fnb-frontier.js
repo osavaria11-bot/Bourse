@@ -1,6 +1,6 @@
 (() => {
  "use strict";
- const U=window.SavyFrontierUtils,script=document.currentScript,workerUrl=new URL("fnb-frontier-worker.js?v=20261020-expanded",script.src);
+ const U=window.SavyFrontierUtils,script=document.currentScript,workerUrl=new URL("fnb-frontier-worker.js?v=20261020-complete-universe",script.src);
  const $=id=>document.getElementById(id),number=(v,d=2)=>v===null||!Number.isFinite(v)?"—":new Intl.NumberFormat("fr-CA",{minimumFractionDigits:d,maximumFractionDigits:d}).format(v);
  const pct=(v,d=1)=>v===null||!Number.isFinite(v)?"—":number(v*100,d)+" %",esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
  const delta=v=>v===null||!Number.isFinite(v)?"—":(v>0?"+":"")+number(v,3),finite=v=>typeof v==="number"&&Number.isFinite(v);
@@ -27,7 +27,8 @@
   const e=U.exposures(prepared,weights);if(!e||!$("frontierExposures"))return;
   const rows=(title,names,values,reference)=>'<section><h4>'+title+'</h4><table><thead><tr><th>Exposition</th><th>Simulation</th><th>VEQT</th><th>Écart</th></tr></thead><tbody>'+values.map((v,i)=>'<tr><th scope="row">'+esc(names[i])+'</th><td>'+pct(v)+'</td><td>'+pct(reference[i])+'</td><td>'+pct(v-reference[i])+'</td></tr>').join("")+'</tbody></table></section>';
   $("frontierExposureSummary").textContent="Diversification "+(e.valid?"conforme":"hors limites")+" · écart régional max. "+pct(e.maxGeoGap)+" · secteur max. "+pct(e.maxSector);
-  $("frontierExposures").innerHTML=rows("Régions",D.geo_names,e.geo,prepared.limits.refGeo)+rows("Secteurs",D.sector_names,e.sector,prepared.limits.refSector);
+  $("frontierAssetMix").textContent="Composition réelle : "+[["equity","actions"],["gold","or physique"],["crypto","crypto"],["bond","obligations"],["cash","liquidités"]].filter(([key])=>e.assets[key]>.00005).map(([key,label])=>label+" "+pct(e.assets[key])).join(" · ")+". Régions et secteurs calculés sur la poche actions.";
+  $("frontierExposures").innerHTML=rows("Régions · poche actions",D.geo_names,e.geo,prepared.limits.refGeo)+rows("Secteurs · poche actions",D.sector_names,e.sector,prepared.limits.refSector);
   root.dataset.exposures=JSON.stringify(e);
  }
  function comparisons(){
@@ -111,7 +112,7 @@
   $("frontierExport").disabled=false;
   $("frontierPriority").disabled=false;
   $("frontierMaxSharpe").disabled=!solution.sharpe;$("frontierMaxIR").disabled=!solution.information;$("frontierBalanced").disabled=!solution.pareto.length;
-  $("frontierStatus").textContent="100 % FNB d’actions cotés au Canada · régions et secteurs à ±10 points de VEQT · maximum sectoriel 35 %. "+(!solution.sharpe?"Pas d’excédent positif avec un Sharpe fini. ":"")+(!solution.information?"Pas d’excédent positif avec un IR fini face à VEQT. ":"");
+  $("frontierStatus").textContent="FNB cotés au Canada · sur la poche actions : régions et secteurs à ±10 points de VEQT, maximum sectoriel 35 %. "+(!solution.sharpe?"Pas d’excédent positif avec un Sharpe fini. ":"")+(!solution.information?"Pas d’excédent positif avec un IR fini face à VEQT. ":"");
   table();dates();draw();updateMetrics();
  }
  function fail(error,id){if(id!==generation)return;loading=false;root.setAttribute("aria-busy","false");root.dataset.ready="error";$("frontierContent").hidden=true;$("frontierError").hidden=false;$("frontierError").textContent=error.message||String(error);$("frontierStatus").textContent="Les autres vues et les portefeuilles enregistrés restent inchangés.";}
@@ -152,8 +153,8 @@
  }
  function show(data){
   root=$("frontier");if(!root)return;
-  if(initialized){requestAnimationFrame(draw);return;}initialized=true;D=U.extend(data,JSON.parse($("frontierExtra")?.textContent||"null"));selectedIds=[...D.optimization.eligible_funds];key="savy:fnb-frontier:v2:"+D.assumptions.as_of+":"+D.optimization.source_digest;
-  try{const saved=JSON.parse(localStorage.getItem(key));if(saved&&["risk","active","ratios"].includes(saved.mode)&&["split","all"].includes(saved.sample)&&[.25,.35,.4,.5,1].includes(saved.cap)&&finite(saved.priority)&&saved.priority>=0&&saved.priority<=1){const check=U.prepare(D,saved);cap=saved.cap;sample=saved.sample;mode=saved.mode;priority=saved.priority;selectedIds=check.ids;prepared=check;weights=U.allocate(prepared,selectedIds.map(id=>saved.weights[id]||0));}}catch{}
+  if(initialized){requestAnimationFrame(draw);return;}initialized=true;D=U.extend(data,JSON.parse($("frontierExtra")?.textContent||"null"));selectedIds=[...D.optimization.eligible_funds];key="savy:fnb-frontier:v3:"+D.assumptions.as_of+":"+D.optimization.source_digest;
+  try{const current=JSON.parse(localStorage.getItem(key)),legacy=current?null:JSON.parse(localStorage.getItem(key.replace(":v3:",":v2:"))),saved=current||legacy;if(saved&&["risk","active","ratios"].includes(saved.mode)&&["split","all"].includes(saved.sample)&&[.25,.35,.4,.5,1].includes(saved.cap)&&finite(saved.priority)&&saved.priority>=0&&saved.priority<=1){const check=U.prepare(D,{...saved,ids:legacy?D.optimization.eligible_funds:saved.ids});cap=saved.cap;sample=saved.sample;mode=saved.mode;priority=saved.priority;selectedIds=check.ids;prepared=check;weights=U.allocate(prepared,selectedIds.map(id=>saved.weights[id]||0));}}catch{}
   $("frontierShowZeros")?.setAttribute("checked","");
   if($("frontierShowZeros"))$("frontierShowZeros").checked=true;
   $("frontierCap").value=String(cap);$("frontierSample").value=sample;$("frontierMode").value=mode;$("frontierPriority").value=String(priority*100);fundControls();bind();calculate();

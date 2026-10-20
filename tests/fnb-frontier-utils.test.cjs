@@ -59,8 +59,8 @@ test('validation months never enter calibration moments and exploration never mu
 
 test('all dated eligible funds are enabled, benchmark wrappers excluded and the original data immutable',()=>{
  const fs=require("node:fs"),extra=fs.existsSync(require("node:path").join(__dirname,"../data/fnb-frontier-universe.json"))?require("../data/fnb-frontier-universe.json"):null,before=JSON.stringify(D),d=U.extend(D,extra),p=U.prepare(d,{cap:.35});
- assert.equal(JSON.stringify(D),before);assert.ok(!p.ids.includes("VEQT"));assert.ok(!p.ids.includes("XEQT"));assert.ok(p.ids.includes("RUD"));
- assert.equal(p.ids.length,16+(extra?Object.keys(extra.funds).length:0));
+ assert.equal(JSON.stringify(D),before);assert.ok(!p.ids.includes("VEQT"));assert.ok(!p.ids.includes("XEQT"));for(const id of ["FEQT","CGL.C","RUD","VEE"])assert.ok(p.ids.includes(id),id+" must be enabled");
+ assert.equal(p.ids.length,18+(extra?Object.keys(extra.funds).length:0));
  if(extra){assert.ok(p.ids.length>=26);const wrong={...extra,as_of:"2000-01-31"};assert.throws(()=>U.extend(D,wrong));}
 });
 test('diversified QP matches a dense constrained grid and rejects an infeasible universe',()=>{
@@ -81,4 +81,18 @@ test('every enlarged frontier point, compromise and slider edit respects economi
  const changed=JSON.parse(JSON.stringify(d));for(const id of [...p.ids,"VEQT"])for(let t=28;t<40;t++)changed.universe.returns[id][t]+=.05;
  assert.deepEqual(U.prepare(changed,{cap:.35}).fit,p.fit);
  assert.ok(solution.maxSolverGap<1e-7);
+});
+
+test("requested funds use their actual returns and asset mix, with gold excluded from equity diversification",()=>{
+ const extra=require("../data/fnb-frontier-universe.json"),d=U.extend(D,extra),p=U.prepare(d,{cap:.35}),base=U.exposures(p,p.feasible);
+ for(const id of ["FEQT","CGL.C","RUD","VEE"]){
+  const i=p.ids.indexOf(id);assert.ok(i>=0);assert.deepEqual(p.fit.series[i],D.universe.returns[id].slice(0,28));assert.deepEqual(p.validation.series[i],D.universe.returns[id].slice(28));
+  assert.equal(d.source_urls[id],D.source_urls[id]);assert.deepEqual(d.source_dates[id],D.source_dates[id]);
+  const w=U.edit(p,p.feasible,i,.1),e=U.exposures(p,w);assert.ok(w[i]>.09,id+" must accept a positive allocation");assert.ok(e.valid);near(Object.values(e.assets).reduce((a,b)=>a+b,0),1);
+  if(id==="CGL.C")near(e.assets.gold,w[i]);
+  if(id==="FEQT")near(e.assets.crypto,w[i]*D.universe.crypto.FEQT);
+ }
+ const withGold=p.feasible.map(v=>v*.8);withGold[p.ids.indexOf("CGL.C")]+=.2;const mixed=U.exposures(p,withGold);
+ base.geo.forEach((v,i)=>near(mixed.geo[i],v));base.sector.forEach((v,i)=>near(mixed.sector[i],v));assert.ok(mixed.valid);near(mixed.equity,base.equity*.8);
+ const missing=JSON.parse(JSON.stringify(D));delete missing.universe.returns.FEQT;assert.throws(()=>U.extend(missing,extra));
 });

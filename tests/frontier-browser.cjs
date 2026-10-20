@@ -6,11 +6,15 @@ const server=http.createServer((req,res)=>{const pathname=new URL(req.url,"http:
 async function check(browser,engine){
  const ctx=await browser.newContext({viewport:{width:1440,height:960},acceptDownloads:true}),page=await ctx.newPage(),errors=[];page.on("pageerror",e=>errors.push(e.message));await page.route("https://**",r=>r.abort());
  const url="http://127.0.0.1:"+server.address().port;
+ const legacyKey="savy:fnb-frontier:v2:"+E.assumptions.as_of+":"+E.optimization.source_digest,legacy={ids:Object.keys(D.results.proposal.weights),weights:D.results.proposal.weights,cap:.35,sample:"split",mode:"risk",priority:.5};
+ await ctx.addInitScript(({key,value})=>{if(!localStorage.getItem(key))localStorage.setItem(key,JSON.stringify(value));},{key:legacyKey,value:legacy});
  await page.goto(url+"/reports/portefeuilles-fnb.html");assert.equal(await page.locator('#frontier[data-ready]').count(),0,"Laboratory computes lazily");
  await page.locator('.nav [data-tab="frontier"]').click();await page.waitForSelector('#frontier[data-ready="true"]',{timeout:90000});
  const weights=async()=>JSON.parse(await page.locator('#frontier').getAttribute('data-weights'));
  const valid=async cap=>{const w=Object.values(await weights());assert.ok(U.weightsOK(w,cap));assert.equal(await page.locator('#frontierTotal').textContent(),'100,0 %');};
  await valid(.35);assert.equal(await page.locator("#frontierWeights tr").count(),E.optimization.eligible_funds.length);assert.equal(await page.locator("#frontierFundChoices input").count(),E.optimization.eligible_funds.length);assert.equal(await page.locator("#frontierSources tr").count(),E.optimization.eligible_funds.length);assert.equal(await page.locator('[data-frontier-include="VEQT"]').count(),0);
+ for(const id of ["FEQT","CGL.C","RUD","VEE"]){assert.equal(await page.locator(`[data-frontier-include="${id}"]`).isChecked(),true,id+" enabled after restoring legacy selection");assert.equal(await page.locator(`[data-frontier-fund="${id}"]`).isVisible(),true,id+" allocation row visible");}
+ const restored=await weights(),expected=U.allocate(U.prepare(E,{cap:.35}),E.optimization.eligible_funds.map(id=>legacy.weights[id]||0));E.optimization.eligible_funds.forEach((id,i)=>assert.ok(Math.abs(restored[id]-expected[i])<1e-9,"Legacy weights preserved for "+id));
  assert.equal(await page.locator("#frontierShowZeros").isChecked(),true,"All candidate funds are visible by default");
  assert.equal(await page.locator("#frontierWeights tr:visible").count(),E.optimization.eligible_funds.length);
  await page.locator("#frontierShowZeros").uncheck();
@@ -24,7 +28,13 @@ async function check(browser,engine){
  const p=U.prepare(E,{cap:.35});
  const actual=await weights(),metrics=U.metrics(p.fit,p.ids.map(id=>actual[id]));assert.ok(Math.abs(metrics.information-ir.information)<1e-10);
  await page.locator('#frontierBalanced').click();await page.locator('#frontierPriority').fill('80');assert.equal(await page.locator('#frontierBalanced').getAttribute('aria-pressed'),'true');await valid(.35);
- await page.locator("#frontierShowZeros").check();await page.locator("#frontierWeight0").fill("10");await valid(.35);assert.ok(JSON.parse(await page.locator("#frontier").getAttribute("data-exposures")).valid);
+ await page.locator("#frontierShowZeros").check();
+ for(const id of ["FEQT","CGL.C","RUD","VEE"]){
+  await page.locator(`[data-frontier-fund="${id}"] input`).fill("10");await valid(.35);const w=await weights(),e=JSON.parse(await page.locator("#frontier").getAttribute("data-exposures"));assert.ok(e.valid);assert.ok(w[id]>.09,id+" participates in calculations");
+  const m=U.metrics(p.fit,p.ids.map(name=>w[name])),shown=JSON.parse(await page.locator("#frontier").getAttribute("data-metrics"));assert.ok(Math.abs(shown.mean-m.mean)<1e-10);
+  if(id==="CGL.C"){assert.ok(Math.abs(e.assets.gold-w[id])<1e-10);assert.match(await page.locator("#frontierAssetMix").textContent(),/or physique/);}
+  if(id==="FEQT"){assert.ok(Math.abs(e.assets.crypto-w[id]*D.universe.crypto.FEQT)<1e-10);assert.match(await page.locator("#frontierAssetMix").textContent(),/crypto/);}
+ }
  await page.locator('#frontierMode').selectOption('active');assert.match(await page.locator('#frontierPlot svg').getAttribute('aria-label'),/Tracking/);
  const before=JSON.stringify(await weights()),box=await page.locator('#frontierPlot svg').boundingBox();await page.mouse.move(box.x+box.width*.8,box.y+box.height*.3);await page.mouse.down();await page.mouse.move(box.x+box.width*.35,box.y+box.height*.65,{steps:6});await page.mouse.up();assert.notEqual(JSON.stringify(await weights()),before);await valid(.35);
  for(const mode of ['risk','active','ratios']){await page.locator('#frontierMode').selectOption(mode);assert.equal(await page.locator('#frontierPlot svg').count(),1);await page.locator('#frontierTrace').fill('5');await valid(.35);}
@@ -37,12 +47,15 @@ async function check(browser,engine){
  for(const width of [768,390,375,320]){await page.setViewportSize({width,height:900});await page.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))));assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),engine+' frontier overflow '+width);assert.ok(await page.locator('#frontierPlot svg').evaluate(n=>n.getBoundingClientRect().width<=innerWidth));}
  if(process.env.QA_SCREENSHOTS_DIR){fs.mkdirSync(process.env.QA_SCREENSHOTS_DIR,{recursive:true});await page.screenshot({path:path.join(process.env.QA_SCREENSHOTS_DIR,engine+'-frontier-mobile.png')});}
  await page.reload();await page.locator('.nav [data-tab="frontier"]').click();await page.waitForSelector('#frontier[data-ready="true"]',{timeout:90000});assert.equal(await page.locator('#frontierCap').inputValue(),'0.25');await valid(.25);
+ await page.locator(".frontier-settings-panel>summary").click();await page.locator("#frontierUniverse>summary").click();await page.locator('[data-frontier-include="CGL.C"]').uncheck();await page.waitForSelector('#frontier[data-ready="true"]',{timeout:90000});
+ await page.reload();await page.locator('.nav [data-tab="frontier"]').click();await page.waitForSelector('#frontier[data-ready="true"]',{timeout:90000});assert.equal(await page.locator("#frontierWeights tr").count(),E.optimization.eligible_funds.length-1,"Current selections survive reload");
+ await page.locator(".frontier-settings-panel>summary").click();await page.locator("#frontierAllFunds").click();await page.waitForSelector('#frontier[data-ready="true"]',{timeout:90000});assert.equal(await page.locator("#frontierWeights tr:visible").count(),30);await valid(.25);
  assert.equal(await page.locator('#analysis').evaluate(n=>JSON.stringify(JSON.parse(n.textContent))),original,"No stored portfolio data changes");
  await page.setViewportSize({width:390,height:844});await page.goto(url+'/index.html#view=analyses&tab=overview');const frame=page.frameLocator('#fundAnalysisFrame');await frame.locator('html[data-ready="true"]').waitFor();await frame.locator('.nav [data-tab="frontier"]').click();await frame.locator('#frontier[data-ready="true"]').waitFor({timeout:90000});
  await page.waitForFunction(()=>{const f=document.getElementById('fundAnalysisFrame');return Math.abs(f.clientHeight-Math.ceil(f.contentDocument.querySelector('.wrap').getBoundingClientRect().height)-1)<2;});
  assert.equal(await frame.locator('.frontier-metrics').evaluate(n=>getComputedStyle(n).gridTemplateColumns.split(' ').length),2,'Readable two-column mobile metrics');
  assert.ok(await frame.locator('html').evaluate(n=>n.scrollHeight<=n.clientHeight+2),'One outer page, no nested vertical scrolling');
  if(process.env.QA_SCREENSHOTS_DIR)await page.screenshot({path:path.join(process.env.QA_SCREENSHOTS_DIR,engine+'-frontier-integrated-390.png')});
- assert.deepEqual(errors,[]);console.log(engine+': frontier worker, weights, drag/slider, distinct Sharpe/IR, validation, cap, export, persistence and 320/375/390/768px passed.');await ctx.close();
+ assert.deepEqual(errors,[]);console.log(engine+': 30 funds including FEQT/CGL.C/RUD/VEE, actual asset mix, legacy migration, worker, drag/slider, distinct Sharpe/IR, validation, cap, export, persistence and 320/375/390/768px passed.');await ctx.close();
 }
 (async()=>{await new Promise(r=>server.listen(0,'127.0.0.1',r));for(const [engine,type] of [['chromium',chromium],...(process.env.PORTAL_WEBKIT==='1'?[['webkit',webkit]]:[])]){const browser=await type.launch({headless:true});try{await check(browser,engine);}finally{await browser.close();}}})().catch(e=>{console.error(e);process.exitCode=1;}).finally(()=>server.close());
