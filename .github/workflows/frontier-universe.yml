@@ -37,9 +37,13 @@ jobs:
           node-version: "24"
       - name: Collect dated issuer returns and underlying exposures
         run: python -m scripts.collect_frontier_universe
+      - name: Install independent numerical verification
+        run: python -m pip install --disable-pip-version-check -r scripts/requirements-fnb.txt
       - name: Verify and render the extended laboratory
         run: |
           node --test tests/fnb-frontier-utils.test.cjs
+          node scripts/check_frontier_solution.cjs | python scripts/check_frontier_solution.py
+          python -m unittest discover -s tests -p "test_frontier_universe.py" -v
           node scripts/build_monthly_fnb.cjs
       - name: Preserve complete sourced extension
         run: |

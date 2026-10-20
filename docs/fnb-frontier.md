@@ -11,7 +11,7 @@ l’appareil; l’export porte explicitement le statut de simulation.
 - Source : le même `data/fnb-analysis.json` que le reste d’Analyse FNB, sérialisé
   par `scripts/build_monthly_fnb.cjs`. Aucun nouvel abonnement ou service externe.
 - Univers : `optimization.eligible_funds`, FNB d’actions cotés au Canada;
-  démarrage avec les FNB de la proposition existante. VEQT est la référence fixe.
+  démarrage avec tous les FNB admissibles, sans limite arbitraire de taille d’univers. VEQT est la référence fixe; VEQT et XEQT sont exclus des positions.
   Or, obligations, actions individuelles et FNB non admissibles ne sont pas ajoutés.
 - Les sources et méthodes de chaque FNB sont visibles, notamment les éventuelles
   limites de reconstitution déjà documentées dans `data_methods`.
@@ -52,17 +52,12 @@ Les mois de validation utilisent les mêmes formules et le même taux constant.
 
 ## Optimisation et interactions
 
-Poids positifs, somme 100 %, plafond initial de 40 % par FNB. Le plafond est
+Poids positifs, somme 100 %, plafond général initial de 35 % par FNB. Les plafonds propres aux fonds restent contraignants : 35 % en général, 15 % FINN, 5 % ZEB/ZEO/XIT. Régions et secteurs : ±10 points de VEQT; maximum sectoriel 35 %. Les planchers régionaux du modèle mensuel sont conservés (30 % US, 15 % Canada, 15 % développés hors Amérique du Nord, 5 % émergents), avec les mêmes plafonds de 60/40/40/20 % et 5 % de pays non publiés. Les expositions sont normalisées sur la poche actions, après liquidités internes. Le plafond est
 modifiable, mais un univers dont le nombre de FNB rend la contrainte impossible
-est refusé clairement. Ce plafond ne garantit pas la diversification des
-expositions économiques sous-jacentes.
+est refusé clairement. Toutes ces contraintes sont appliquées à la frontière, au nuage et aux interactions.
 
-`js/fnb-frontier-utils.js` trace des programmes quadratiques convexes
-`min 0,5 w'Σw − λμ'w` sur le simplexe borné. Les pas de coordonnées par paires
-préservent le budget et les bornes; l’écart de Frank–Wolfe contrôle l’optimalité
-de chaque résolution. Une résolution non convergée produit une erreur plutôt
-qu’une fausse frontière. Le nuage déterministe d’allocations n’est pas utilisé
-comme substitut à la frontière moyenne–variance.
+`js/fnb-frontier-utils.js` trace les programmes quadratiques convexes
+`min 0,5 w’Σw − λμ’w` sur le polytope complet des contraintes. Dykstra trouve seulement un point initial admissible; un solveur à ensemble actif résout ensuite les systèmes KKT directement, afin d’éviter l’inversion instable d’actifs très corrélés. Une régularisation numérique de 1e−10 assure les directions; le résidu primal/dual est calculé sur la covariance originale. Une non-convergence bloque la publication du point. Le nuage est formé de mélanges convexes d’allocations admissibles; il ne remplace pas la frontière.
 
 La frontière active remplace `Σ` par la covariance des rendements de chaque
 FNB moins VEQT. Les maxima de Sharpe et d’IR **positifs et finis** sont cherchés
@@ -75,10 +70,9 @@ un point non dominé dans le plan Sharpe/IR. Son curseur pondère deux scores
 normalisés dans cet échantillon. Il ne représente pas une frontière multicritère
 exhaustive ni une maximisation simultanée garantie des deux ratios.
 
-Déplacer un poids fixe celui-ci puis redistribue le reste proportionnellement,
-avec projection sous le même plafond. Les colonnes `Δ Sharpe` et `Δ IR`
+Déplacer un poids cherche à atteindre la cible, puis réajuste les autres poids avec une projection quadratique sous toutes les contraintes. La cible peut être limitée lorsqu’une exposition bloque le mouvement. Les colonnes `Δ Sharpe` et `Δ IR`
 recalculent l’effet d’un ajout de **1 point de poids**, financé par les autres
-FNB; « — » si le plafond ne permet pas cet ajout complet. Il s’agit d’une
+FNB; « — » si un plafond ou une contrainte d’exposition empêche cet ajout complet. Il s’agit d’une
 sensibilité locale du mélange historique, pas d’une attribution causale ou
 d’une garantie de création de valeur future.
 
@@ -99,3 +93,11 @@ et portail vérifient aussi la vue intégrée et son absence de second défileme
 
 Références : [optimisation moyenne–variance, CVX](https://www.cvxgrp.org/cvx_short_course/docs/applications/notebooks/portfolio_optimization.html)
 et [ratio d’information, CFA Institute](https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/using-multifactor-models).
+
+## Univers élargi et publication
+
+`data/fnb-frontier-model.json` ajoute VFV, VVL, XIC, XIT, XMU, XMV, XMW, XQQ, XSU, XUU, ZLU et ZUQ. Les collecteurs officiels déjà utilisés dans « Sources et dates » alimentent `data/fnb-frontier-universe.json`. Les mois sont exactement ceux de l’analyse; aucun proxy ni remplissage n’est ajouté. Le fichier conserve les sources, méthodes, dates, devises et expositions. Le laboratoire inclut aussi RUD, déjà documenté dans les sources, soit 28 FNB au lancement de cette extension.
+
+Le rapport sérialise cette extension séparément de `#analysis`; les allocations et historiques acquis restent intacts. Le générateur ajoute les nouvelles lignes dans « Données → Sources et dates » et les contrôles d’exposition dans le laboratoire. Le workflow `Expanded FNB frontier sources` vérifie quotidiennement l’alignement avec le dernier instantané mensuel et réessaie une collecte incomplète, sans publier de données partielles. Les archives gardent leurs instantanés.
+
+Les tests couvrent les contraintes de tous les points, un optimum comparé à une grille dense, les curseurs, les mois manquants et le traitement des lignes de droits à valeur nulle chez BMO. Six programmes quadratiques sont également recoupés avec SciPy/SLSQP, indépendamment du solveur du navigateur. La comparaison de trois profils présente calibration et validation côte à côte; les compositions peuvent être dépliées.
