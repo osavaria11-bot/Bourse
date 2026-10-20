@@ -18,7 +18,7 @@ except ModuleNotFoundError:
     from fnb_sources import Client, collect, month_end, previous_month
 
 ROOT = Path(__file__).resolve().parents[1]
-MODEL_VERSION = "1.0.0"
+MODEL_VERSION = "1.1.0"
 PROPOSAL = "proposal"
 GEO_NAMES = ["États-Unis", "Canada", "Développés hors Amérique du Nord", "Marchés émergents", "Pays non publiés",
              "Or physique", "Cryptomonnaies indirectes", "Obligations", "Liquidités et autres"]
@@ -100,6 +100,7 @@ def stats(returns, benchmark, rf, dates):
 def eligible_funds(config, sources):
     out = []
     for ticker, fund in config["funds"].items():
+        if ticker in ("VEQT", "XEQT"): continue  # Benchmarks never become portfolio positions.
         a = sources["funds"][ticker]["assets"]
         # An equity ETF can carry incidental settlement cash; there is no cash sleeve.
         if fund["equity_eligible"] and fund["currency"] == "CAD" and fund["exchange"] in ["TSX", "Cboe Canada"]:
@@ -212,7 +213,16 @@ def refresh_analysis(current, baseline, sources, config, generated_at):
     if len(dates) < len(current["dates"]) or dates[:len(current["dates"])] != current["dates"]: raise ValueError("Historical months cannot be removed")
     old_returns = current["universe"]["returns"]
     old_returns = {**old_returns, "VEQT": current["results"]["VEQT"]["monthly"]}
-    frozen = {t: list(old_returns[t]) for t in config["funds"]}
+    frozen = {}
+    for ticker in config["funds"]:
+        if ticker in old_returns:
+            frozen[ticker] = list(old_returns[ticker])
+        else:
+            # New candidates require their own complete official history.
+            supplied = sources["funds"][ticker]["returns"]
+            if any(month not in supplied for month in current["dates"]):
+                raise ValueError("New ETF missing common history: " + ticker)
+            frozen[ticker] = [supplied[month] for month in current["dates"]]
     for ticker in config["funds"]:
         overlap = [(month, old) for month, old in zip(current["dates"], frozen[ticker]) if month in sources["funds"][ticker]["returns"]]
         if overlap and max(abs(old - sources["funds"][ticker]["returns"][month]) for month, old in overlap) > .05:
@@ -220,6 +230,8 @@ def refresh_analysis(current, baseline, sources, config, generated_at):
         for month in dates[len(current["dates"]):]:
             if month not in sources["funds"][ticker]["returns"]: raise ValueError("Missing common month " + ticker + " " + month)
             frozen[ticker].append(sources["funds"][ticker]["returns"][month])
+    d["funds"] = sorted(config["funds"])
+    d["fund_labels"] = {t: {k: f[k] for k in ("name", "description", "source_url")} for t, f in config["funds"].items()}
     d["dates"] = dates
     d["wealth_dates"] = [month_end(previous_month(month_end(dates[0]))).isoformat()] + [month_end(m).isoformat() for m in dates]
     rf = sources["risk_free"]["rate"]

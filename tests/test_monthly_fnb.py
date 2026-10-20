@@ -97,7 +97,14 @@ class PublicationGuards(unittest.TestCase):
         if not self.current: self.skipTest("Initial research not yet generated")
         config = model.read(ROOT / "data/fnb-model.json"); current = self.initial; u = current["universe"]
         data = {"as_of":"2026-10-31", "risk_free":current["optimization"]["risk_free"], "funds":{}}
+        extra = model.read(ROOT / "data/fnb-frontier-universe.json")["funds"] if (ROOT / "data/fnb-frontier-universe.json").exists() else {}
         for t in config["funds"]:
+            if t not in u["returns"] and t != "VEQT":
+                f = extra[t]
+                data["funds"][t] = {"returns":{**dict(zip(current["dates"], f["returns"])), "2026-10":.01},
+                    "geo":f["geo"], "sector":f["sector"], "assets":{"equity":f["equity"], "cash":1-f["equity"], "bond":0., "crypto":0., "gold":0.},
+                    "mer":f["mer"], "dates":f["source_dates"], "source_url":f["source_url"], "return_method":f["method"]}
+                continue
             data["funds"][t] = {"returns":{"2026-10":.01}, "geo":u["geo"][t], "sector":u["sector"][t],
                 "assets":{a:u[a][t] for a in ["equity","bond","crypto","gold","cash"]}, "mer":u["mer"][t],
                 "dates":current["source_dates"][t], "source_url":current["source_urls"][t], "return_method":"Test fixture"}
@@ -109,6 +116,10 @@ class PublicationGuards(unittest.TestCase):
         model.validate(new,self.baseline)
         self.assertEqual(current,original)
         self.assertEqual(new["results"]["proposal"]["weights"],weights)
+        for t in extra:
+            self.assertEqual(new["universe"]["returns"][t][:40],extra[t]["returns"])
+        self.assertNotIn("VEQT",new["optimization"]["eligible_funds"])
+        self.assertNotIn("XEQT",new["optimization"]["eligible_funds"])
         self.assertNotEqual(new["results"]["proposal"]["monthly"][:40],current["results"]["proposal"]["monthly"])
         for k in self.baseline["order"]:
             self.assertEqual(new["results"][k]["monthly"][:40],current["results"][k]["monthly"])
