@@ -1,7 +1,7 @@
 "use strict";
 const assert=require("node:assert/strict"),fs=require("node:fs"),path=require("node:path"),http=require("node:http");
 const {chromium,webkit}=require(process.env.PLAYWRIGHT_MODULE_PATH||"playwright"),U=require("../js/fnb-frontier-utils.js");
-const root=path.resolve(__dirname,".."),D=JSON.parse(fs.readFileSync(path.join(root,"data/fnb-analysis.json"),"utf8")),original=JSON.stringify(D);
+const root=path.resolve(__dirname,".."),D=JSON.parse(fs.readFileSync(path.join(root,"data/fnb-analysis.json"),"utf8")),original=JSON.stringify(D),E=U.extend(D,fs.existsSync(path.join(root,"data/fnb-frontier-universe.json"))?JSON.parse(fs.readFileSync(path.join(root,"data/fnb-frontier-universe.json"),"utf8")):null);
 const server=http.createServer((req,res)=>{const pathname=new URL(req.url,"http://localhost").pathname,f=path.resolve(root,"."+(pathname==='/'?'/index.html':pathname));if(!f.startsWith(root+path.sep)||!fs.existsSync(f)||!fs.statSync(f).isFile()){res.writeHead(404);return res.end();}res.setHeader("Content-Type",f.endsWith(".html")?"text/html":f.endsWith(".css")?"text/css":f.endsWith(".js")?"text/javascript":"application/json");fs.createReadStream(f).pipe(res);});
 async function check(browser,engine){
  const ctx=await browser.newContext({viewport:{width:1440,height:960},acceptDownloads:true}),page=await ctx.newPage(),errors=[];page.on("pageerror",e=>errors.push(e.message));await page.route("https://**",r=>r.abort());
@@ -10,22 +10,22 @@ async function check(browser,engine){
  await page.locator('.nav [data-tab="frontier"]').click();await page.waitForSelector('#frontier[data-ready="true"]',{timeout:90000});
  const weights=async()=>JSON.parse(await page.locator('#frontier').getAttribute('data-weights'));
  const valid=async cap=>{const w=Object.values(await weights());assert.ok(U.weightsOK(w,cap));assert.equal(await page.locator('#frontierTotal').textContent(),'100,0 %');};
- await valid(.4);assert.equal(await page.locator('#frontierWeights tr').count(),8);assert.equal(await page.locator('#frontierFundChoices input').count(),D.optimization.eligible_funds.length);assert.equal(await page.locator('#frontierSources tr').count(),8);
+ await valid(.35);assert.equal(await page.locator("#frontierWeights tr").count(),E.optimization.eligible_funds.length);assert.equal(await page.locator("#frontierFundChoices input").count(),E.optimization.eligible_funds.length);assert.equal(await page.locator("#frontierSources tr").count(),E.optimization.eligible_funds.length);assert.equal(await page.locator('[data-frontier-include="VEQT"]').count(),0);
  assert.ok((await page.locator('#frontierDates').textContent()).includes('2025-10 → 2026-09'));
  await page.locator('#frontierMaxSharpe').click();const sr=JSON.parse(await page.locator('#frontier').getAttribute('data-metrics'));await page.locator('#frontierMaxIR').click();const ir=JSON.parse(await page.locator('#frontier').getAttribute('data-metrics'));
- assert.ok(sr.sharpe>ir.sharpe);assert.ok(ir.information>sr.information);await valid(.4);
- const p=U.prepare(D);
+ assert.ok(sr.sharpe>ir.sharpe);assert.ok(ir.information>sr.information);await valid(.35);
+ const p=U.prepare(E,{cap:.35});
  const actual=await weights(),metrics=U.metrics(p.fit,p.ids.map(id=>actual[id]));assert.ok(Math.abs(metrics.information-ir.information)<1e-10);
- await page.locator('#frontierBalanced').click();await page.locator('#frontierPriority').fill('80');assert.equal(await page.locator('#frontierBalanced').getAttribute('aria-pressed'),'true');await valid(.4);
- await page.locator('#frontierWeight0').fill('10');await valid(.4);assert.ok(Math.abs((await weights())[p.ids[0]]-.1)<1e-8);
+ await page.locator('#frontierBalanced').click();await page.locator('#frontierPriority').fill('80');assert.equal(await page.locator('#frontierBalanced').getAttribute('aria-pressed'),'true');await valid(.35);
+ await page.locator("#frontierShowZeros").check();await page.locator("#frontierWeight0").fill("10");await valid(.35);assert.ok(JSON.parse(await page.locator("#frontier").getAttribute("data-exposures")).valid);
  await page.locator('#frontierMode').selectOption('active');assert.match(await page.locator('#frontierPlot svg').getAttribute('aria-label'),/Tracking/);
- const before=JSON.stringify(await weights()),box=await page.locator('#frontierPlot svg').boundingBox();await page.mouse.move(box.x+box.width*.8,box.y+box.height*.3);await page.mouse.down();await page.mouse.move(box.x+box.width*.35,box.y+box.height*.65,{steps:6});await page.mouse.up();assert.notEqual(JSON.stringify(await weights()),before);await valid(.4);
- for(const mode of ['risk','active','ratios']){await page.locator('#frontierMode').selectOption(mode);assert.equal(await page.locator('#frontierPlot svg').count(),1);await page.locator('#frontierTrace').fill('5');await valid(.4);}
+ const before=JSON.stringify(await weights()),box=await page.locator('#frontierPlot svg').boundingBox();await page.mouse.move(box.x+box.width*.8,box.y+box.height*.3);await page.mouse.down();await page.mouse.move(box.x+box.width*.35,box.y+box.height*.65,{steps:6});await page.mouse.up();assert.notEqual(JSON.stringify(await weights()),before);await valid(.35);
+ for(const mode of ['risk','active','ratios']){await page.locator('#frontierMode').selectOption(mode);assert.equal(await page.locator('#frontierPlot svg').count(),1);await page.locator('#frontierTrace').fill('5');await valid(.35);}
  const event=page.waitForEvent('download');await page.locator('#frontierExport').click();const file=await event,data=JSON.parse(fs.readFileSync(await file.path(),'utf8'));assert.equal(data.kind,'savy_frontier_local_simulation');assert.equal(data.validation.length,12);assert.equal(data.benchmark,'VEQT');
  await page.locator('.frontier-settings-panel>summary').click();await page.locator('#frontierCap').selectOption('0.25');await page.waitForSelector('#frontier[data-ready="true"]',{timeout:90000});await valid(.25);
  await page.locator('#frontierSample').selectOption('all');await page.waitForSelector('#frontier[data-ready="true"]',{timeout:90000});assert.match(await page.locator('#frontierMeanTest').textContent(),/Sans validation/);await valid(.25);
- await page.locator('#frontierUniverse>summary').click();await page.locator('[data-frontier-include="VEQT"]').check();await page.waitForSelector('#frontier[data-ready="true"]',{timeout:90000});assert.equal(await page.locator('#frontierWeights tr').count(),9);await valid(.25);
- await page.locator('[data-frontier-fund="VEQT"] input').fill('10');await valid(.25);await page.locator('[data-frontier-include="VEQT"]').uncheck();await page.waitForSelector('#frontier[data-ready="true"]',{timeout:90000});assert.equal(await page.locator('#frontierWeights tr').count(),8);await valid(.25);
+ await page.locator('#frontierUniverse>summary').click();await page.locator('[data-frontier-include="FCMO"]').uncheck();await page.waitForSelector('#frontier[data-ready="true"]',{timeout:90000});assert.equal(await page.locator('#frontierWeights tr').count(),E.optimization.eligible_funds.length-1);await valid(.25);
+ await page.locator('[data-frontier-include="FCMO"]').check();await page.waitForSelector('#frontier[data-ready="true"]',{timeout:90000});assert.equal(await page.locator('#frontierWeights tr').count(),E.optimization.eligible_funds.length);await valid(.25);
  await page.locator('#frontierUniverse>summary').click();await page.locator('.frontier-settings-panel>summary').click();
  for(const width of [768,390,375,320]){await page.setViewportSize({width,height:900});await page.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))));assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),engine+' frontier overflow '+width);assert.ok(await page.locator('#frontierPlot svg').evaluate(n=>n.getBoundingClientRect().width<=innerWidth));}
  if(process.env.QA_SCREENSHOTS_DIR){fs.mkdirSync(process.env.QA_SCREENSHOTS_DIR,{recursive:true});await page.screenshot({path:path.join(process.env.QA_SCREENSHOTS_DIR,engine+'-frontier-mobile.png')});}

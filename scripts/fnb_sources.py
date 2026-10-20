@@ -335,8 +335,13 @@ def bmo(client, ticker, fund, cutoff):
     d = client.json(BMO, {"query": query})["data"]
     p = d["portfolios"][0]
     if p["entityId"] != ticker: raise ValueError("BMO identity")
-    rows = [r for r in p["kb2Holdings"] if r["assetClass"] == "Equity" and (r.get("baseMarketValue") or 0) > 0]
-    if len(rows) != p["numberOfEquityPositions"]: raise ValueError("BMO incomplete holdings")
+    equity_rows = [r for r in p["kb2Holdings"] if r["assetClass"] == "Equity"]
+    if len(equity_rows) != p["numberOfEquityPositions"]: raise ValueError("BMO incomplete holdings")
+    # The reported count includes zero-value corporate-action rights (e.g. ZUQ).
+    # Count those rows for completeness, but never give them a positive exposure.
+    if any((r.get("allocation") or 0) > 0 and not (r.get("baseMarketValue") or 0) > 0 for r in equity_rows):
+        raise ValueError("BMO positive equity allocation without a market value")
+    rows = [r for r in equity_rows if (r.get("baseMarketValue") or 0) > 0]
     geo, sec, positions = [0.] * 5, [0.] * len(SECTORS), []
     for r in rows:
         positions.append([r["holding"], r["allocation"]])

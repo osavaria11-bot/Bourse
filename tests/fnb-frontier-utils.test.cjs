@@ -56,3 +56,29 @@ test('validation months never enter calibration moments and exploration never mu
  near(m.reduce((s,v)=>s+v.riskShare,0),1);assert.equal(JSON.stringify(D),before);
  const bad=JSON.parse(before);bad.dates[2]='2023-09';assert.throws(()=>U.prepare(bad));assert.throws(()=>U.prepare(D,{ids:['FEQT','VEQT','VCN'],cap:.4}));
 });
+
+test('all dated eligible funds are enabled, benchmark wrappers excluded and the original data immutable',()=>{
+ const fs=require("node:fs"),extra=fs.existsSync(require("node:path").join(__dirname,"../data/fnb-frontier-universe.json"))?require("../data/fnb-frontier-universe.json"):null,before=JSON.stringify(D),d=U.extend(D,extra),p=U.prepare(d,{cap:.35});
+ assert.equal(JSON.stringify(D),before);assert.ok(!p.ids.includes("VEQT"));assert.ok(!p.ids.includes("XEQT"));assert.ok(p.ids.includes("RUD"));
+ assert.equal(p.ids.length,16+(extra?Object.keys(extra.funds).length:0));
+ if(extra){assert.ok(p.ids.length>=26);const wrong={...extra,as_of:"2000-01-31"};assert.throws(()=>U.extend(D,wrong));}
+});
+test('diversified QP matches a dense constrained grid and rejects an infeasible universe',()=>{
+ const limits={rows:[[1,0,0],[0,1,0],[0,0,1],[-1,0,0],[0,-1,0],[0,0,-1],[1,1,0],[0,0,-1]],bounds:[.8,.8,.8,0,0,0,.6,-.4]};
+ const c=[[.04,.01,.005],[.01,.09,.01],[.005,.01,.06]],linear=[.01,.03,.02],q=U.constrainedQuadratic(c,linear,.8,null,limits),objective=w=>.5*w.reduce((s,v,i)=>s+v*c[i].reduce((r,x,j)=>r+x*w[j],0),0)-w.reduce((s,v,i)=>s+v*linear[i],0);
+ assert.ok(U.feasible(q.weights,limits));assert.ok(q.gap<1e-7);
+ for(let a=0;a<=80;a++)for(let b=0;b<=80;b++){const w=[a/100,b/100,1-(a+b)/100];if(U.feasible(w,limits))assert.ok(objective(q.weights)<=objective(w)+1e-8);}
+ const bad=JSON.parse(JSON.stringify(limits));bad.bounds[6]=.1;bad.rows.push([0,0,1]);bad.bounds.push(.4);assert.throws(()=>U.feasibleStart([.3,.3,.4],bad));
+});
+test('every enlarged frontier point, compromise and slider edit respects economic exposure limits',()=>{
+ const fs=require("node:fs"),extra=fs.existsSync(require("node:path").join(__dirname,"../data/fnb-frontier-universe.json"))?require("../data/fnb-frontier-universe.json"):null;
+ const d=U.extend(D,extra),p=U.prepare(d,{cap:.35}),solution=U.solve(p),points=[...solution.absolute,...solution.active,...solution.cloud,solution.sharpe,solution.information,U.compromise(solution.pareto)].filter(Boolean);
+ for(const point of points){
+  const e=U.exposures(p,point.weights);assert.ok(e.valid);assert.ok(e.maxGeoGap<=.10000001);assert.ok(e.maxSectorGap<=.10000001);assert.ok(e.maxSector<=.35000001);assert.ok(e.geo[3]>=.05-1e-8);
+  point.weights.forEach((w,i)=>assert.ok(w<=p.limits.caps[i]+1e-8));assert.ok(point.weights.every(w=>w>=-1e-9));
+ }
+ for(let i=0;i<p.ids.length;i++){const w=U.edit(p,solution.sharpe.weights,i,.1);assert.ok(U.feasible(w,p.limits));}
+ const changed=JSON.parse(JSON.stringify(d));for(const id of [...p.ids,"VEQT"])for(let t=28;t<40;t++)changed.universe.returns[id][t]+=.05;
+ assert.deepEqual(U.prepare(changed,{cap:.35}).fit,p.fit);
+ assert.ok(solution.maxSolverGap<1e-7);
+});

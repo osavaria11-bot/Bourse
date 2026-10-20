@@ -1,10 +1,10 @@
 (() => {
  "use strict";
- const U=window.SavyFrontierUtils,script=document.currentScript,workerUrl=new URL("fnb-frontier-worker.js?v=20261020-frontier",script.src);
+ const U=window.SavyFrontierUtils,script=document.currentScript,workerUrl=new URL("fnb-frontier-worker.js?v=20261020-expanded",script.src);
  const $=id=>document.getElementById(id),number=(v,d=2)=>v===null||!Number.isFinite(v)?"—":new Intl.NumberFormat("fr-CA",{minimumFractionDigits:d,maximumFractionDigits:d}).format(v);
  const pct=(v,d=1)=>v===null||!Number.isFinite(v)?"—":number(v*100,d)+" %",esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
  const delta=v=>v===null||!Number.isFinite(v)?"—":(v>0?"+":"")+number(v,3),finite=v=>typeof v==="number"&&Number.isFinite(v);
- let D,root,prepared,solution,weights,selectedIds,cap=.4,sample="split",mode="risk",priority=.5,profile="seed",key,worker,generation=0,loading=false,plot,chartTimer,pending,initialized=false;
+ let D,root,prepared,solution,weights,selectedIds,cap=.35,sample="split",mode="risk",priority=.5,profile="seed",key,worker,generation=0,loading=false,plot,chartTimer,pending,initialized=false;
  const cache=new Map(),labels={seed:"Proposition adaptée aux contraintes choisies",sharpe:"Sharpe maximal",information:"IR maximal / VEQT",compromise:"Compromis Sharpe / IR",custom:"Simulation libre",frontier:"Point de la frontière"};
  const seedWeights=()=>D.results.proposal?.weights||{VEQT:1};
  const savedWeights=()=>Object.fromEntries(selectedIds.map((id,i)=>[id,weights[i]]));
@@ -13,14 +13,32 @@
   $("frontierFundChoices").innerHTML=D.optimization.eligible_funds.map(id=>`<label><input type="checkbox" data-frontier-include="${esc(id)}" ${selectedIds.includes(id)?"checked":""}><span><b>${esc(id)}</b><small>${esc(D.fund_labels[id]?.description||"Actions")}</small></span></label>`).join("");
  }
  function table(){
-  $("frontierWeights").innerHTML=selectedIds.map((id,i)=>`<tr data-frontier-fund="${esc(id)}"><th scope="row"><label for="frontierWeight${i}"><span><b>${esc(id)}</b><small>${esc(D.fund_labels[id]?.description||"FNB d’actions")}</small></span><output id="frontierWeightLabel${i}"></output></label><input id="frontierWeight${i}" data-frontier-weight="${i}" type="range" min="0" max="${cap*100}" step="0.1" aria-label="Poids de ${esc(id)} en pourcentage"></th><td data-frontier-delta="sharpe"></td><td data-frontier-delta="information"></td></tr>`).join("");
-  $("frontierSources").innerHTML=selectedIds.map(id=>`<tr><th scope="row">${esc(id)}<small>${esc(D.fund_labels[id]?.name||id)}</small></th><td>${esc(D.data_methods[id]||"Voir la source du fonds.")} <a href="${esc(D.source_urls[id])}" target="_blank" rel="noopener noreferrer">Source ↗</a></td></tr>`).join("");
+  $("frontierWeights").innerHTML=selectedIds.map((id,i)=>`<tr data-frontier-fund="${esc(id)}"><th scope="row"><label for="frontierWeight${i}"><span><b>${esc(id)}</b><small>${esc(D.fund_labels[id]?.description||"FNB d’actions")}</small></span><output id="frontierWeightLabel${i}"></output></label><input id="frontierWeight${i}" data-frontier-weight="${i}" type="range" min="0" max="${Math.min(cap,D.frontier_caps[id]??.35)*100}" step="0.1" aria-label="Poids de ${esc(id)} en pourcentage"></th><td data-frontier-delta="sharpe"></td><td data-frontier-delta="information"></td></tr>`).join("");
+  $("frontierSources").innerHTML=selectedIds.map(id=>`<tr><th scope="row">${esc(id)}<small>${esc(D.fund_labels[id]?.name||id)}</small></th><td>${esc(D.data_methods[id]||"Voir la source du fonds.")} <a href="${esc(D.source_urls[id])}" target="_blank" rel="noopener noreferrer">Source ↗</a><br><small>Performances : ${esc(D.source_dates[id]?.prices||"—")} · positions : ${esc(D.source_dates[id]?.holdings||"—")} · secteurs : ${esc(D.source_dates[id]?.sectors||"—")}</small></td></tr>`).join("");
  }
  function dates(){
   const label=list=>list[0]+" → "+list.at(-1)+" · "+list.length+" mois";
   $("frontierDates").textContent="Calibration : "+label(prepared.dates.fit)+(prepared.validation?" · Validation : "+label(prepared.dates.validation):" · Pas de validation séparée")+" · CAD";
   const rf=D.optimization.risk_free;$("frontierRiskFreeNote").textContent="Taux sans risque constant de comparaison : "+pct(prepared.riskFree,2)+" par an"+(rf?.date?", observation du "+rf.date:"")+". Ce taux courant n’est pas une série historique de taux; le laboratoire ne prétend pas reconstituer une décision réellement prise au début de la période.";
  }
+
+ function showExposures(){
+  const e=U.exposures(prepared,weights);if(!e||!$("frontierExposures"))return;
+  const rows=(title,names,values,reference)=>'<section><h4>'+title+'</h4><table><thead><tr><th>Exposition</th><th>Simulation</th><th>VEQT</th><th>Écart</th></tr></thead><tbody>'+values.map((v,i)=>'<tr><th scope="row">'+esc(names[i])+'</th><td>'+pct(v)+'</td><td>'+pct(reference[i])+'</td><td>'+pct(v-reference[i])+'</td></tr>').join("")+'</tbody></table></section>';
+  $("frontierExposureSummary").textContent="Diversification "+(e.valid?"conforme":"hors limites")+" · écart régional max. "+pct(e.maxGeoGap)+" · secteur max. "+pct(e.maxSector);
+  $("frontierExposures").innerHTML=rows("Régions",D.geo_names,e.geo,prepared.limits.refGeo)+rows("Secteurs",D.sector_names,e.sector,prepared.limits.refSector);
+  root.dataset.exposures=JSON.stringify(e);
+ }
+ function comparisons(){
+  if(!$("frontierComparison"))return;
+  const choices=[["sharpe","Sharpe maximal",solution.sharpe],["information","IR maximal",solution.information],["compromise","Compromis",U.compromise(solution.pareto,priority)]];
+  $("frontierComparison").innerHTML='<table><thead><tr><th>Profil</th><th>Sharpe calibration</th><th>IR calibration</th><th>CAGR validation</th><th>Sharpe validation</th><th>IR validation</th></tr></thead><tbody>'+choices.map(([key,label,p])=>{
+   if(!p)return '<tr><th>'+label+'</th><td colspan="5">Ratio positif indisponible</td></tr>';
+   const v=prepared.validation?U.metrics(prepared.validation,p.weights):null;
+   return '<tr><th><button type="button" data-frontier-profile="'+key+'">'+label+'</button><details><summary>Composition</summary><p>'+prepared.ids.map((id,i)=>p.weights[i]>.00005?esc(id)+" "+pct(p.weights[i]):"").filter(Boolean).join(" · ")+'</p></details></th><td>'+number(p.sharpe)+'</td><td>'+number(p.information)+'</td><td>'+pct(v?.cagr)+'</td><td>'+number(v?.sharpe)+'</td><td>'+number(v?.information)+'</td></tr>';
+  }).join("")+(()=>{const v=prepared.validation?.reference;return '<tr><th>VEQT</th><td>'+number(prepared.fit.reference.sharpe)+'</td><td>—</td><td>'+pct(prepared.validation?prepared.validation.benchmark.reduce((p,r)=>p*(1+r),1)**(12/prepared.validation.n)-1:null)+'</td><td>'+number(v?.sharpe)+'</td><td>—</td></tr>';})()+'</tbody></table>';
+ }
+
  function updateMetrics(){
   if(!prepared||!weights||loading)return;
   const m=U.metrics(prepared.fit,weights),test=prepared.validation?U.metrics(prepared.validation,weights):null;
@@ -30,17 +48,17 @@
   const b=prepared.fit.reference;$("frontierBenchmark").textContent="VEQT · même calibration : moyenne "+pct(b.mean)+" · volatilité "+pct(b.vol)+" · Sharpe "+number(b.sharpe)+". Son IR contre lui-même est non défini.";
   $("frontierActive").textContent="Simulation / VEQT : excédent moyen "+pct(m.excess,2)+"/an · tracking error "+pct(m.tracking,2)+(test?". Validation : "+pct(test.excess,2)+"/an · tracking error "+pct(test.tracking,2):"")+".";
   $("frontierCagr").textContent="CAGR de la simulation : "+pct(m.cagr,2)+(test?"; sur la validation : "+pct(test.cagr,2):"")+".";
-  $("frontierSelection").textContent=labels[profile]+" · "+selectedIds.length+" FNB · plafond "+pct(cap,0)+" · poids total "+pct(weights.reduce((s,v)=>s+v,0),1)+". Simulation locale uniquement.";
+  $("frontierSelection").textContent=labels[profile]+" · "+selectedIds.length+" FNB admissibles · "+weights.filter(v=>v>.00005).length+" positions · plafond général "+pct(cap,0)+" · poids total "+pct(weights.reduce((s,v)=>s+v,0),1)+". Simulation locale uniquement.";
   $("frontierTotal").textContent=pct(weights.reduce((s,v)=>s+v,0),1);
   $("frontierPriorityLabel").textContent="Sharpe "+Math.round(priority*100)+" % · IR "+Math.round((1-priority)*100)+" %";
   const marginals=U.marginals(prepared,weights);
   selectedIds.forEach((id,i)=>{
    $("frontierWeight"+i).value=String(weights[i]*100);$("frontierWeightLabel"+i).textContent=pct(weights[i]);
-   const row=root.querySelector('[data-frontier-fund="'+id+'"]');
+   const row=root.querySelector('[data-frontier-fund="'+id+'"]');row.hidden=weights[i]<.00005&&!$("frontierShowZeros")?.checked;
    for(const metric of ["sharpe","information"]){const cell=row.querySelector('[data-frontier-delta="'+metric+'"]'),v=marginals[i][metric];cell.textContent=delta(v);cell.className=v>1e-8?"positive":v< -1e-8?"negative":"";}
   });
   for(const [id,name] of [["frontierMaxSharpe","sharpe"],["frontierMaxIR","information"],["frontierBalanced","compromise"],["frontierReset","seed"]])$(id).setAttribute("aria-pressed",String(profile===name));
-  root.dataset.weights=JSON.stringify(savedWeights());root.dataset.metrics=JSON.stringify(m);moveMarker(m);save();
+  showExposures();comparisons();root.dataset.weights=JSON.stringify(savedWeights());root.dataset.metrics=JSON.stringify(m);moveMarker(m);save();
  }
  function coordinates(p){return mode==="active"?[p.tracking,p.excess]:mode==="ratios"?[p.sharpe,p.information]:[p.vol,p.mean];}
  function curve(){
@@ -92,7 +110,7 @@
   $("frontierExport").disabled=false;
   $("frontierPriority").disabled=false;
   $("frontierMaxSharpe").disabled=!solution.sharpe;$("frontierMaxIR").disabled=!solution.information;$("frontierBalanced").disabled=!solution.pareto.length;
-  $("frontierStatus").textContent="100 % FNB d’actions cotés au Canada · simulation historique · aucun ordre ni modification des portefeuilles. "+(!solution.sharpe?"Pas d’excédent positif avec un Sharpe fini. ":"")+(!solution.information?"Pas d’excédent positif avec un IR fini face à VEQT. ":"");
+  $("frontierStatus").textContent="100 % FNB d’actions cotés au Canada · régions et secteurs à ±10 points de VEQT · maximum sectoriel 35 %. "+(!solution.sharpe?"Pas d’excédent positif avec un Sharpe fini. ":"")+(!solution.information?"Pas d’excédent positif avec un IR fini face à VEQT. ":"");
   table();dates();draw();updateMetrics();
  }
  function fail(error,id){if(id!==generation)return;loading=false;root.setAttribute("aria-busy","false");root.dataset.ready="error";$("frontierContent").hidden=true;$("frontierError").hidden=false;$("frontierError").textContent=error.message||String(error);$("frontierStatus").textContent="Les autres vues et les portefeuilles enregistrés restent inchangés.";}
@@ -104,7 +122,7 @@
   pending=setTimeout(()=>{
    try{
     const fresh=!prepared,old=weights&&prepared?Object.fromEntries(prepared.ids.map((name,i)=>[name,weights[i]])):seedWeights();
-    prepared=U.prepare(D,{ids:selectedIds,cap,sample});weights=U.project(selectedIds.map(name=>old[name]||0),cap);if(!fresh)profile="custom";
+    prepared=U.prepare(D,{ids:selectedIds,cap,sample});weights=U.allocate(prepared,selectedIds.map(name=>old[name]||0));if(!fresh)profile="custom";
     const modelKey=JSON.stringify({ids:selectedIds,cap,sample}),calculationPrepared=prepared;if(cache.has(modelKey)){complete(cache.get(modelKey),id);return;}
     const done=result=>{if(id!==generation)return;cache.set(modelKey,result);if(cache.size>4)cache.delete(cache.keys().next().value);complete(result,id);};
     const fallback=()=>{if(id!==generation)return;pending=setTimeout(()=>{try{done(U.solve(calculationPrepared));}catch(error){fail(error,id);}},0);};
@@ -114,24 +132,27 @@
    }catch(error){fail(error,id);}
   },100);
  }
- function reset(){weights=U.project(selectedIds.map(id=>seedWeights()[id]||0),cap);profile="seed";updateMetrics();}
+ function reset(){weights=U.allocate(prepared,selectedIds.map(id=>seedWeights()[id]||0));profile="seed";updateMetrics();}
  function bind(){
+  $("frontierShowZeros")?.addEventListener("change",updateMetrics);
+  $("frontierComparison")?.addEventListener("click",event=>{const name=event.target.dataset.frontierProfile;if(name)choose(name==="compromise"?U.compromise(solution.pareto,priority):solution[name],name);});
+  $("frontierAllFunds")?.addEventListener("click",()=>{selectedIds=[...D.optimization.eligible_funds];fundControls();calculate();});
   $("frontierCap").addEventListener("change",event=>{const next=Number(event.target.value);if(selectedIds.length*next<1-1e-9){event.target.value=String(cap);$("frontierError").hidden=false;$("frontierError").textContent="Choisissez au moins "+Math.ceil(1/next)+" FNB pour ce plafond.";return;}cap=next;calculate();});
   $("frontierSample").addEventListener("change",event=>{sample=event.target.value;calculate();});
   $("frontierFundChoices").addEventListener("change",event=>{const ids=[...root.querySelectorAll('[data-frontier-include]:checked')].map(n=>n.dataset.frontierInclude);if(ids.length*cap<1-1e-9){event.target.checked=true;$("frontierError").hidden=false;$("frontierError").textContent="Conservez au moins "+Math.ceil(1/cap)+" FNB pour ce plafond.";return;}selectedIds=ids;calculate();});
-  $("frontierWeights").addEventListener("input",event=>{if(!event.target.hasAttribute("data-frontier-weight")||loading)return;weights=U.changeWeight(weights,Number(event.target.dataset.frontierWeight),Number(event.target.value)/100,cap);profile="custom";updateMetrics();});
+  $("frontierWeights").addEventListener("input",event=>{if(!event.target.hasAttribute("data-frontier-weight")||loading)return;weights=U.edit(prepared,weights,Number(event.target.dataset.frontierWeight),Number(event.target.value)/100);profile="custom";updateMetrics();});
   $("frontierMode").addEventListener("change",event=>{mode=event.target.value;draw();save();});
   $("frontierTrace").addEventListener("input",event=>choose(plot?.line[Number(event.target.value)],"frontier"));
   $("frontierMaxSharpe").addEventListener("click",()=>choose(solution.sharpe,"sharpe"));$("frontierMaxIR").addEventListener("click",()=>choose(solution.information,"information"));
   const balanced=()=>choose(U.compromise(solution.pareto,priority),"compromise");$("frontierBalanced").addEventListener("click",()=>{$("frontierPriorityPanel").open=true;balanced();});
   $("frontierPriority").addEventListener("input",event=>{if(loading)return;priority=Number(event.target.value)/100;balanced();});$("frontierReset").addEventListener("click",reset);
-  $("frontierExport").addEventListener("click",()=>{if(loading)return;const payload={kind:"savy_frontier_local_simulation",exported_at:new Date().toISOString(),currency:"CAD",benchmark:"VEQT",calibration:prepared.dates.fit,validation:prepared.dates.validation,as_of:prepared.asOf,max_fund_weight:cap,rebalance:"monthly",risk_free:prepared.riskFree,weights:savedWeights(),calibration_metrics:U.metrics(prepared.fit,weights),validation_metrics:prepared.validation?U.metrics(prepared.validation,weights):null,warning:"Exploration historique uniquement; aucun portefeuille enregistré ou suivi prospectif modifié."};const url=URL.createObjectURL(new Blob([JSON.stringify(payload,null,2)],{type:"application/json"})),a=document.createElement("a");a.href=url;a.download="SAVY_Frontiere_Simulation.json";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
+  $("frontierExport").addEventListener("click",()=>{if(loading)return;const payload={constraints:{geo_tolerance:prepared.limits.geoTolerance,sector_tolerance:prepared.limits.sectorTolerance,sector_cap:prepared.limits.sectorCap,fund_caps:Object.fromEntries(prepared.ids.map((id,i)=>[id,prepared.limits.caps[i]]))},exposures:U.exposures(prepared,weights),kind:"savy_frontier_local_simulation",exported_at:new Date().toISOString(),currency:"CAD",benchmark:"VEQT",calibration:prepared.dates.fit,validation:prepared.dates.validation,as_of:prepared.asOf,max_fund_weight:cap,rebalance:"monthly",risk_free:prepared.riskFree,weights:savedWeights(),calibration_metrics:U.metrics(prepared.fit,weights),validation_metrics:prepared.validation?U.metrics(prepared.validation,weights):null,warning:"Exploration historique uniquement; aucun portefeuille enregistré ou suivi prospectif modifié."};const url=URL.createObjectURL(new Blob([JSON.stringify(payload,null,2)],{type:"application/json"})),a=document.createElement("a");a.href=url;a.download="SAVY_Frontiere_Simulation.json";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
   let width=0;if(typeof ResizeObserver!=="undefined")new ResizeObserver(entries=>{const next=entries[0].contentRect.width;if(next>0&&Math.abs(next-width)>1){width=next;cancelAnimationFrame(chartTimer);chartTimer=requestAnimationFrame(draw);}}).observe($("frontierPlot"));
  }
  function show(data){
   root=$("frontier");if(!root)return;
-  if(initialized){requestAnimationFrame(draw);return;}initialized=true;D=data;selectedIds=Object.keys(seedWeights()).filter(id=>D.optimization.eligible_funds.includes(id));key="savy:fnb-frontier:v1:"+D.assumptions.as_of+":"+D.optimization.source_digest;
-  try{const saved=JSON.parse(localStorage.getItem(key));if(saved&&["risk","active","ratios"].includes(saved.mode)&&["split","all"].includes(saved.sample)&&[.25,.35,.4,.5,1].includes(saved.cap)&&finite(saved.priority)&&saved.priority>=0&&saved.priority<=1){const check=U.prepare(D,saved);cap=saved.cap;sample=saved.sample;mode=saved.mode;priority=saved.priority;selectedIds=check.ids;prepared=check;weights=U.project(selectedIds.map(id=>saved.weights[id]||0),cap);}}catch{}
+  if(initialized){requestAnimationFrame(draw);return;}initialized=true;D=U.extend(data,JSON.parse($("frontierExtra")?.textContent||"null"));selectedIds=[...D.optimization.eligible_funds];key="savy:fnb-frontier:v2:"+D.assumptions.as_of+":"+D.optimization.source_digest;
+  try{const saved=JSON.parse(localStorage.getItem(key));if(saved&&["risk","active","ratios"].includes(saved.mode)&&["split","all"].includes(saved.sample)&&[.25,.35,.4,.5,1].includes(saved.cap)&&finite(saved.priority)&&saved.priority>=0&&saved.priority<=1){const check=U.prepare(D,saved);cap=saved.cap;sample=saved.sample;mode=saved.mode;priority=saved.priority;selectedIds=check.ids;prepared=check;weights=U.allocate(prepared,selectedIds.map(id=>saved.weights[id]||0));}}catch{}
   $("frontierCap").value=String(cap);$("frontierSample").value=sample;$("frontierMode").value=mode;$("frontierPriority").value=String(priority*100);fundControls();bind();calculate();
  }
  window.SavyFnbFrontier={show};
