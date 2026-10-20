@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Collect published macro and commodity observations, with per-series fallback.
 
-Only the Python standard library is required. No credentials or browser proxies.
+The NY Fed historical workbook uses xlrd. No credentials or browser proxies.
 """
 from __future__ import annotations
 
@@ -29,6 +29,8 @@ BRIEFING_IDS = ["CPIAUCSL", "PCEPILFE", "V41690973", "V108785715", "V108785714",
 BANK_POLICY_URL = "https://www.bankofcanada.ca/core-functions/monetary-policy/key-interest-rate/"
 CANADA_LABOUR_URL = "https://www150.statcan.gc.ca/t1/tbl1/fr/tv.action?pid=1410028701"
 NUMERCO_URANIUM_URL = "https://numerco.com/UHistory/"
+NYFED_RECESSION_URL = "https://www.newyorkfed.org/research/capital_markets/ycfaq"
+NYFED_RECESSION_DATA_URL = "https://www.newyorkfed.org/medialibrary/media/research/capital_markets/allmonth.xls"
 NUMERCO_API_BASE = "https://pg-app-yoa7d4wnnpyx68zgkxvc6d17cjk19s.scalabl.cloud/1/"
 STATCAN_SERIES = {
     "V2062815": {"vector_id": 2062815, "product_id": 14100287},
@@ -70,13 +72,13 @@ def atomic_write_json(path: Path, payload: dict, *, compact: bool = False) -> No
         if temporary is not None:
             temporary.unlink(missing_ok=True)
 
-def fetch_text(url: str, *, headers: dict | None = None, data: bytes | None = None) -> str:
+def fetch_bytes(url: str, *, headers: dict | None = None, data: bytes | None = None) -> bytes:
     request = Request(url, data=data, headers={"User-Agent": "SavyMacroDashboard/3.0",
                       "Accept": "text/csv, application/json, text/html", **(headers or {})})
     for attempt in range(RETRY_ATTEMPTS):
         try:
             with urlopen(request, timeout=TIMEOUT_SECONDS) as response:
-                return response.read().decode("utf-8-sig")
+                return response.read()
         except HTTPError as exc:
             if exc.code not in (429, 500, 502, 503, 504) or attempt + 1 == RETRY_ATTEMPTS:
                 raise SourceError(f"HTTP {exc.code}") from exc
@@ -85,6 +87,63 @@ def fetch_text(url: str, *, headers: dict | None = None, data: bytes | None = No
                 raise SourceError(f"Source inaccessible ({type(exc).__name__})") from exc
         time.sleep(2 ** attempt)
     raise SourceError("Source inaccessible")
+
+def fetch_text(url: str, *, headers: dict | None = None, data: bytes | None = None) -> str:
+    return fetch_bytes(url, headers=headers, data=data).decode("utf-8-sig")
+
+def parse_recession_rows(rows: list[list], today: date) -> list[list]:
+    """NY Fed Rec_prob is indexed by FORECAST month, twelve months ahead.
+
+    Keep the published value, convert fractions to percent, and date each
+    estimate by its input month. Never mistake a future target for future data.
+    """
+    expected = ["Date", "10 Year Treasury Yield", "3 Month Treasury Yield",
+                "3 Month Treasury Yield (Bond Equivalent Basis)", "Spread", "Rec_prob", "NBER_Rec"]
+    if not rows or rows[0] != expected:
+        raise SourceError("Fed de New York : colonnes historiques non reconnues")
+    months = {m: i for i, m in enumerate(
+        ("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"), 1)}
+    dated = {}
+    for row in rows[1:]:
+        if len(row) != 7:
+            raise SourceError("Fed de New York : ligne historique incomplète")
+        match = re.fullmatch(r"01-([A-Za-z]{3})-(\d{4})", str(row[0]))
+        if not match or match[1] not in months:
+            raise SourceError("Fed de New York : mois historique non reconnu")
+        day = date(int(match[2]), months[match[1]], 1)
+        if day in dated:
+            raise SourceError("Fed de New York : mois historique dupliqué")
+        dated[day] = row
+    output = []
+    for target, row in sorted(dated.items()):
+        source_day = months_before(target, 12)
+        inputs = dated.get(source_day)
+        # Only completed input months, backed by the workbook's Treasury data.
+        if source_day >= today.replace(day=1) or not inputs:
+            continue
+        numeric = lambda x: isinstance(x, (int, float)) and not isinstance(x, bool) and math.isfinite(x)
+        if not all(numeric(x) for x in inputs[1:5]):
+            continue
+        probability = row[5]
+        if probability in ("", None):
+            continue
+        if not numeric(probability) or not 0 <= probability <= 1:
+            raise SourceError("Fed de New York : probabilité hors de [0, 1]")
+        output.append([source_day.isoformat(), probability * 100])
+    if not output:
+        raise SourceError("Fed de New York : aucune probabilité publiée exploitable")
+    return output
+
+def parse_recession_workbook(content: bytes, today: date) -> list[list]:
+    import xlrd
+    try:
+        workbook = xlrd.open_workbook(file_contents=content)
+        sheet = workbook.sheet_by_name("rec_prob")
+        return parse_recession_rows([sheet.row_values(i) for i in range(sheet.nrows)], today)
+    except SourceError:
+        raise
+    except Exception as exc:
+        raise SourceError("Fed de New York : fichier historique XLS invalide") from exc
 
 def parse_observations(text: str, series_id: str, today: date) -> list[list]:
     reader = csv.DictReader(io.StringIO(text.lstrip("\ufeff")))
@@ -141,6 +200,9 @@ def parse_bank_observations(text: str, series_id: str, today: date) -> list[list
     return parse_observations(output.getvalue(), series_id, today)
 
 def source_metadata(definition: dict) -> dict:
+    if definition.get("provider") == "new_york_fed":
+        return {"source_url": NYFED_RECESSION_URL, "source_label": "Fed de New York",
+                "source_data_url": NYFED_RECESSION_DATA_URL}
     if definition.get("provider") == "numerco":
         return {"source_url": NUMERCO_URANIUM_URL, "source_label": "Numerco"}
     if definition.get("provider") == "bank_of_canada":
@@ -280,7 +342,11 @@ def fetch_series(definition: dict, now: datetime) -> dict:
     today = now.date()
     # An extra year is required for year-over-year transformations at the start.
     start = date(today.year - HISTORY_YEARS - 1, 1, 1)
-    if definition.get("provider") == "numerco":
+    if definition.get("provider") == "new_york_fed":
+        if definition["id"] != "NYFEDRECPROB" or definition.get("transform", "none") != "none":
+            raise SourceError("Série Fed de New York non prise en charge")
+        observations = parse_recession_workbook(fetch_bytes(NYFED_RECESSION_DATA_URL), today)
+    elif definition.get("provider") == "numerco":
         if definition["id"] != "URANIUMSPOT" or definition.get("transform", "none") != "none":
             raise SourceError("Série Numerco non prise en charge")
         observations = fetch_numerco_observations(today)
@@ -357,7 +423,7 @@ def collect_sources(definitions: list[dict], previous: dict | None, now: datetim
         "last_successful_update": now.isoformat() if not errors else (previous or {}).get("last_successful_update"),
         "update_status": status,
         "data_provider": " / ".join(["FRED"] + [label for provider, label in
-            (("bank_of_canada", "Banque du Canada"), ("statistics_canada", "Statistique Canada"), ("numerco", "Numerco"))
+            (("bank_of_canada", "Banque du Canada"), ("statistics_canada", "Statistique Canada"), ("numerco", "Numerco"), ("new_york_fed", "Fed de New York"))
             if any(d.get("provider") == provider for d in definitions)]),
         "coverage": {"total": len(points), "fresh": fresh, "cached": available - fresh, "unavailable": len(points) - available},
         "errors": sorted(errors, key=lambda error: error["id"]),

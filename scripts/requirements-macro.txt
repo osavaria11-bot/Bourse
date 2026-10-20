@@ -1,0 +1,2 @@
+# Read the NY Fed's published legacy XLS; never execute spreadsheet macros.
+xlrd==2.0.1

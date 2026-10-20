@@ -12,6 +12,7 @@ on:
     paths:
       - "data/series.json"
       - "scripts/generate_daily_briefing.py"
+      - "scripts/requirements-macro.txt"
       - "scripts/collect_market_indices.py"
       - "scripts/collect_security_prices.py"
       - "scripts/collect_portfolio_exposures.py"
@@ -58,7 +59,9 @@ jobs:
         with:
           python-version: "3.13"
       - name: Verify collector
-        run: python -m unittest discover -s tests -p 'test_*.py' -v
+        run: |
+          python -m pip install --disable-pip-version-check -r scripts/requirements-macro.txt
+          python -m unittest discover -s tests -p 'test_*.py' -v
       - name: Setup Node for data validation
         uses: actions/setup-node@v6
         with:

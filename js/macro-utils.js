@@ -48,6 +48,7 @@
       }[point.id];
       const statcan = point.provider === "statistics_canada" && statcanSeries && point.vector_id === statcanSeries[0];
       const uraniumSpot = point.provider === "numerco" && point.id === "URANIUMSPOT";
+      const recession = point.provider === "new_york_fed" && point.id === "NYFEDRECPROB";
       const treasuryKind = {DGS10: "nominal", DFII10: "real", T10Y2Y: "nominal", T10Y3M: "nominal"}[point.id];
       const treasuryURL = treasuryKind && "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_" + (treasuryKind === "real" ? "real_" : "") + "yield_curve";
       const primary = point.observation_source, policy = point.current_policy;
@@ -68,8 +69,8 @@
         previous_date: isDate(point.previous_date) && point.previous_date <= today ? point.previous_date : null,
         source_url: bankPolicy ? "https://www.bankofcanada.ca/core-functions/monetary-policy/key-interest-rate/" :
           statcan ? "https://www150.statcan.gc.ca/t1/tbl1/fr/tv.action?pid=" + statcanSeries[1] + "01" :
-          uraniumSpot ? "https://numerco.com/UHistory/" : treasury ? treasuryURL : "https://fred.stlouisfed.org/series/" + point.id,
-        source_label: bankPolicy ? "Banque du Canada" : statcan ? "Statistique Canada" : uraniumSpot ? "Numerco" : treasury ? "FRED / U.S. Treasury" : "FRED",
+          uraniumSpot ? "https://numerco.com/UHistory/" : recession ? "https://www.newyorkfed.org/research/capital_markets/ycfaq" : treasury ? treasuryURL : "https://fred.stlouisfed.org/series/" + point.id,
+        source_label: bankPolicy ? "Banque du Canada" : statcan ? "Statistique Canada" : uraniumSpot ? "Numerco" : recession ? "Fed de New York" : treasury ? "FRED / U.S. Treasury" : "FRED",
       });
     }
     if (!series.length) throw new Error("Aucun indicateur valide");

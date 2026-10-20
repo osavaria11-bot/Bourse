@@ -9,6 +9,14 @@ const sample = () => ({
   source_url: "https://fred.stlouisfed.org/series/TEST",
   history: [["2026-09-01", -0.3], ["2026-09-30", null], ["2026-10-09", -0.4]],
 });
+test("recession risk keeps the primary NY Fed attribution in cards and CSV", () => {
+  const point = {...sample(), id: "NYFEDRECPROB", provider: "new_york_fed", frequency: "monthly", source_url: "javascript:bad"};
+  const normalized = U.normalizeDataset({schema_version: 2, generated_at: "2026-10-10T16:00:00Z", series: [point]}, "2026-10-10").series[0];
+  assert.equal(normalized.source_label, "Fed de New York");
+  assert.equal(normalized.source_url, "https://www.newyorkfed.org/research/capital_markets/ycfaq");
+  assert.match(U.historyCSV(normalized, "1Y"), /newyorkfed\.org/);
+  assert.doesNotMatch(U.historyCSV(normalized, "1Y"), /fred\.stlouisfed|javascript:bad/);
+});
 test("Invalid calendar dates and non-ISO dates are rejected", () => {
   assert.equal(U.isDate("2026-02-30"), false);
   assert.equal(U.isDate("10/09/2026"), false);

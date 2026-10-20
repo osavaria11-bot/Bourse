@@ -36,6 +36,7 @@ jobs:
           python-version: "3.13"
       - name: Refresh official observations and decision odds after key release times
         run: |
+          python -m pip install --disable-pip-version-check -r scripts/requirements-macro.txt
           python scripts/generate_daily_briefing.py
           python scripts/collect_rate_odds.py
           python scripts/collect_yield_curves.py

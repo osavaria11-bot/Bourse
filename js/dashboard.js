@@ -266,6 +266,10 @@
     }
     const date = el("p", "observation-date", (current.historyLabel ? "Historique : " + current.historyLabel + " (série distincte) · " :
       live ? "Historique · " + point.source_label + " · " : "Dernière observation publiée : ") + U.observationLabel(point.date, point.frequency));
+    if (point.id === "NYFEDRECPROB" && point.provider === "new_york_fed" && point.date) {
+      const target = (Number(point.date.slice(0, 4)) + 1) + point.date.slice(4);
+      date.textContent = "Calcul : " + U.observationLabel(point.date, "monthly") + " · Horizon : " + U.observationLabel(target, "monthly");
+    }
     const host = el("div", "chart-host"); host.dataset.id = point.id;
     host.append(el("p", "chart-placeholder", "Chargement du graphique…"));
     const bottom = el("div", "card-bottom");

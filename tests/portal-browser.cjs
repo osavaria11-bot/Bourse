@@ -166,7 +166,11 @@ async function check(browser, engine) {
   assert.equal(await page.locator('#marketRanges [data-range="3M"]').getAttribute("aria-pressed"), "true"); await shot("markets");
   await go("marches", "economy");
   const count = await page.locator(".indicator-card").count();
-  assert.equal(count, 41); assert.equal(await page.locator(".indicator-card:visible").count(), count);
+  assert.equal(count, 42); assert.equal(await page.locator(".indicator-card:visible").count(), count);
+  const recession = page.locator('.indicator-card[data-id="NYFEDRECPROB"]');
+  assert.equal(await recession.isVisible(), true);
+  assert.match(await recession.locator(".observation-date").textContent(), /Calcul : .+ · Horizon :/);
+  assert.equal(await recession.locator(".card-bottom a").getAttribute("href"), "https://www.newyorkfed.org/research/capital_markets/ycfaq");
   assert.equal(await page.locator("#indicatorSelect,#macroCompare,#macroPaging").count(), 0);
   for (const id of ["DGS10", "VIXCLS", "INDPRO", "NASDAQXAU", "VXEEMCLS", "DTWEXBGS", "DCOILWTICO", "URANIUMSPOT"]) {
     await page.locator('.indicator-card[data-id="' + id + '"]').scrollIntoViewIfNeeded();
