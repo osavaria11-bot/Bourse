@@ -13,6 +13,7 @@
   $("frontierFundChoices").innerHTML=D.optimization.eligible_funds.map(id=>`<label><input type="checkbox" data-frontier-include="${esc(id)}" ${selectedIds.includes(id)?"checked":""}><span><b>${esc(id)}</b><small>${esc(D.fund_labels[id]?.description||"Actions")}</small></span></label>`).join("");
  }
  function table(){
+  $("frontierWeightsTitle").textContent="Allocation interactive · "+selectedIds.length+" FNB";
   $("frontierWeights").innerHTML=selectedIds.map((id,i)=>`<tr data-frontier-fund="${esc(id)}"><th scope="row"><label for="frontierWeight${i}"><span><b>${esc(id)}</b><small>${esc(D.fund_labels[id]?.description||"FNB d’actions")}</small></span><output id="frontierWeightLabel${i}"></output></label><input id="frontierWeight${i}" data-frontier-weight="${i}" type="range" min="0" max="${Math.min(cap,D.frontier_caps[id]??.35)*100}" step="0.1" aria-label="Poids de ${esc(id)} en pourcentage"></th><td data-frontier-delta="sharpe"></td><td data-frontier-delta="information"></td></tr>`).join("");
   $("frontierSources").innerHTML=selectedIds.map(id=>`<tr><th scope="row">${esc(id)}<small>${esc(D.fund_labels[id]?.name||id)}</small></th><td>${esc(D.data_methods[id]||"Voir la source du fonds.")} <a href="${esc(D.source_urls[id])}" target="_blank" rel="noopener noreferrer">Source ↗</a><br><small>Performances : ${esc(D.source_dates[id]?.prices||"—")} · positions : ${esc(D.source_dates[id]?.holdings||"—")} · secteurs : ${esc(D.source_dates[id]?.sectors||"—")}</small></td></tr>`).join("");
  }
@@ -153,6 +154,8 @@
   root=$("frontier");if(!root)return;
   if(initialized){requestAnimationFrame(draw);return;}initialized=true;D=U.extend(data,JSON.parse($("frontierExtra")?.textContent||"null"));selectedIds=[...D.optimization.eligible_funds];key="savy:fnb-frontier:v2:"+D.assumptions.as_of+":"+D.optimization.source_digest;
   try{const saved=JSON.parse(localStorage.getItem(key));if(saved&&["risk","active","ratios"].includes(saved.mode)&&["split","all"].includes(saved.sample)&&[.25,.35,.4,.5,1].includes(saved.cap)&&finite(saved.priority)&&saved.priority>=0&&saved.priority<=1){const check=U.prepare(D,saved);cap=saved.cap;sample=saved.sample;mode=saved.mode;priority=saved.priority;selectedIds=check.ids;prepared=check;weights=U.allocate(prepared,selectedIds.map(id=>saved.weights[id]||0));}}catch{}
+  $("frontierShowZeros")?.setAttribute("checked","");
+  if($("frontierShowZeros"))$("frontierShowZeros").checked=true;
   $("frontierCap").value=String(cap);$("frontierSample").value=sample;$("frontierMode").value=mode;$("frontierPriority").value=String(priority*100);fundControls();bind();calculate();
  }
  window.SavyFnbFrontier={show};

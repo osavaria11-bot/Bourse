@@ -11,6 +11,13 @@ async function check(browser,engine){
  const weights=async()=>JSON.parse(await page.locator('#frontier').getAttribute('data-weights'));
  const valid=async cap=>{const w=Object.values(await weights());assert.ok(U.weightsOK(w,cap));assert.equal(await page.locator('#frontierTotal').textContent(),'100,0 %');};
  await valid(.35);assert.equal(await page.locator("#frontierWeights tr").count(),E.optimization.eligible_funds.length);assert.equal(await page.locator("#frontierFundChoices input").count(),E.optimization.eligible_funds.length);assert.equal(await page.locator("#frontierSources tr").count(),E.optimization.eligible_funds.length);assert.equal(await page.locator('[data-frontier-include="VEQT"]').count(),0);
+ assert.equal(await page.locator("#frontierShowZeros").isChecked(),true,"All candidate funds are visible by default");
+ assert.equal(await page.locator("#frontierWeights tr:visible").count(),E.optimization.eligible_funds.length);
+ await page.locator("#frontierShowZeros").uncheck();
+ assert.equal(await page.locator("#frontierWeights tr:visible").count(),Object.values(await weights()).filter(v=>v>.00005).length,"Compact view hides only zero weights");
+ await page.locator("#frontierShowZeros").check();
+ assert.equal(await page.locator("#frontierWeights tr:visible").count(),E.optimization.eligible_funds.length);
+
  assert.ok((await page.locator('#frontierDates').textContent()).includes('2025-10 → 2026-09'));
  await page.locator('#frontierMaxSharpe').click();const sr=JSON.parse(await page.locator('#frontier').getAttribute('data-metrics'));await page.locator('#frontierMaxIR').click();const ir=JSON.parse(await page.locator('#frontier').getAttribute('data-metrics'));
  assert.ok(sr.sharpe>ir.sharpe);assert.ok(ir.information>sr.information);await valid(.35);
