@@ -79,3 +79,13 @@ test("incomplete month alignment cannot create an apparently fresh frontier",()=
  const extra=structuredClone(require("../data/fnb-frontier-universe.json"));extra.dates.pop();
  assert.throws(()=>U.extend(require("../data/fnb-analysis.json"),extra),/mêmes mois/);
 });
+test("a month with no positive Sharpe is still archived with an explicit unavailable profile",()=>{
+ const bear=structuredClone(data);
+ for(const values of Object.values(bear.universe.returns))for(let i=0;i<values.length;i++)values[i]-=.1;
+ const record=M.build(bear);
+ for(const sample of Object.values(record.samples)){
+  assert.equal(sample.profiles.sharpe,null);
+  assert.match(sample.unavailable_profiles.sharpe,/No positive finite ratio/);
+ }
+ M.validate(record);
+});

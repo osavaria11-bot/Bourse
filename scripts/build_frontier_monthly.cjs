@@ -59,10 +59,10 @@ function build(data,{generatedAt=new Date().toISOString(),previous=null}={}){
   note:"Historical optimization, not an executed rebalance. The first record is a baseline. The compromise is selected from sampled nondominated candidates; it is not an exhaustive joint optimum."};
  for(const sample of ["split","all"]){
   const p=prepare(inputs,sample),solution=U.solve(p),compromise=U.compromise(solution.candidates,.5);
-  if(!solution.sharpe||!solution.information||!compromise)throw Error("A positive-ratio profile is unavailable; no partial monthly record");
   if(solution.candidates.some(point=>!U.feasible(point.weights,p.limits)))throw Error("Infeasible frontier candidate");
-  const profiles={};
+  const profiles={},unavailable={};
   for(const [id,point] of Object.entries({sharpe:solution.sharpe,information:solution.information,compromise})){
+   if(!point){profiles[id]=null;unavailable[id]=id==="compromise"?"No finite Sharpe/IR compromise is available":"No positive finite ratio is available";continue;}
    const current={weights:Object.fromEntries(p.ids.map((ticker,i)=>[ticker,point.weights[i]])),...evaluate(p,point.weights)};
    const old=previous?.samples[sample]?.profiles[id];
    if(old)current.comparison=compareProfile(p,current,old);
@@ -70,6 +70,7 @@ function build(data,{generatedAt=new Date().toISOString(),previous=null}={}){
   }
   record.samples[sample]={dates:p.dates,benchmark:{calibration:p.fit.reference,validation:p.validation?.reference??null},profiles,
    audit:{absolute_points:solution.absolute.length,active_points:solution.active.length,checked_candidates:solution.candidates.length,max_solver_gap:solution.maxSolverGap}};
+  if(Object.keys(unavailable).length)record.samples[sample].unavailable_profiles=unavailable;
  }
  validate(record,previous);return record;
 }
@@ -83,7 +84,9 @@ function validate(record,previous=null){
   if(JSON.stringify(p.dates)!==JSON.stringify(saved.dates))throw Error("Inconsistent calibration and validation windows");
   if(saved.audit.max_solver_gap>1e-7||saved.audit.absolute_points!==61||saved.audit.active_points!==61)throw Error("Uncertified frontier solve");
   for(const id of PROFILE_IDS){
-   const profile=saved.profiles[id],w=p.ids.map(t=>profile.weights[t]);
+   const profile=saved.profiles[id];
+   if(profile===null){if(!saved.unavailable_profiles?.[id])throw Error("Unavailable profile must have an explicit reason");continue;}
+   const w=p.ids.map(t=>profile.weights[t]);
    if(Object.keys(profile.weights).length!==p.ids.length||!U.feasible(w,p.limits))throw Error("Invalid archived portfolio weights");
    const actual=evaluate(p,w);
    for(const window of ["calibration","validation"]){
@@ -91,7 +94,8 @@ function validate(record,previous=null){
     if(actual[window]&&metricKeys.some(k=>!near(profile[window][k],actual[window][k])))throw Error("Archived ratio disagrees with monthly returns");
    }
    if(JSON.stringify(profile.exposures)!==JSON.stringify(actual.exposures))throw Error("Archived exposures disagree with weights");
-   if(previous&&JSON.stringify(profile.comparison)!==JSON.stringify(compareProfile(p,profile,previous.samples[sample].profiles[id])))throw Error("Monthly changes disagree with previous archive");
+   const old=previous?.samples[sample].profiles[id];
+   if(previous&&JSON.stringify(profile.comparison??null)!==JSON.stringify(old?compareProfile(p,profile,old):null))throw Error("Monthly changes disagree with previous archive");
   }
  }
  return record;
