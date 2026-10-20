@@ -69,10 +69,6 @@ def main():
             except Exception as exc:
                 errors.append(t + ": " + str(exc))
                 print(t, "FAILED", str(exc), flush=True)
-                if t == "ZUQ":
-                    query = 'query { portfolios(entityId:"ZUQ",sortDirection:"d",take:1){entityId effectiveDate numberOfEquityPositions kb2Holdings(take:5000){holding allocation assetClass country sector baseMarketValue}}}'
-                    raw = client.json("https://df.bmogam.com/api/graphql/etf-funds-production", {"query": query})["data"]["portfolios"][0]
-                    print("ZUQ diagnostic", json.dumps(raw), flush=True)
     if errors: raise ValueError("No partial extension published: " + " | ".join(errors))
     out = build(base, config, sources, today.isoformat())
     out["config_digest"] = config_digest
