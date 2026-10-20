@@ -42,6 +42,7 @@ async function check(browser,engine){
  }
  for(const id of ["XIT","ZEB"]){await page.locator(`[data-frontier-fund="${id}"] input`).fill("10");await valid(.35);assert.ok((await weights())[id]>.095,id+" can now exceed the old 5% limit");}
  await page.locator('#frontierMode').selectOption('active');assert.match(await page.locator('#frontierPlot svg').getAttribute('aria-label'),/Tracking/);
+ await page.locator('#frontierPlot svg').scrollIntoViewIfNeeded();
  const before=JSON.stringify(await weights()),box=await page.locator('#frontierPlot svg').boundingBox();await page.mouse.move(box.x+box.width*.8,box.y+box.height*.3);await page.mouse.down();await page.mouse.move(box.x+box.width*.35,box.y+box.height*.65,{steps:6});await page.mouse.up();assert.notEqual(JSON.stringify(await weights()),before);await valid(.35);
  for(const mode of ['risk','active','ratios']){await page.locator('#frontierMode').selectOption(mode);assert.equal(await page.locator('#frontierPlot svg').count(),1);await page.locator('#frontierTrace').fill('5');await valid(.35);}
  const event=page.waitForEvent('download');await page.locator('#frontierExport').click();const file=await event,data=JSON.parse(fs.readFileSync(await file.path(),'utf8'));assert.equal(data.kind,'savy_frontier_local_simulation');assert.equal(data.validation.length,12);assert.equal(data.benchmark,'VEQT');
