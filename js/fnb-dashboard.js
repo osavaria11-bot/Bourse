@@ -144,15 +144,16 @@ const SavyFnb = (() => {
     }
     const reportPeriod=document.querySelector('.report-header p').textContent;
     function switchView(id) {
-      if(!["allPortfolios","overview","exposures","portfolios","methods","performance"].includes(id))id="allPortfolios";activeView=id;
+      if(!["allPortfolios","overview","exposures","portfolios","methods","performance","frontier"].includes(id))id="allPortfolios";activeView=id;
       document.querySelector(".dashboard-toolbar").hidden=!["allPortfolios","overview","exposures"].includes(id);
       document.querySelector('.report-header p').textContent=id==='performance'?'Suivi prospectif · depuis le 19 octobre 2026 · CAD':reportPeriod;
-      document.querySelector('.report-tools').hidden=id==='performance';
+      document.querySelector('.report-tools').hidden=['performance','frontier'].includes(id);
       $("summaryFocus").closest(".field").hidden=id!=="overview";
       document.querySelectorAll("[data-dashboard-view]").forEach(n=>{n.hidden=n.id!==id;});
       document.querySelectorAll(".nav [data-tab]").forEach(n=>{const on=n.dataset.tab===id;n.classList.toggle("active",on);if(on)n.setAttribute("aria-current","page");else n.removeAttribute("aria-current");});
       requestAnimationFrame(()=>{if(id==="overview"){drawRisk();drawGrowth();}if(id==="exposures")drawSector();});
       if(id==="performance")window.SavyFnbPerformance?.show();
+      if(id==="frontier")window.SavyFnbFrontier?.show(D);
       window.scrollTo({top:0,behavior:"instant"});
     }
     function openPortfolio(k) {if(!own.includes(k))return;$("ficheFocus").value=k;document.querySelectorAll("[data-fiche]").forEach(n=>{n.hidden=n.dataset.fiche!==k;});switchView("portfolios");}

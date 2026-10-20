@@ -12,7 +12,7 @@ The existing static site and GitHub Pages workflows are retained. `portal.js` mo
 | Recherche | Finviz research and portfolio tracking together: one Wednesday 22:00 America/Toronto delivery, current selection and simulation rules; published PDF archives |
 | Immobilier | Current briefing, opportunities and published PDF archives |
 | Polymarket | Three Finance, five popular political markets and two popular events across all topics; ten distinct markets, five columns on desktop and a compact responsive grid |
-| Analyse FNB | Interactive comparison of the 11 ETF portfolios, ratios, risk/return compass and investment growth; independent chart selections and 5% CGL.C where held |
+| Analyse FNB | Interactive comparison of the 11 ETF portfolios, ratios, risk/return compass, investment growth, permanent tracking and a separate efficient-frontier laboratory versus VEQT; existing allocations unchanged |
 | Dashboard complet | Rightmost navigation item; all original components on one page, all six market charts, every filtered macro chart and all portfolio panels |
 
 The complete dashboard moves the same live component nodes into its page and restores their exact original positions on exit. No duplicated IDs, separate quotes or extra timers. Period changes and refreshes retain the complete chart grid; returning to a compact section restores its selected market and full-view setting. Portfolio visibility controls and empty-data gating are preserved. Direct dashboard bookmarks and personal access fragments work together.
@@ -20,6 +20,8 @@ The complete dashboard moves the same live component nodes into its page and res
 Routes use `#view=…&tab=…`. Old `#portfolio`, `#indicators`, `#yieldCurves`, `#weeklyReports`, `#fearGreed` and `#polymarket` bookmarks still work. Browser back/forward and refresh preserve the selected page. Cmd/Ctrl+K opens economic search. Desktop navigation stays at the top; mobile navigation stays at the bottom, including the safe area.
 
 The FNB report is available at `#view=analyses&tab=overview` (`FNB` in mobile navigation). Its self-contained file, `reports/portefeuilles-fnb.html`, is loaded once when the tab first opens. Returning to the tab preserves the selections. The full-screen link opens the same report independently. The report follows the same light/dark SAVY palette, including when the parent theme changes; all report selections and calculations are retained.
+
+The seventh report view, `Frontière efficiente`, is a local exploratory laboratory. It calculates in a same-origin worker only on first opening, and reuses the current serialized monthly ETF returns. Weight sliders and frontier dragging recompute immediately without changing the optimizer’s stored recommendation, private portfolios or permanent tracking ledger. It supports a benchmark-relative view and a sampled Sharpe/IR trade-off, a cap per ETF, fund selection and a separate validation period. Its dedicated preferences are isolated in `savy:fnb-frontier:v1:*`. The parent’s content-height observer includes this view, including after worker results and mobile reflows. See `docs/fnb-frontier.md` for formulas and numerical checks.
 
 Personal access keys remain exclusively in URL fragments and existing local storage. Navigation preserves the key and selected portfolio. Profile refresh retains the current page instead of resetting it. Personal Home Screen manifest and export formats are unchanged. Import fragments are removed after import, as before.
 

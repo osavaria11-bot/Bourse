@@ -196,7 +196,9 @@ async function check(browser, engine) {
   await go("accueil"); assert.equal(await page.locator("#fearGreed").isVisible(), true);
   assert.equal(await page.evaluate(node=>node===document.getElementById("fearGreed"), sentimentNode), true);
   await page.goto(url + "/#view=dashboard&tab=overview"); await page.reload();
-  await page.waitForFunction(()=>document.querySelectorAll(".indicator-card").length>30);
+  await page.waitForFunction(()=>document.querySelectorAll(".indicator-card").length>30).catch(async error=>{
+    console.error("Dashboard reload diagnostics",JSON.stringify({errors,state:await page.evaluate(()=>({cards:document.querySelectorAll('.indicator-card').length,status:document.getElementById('updated')?.textContent,ready:document.readyState,search:document.getElementById('searchInput')?.value,body:document.body.dataset.page}))}));throw error;
+  });
   assert.equal(await page.locator(".indicator-card:visible").count(), count, "Direct dashboard bookmarks open every chart");
   await go("accueil"); await sentimentNode.dispose();
   await go("immobilier"); assert.equal(await page.locator('#propertyReportsGrid [data-report-kind="real_estate"]').isVisible(), true);
@@ -260,9 +262,10 @@ async function check(browser, engine) {
     }
     await go("accueil"); await shot("mobile-" + width);
     await go("analyses");
-    for(const view of ["allPortfolios","overview","exposures","portfolios","performance","methods"]){
+    for(const view of ["allPortfolios","overview","exposures","portfolios","performance","frontier","methods"]){
       await fundReport.locator('.nav [data-tab="'+view+'"]').click();
       if(view==="performance")await fundReport.locator('#performance[data-ready="true"]').waitFor();
+      if(view==="frontier")await fundReport.locator('#frontier[data-ready="true"]').waitFor({timeout:90000});
       await page.waitForFunction(()=>{
         const f=document.getElementById("fundAnalysisFrame"),content=f.contentDocument?.querySelector(".wrap");
         return content&&Math.abs(f.clientHeight-(Math.ceil(content.getBoundingClientRect().height)+1))<2;
