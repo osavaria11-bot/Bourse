@@ -81,7 +81,7 @@
    const lambda=scale*10**(-5+8*k/(count-1)),q=quadratic(c,center.map(v=>v*lambda),cap,warm);warm=q.weights;
    points.push({...metrics(model,warm),...q,lambda});
   }
-  const last=linearOpt(mu,cap,true);points.push({...metrics(model,last),weights:last,lambda:null,gap:0,iterations:0});
+  // Keep the QP endpoint: a pure maximum-mean vertex can be dominated when means tie.
   return {points,c,center,scale};
  }
  function bestRatio(model,cap,curve,key){

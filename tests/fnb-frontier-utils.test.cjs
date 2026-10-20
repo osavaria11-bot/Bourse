@@ -27,6 +27,11 @@ test('quadratic solver matches an analytic two-asset optimum and verifies a conv
  const bounded=U.quadratic(C,[0,0],.6);near(bounded.weights[0],.6,1e-8);
  const linear=U.quadratic([[0,0,0],[0,0,0],[0,0,0]],[.2,.1,0],.5);near(linear.weights[0],.5);near(linear.weights[1],.5);
 });
+test('equal expected returns retain the minimum-risk frontier rather than an arbitrary dominated endpoint',()=>{
+ const a=Array.from({length:24},(_,i)=>1/64+(i%2?1/32:-1/32)),b=a.map((_,i)=>1/64+(i%2?1/128:-1/128));
+ const model=U.moments([a,b],benchmark,.02),curve=U.trace(model,1);
+ for(const p of curve.points)near(p.vol,Math.sqrt(model.covariance[1][1]),1e-8);
+});
 test('numerical Sharpe and IR maxima beat a dense feasible grid; each frontier respects its constraints',()=>{
  const fit=U.moments(series,benchmark,.02),cap=.8,solution=U.solve({fit,cap,ids:['A','B','C']});assert.ok(solution.sharpe&&solution.information);
  let bestSharpe=-Infinity,bestIR=-Infinity;
