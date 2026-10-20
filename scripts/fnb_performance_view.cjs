@@ -1,6 +1,6 @@
 "use strict";
 module.exports=function tracking(html){
- html=html.replace(/<!-- fnb-performance:start -->[\s\S]*?<!-- fnb-performance:end -->/g,"");
+ html=html.replace(/<!-- fnb-performance:start -->[\s\S]*?<!-- fnb-performance:end -->\r?\n?/g,"");
  if(!html.includes('data-tab="performance"'))html=html.replace('<a href="#methods"', '<a href="#performance" data-tab="performance">Suivi des performances</a><a href="#methods"');
  const view=`<!-- fnb-performance:start --><section id="performance" data-dashboard-view hidden aria-labelledby="performanceTitle">
  <div class="performance-heading"><div><p class="eyebrow">INVESTISSEMENTS VIRTUELS · CAD</p><h2 id="performanceTitle">Suivi des performances</h2><p id="performanceStatus" class="method-summary" role="status">Chargement des clôtures…</p></div><div class="performance-controls"><div class="field"><label for="performanceCohort">Date de lancement</label><select id="performanceCohort"></select></div><div class="field"><label for="performanceBenchmark">Benchmark de comparaison</label><select id="performanceBenchmark"><option>FEQT</option><option selected>VEQT</option><option>VGRO</option><option>VBAL</option></select></div><button id="performanceRetry" hidden>Réessayer</button></div></div>

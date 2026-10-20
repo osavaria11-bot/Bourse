@@ -1,7 +1,7 @@
 "use strict";
 // Kept in the monthly renderer so every new snapshot automatically supplies the laboratory.
 module.exports=function frontier(html){
- html=html.replace(/<!-- fnb-frontier:start -->[\s\S]*?<!-- fnb-frontier:end -->/g,"");
+ html=html.replace(/<!-- fnb-frontier:start -->[\s\S]*?<!-- fnb-frontier:end -->\r?\n?/g,"");
  if(!html.includes('data-tab="frontier"'))html=html.replace('<a href="#methods"','<a href="#frontier" data-tab="frontier">Frontière efficiente</a><a href="#methods"');
  const view=`<!-- fnb-frontier:start --><section id="frontier" data-dashboard-view hidden aria-labelledby="frontierTitle">
  <div class="frontier-heading"><div><p class="eyebrow">LABORATOIRE · SIMULATION HISTORIQUE · CAD</p><h2 id="frontierTitle">Frontière efficiente</h2><p id="frontierDates" class="method-summary"></p></div><details class="frontier-settings-panel"><summary aria-label="Univers, plafond et période">Paramètres</summary><div class="frontier-settings"><label>Période<select id="frontierSample"><option value="split">Calibration + 12 mois de validation</option><option value="all">Tout l’historique · sans validation</option></select></label><label>Plafond général par FNB<select id="frontierCap"><option value="0.25">25 %</option><option value="0.35" selected>35 %</option><option value="0.4">40 %</option><option value="0.5">50 %</option><option value="1">100 %</option></select></label><button type="button" id="frontierAllFunds">Tous admissibles</button><details id="frontierUniverse" class="frontier-universe"><summary>Choisir les FNB</summary><div id="frontierFundChoices"></div></details></div></details></div>
