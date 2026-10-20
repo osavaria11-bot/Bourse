@@ -1,6 +1,6 @@
 (() => {
  "use strict";
- const U=window.SavyFrontierUtils,script=document.currentScript,workerUrl=new URL("fnb-frontier-worker.js?v=20261020-complete-universe",script.src);
+ const U=window.SavyFrontierUtils,script=document.currentScript,workerUrl=new URL("fnb-frontier-worker.js?v=20261020-caps-5-10-10",script.src);
  const $=id=>document.getElementById(id),number=(v,d=2)=>v===null||!Number.isFinite(v)?"—":new Intl.NumberFormat("fr-CA",{minimumFractionDigits:d,maximumFractionDigits:d}).format(v);
  const pct=(v,d=1)=>v===null||!Number.isFinite(v)?"—":number(v*100,d)+" %",esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
  const delta=v=>v===null||!Number.isFinite(v)?"—":(v>0?"+":"")+number(v,3),finite=v=>typeof v==="number"&&Number.isFinite(v);

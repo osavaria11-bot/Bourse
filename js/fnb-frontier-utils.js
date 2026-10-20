@@ -1,6 +1,7 @@
 (function(root,factory){if(typeof module==="object"&&module.exports)module.exports=factory();else root.SavyFrontierUtils=factory();})(typeof globalThis!=="undefined"?globalThis:this,function(){
  "use strict";
  const EPS=1e-10, PERIODS=12;
+ const FUND_CAPS={"CGL.C":.05,FINN:.15,XIT:.10,ZEB:.10,ZEO:.05};
  const dot=(a,b)=>a.reduce((s,v,i)=>s+v*b[i],0),matvec=(a,w)=>a.map(row=>dot(row,w));
  const sum=a=>a.reduce((s,v)=>s+v,0),finite=v=>typeof v==="number"&&Number.isFinite(v);
  function project(values,cap=1,total=1){
@@ -44,23 +45,24 @@
   }
   d.fund_labels.FEQT.description="Actions mondiales · crypto incluse";
   d.fund_labels["CGL.C"].description="Or physique · CAD non couvert";
-  d.frontier_caps=Object.fromEntries(d.optimization.eligible_funds.map(id=>[id,id==="FINN"?.15:["ZEB","ZEO","XIT"].includes(id)?.05:.35]));
+  d.frontier_caps=Object.fromEntries(d.optimization.eligible_funds.map(id=>[id,FUND_CAPS[id]??.35]));
   if(extra){
    if(extra.as_of!==d.assumptions.as_of||JSON.stringify(extra.dates)!==JSON.stringify(d.dates))throw Error("Les nouveaux FNB n’ont pas les mêmes mois que l’analyse. Actualisation nécessaire.");
    for(const [id,f] of Object.entries(extra.funds)){
     if(["VEQT","XEQT"].includes(id)||f.currency!=="CAD"||!["TSX","Cboe Canada"].includes(f.exchange)||f.equity<.92||f.returns.length!==d.dates.length)throw Error("FNB supplémentaire non admissible : "+id);
     for(const key of ["returns","geo","sector","equity","mer"])d.universe[key][id]=f[key];
-    d.fund_labels[id]=f.label;d.source_urls[id]=f.source_url;d.source_dates[id]=f.source_dates;d.data_methods[id]=f.method;d.frontier_caps[id]=f.max_weight;
+    d.fund_labels[id]=f.label;d.source_urls[id]=f.source_url;d.source_dates[id]=f.source_dates;d.data_methods[id]=f.method;d.frontier_caps[id]=FUND_CAPS[id]??f.max_weight;
     if(!d.optimization.eligible_funds.includes(id))d.optimization.eligible_funds.push(id);
    }
    d.optimization.source_digest+=":"+extra.source_digest;
   }
+  if(d.fund_labels.XIT)d.fund_labels.XIT={...d.fund_labels.XIT,description:"Technologie canadienne · maximum 10 %"};
   d.optimization.eligible_funds.sort();return d;
  }
  function limitsFor(data,ids,cap){
   const settings=data.optimization.constraints||{},u=data.universe,eq=ids.map(id=>u.equity[id]),rows=[],bounds=[],labels=[];
   const add=(row,bound,label)=>{const norm=Math.sqrt(dot(row,row));if(norm<1e-14){if(bound< -1e-10)throw Error("Expositions incompatibles");return;}rows.push(row.map(v=>v/norm));bounds.push(bound/norm);labels.push(label);};
-  const caps=ids.map(id=>Math.min(cap,data.frontier_caps?.[id]??(["ZEB","ZEO","XIT"].includes(id)?.05:id==="FINN"?.15:.35)));
+  const caps=ids.map(id=>Math.min(cap,FUND_CAPS[id]??data.frontier_caps?.[id]??.35));
   ids.forEach((id,i)=>{const row=ids.map((_,j)=>i===j?1:0);add(row,caps[i],id+" maximum");add(row.map(v=>-v),0,id+" minimum");});
   const groups=[
    {key:"geo",ref:u.ref_geo,tolerance:settings.geo_tolerance??.1,cap:1},

@@ -88,11 +88,24 @@ test("requested funds use their actual returns and asset mix, with gold excluded
  for(const id of ["FEQT","CGL.C","RUD","VEE"]){
   const i=p.ids.indexOf(id);assert.ok(i>=0);assert.deepEqual(p.fit.series[i],D.universe.returns[id].slice(0,28));assert.deepEqual(p.validation.series[i],D.universe.returns[id].slice(28));
   assert.equal(d.source_urls[id],D.source_urls[id]);assert.deepEqual(d.source_dates[id],D.source_dates[id]);
-  const w=U.edit(p,p.feasible,i,.1),e=U.exposures(p,w);assert.ok(w[i]>.09,id+" must accept a positive allocation");assert.ok(e.valid);near(Object.values(e.assets).reduce((a,b)=>a+b,0),1);
+  const target=id==="CGL.C"?.04:.1,w=U.edit(p,p.feasible,i,target),e=U.exposures(p,w);assert.ok(w[i]>target*.9,id+" must accept a positive allocation");assert.ok(e.valid);near(Object.values(e.assets).reduce((a,b)=>a+b,0),1);
   if(id==="CGL.C")near(e.assets.gold,w[i]);
   if(id==="FEQT")near(e.assets.crypto,w[i]*D.universe.crypto.FEQT);
  }
- const withGold=p.feasible.map(v=>v*.8);withGold[p.ids.indexOf("CGL.C")]+=.2;const mixed=U.exposures(p,withGold);
- base.geo.forEach((v,i)=>near(mixed.geo[i],v));base.sector.forEach((v,i)=>near(mixed.sector[i],v));assert.ok(mixed.valid);near(mixed.equity,base.equity*.8);
+ const withGold=p.feasible.map(v=>v*.96);withGold[p.ids.indexOf("CGL.C")]+=.04;const mixed=U.exposures(p,withGold);
+ base.geo.forEach((v,i)=>near(mixed.geo[i],v));base.sector.forEach((v,i)=>near(mixed.sector[i],v));assert.ok(mixed.valid);near(mixed.equity,base.equity*.96);
  const missing=JSON.parse(JSON.stringify(D));delete missing.universe.returns.FEQT;assert.throws(()=>U.extend(missing,extra));
+});
+
+test("CGL.C 5%, XIT 10% and ZEB 10% apply to optimization, edits and restored weights",()=>{
+ const extra=require("../data/fnb-frontier-universe.json"),before=JSON.stringify(extra),d=U.extend(D,extra),p=U.prepare(d,{cap:.35});
+ assert.equal(JSON.stringify(extra),before,"Frontier preferences must not mutate the source snapshot");
+ for(const [id,cap] of [["CGL.C",.05],["XIT",.10],["ZEB",.10]]){
+  const i=p.ids.indexOf(id);near(p.limits.caps[i],cap);near(d.frontier_caps[id],cap);
+  const w=U.edit(p,p.feasible,i,.9);assert.ok(U.feasible(w,p.limits));near(w[i],cap,1e-7);
+ }
+ const old=p.feasible.map(v=>v*.7);old[p.ids.indexOf("CGL.C")]+=.3;
+ assert.ok(!U.feasible(old,p.limits));const restored=U.allocate(p,old);assert.ok(U.feasible(restored,p.limits));near(restored[p.ids.indexOf("CGL.C")],.05,1e-8);
+ const stricter=U.prepare(d,{cap:.05,ids:p.ids});
+ for(const cap of stricter.limits.caps)assert.ok(cap<=.05);
 });

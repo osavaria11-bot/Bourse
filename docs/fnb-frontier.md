@@ -12,7 +12,7 @@ l’appareil; l’export porte explicitement le statut de simulation.
   par `scripts/build_monthly_fnb.cjs`. Aucun nouvel abonnement ou service externe.
 - Univers : `optimization.eligible_funds`, FNB d’actions cotés au Canada;
   démarrage avec tous les FNB admissibles, sans limite arbitraire de taille d’univers. VEQT est la référence fixe; VEQT et XEQT sont exclus des positions.
-  Or, obligations, actions individuelles et FNB non admissibles ne sont pas ajoutés.
+  FEQT et CGL.C sont aussi disponibles avec leur véritable composition en actions, crypto et or; les régions et secteurs portent sur la poche actions.
 - Les sources et méthodes de chaque FNB sont visibles, notamment les éventuelles
   limites de reconstitution déjà documentées dans `data_methods`.
 - Mêmes mois consécutifs et mêmes conventions de rendement total en CAD pour
@@ -52,7 +52,7 @@ Les mois de validation utilisent les mêmes formules et le même taux constant.
 
 ## Optimisation et interactions
 
-Poids positifs, somme 100 %, plafond général initial de 35 % par FNB. Les plafonds propres aux fonds restent contraignants : 35 % en général, 15 % FINN, 5 % ZEB/ZEO/XIT. Régions et secteurs : ±10 points de VEQT; maximum sectoriel 35 %. Les planchers régionaux du modèle mensuel sont conservés (30 % US, 15 % Canada, 15 % développés hors Amérique du Nord, 5 % émergents), avec les mêmes plafonds de 60/40/40/20 % et 5 % de pays non publiés. Les expositions sont normalisées sur la poche actions, après liquidités internes. Le plafond est
+Poids positifs, somme 100 %, plafond général initial de 35 % par FNB. Les plafonds propres aux fonds restent contraignants : 35 % en général, 15 % FINN, 5 % CGL.C/ZEO et 10 % XIT/ZEB. Régions et secteurs : ±10 points de VEQT; maximum sectoriel 35 %. Les planchers régionaux du modèle mensuel sont conservés (30 % US, 15 % Canada, 15 % développés hors Amérique du Nord, 5 % émergents), avec les mêmes plafonds de 60/40/40/20 % et 5 % de pays non publiés. Les expositions sont normalisées sur la poche actions, après liquidités internes. Le plafond est
 modifiable, mais un univers dont le nombre de FNB rend la contrainte impossible
 est refusé clairement. Toutes ces contraintes sont appliquées à la frontière, au nuage et aux interactions.
 
@@ -96,7 +96,7 @@ et [ratio d’information, CFA Institute](https://www.cfainstitute.org/insights/
 
 ## Univers élargi et publication
 
-`data/fnb-frontier-model.json` ajoute VFV, VVL, XIC, XIT, XMU, XMV, XMW, XQQ, XSU, XUU, ZLU et ZUQ. Les collecteurs officiels déjà utilisés dans « Sources et dates » alimentent `data/fnb-frontier-universe.json`. Les mois sont exactement ceux de l’analyse; aucun proxy ni remplissage n’est ajouté. Le fichier conserve les sources, méthodes, dates, devises et expositions. Le laboratoire inclut aussi RUD, déjà documenté dans les sources, soit 28 FNB au lancement de cette extension.
+`data/fnb-frontier-model.json` ajoute VFV, VVL, XIC, XIT, XMU, XMV, XMW, XQQ, XSU, XUU, ZLU et ZUQ. Les collecteurs officiels déjà utilisés dans « Sources et dates » alimentent `data/fnb-frontier-universe.json`. Les mois sont exactement ceux de l’analyse; aucun proxy ni remplissage n’est ajouté. Le fichier conserve les sources, méthodes, dates, devises et expositions. Le laboratoire inclut aussi RUD, déjà documenté dans les sources, ainsi que FEQT et CGL.C, soit 30 FNB disponibles.
 
 Le rapport sérialise cette extension séparément de `#analysis`; les allocations et historiques acquis restent intacts. Le générateur ajoute les nouvelles lignes dans « Données → Sources et dates » et les contrôles d’exposition dans le laboratoire. Le workflow `Expanded FNB frontier sources` vérifie quotidiennement l’alignement avec le dernier instantané mensuel et réessaie une collecte incomplète, sans publier de données partielles. Les archives gardent leurs instantanés.
 
