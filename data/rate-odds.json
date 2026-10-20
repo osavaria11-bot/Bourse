@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "rate_odds",
-  "generated_at": "2026-10-20T06:37:31.576581+00:00",
+  "generated_at": "2026-10-20T15:24:37.888805+00:00",
   "decisions": [
     {
       "id": "fed",
@@ -20,9 +20,9 @@
       "id": "canada",
       "label": "Banque du Canada",
       "meeting_date": "2026-10-28",
-      "as_of": "2026-10-19",
-      "hike": 87,
-      "hold": 13,
+      "as_of": "2026-10-20",
+      "hike": 85,
+      "hold": 15,
       "cut": 0,
       "source": "BlueGamma",
       "source_url": "https://www.bluegamma.io/central-banks/central-bank-interest-rate-forecasts/the-bank-of-canada-interest-rate-forecast",
