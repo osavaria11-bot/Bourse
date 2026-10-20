@@ -52,7 +52,7 @@ Les mois de validation utilisent les mêmes formules et le même taux constant.
 
 ## Optimisation et interactions
 
-Poids positifs, somme 100 %, plafond général initial de 35 % par FNB. Les plafonds propres aux fonds restent contraignants : 35 % en général, 15 % FINN, 5 % CGL.C/ZEO et 10 % XIT/ZEB. Régions et secteurs : ±10 points de VEQT; maximum sectoriel 35 %. Les planchers régionaux du modèle mensuel sont conservés (30 % US, 15 % Canada, 15 % développés hors Amérique du Nord, 5 % émergents), avec les mêmes plafonds de 60/40/40/20 % et 5 % de pays non publiés. Les expositions sont normalisées sur la poche actions, après liquidités internes. Le plafond est
+Poids positifs, somme 100 %, plafond général initial de 35 % par FNB. Les plafonds propres aux fonds restent contraignants : 35 % en général, 15 % FINN, 5 % CGL.C/ZEO et 10 % XIT/ZEB. La crypto totale est plafonnée à 3 % du portefeuille, en additionnant les poches indirectes de tous les FNB; il s’agit d’un maximum, sans poids minimum imposé. Régions et secteurs : ±10 points de VEQT; maximum sectoriel 35 %. Les planchers régionaux du modèle mensuel sont conservés (30 % US, 15 % Canada, 15 % développés hors Amérique du Nord, 5 % émergents), avec les mêmes plafonds de 60/40/40/20 % et 5 % de pays non publiés. Les expositions sont normalisées sur la poche actions, après liquidités internes. Le plafond est
 modifiable, mais un univers dont le nombre de FNB rend la contrainte impossible
 est refusé clairement. Toutes ces contraintes sont appliquées à la frontière, au nuage et aux interactions.
 

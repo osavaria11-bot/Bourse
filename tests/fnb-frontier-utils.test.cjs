@@ -109,3 +109,16 @@ test("CGL.C 5%, XIT 10% and ZEB 10% apply to optimization, edits and restored we
  const stricter=U.prepare(d,{cap:.05,ids:p.ids});
  for(const cap of stricter.limits.caps)assert.ok(cap<=.05);
 });
+
+test("the 3% crypto ceiling aggregates fund holdings and constrains edits and restored allocations",()=>{
+ const d=U.extend(D,require("../data/fnb-frontier-universe.json"));
+ // Synthetic wrappers make the portfolio limit bind independently of the per-fund cap.
+ for(const id of ["FEQT","FCUQ"]){d.universe.crypto[id]=.25;d.universe.equity[id]=.75;d.universe.cash[id]=0;}
+ const p=U.prepare(d,{cap:.35}),i=p.ids.indexOf("FEQT"),j=p.ids.indexOf("FCUQ");near(p.limits.cryptoCap,.03);
+ const old=p.feasible.map(v=>v*.6);old[i]+=.2;old[j]+=.2;assert.ok(!U.feasible(old,p.limits));
+ for(const w of [U.allocate(p,old),U.edit(p,p.feasible,i,.35)]){
+  const e=U.exposures(p,w);assert.ok(e.valid);assert.ok(e.assets.crypto<=.03+1e-8);near(e.assets.crypto,.25*(w[i]+w[j]));
+ }
+ const solution=U.solve(p);for(const point of [...solution.absolute,...solution.active,...solution.cloud])assert.ok(U.exposures(p,point.weights).assets.crypto<=.03+1e-8);
+ const bad=JSON.parse(JSON.stringify(d));bad.universe.crypto.FEQT=NaN;assert.throws(()=>U.prepare(bad,{cap:.35}));
+});

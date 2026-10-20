@@ -165,6 +165,46 @@ class PublicationGuards(unittest.TestCase):
         self.assertAlmostEqual(v["monthly"][0], (1 + .024) * .9995 - 1)
         self.assertTrue(all(r["training_end"] < r["month"] for r in v["audit"]))
 
+    def test_feqt_crypto_is_allowed_as_part_of_the_total_portfolio_budget(self):
+        config = model.read(ROOT / "data/fnb-model.json")
+        self.assertTrue(config["funds"]["FEQT"]["equity_eligible"])
+        self.assertEqual(config["optimization"]["crypto_cap"], .03)
+        cfg = {"funds":{"FEQT":config["funds"]["FEQT"]},"optimization":{"crypto_cap":.03}}
+        assets = {"equity":.968,"crypto":.032,"bond":0.,"gold":0.,"cash":0.}
+        self.assertEqual(model.eligible_funds(cfg,{"funds":{"FEQT":{"assets":assets}}}),["FEQT"])
+        cfg["optimization"]["crypto_cap"] = 0
+        self.assertEqual(model.eligible_funds(cfg,{"funds":{"FEQT":{"assets":assets}}}),[])
+
+    @unittest.skipUnless(importlib.util.find_spec("scipy"), "Numerical research dependencies not installed")
+    def test_optimizer_crypto_cap_survives_pruning_and_rounding(self):
+        import math
+        config = model.read(ROOT / "data/fnb-model.json")
+        names = ["A","B","C","D","E","F"]
+        config["funds"] = {t:{"max_weight":.35} for t in names}
+        geo,sector = self.current["universe"]["ref_geo"],self.current["universe"]["ref_sector"]
+        data = {"funds":{"VEQT":{"geo":geo,"sector":sector}}}
+        returns = {}
+        for i,t in enumerate(names):
+            crypto = .08 if i<3 else 0.
+            data["funds"][t] = {"assets":{"equity":1-crypto,"crypto":crypto},"geo":geo,"sector":sector,"mer":.001}
+            returns[t] = [(.025 if i<3 else .004)+.008*math.sin(m*.8+i*.1) for m in range(36)]
+        benchmark = [.01+.008*math.sin(m*.8) for m in range(36)]
+        weights = model.optimize(returns,names,data,config,benchmark,.02)
+        exposure = sum(w*data["funds"][t]["assets"]["crypto"] for t,w in weights.items())
+        self.assertLessEqual(exposure,.03+1e-8)
+        self.assertGreater(exposure,.025)
+        self.assertAlmostEqual(sum(weights.values()),1.)
+
+    def test_published_crypto_budget_is_validated_without_rewriting_old_rules(self):
+        model.validate(self.current,self.baseline)
+        changed = copy.deepcopy(self.current)
+        changed["optimization"]["constraints"]["crypto_cap"] = .03
+        changed["optimization"]["eligible_funds"].append("FEQT")
+        changed["results"]["proposal"]["weights"] = {"FEQT":1.}
+        changed["results"]["proposal"]["crypto"] = .032
+        with self.assertRaisesRegex(ValueError,"cryptocurrency"):
+            model.validate(changed,self.baseline)
+
 
 if __name__ == "__main__":
     unittest.main()

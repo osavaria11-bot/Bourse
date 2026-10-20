@@ -1,6 +1,6 @@
 (function(root,factory){if(typeof module==="object"&&module.exports)module.exports=factory();else root.SavyFrontierUtils=factory();})(typeof globalThis!=="undefined"?globalThis:this,function(){
  "use strict";
- const EPS=1e-10, PERIODS=12;
+ const EPS=1e-10, PERIODS=12, CRYPTO_CAP=.03;
  const FUND_CAPS={"CGL.C":.05,FINN:.15,XIT:.10,ZEB:.10,ZEO:.05};
  const dot=(a,b)=>a.reduce((s,v,i)=>s+v*b[i],0),matvec=(a,w)=>a.map(row=>dot(row,w));
  const sum=a=>a.reduce((s,v)=>s+v,0),finite=v=>typeof v==="number"&&Number.isFinite(v);
@@ -81,7 +81,9 @@
    });
   }
   const assets=Object.fromEntries(["equity","bond","cash","crypto","gold"].map(key=>[key,ids.map(id=>Math.max(0,u[key]?.[id]??(key==="cash"?1-u.equity[id]:0)))]));
-  return {rows,bounds,labels,caps,assets,equity:eq,geo:ids.map(id=>u.geo[id]),sector:ids.map(id=>u.sector[id]),refGeo:u.ref_geo,refSector:u.ref_sector,geoTolerance:settings.geo_tolerance??.1,sectorTolerance:settings.sector_tolerance??.1,sectorCap:settings.sector_cap??.35,unknownCap:settings.unknown_geography_cap??.05};
+  if(ids.some(id=>{const v=u.crypto?.[id]??0;return !finite(v)||v<0||v>1;}))throw Error("Exposition crypto invalide");
+  add(assets.crypto,CRYPTO_CAP,"crypto maximum");
+  return {rows,bounds,labels,caps,assets,cryptoCap:CRYPTO_CAP,equity:eq,geo:ids.map(id=>u.geo[id]),sector:ids.map(id=>u.sector[id]),refGeo:u.ref_geo,refSector:u.ref_sector,geoTolerance:settings.geo_tolerance??.1,sectorTolerance:settings.sector_tolerance??.1,sectorCap:settings.sector_cap??.35,unknownCap:settings.unknown_geography_cap??.05};
  }
  function feasible(w,limits,tol=2e-8){
   return weightsOK(w,1)&&(!limits||limits.rows.every((r,i)=>dot(r,w)<=limits.bounds[i]+tol));

@@ -69,7 +69,7 @@
       "source_url": "https://www.fidelity.ca/en/products/etfs/feqt/",
       "currency": "CAD",
       "exchange": "Cboe Canada",
-      "equity_eligible": false,
+      "equity_eligible": true,
       "max_weight": 0.35,
       "mer": 0.0043,
       "quote_symbol": "FEQT.NE",
@@ -465,6 +465,7 @@
     }
   },
   "optimization": {
+    "crypto_cap": 0.03,
     "lookback_months": 36,
     "minimum_training_months": 24,
     "max_funds": 8,

@@ -18,7 +18,7 @@ except ModuleNotFoundError:
     from fnb_sources import Client, collect, month_end, previous_month
 
 ROOT = Path(__file__).resolve().parents[1]
-MODEL_VERSION = "1.1.0"
+MODEL_VERSION = "1.2.0"
 PROPOSAL = "proposal"
 GEO_NAMES = ["États-Unis", "Canada", "Développés hors Amérique du Nord", "Marchés émergents", "Pays non publiés",
              "Or physique", "Cryptomonnaies indirectes", "Obligations", "Liquidités et autres"]
@@ -99,12 +99,15 @@ def stats(returns, benchmark, rf, dates):
 
 def eligible_funds(config, sources):
     out = []
+    crypto_cap = config.get("optimization", {}).get("crypto_cap", 0.)
     for ticker, fund in config["funds"].items():
         if ticker in ("VEQT", "XEQT"): continue  # Benchmarks never become portfolio positions.
         a = sources["funds"][ticker]["assets"]
         # An equity ETF can carry incidental settlement cash; there is no cash sleeve.
         if fund["equity_eligible"] and fund["currency"] == "CAD" and fund["exchange"] in ["TSX", "Cboe Canada"]:
-            if a["bond"] > .0005 or a["gold"] > .0005 or a["crypto"] > .0005 or a["equity"] < .92: continue
+            if a["bond"] > .0005 or a["gold"] > .0005 or a["equity"] < .92: continue
+            # The ceiling applies to the portfolio, not to each wrapper's own crypto percentage.
+            if crypto_cap <= 0 and a["crypto"] > .0005: continue
             out.append(ticker)
     return sorted(out)
 
@@ -143,6 +146,13 @@ def optimize(returns, names, sources, config, benchmark, rf):
     A = np.vstack([g - upper_g[:,None] * eq, lower_g[:,None] * eq - g,
                    s - upper_s[:,None] * eq, lower_s[:,None] * eq - s])
     b = np.zeros(A.shape[0])
+    crypto = np.array([sources["funds"][t]["assets"]["crypto"] for t in names])
+    crypto_cap = settings.get("crypto_cap", 0.)
+    if not math.isfinite(crypto_cap) or not 0 <= crypto_cap <= 1 or np.any(~np.isfinite(crypto)) or np.any((crypto < 0) | (crypto > 1)):
+        raise ValueError("Invalid cryptocurrency exposure or limit")
+    # Preserve room for the final rounding of each weight to 0.1 percentage point.
+    crypto_bound = max(0., crypto_cap - .001 * crypto.sum()) if crypto_cap > 0 else .0005
+    A = np.vstack([A, crypto]); b = np.r_[b, crypto_bound]
     cap = np.array([config["funds"][t]["max_weight"] for t in names])
     fees = np.array([sources["funds"][t]["mer"] for t in names])
     def objective(w):
@@ -182,6 +192,8 @@ def optimize(returns, names, sources, config, benchmark, rf):
             np.minimum(ref_s + settings["sector_tolerance"], settings["sector_cap"]), -np.maximum(ref_s - settings["sector_tolerance"],0)]) > 1e-7:
         raise ValueError("Rounded proposal violates diversification limits")
     if np.max(rounded - cap) > 1e-8: raise ValueError("Rounded proposal exceeds an ETF cap")
+    if crypto @ rounded > (crypto_cap if crypto_cap > 0 else .0005) + 1e-8:
+        raise ValueError("Rounded proposal exceeds the cryptocurrency limit")
     return {t: float(w) for t, w in zip(names, rounded) if w > 0}
 
 
@@ -255,7 +267,7 @@ def refresh_analysis(current, baseline, sources, config, generated_at):
     weights = optimize(frozen, names, sources, config, frozen["VEQT"], rf)
     month = generated_at[:7]
     proposal = {"id": PROPOSAL, "name": "SAVY Actions · " + month, "label": "Proposition mensuelle · " + month,
-        "short_name": "Actions " + month, "style_label": "Proposition séparée · 100 % FNB d’actions", "color": "#9ce3cb", "weights": weights,
+        "short_name": "Actions " + month, "style_label": "Proposition séparée · FNB d’actions" + (" · crypto ≤ 3 %" if config["optimization"].get("crypto_cap", 0) else ""), "color": "#9ce3cb", "weights": weights,
         "description": "Allocation distincte, optimisée sur les données disponibles. Aucun portefeuille existant n’est remplacé."}
     d["results"][PROPOSAL] = proposal
     d["proposal_order"] = [PROPOSAL]
@@ -309,7 +321,7 @@ def refresh_analysis(current, baseline, sources, config, generated_at):
     d["optimization"] = {"schema_version": 1, "model_version": MODEL_VERSION, "model_sha256": model_hash, "month": month,
         "generated_at": generated_at, "as_of": sources["as_of"], "proposal_id": PROPOSAL, "eligible_funds": names,
         "constraints": config["optimization"], "validation": validation, "reasons": reasons, "beats_sharpe": beats,
-        "risk_free": sources["risk_free"], "allocation_type": "100 % de l’allocation en FNB d’actions; liquidités opérationnelles internes des FNB visibles dans la répartition.",
+        "risk_free": sources["risk_free"], "allocation_type": "100 % de l’allocation en FNB principalement investis en actions; crypto indirecte limitée à 3 % du portefeuille et liquidités internes visibles." if config["optimization"].get("crypto_cap", 0) else "100 % de l’allocation en FNB d’actions; liquidités opérationnelles internes des FNB visibles dans la répartition.",
         "history_policy": "Pondérations existantes et rendements mensuels acquis inchangés; ajouts des seuls mois complétés. Les ratios de chaque publication sont archivés séparément.",
         "performance_type": "Simulation rétrospective, distributions réinvesties. Le suivi après publication commence au premier mois complet suivant la publication.",
         "source_digest": hashlib.sha256(json.dumps(sources, sort_keys=True).encode()).hexdigest()}
@@ -330,10 +342,18 @@ def validate(d, baseline):
     p = d["results"][PROPOSAL]
     if not set(p["weights"]) <= set(d["optimization"]["eligible_funds"]): raise ValueError("Non-equity proposal holding")
     if p["max_geo_gap"] > .1 + 1e-8 or p["max_sector_gap"] > .1 + 1e-8: raise ValueError("Proposal concentration breach")
-    for a in ["bond", "gold", "crypto"]:
+    for a in ["bond", "gold"]:
         if p[a] > .0005: raise ValueError("Proposal includes " + a)
+    crypto_cap = d["optimization"]["constraints"].get("crypto_cap", 0.)
+    if not math.isfinite(crypto_cap) or not 0 <= crypto_cap <= 1: raise ValueError("Invalid cryptocurrency limit")
+    crypto_bound = crypto_cap if crypto_cap > 0 else .0005
+    actual_crypto = sum(w * d["universe"]["crypto"][t] for t, w in p["weights"].items())
+    if abs(actual_crypto - p["crypto"]) > 1e-8 or actual_crypto > crypto_bound + 1e-8:
+        raise ValueError("Proposal violates its cryptocurrency limit")
     for row in d["optimization"]["validation"]["audit"]:
         if row["training_end"] >= row["month"]: raise ValueError("Look-ahead in chronological validation")
+        if sum(w * d["universe"]["crypto"][t] for t, w in row["weights"].items()) > crypto_bound + 1e-8:
+            raise ValueError("Chronological allocation exceeds its cryptocurrency limit")
 
 
 def history_index(root, current, baseline):
