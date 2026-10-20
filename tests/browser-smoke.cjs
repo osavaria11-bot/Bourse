@@ -34,7 +34,7 @@ const dataset = { schema_version: 2, generated_at: now.toISOString(), last_succe
 const markets = { ...dataset, kind: "market_indices", series: [
   ["SPX", "^GSPC"], ["IXIC", "^IXIC"], ["TSX", "^GSPTSE"], ["STOXX600", "^STOXX"], ["EEM", "EEM"],
   ["FEQT", "FEQT.NE"],
-].map(([id, quote_symbol]) => ({...series[0], id, quote_symbol, title: "Synthetic market " + id, frequency: "daily",
+].map(([id, quote_symbol]) => ({...series.find(point => point.frequency === "daily"), id, quote_symbol, title: "Synthetic market " + id, frequency: "daily",
   unit: id === "EEM" ? "$ US" : id === "FEQT" ? "$ CA" : "points", ...(id === "FEQT" ? {currency: "CAD"} : {})})) };
 const newsTime = new Date(now.getTime() - 86400000);
 const edition = new Intl.DateTimeFormat("en-CA", {timeZone: "America/Toronto"}).format(newsTime);
