@@ -2,11 +2,11 @@
   "schema_version": 1,
   "kind": "polymarket_events",
   "provider": "polymarket",
-  "generated_at": "2026-10-20T15:23:47.383336Z",
+  "generated_at": "2026-10-20T15:38:51.688943Z",
   "groups": {
     "finance": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-20T15:23:47.383336Z",
+      "fetched_at": "2026-10-20T15:38:51.688943Z",
       "ranking": "volume",
       "events": [
         {
@@ -20,7 +20,7 @@
           "outcomes": [
             {
               "label": "0 (0 bps)",
-              "probability": 0.9695,
+              "probability": 0.9685,
               "market_id": "616902",
               "ends_at": "2027-01-01T04:59:00Z"
             },
@@ -43,7 +43,7 @@
           "outcomes": [
             {
               "label": "No change",
-              "probability": 0.875,
+              "probability": 0.865,
               "market_id": "2589812",
               "ends_at": "2026-10-29T03:59:00Z"
             },
@@ -82,7 +82,7 @@
     },
     "popular": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-20T15:23:47.383336Z",
+      "fetched_at": "2026-10-20T15:38:51.688943Z",
       "ranking": "volume24hr",
       "events": [
         {
@@ -96,13 +96,13 @@
           "outcomes": [
             {
               "label": "October 22",
-              "probability": 0.934,
+              "probability": 0.9355,
               "market_id": "5686979",
               "ends_at": "2026-10-23T03:59:00Z"
             },
             {
               "label": "October 24",
-              "probability": 0.885,
+              "probability": 0.88,
               "market_id": "5686977",
               "ends_at": "2026-10-25T03:59:00Z"
             }
@@ -188,13 +188,13 @@
           "outcomes": [
             {
               "label": "320-339",
-              "probability": 0.665,
+              "probability": 0.826,
               "market_id": "5479390",
               "ends_at": "2026-10-20T16:00:00Z"
             },
             {
               "label": "340-359",
-              "probability": 0.346,
+              "probability": 0.1875,
               "market_id": "5479391",
               "ends_at": "2026-10-20T16:00:00Z"
             }
@@ -204,7 +204,7 @@
     },
     "trending": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-20T15:23:47.383336Z",
+      "fetched_at": "2026-10-20T15:38:51.688943Z",
       "ranking": "volume24hr",
       "events": [
         {
