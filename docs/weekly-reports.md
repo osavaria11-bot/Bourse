@@ -28,21 +28,50 @@ exemple ne sont pas des données actuelles. Si le suivi est indisponible, l’in
 explicitement avec N/D et conserver son état, sans inventer de performance.
 Ne publier aucun état privé, identifiant de fichier, quantité personnelle ni clé.
 
-Le briefing quotidien consulte `data/weekly-reports.json`, `reports.stocks` et le
-PDF correspondant avant sa rédaction. À la première édition du matin après une
-nouvelle publication hebdomadaire — normalement le jeudi — il reprend les
-changements de sélection et le suivi A/B/SPY, leur vraie date et le lien public du
-PDF. La source est identifiée « SAVY — recherche et suivi simulé », distincte des
-nouvelles de marché externes. Le résumé est aussi repris dans la version orale.
-Il ne présente pas un rapport attendu le soir comme déjà publié et ne répète pas
-la même édition chaque matin. Une publication retardée est signalée; la dernière
-édition validée reste accessible dans Recherche et ses archives.
+**Séparation demandée le 20 octobre 2026 : ne pas inclure la recherche ni le
+suivi A/B/SPY dans le briefing du matin, ni à l’écrit ni en audio.** Ils restent
+dans Recherche & suivi et dans leur PDF. Cette consigne remplace la reprise du
+jeudi envisagée le 19 octobre. Le briefing reste consacré aux nouvelles de marché;
+il ne doit ni reprendre le rapport interne ni annoncer son retard.
 
-Les tâches hebdomadaire et quotidienne doivent lire la version courante de ce
-document. Le producteur hebdomadaire publie le registre et son PDF ensemble;
-le briefing les lit sans les modifier. Chacun préserve les changements concurrents
-sur `main`, les autres rapports et les historiques. Les collectes macro/cotations
-ne créent ni rapport Finviz ni performance simulée.
+Le producteur hebdomadaire préserve les changements concurrents sur `main`, les
+autres rapports et les historiques. Les collectes macro/cotations ne créent ni
+rapport Finviz ni performance simulée.
+
+## Chiffres et continuité dans Recherche
+
+`data/research-performance.json` est la projection publique des seules valeurs
+de A, B et SPY de l’état de simulation existant. Il ne contient aucune position
+personnelle, quantité, transaction détaillée ou identité de fichier privé.
+Le tableau indique sa propre clôture réelle et ses dates de période : il peut
+être plus récent que le PDF de recherche sans modifier cette édition archivée.
+La première projection reprend les douze valorisations déjà enregistrées du
+30 septembre au 15 octobre 2026; elle ne crée pas de cours pour les séances suivantes.
+
+À chaque livraison hebdomadaire, lire l’état et le classeur courants, traiter
+les seules instructions admissibles puis exécuter :
+
+```bash
+node scripts/build_research_performance.cjs /chemin/absolu/etat-courant.json
+node scripts/validate_weekly_reports.cjs
+```
+
+Le générateur vérifie les NAV contre les positions et liquidités de clôture,
+les montants des transactions, leur antériorité de publication, les rendements
+journaliers/cumulés et ceux de la fenêtre enregistrée ainsi que les écarts à SPY.
+Il compare la projection avec l’historique public existant et refuse toute
+réinitialisation ou réécriture. Publier cette projection, le registre et le PDF
+de la nouvelle édition ensemble. Ne jamais publier le fichier d’état source.
+Si une clôture ou un contrôle manque, conserver le dernier relevé avec sa date;
+ne pas combler avec zéro ou appeler une ancienne clôture celle du jour.
+
+Le navigateur recalcule les rendements depuis les NAV, sans ajouter des
+pourcentages. Cumul = dernière valeur / 10 000 − 1; période = dernière valeur /
+valeur au début de période − 1; écart à SPY = différence des rendements aux mêmes
+dates, en points de pourcentage. La base historique reste **USD hors dividendes**,
+sans frais ni fiscalité : un dividende à recevoir ne s’ajoute pas à cette série.
+Le lecteur conserve le dernier relevé validé en cas de panne ou d’historique
+incompatible et ne présente pas les résultats du backtest FNB comme ceux de Finviz.
 
 ## Publier une nouvelle édition
 

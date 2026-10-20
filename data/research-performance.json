@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "kind": "savy_finviz_performance",
+  "generated_at": "2026-10-20T12:00:53.253Z",
+  "currency": "USD",
+  "return_basis": "price_return",
+  "initial_capital": 10000,
+  "launch_date": "2026-09-30",
+  "as_of": "2026-10-15",
+  "period_start": "2026-10-08",
+  "dates": [
+    "2026-09-30",
+    "2026-10-01",
+    "2026-10-02",
+    "2026-10-05",
+    "2026-10-06",
+    "2026-10-07",
+    "2026-10-08",
+    "2026-10-09",
+    "2026-10-12",
+    "2026-10-13",
+    "2026-10-14",
+    "2026-10-15"
+  ],
+  "values": {
+    "top5": [
+      10000,
+      10059.197565903543,
+      10027.868114532628,
+      10122.465580757502,
+      10006.007922856137,
+      10069.356960121717,
+      9755.945889977977,
+      9697.086395365988,
+      9423.512282278949,
+      9378.109068690597,
+      9030.503408490165,
+      8984.458340899915
+    ],
+    "others": [
+      10000,
+      10055.655923710918,
+      10196.708760485222,
+      10195.853444272263,
+      10272.854066986522,
+      10102.735376819186,
+      10029.796877602163,
+      10101.996603066242,
+      9982.689264816669,
+      9897.112600349334,
+      9653.910305206073,
+      9702.357719288826
+    ],
+    "spy": [
+      10000,
+      10017.833025189148,
+      10091.918754835242,
+      10159.972725961476,
+      10215.832054862778,
+      10191.311645227699,
+      10148.171459292185,
+      10209.013545231634,
+      10202.85066152656,
+      10201.67053485963,
+      10091.394254094384,
+      10120.11066965632
+    ]
+  },
+  "method_note": "Simulation en USD : 10 000 $ par portefeuille au 30 septembre 2026. Série de cours hors dividendes, sans frais ni impôts. Historique reconstitué jusqu’au 8 octobre; suivi enregistré ensuite. Les nouvelles pondérations s’appliquent après la clôture d’exécution, jamais à la période passée. Rééquilibrages du jeudi; valeurs actualisées lors de la livraison hebdomadaire, pas en intraday. Les clôtures et dates ci-dessus sont celles du dernier relevé enregistré, pas celles de la consultation."
+}

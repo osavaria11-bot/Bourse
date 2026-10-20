@@ -18,6 +18,22 @@
 .chart svg circle[stroke="#fff"]{stroke:var(--surface)}
 .plot-tip{color:#fff}
 .in-dashboard .wrap{max-width:none;padding:0 0 12px}
+.in-dashboard{overflow:hidden}.in-dashboard table{font-family:inherit}
+/* In SAVY the outer page owns vertical scrolling; the report is not a second page. */
+.in-dashboard .all-table,.in-dashboard .ratios-table,.in-dashboard .performance-table{max-height:none}
+@media(max-width:600px){
+  .in-dashboard{font-size:14px}
+  .in-dashboard .report-header{gap:8px;align-items:center;margin-bottom:8px}
+  .in-dashboard .report-header p{max-width:none;font-size:10px}
+  .in-dashboard .nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px;padding-bottom:10px;overflow:visible}
+  .in-dashboard .nav a{display:flex;align-items:center;justify-content:center;white-space:normal;text-align:center;font-size:11px;line-height:1.35;padding:7px 5px;min-height:38px}
+  .in-dashboard .all-comparison,.in-dashboard .preference-panel{padding:0;border:0;background:transparent;border-radius:0}
+  .in-dashboard .all-table table{font-size:11px}
+  .in-dashboard .all-table th,.in-dashboard .all-table td{padding:10px 8px}
+  .in-dashboard .all-table tbody th{min-width:145px}
+  .in-dashboard .preference-panel{padding-top:14px;border-top:1px solid var(--border)}
+  .in-dashboard .dashboard-toolbar{margin-bottom:14px}
+}
 /* The dark VEQT series also stays visible on the dark SAVY surface. */
 :root:not([data-theme="light"]) .chart svg [fill="#142333"]{fill:var(--text)}
 :root:not([data-theme="light"]) .chart svg [stroke="#142333"]{stroke:var(--text)}

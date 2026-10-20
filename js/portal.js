@@ -121,6 +121,8 @@
     card.append(el("span", "eyebrow", step), el("h3", "", title), el("strong", "research-time", time), el("span", "meta", note), el("p", "meta", detail)); schedule.append(card);
   }
   plan.append(schedule); research.prepend(plan);
+  const researchPerformance = el("section", "research-performance"); researchPerformance.id = "researchPerformance";
+  researchPerformance.setAttribute("aria-label", "Suivi des portefeuilles simulés Finviz"); plan.append(researchPerformance);
   const strategies = el("details", "portal-method research-rules"); strategies.id = "researchStrategies";
   strategies.append(el("summary", "", "Règles des deux portefeuilles simulés"));
   const strategyList = el("div", "portal-strategies");
@@ -140,16 +142,35 @@
   const fundAnalysis = pane("analyses", "overview"), fundHeading = el("div", "portal-section-heading"), fundTitle = el("div");
   fundTitle.append(el("h2", "", "Portefeuilles FNB"));
   const fundFullScreen = el("a", "button quiet", "Ouvrir en plein écran ↗");
-  const fundReportUrl = () => "reports/portefeuilles-fnb.html?v=20261019-performance&month=" + new Intl.DateTimeFormat("fr-CA",{timeZone:"America/Toronto",year:"numeric",month:"2-digit"}).format(new Date());
+  const fundReportUrl = () => "reports/portefeuilles-fnb.html?v=20261020-mobile&month=" + new Intl.DateTimeFormat("fr-CA",{timeZone:"America/Toronto",year:"numeric",month:"2-digit"}).format(new Date());
   fundFullScreen.href = fundReportUrl(); fundFullScreen.target = "_blank"; fundFullScreen.rel = "noopener noreferrer";
   fundHeading.append(fundTitle, fundFullScreen);
   const fundFrame = el("iframe", "portal-report-frame"); fundFrame.id = "fundAnalysisFrame";
   fundFrame.title = "Analyse des 11 portefeuilles FNB : ratios, boussole et évolution des placements";
+  let reportObserver, reportPaint;
+  function fitReport() {
+    cancelAnimationFrame(reportPaint);
+    reportPaint = requestAnimationFrame(() => {
+      const content = fundFrame.contentDocument?.querySelector(".wrap");
+      if (!content || !fundFrame.clientWidth) return;
+      // Measure content, not the document viewport: the frame must shrink as well as grow.
+      const height = Math.ceil(content.getBoundingClientRect().height) + 1;
+      if (height > 0 && fundFrame.style.height !== height + "px") fundFrame.style.height = height + "px";
+    });
+  }
   function syncReportTheme() {
     const root = fundFrame.contentDocument?.documentElement;
     if (root) {root.classList.add("in-dashboard"); root.dataset.theme = document.documentElement.dataset.theme;}
+    fitReport();
   }
-  fundFrame.addEventListener("load", syncReportTheme);
+  fundFrame.addEventListener("load", () => {
+    reportObserver?.disconnect(); syncReportTheme();
+    const content = fundFrame.contentDocument?.querySelector(".wrap");
+    if (content && typeof ResizeObserver !== "undefined") {
+      reportObserver = new ResizeObserver(fitReport); reportObserver.observe(content);
+    }
+  });
+  window.addEventListener("resize", fitReport);
   new MutationObserver(syncReportTheme).observe(document.documentElement, {attributes: true, attributeFilter: ["data-theme"]});
   fundAnalysis.append(fundHeading, fundFrame);
 
@@ -268,7 +289,7 @@
     for (const item of document.querySelectorAll(".portal-tabs a")) {if (item.dataset.tab === active.tab && item.closest(".portal-page").dataset.page === active.page) item.setAttribute("aria-current", "page"); else item.removeAttribute("aria-current");}
     document.title = "SAVY · " + R.PAGES[active.page].label;
     document.body.dataset.page = active.page;
-    if (active.page === "analyses") {const url=fundReportUrl();fundFullScreen.href=url;if(fundFrame.getAttribute("src")!==url)fundFrame.src=url;}
+    if (active.page === "analyses") {const url=fundReportUrl();fundFullScreen.href=url;if(fundFrame.getAttribute("src")!==url)fundFrame.src=url;fitReport();}
     $("#portfolioManage").hidden = all || active.tab === "positions";
     syncIndicators(); syncMarkets();
     window.scrollTo({top: 0, behavior: "instant"}); window.dispatchEvent(new Event("resize"));

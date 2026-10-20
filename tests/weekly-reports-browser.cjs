@@ -3,6 +3,7 @@ const {componentPage} = require("./portal-navigation.cjs");
 const {chromium} = require(process.env.PLAYWRIGHT_MODULE_PATH || "playwright");
 const assert = require("node:assert/strict"), fs = require("node:fs"), path = require("node:path"), http = require("node:http"), crypto = require("node:crypto");
 const root = path.resolve(__dirname, ".."), original = JSON.parse(fs.readFileSync(path.join(root, "data/weekly-reports.json"), "utf8"));
+const performance=JSON.parse(fs.readFileSync(path.join(root,"data/research-performance.json"),"utf8"));
 let mode = "fresh";
 function fixture() {
   const data = structuredClone(original);
@@ -16,6 +17,10 @@ function fixture() {
 const mime = {".html":"text/html", ".js":"text/javascript", ".css":"text/css", ".json":"application/json", ".pdf":"application/pdf"};
 const server = http.createServer((req, res) => {
   const url = new URL(req.url, "http://localhost");
+  if(url.pathname==="/data/research-performance.json"){
+    const snapshot=structuredClone(performance);if(mode==="invalid")snapshot.values.top5[1]+=1;
+    res.writeHead(mode==="offline"?503:200,{"Content-Type":"application/json"});res.end(JSON.stringify(snapshot));return;
+  }
   if (url.pathname === "/data/weekly-reports.json") {
     res.writeHead(mode === "offline" ? 503 : 200, {"Content-Type":"application/json"}); res.end(JSON.stringify(fixture())); return;
   }
@@ -32,6 +37,11 @@ async function main() {
     const url = "http://127.0.0.1:" + server.address().port;
     await page.goto(url + "/#weeklyReports");
     await page.waitForFunction(() => document.querySelectorAll(".weekly-report-document a").length === 2);
+    await page.waitForFunction(()=>document.querySelectorAll("#researchPerformance tbody tr").length===3);
+    assert.equal(await page.locator("#researchPerformance time").getAttribute("datetime"),performance.as_of);
+    const value=new Intl.NumberFormat("fr-CA",{minimumFractionDigits:2,maximumFractionDigits:2}).format(performance.values.top5.at(-1));
+    assert.ok((await page.locator('[data-simulation="top5"] td').first().textContent()).includes(value));
+    assert.equal(await page.locator("#researchPerformance").evaluate(n=>n.closest("#page-recherche")!==null),true);
     assert.equal(await page.locator("#weeklyReports").evaluate(node => node.closest("#page-recherche") !== null), true);
     assert.deepEqual(await page.locator(".weekly-stock").evaluateAll(nodes => nodes.map(node => node.dataset.ticker)), original.reports.stocks.stocks.map(row=>row.ticker));
     assert.ok((await page.locator('[data-report-kind="stocks"] .weekly-report-count').innerText()).includes(original.reports.stocks.stocks.length ? original.reports.stocks.stocks.length + " titre" : "Aucun titre"));
@@ -50,10 +60,12 @@ async function main() {
       await page.waitForFunction(() => document.getElementById("weeklyReportsStatus").textContent.includes("conservées"));
       assert.equal(await page.locator('[data-report-kind="stocks"] time').getAttribute("datetime"), original.reports.stocks.edition_date);
       assert.equal(await page.locator('[data-report-kind="stocks"] .weekly-report-document a').getAttribute("href"), original.reports.stocks.document.path);
+      assert.ok((await page.locator('[data-simulation="top5"] td').first().textContent()).includes(value),"Reject rewritten tracking history");
     }
     mode = "offline"; await page.reload();
     await page.waitForFunction(() => document.getElementById("weeklyReportsStatus").textContent.includes("conservées"));
     assert.equal(await page.locator(".weekly-report-document a").count(), 2);
+    assert.equal(await page.locator("#researchPerformance tbody tr").count(),3,"Preserve tracking in outage");
     for (const width of [1440, 800, 375, 320]) {
       await page.setViewportSize({width,height:1000}); await page.locator("#weeklyReportsTitle").scrollIntoViewIfNeeded();
       for (let theme = 0; theme < 2; theme++) {
@@ -69,6 +81,7 @@ async function main() {
     const empty = await componentPage(browser,); await empty.route("https://**", route => route.abort()); await empty.goto(url);
     await empty.waitForFunction(() => document.getElementById("weeklyReportsStatus").textContent.includes("indisponibles"));
     assert.equal(await empty.locator(".weekly-report-document a").count(), 0);
+    assert.equal(await empty.locator("#researchPerformance tbody tr").count(),0,"Never invent missing simulated returns");
     assert.deepEqual(errors, []);
     console.log("Weekly reports verified: dedicated page placement, actual dated ranking, correct PDF editions/bytes, safe links, cached outage, stale rejection and desktop/mobile dark/light layouts.");
   } finally {await browser.close();}

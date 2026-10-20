@@ -38,3 +38,27 @@ test("ranks and ratings are validated while genuine smaller or empty universes r
   assert.equal(W.normalizeReport({...report, stocks: [{...report.stocks[0], rating: null, decision: null}]}, "stocks", NOW).stocks[0].rating, null);
   assert.equal(W.localDay(Date.parse("2026-10-18T01:00:00Z")), "2026-10-17");
 });
+
+const performance = () => ({schema_version:1,kind:"savy_finviz_performance",generated_at:"2026-10-17T16:00:00Z",initial_capital:10000,currency:"USD",return_basis:"price_return",launch_date:"2026-09-30",as_of:"2026-10-02",period_start:"2026-10-01",dates:["2026-09-30","2026-10-01","2026-10-02"],values:{top5:[10000,11000,9900],others:[10000,10000,10200],spy:[10000,10100,10300]},method_note:"Synthetic price-return simulation, not investment results."});
+test("Finviz performance derives compounded period/cumulative returns and matched SPY gaps from NAVs", () => {
+  const p=W.normalizePerformance(performance(),NOW),rows=W.performanceRows(p);
+  assert.ok(Math.abs(rows[0].period+.1)<1e-12);
+  assert.ok(Math.abs(rows[0].total+.01)<1e-12);
+  assert.ok(Math.abs(rows[0].gap_total+.04)<1e-12);
+  assert.ok(Math.abs(rows[0].gap_period-(-.1-(10300/10100-1)))<1e-12);
+  assert.equal(rows[2].gap_total,0);
+});
+test("Finviz dates, currency, cash baseline and complete aligned histories are required", () => {
+  for(const change of [{initial_capital:9000},{currency:"CAD"},{return_basis:"total_return"},{as_of:"2026-10-03"},{period_start:"2026-09-29"},{generated_at:"2026-10-18T16:00:00Z"},{dates:["2026-09-30","2026-10-01","2026-10-01"]},{values:{...performance().values,top5:[10000,11000]}},{values:{...performance().values,top5:[10000,11000,NaN]}},{values:{...performance().values,top5:[9999,11000,9900]}}])
+    assert.throws(()=>W.normalizePerformance({...performance(),...change},NOW));
+  const raw=performance();raw.private_positions={ticker:"PRIVATE"};
+  assert.equal(W.normalizePerformance(raw,NOW).private_positions,undefined);
+});
+test("Finviz tracking cannot reset, delete or rewrite a published valuation", () => {
+  const previous=W.normalizePerformance(performance(),NOW),next=structuredClone(previous);
+  next.dates.push("2026-10-05");next.as_of="2026-10-05";for(const id of W.PERFORMANCE_IDS)next.values[id].push(10500);
+  assert.deepEqual(W.continuePerformance(previous,W.normalizePerformance(next,NOW)),next);
+  const changed=structuredClone(next);changed.values.top5[1]=10999;assert.throws(()=>W.continuePerformance(previous,changed));
+  assert.throws(()=>W.continuePerformance(next,previous));
+  const missing=structuredClone(next);missing.dates[1]="2026-10-04";assert.throws(()=>W.continuePerformance(previous,missing));
+});

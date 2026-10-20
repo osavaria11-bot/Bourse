@@ -259,6 +259,22 @@ async function check(browser, engine) {
       }
     }
     await go("accueil"); await shot("mobile-" + width);
+    await go("analyses");
+    for(const view of ["allPortfolios","overview","exposures","portfolios","performance","methods"]){
+      await fundReport.locator('.nav [data-tab="'+view+'"]').click();
+      if(view==="performance")await fundReport.locator('#performance[data-ready="true"]').waitFor();
+      await page.waitForFunction(()=>{
+        const f=document.getElementById("fundAnalysisFrame"),content=f.contentDocument?.querySelector(".wrap");
+        return content&&Math.abs(f.clientHeight-(Math.ceil(content.getBoundingClientRect().height)+1))<2;
+      });
+      assert.equal(await page.locator("#fundAnalysisFrame").evaluate(n=>getComputedStyle(n).borderTopWidth),"0px");
+      assert.ok(await fundReport.locator("html").evaluate(n=>n.scrollHeight<=n.clientHeight+2),"FNB has no second vertical page "+width+" "+view);
+      assert.ok(await fundReport.locator(".nav").evaluate(n=>n.scrollWidth<=n.clientWidth),"All FNB tabs fit without horizontal navigation "+width);
+      assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
+    }
+    await fundReport.locator('.nav [data-tab="allPortfolios"]').click();
+    await page.waitForFunction(()=>{const f=document.getElementById("fundAnalysisFrame");return Math.abs(f.clientHeight-(Math.ceil(f.contentDocument.querySelector(".wrap").getBoundingClientRect().height)+1))<2;});
+    await shot("fnb-mobile-"+width);
   }
   assert.deepEqual(errors, []);
   console.log(engine + ": eight sections, compact home and complete dashboard, charts/periods/expansion, reports/archives, all portfolio views, keyboard/back/reload, fragment privacy and 375/320px layouts passed.");

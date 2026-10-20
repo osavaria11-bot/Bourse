@@ -3,12 +3,13 @@
   const W = window.WeeklyReportsUtils, U = window.MacroUtils, host = document.getElementById("weeklyReportsGrid");
   if (!host) return;
   const KEY = "savy:weekly-reports:v1";
-  let data = null, pending = null, copy = false;
+  let data = null, pending = null, copy = false, performance = null, performanceCopy = false;
   function el(tag, className, content) {
     const node = document.createElement(tag); if (className) node.className = className;
     if (content !== undefined) node.textContent = content; return node;
   }
   function render() {
+    renderPerformance();
     host.replaceChildren();
     const propertyHost = document.getElementById("propertyReportsGrid"); propertyHost?.replaceChildren();
     for (const kind of W.KINDS) {
@@ -58,11 +59,42 @@
     if (status) status.textContent = data?.reports.real_estate ? (copy ? "Dernière édition conservée sur cet appareil." : "Dernière édition publiée · document disponible ci-dessous.") : "Le briefing immobilier est indisponible pour le moment.";
     window.SavyPortal?.homeReports(data, copy);
   }
+  function renderPerformance() {
+    const target = document.getElementById("researchPerformance"); if (!target) return;
+    target.replaceChildren(el("h3", "", "Suivi simulé · A / B / SPY"));
+    if (!performance) {target.append(el("p", "meta", "Suivi indisponible · aucun rendement estimé ou remis à zéro.")); return;}
+    const time = el("time", "meta", "Clôture du " + U.observationLabel(performance.as_of)); time.dateTime = performance.as_of;
+    target.append(time, el("p", "meta", "Période : " + U.observationLabel(performance.period_start) + " → " + U.observationLabel(performance.as_of) + " · cumul depuis le 30 septembre 2026."));
+    if (performanceCopy) target.append(el("p", "meta", "Dernier relevé vérifié conservé · actualisation indisponible ou historique incompatible."));
+    const wrap = el("div", "research-performance-table"), table = el("table"), head = el("thead"), headings = el("tr");
+    wrap.tabIndex = 0; wrap.setAttribute("aria-label", "Valeurs et rendements simulés en dollars américains");
+    for (const label of ["Portefeuille", "Valeur USD", "Période", "Cumul", "Écart / SPY¹"]) {const th = el("th", "", label); th.scope = "col"; headings.append(th);}
+    head.append(headings); table.append(head); const body = el("tbody");
+    const percent = v => U.formatNumber(v * 100, 2) + " %", money = v => U.formatNumber(v, 2) + " $";
+    for (const row of W.performanceRows(performance)) {
+      const tr = el("tr"), name = {top5:"A · Top 5", others:"B · Autres", spy:"SPY"}[row.id]; tr.dataset.simulation = row.id;
+      const th = el("th", "", name); th.scope = "row"; tr.append(th);
+      for (const value of [money(row.value), percent(row.period), percent(row.total), row.id === "spy" ? "—" : U.formatNumber(row.gap_total * 100, 2) + " pts"]) tr.append(el("td", "", value));
+      body.append(tr);
+    }
+    table.append(body); wrap.append(table); target.append(wrap, el("p", "meta", "¹ Écart de rendement cumulé en points de pourcentage, aux mêmes dates et hors dividendes."));
+    const method = el("details", "portal-method"); method.append(el("summary", "", "Méthode et continuité"), el("p", "meta", performance.method_note)); target.append(method);
+  }
   try {data = W.normalize(JSON.parse(localStorage.getItem(KEY))); copy = true; render();} catch { /* Read the published editions. */ }
+  try {performance = W.normalizePerformance(JSON.parse(localStorage.getItem(KEY + ":performance"))); performanceCopy = true; renderPerformance();} catch { /* No invented performance without a validated snapshot. */ }
   async function refresh() {
     if (pending) return pending;
     pending = (async () => {
       const controller = new AbortController(), timeout = setTimeout(() => controller.abort(), 12000);
+      const performanceRequest = (async () => {
+        try {
+          const response = await fetch("data/research-performance.json?v=" + Date.now(), {cache:"no-store", signal:controller.signal});
+          if (!response.ok) throw new Error("Suivi indisponible");
+          const next = W.normalizePerformance(await response.json()); W.continuePerformance(performance, next);
+          performance = next; performanceCopy = false;
+          try {localStorage.setItem(KEY + ":performance", JSON.stringify(performance));} catch { /* Session only. */ }
+        } catch {performanceCopy = true;}
+      })();
       try {
         const response = await fetch("data/weekly-reports.json?v=" + Date.now(), {cache: "no-store", signal: controller.signal});
         if (!response.ok) throw new Error("Rapports indisponibles");
@@ -74,7 +106,7 @@
         data = next;
         try {localStorage.setItem(KEY, JSON.stringify(data));} catch { /* Keep this session usable. */ }
       } catch {copy = true;}
-      finally {clearTimeout(timeout); render();}
+      finally {await performanceRequest; clearTimeout(timeout); render();}
     })();
     try {await pending;} finally {pending = null;}
   }

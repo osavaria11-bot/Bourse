@@ -4,6 +4,8 @@ const W = require("../js/weekly-reports-utils.js");
 const root = path.resolve(__dirname, "..");
 const raw = JSON.parse(fs.readFileSync(path.join(root, "data/weekly-reports.json"), "utf8"));
 const data = W.normalize(raw);
+const performance = W.normalizePerformance(JSON.parse(fs.readFileSync(path.join(root,"data/research-performance.json"),"utf8")));
+console.log("Finviz performance: " + performance.as_of + " · " + performance.dates.length + " preserved valuation dates · USD price returns");
 for (const kind of W.KINDS) {
   const report = data.reports[kind];
   if (!report) throw new Error("Invalid or missing weekly report: " + kind);

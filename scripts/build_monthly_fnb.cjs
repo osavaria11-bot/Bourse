@@ -54,7 +54,7 @@ if(methodsStart<0||footer<methodsStart)throw Error("Methods template not found")
 const research=`<section class="section monthly-research"><h2>Recherche mensuelle · ${esc(O.month)}</h2><p class="method-summary">${esc(O.reasons.join(' '))}</p><p class="method-summary">Validation chronologique : Sharpe ${num(v.metrics.sharpe)} contre ${num(v.benchmark.sharpe)} pour VEQT. ${esc(v.note)}</p><button id="monthlyCharts">Comparer la proposition aux benchmarks</button><details class="monthly-details"><summary>Archives des recommandations</summary><div id="monthlyHistory">Chargement des archives…</div></details><p id="monthlyStatus" class="method-summary" role="status">Recherche automatique au début de chaque mois.</p></section>`;
 html=html.slice(0,methodsStart)+method.replace('<div class="section source-table">',research+'<div class="section source-table">')+html.slice(footer);
 html=require('./fnb_performance_view.cjs')(html);
-html=html.replace(/fnb-dashboard\.(js|css)\?v=[^"']+/g,'fnb-dashboard.$1?v=20261019-performance');
+html=html.replace(/fnb-dashboard\.(js|css)\?v=[^"']+/g,'fnb-dashboard.$1?v=20261020-mobile');
 // Remove any archived data from the serialized payload before replacing it.
 html=html.replace(/(<script[^>]*id="analysis"[^>]*>)[\s\S]*?(<\/script>)/,(_,a,b)=>a+JSON.stringify(D).replace(/</g,"\\u003c")+b);
 fs.writeFileSync(file,html);
