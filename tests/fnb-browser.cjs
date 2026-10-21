@@ -18,12 +18,13 @@ async function check(browser,engine){
  assert.equal(await page.locator('#growthSvg .wealth-line:visible').count(),5);
  await page.locator('#capitalInput').fill('20 000');
  for(const k of D.robust_order){
+  await page.locator('.nav [data-tab="overview"]').click();
   assert.equal(await page.locator('#risk-series-'+k).isChecked(),true);assert.equal(await page.locator('#growth-series-'+k).isChecked(),true);
   const row=page.locator('#growthReadout [data-portfolio="'+k+'"] b');assert.ok((await row.innerText()).includes(new Intl.NumberFormat('fr-CA',{maximumFractionDigits:0}).format(D.results[k].end*2).replace(/\s/g,' '))||(await row.innerText()).replace(/\s/g,'').includes(String(Math.round(D.results[k].end*2))));
   await page.locator('.nav [data-tab="portfolios"]').click();await page.locator('#ficheFocus').selectOption(k);assert.equal(await page.locator('[data-fiche="'+k+'"] [data-fund]').count(),Object.keys(D.results[k].weights).length);assert.equal(await page.locator('[data-fiche="'+k+'"] .robust-diagnostics tbody tr').count(),5);
   await page.locator('[data-fiche="'+k+'"] [data-open-exposure]').click();assert.equal(await page.locator('#sectorFocus').inputValue(),k);
  }
- await page.locator('#capitalInput').fill('10 000');await page.locator('.nav [data-tab="allPortfolios"]').click();
+ await page.locator('.nav [data-tab="overview"]').click();await page.locator('#capitalInput').fill('10 000');await page.locator('.nav [data-tab="allPortfolios"]').click();
  await page.locator('#allPortfolios [data-open-portfolio="proposal"]').first().click();
  assert.equal(await page.locator('[data-fiche="proposal"]').isVisible(),true);
  assert.equal(await page.locator('[data-fiche="proposal"] [data-fund]').count(),Object.keys(D.results.proposal.weights).length);
