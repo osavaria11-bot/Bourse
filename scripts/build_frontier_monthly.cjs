@@ -7,8 +7,10 @@ const read=file=>JSON.parse(fs.readFileSync(file,"utf8"));
 const digest=value=>crypto.createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const near=(a,b)=>a===null?b===null:typeof a==="number"&&Number.isFinite(a)&&Math.abs(a-b)<1e-8;
 const metricKeys=["mean","vol","variance","tracking","excess","sharpe","information","cagr"];
-function inputsFor(data){
- const p=U.prepare(data,{cap:.35,sample:"split"}),ids=p.ids;
+function inputsFor(data,cap=.5,policy=null){
+ // Reproduce dated constraints when auditing an immutable older publication.
+ if(policy){data=structuredClone(data);for(const key of ['geo_tolerance','sector_tolerance','sector_cap','unknown_geography_cap'])data.optimization.constraints[key]=policy[key];}
+ const p=U.prepare(data,{cap,sample:"split"}),ids=p.ids;
  return {ids,dates:data.dates,as_of:p.asOf,risk_free:p.riskFree,cap:p.cap,limits:p.limits,seed:p.feasible,
   returns:Object.fromEntries([...ids,"VEQT"].map(id=>[id,data.universe.returns[id]]))};
 }
@@ -44,9 +46,9 @@ function build(data,{generatedAt=new Date().toISOString(),previous=null}={}){
  const [year,m]=month.split("-").map(Number),cutoff=new Date(Date.UTC(year,m-1,0)).toISOString().slice(0,7);
  if(inputs.dates.at(-1)!==cutoff)throw Error("The frontier must cover the last completed month");
  if(previous&&previous.month>=month)throw Error("Previous frontier must precede this month");
- const L=inputs.limits,policy={version:1,benchmark:"VEQT",currency:"CAD",periods_per_year:12,
+ const L=inputs.limits,policy={version:2,benchmark:"VEQT",currency:"CAD",periods_per_year:12,
   returns:"Total returns, constant target weights each month",covariance:"Sample covariance",risk_free:"Constant comparison rate",
-  compromise_priority:.5,validation_months:12,general_cap:.35,
+  compromise_priority:.5,validation_months:12,general_cap:inputs.cap,
   fund_caps:Object.fromEntries(inputs.ids.map((id,i)=>[id,L.caps[i]])),crypto_cap:L.cryptoCap,
   geo_tolerance:L.geoTolerance,sector_tolerance:L.sectorTolerance,sector_cap:L.sectorCap,unknown_geography_cap:L.unknownCap,
   region_minimum:[.30,.15,.15,.05],region_maximum:[.60,.40,.40,.20]};
@@ -131,14 +133,15 @@ function main(argv=process.argv.slice(2)){
   const actual=months.map(name=>{const r=validate(read(path.join(folder,name)),previous);previous=r;return {month:r.month,as_of:r.as_of,path:"data/fnb-frontier-history/"+name,generated_at:r.generated_at,input_digest:r.input_digest};});
   if(JSON.stringify(actual)!==JSON.stringify(index.months)||index.latest_month!==latest.month||latest.month!==months.at(-1).slice(0,7)||JSON.stringify(latest)!==JSON.stringify(read(path.join(folder,latest.month+".json"))))throw Error("Frontier history index or current copy disagrees with archives");
   if(latest.month===month&&extra.as_of===base.assumptions.as_of){
-   if(latest.input_digest!==digest(inputsFor(U.extend(base,extra))))throw Error("Current frontier inputs changed after the monthly archive");
+   // Validate old prices/exposures with their recorded cap, not today's new default.
+   if(latest.input_digest!==digest(inputsFor(U.extend(base,extra),latest.inputs.cap,latest.policy)))throw Error("Current frontier inputs changed after the monthly archive");
   }
   console.log("Validated monthly frontier archives:",months.length,"; latest",latest.month,"; research month",month);return latest;
  }
  const data=U.extend(base,extra),inputs=inputsFor(data);
  if(fs.existsSync(file)){
   const record=validate(read(file));
-  if(record.input_digest!==digest(inputs))throw Error("Current inputs differ from the published month; keep the archive and review the change explicitly");
+  if(record.input_digest!==digest(inputsFor(data,record.inputs.cap,record.policy)))throw Error("Current inputs differ from the published month; keep the archive and review the change explicitly");
   publish(root,record);console.log("Monthly frontier already archived; retained:",month);return record;
  }
  const previousFiles=fs.existsSync(folder)?fs.readdirSync(folder).filter(name=>/^\d{4}-\d{2}\.json$/.test(name)&&name.slice(0,7)<month).sort():[];

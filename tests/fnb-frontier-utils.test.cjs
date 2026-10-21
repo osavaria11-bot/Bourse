@@ -110,6 +110,21 @@ test("CGL.C 5%, XIT 10% and ZEB 10% apply to optimization, edits and restored we
  for(const cap of stricter.limits.caps)assert.ok(cap<=.05);
 });
 
+test("FEQT can reach 50% without relaxing any other fund, geography, sector or crypto limit",()=>{
+ const before=JSON.stringify(D),d=U.extend(D,require('../data/fnb-frontier-universe.json')),p=U.prepare(d),i=p.ids.indexOf('FEQT');
+ near(p.cap,.50);near(p.limits.caps[i],.50);near(d.frontier_caps.FEQT,.50);
+ near(p.limits.geoTolerance,.10);near(p.limits.sectorTolerance,.07);
+ for(const [id,cap] of [['FINN',.15],['CGL.C',.05],['XIT',.10],['ZEB',.10],['ZEO',.05],['FCIV',.35],['FCMO',.35]])near(p.limits.caps[p.ids.indexOf(id)],cap);
+ const w=U.edit(p,p.feasible,i,.9),e=U.exposures(p,w);
+ assert.ok(w[i]>.499,'A 50% FEQT request is not clipped to the old 35% cap');assert.ok(e.valid);assert.ok(e.assets.crypto<=.03+1e-8);assert.ok(e.maxSectorGap<=.07+1e-8);
+ const solution=U.solve(p);
+ for(const point of [...solution.absolute,...solution.active,...solution.cloud,solution.sharpe,solution.information,U.compromise(solution.pareto)].filter(Boolean)){
+  assert.ok(U.feasible(point.weights,p.limits));point.weights.forEach((v,k)=>assert.ok(v<=p.limits.caps[k]+1e-8));
+ }
+ near(U.prepare(d,{cap:.25}).limits.caps[i],.25);
+ assert.equal(JSON.stringify(D),before);
+});
+
 test("the 3% crypto ceiling aggregates fund holdings and constrains edits and restored allocations",()=>{
  const d=U.extend(D,require("../data/fnb-frontier-universe.json"));
  // Synthetic wrappers make the portfolio limit bind independently of the per-fund cap.

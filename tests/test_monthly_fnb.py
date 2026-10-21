@@ -168,6 +168,12 @@ class PublicationGuards(unittest.TestCase):
     def test_feqt_crypto_is_allowed_as_part_of_the_total_portfolio_budget(self):
         config = model.read(ROOT / "data/fnb-model.json")
         self.assertTrue(config["funds"]["FEQT"]["equity_eligible"])
+        self.assertEqual(config["funds"]["FEQT"]["max_weight"], .50)
+        self.assertEqual(config["funds"]["CGL.C"]["max_weight"], .05)
+        self.assertEqual(config["funds"]["XIT"]["max_weight"], .10)
+        self.assertEqual(config["funds"]["ZEB"]["max_weight"], .10)
+        self.assertEqual(config["optimization"]["geo_tolerance"], .10)
+        self.assertEqual(config["optimization"]["sector_tolerance"], .07)
         self.assertEqual(config["optimization"]["crypto_cap"], .03)
         cfg = {"funds":{"FEQT":config["funds"]["FEQT"]},"optimization":{"crypto_cap":.03}}
         assets = {"equity":.968,"crypto":.032,"bond":0.,"gold":0.,"cash":0.}

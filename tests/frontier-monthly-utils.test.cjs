@@ -15,10 +15,12 @@ test("monthly profiles preserve the browser's current universe, limits and split
  assert.deepEqual(first.inputs.ids,data.optimization.eligible_funds);assert.ok(first.inputs.ids.includes("FEQT"));
  assert.equal(first.policy.crypto_cap,.03);assert.equal(first.policy.fund_caps["CGL.C"],.05);
  assert.equal(first.policy.fund_caps.XIT,.10);assert.equal(first.policy.fund_caps.ZEB,.10);
+ assert.equal(first.policy.fund_caps.FEQT,.50);assert.equal(first.policy.general_cap,.50);
+ assert.equal(first.policy.geo_tolerance,.10);assert.equal(first.policy.sector_tolerance,.07);
  assert.equal(first.comparison,null);assert.equal(first.samples.split.dates.validation.length,12);
  assert.equal(first.samples.all.dates.validation.length,0);
  assert.equal(JSON.stringify(data),original);
- const p=U.prepare(data,{cap:.35}),solution=U.solve(p);
+ const p=U.prepare(data),solution=U.solve(p);
  for(const id of ["sharpe","information"]){
   assert.deepEqual(first.samples.split.profiles[id].weights,Object.fromEntries(p.ids.map((t,i)=>[t,solution[id].weights[i]])));
  }
@@ -27,6 +29,16 @@ test("monthly profiles preserve the browser's current universe, limits and split
   assert.ok(sample.audit.checked_candidates>600);assert.ok(sample.audit.max_solver_gap<1e-7);
   for(const profile of Object.values(sample.profiles))assert.ok(profile.exposures.valid);
  }
+});
+test("a new FEQT allowance does not rewrite the former monthly policy, inputs or ratios",()=>{
+ const archived=require('../data/fnb-frontier-history/2026-10.json'),before=JSON.stringify(archived);
+ assert.equal(archived.policy.fund_caps.FEQT,.35);
+ assert.equal(archived.policy.sector_tolerance,.10);
+ assert.equal(JSON.stringify(M.inputsFor(data,archived.inputs.cap,archived.policy)),JSON.stringify(archived.inputs),'Serialized inputs and their digest stay byte-equivalent');
+ M.validate(archived);
+ const changed=structuredClone(data);changed.universe.returns.FEQT[0]+=.001;
+ assert.notDeepEqual(M.inputsFor(changed,archived.inputs.cap,archived.policy),archived.inputs,'Old sources still reject revisions');
+ assert.equal(JSON.stringify(archived),before);
 });
 test("monthly changes compare both allocations on the same new window and risk-free rate",()=>{
  assert.equal(second.comparison.previous_month,firstMonth);

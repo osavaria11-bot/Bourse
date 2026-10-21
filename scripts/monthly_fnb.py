@@ -18,7 +18,7 @@ except ModuleNotFoundError:
     from fnb_sources import Client, collect, month_end, previous_month
 
 ROOT = Path(__file__).resolve().parents[1]
-MODEL_VERSION = "1.2.0"
+MODEL_VERSION = "1.3.0"
 PROPOSAL = "proposal"
 GEO_NAMES = ["États-Unis", "Canada", "Développés hors Amérique du Nord", "Marchés émergents", "Pays non publiés",
              "Or physique", "Cryptomonnaies indirectes", "Obligations", "Liquidités et autres"]
@@ -292,7 +292,7 @@ def refresh_analysis(current, baseline, sources, config, generated_at):
         item["max_sector_gap"] = max(abs(a - b) for a, b in zip(item["sectors"], u["ref_sector"]))
         d["checks"][key] = {"weight_sum": sum(weights.values()), "allocation_sum": sum(item["geo_total"]),
             "sector_sum": sum(item["sectors"]), "months": len(dates), "geo_limit_pass": item["max_geo_gap"] <= .1,
-            "sector_limit_pass": item["max_sector_gap"] <= .1, "allocation_preserved": key == PROPOSAL or weights == baseline["results"][key]["weights"]}
+            "sector_limit_pass": item["max_sector_gap"] <= config["optimization"]["sector_tolerance"], "allocation_preserved": key == PROPOSAL or weights == baseline["results"][key]["weights"]}
     ref = d["results"]["VEQT"]
     for key, item in d["results"].items():
         item["vol_diff"], item["cagr_gap"] = item["vol"] - ref["vol"], item["cagr"] - ref["cagr"]
@@ -350,7 +350,8 @@ def validate(d, baseline):
             raise ValueError("Frozen robust allocation changed")
     p = d["results"][PROPOSAL]
     if not set(p["weights"]) <= set(d["optimization"]["eligible_funds"]): raise ValueError("Non-equity proposal holding")
-    if p["max_geo_gap"] > .1 + 1e-8 or p["max_sector_gap"] > .1 + 1e-8: raise ValueError("Proposal concentration breach")
+    constraints = d["optimization"]["constraints"]
+    if p["max_geo_gap"] > constraints["geo_tolerance"] + 1e-8 or p["max_sector_gap"] > constraints["sector_tolerance"] + 1e-8: raise ValueError("Proposal concentration breach")
     for a in ["bond", "gold"]:
         if p[a] > .0005: raise ValueError("Proposal includes " + a)
     crypto_cap = d["optimization"]["constraints"].get("crypto_cap", 0.)

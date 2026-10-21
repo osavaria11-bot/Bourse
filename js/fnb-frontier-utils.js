@@ -1,7 +1,7 @@
 (function(root,factory){if(typeof module==="object"&&module.exports)module.exports=factory();else root.SavyFrontierUtils=factory();})(typeof globalThis!=="undefined"?globalThis:this,function(){
  "use strict";
  const EPS=1e-10, PERIODS=12, CRYPTO_CAP=.03;
- const FUND_CAPS={"CGL.C":.05,FINN:.15,XIT:.10,ZEB:.10,ZEO:.05};
+ const FUND_CAPS={FEQT:.50,"CGL.C":.05,FINN:.15,XIT:.10,ZEB:.10,ZEO:.05};
  const dot=(a,b)=>a.reduce((s,v,i)=>s+v*b[i],0),matvec=(a,w)=>a.map(row=>dot(row,w));
  const sum=a=>a.reduce((s,v)=>s+v,0),finite=v=>typeof v==="number"&&Number.isFinite(v);
  function project(values,cap=1,total=1){
@@ -35,6 +35,7 @@
 
  function extend(data,extra){
   const d=JSON.parse(JSON.stringify(data));
+  d.optimization.constraints={...d.optimization.constraints,geo_tolerance:.10,sector_tolerance:.07};
   d.optimization.eligible_funds=d.optimization.eligible_funds.filter(id=>id!=="VEQT"&&id!=="XEQT");
   if(d.universe.returns.RUD&&d.universe.equity.RUD>=.92&&!d.optimization.eligible_funds.includes("RUD"))d.optimization.eligible_funds.push("RUD");
   // The interactive laboratory also includes the sourced gold and multi-asset funds.
@@ -178,7 +179,7 @@
   const available=data.optimization?.eligible_funds?.filter(id=>!["VEQT","XEQT"].includes(id));
   const monthIndex=d=>Number(d.slice(0,4))*12+Number(d.slice(5));
   if(!Array.isArray(available)||!Array.isArray(data.dates)||data.dates.length<24||new Set(data.dates).size!==data.dates.length||data.dates.some((d,i)=>!/^\d{4}-(0[1-9]|1[0-2])$/.test(d)||(i&&monthIndex(d)!==monthIndex(data.dates[i-1])+1))||data.assumptions.as_of.slice(0,7)!==data.dates.at(-1))throw Error("Données FNB mensuelles insuffisantes");
-  const ids=options.ids||available,cap=options.cap??.4,riskFree=options.riskFree??data.assumptions.risk_free;
+  const ids=options.ids||available,cap=options.cap??.5,riskFree=options.riskFree??data.assumptions.risk_free;
   if(!Array.isArray(ids)||new Set(ids).size!==ids.length||ids.some(id=>!available.includes(id))||ids.length*cap<1-1e-9||cap<=0||cap>1)throw Error("Choisir assez de FNB admissibles pour ce plafond");
   const source=ids.map(id=>data.universe.returns[id]),benchmark=data.universe.returns.VEQT;
   if(!Array.isArray(benchmark)||benchmark.length!==data.dates.length||source.some(s=>!Array.isArray(s)||s.length!==benchmark.length))throw Error("Périodes des FNB et de VEQT incompatibles");

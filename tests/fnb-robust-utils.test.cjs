@@ -1,8 +1,8 @@
 "use strict";
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),os=require('node:os'),{execFileSync}=require('node:child_process');
 const root=path.resolve(__dirname,'..'),read=p=>JSON.parse(fs.readFileSync(path.join(root,p),'utf8')),D=read('data/fnb-analysis.json'),U=require('../js/fnb-frontier-utils.js'),{consolidate}=require('../scripts/fnb_holdings.cjs');
-test('three robust selections meet all frontier limits and have complete sourced equity look-through',()=>{
- const E=U.extend(D,read('data/fnb-frontier-universe.json')),p=U.prepare(E,{cap:.35,sample:'split'}),H=read('data/fnb-holdings.json');
+test('frozen robust selections retain their published limits and complete sourced equity look-through',()=>{
+ const archive=read('data/fnb-frontier-history/2026-10.json'),p=require('../scripts/build_frontier_monthly.cjs').prepare(archive.inputs,'split'),H=read('data/fnb-holdings.json');
  assert.equal(D.robust_order.length,3);
  for(const k of D.robust_order){
   const q=D.results[k],w=p.ids.map(t=>q.weights[t]||0);assert.ok(U.feasible(w,p.limits),k);
@@ -10,6 +10,11 @@ test('three robust selections meet all frontier limits and have complete sourced
   const h=consolidate(q.weights,H.funds);assert.deepEqual(h,D.lookthrough.results[k]);assert.ok(h.stock_count>1000);assert.equal(h.top10.length,10);
   assert.ok(D.order.includes(k)&&D.exposure_order.includes(k));assert.ok(D.preference_ranking.entries.some(e=>e.id===k));
  }
+});
+test('the tighter current sector rule flags the former Compromis without changing its allocation',()=>{
+ const before=JSON.stringify(D.results),ranking=require('../scripts/fnb_preferences.cjs')(D),entry=ranking.entries.find(e=>e.id===D.robust_order[0]);
+ assert.ok(entry.limit_flags.includes('Limite sectorielle dépassée'));
+ assert.equal(entry.eligible,false);assert.equal(JSON.stringify(D.results),before);
 });
 test('robust cards and choices render idempotently without editing historical publications',()=>{
  const stage=fs.mkdtempSync(path.join(os.tmpdir(),'savy-robust-'));

@@ -23,7 +23,7 @@ def validate_catalog(catalog):
         raise ValueError("Invalid robustness publication date")
     ids = [p["id"] for p in catalog["portfolios"]]
     if len(set(ids)) != 3: raise ValueError("Duplicate robust identity")
-    caps = {"CGL.C": .05, "XIT": .10, "ZEB": .10, "ZEO": .05, "FINN": .15}
+    caps = {"FEQT": .50, "CGL.C": .05, "XIT": .10, "ZEB": .10, "ZEO": .05, "FINN": .15}
     for p in catalog["portfolios"]:
         if not 0 <= p["compromise_fraction"] <= 1: raise ValueError("Invalid blend fraction")
         w = p["weights"]
@@ -105,14 +105,14 @@ def apply(analysis, selections, previous=None):
             region = q["geo_equity"]
             if q["max_geo_gap"] > .1+1e-8 or any(not lo-1e-8 <= v <= hi+1e-8 for v,lo,hi in zip(region[:4],[.30,.15,.15,.05],[.60,.40,.40,.20])) or region[4] > .05+1e-8:
                 signals.append("Limite géographique dépassée")
-            if q["max_sector_gap"] > .1+1e-8 or max(q["sectors"]) > .35+1e-8: signals.append("Limite sectorielle dépassée")
+            if q["max_sector_gap"] > .07+1e-8 or max(q["sectors"]) > .35+1e-8: signals.append("Limite sectorielle dépassée")
             if q["crypto"] > .03+1e-8: signals.append("Limite crypto dépassée")
             q["robust_review"] = {"as_of": d["assumptions"]["as_of"], "review_required": bool(signals), "signals": signals}
             d["results"][k] = q
             d["asset_dates"][k] = {t: d["source_dates"][t]["assets"] for t in w}
             d["checks"][k] = {"weight_sum": sum(w.values()), "allocation_sum": sum(q["geo_total"]),
                 "sector_sum": sum(q["sectors"]), "months": len(dates), "geo_limit_pass": q["max_geo_gap"] <= .1+1e-8,
-                "sector_limit_pass": q["max_sector_gap"] <= .1+1e-8, "allocation_preserved": True}
+                "sector_limit_pass": q["max_sector_gap"] <= .07+1e-8, "allocation_preserved": True}
             d["robust_order"].append(k)
     d["order"] = d["robust_order"] + d["order"]
     d["exposure_order"] = d["robust_order"] + d["exposure_order"]

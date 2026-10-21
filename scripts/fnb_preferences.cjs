@@ -10,13 +10,13 @@ function period(p,b,rf,dates){
  return {start:dates[0],end:dates.at(-1),months:p.length,total_return:total(p),benchmark_return:total(b),gap:total(p)-total(b),sharpe:vol>1e-12?(mean(p)*12-rf)/vol:null,information:te>1e-12?mean(active)*12/te:null};
 }
 function limits(q,D){
- const flags=[],caps={'CGL.C':.05,XIT:.10,ZEB:.10,ZEO:.05,FINN:.15},eps=1e-8;
+ const flags=[],caps={FEQT:.50,'CGL.C':.05,XIT:.10,ZEB:.10,ZEO:.05,FINN:.15},eps=1e-8;
  for(const [t,w] of Object.entries(q.weights))if(w>(caps[t]??.35)+eps)flags.push(t+' au-dessus du plafond par fonds');
  if(q.weights.VEQT||q.weights.XEQT)flags.push('Benchmark détenu dans l’allocation');
  if(q.crypto>.03+eps)flags.push('Crypto au-dessus de 3 %');
  const g=q.geo_equity,lo=[.30,.15,.15,.05],hi=[.60,.40,.40,.20];
  if(g.some((v,i)=>Math.abs(v-D.universe.ref_geo[i])>.10+eps)||g.slice(0,4).some((v,i)=>v<lo[i]-eps||v>hi[i]+eps)||g[4]>.05+eps)flags.push('Limite géographique dépassée');
- if(q.sectors.some((v,i)=>v>.35+eps||Math.abs(v-D.universe.ref_sector[i])>.10+eps))flags.push('Limite sectorielle dépassée');
+ if(q.sectors.some((v,i)=>v>.35+eps||Math.abs(v-D.universe.ref_sector[i])>.07+eps))flags.push('Limite sectorielle dépassée');
  return flags;
 }
 module.exports=function preferences(D){
@@ -47,8 +47,9 @@ module.exports=function preferences(D){
   return {id,eligible,score,worst_information,worst_sharpe,mer:q.mer,signals,performance_flags,limit_flags,diagnostics,reason};
  });
  entries.sort((a,b)=>Number(b.eligible)-Number(a.eligible)||(b.score??-Infinity)-(a.score??-Infinity)||a.mer-b.mer||a.id.localeCompare(b.id));
- const date=[D.assumptions.analysis_date,D.optimization.generated_at.slice(0,10),...(D.robust_selections||[]).map(c=>c.published_at.slice(0,10))].filter(Boolean).sort().at(-1);
- return {date,as_of:D.assumptions.as_of,method_version:'common-robustness-v1',
+ const date=['2026-10-21',D.assumptions.analysis_date,D.optimization.generated_at.slice(0,10),...(D.robust_selections||[]).map(c=>c.published_at.slice(0,10))].filter(Boolean).sort().at(-1);
+ return {date,as_of:D.assumptions.as_of,method_version:'common-robustness-v2-feqt50-sector7',
+  policy:{effective_date:'2026-10-21',feqt_cap:.50,geo_tolerance:.10,sector_tolerance:.07},
   criteria:'Même règle pour tous les candidats : limites actuelles et absence de signal défavorable sur 6 / 12 mois d’abord; puis IR minimal + Sharpe minimal des fenêtres début 28 mois / derniers 24 mois / derniers 12 mois, moins 25 × RFG annuel (en décimal). Frais déjà inclus dans les rendements; la pénalité exprime une préférence pour des coûts plus faibles. Les 3 derniers mois servent d’alerte. Les allocations historiques hors limites restent suivies et signalées. Nº 10 et 11, mandats mixtes, exclus. Classement rétrospectif, sans test indépendant ni garantie de robustesse future; les variantes Robuste ne sont pas prioritaires par leur nom.',
   entries:entries.map((e,i)=>({...e,rank:i+1}))};
 };

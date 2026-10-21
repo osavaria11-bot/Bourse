@@ -1,10 +1,10 @@
 (() => {
  "use strict";
- const U=window.SavyFrontierUtils,script=document.currentScript,workerUrl=new URL("fnb-frontier-worker.js?v=20261020-crypto3",script.src);
+ const U=window.SavyFrontierUtils,script=document.currentScript,workerUrl=new URL("fnb-frontier-worker.js?v=20261021-feqt50",script.src);
  const $=id=>document.getElementById(id),number=(v,d=2)=>v===null||!Number.isFinite(v)?"—":new Intl.NumberFormat("fr-CA",{minimumFractionDigits:d,maximumFractionDigits:d}).format(v);
  const pct=(v,d=1)=>v===null||!Number.isFinite(v)?"—":number(v*100,d)+" %",esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
  const delta=v=>v===null||!Number.isFinite(v)?"—":(v>0?"+":"")+number(v,3),finite=v=>typeof v==="number"&&Number.isFinite(v);
- let D,root,prepared,solution,weights,selectedIds,cap=.35,sample="split",mode="risk",priority=.5,profile="seed",key,worker,generation=0,loading=false,plot,chartTimer,pending,initialized=false;
+ let D,root,prepared,solution,weights,selectedIds,cap=.5,sample="split",mode="risk",priority=.5,profile="seed",key,worker,generation=0,loading=false,plot,chartTimer,pending,initialized=false;
  const cache=new Map(),labels={seed:"Proposition adaptée aux contraintes choisies",sharpe:"Sharpe maximal",information:"IR maximal / VEQT",compromise:"Compromis Sharpe / IR",custom:"Simulation libre",frontier:"Point de la frontière"};
  const seedWeights=()=>D.results.proposal?.weights||{VEQT:1};
  const savedWeights=()=>Object.fromEntries(selectedIds.map((id,i)=>[id,weights[i]]));
@@ -14,7 +14,7 @@
  }
  function table(){
   $("frontierWeightsTitle").textContent="Allocation interactive · "+selectedIds.length+" FNB";
-  $("frontierWeights").innerHTML=selectedIds.map((id,i)=>`<tr data-frontier-fund="${esc(id)}"><th scope="row"><label for="frontierWeight${i}"><span><b>${esc(id)}</b><small>${esc(D.fund_labels[id]?.description||"FNB d’actions")}</small></span><output id="frontierWeightLabel${i}"></output></label><input id="frontierWeight${i}" data-frontier-weight="${i}" type="range" min="0" max="${Math.min(cap,D.frontier_caps[id]??.35)*100}" step="0.1" aria-label="Poids de ${esc(id)} en pourcentage"></th><td data-frontier-delta="sharpe"></td><td data-frontier-delta="information"></td></tr>`).join("");
+  $("frontierWeights").innerHTML=selectedIds.map((id,i)=>`<tr data-frontier-fund="${esc(id)}"><th scope="row"><label for="frontierWeight${i}"><span><b>${esc(id)}</b><small>${esc(D.fund_labels[id]?.description||"FNB d’actions")}</small></span><output id="frontierWeightLabel${i}"></output></label><input id="frontierWeight${i}" data-frontier-weight="${i}" type="range" min="0" max="${prepared.limits.caps[i]*100}" step="0.1" aria-label="Poids de ${esc(id)} en pourcentage"></th><td data-frontier-delta="sharpe"></td><td data-frontier-delta="information"></td></tr>`).join("");
   $("frontierSources").innerHTML=selectedIds.map(id=>`<tr><th scope="row">${esc(id)}<small>${esc(D.fund_labels[id]?.name||id)}</small></th><td>${esc(D.data_methods[id]||"Voir la source du fonds.")} <a href="${esc(D.source_urls[id])}" target="_blank" rel="noopener noreferrer">Source ↗</a><br><small>Performances : ${esc(D.source_dates[id]?.prices||"—")} · positions : ${esc(D.source_dates[id]?.holdings||"—")} · secteurs : ${esc(D.source_dates[id]?.sectors||"—")}</small></td></tr>`).join("");
  }
  function dates(){
@@ -153,8 +153,15 @@
  }
  function show(data){
   root=$("frontier");if(!root)return;
-  if(initialized){requestAnimationFrame(draw);return;}initialized=true;D=U.extend(data,JSON.parse($("frontierExtra")?.textContent||"null"));selectedIds=[...D.optimization.eligible_funds];key="savy:fnb-frontier:v3:"+D.assumptions.as_of+":"+D.optimization.source_digest;
-  try{const current=JSON.parse(localStorage.getItem(key)),legacy=current?null:JSON.parse(localStorage.getItem(key.replace(":v3:",":v2:"))),saved=current||legacy;if(saved&&["risk","active","ratios"].includes(saved.mode)&&["split","all"].includes(saved.sample)&&[.25,.35,.4,.5,1].includes(saved.cap)&&finite(saved.priority)&&saved.priority>=0&&saved.priority<=1){const check=U.prepare(D,{...saved,ids:legacy?D.optimization.eligible_funds:saved.ids});cap=saved.cap;sample=saved.sample;mode=saved.mode;priority=saved.priority;selectedIds=check.ids;prepared=check;weights=U.allocate(prepared,selectedIds.map(id=>saved.weights[id]||0));}}catch{}
+  if(initialized){requestAnimationFrame(draw);return;}initialized=true;D=U.extend(data,JSON.parse($("frontierExtra")?.textContent||"null"));selectedIds=[...D.optimization.eligible_funds];key="savy:fnb-frontier:v4:"+D.assumptions.as_of+":"+D.optimization.source_digest;
+  try{
+   const current=JSON.parse(localStorage.getItem(key)),v3=current?null:JSON.parse(localStorage.getItem(key.replace(":v4:",":v3:"))),v2=current||v3?null:JSON.parse(localStorage.getItem(key.replace(":v4:",":v2:"))),saved=current||v3||v2;
+   if(saved&&["risk","active","ratios"].includes(saved.mode)&&["split","all"].includes(saved.sample)&&[.25,.35,.4,.5,1].includes(saved.cap)&&finite(saved.priority)&&saved.priority>=0&&saved.priority<=1){
+    // Migrate the former default once; a new explicit stricter cap remains usable.
+    const nextCap=!current&&saved.cap===.35?.5:saved.cap,check=U.prepare(D,{...saved,cap:nextCap,ids:v2?D.optimization.eligible_funds:saved.ids});
+    cap=nextCap;sample=saved.sample;mode=saved.mode;priority=saved.priority;selectedIds=check.ids;prepared=check;weights=U.allocate(prepared,selectedIds.map(id=>saved.weights[id]||0));
+   }
+  }catch{}
   $("frontierShowZeros")?.setAttribute("checked","");
   if($("frontierShowZeros"))$("frontierShowZeros").checked=true;
   $("frontierCap").value=String(cap);$("frontierSample").value=sample;$("frontierMode").value=mode;$("frontierPriority").value=String(priority*100);fundControls();bind();calculate();
