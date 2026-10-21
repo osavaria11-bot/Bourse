@@ -1,6 +1,5 @@
 /* Shared SAVY palette; the parent dashboard synchronizes data-theme. */
 .performance-controls{max-width:100%;min-width:0}.performance-controls .field{min-width:0;max-width:100%}.performance-controls select{max-width:100%;min-width:0}
-@media(max-width:600px){.performance-controls{width:100%}.performance-controls .field{width:100%}.performance-controls select{width:100%}}
 /* Frontier laboratory: local scenarios, same SAVY surfaces and one outer scroll. */
 @media(max-width:600px){
   html .nav:has([data-tab="frontier"]){display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;overflow:visible}
@@ -115,4 +114,14 @@ a.fund-name{text-decoration:none}a.fund-name:hover{text-decoration:underline;col
  #frontierContent>.frontier-method{order:7}
  #frontierExposures{grid-template-columns:1fr}
  #frontierExposures table{font-size:10px}
+}
+
+/* Keep the portfolio picker readable instead of squeezing three selects into
+   one phone-width row; the benchmark and launch date share the second row. */
+.performance-heading>div{min-width:0;max-width:100%}
+.performance-controls .field label{white-space:normal}
+@media(max-width:600px){
+ .performance-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%}
+ .performance-controls>.field:first-child{grid-column:1/-1}
+ .performance-controls .field,.performance-controls select{width:100%;min-width:0}
 }
