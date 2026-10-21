@@ -8,7 +8,7 @@ let html=fs.readFileSync(file,"utf8");
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const num=(v,n=2)=>v===null?"—":new Intl.NumberFormat("fr-CA",{minimumFractionDigits:n,maximumFractionDigits:n}).format(v);
 const pct=(v,n=1)=>v===null?"—":num(v*100,n)+" %";
-const own=[...(D.proposal_order||[]),...D.custom_order],label=k=>k==="proposal"?"Proposition · "+O.month:D.custom_order.includes(k)?"Nº "+k+" · "+R[k].short_name:k;
+const robust=D.robust_order||[],own=[...robust,...(D.proposal_order||[]),...D.custom_order],label=k=>robust.includes(k)?R[k].name:k==="proposal"?"Proposition · "+O.month:D.custom_order.includes(k)?"Nº "+k+" · "+R[k].short_name:k;
 const fund=t=>{const f=D.fund_labels[t];if(!f)throw Error("Missing label "+t);return `<span class="fund-ticker">${esc(t)}</span><a class="fund-name" href="${esc(f.source_url)}" target="_blank" rel="noopener noreferrer">${esc(f.name)}</a><span class="fund-description">${esc(f.description)}</span>`;};
 const table=(headers,rows)=>'<div class="table-wrap" tabindex="0"><table><thead><tr>'+headers.map(h=>'<th scope="col">'+h+'</th>').join('')+'</tr></thead><tbody>'+rows.join('')+'</tbody></table></div>';
 function card(k){const q=R[k],hold=D.lookthrough.results[k],props=k==="proposal";
@@ -16,7 +16,10 @@ function card(k){const q=R[k],hold=D.lookthrough.results[k],props=k==="proposal"
  const allocations=Object.entries(q.weights).sort((a,b)=>b[1]-a[1]).map(([t,w])=>`<tr><th scope="row" data-fund="${esc(t)}">${fund(t)}</th><td>${pct(w)}</td></tr>`);
  const positions=hold.top10.map((p,i)=>`<tr data-holding="${esc(p.id)}"><td>${i+1}</td><th scope="row">${esc(p.name)}</th><td>${pct(p.weight,2)}</td></tr>`);
  const assets=[["equity","Actions"],["bond","Obligations"],["gold","Or"],["crypto","Crypto"],["cash","Liquidités / autres"]].filter(([key])=>q[key]>.000001).map(([key,n])=>`<span>${n} ${pct(q[key])}</span>`).join('');
- return `<article${k!=="2"?' hidden':''} class="portfolio-card${props?' proposed-card':''}" data-fiche="${k}"><header><div class="eyebrow">${props?'PROPOSITION SÉPARÉE · '+esc(O.month):'Nº '+k}</div><h3>${esc(q.name||q.label)}</h3><p class="portfolio-style">${esc(q.style_label||q.description)}</p></header><div class="actions"><button data-open-exposure="${k}">Voir les expositions</button></div><div class="mini-metrics">${metrics}</div>${table(["FNB","Poids cible"],allocations)}<div class="asset-mix">${assets}</div>${props?'<p class="method-summary">'+esc(O.allocation_type)+'</p>':''}<section class="holdings-section" aria-label="Actions sous-jacentes"><div class="section-head"><h4>10 premières actions</h4><span class="holdings-count">≈ ${num(hold.stock_count,0)} sociétés</span></div><p class="holdings-date">Poids du portefeuille total · positions du ${hold.date_min} au ${hold.date_max}</p>${table(["#","Action","Poids"],positions)}<p class="method-summary">Total des 10 premières : ${pct(hold.top10_weight,2)}. Estimation aux poids cibles; les doublons sont regroupés par société.</p><details><summary>Calcul et sources</summary><p class="method-summary">${esc(D.lookthrough.method)}</p><ul class="holdings-sources">${hold.sources.map(s=>`<li><a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.fund)}</a> · ${esc(s.date)}</li>`).join('')}</ul></details></section></article>`;
+ const recent=D.robust_selections?.find(c=>c.portfolios.some(p=>p.id===k))?.recent_market_check;
+ const marketCheck=recent?'<p class="method-summary">Contrôle au moment de la sélection · '+esc(recent.start)+' → '+esc(recent.end)+' : '+pct(recent.portfolios[k].total_return,2)+' contre '+pct(recent.benchmark_return,2)+' pour VEQT. Simulation à poids de départ du 30 septembre, distincte du suivi après publication.</p>':'';
+ const diagnostic=robust.includes(k)?'<section class="robust-diagnostics"><h4>Contrôle de robustesse historique</h4><p class="method-summary">'+esc(q.description)+' '+esc(q.selection_note)+'</p>'+table(['Période','Rendement cumulé','Sharpe','IR / VEQT'],Object.entries(q.robust_diagnostics).map(([id,m])=>'<tr><th scope="row">'+esc(id==='debut_28'?'Début · 28 mois':m.months+' derniers mois')+'<small> · '+esc(m.start)+' → '+esc(m.end)+'</small></th><td>'+pct(m.total_return)+'</td><td>'+num(m.sharpe)+'</td><td>'+num(m.information)+'</td></tr>'))+marketCheck+'<p class="method-summary">Rééquilibrage annuel simulé comme les autres fiches. Les ratios peuvent différer du laboratoire, qui rééquilibre chaque mois. Suivi distinct de 10 000 $ après publication, sans rééquilibrage.</p><p class="method-summary">Contrôle au '+esc(q.robust_review.as_of)+' : '+(q.robust_review.review_required?'réévaluation requise; consulter la revue mensuelle.':'pas de signal de réévaluation selon les critères suivis.')+'</p></section>':'';
+ return `<article${k!=="2"?' hidden':''} class="portfolio-card${props?' proposed-card':''}" data-fiche="${k}"><header><div class="eyebrow">${robust.includes(k)?'SÉLECTION ROBUSTESSE · '+esc(q.published_at.slice(0,10)):props?'PROPOSITION SÉPARÉE · '+esc(O.month):'Nº '+k}</div><h3>${esc(q.name||q.label)}</h3><p class="portfolio-style">${esc(q.style_label||q.description)}</p></header><div class="actions"><button data-open-exposure="${k}">Voir les expositions</button></div><div class="mini-metrics">${metrics}</div>${table(["FNB","Poids cible"],allocations)}<div class="asset-mix">${assets}</div>${diagnostic}${props?'<p class="method-summary">'+esc(O.allocation_type)+'</p>':''}<section class="holdings-section" aria-label="Actions sous-jacentes"><div class="section-head"><h4>10 premières actions</h4><span class="holdings-count">≈ ${num(hold.stock_count,0)} sociétés</span></div><p class="holdings-date">Poids du portefeuille total · positions du ${hold.date_min} au ${hold.date_max}</p>${table(["#","Action","Poids"],positions)}<p class="method-summary">Total des 10 premières : ${pct(hold.top10_weight,2)}. Estimation aux poids cibles; les doublons sont regroupés par société.</p><details><summary>Calcul et sources</summary><p class="method-summary">${esc(D.lookthrough.method)}</p><ul class="holdings-sources">${hold.sources.map(s=>`<li><a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.fund)}</a> · ${esc(s.date)}</li>`).join('')}</ul></details></section></article>`;
 }
 const cards=own.map(card).join('');
 // The card grid ends immediately before the methods view.
@@ -25,7 +28,7 @@ if(start<0||end<start)throw Error("Portfolio template not found");
 html=html.slice(0,start)+'<div class="portfolio-grid">'+cards+'</div></section>\n'+html.slice(end);
 for(const id of ["summaryFocus","sectorFocus","ficheFocus"]){
  const list=id==="sectorFocus"?D.order:own;
- const opts=(id==="ficheFocus"?'<option value="all">Tous · 11 existants + proposition</option>':'')+list.map(k=>`<option value="${k}"${k==="2"?' selected':''}>${esc(id==="ficheFocus"&&D.custom_order.includes(k)?'Nº '+k+' — '+R[k].name:label(k))}</option>`).join('');
+ const opts=(id==="ficheFocus"?'<option value="all">Tous · '+own.length+' portefeuilles</option>':'')+list.map(k=>`<option value="${k}"${k==="2"?' selected':''}>${esc(id==="ficheFocus"&&D.custom_order.includes(k)?'Nº '+k+' — '+R[k].name:label(k))}</option>`).join('');
  html=html.replace(new RegExp('(<select id="'+id+'"[^>]*>)[\\s\\S]*?(</select>)'),(_,a,b)=>a+opts+b);
 }
 // A checked proposal is independently selectable in each of the existing charts.
@@ -33,15 +36,20 @@ html=html.replace(/<label class="choice-card[^>]*for="(?:risk|growth)-series-pro
 for(const chart of ["risk","growth"]){
  const choice=`<label class="choice-card is-selected" for="${chart}-series-proposal"><input id="${chart}-series-proposal" type="checkbox" data-series="proposal" data-chart="${chart}" checked aria-label="Afficher la proposition mensuelle"><span class="choice-title"><strong><span class="dot" style="background:${R.proposal.color}"></span>Proposition</strong><span class="choice-name">${esc(O.month)}</span></span></label>`;
  html=html.replace(new RegExp('(<label class="choice-card[^>]*for="'+chart+'-series-1")'),choice+'$1');
+ html=html.replace(new RegExp('<label class="choice-card[^>]*for="'+chart+'-series-robust-[^"]+"[\\s\\S]*?<\\/label>','g'),'');
+ const choices=robust.map(k=>`<label class="choice-card" for="${chart}-series-${k}"><input id="${chart}-series-${k}" type="checkbox" data-series="${k}" data-chart="${chart}" aria-label="Afficher ${esc(R[k].name)}"><span class="choice-title"><strong><span class="dot" style="background:${R[k].color}"></span>${esc(R[k].chart_name)}</strong><span class="choice-name">${esc(R[k].style_label)}</span></span></label>`).join('');
+ html=html.replace(new RegExp('(<label class="choice-card[^>]*for="'+chart+'-series-proposal")'),choices+'$1');
 }
 html=html.replace(/(<input[^>]+id="monthSlider"[^>]*>)/,tag=>tag.replace(/max="[^"]+"/,'max="'+D.dates.length+'"').replace(/value="[^"]+"/,'value="'+D.dates.length+'"'));
 const dateLabel=new Intl.DateTimeFormat('fr-CA',{year:'numeric',month:'long',timeZone:'UTC'});
 const period=dateLabel.format(new Date(D.dates[0]+'-01T12:00:00Z'))+' – '+dateLabel.format(new Date(D.assumptions.as_of+'T12:00:00Z'));
 html=html.replace(/(<header class="report-header">[\s\S]*?<p>)[\s\S]*?(<\/p>)/,(_,a,b)=>a+esc(period)+' · '+D.dates.length+' mois · CAD'+b);
-html=html.replace(/11 portefeuilles · \d+ mois/g,'11 portefeuilles + proposition · '+D.dates.length+' mois');
+html=html.replace(/(?:\d+ portefeuilles(?: \+ proposition)?(?: \+ \d+ Robuste)?)[ ·]+\d+ mois/g,own.length+' portefeuilles · '+D.dates.length+' mois');
 html=html.replace(/Positions de juin à octobre 2026\./g,'Positions datées des dernières publications officielles; dates dans chaque fiche.');
 html=html.replace(/(<h2 id="preferenceTitle">)[^<]*(<\/h2>)/,'$1Mon classement actualisé$2');
-html=html.replace(/(<p class="preference-caption">)[\s\S]*?(<\/p>)/,'$1Proposition et portefeuilles nº 1 à 9$2');
+html=html.replace(/(<p class="preference-caption">)[\s\S]*?(<\/p>)/,'$1Sélections Robuste, proposition et nº 1 à 9$2');
+html=html.replace(/<!-- fnb-robust:start -->[\s\S]*?<!-- fnb-robust:end -->\n?/g,'');
+if(robust.length){const note='<!-- fnb-robust:start --><div class="robust-intro"><p class="method-summary">Trois variantes apparentées : Compromis, Diversifié (70 % Compromis / 30 % noyau indiciel), Noyau (50 % / 50 %). Sélection rétrospective sur '+D.dates.length+' mois; robustesse future à confirmer. Détails et contrôles dans chaque fiche; suivi après publication dans « Suivi des performances ».</p><button id="robustCharts">Comparer les 3 Robuste · risque et montant</button></div><!-- fnb-robust:end -->\n';html=html.replace('<div class="benchmark-controls all-benchmarks">',note+'<div class="benchmark-controls all-benchmarks">');}
 html=html.replace(/(<ol class="preference-list">)[\s\S]*?(<\/ol>)/,(_,a,b)=>a+D.preference_ranking.entries.map(e=>`<li class="preference-item" data-preference="${e.id}"><span class="preference-rank">${e.rank}</span><div><button class="stats-open" data-open-portfolio="${e.id}">${esc(label(e.id))}</button><p>${esc(e.reason)}</p></div></li>`).join('')+b);
 html=html.replace(/(<aside[^>]*class="section preference-panel"[\s\S]*?<p class="all-overview-note">)[\s\S]*?(<\/p>)/,(_,a,b)=>a+esc(D.preference_ranking.criteria)+b);
 const v=O.validation;
@@ -55,7 +63,7 @@ const research=`<section class="section monthly-research"><h2>Recherche mensuell
 html=html.slice(0,methodsStart)+method.replace('<div class="section source-table">',research+'<div class="section source-table">')+html.slice(footer);
 html=require('./fnb_performance_view.cjs')(html);
 html=require('./fnb_frontier_view.cjs')(html);
-html=html.replace(/fnb-dashboard\.(js|css)\?v=[^"']+/g,'fnb-dashboard.$1?v=20261020-expanded');
+html=html.replace(/fnb-dashboard\.(js|css)\?v=[^"']+/g,'fnb-dashboard.$1?v=20261020-robust');
 // Remove any archived data from the serialized payload before replacing it.
 html=html.replace(/(<script[^>]*id="analysis"[^>]*>)[\s\S]*?(<\/script>)/,(_,a,b)=>a+JSON.stringify(D).replace(/</g,"\\u003c")+b);
 html=require("./fnb_frontier_overlay.cjs")(html,root);

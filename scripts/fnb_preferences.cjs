@@ -15,5 +15,9 @@ module.exports=function preferences(D){
   ["3","Faible volatilité bien représentée, au prix d’un biais défensif marqué pour un objectif de croissance."],
   ["9","Le plus offensif; sa volatilité et son recul maximal historiques pèsent sur mon appréciation."]
  ];
- return {date:D.optimization.generated_at.slice(0,10),criteria:"Préférence de construction pour la croissance à long terme : diversification, concentration, simplicité et frais avant le seul backtest. Proposition incluse; nº 10 et 11, mandats mixtes, comparés au tableau mais exclus de cette préférence. Ce jugement ne prédit pas les rendements.",entries:items.map(([id,reason],i)=>({id,rank:i+1,reason}))};
+ const score=id=>{const q=D.results[id],r=q.robust_diagnostics;return Math.min(r.debut_28.information??-10,r.derniers_12.information??-10,r.derniers_24.information??-10)+(r.derniers_12.sharpe??-10)-25*q.mer;};
+ const ordered=[...(D.robust_order||[])].sort((a,b)=>score(b)-score(a)||a.localeCompare(b));
+ const robust=ordered.filter(id=>!D.results[id].robust_review.review_required).map(id=>[id,D.results[id].description+' Contrôles historiques au '+D.results[id].robust_review.as_of+'; à confirmer après publication.']);
+ const watch=ordered.filter(id=>D.results[id].robust_review.review_required).map(id=>[id,'Réévaluation requise : '+D.results[id].robust_review.signals.join('; ')+'. Allocation et historique conservés.']);
+ return {date:D.optimization.generated_at.slice(0,10),criteria:"Sélections Robuste : stabilité du Sharpe et de l’IR sur plusieurs périodes, diversification et frais. Leur ordre est réévalué avec les données mensuelles; un signal défavorable les retire des premières préférences. Trois variantes apparentées; sélection rétrospective, robustesse future à confirmer. Les autres préférences restent fondées sur la construction à long terme; nº 10 et 11, mandats mixtes, exclus. Ce jugement ne prédit pas les rendements.",entries:[...robust,...items,...watch].map(([id,reason],i)=>({id,rank:i+1,reason}))};
 };

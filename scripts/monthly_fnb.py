@@ -325,6 +325,9 @@ def refresh_analysis(current, baseline, sources, config, generated_at):
         "history_policy": "Pondérations existantes et rendements mensuels acquis inchangés; ajouts des seuls mois complétés. Les ratios de chaque publication sont archivés séparément.",
         "performance_type": "Simulation rétrospective, distributions réinvesties. Le suivi après publication commence au premier mois complet suivant la publication.",
         "source_digest": hashlib.sha256(json.dumps(sources, sort_keys=True).encode()).hexdigest()}
+    if current.get("robust_selections"):
+        from robust_fnb import apply
+        apply(d, current["robust_selections"], current)
     return d
 
 
@@ -339,6 +342,12 @@ def validate(d, baseline):
             old = baseline["results"][key]
             if r["weights"] != old["weights"] or r["monthly"][:len(old["monthly"])] != old["monthly"]: raise ValueError("Historical data altered " + key)
         if not all(math.isfinite(r[k]) for k in ["cagr", "vol", "sharpe", "end"]): raise ValueError("Invalid performance " + key)
+    expected_robust = [p for c in d.get("robust_selections", []) for p in c["portfolios"]]
+    if d.get("robust_order", []) != [p["id"] for p in expected_robust]:
+        raise ValueError("Robust portfolio identities changed")
+    for p in expected_robust:
+        if d["results"][p["id"]]["weights"] != p["weights"]:
+            raise ValueError("Frozen robust allocation changed")
     p = d["results"][PROPOSAL]
     if not set(p["weights"]) <= set(d["optimization"]["eligible_funds"]): raise ValueError("Non-equity proposal holding")
     if p["max_geo_gap"] > .1 + 1e-8 or p["max_sector_gap"] > .1 + 1e-8: raise ValueError("Proposal concentration breach")
@@ -397,6 +406,11 @@ def main(argv=None):
     current_file = root / "data/fnb-analysis.json"
     if args.check:
         current = read(current_file); validate(current, baseline)
+        from robust_fnb import catalogs, validate_sources
+        selections = catalogs(root)
+        for selection in selections: validate_sources(root, selection)
+        if current.get("robust_selections", []) != selections:
+            raise ValueError("Current robustness selections disagree with frozen catalogs")
         for file in (root / "data/fnb-history").glob("????-??.json"): validate(read(file), baseline)
         print("Validated", len(current["order"]), "series; allocations and acquired historical returns preserved."); return 0
     if archive.exists():
@@ -428,7 +442,7 @@ def main(argv=None):
         # Snapshot names are month-unique; reruns never append duplicate recommendations.
         write(archive, d)
         write(root / "data/fnb-analysis.json", d)
-        required = {t for k in d["custom_order"] + d["proposal_order"] for t in d["results"][k]["weights"]}
+        required = {t for k in d["custom_order"] + d["proposal_order"] + d.get("robust_order", []) for t in d["results"][k]["weights"]}
         write(root / "data/fnb-holdings.json", {**holdings, "funds": {t: value for t, value in holdings["funds"].items() if t in required}})
         write(root / "data/fnb-lookthrough.json", d["lookthrough"])
         write(root / "data/fnb-history/index.json", history_index(root, d, baseline))

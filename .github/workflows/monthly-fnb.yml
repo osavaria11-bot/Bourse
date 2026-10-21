@@ -11,6 +11,7 @@ on:
     paths:
       - ".github/workflows/monthly-fnb.yml"
       - "scripts/monthly_fnb.py"
+      - "scripts/robust_fnb.py"
       - "scripts/fnb_sources.py"
       - "scripts/build_monthly_fnb.cjs"
       - "scripts/fnb_preferences.cjs"

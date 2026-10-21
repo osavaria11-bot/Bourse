@@ -11,8 +11,19 @@ async function check(browser,engine){
  await page.goto(url+'/reports/portefeuilles-fnb.html');await page.waitForSelector('html[data-ready="true"]');
  assert.equal(await page.locator('.monthly-proposal').count(),0);
  assert.equal(await page.locator('[data-preference="proposal"]').count(),1);
- assert.equal(await page.locator('[data-preference="proposal"] .preference-rank').textContent(),'3');
- assert.equal(await page.locator('#allPortfolioBody [data-open-portfolio]').count(),12);
+ assert.equal(await page.locator('[data-preference="proposal"] .preference-rank').textContent(),String(D.preference_ranking.entries.find(e=>e.id==='proposal').rank));
+ assert.equal(await page.locator('#allPortfolioBody [data-open-portfolio]').count(),D.custom_order.length+D.proposal_order.length+D.robust_order.length);
+ await page.locator('#robustCharts').click();assert.equal(await page.locator('#overview').isVisible(),true);
+ assert.equal(await page.locator('#riskSvg .risk-point:visible').count(),5);
+ assert.equal(await page.locator('#growthSvg .wealth-line:visible').count(),5);
+ await page.locator('#capitalInput').fill('20 000');
+ for(const k of D.robust_order){
+  assert.equal(await page.locator('#risk-series-'+k).isChecked(),true);assert.equal(await page.locator('#growth-series-'+k).isChecked(),true);
+  const row=page.locator('#growthReadout [data-portfolio="'+k+'"] b');assert.ok((await row.innerText()).includes(new Intl.NumberFormat('fr-CA',{maximumFractionDigits:0}).format(D.results[k].end*2).replace(/\s/g,' '))||(await row.innerText()).replace(/\s/g,'').includes(String(Math.round(D.results[k].end*2))));
+  await page.locator('.nav [data-tab="portfolios"]').click();await page.locator('#ficheFocus').selectOption(k);assert.equal(await page.locator('[data-fiche="'+k+'"] [data-fund]').count(),Object.keys(D.results[k].weights).length);assert.equal(await page.locator('[data-fiche="'+k+'"] .robust-diagnostics tbody tr').count(),5);
+  await page.locator('[data-fiche="'+k+'"] [data-open-exposure]').click();assert.equal(await page.locator('#sectorFocus').inputValue(),k);
+ }
+ await page.locator('#capitalInput').fill('10 000');await page.locator('.nav [data-tab="allPortfolios"]').click();
  await page.locator('#allPortfolios [data-open-portfolio="proposal"]').first().click();
  assert.equal(await page.locator('[data-fiche="proposal"]').isVisible(),true);
  assert.equal(await page.locator('[data-fiche="proposal"] [data-fund]').count(),Object.keys(D.results.proposal.weights).length);
@@ -41,6 +52,9 @@ async function check(browser,engine){
  const tracking=JSON.parse(fs.readFileSync(path.join(root,'data/fnb-performance.json'),'utf8'));
  assert.equal(await page.locator('#performanceBody tr').count(),tracking.accounts.length);
  assert.equal(await page.locator('#performanceBenchmark option').count(),4);
+ await page.locator('#performanceRobust').click();assert.equal(await page.locator('#performanceBody tr').count(),D.robust_order.length+4);
+ for(const k of D.robust_order)assert.ok((await page.locator('#performanceBody').innerText()).includes(D.results[k].name));
+ await page.locator('#performanceCohort').selectOption('all');
  await page.locator('#performanceAll').click();assert.equal(await page.locator('#performanceChart .performance-series').count(),tracking.accounts.filter(a=>a.history.length).length);
  await page.locator('#performanceNone').click();assert.equal(await page.locator('#performanceChart .performance-series').count(),0);
  for(const b of ['FEQT','VEQT','VGRO','VBAL']){await page.locator('#performanceBenchmark').selectOption(b);assert.match(await page.locator('#performanceGap').textContent(),new RegExp(b));}

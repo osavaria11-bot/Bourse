@@ -89,6 +89,13 @@ def register(root, registry):
         launch = START if month == "2026-10" else publication_launch(opt["generated_at"]).isoformat()
         candidates.append(definition("proposal-" + month, d["results"]["proposal"], launch,
                                      file.relative_to(root).as_posix(), published=opt["generated_at"]))
+    from robust_fnb import catalogs, validate_catalog
+    for catalog in catalogs(root):
+        validate_catalog(catalog)
+        launch = publication_launch(catalog["published_at"]).isoformat()
+        for portfolio in catalog["portfolios"]:
+            candidates.append(definition(portfolio["id"], portfolio, launch, catalog["catalog_path"],
+                                         published=catalog["published_at"]))
     for candidate in candidates:
         if candidate["id"] not in known:
             registry["accounts"].append(candidate); known.add(candidate["id"])
@@ -323,17 +330,20 @@ def main():
     if args.check:
         registry, days = load_state(root)
         if not registry["accounts"]: raise ValueError("Missing performance registry")
+        # Research may have just published a new identity. Check frozen existing
+        # definitions now; collection below is responsible for adding new ones.
+        register(root, registry)
         if read(root / "data/fnb-performance.json") != snapshot(registry, days, read(root / "data/fnb-model.json")):
             raise ValueError("Performance snapshot disagrees with permanent ledger")
         print("Validated permanent FNB ledger:", len(days), "sessions"); return 0
     now = datetime.now(TZ)
     # Save launch definitions even if the first official close is late. Empty
     # histories are explicitly pending, never substituted with an older price.
-    if not (root / "data/fnb-performance/registry.json").exists():
-        registry, days = load_state(root)
-        registry = register(root, registry)
-        write(root / "data/fnb-performance/registry.json", registry)
-        write(root / "data/fnb-performance.json", snapshot(registry, days, read(root / "data/fnb-model.json")))
+    registry, days = load_state(root)
+    registered = register(root, registry)
+    if registered != registry:
+        write(root / "data/fnb-performance/registry.json", registered)
+        write(root / "data/fnb-performance.json", snapshot(registered, days, read(root / "data/fnb-model.json")))
     try: run(root, now)
     except Exception as exc:
         write(root / "data/fnb-performance-status.json", {"schema_version": 1, "status": "retrying", "checked_at": now.isoformat(timespec="seconds"),

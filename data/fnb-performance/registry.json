@@ -326,6 +326,80 @@
       "published_at": "2026-10-19T17:23:36-04:00",
       "method": "buy_hold_fractional_ex_date_close_v1",
       "definition_sha256": "2376525d92dc65c0d80dda8a370b3dcd42c8804a7acedb0dcd5f15f4e07d1420"
+    },
+    {
+      "id": "robust-2026-10-1",
+      "name": "Robuste 1 · Compromis",
+      "color": "#60c9b5",
+      "kind": "portfolio",
+      "launch_date": "2026-10-21",
+      "capital": 10000.0,
+      "currency": "CAD",
+      "weights": {
+        "CGL.C": 0.05,
+        "FCIV": 0.2726373480084818,
+        "FCMO": 0.22146539041505411,
+        "FINN": 0.14888191335716783,
+        "VEE": 0.052388084039207444,
+        "XMV": 0.20462726418009014,
+        "ZEO": 0.05
+      },
+      "definition_source": "data/fnb-robust/2026-10-20.json",
+      "published_at": "2026-10-20T19:50:14-04:00",
+      "method": "buy_hold_fractional_ex_date_close_v1",
+      "definition_sha256": "db4c1cb645687482917cd42ea8db4c6f6fcbce07e743176eac4bda03da076215"
+    },
+    {
+      "id": "robust-2026-10-2",
+      "name": "Robuste 2 · Diversifié",
+      "color": "#84b8ee",
+      "kind": "portfolio",
+      "launch_date": "2026-10-21",
+      "capital": 10000.0,
+      "currency": "CAD",
+      "weights": {
+        "CGL.C": 0.05,
+        "FCIV": 0.19084614360593724,
+        "FCMO": 0.15502577329053788,
+        "FCUQ": 0.024000000000000004,
+        "FINN": 0.10421733935001748,
+        "VCN": 0.08400000000000002,
+        "VEE": 0.05467165882744521,
+        "VFV": 0.10500000000000001,
+        "XEF": 0.054000000000000006,
+        "XMV": 0.14323908492606308,
+        "ZEO": 0.034999999999999996
+      },
+      "definition_source": "data/fnb-robust/2026-10-20.json",
+      "published_at": "2026-10-20T19:50:14-04:00",
+      "method": "buy_hold_fractional_ex_date_close_v1",
+      "definition_sha256": "3deacef48098a0ee25a53cc30dd147943dfdad24609a0306c42e639857de99f1"
+    },
+    {
+      "id": "robust-2026-10-3",
+      "name": "Robuste 3 · Noyau",
+      "color": "#c1a3e7",
+      "kind": "portfolio",
+      "launch_date": "2026-10-21",
+      "capital": 10000.0,
+      "currency": "CAD",
+      "weights": {
+        "CGL.C": 0.05,
+        "FCIV": 0.1363186740042409,
+        "FCMO": 0.11073269520752706,
+        "FCUQ": 0.04,
+        "FINN": 0.07444095667858391,
+        "VCN": 0.14,
+        "VEE": 0.05619404201960372,
+        "VFV": 0.175,
+        "XEF": 0.09,
+        "XMV": 0.10231363209004507,
+        "ZEO": 0.025
+      },
+      "definition_source": "data/fnb-robust/2026-10-20.json",
+      "published_at": "2026-10-20T19:50:14-04:00",
+      "method": "buy_hold_fractional_ex_date_close_v1",
+      "definition_sha256": "cc95d5f106792e799c10aee0fabe50a77ff286c1316c98102fd2ce1e744f19a2"
     }
   ]
 }
