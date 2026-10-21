@@ -105,7 +105,7 @@ def register(root, registry):
     return registry
 
 
-def parse_prices(payload, symbol, first, last, fallback=None):
+def parse_prices(payload, symbol, first, last, fallback=None, prefer_fallback=False):
     """Recover contemporaneous closes from Yahoo's split-adjusted Close series.
 
     Yahoo retrospectively splits BOTH Close and historical dividend amounts.
@@ -136,7 +136,7 @@ def parse_prices(payload, symbol, first, last, fallback=None):
         day = day_of(ts)
         if not first <= day <= last: continue
         close, adj = quote_data["close"][i], adjusted[i]
-        replacement = (fallback or {}).get(day) if close is None or adj is None else None
+        replacement = (fallback or {}).get(day) if prefer_fallback or close is None or adj is None else None
         if replacement: close, adj = replacement["close"], replacement["adjusted_close"]
         if close is None or adj is None: continue
         if not all(math.isfinite(x) and x > 0 for x in [close, adj]): raise ValueError("Invalid close")
@@ -170,7 +170,7 @@ def tmx_closes(client, ticker, first, last):
         if row["datetime"][:10] in adjusted and row["closePrice"] is not None and adjusted[row["datetime"][:10]] is not None}
 
 
-def collect(config, tickers, first, last, client=None):
+def collect(config, tickers, first, last, client=None, preferred_tmx=()):
     client = client or Client()
     def one(ticker):
         symbol = config["funds"][ticker]["quote_symbol"]
@@ -185,8 +185,14 @@ def collect(config, tickers, first, last, client=None):
         while day.isoformat() <= last:
             if trading_day(day): expected.append(day.isoformat())
             day += timedelta(days=1)
-        if any(day not in parsed for day in expected):
-            parsed = parse_prices(payload, symbol, first, last, tmx_closes(client, ticker, first, last))
+        if ticker in preferred_tmx or any(day not in parsed for day in expected):
+            official = tmx_closes(client, ticker, first, last)
+            if any(day not in official for day in expected):
+                raise ValueError("Missing consistent TMX closing history: " + ticker)
+            # Use one source for both ends of each return. Mixing a newly
+            # populated Yahoo anchor with an accepted TMX close can fabricate a
+            # revision even when TMX still confirms the immutable ledger price.
+            parsed = parse_prices(payload, symbol, first, last, official, prefer_fallback=True)
         return ticker, parsed
     with ThreadPoolExecutor(max_workers=4) as pool: return dict(pool.map(one, sorted(tickers)))
 
@@ -303,7 +309,8 @@ def run(root, now, sources=None):
     if day <= last:
         first = (day - timedelta(days=10)).isoformat()
         required = {t for a in registry["accounts"] if a["launch_date"] <= last.isoformat() for t in a["weights"]}
-        quotes = sources if sources is not None else collect(read(root / "data/fnb-model.json"), required, first, last.isoformat())
+        preferred_tmx = {t for t,p in (days[-1]["prices"].items() if days else []) if p.get("price_source") == "TMX Money"}
+        quotes = sources if sources is not None else collect(read(root / "data/fnb-model.json"), required, first, last.isoformat(), preferred_tmx=preferred_tmx)
         while day <= last:
             record = make_day(day.isoformat(), registry, quotes, (additions or days or [None])[-1], now.isoformat(timespec="seconds"))
             additions.append(record); day = next_session(day)

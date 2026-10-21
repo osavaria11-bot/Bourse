@@ -7,6 +7,7 @@ import shutil
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
@@ -133,6 +134,28 @@ class PermanentTracking(unittest.TestCase):
         self.assertEqual(q[F.START]["close"], 77.21); self.assertEqual(q[F.START]["price_source"], "TMX Money")
         del fallback[F.START]
         self.assertEqual(F.parse_prices(payload, "TEST.TO", F.START, F.START, fallback), {})
+
+    def test_tmx_fallback_uses_one_source_for_both_return_endpoints(self):
+        stamp=lambda day:int(datetime.fromisoformat(day+"T13:30:00+00:00").timestamp())
+        payload={"chart":{"result":[{"meta":{"symbol":"TEST.TO","currency":"CAD","instrumentType":"ETF","exchangeTimezoneName":"America/Toronto"},
+            "timestamp":[stamp("2026-10-19"),stamp("2026-10-20")],"indicators":{"quote":[{"close":[77.27,None]}],"adjclose":[{"adjclose":[77.27,None]}]}}]}}
+        class Client:
+            def json(self,url): return payload
+        official={day:{"close":price,"adjusted_close":price,"source_url":"https://money.tmx.com/en/quote/TEST"} for day,price in [("2026-10-19",77.21),("2026-10-20",77.08)]}
+        cfg={"funds":{"TEST":{"quote_symbol":"TEST.TO"}}}
+        with patch.object(F,"tmx_closes",return_value=official):
+            q=F.collect(cfg,{"TEST"},"2026-10-19","2026-10-20",Client())["TEST"]
+        self.assertEqual(q["2026-10-19"]["close"],77.21); self.assertEqual(q["2026-10-20"]["close"],77.08)
+        self.assertEqual({p["price_source"] for p in q.values()},{"TMX Money"})
+        # Even when Yahoo later populates both observations, keep the source of
+        # the already accepted nominal anchor. No historical record is edited.
+        payload["chart"]["result"][0]["indicators"]={"quote":[{"close":[77.27,77.10]}],"adjclose":[{"adjclose":[77.27,77.10]}]}
+        with patch.object(F,"tmx_closes",return_value=official):
+            q=F.collect(cfg,{"TEST"},"2026-10-19","2026-10-20",Client(),preferred_tmx={"TEST"})["TEST"]
+        self.assertEqual(q["2026-10-19"]["close"],77.21); self.assertEqual(q["2026-10-20"]["close"],77.08)
+        del official["2026-10-19"]
+        with patch.object(F,"tmx_closes",return_value=official):
+            with self.assertRaisesRegex(ValueError,"consistent TMX"): F.collect(cfg,{"TEST"},"2026-10-19","2026-10-20",Client(),preferred_tmx={"TEST"})
 
 
 if __name__ == "__main__": unittest.main()

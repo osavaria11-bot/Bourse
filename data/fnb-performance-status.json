@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "status": "retrying",
-  "checked_at": "2026-10-20T20:03:59-04:00",
+  "status": "current",
+  "checked_at": "2026-10-20T20:05:20-04:00",
+  "as_of": "2026-10-20",
   "expected_session": "2026-10-20",
-  "message": "Clôtures incomplètes : dernier historique validé conservé. Reprise automatique.",
-  "error": "Previously accepted nominal close revised: FCUQ"
+  "added_sessions": 1
 }
