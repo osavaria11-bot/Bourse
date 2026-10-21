@@ -63,10 +63,13 @@ async function check(browser,engine){
  const contents=fs.readFileSync(await csv.path(),'utf8');assert.ok(contents.includes(D.results.proposal.name));
  assert.equal(contents.trim().split('\n').length,D.dates.length+1);
  await page.locator('.nav [data-tab="performance"]').click();await page.waitForSelector('#performance[data-ready="true"]');
- const tracking=JSON.parse(fs.readFileSync(path.join(root,'data/fnb-performance.json'),'utf8'));
+ const tracking=JSON.parse(fs.readFileSync(path.join(root,'data/fnb-comparison.json'),'utf8'));
  assert.equal(await page.locator('#performanceBody tr').count(),tracking.accounts.length);
  assert.equal(await page.locator('#performanceBenchmark option').count(),4);
  assert.equal(await page.locator('#performanceFocus option').count(),tracking.accounts.filter(a=>a.kind!=='benchmark').length+1);
+ assert.equal(await page.locator('#performanceCohort').count(),0);
+ assert.match(await page.locator('#performanceStart').innerText(),/19 oct/);
+ assert.equal(await page.locator('#performanceChart .performance-series').count(),tracking.accounts.filter(a=>a.history.length).length);
  for(const k of ['savy-5','savy-2']){
   await page.locator('#performanceFocus').selectOption(k);
   assert.equal(await page.locator('#performancePositions').inputValue(),k);
@@ -75,17 +78,19 @@ async function check(browser,engine){
   assert.ok((await page.locator('#performanceReadout').innerText()).includes(new Intl.NumberFormat('fr-CA',{minimumFractionDigits:2,maximumFractionDigits:2}).format(expected)));
  }
  await page.locator('#performanceFocus').selectOption('robust-2026-10-2');
- assert.equal(await page.locator('#performanceCohort').inputValue(),'2026-10-21');
- assert.equal(await page.locator('#performanceChart .performance-series').count(),0);
- assert.match(await page.locator('#performanceDate').innerText(),/Lancement prévu/);
- await page.locator('#performanceRobust').click();assert.equal(await page.locator('#performanceBody tr').count(),D.robust_order.length+4);
+ assert.equal(await page.locator('#performanceChart .performance-series').count(),2);
+ assert.match(await page.locator('#performanceBody [data-performance-row="robust-2026-10-2"]').innerText(),/Simulation depuis le 19 oct/);
+ await page.locator('#performanceSlider').fill('0');
+ assert.match(await page.locator('#performanceDate').innerText(),/19 oct/);
+ assert.match(await page.locator('#performanceReadout').innerText(),/10\s000,00/);
+ await page.locator('#performanceRobust').click();assert.equal(await page.locator('#performanceBody tr').count(),tracking.accounts.length);
+ assert.equal(await page.locator('#performanceChart .performance-series').count(),D.robust_order.length+4);
  for(const k of D.robust_order)assert.ok((await page.locator('#performanceBody').innerText()).includes(D.results[k].name));
- await page.locator('#performanceCohort').selectOption('all');
  await page.locator('#performanceAll').click();assert.equal(await page.locator('#performanceChart .performance-series').count(),tracking.accounts.filter(a=>a.history.length).length);
  await page.locator('#performanceNone').click();assert.equal(await page.locator('#performanceChart .performance-series').count(),0);
  for(const b of ['FEQT','VEQT','VGRO','VBAL']){await page.locator('#performanceBenchmark').selectOption(b);assert.match(await page.locator('#performanceGap').textContent(),new RegExp(b));}
  await page.locator('#performanceAll').click();
- const trackedDownload=page.waitForEvent('download');await page.locator('#performanceCsv').click();assert.match((await trackedDownload).suggestedFilename(),/Suivi_quotidien/);
+ const trackedDownload=page.waitForEvent('download');await page.locator('#performanceCsv').click();const dailyCsv=await trackedDownload;assert.match(dailyCsv.suggestedFilename(),/Suivi_quotidien/);const dailyContents=fs.readFileSync(await dailyCsv.path(),'utf8');assert.match(dailyContents,/simulation/);assert.match(dailyContents,/2026-10-19/);
  await page.reload();await page.waitForSelector('html[data-ready="true"]');await page.locator('.nav [data-tab="performance"]').click();await page.waitForSelector('#performance[data-ready="true"]');
  assert.equal(await page.locator('#performanceBenchmark').inputValue(),'VBAL');
  await page.locator('.nav [data-tab="methods"]').click();await page.locator('.monthly-details summary').click();

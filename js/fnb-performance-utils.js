@@ -27,6 +27,18 @@ const SavyPerformanceUtils=(()=>{
   const ranks=new Map(),groups=new Map();for(const a of accounts.filter(a=>a.kind!=="benchmark"&&a.history.length)){const list=groups.get(a.launch_date)||[];list.push(a);groups.set(a.launch_date,list);}
   for(const list of groups.values()){list.sort((a,b)=>metrics(b.history).total-metrics(a.history).total||a.id.localeCompare(b.id));let prev=null,rank=0;list.forEach((a,i)=>{const total=metrics(a.history).total;if(prev===null||Math.abs(total-prev)>1e-9)rank=i+1;ranks.set(a.id,rank);prev=total;});}return ranks;
  }
- return{validate,metrics,rebase,gap,ranking,monthBefore};
+ function validateComparison(data){
+  validate(data);
+  if(data.model!=='common_start_buy_hold_v1'||data.inception!=='2026-10-19')throw Error('Départ commun invalide');
+  const expected=data.accounts.find(a=>a.id==='VEQT').history.map(h=>h.date).join(',');
+  for(const a of data.accounts){
+   if(a.launch_date!==data.inception||!a.actual_launch_date||!['simulation','recorded_from_common_start'].includes(a.series_type))throw Error('Comparaison désalignée');
+   if(a.history.length&&a.history.map(h=>h.date).join(',')!==expected)throw Error('Séances communes incompatibles');
+   if(a.actual_launch_date>data.inception&&a.series_type!=='simulation')throw Error('Simulation non signalée');
+   if(!a.history.length&&!a.unavailable_reason)throw Error('Historique absent non signalé');
+  }
+  return data;
+ }
+ return{validate,validateComparison,metrics,rebase,gap,ranking,monthBefore};
 })();
 if(typeof module==="object"&&module.exports)module.exports=SavyPerformanceUtils;

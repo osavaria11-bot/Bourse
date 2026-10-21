@@ -32,6 +32,8 @@ Les candidats qui respectent les limites actuelles et n’ont ni IR négatif/ind
 
 « Portefeuille suivi » remplace maintenant le portefeuille précédemment suivi dans les deux graphiques, actualise les montants, la fiche et les expositions, et conserve les autres comparaisons choisies. Le suivi après publication possède un sélecteur distinct « Portefeuille à comparer » : il affiche ce compte avec son benchmark à la même date de lancement, y compris l’attente explicite d’une première clôture. Les deux classements gardent des buts distincts : préférence historique de robustesse et rendement effectivement suivi depuis le lancement.
 
+**Nouvelle consigne du 20 octobre :** la vue Suivi des performances affiche désormais la [comparaison au départ commun](fnb-common-start.md) du 19 octobre 2026 pour tous, Robuste et ajouts futurs compris. Les allocations créées après cette date sont explicitement simulées depuis le 19. Cette comparaison remplace l’affichage par cohortes décrit ci-dessus; les vrais comptes après publication et leurs archives conservent leurs dates pour l’audit.
+
 ## Sources
 
 - [Archive méthodologique CFA Institute — validation des modèles](https://rpc.cfainstitute.org/research/foundation/2024/investment-model-validation)

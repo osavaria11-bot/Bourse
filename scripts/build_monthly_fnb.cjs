@@ -69,7 +69,7 @@ const research=`<section class="section monthly-research"><h2>Recherche mensuell
 html=html.slice(0,methodsStart)+method.replace('<div class="section source-table">',research+'<div class="section source-table">')+html.slice(footer);
 html=require('./fnb_performance_view.cjs')(html);
 html=require('./fnb_frontier_view.cjs')(html);
-html=html.replace(/fnb-dashboard\.(js|css)\?v=[^"']+/g,'fnb-dashboard.$1?v=20261020-selection');
+html=html.replace(/fnb-dashboard\.(js|css)\?v=[^"']+/g,'fnb-dashboard.$1?v=20261020-common');
 // Remove any archived data from the serialized payload before replacing it.
 html=html.replace(/(<script[^>]*id="analysis"[^>]*>)[\s\S]*?(<\/script>)/,(_,a,b)=>a+JSON.stringify(D).replace(/</g,"\\u003c")+b);
 html=require("./fnb_frontier_overlay.cjs")(html,root);

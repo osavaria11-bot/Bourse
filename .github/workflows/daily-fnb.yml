@@ -16,6 +16,7 @@ on:
     paths:
       - .github/workflows/daily-fnb.yml
       - scripts/daily_fnb.py
+      - scripts/common_fnb.py
       - scripts/robust_fnb.py
       - data/fnb-robust/**
 
@@ -42,6 +43,7 @@ jobs:
       - name: Verify investment accounting and immutable history
         run: |
           python -m unittest discover -s tests -p 'test_daily_fnb.py' -v
+          python -m unittest discover -s tests -p 'test_common_fnb.py' -v
           python scripts/daily_fnb.py --check
       - name: Record completed sessions and register new monthly proposals
         id: collect
@@ -50,9 +52,17 @@ jobs:
       - name: Validate closing ledger
         if: steps.collect.outcome == 'success'
         run: python scripts/daily_fnb.py --check
+      - name: Compare all registered allocations from 19 October 2026
+        id: comparison
+        continue-on-error: true
+        run: python scripts/common_fnb.py
+      - name: Validate common start and preserved source records
+        if: steps.comparison.outcome == 'success'
+        run: python scripts/common_fnb.py --check
       - name: Publish daily history without overwriting an accepted session
         env:
           OUTCOME: ${{ steps.collect.outcome }}
+          COMPARISON_OUTCOME: ${{ steps.comparison.outcome }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -64,6 +74,11 @@ jobs:
             # Existing accepted daily records and units remain untouched.
             git add data/fnb-performance/registry.json data/fnb-performance.json data/fnb-performance-status.json
             echo "::warning::Closing prices incomplete. Existing investments preserved; automatic retry scheduled."
+          fi
+          if [ "$COMPARISON_OUTCOME" = 'success' ]; then
+            git add data/fnb-comparison.json data/fnb-comparison data/fnb-comparison-status.json
+          else
+            echo "::warning::Common-start comparison pending; last validated comparison retained."
           fi
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "chore: record permanent daily FNB performance"
@@ -79,4 +94,8 @@ jobs:
           d=json.loads(Path('data/fnb-performance.json').read_text())
           with open(os.environ['GITHUB_STEP_SUMMARY'],'a') as f:
               f.write(f"SAVY permanent tracking: {s['status']}; closing session {d['as_of']}; {len(d['accounts'])} accounts. Existing units, allocations and accepted daily records preserved.\n")
+              comparison=Path('data/fnb-comparison.json')
+              if comparison.exists():
+                  c=json.loads(comparison.read_text())
+                  f.write(f"Common-start comparison: {c['inception']} through {c['as_of']}; {len(c['accounts'])} accounts, later additions explicitly simulated.\n")
           PY

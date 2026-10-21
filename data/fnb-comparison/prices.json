@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "inception": "2026-10-19",
+  "prices": {
+    "VFV": {
+      "2026-10-19": {
+        "close": 192.5,
+        "adjusted_close": 192.5,
+        "distribution": 0.0,
+        "split": 1.0,
+        "symbol": "VFV.TO",
+        "source_url": "https://finance.yahoo.com/quote/VFV.TO/history/",
+        "price_source": "Yahoo Finance",
+        "corporate_actions_source": "Yahoo Finance"
+      },
+      "2026-10-20": {
+        "close": 192.27000427246094,
+        "adjusted_close": 192.27000427246094,
+        "distribution": 0.0,
+        "split": 1.0,
+        "symbol": "VFV.TO",
+        "source_url": "https://finance.yahoo.com/quote/VFV.TO/history/",
+        "price_source": "Yahoo Finance",
+        "corporate_actions_source": "Yahoo Finance"
+      }
+    },
+    "XMV": {
+      "2026-10-19": {
+        "close": 60.9900016784668,
+        "adjusted_close": 60.9900016784668,
+        "distribution": 0.0,
+        "split": 1.0,
+        "symbol": "XMV.TO",
+        "source_url": "https://finance.yahoo.com/quote/XMV.TO/history/",
+        "price_source": "Yahoo Finance",
+        "corporate_actions_source": "Yahoo Finance"
+      },
+      "2026-10-20": {
+        "close": 61.349998474121094,
+        "adjusted_close": 61.349998474121094,
+        "distribution": 0.0,
+        "split": 1.0,
+        "symbol": "XMV.TO",
+        "source_url": "https://finance.yahoo.com/quote/XMV.TO/history/",
+        "price_source": "Yahoo Finance",
+        "corporate_actions_source": "Yahoo Finance"
+      }
+    }
+  },
+  "sha256": "f4ea924f772f3e96d64317a74f3b73451488ebbcf2a314a351862035d649af61"
+}
