@@ -17,7 +17,7 @@ test('robust cards and choices render idempotently without editing historical pu
   for(const f of ['data/fnb-analysis.json','data/fnb-frontier-universe.json','reports/portefeuilles-fnb.html']){fs.mkdirSync(path.dirname(path.join(stage,f)),{recursive:true});fs.copyFileSync(path.join(root,f),path.join(stage,f));}
   const build=()=>execFileSync(process.execPath,[path.join(root,'scripts/build_monthly_fnb.cjs'),stage]);build();
   const first=fs.readFileSync(path.join(stage,'reports/portefeuilles-fnb.html'),'utf8');build();assert.equal(fs.readFileSync(path.join(stage,'reports/portefeuilles-fnb.html'),'utf8'),first);
-  for(const k of D.robust_order){assert.equal((first.match(new RegExp('data-fiche="'+k+'"','g'))||[]).length,1);for(const chart of ['risk','growth'])assert.equal((first.match(new RegExp('id="'+chart+'-series-'+k+'"','g'))||[]).length,1);}
+  for(const k of D.robust_order){assert.equal((first.match(new RegExp('data-fiche="'+k+'"','g'))||[]).length,1);for(const chart of ['risk','growth'])assert.equal((first.match(new RegExp('id="'+chart+'-series-'+k+'"','g'))||[]).length,1);assert.ok(first.includes('#compass:has(#risk-series-'+k+':checked) .risk-point'));assert.ok(first.includes('#capital:has(#growth-series-'+k+':checked) .wealth-line'));assert.ok(first.includes('#capital:has(#growth-series-'+k+':checked) .readout-item'));}
   const archived=read('data/fnb-history/2026-10.json');assert.equal(archived.robust_order,undefined);assert.equal(archived.custom_order.length,11);
  }finally{fs.rmSync(stage,{recursive:true,force:true});}
 });
