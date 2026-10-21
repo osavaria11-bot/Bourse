@@ -4,6 +4,7 @@ const assert = require("node:assert/strict"), fs = require("node:fs"), path = re
 const {chromium, webkit} = require(process.env.PLAYWRIGHT_MODULE_PATH || "playwright");
 const root = path.resolve(__dirname, ".."), R = require("../js/portal-utils.js");
 const fnbData=JSON.parse(fs.readFileSync(path.join(root,"data/fnb-analysis.json"),"utf8"));
+const fnbOwn=[...(fnbData.robust_order||[]),...fnbData.proposal_order,...fnbData.custom_order];
 const fnbBeta=new Intl.NumberFormat("fr-CA",{minimumFractionDigits:2,maximumFractionDigits:2}).format(fnbData.pairwise.find(p=>p.portfolio==="10"&&p.comparable==="VBAL").beta_vs_comparable);
 const types = {".html":"text/html", ".js":"text/javascript", ".css":"text/css", ".json":"application/json", ".pdf":"application/pdf", ".png":"image/png"};
 const server = http.createServer((req, res) => {
@@ -46,22 +47,22 @@ async function check(browser, engine) {
   await fundReport.locator('html[data-ready="true"]').waitFor();
   assert.equal(await fundReport.locator('.nav [data-tab]').first().textContent(), "Vue d’ensemble");
   assert.equal(await fundReport.locator("#allPortfolios").isVisible(), true);
-  assert.equal(await fundReport.locator("#allPortfolioBody tr").count(), 15);
-  assert.equal(await fundReport.locator("#allPortfolioBody [data-open-portfolio]").count(), 12);
+  assert.equal(await fundReport.locator("#allPortfolioBody tr").count(), fnbOwn.length+3);
+  assert.equal(await fundReport.locator("#allPortfolioBody [data-open-portfolio]").count(), fnbOwn.length);
   assert.equal(await fundReport.locator("#monthlyTitle").count(),0);
-  assert.equal(await fundReport.locator("[data-preference]").count(), 10);
+  assert.equal(await fundReport.locator("[data-preference]").count(), fnbData.preference_ranking.entries.length);
   assert.equal(await fundReport.locator('[data-preference="5"]').first().textContent().then(t=>t.includes("Élan")), true);
   assert.equal(await fundReport.locator('[data-preference="10"], [data-preference="11"]').count(), 0);
   await fundReport.locator("#referenceSelect").selectOption("VBAL");
   assert.equal(await fundReport.locator('#allPortfolioBody tr').filter({has:fundReport.locator('[data-open-portfolio="10"]')}).locator('td').nth(3).textContent(), fnbBeta);
   await fundReport.locator("#referenceSelect").selectOption("VEQT");
   await fundReport.locator('[data-overview-benchmark="FBAL"]').check();
-  assert.equal(await fundReport.locator("#allPortfolioBody tr").count(), 16);
+  assert.equal(await fundReport.locator("#allPortfolioBody tr").count(), fnbOwn.length+4);
   await fundReport.locator('[data-overview-benchmark="FBAL"]').uncheck();
   await fundReport.locator('[data-all-sort="cagr"]').click();
-  assert.equal(await fundReport.locator("#allPortfolioBody [data-open-portfolio]").first().getAttribute("data-open-portfolio"), [...fnbData.proposal_order,...fnbData.custom_order].sort((a,b)=>fnbData.results[b].cagr-fnbData.results[a].cagr)[0]);
+  assert.equal(await fundReport.locator("#allPortfolioBody [data-open-portfolio]").first().getAttribute("data-open-portfolio"), [...fnbOwn].sort((a,b)=>fnbData.results[b].cagr-fnbData.results[a].cagr)[0]);
   await fundReport.locator('[data-all-sort="rank"]').click();
-  assert.equal(await fundReport.locator("#allPortfolioBody [data-open-portfolio]").first().getAttribute("data-open-portfolio"), "5");
+  assert.equal(await fundReport.locator("#allPortfolioBody [data-open-portfolio]").first().getAttribute("data-open-portfolio"), fnbData.preference_ranking.entries[0].id);
   await fundReport.locator('#allPortfolioBody [data-open-portfolio="2"]').click();
   assert.equal(await fundReport.locator('[data-fiche="2"] .holdings-section').isVisible(), true);
   for (let id=1;id<=11;id++) {
@@ -70,10 +71,10 @@ async function check(browser, engine) {
   }
   assert.equal(await fundReport.locator('[data-fiche="1"] [data-fund="FEQT"] .fund-name').textContent(),"Fidelity All-in-One Equity ETF");
   assert.equal(await fundReport.locator('[data-fiche="1"] [data-fund="FEQT"] .fund-description').textContent(),"Actions mondiales");
-  assert.equal(await fundReport.locator('.source-table [data-fund] .fund-name').count(),24);
+  assert.equal(await fundReport.locator('.source-table [data-fund] .fund-name').count(),Object.keys(fnbData.fund_labels).length);
   await fundReport.locator('.nav [data-tab="portfolios"]').click();
   await fundReport.locator("#ficheFocus").selectOption("all");
-  assert.equal(await fundReport.locator(".portfolio-card:visible").count(),12);
+  assert.equal(await fundReport.locator(".portfolio-card:visible").count(),fnbOwn.length);
   assert.ok(await fundReport.locator('.portfolio-card:visible [data-fund] .fund-name').count()>40);
   await shot("fnb-fund-grid");
   for(const width of [768,320]) {
