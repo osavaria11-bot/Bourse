@@ -148,6 +148,7 @@ const SavyFnb = (() => {
       document.querySelector(".dashboard-toolbar").hidden=!["allPortfolios","overview","exposures"].includes(id);
       document.querySelector('.report-header p').textContent=id==='performance'?'Suivi prospectif · depuis le 19 octobre 2026 · CAD':reportPeriod;
       document.querySelector('.report-tools').hidden=['performance','frontier'].includes(id);
+      const footer=document.querySelector('.footer');if(footer)footer.textContent=id==='performance'?'Suivi après publication · Distributions réinvesties · Sans versements ni retraits':'Simulation historique · Distributions réinvesties · Sans versements ni retraits';
       $("summaryFocus").closest(".field").hidden=id!=="overview";
       document.querySelectorAll("[data-dashboard-view]").forEach(n=>{n.hidden=n.id!==id;});
       document.querySelectorAll(".nav [data-tab]").forEach(n=>{const on=n.dataset.tab===id;n.classList.toggle("active",on);if(on)n.setAttribute("aria-current","page");else n.removeAttribute("aria-current");});
@@ -156,7 +157,24 @@ const SavyFnb = (() => {
       if(id==="frontier")window.SavyFnbFrontier?.show(D);
       window.scrollTo({top:0,behavior:"instant"});
     }
-    function openPortfolio(k) {if(!own.includes(k))return;$("ficheFocus").value=k;document.querySelectorAll("[data-fiche]").forEach(n=>{n.hidden=n.dataset.fiche!==k;});switchView("portfolios");}
+    function choosePortfolio(k, charts = false) {
+      if(!own.includes(k))return;
+      const previous=summary;summary=k;focus=k;
+      $("summaryFocus").value=k;$("sectorFocus").value=k;$("ficheFocus").value=k;
+      document.querySelectorAll("[data-fiche]").forEach(n=>{n.hidden=n.dataset.fiche!==k;});
+      if(charts){
+        // Replace the followed portfolio, retaining other comparisons and
+        // each chart's independent choices.
+        for(const section of ["compass","capital"])$(section).querySelectorAll("[data-series]").forEach(n=>{
+          if(n.dataset.series===previous&&previous!==k)n.checked=false;
+          if(n.dataset.series===k||n.dataset.series===reference)n.checked=true;
+        });
+        month=D.dates.length;refreshCharts();
+        $("riskDetail").textContent=name(k)+" · Pointillés : "+reference;
+      }
+      drawSummary();drawSector();
+    }
+    function openPortfolio(k) {if(!own.includes(k))return;choosePortfolio(k,true);switchView("portfolios");}
     function refreshCharts(){syncSelection();drawRisk();drawGrowth();statsRows();}
     function status(message){$("actionStatus").textContent=message;$("actionStatus").hidden=false;}
     function download(filename,body,type){try{const url=URL.createObjectURL(new Blob([body],{type})),a=document.createElement("a");a.href=url;a.download=filename;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000);}catch(error){status("Téléchargement indisponible dans cet aperçu.");}}
@@ -170,7 +188,7 @@ const SavyFnb = (() => {
       if(target.dataset.sort){descending=sortKey===target.dataset.sort?!descending:true;sortKey=target.dataset.sort;statsRows();}
       if(target.dataset.allSort){allDescending=allSort===target.dataset.allSort?!allDescending:target.dataset.allSort!=="rank";allSort=target.dataset.allSort;renderAllPortfolios();}
       if(target.dataset.openPortfolio)openPortfolio(target.dataset.openPortfolio);
-      if(target.dataset.openExposure){focus=target.dataset.openExposure;$("sectorFocus").value=focus;switchView("exposures");}
+      if(target.dataset.openExposure){choosePortfolio(target.dataset.openExposure,true);switchView("exposures");}
       if(target.id==="monthlyCharts"){setPreset("monthly","risk");setPreset("monthly","growth");switchView("overview");}
       if(target.id==="robustCharts"){setPreset("robust","risk");setPreset("robust","growth");switchView("overview");}
       if(target.matches(".risk-point")){const k=target.dataset.portfolio,q=R[k];$("riskDetail").innerHTML=`<b>${escape(name(k))}</b> · ${pct(q.cagr)} rendement · ${pct(q.vol)} vol. · Sharpe ${number(q.sharpe)} ${own.includes(k)?`<button data-open-portfolio="${k}">Fiche ↗</button>`:''}`;}
@@ -186,12 +204,12 @@ const SavyFnb = (() => {
       const el=event.target;
       if(el.matches("[data-series]"))refreshCharts();
       if(el.matches("[data-overview-benchmark]"))renderAllPortfolios();
-      if(el.id==="summaryFocus"){summary=el.value;drawSummary();}
+      if(el.id==="summaryFocus")choosePortfolio(el.value,true);
       if(el.id==="referenceSelect"){reference=el.value;for(const section of ["compass","capital"])$(section).querySelector('[data-series="'+reference+'"]').checked=true;drawSummary();refreshCharts();drawSector();$("riskDetail").textContent="Pointillés : "+reference;}
       if(el.id==="tableScope")statsRows();
       if(el.id==="riskAxis"){axis=el.value;drawRisk();}
-      if(el.id==="sectorFocus"){focus=el.value;drawSector();}
-      if(el.id==="ficheFocus"){document.querySelectorAll("[data-fiche]").forEach(n=>{n.hidden=el.value!=="all"&&n.dataset.fiche!==el.value;});}
+      if(el.id==="sectorFocus"){if(own.includes(el.value))choosePortfolio(el.value,true);else{focus=el.value;drawSector();}}
+      if(el.id==="ficheFocus"){if(el.value==="all")document.querySelectorAll("[data-fiche]").forEach(n=>{n.hidden=false;});else choosePortfolio(el.value,true);}
     });
     document.addEventListener("toggle",event=>{
       const chooser=event.target;if(!chooser.matches?.("[data-chart-chooser]")||!chooser.open)return;

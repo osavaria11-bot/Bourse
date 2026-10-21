@@ -25,5 +25,6 @@ test('a deteriorating robustness selection leaves the first preferences without 
  const copy=structuredClone(D),id=copy.robust_order[0],weights=structuredClone(copy.results[id].weights);
  copy.results[id].robust_review={review_required:true,signals:['Retard cumulé sur 6 mois face à VEQT']};
  const ranking=require('../scripts/fnb_preferences.cjs')(copy);
- assert.equal(ranking.entries.at(-1).id,id);assert.match(ranking.entries.at(-1).reason,/Réévaluation requise/);assert.deepEqual(copy.results[id].weights,weights);
+ const entry=ranking.entries.find(e=>e.id===id);
+ assert.equal(entry.eligible,false);assert.ok(entry.rank>ranking.entries.filter(e=>e.eligible).length);assert.match(entry.reason,/Réévaluation requise/);assert.deepEqual(copy.results[id].weights,weights);
 });

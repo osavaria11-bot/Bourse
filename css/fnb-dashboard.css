@@ -1,4 +1,6 @@
 /* Shared SAVY palette; the parent dashboard synchronizes data-theme. */
+.performance-controls{max-width:100%;min-width:0}.performance-controls .field{min-width:0;max-width:100%}.performance-controls select{max-width:100%;min-width:0}
+@media(max-width:600px){.performance-controls{width:100%}.performance-controls .field{width:100%}.performance-controls select{width:100%}}
 /* Frontier laboratory: local scenarios, same SAVY surfaces and one outer scroll. */
 @media(max-width:600px){
   html .nav:has([data-tab="frontier"]){display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;overflow:visible}

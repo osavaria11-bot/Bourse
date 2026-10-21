@@ -13,6 +13,19 @@ async function check(browser,engine){
  assert.equal(await page.locator('[data-preference="proposal"]').count(),1);
  assert.equal(await page.locator('[data-preference="proposal"] .preference-rank').textContent(),String(D.preference_ranking.entries.find(e=>e.id==='proposal').rank));
  assert.equal(await page.locator('#allPortfolioBody [data-open-portfolio]').count(),D.custom_order.length+D.proposal_order.length+D.robust_order.length);
+ // Changing the followed portfolio must change the actual curves, amounts
+ // and companion selectors, not only the four summary figures.
+ await page.locator('.nav [data-tab="overview"]').click();
+ for(const k of ['robust-2026-10-1','5','robust-2026-10-2','2']){
+  const previous=await page.locator('#summaryFocus').inputValue();
+  await page.locator('#summaryFocus').selectOption(k);
+  assert.equal(await page.locator('#sectorFocus').inputValue(),k);assert.equal(await page.locator('#ficheFocus').inputValue(),k);
+  assert.equal(await page.locator('#riskSvg .risk-point[data-portfolio="'+k+'"]').isVisible(),true);
+  assert.equal(await page.locator('#growthSvg .wealth-line[data-portfolio="'+k+'"]').isVisible(),true);
+  if(previous!==k)assert.equal(await page.locator('#growthSvg .wealth-line[data-portfolio="'+previous+'"]').isVisible(),false);
+  assert.equal(await page.locator('#growthReadout [data-portfolio="'+k+'"] b').innerText(),new Intl.NumberFormat('fr-CA',{style:'currency',currency:'CAD',currencyDisplay:'narrowSymbol',maximumFractionDigits:0}).format(D.results[k].end));
+ }
+ await page.locator('.nav [data-tab="allPortfolios"]').click();
  await page.locator('#robustCharts').click();assert.equal(await page.locator('#overview').isVisible(),true);
  assert.equal(await page.locator('#riskSvg .risk-point:visible').count(),5);
  assert.equal(await page.locator('#growthSvg .wealth-line:visible').count(),5);
@@ -53,6 +66,18 @@ async function check(browser,engine){
  const tracking=JSON.parse(fs.readFileSync(path.join(root,'data/fnb-performance.json'),'utf8'));
  assert.equal(await page.locator('#performanceBody tr').count(),tracking.accounts.length);
  assert.equal(await page.locator('#performanceBenchmark option').count(),4);
+ assert.equal(await page.locator('#performanceFocus option').count(),tracking.accounts.filter(a=>a.kind!=='benchmark').length+1);
+ for(const k of ['savy-5','savy-2']){
+  await page.locator('#performanceFocus').selectOption(k);
+  assert.equal(await page.locator('#performancePositions').inputValue(),k);
+  assert.equal(await page.locator('#performanceChart .performance-series').count(),2);
+  const expected=tracking.accounts.find(a=>a.id===k).history.at(-1).value;
+  assert.ok((await page.locator('#performanceReadout').innerText()).includes(new Intl.NumberFormat('fr-CA',{minimumFractionDigits:2,maximumFractionDigits:2}).format(expected)));
+ }
+ await page.locator('#performanceFocus').selectOption('robust-2026-10-2');
+ assert.equal(await page.locator('#performanceCohort').inputValue(),'2026-10-21');
+ assert.equal(await page.locator('#performanceChart .performance-series').count(),0);
+ assert.match(await page.locator('#performanceDate').innerText(),/Lancement prévu/);
  await page.locator('#performanceRobust').click();assert.equal(await page.locator('#performanceBody tr').count(),D.robust_order.length+4);
  for(const k of D.robust_order)assert.ok((await page.locator('#performanceBody').innerText()).includes(D.results[k].name));
  await page.locator('#performanceCohort').selectOption('all');
@@ -73,7 +98,7 @@ async function check(browser,engine){
  assert.equal(await page.locator('#allPortfolioBody [data-open-portfolio]').count(),11);
  assert.equal(await page.locator('.monthly-proposal').count(),0);
  await page.goto(url+'/reports/portefeuilles-fnb.html');await page.waitForSelector('html[data-ready="true"]');
- for(const width of [768,375,320]){await page.setViewportSize({width,height:900});for(const view of ['allPortfolios','overview','exposures','portfolios','methods','performance','frontier']){await page.locator('.nav [data-tab="'+view+'"]').click();if(view==='frontier')await page.waitForSelector('#frontier[data-ready="true"]',{timeout:90000});await page.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))));assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'FNB viewport overflow '+width+' '+view);}}
+ for(const width of [768,375,320]){await page.setViewportSize({width,height:900});for(const view of ['allPortfolios','overview','exposures','portfolios','methods','performance','frontier']){await page.locator('.nav [data-tab="'+view+'"]').click();if(view==='frontier')await page.waitForSelector('#frontier[data-ready="true"]',{timeout:90000});if(view==='overview'){await page.locator('#summaryFocus').selectOption('robust-2026-10-3');assert.equal(await page.locator('#growthSvg .wealth-line[data-portfolio="robust-2026-10-3"]').isVisible(),true);}if(view==='performance'){await page.locator('#performanceFocus').selectOption('savy-1');assert.equal(await page.locator('#performanceChart .performance-series').count(),2);}await page.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))));assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'FNB viewport overflow '+width+' '+view);}}
  assert.deepEqual(errors,[]);console.log(engine+': monthly proposal, all benchmarks/exposures, separate chart choices, exports, frozen archives and 320/375/768px passed.');await context.close();
 }
 (async()=>{await new Promise(r=>server.listen(0,'127.0.0.1',r));for(const [name,type] of [['chromium',chromium],...(process.env.PORTAL_WEBKIT==='1'?[['webkit',webkit]]:[])]){const browser=await type.launch({headless:true});try{await check(browser,name);}finally{await browser.close();}}})().catch(e=>{console.error(e);process.exitCode=1;}).finally(()=>server.close());

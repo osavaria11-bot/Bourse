@@ -51,7 +51,9 @@ html=html.replace(/(<header class="report-header">[\s\S]*?<p>)[\s\S]*?(<\/p>)/,(
 html=html.replace(/(?:\d+ portefeuilles(?: \+ proposition)?(?: \+ \d+ Robuste)?)[ ·]+\d+ mois/g,own.length+' portefeuilles · '+D.dates.length+' mois');
 html=html.replace(/Positions de juin à octobre 2026\./g,'Positions datées des dernières publications officielles; dates dans chaque fiche.');
 html=html.replace(/(<h2 id="preferenceTitle">)[^<]*(<\/h2>)/,'$1Mon classement actualisé$2');
-html=html.replace(/(<p class="preference-caption">)[\s\S]*?(<\/p>)/,'$1Sélections Robuste, proposition et nº 1 à 9$2');
+html=html.replace(/(<p class="preference-caption">)[\s\S]*?(<\/p>)/,(_,a,b)=>a+'Même méthode pour tous · données au '+esc(D.preference_ranking.as_of)+b);
+html=html.replace(/(<select id="tableScope"[^>]*>[\s\S]*?<option value="all">)[^<]*(<\/option>)/,(_,a,b)=>a+'Tous les '+own.length+' portefeuilles'+b);
+html=html.replace(/Taux sans risque : [\d,]+ %\./g,'Taux sans risque : '+pct(D.assumptions.risk_free,2)+'.');
 html=html.replace(/<!-- fnb-robust:start -->[\s\S]*?<!-- fnb-robust:end -->\n?/g,'');
 if(robust.length){const note='<!-- fnb-robust:start --><div class="robust-intro"><p class="method-summary">Trois variantes apparentées : Compromis, Diversifié (70 % Compromis / 30 % noyau indiciel), Noyau (50 % / 50 %). Sélection rétrospective sur '+D.dates.length+' mois; robustesse future à confirmer. Détails et contrôles dans chaque fiche; suivi après publication dans « Suivi des performances ».</p><button id="robustCharts">Comparer les 3 Robuste · risque et montant</button></div><!-- fnb-robust:end -->\n';html=html.replace('<div class="benchmark-controls all-benchmarks">',note+'<div class="benchmark-controls all-benchmarks">');}
 html=html.replace(/(<ol class="preference-list">)[\s\S]*?(<\/ol>)/,(_,a,b)=>a+D.preference_ranking.entries.map(e=>`<li class="preference-item" data-preference="${e.id}"><span class="preference-rank">${e.rank}</span><div><button class="stats-open" data-open-portfolio="${e.id}">${esc(label(e.id))}</button><p>${esc(e.reason)}</p></div></li>`).join('')+b);
@@ -67,7 +69,7 @@ const research=`<section class="section monthly-research"><h2>Recherche mensuell
 html=html.slice(0,methodsStart)+method.replace('<div class="section source-table">',research+'<div class="section source-table">')+html.slice(footer);
 html=require('./fnb_performance_view.cjs')(html);
 html=require('./fnb_frontier_view.cjs')(html);
-html=html.replace(/fnb-dashboard\.(js|css)\?v=[^"']+/g,'fnb-dashboard.$1?v=20261020-robust');
+html=html.replace(/fnb-dashboard\.(js|css)\?v=[^"']+/g,'fnb-dashboard.$1?v=20261020-selection');
 // Remove any archived data from the serialized payload before replacing it.
 html=html.replace(/(<script[^>]*id="analysis"[^>]*>)[\s\S]*?(<\/script>)/,(_,a,b)=>a+JSON.stringify(D).replace(/</g,"\\u003c")+b);
 html=require("./fnb_frontier_overlay.cjs")(html,root);
