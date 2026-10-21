@@ -1,8 +1,18 @@
 {
   "schema_version": 1,
   "kind": "reviewed_earnings_highlights",
-  "reviewed_at": "2026-10-16T11:12:38Z",
+  "reviewed_at": "2026-10-21T11:15:38.881Z",
   "reports": {
+    "NFLX:2026-10-20": {
+      "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-20-netflix-inc-stock/",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1065280/000106528026000290/ex991_q326.htm",
+      "messages": [
+        "Perspectives — Netflix ramène sa cible de revenus publicitaires 2026 d’environ 3,0 à 2,7 G$ US, car certains outils et liens avec ses partenaires arrivent plus lentement que prévu. L’abonnement dépasse ses attentes, mais ce retard réduit la qualité du mix de croissance.",
+        "Rentabilité — La marge opérationnelle atteint 34,6 %, contre 28,2 % un an plus tôt, mais l’avance sur la prévision interne vient surtout du calendrier des dépenses et d’un léger surplus de revenus. La marge prévue au T4 retombe à 26,0 %, dont 120 points de base liés aux réductions d’effectifs.",
+        "Cash-flow — Le flux de trésorerie disponible du trimestre monte à 2,884 G$ US, contre 2,660 G$ US. La cible annuelle baisse toutefois de 12,5 à environ 12,0 G$ US, principalement parce que la clôture d’une opération immobilière est maintenant attendue au quatrième trimestre.",
+        "Exécution — La rétention s’améliore et le désabonnement est meilleur que prévu, mais la direction veut accélérer les heures de visionnement et reconnaît que les contenus américains ne croissent pas assez vite. Ma lecture : le risque principal passe du nombre d’abonnés à l’engagement et à la monétisation publicitaire."
+      ]
+    },
     "TSM:2026-10-15": {
       "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-15-taiwan-semiconductor-manufacturing-company-limited-stock/",
       "source_url": "https://investor.tsmc.com/english/quarterly-results/2026/q3",
