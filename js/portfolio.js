@@ -257,19 +257,38 @@
       (risk.skipped_closes ? " · " + risk.skipped_closes + " clôtures sans correspondance exclues" : "") :
       (risk.reason === "short_history" ? "Pas assez de clôtures communes sur cette période." : ("Risque indisponible : un historique complet du portefeuille et de FEQT est nécessaire pour cette période.".replaceAll("FEQT", benchmarkId)));
     $("#portfolioRiskStatus").classList.toggle("warning", !risk.available);
-    const measurements = [["volatility", "Volatilité annualisée", risk.portfolio.volatility, risk.benchmark.volatility, "%"],
+    const measurements = [["period_return", "Rendement sur la période", risk.portfolio.period_return, risk.benchmark.period_return, "%"],
+      ["active_return", "Excédent moyen annualisé", risk.portfolio.active_return, risk.benchmark.active_return, "%"],
+      ["sharpe", "Ratio de Sharpe", risk.portfolio.sharpe, risk.benchmark.sharpe, ""],
+      ["sortino", "Ratio de Sortino", risk.portfolio.sortino, risk.benchmark.sortino, ""],
+      ["information", "Ratio d’information", risk.portfolio.information, risk.benchmark.information, ""],
+      ["treynor", "Ratio de Treynor", risk.portfolio.treynor, risk.benchmark.treynor, "%/β"],
+      ["alpha", "Alpha de Jensen annualisé", risk.portfolio.alpha, risk.benchmark.alpha, "%"],
+      ["volatility", "Volatilité annualisée", risk.portfolio.volatility, risk.benchmark.volatility, "%"],
+      ["tracking_error", "Tracking error annualisée", risk.portfolio.tracking_error, risk.benchmark.tracking_error, "%"],
       ["drawdown", "Baisse maximale", risk.portfolio.drawdown?.value, risk.benchmark.drawdown?.value, "%"],
-      ["beta", ("Bêta relatif à FEQT".replaceAll("FEQT", benchmarkId)), risk.portfolio.beta, risk.benchmark.beta, ""]];
+      ["beta", ("Bêta relatif à FEQT".replaceAll("FEQT", benchmarkId)), risk.portfolio.beta, risk.benchmark.beta, ""],
+      ["correlation", ("Corrélation avec FEQT".replaceAll("FEQT", benchmarkId)), risk.portfolio.correlation, risk.benchmark.correlation, ""]];
     for (const [key, label, portfolio, benchmark, unit] of measurements) {
       const tr = el("tr"), heading = el("th", "", label); heading.scope = "row"; tr.dataset.metric = key; tr.append(heading);
       for (const value of [portfolio, benchmark]) tr.append(el("td", "", U.validNumber(value) ? U.formatNumber(value, 2) + (unit ? " " + unit : "") : "N/D"));
-      tr.append(el("td", "", U.validNumber(portfolio) && U.validNumber(benchmark) ? unit ? points(portfolio - benchmark) :
+      tr.append(el("td", "", U.validNumber(portfolio) && U.validNumber(benchmark) ? unit === "%/β" ? points(portfolio - benchmark) + "/β" : unit ? points(portfolio - benchmark) :
         (portfolio - benchmark > 0 ? "+" : "") + U.formatNumber(portfolio - benchmark, 2) : "—")); rows.append(tr);
     }
     $("#portfolioRiskRows").replaceChildren(rows);
     const notes = [];
     if (risk.available) {
+      notes.push("Taux sans risque fixe : " + U.formatNumber(risk.risk_free_rate * 100, 2) + " %/an (hypothèse de comparaison). Ratios calculés sur les clôtures, pas sur les cotations en séance.");
       if (!U.validNumber(risk.portfolio.volatility)) notes.push("Volatilité : minimum " + F.MIN_VOLATILITY_RETURNS + " rendements communs.");
+      if (risk.observations < F.MIN_RATIO_RETURNS) notes.push("Ratios et excédent annualisé : minimum " + F.MIN_RATIO_RETURNS + " rendements communs; choisis 3 mois ou plus.");
+      else {
+        if (risk.observations < F.SESSIONS_PER_YEAR) notes.push("Moins d’un an de séances : ratios sensibles à la période, à interpréter avec prudence. L’annualisation n’est pas une prévision.");
+        if (!U.validNumber(risk.portfolio.sharpe) || !U.validNumber(risk.benchmark.sharpe)) notes.push("Sharpe N/D si la volatilité est nulle ou quasi nulle.");
+        if (!U.validNumber(risk.portfolio.sortino) || !U.validNumber(risk.benchmark.sortino)) notes.push("Sortino N/D en l’absence d’écart baissier mesurable au taux sans risque.");
+        if (!U.validNumber(risk.portfolio.information)) notes.push("Ratio d’information N/D si la tracking error est nulle ou quasi nulle.");
+        if (!U.validNumber(risk.portfolio.treynor)) notes.push("Treynor N/D si le bêta est indisponible, nul, quasi nul ou négatif.");
+      }
+      notes.push("Le benchmark comparé à lui-même a un excédent et une tracking error de 0; son ratio d’information est indéfini (N/D), pas 0.");
       if (!U.validNumber(risk.portfolio.beta)) notes.push(risk.beta_reason === "constant_benchmark" ? ("Bêta indisponible : FEQT ne varie pas assez sur cet échantillon.".replaceAll("FEQT", benchmarkId)) : "Bêta : minimum " + F.MIN_BETA_RETURNS + " rendements communs.");
       for (const [label, measure] of [["Portefeuille", risk.portfolio.drawdown], [benchmarkId, risk.benchmark.drawdown]])
         notes.push(label + " : " + (measure.value < 0 ? "baisse maximale du sommet du " + measure.peak_date + " au creux du " + measure.trough_date + "." : "aucune baisse entre sommet et creux observée sur ces clôtures."));
@@ -429,7 +448,7 @@
     $("#portfolioRisk .table-wrap").hidden = Boolean(selected?.intraday);
     if (selected?.intraday) {
       $("#portfolioRiskRows").replaceChildren();
-      $("#portfolioRiskStatus").textContent = "Les mesures de risque utilisent les clôtures quotidiennes. Choisis 1 mois ou plus pour les consulter.";
+      $("#portfolioRiskStatus").textContent = "Les mesures de risque utilisent les clôtures quotidiennes. Choisis 1 mois pour la volatilité, ou 3 mois et plus pour les ratios Sharpe, Sortino et information.";
       $("#portfolioRiskStatus").classList.remove("warning"); $("#portfolioRiskNote").textContent = "";
     } else renderRisk(closedSelected);
   }

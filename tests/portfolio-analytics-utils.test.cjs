@@ -87,6 +87,70 @@ test("a constant benchmark never produces an infinite beta, and statistical mini
   const month = riskFixture(20), monthRisk = F.riskFor(positions, month, selection(month, positions));
   assert.ok(monthRisk.portfolio.volatility > 0); assert.equal(monthRisk.portfolio.beta, null);
 });
+test("Sharpe, Sortino, information, Treynor and Jensen alpha use the same common daily returns and explicit fixed risk-free assumption", () => {
+  const data = riskFixture(), positions = [{ticker: "AAA", quantity: 3, currency: "CAD"}];
+  const before = JSON.stringify(data), risk = F.riskFor(positions, data, selection(data, positions));
+  const rf = (1.0238 ** (1 / 252) - 1), n = 40;
+  const meanBenchmark = .0025, meanPortfolio = .00375, meanActive = .00125;
+  const sdBenchmark = Math.sqrt(n * .0075 ** 2 / (n - 1)), sdPortfolio = sdBenchmark * 1.5, sdActive = sdBenchmark * .5;
+  almost(risk.risk_free_rate, .0238);
+  almost(risk.portfolio.sharpe, (meanPortfolio - rf) / sdPortfolio * Math.sqrt(252));
+  almost(risk.benchmark.sharpe, (meanBenchmark - rf) / sdBenchmark * Math.sqrt(252));
+  almost(risk.portfolio.sortino, (meanPortfolio - rf) / Math.sqrt((-.0075 - rf) ** 2 / 2) * Math.sqrt(252));
+  almost(risk.benchmark.sortino, (meanBenchmark - rf) / Math.sqrt((-.005 - rf) ** 2 / 2) * Math.sqrt(252));
+  almost(risk.portfolio.active_return, meanActive * 252 * 100);
+  almost(risk.portfolio.tracking_error, sdActive * Math.sqrt(252) * 100);
+  almost(risk.portfolio.information, meanActive / sdActive * Math.sqrt(252));
+  almost(risk.portfolio.information, risk.portfolio.active_return / risk.portfolio.tracking_error);
+  almost(risk.portfolio.treynor, (meanPortfolio - rf) * 252 / 1.5 * 100);
+  almost(risk.benchmark.treynor, (meanBenchmark - rf) * 252 * 100);
+  almost(risk.portfolio.alpha, ((meanPortfolio - rf) - 1.5 * (meanBenchmark - rf)) * 252 * 100);
+  almost(risk.portfolio.correlation, 1); almost(risk.benchmark.correlation, 1);
+  almost(risk.portfolio.period_return, ((1.015 * .9925) ** 20 - 1) * 100);
+  almost(risk.benchmark.period_return, ((1.01 * .995) ** 20 - 1) * 100);
+  assert.equal(risk.benchmark.active_return, 0); assert.equal(risk.benchmark.tracking_error, 0);
+  assert.equal(risk.benchmark.alpha, 0); assert.equal(risk.benchmark.information, null);
+  assert.equal(JSON.stringify(data), before, "analytics never mutate prices or holdings");
+  const scaled = F.riskFor([{...positions[0], quantity: 300}], data, selection(data, [{...positions[0], quantity: 300}]));
+  for (const key of ["period_return", "active_return", "volatility", "sharpe", "sortino", "information", "treynor", "alpha", "correlation"])
+    almost(scaled.portfolio[key], risk.portfolio[key]);
+});
+test("identical reference never invents an information ratio, and short windows do not annualize an active return", () => {
+  for (const count of [1, 19, 20, 29, 30, 40]) {
+    const data = riskFixture(count), positions = [{ticker: "FEQT", quantity: 4, currency: "CAD"}];
+    const risk = F.riskFor(positions, data, selection(data, positions));
+    assert.equal(risk.available, true); almost(risk.portfolio.period_return, risk.benchmark.period_return);
+    assert.equal(risk.portfolio.information, null);
+    if (count >= 20) almost(risk.portfolio.tracking_error, 0);
+    else assert.equal(risk.portfolio.tracking_error, null);
+    if (count >= 30) {almost(risk.portfolio.alpha, 0); almost(risk.portfolio.sharpe, risk.benchmark.sharpe);}
+    else for (const key of ["sharpe", "sortino", "treynor", "alpha", "active_return", "correlation"]) assert.equal(risk.portfolio[key], null, key);
+  }
+});
+test("zero risk, zero downside and nonpositive beta are undefined ratios, never infinities or false zeroes", () => {
+  const positions = [{ticker: "AAA", quantity: 1, currency: "CAD"}];
+  for (const constantPortfolio of [false, true]) {
+    const data = riskFixture();
+    if (constantPortfolio) data.series[0].history = data.series[0].history.map(row => [row[0], 100]);
+    else data.series[1].history = data.series[1].history.map(row => [row[0], 100]);
+    const risk = F.riskFor(positions, data, selection(data, positions));
+    assert.equal(risk.portfolio.treynor, null);
+    assert.equal(risk.portfolio.correlation, null);
+    if (constantPortfolio) {assert.equal(risk.portfolio.sharpe, null); assert.ok(risk.portfolio.sortino < 0);}
+    else {assert.equal(risk.benchmark.sharpe, null); assert.equal(risk.portfolio.alpha, null);}
+    assert.doesNotMatch(JSON.stringify(risk), /Infinity|NaN/);
+  }
+  const rising = riskFixture();
+  rising.series[0].history = rising.series[0].history.map((row, i) => [row[0], 100 * 1.001 ** i]);
+  assert.equal(F.riskFor(positions, rising, selection(rising, positions)).portfolio.sortino, null);
+  const inverse = riskFixture(), benchmark = inverse.series[1].history;
+  let value = 100;
+  inverse.series[0].history = benchmark.map((row, i) => {if (i) value *= 1 - (row[1] / benchmark[i - 1][1] - 1); return [row[0], value];});
+  const negative = F.riskFor(positions, inverse, selection(inverse, positions));
+  almost(negative.portfolio.beta, -1); almost(negative.portfolio.correlation, -1);
+  assert.equal(negative.portfolio.treynor, null); assert.ok(negative.portfolio.information < 0);
+  assert.ok(Number.isFinite(negative.portfolio.alpha));
+});
 const earningsCatalog = {series: [{id: "BIG"}, {id: "SMALL"}, {id: "CDR"}, {id: "EMPTY"}, {id: "ETF"}]};
 const now = Date.parse("2026-10-11T20:00:00Z");
 function metric(actual, estimate, currency = "USD") {return {actual, estimate, currency, source_url: "https://example.com/earnings"};}
@@ -160,8 +224,34 @@ for (const benchmark of ["VBAL", "VGRO"]) test("risk and beta use the selected "
   const selected = selection(data, positions), feqt = F.riskFor(positions, data, selected), reference = F.riskFor(positions, data, selected, benchmark);
   almost(feqt.portfolio.beta, 1.5); almost(reference.portfolio.beta, 3);
   almost(reference.benchmark.volatility, feqt.benchmark.volatility / 2);
+  almost(reference.portfolio.sharpe, feqt.portfolio.sharpe);
+  almost(reference.portfolio.sortino, feqt.portfolio.sortino);
+  assert.notEqual(reference.portfolio.information, feqt.portfolio.information);
+  assert.notEqual(reference.portfolio.tracking_error, feqt.portfolio.tracking_error);
+  assert.notEqual(reference.portfolio.treynor, feqt.portfolio.treynor);
+  assert.notEqual(reference.portfolio.alpha, feqt.portfolio.alpha);
   const self = [{ticker: benchmark, quantity: 4, currency: "CAD"}];
   almost(F.riskFor(self, data, selection(data, self), benchmark).portfolio.beta, 1);
   data.series.at(-1).quote_symbol = benchmark + ".NE";
   assert.equal(F.riskFor(positions, data, selected, benchmark).available, false);
+});
+test("ratios include exact historical FX and recompute on only the common requested dates", () => {
+  const data = riskFixture(70), positions = [{ticker: "AAA", quantity: 2, currency: "USD"}];
+  data.series[2].history = data.series[2].history.map((row, i) => [row[0], 1.2 * (1 + .0003 * i)]);
+  const equivalent = structuredClone(data);
+  equivalent.series[0].history = equivalent.series[0].history.map((row, i) => [row[0], row[1] * data.series[2].history[i][1]]);
+  const cad = [{...positions[0], currency: "CAD"}];
+  const selected = selection(data, positions); selected.start = data.series[1].history[10][0];
+  selected.end = data.series[1].history[65][0];
+  const missing = data.series[1].history[25][0];
+  data.series[0].history = data.series[0].history.filter(row => row[0] !== missing);
+  equivalent.series[0].history = equivalent.series[0].history.filter(row => row[0] !== missing);
+  const actual = F.riskFor(positions, data, selected), expected = F.riskFor(cad, equivalent, selected);
+  assert.equal(actual.start, selected.start); assert.equal(actual.end, selected.end);
+  assert.equal(actual.observations, 54); assert.equal(actual.skipped_closes, 1);
+  for (const key of ["period_return", "active_return", "volatility", "sharpe", "sortino", "information", "treynor", "alpha", "tracking_error", "correlation"])
+    almost(actual.portfolio[key], expected.portfolio[key]);
+  const invalid = F.riskFor(positions, data, {...selected, incomplete: true});
+  assert.equal(invalid.available, false);
+  for (const side of [invalid.portfolio, invalid.benchmark]) assert.ok(Object.values(side).every(value => value === null));
 });

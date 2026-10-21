@@ -3,7 +3,9 @@
   else root.PortfolioAnalyticsUtils = factory(root.PortfolioUtils, root.MacroUtils);
 })(typeof globalThis !== "undefined" ? globalThis : this, function (P, U) {
   "use strict";
-  const MIN_VOLATILITY_RETURNS = 20, MIN_BETA_RETURNS = 30, SESSIONS_PER_YEAR = 252;
+  const MIN_VOLATILITY_RETURNS = 20, MIN_BETA_RETURNS = 30, MIN_RATIO_RETURNS = 30, SESSIONS_PER_YEAR = 252;
+  // Fixed comparison assumption, not a claim about today's money-market rate.
+  const RISK_FREE_RATE = .0238, VARIANCE_EPSILON = 1e-12;
   function contributionsFor(positions, data, selected) {
     const unavailable = {available: false, start: selected?.start, end: selected?.end, rows: [], total: null, change_cad: null};
     if (!positions?.length || !data || !selected?.start || !selected.end || selected.incomplete) return unavailable;
@@ -29,7 +31,7 @@
       const a = first[i] - meanFirst, b = second[i] - meanSecond;
       firstSquares += a * a; secondSquares += b * b; cross += a * b;
     }
-    return {firstVariance: firstSquares / (n - 1), secondVariance: secondSquares / (n - 1), covariance: cross / (n - 1)};
+    return {meanFirst, meanSecond, firstVariance: firstSquares / (n - 1), secondVariance: secondSquares / (n - 1), covariance: cross / (n - 1)};
   }
   function drawdown(points, key) {
     let peak = points[0][key], peakDate = points[0].date, worst = 0, from = peakDate, to = peakDate;
@@ -41,8 +43,10 @@
     return {value: worst, peak_date: from, trough_date: to};
   }
   function riskFor(positions, data, selected, benchmarkId = "FEQT") {
+    const empty = () => ({period_return: null, active_return: null, volatility: null, drawdown: null, beta: null,
+      sharpe: null, sortino: null, information: null, treynor: null, alpha: null, tracking_error: null, correlation: null});
     const unavailable = {available: false, reason: "missing_history", start: selected?.start, end: selected?.end, observations: 0,
-      portfolio: {volatility: null, drawdown: null, beta: null}, benchmark: {volatility: null, drawdown: null, beta: null}};
+      risk_free_rate: RISK_FREE_RATE, portfolio: empty(), benchmark: empty()};
     if (!positions?.length || !data || selected?.incomplete || !selected?.history?.length ||
         selected.history.some(row => !U.validNumber(row[1]) || row[1] <= 0)) return unavailable;
     const byId = new Map(data.series.map(row => [row.id, row])), feqt = byId.get(benchmarkId);
@@ -58,6 +62,7 @@
       if (required.some(id => !maps.get(id).has(date))) continue;
       const value = positions.reduce((total, row) => total + row.quantity * maps.get(row.ticker).get(date) *
         (row.currency === "USD" ? maps.get("USDCAD").get(date) : 1), 0);
+      if (!U.validNumber(value) || value <= 0) return unavailable;
       points.push({date, portfolio: value, benchmark});
     }
     if (points.length < 2) return {...unavailable, reason: "short_history", observations: Math.max(0, points.length - 1)};
@@ -71,13 +76,35 @@
       benchmarkReturns.push(points[i].benchmark / points[i - 1].benchmark - 1);
     }
     const n = portfolioReturns.length, stats = n > 1 ? moments(portfolioReturns, benchmarkReturns) : null;
-    const canVolatility = n >= MIN_VOLATILITY_RETURNS, canBeta = n >= MIN_BETA_RETURNS && stats.secondVariance > 1e-12;
+    const canVolatility = n >= MIN_VOLATILITY_RETURNS, canRatio = n >= MIN_RATIO_RETURNS;
+    const canBeta = n >= MIN_BETA_RETURNS && stats.secondVariance > VARIANCE_EPSILON;
+    const dailyRiskFree = Math.expm1(Math.log1p(RISK_FREE_RATE) / SESSIONS_PER_YEAR);
+    const active = portfolioReturns.map((value, i) => value - benchmarkReturns[i]);
+    const activeStats = n > 1 ? moments(active, active) : null;
+    function measures(returns, key, variance, mean, beta) {
+      const annualExcess = canRatio ? (mean - dailyRiskFree) * SESSIONS_PER_YEAR : null;
+      // Lower partial moment over ALL observations, not just the losing days.
+      const downsideVariance = returns.reduce((sum, value) => sum + Math.min(0, value - dailyRiskFree) ** 2, 0) / n;
+      return {period_return: (points.at(-1)[key] / points[0][key] - 1) * 100,
+        volatility: canVolatility ? Math.sqrt(variance * SESSIONS_PER_YEAR) * 100 : null,
+        drawdown: drawdown(points, key), beta,
+        sharpe: canRatio && variance > VARIANCE_EPSILON ? annualExcess / Math.sqrt(variance * SESSIONS_PER_YEAR) : null,
+        sortino: canRatio && downsideVariance > VARIANCE_EPSILON ? annualExcess / Math.sqrt(downsideVariance * SESSIONS_PER_YEAR) : null,
+        treynor: canRatio && beta > 1e-8 ? annualExcess / beta * 100 : null};
+    }
+    const portfolio = measures(portfolioReturns, "portfolio", stats?.firstVariance, stats?.meanFirst, canBeta ? stats.covariance / stats.secondVariance : null);
+    const benchmark = measures(benchmarkReturns, "benchmark", stats?.secondVariance, stats?.meanSecond, canBeta ? 1 : null);
+    Object.assign(portfolio, {
+      active_return: canRatio ? activeStats.meanFirst * SESSIONS_PER_YEAR * 100 : null,
+      tracking_error: canVolatility ? Math.sqrt(activeStats.firstVariance * SESSIONS_PER_YEAR) * 100 : null,
+      information: canRatio && activeStats.firstVariance > VARIANCE_EPSILON ? activeStats.meanFirst * Math.sqrt(SESSIONS_PER_YEAR / activeStats.firstVariance) : null,
+      alpha: canRatio && canBeta ? ((stats.meanFirst - dailyRiskFree) - portfolio.beta * (stats.meanSecond - dailyRiskFree)) * SESSIONS_PER_YEAR * 100 : null,
+      correlation: canBeta && stats.firstVariance > VARIANCE_EPSILON ? Math.max(-1, Math.min(1, stats.covariance / Math.sqrt(stats.firstVariance * stats.secondVariance))) : null});
+    Object.assign(benchmark, {active_return: canRatio ? 0 : null, tracking_error: canVolatility ? 0 : null,
+      information: null, alpha: canRatio && canBeta ? 0 : null, correlation: canBeta ? 1 : null});
     return {available: true, reason: null, start: points[0].date, end: points.at(-1).date, requested_start: selected.start,
       requested_end: selected.end, observations: n, matched_closes: points.length, skipped_closes: candidates.length - points.length,
-      portfolio: {volatility: canVolatility ? Math.sqrt(stats.firstVariance * SESSIONS_PER_YEAR) * 100 : null,
-        drawdown: drawdown(points, "portfolio"), beta: canBeta ? stats.covariance / stats.secondVariance : null},
-      benchmark: {volatility: canVolatility ? Math.sqrt(stats.secondVariance * SESSIONS_PER_YEAR) * 100 : null,
-        drawdown: drawdown(points, "benchmark"), beta: canBeta ? 1 : null},
+      risk_free_rate: RISK_FREE_RATE, portfolio, benchmark,
       beta_reason: n < MIN_BETA_RETURNS ? "short_history" : !canBeta ? "constant_benchmark" : null};
   }
   function safeHTTPS(value) {
@@ -173,5 +200,5 @@
       inWindow: !!earnings && week.start >= earnings.window.start && week.end <= earnings.window.end};
   }
   return {contributionsFor, riskFor, normalizeEarnings, selectEarnings, earningsOutcome, earningsMessages, weekFor, localDay, shiftDay,
-    MIN_VOLATILITY_RETURNS, MIN_BETA_RETURNS, SESSIONS_PER_YEAR};
+    MIN_VOLATILITY_RETURNS, MIN_BETA_RETURNS, MIN_RATIO_RETURNS, SESSIONS_PER_YEAR, RISK_FREE_RATE};
 });

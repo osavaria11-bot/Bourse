@@ -9,6 +9,24 @@ const U = require("../js/macro-utils.js");
 const E = require("../js/portfolio-exposure-utils.js");
 const F = require("../js/portfolio-analytics-utils.js");
 const A = require("../js/portfolio-profile-utils.js"), crypto = require("node:crypto");
+async function checkRiskRatios(page, risk) {
+  const measures = [["period_return", " %"], ["active_return", " %"], ["sharpe", ""], ["sortino", ""],
+    ["information", ""], ["treynor", " %/β"], ["alpha", " %"], ["volatility", " %"],
+    ["tracking_error", " %"], ["drawdown", " %"], ["beta", ""], ["correlation", ""]];
+  assert.equal(await page.locator('#portfolioRiskRows tr').count(), measures.length);
+  for (const [key, unit] of measures) {
+    const cells = await page.locator('#portfolioRiskRows tr[data-metric="' + key + '"] td').allTextContents();
+    for (const [index, side] of [[0, risk.portfolio], [1, risk.benchmark]]) {
+      const value = key === 'drawdown' ? side.drawdown?.value : side[key];
+      assert.equal(cells[index], U.validNumber(value) ? U.formatNumber(value, 2) + unit : 'N/D', key);
+    }
+  }
+  assert.equal(await page.locator('#portfolioRiskRows tr[data-metric="information"] td').nth(1).textContent(), 'N/D');
+  if (risk.available) {
+    assert.match(await page.locator('#portfolioRiskNote').textContent(), /2,38 %\/an/);
+    assert.match(await page.locator('#portfolioRiskStatus').textContent(), new RegExp(risk.start + '.*' + risk.end));
+  }
+}
 async function checkRelative(page, comparison, benchmark) {
   assert.equal(await page.locator('#portfolioRelativeTitle').innerText(), 'Écart avec ' + benchmark);
   if (!comparison.available) {assert.equal(await page.locator('#portfolioRelativeChart svg').count(), 0); return;}
@@ -281,6 +299,7 @@ async function main() {
       const selected = P.period(history, range.key);
       const comparison = P.benchmarkFor(selected, prices.series.find(row => row.id === "FEQT"));
       const contributions = F.contributionsFor(syntheticPositions, prices, selected), risk = F.riskFor(syntheticPositions, prices, selected);
+      await checkRiskRatios(page, risk);
       assert.equal(await page.locator("#portfolioContributionRows tr").count(), contributions.rows.length);
       assert.deepEqual(await page.locator("#portfolioContributionRows tr").evaluateAll(nodes => nodes.map(node => node.dataset.ticker)), contributions.rows.map(row => row.ticker));
       for (const row of contributions.rows) {
@@ -398,7 +417,7 @@ async function main() {
     assert.equal(await page.locator("#portfolioChart .chart-benchmark").count(), 0);
     assert.equal(await page.locator("#portfolioContributionRows tr").count(), 0);
     assert.match(await page.locator("#portfolioContributionsStatus").innerText(), /indisponibles/);
-    assert.deepEqual(await page.locator("#portfolioRiskRows td").allTextContents(), ["N/D", "N/D", "—", "N/D", "N/D", "—", "N/D", "N/D", "—"]);
+    assert.deepEqual(await page.locator("#portfolioRiskRows td").allTextContents(), Array.from({length: 12}, () => ["N/D", "N/D", "—"]).flat());
     missingBaseline = false; missingFX = true;
     await page.reload(); await page.waitForFunction(() => document.querySelectorAll("#portfolioRows tr").length === 6);
     await page.evaluate(() => { window.SavyLiveFX.current = () => null; document.dispatchEvent(new Event("savy:fx")); });
@@ -499,6 +518,7 @@ async function main() {
       await checkRelative(direct, expected, 'VBAL');
       assert.equal(await direct.locator('#portfolioBenchmark .portfolio-benchmark-item:nth-child(2) strong').textContent(), U.validNumber(expected.benchmark_percent) ? (expected.benchmark_percent > 0 ? '+' : '') + U.formatNumber(expected.benchmark_percent, 2) + ' %' : '—');
       const risk = F.riskFor(secondSyntheticPositions, prices, selected, 'VBAL');
+      await checkRiskRatios(direct, risk);
       const value = risk.portfolio.beta;
       assert.equal(await direct.locator('#portfolioRiskRows tr[data-metric="beta"] td').first().textContent(), U.validNumber(value) ? U.formatNumber(value, 2) : 'N/D');
       const contributed = F.contributionsFor(secondSyntheticPositions, prices, selected);
@@ -583,6 +603,7 @@ async function main() {
       await checkRelative(direct, expected, 'VGRO');
       assert.equal(await direct.locator('#portfolioBenchmark .portfolio-benchmark-item:nth-child(2) strong').textContent(), U.validNumber(expected.benchmark_percent) ? (expected.benchmark_percent > 0 ? '+' : '') + U.formatNumber(expected.benchmark_percent, 2) + ' %' : '—');
       const risk = F.riskFor(thirdSyntheticPositions, prices, selected, 'VGRO'), value = risk.portfolio.beta;
+      await checkRiskRatios(direct, risk);
       assert.equal(await direct.locator('#portfolioRiskRows tr[data-metric="beta"] td').first().textContent(), U.validNumber(value) ? U.formatNumber(value, 2) : 'N/D');
       assert.equal(await direct.locator('#portfolioContributionRows tr').count(), F.contributionsFor(thirdSyntheticPositions, prices, selected).rows.length);
     }
