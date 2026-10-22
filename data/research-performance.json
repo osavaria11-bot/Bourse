@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "kind": "savy_finviz_performance",
-  "generated_at": "2026-10-20T12:00:53.253Z",
+  "generated_at": "2026-10-22T02:27:28.381Z",
   "currency": "USD",
   "return_basis": "price_return",
   "initial_capital": 10000,
   "launch_date": "2026-09-30",
-  "as_of": "2026-10-15",
-  "period_start": "2026-10-08",
+  "as_of": "2026-10-21",
+  "period_start": "2026-10-15",
   "dates": [
     "2026-09-30",
     "2026-10-01",
@@ -20,7 +20,11 @@
     "2026-10-12",
     "2026-10-13",
     "2026-10-14",
-    "2026-10-15"
+    "2026-10-15",
+    "2026-10-16",
+    "2026-10-19",
+    "2026-10-20",
+    "2026-10-21"
   ],
   "values": {
     "top5": [
@@ -35,7 +39,11 @@
       9423.512282278949,
       9378.109068690597,
       9030.503408490165,
-      8984.458340899915
+      8984.458340899915,
+      8983.116771398149,
+      8953.402761402249,
+      9040.29153497527,
+      9028.92947885713
     ],
     "others": [
       10000,
@@ -49,6 +57,10 @@
       9982.689264816669,
       9897.112600349334,
       9653.910305206073,
+      9702.357719288826,
+      9702.357719288826,
+      9702.357719288826,
+      9702.357719288826,
       9702.357719288826
     ],
     "spy": [
@@ -63,7 +75,11 @@
       10202.85066152656,
       10201.67053485963,
       10091.394254094384,
-      10120.11066965632
+      10120.11066965632,
+      10008.129761483287,
+      10050.483196307516,
+      10084.182368907595,
+      10137.156943734184
     ]
   },
   "method_note": "Simulation en USD : 10 000 $ par portefeuille au 30 septembre 2026. Série de cours hors dividendes, sans frais ni impôts. Historique reconstitué jusqu’au 8 octobre; suivi enregistré ensuite. Les nouvelles pondérations s’appliquent après la clôture d’exécution, jamais à la période passée. Rééquilibrages du jeudi; valeurs actualisées lors de la livraison hebdomadaire, pas en intraday. Les clôtures et dates ci-dessus sont celles du dernier relevé enregistré, pas celles de la consultation."

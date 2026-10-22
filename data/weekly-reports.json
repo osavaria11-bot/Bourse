@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "savy_weekly_reports",
-  "generated_at": "2026-10-19T11:38:54Z",
+  "generated_at": "2026-10-22T02:27:28.315011Z",
   "reports": {
     "real_estate": {
       "title": "Débriefing immobilier",
@@ -28,25 +28,78 @@
     },
     "stocks": {
       "title": "Top 5 du screener Finviz",
-      "edition_date": "2026-10-14",
-      "reference_date": "2026-10-14",
+      "edition_date": "2026-10-21",
+      "reference_date": "2026-10-21",
       "document_scope": "full",
-      "summary": "Mastercard arrive en tête pour la visibilité de ses flux de trésorerie. Le screener ne retient que quatre candidats dans cette édition : MA, LLY, APH et WMG. Mastercard est le seul BUY au cours de référence.",
-      "highlights": [],
-      "method_note": "Classement et décisions de l’édition du 14 octobre, aux clôtures en USD. Rendements centraux conditionnels sur 24 mois, dividendes modélisés inclus. Cette édition conserve les 13 filtres alors en vigueur; le nouveau screener à 12 filtres s’applique aux prochaines éditions.",
+      "summary": "NVIDIA arrive en tête, devant Micron, TSMC, Amphenol et Sandisk. Les 14 admissibles sont analysés aux clôtures du 21 octobre 2026 en USD. Le suivi simulé A/B/SPY couvre les clôtures du 15 au 21 octobre, hors dividendes; les nouveaux rangs ne seront appliqués qu’après la clôture admissible du 22 octobre. Le capital et les historiques depuis le 30 septembre sont conservés.",
+      "highlights": [
+        "A « Top 5 pondéré » — clôture du 21 octobre : 9 028,93 USD; période 15–21 octobre +0,49 %; depuis le 30 septembre -9,71 %. Écart à SPY : +0.33 point sur la période, -11.08 points depuis le lancement.",
+        "B « Autres équipondérés » — clôture du 21 octobre : 9 702,36 USD; période 15–21 octobre +0,00 %; depuis le 30 septembre -2,98 %. Écart à SPY : -0.17 point sur la période, -4.35 points depuis le lancement.",
+        "SPY conservé — clôture du 21 octobre : 10 137,16 USD; période 15–21 octobre +0,17 %; depuis le 30 septembre +1,37 %.",
+        "Univers vérifié le 21 octobre à 22 h 04 EDT : 14 admissibles sur une page, 12 filtres exacts. Top 5 : NVDA, MU, TSM, APH, SNDK; 100 % technologie et forte sensibilité au cycle IA.",
+        "Dernière exécution : 15 octobre; 59 transactions conservées. Les nouveaux poids A 30–25–20–15–10 % et B 1/9 restent en attente de la clôture vérifiée du 22 octobre. Aucun prix futur ni nouvel apport.",
+        "Les scénarios sont conditionnels. Révisions BPA 1/3 mois, momentum 6 mois et 12-1 : N/D. Révision fournisseur MA du 15 octobre documentée sans réécrire le registre. Rapport complet : 14 fiches et suivi A/B/SPY."
+      ],
+      "method_note": "Screener exact à 12 filtres, appliqué à cette nouvelle édition après la demande du 17 octobre : Short Float <5 %, SMA50 retirée, dix autres filtres conservés. Décisions aux clôtures du 21 octobre, 16 h EDT, en USD. Scénarios centraux à 24 mois conditionnels, dividendes bruts modélisés inclus sauf SNDK hors dividendes; aucune probabilité inventée. Suivi simulé A/B/SPY : cours hors dividendes, sans frais, impôts ou change, période 15–21 octobre; cumul depuis le 30 septembre 2026. Écarts à SPY aux mêmes dates, en points. Exécution passée du 15 octobre distincte des instructions en attente pour le 22; aucune remise à zéro. Les lacunes de consensus historique, momentum et comparables sont indiquées N/D dans le PDF.",
       "stocks": [
-        {"rank": 1, "ticker": "MA", "company": "Mastercard", "rating": 3.9, "decision": "BUY", "summary": "Réseau mondial de paiements et services à forte marge. Les volumes transfrontaliers, les services et les rachats d’actions soutiennent la thèse.", "central_label": "Scénario central à 24 mois : +29 % USD · +14 %/an", "risk": "Routage des cartes, réglementation et ralentissement de la consommation."},
-        {"rank": 2, "ticker": "LLY", "company": "Eli Lilly", "rating": 3.6, "decision": "HOLD", "summary": "La croissance des traitements du diabète et de l’obésité repose sur la capacité, l’accès aux payeurs et les progrès cliniques. Le prix limite la marge de sécurité.", "central_label": "Scénario central à 24 mois : +27 % USD · +13 %/an", "risk": "Pression sur les prix, concurrence, essais et besoins de capital."},
-        {"rank": 3, "ticker": "APH", "company": "Amphenol", "rating": 3.5, "decision": "HOLD", "summary": "Le contenu croissant des interconnexions IA et les acquisitions soutiennent la croissance. Le repli du cours améliore le potentiel, malgré une prime de valorisation encore élevée.", "central_label": "Scénario central à 24 mois : +25 % USD · +12 %/an", "risk": "Cycle de capex IA, dette d’acquisition et conversion des commandes en cash."},
-        {"rank": 4, "ticker": "WMG", "company": "Warner Music Group", "rating": 3.2, "decision": "HOLD", "summary": "Les droits musicaux, le streaming et les gains de marge portent le scénario. Les licences IA ajoutent une piste de croissance, avec une visibilité encore faible.", "central_label": "Scénario central à 24 mois : +32 % USD · +15 %/an", "risk": "Dette, coût des catalogues, exécution et contribution incertaine de l’IA."}
+        {
+          "rank": 1,
+          "ticker": "NVDA",
+          "company": "NVIDIA",
+          "rating": 4.4,
+          "decision": "BUY",
+          "summary": "Clôture du 21 octobre 2026, 16 h EDT : 221,97 USD. Potentiel et avantage logiciel supérieurs, mais dépendance aux budgets IA et à leur financement. Potentiel supérieur à la comparaison de marché, sous réserve du risque et de la concentration.",
+          "central_label": "Scénario central 24 mois : +91 % USD · +38 %/an · dividendes modélisés inclus",
+          "risk": "Le scénario défavorable combine ralentissement du financement client et baisse de marge. Le favorable demande une monétisation soutenue de l'IA et une prime élevée."
+        },
+        {
+          "rank": 2,
+          "ticker": "MU",
+          "company": "Micron Technology",
+          "rating": 4.1,
+          "decision": "BUY",
+          "summary": "Clôture du 21 octobre 2026, 16 h EDT : 913,67 USD. Décote forte et contrats documentés; risque cyclique et de révision bien supérieur à NVIDIA. Potentiel supérieur à la comparaison de marché, sous réserve du risque et de la concentration.",
+          "central_label": "Scénario central 24 mois : +79 % USD · +34 %/an · dividendes modélisés inclus",
+          "risk": "Le défavorable à 100 $ de BPA n'est pas un plancher : il illustre un cycle défavorable avec compression des prix et des marges. Le favorable exige une demande persistante et peu d'offre nouvelle."
+        },
+        {
+          "rank": 3,
+          "ticker": "TSM",
+          "company": "TSMC",
+          "rating": 4.0,
+          "decision": "BUY",
+          "summary": "Clôture du 21 octobre 2026, 16 h EDT : 431,89 USD. Résultats frais et leadership industriel; potentiel moins spectaculaire mais meilleure visibilité que la mémoire. Potentiel supérieur à la comparaison de marché, sous réserve du risque et de la concentration.",
+          "central_label": "Scénario central 24 mois : +45 % USD · +20 %/an · dividendes modélisés inclus",
+          "risk": "Le central requiert l'utilisation des capacités 2 nm et une hausse des profits malgré les coûts étrangers. Le favorable demande aussi une hausse du multiple; le défavorable retient moins de bénéfices et une décote géopolitique."
+        },
+        {
+          "rank": 4,
+          "ticker": "APH",
+          "company": "Amphenol",
+          "rating": 3.8,
+          "decision": "BUY",
+          "summary": "Clôture du 21 octobre 2026, 16 h EDT : 79,20 USD. Moins de potentiel que la mémoire, mais qualité du cash et diversité opérationnelle supérieures. Potentiel supérieur à la comparaison de marché, sous réserve du risque et de la concentration.",
+          "central_label": "Scénario central 24 mois : +43 % USD · +19 %/an · dividendes modélisés inclus",
+          "risk": "Le favorable requiert maintien des commandes et intégration sans dilution excessive. Le défavorable suppose ralentissement de l'IT datacom et dévalorisation."
+        },
+        {
+          "rank": 5,
+          "ticker": "SNDK",
+          "company": "Sandisk",
+          "rating": 3.7,
+          "decision": "BUY",
+          "summary": "Clôture du 21 octobre 2026, 16 h EDT : 1 378,22 USD. Potentiel élevé, mais cycle NAND, dilution et durée de visibilité inférieure aux quatre premiers. Potentiel supérieur à la comparaison de marché, sous réserve du risque et de la concentration.",
+          "central_label": "Scénario central 24 mois : +74 % USD · +32 %/an · hors dividendes",
+          "risk": "Le défavorable envisage 100 $ de BPA et 6× si les prix et le mix se retournent. Le favorable suppose une poursuite des SSD d'entreprise et une prime accrue."
+        }
       ],
       "document": {
-        "path": "reports/stocks/2026-10-14.pdf",
-        "label": "Ouvrir le rapport actions complet",
+        "path": "reports/stocks/2026-10-21.pdf",
+        "label": "Ouvrir le rapport actions et suivi complet - 21 octobre 2026",
         "mime_type": "application/pdf",
-        "pages": 16,
-        "size_bytes": 172998,
-        "sha256": "3415a79fde7d9181c20f4b0a5daf13b8f7d91dd36d5bc42385ff0f5753224838"
+        "pages": 35,
+        "size_bytes": 170158,
+        "sha256": "70b3bededc62bd712bc7f0c3dcde643af32086613e145ac5442905d27348dcb6"
       }
     }
   }
