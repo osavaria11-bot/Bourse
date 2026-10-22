@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "reviewed_earnings_highlights",
-  "reviewed_at": "2026-10-21T11:15:38.881Z",
+  "reviewed_at": "2026-10-22T11:10:49.369Z",
   "reports": {
     "NFLX:2026-10-20": {
       "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-20-netflix-inc-stock/",
@@ -291,6 +291,26 @@
         "Google Cloud croît de 82 %.",
         "Les investissements rendent le flux de trésorerie disponible négatif de 5,9 G$ US.",
         "Alphabet ajoute 15 G$ US de dépenses prévues en 2026 et anticipe une augmentation en 2027."
+      ]
+    },
+    "META:2026-10-21": {
+      "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-21-facebook-inc-stock/",
+      "source_url": "https://www.globalbankingandfinance.com/meta-issue-new-class-shares-tightens-ai-spending-forecast/",
+      "messages": [
+        "Monétisation — Zuckerberg annonce plus de dix millions de comptes Muse en six semaines et veut facturer plus tôt que pour les produits habituels, car les coûts sont élevés. Susan Li prévoit des revenus additionnels d’IA en 2027; les comptes ouverts ne prouvent donc pas encore la rentabilité.",
+        "Perspectives — Les revenus prévus au T4 sont de 73–76 G$ US, contre 73,73 G$ US au consensus LSEG. Le minimum du budget annuel d’investissements monte de 130 à 135 G$ US, le plafond restant à 145 : la croissance exige davantage de capital avant sa monétisation.",
+        "Financement — Le cash-flow libre devient négatif de 2,12 G$ US. La catégorie C sans droit de vote, prévue en janvier 2027, facilitera de futures émissions pour les investissements et acquisitions. Ma lecture : surveiller la dilution future et le maintien du contrôle de Zuckerberg.",
+        "Risque juridique — La charge de 9,89 G$ US liée au règlement sur les adolescents réduit le BPA du trimestre. Reuters rapporte séparément une pénalité de 25 G$ US ordonnée le 21 octobre au Nouveau-Mexique. Ce sont deux dossiers distincts; ne pas confondre charge comptable et décaissement immédiat."
+      ]
+    },
+    "WCN:2026-10-21": {
+      "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-21-waste-connections-inc-stock/",
+      "source_url": "https://greenstocknews.com/news/nyse/wcn/waste-connections-reports-third-quarter-2026-results-and-raises-full-year-outlook",
+      "messages": [
+        "Perspectives — Waste Connections relève une deuxième fois ses objectifs 2026 : revenus d’environ 10,09 G$ US et BAIIA ajusté de 3,345 G$ US. Ces cibles excluent les acquisitions supplémentaires et supposent un environnement économique inchangé.",
+        "Exécution — Le PDG signale une amélioration séquentielle de 70 points de base des volumes unitaires de déchets solides, menée par les sites d’enfouissement. La marge de BAIIA ajusté atteint 34 %, avec une expansion sous-jacente de 50 points de base malgré la hausse tardive du diesel.",
+        "Cash-flow — La direction vise 1,40–1,45 G$ US de flux de trésorerie disponible ajusté pour 2026, après environ 1,25 G$ US d’investissements. Ma lecture : vérifier la conversion des marges en cash; cette mesure ajustée ne représente pas tout l’argent libre après le service obligatoire de la dette.",
+        "Capital — Les rachats dépassent 1 G$ US depuis janvier, soit 2,5 % des actions, et le dividende augmente de 10 % pour une seizième hausse annuelle consécutive. Les acquisitions conclues ajoutent environ 130 M$ US de revenus annualisés; leur intégration doit préserver la discipline financière."
       ]
     }
   }
