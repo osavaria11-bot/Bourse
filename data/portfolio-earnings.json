@@ -3722,12 +3722,41 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=META&size=100"
           },
-          "messages": [],
+          "messages": [
+            {
+              "text": "Publication du 21 octobre — Ces résultats Q3 2026 apparaissent aussi dans une fiche fournisseur du 22; ce n’est pas un nouveau trimestre. Muse dépasse dix millions de comptes en six semaines. Zuckerberg veut le monétiser plus tôt, car son coût est élevé; ces comptes ne prouvent pas encore sa rentabilité.",
+              "language": "fr",
+              "source_url": "https://www.globalbankingandfinance.com/meta-issue-new-class-shares-tightens-ai-spending-forecast/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Perspectives — Les revenus prévus au T4 sont de 73–76 G$ US, contre 73,73 G$ US au consensus LSEG. Le minimum du budget annuel d’investissements monte de 130 à 135 G$ US, le plafond restant à 145 : la croissance exige davantage de capital avant sa monétisation.",
+              "language": "fr",
+              "source_url": "https://www.globalbankingandfinance.com/meta-issue-new-class-shares-tightens-ai-spending-forecast/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Financement — Le cash-flow libre devient négatif de 2,12 G$ US. La catégorie C sans droit de vote, prévue en janvier 2027, facilitera de futures émissions pour les investissements et acquisitions. Ma lecture : surveiller la dilution future et le maintien du contrôle de Zuckerberg.",
+              "language": "fr",
+              "source_url": "https://www.globalbankingandfinance.com/meta-issue-new-class-shares-tightens-ai-spending-forecast/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Risque juridique — La charge de 9,89 G$ US liée au règlement sur les adolescents réduit le BPA du trimestre. Reuters rapporte séparément une pénalité de 25 G$ US ordonnée le 21 octobre au Nouveau-Mexique. Ce sont deux dossiers distincts; ne pas confondre charge comptable et décaissement immédiat.",
+              "language": "fr",
+              "source_url": "https://www.globalbankingandfinance.com/meta-issue-new-class-shares-tightens-ai-spending-forecast/",
+              "kind": "reviewed_summary"
+            }
+          ],
           "report_url": null,
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=META&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.globalbankingandfinance.com/meta-issue-new-class-shares-tightens-ai-spending-forecast/"
             }
           ]
         },
@@ -3751,22 +3780,28 @@
           },
           "messages": [
             {
-              "text": "Core business momentum remained strong",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-22-facebook-inc-stock/",
-              "kind": "call_topic"
+              "text": "Publication du 21 octobre — Ces résultats Q3 2026 apparaissent aussi dans une fiche fournisseur du 22; ce n’est pas un nouveau trimestre. Muse dépasse dix millions de comptes en six semaines. Zuckerberg veut le monétiser plus tôt, car son coût est élevé; ces comptes ne prouvent pas encore sa rentabilité.",
+              "language": "fr",
+              "source_url": "https://www.globalbankingandfinance.com/meta-issue-new-class-shares-tightens-ai-spending-forecast/",
+              "kind": "reviewed_summary"
             },
             {
-              "text": "Muse showed rapid early adoption",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-22-facebook-inc-stock/",
-              "kind": "call_topic"
+              "text": "Perspectives — Les revenus prévus au T4 sont de 73–76 G$ US, contre 73,73 G$ US au consensus LSEG. Le minimum du budget annuel d’investissements monte de 130 à 135 G$ US, le plafond restant à 145 : la croissance exige davantage de capital avant sa monétisation.",
+              "language": "fr",
+              "source_url": "https://www.globalbankingandfinance.com/meta-issue-new-class-shares-tightens-ai-spending-forecast/",
+              "kind": "reviewed_summary"
             },
             {
-              "text": "AI expansion is driving substantial near-term costs.",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-22-facebook-inc-stock/",
-              "kind": "call_topic"
+              "text": "Financement — Le cash-flow libre devient négatif de 2,12 G$ US. La catégorie C sans droit de vote, prévue en janvier 2027, facilitera de futures émissions pour les investissements et acquisitions. Ma lecture : surveiller la dilution future et le maintien du contrôle de Zuckerberg.",
+              "language": "fr",
+              "source_url": "https://www.globalbankingandfinance.com/meta-issue-new-class-shares-tightens-ai-spending-forecast/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Risque juridique — La charge de 9,89 G$ US liée au règlement sur les adolescents réduit le BPA du trimestre. Reuters rapporte séparément une pénalité de 25 G$ US ordonnée le 21 octobre au Nouveau-Mexique. Ce sont deux dossiers distincts; ne pas confondre charge comptable et décaissement immédiat.",
+              "language": "fr",
+              "source_url": "https://www.globalbankingandfinance.com/meta-issue-new-class-shares-tightens-ai-spending-forecast/",
+              "kind": "reviewed_summary"
             }
           ],
           "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-22-facebook-inc-stock/",
@@ -3774,6 +3809,10 @@
             {
               "label": "MarketBeat · résultats et consensus",
               "url": "https://www.marketbeat.com/stocks/NASDAQ/META/earnings/"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.globalbankingandfinance.com/meta-issue-new-class-shares-tightens-ai-spending-forecast/"
             }
           ]
         }
@@ -7016,5 +7055,6 @@
       "source_warnings": []
     }
   },
-  "errors": {}
+  "errors": {},
+  "analysis_reviewed_at": "2026-10-22T11:16:36.960Z"
 }
