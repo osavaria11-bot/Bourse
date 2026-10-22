@@ -1,16 +1,16 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-10-22T11:17:34.178492+00:00",
+  "generated_at": "2026-10-22T15:40:58.085502+00:00",
   "last_successful_update": "2026-10-21T11:20:31.025315+00:00",
   "update_status": "partial_data",
   "coverage": {
     "total": 42,
-    "fresh": 37,
-    "cached": 5,
+    "fresh": 38,
+    "cached": 4,
     "unavailable": 0
   },
   "data_provider": "FRED / Banque du Canada / Statistique Canada / Numerco / Fed de New York / U.S. Treasury",
-  "briefing_paragraph": "Dernières observations publiées — Inflation CPI · annuelle : 3,72 % (période : 2026-09-01); Inflation PCE sous-jacente · annuelle : 3,01 % (période : 2026-08-01); Inflation Canada · IPC global annuel : 3,1 % (période : 2026-09-01); Inflation Canada · CPI-trim annuel : 1,8 % (période : 2026-09-01); Inflation Canada · CPI-median annuel : 1,9 % (période : 2026-09-01); Taux de chômage · États-Unis : 4,20 % (période : 2026-09-01); Taux de chômage · Canada : 6,50 % (période : 2026-09-01); Assurance-chômage US · demandes initiales : 199000 demandes (période : 2026-10-10); Assurance-chômage US · moyenne de 4 semaines : 198500 demandes (période : 2026-10-10); Créations nettes d’emplois · mensuelles : 29 milliers (période : 2026-09-01); Croissance du PIB réel · trimestre annualisé : 2,22 % (période : 2026-04-01); Taux directeur américain · borne inférieure : 3,75 % (période : 2026-10-21); Taux directeur américain · borne supérieure : 4,00 % (période : 2026-10-21); Trésor américain · 10 ans : 5,13 % (période : 2026-10-21); Taux réel américain · 10 ans (TIPS) : 2,76 % (période : 2026-10-21); Courbe des taux · 10 ans – 2 ans : 0,32 pt (période : 2026-10-21); Volatilité anticipée · VIX : 17,31 points (période : 2026-10-20); USD/CAD · dollars canadiens pour 1 $ US : 1,4157 $ CA/$ US (période : 2026-10-16); Taux directeur canadien : 2,25 % (période : 2026-10-20).",
+  "briefing_paragraph": "Dernières observations publiées — Inflation CPI · annuelle : 3,72 % (période : 2026-09-01); Inflation PCE sous-jacente · annuelle : 3,01 % (période : 2026-08-01); Inflation Canada · IPC global annuel : 3,1 % (période : 2026-09-01); Inflation Canada · CPI-trim annuel : 1,8 % (période : 2026-09-01); Inflation Canada · CPI-median annuel : 1,9 % (période : 2026-09-01); Taux de chômage · États-Unis : 4,20 % (période : 2026-09-01); Taux de chômage · Canada : 6,50 % (période : 2026-09-01); Assurance-chômage US · demandes initiales : 194000 demandes (période : 2026-10-17); Assurance-chômage US · moyenne de 4 semaines : 197750 demandes (période : 2026-10-17); Créations nettes d’emplois · mensuelles : 29 milliers (période : 2026-09-01); Croissance du PIB réel · trimestre annualisé : 2,22 % (période : 2026-04-01); Taux directeur américain · borne inférieure : 3,75 % (période : 2026-10-22); Taux directeur américain · borne supérieure : 4,00 % (période : 2026-10-22); Trésor américain · 10 ans : 5,13 % (période : 2026-10-21); Taux réel américain · 10 ans (TIPS) : 2,76 % (période : 2026-10-21); Courbe des taux · 10 ans – 2 ans : 0,32 pt (période : 2026-10-21); Volatilité anticipée · VIX : 16,68 points (période : 2026-10-21); USD/CAD · dollars canadiens pour 1 $ US : 1,4157 $ CA/$ US (période : 2026-10-16); Taux directeur canadien : 2,25 % (période : 2026-10-21).",
   "news_digest_note": "Veille complémentaire. Les données suivent le calendrier de publication de chaque source.",
   "news_sources": [
     {
@@ -48,20 +48,20 @@
     {
       "id": "DFEDTARU",
       "title": "Taux directeur américain · borne supérieure",
-      "date": "2026-10-21",
+      "date": "2026-10-22",
       "value": 4.0,
       "previous_value": 4.0,
-      "previous_date": "2026-10-20",
+      "previous_date": "2026-10-21",
       "unit": "%",
       "fetch_status": "fresh"
     },
     {
       "id": "DFEDTARL",
       "title": "Taux directeur américain · borne inférieure",
-      "date": "2026-10-21",
+      "date": "2026-10-22",
       "value": 3.75,
       "previous_value": 3.75,
-      "previous_date": "2026-10-20",
+      "previous_date": "2026-10-21",
       "unit": "%",
       "fetch_status": "fresh"
     },
@@ -158,20 +158,20 @@
     {
       "id": "ICSA",
       "title": "Assurance-chômage US · demandes initiales",
-      "date": "2026-10-10",
-      "value": 199000.0,
-      "previous_value": 198000.0,
-      "previous_date": "2026-10-03",
+      "date": "2026-10-17",
+      "value": 194000.0,
+      "previous_value": 200000.0,
+      "previous_date": "2026-10-10",
       "unit": "demandes",
       "fetch_status": "fresh"
     },
     {
       "id": "IC4WSA",
       "title": "Assurance-chômage US · moyenne de 4 semaines",
-      "date": "2026-10-10",
-      "value": 198500.0,
-      "previous_value": 198250.0,
-      "previous_date": "2026-10-03",
+      "date": "2026-10-17",
+      "value": 197750.0,
+      "previous_value": 198750.0,
+      "previous_date": "2026-10-10",
       "unit": "demandes",
       "fetch_status": "fresh"
     },
@@ -198,10 +198,10 @@
     {
       "id": "VIXCLS",
       "title": "Volatilité anticipée · VIX",
-      "date": "2026-10-20",
-      "value": 17.31,
-      "previous_value": 18.44,
-      "previous_date": "2026-10-19",
+      "date": "2026-10-21",
+      "value": 16.68,
+      "previous_value": 17.31,
+      "previous_date": "2026-10-20",
       "unit": "points",
       "fetch_status": "fresh"
     },
@@ -218,10 +218,10 @@
     {
       "id": "V39079",
       "title": "Taux directeur canadien",
-      "date": "2026-10-20",
+      "date": "2026-10-21",
       "value": 2.25,
       "previous_value": 2.25,
-      "previous_date": "2026-10-19",
+      "previous_date": "2026-10-20",
       "unit": "%",
       "fetch_status": "fresh"
     }
