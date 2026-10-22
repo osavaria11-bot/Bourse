@@ -1,7 +1,8 @@
 "use strict";
 
-// Dispatch is supported with GITHUB_TOKEN. Each validated refresh queues its
-// successor, so delayed or dropped calendar events do not stop the quote feed.
+// Dispatch is supported with GITHUB_TOKEN. Each source check or validated
+// refresh queues its successor, so delayed calendar events or run indexing
+// do not stop the feed. This dispatcher never authorizes quote publication.
 module.exports = async function queueRefresh({github, context, core, sourceSha, collectedAt,
   now = Date.now, wait = ms => new Promise(resolve => setTimeout(resolve, ms))}) {
   const collected = Date.parse(collectedAt), initial = now();

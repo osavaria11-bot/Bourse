@@ -168,7 +168,10 @@ jobs:
 
   next:
     needs: [source, refresh]
-    if: ${{ always() && !cancelled() && needs.source.outputs.ready == 'true' }}
+    # GitHub's run index can lag a completed deployment. Keep checking the
+    # current source every five minutes while validation becomes visible;
+    # the refresh job still requires an exact successful full validation.
+    if: ${{ always() && !cancelled() && needs.source.result == 'success' }}
     runs-on: ubuntu-latest
     timeout-minutes: 6
     permissions:
