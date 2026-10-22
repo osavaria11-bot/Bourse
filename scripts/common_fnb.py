@@ -110,6 +110,8 @@ def build(root, registry, days, cache, updated_at, sources=None, fetch=False):
     result = {"schema_version":1,"model":MODEL,"currency":"CAD","capital":F.CAPITAL,"inception":F.START,
         "as_of":dates[-1],"updated_at":updated_at,"benchmarks":F.BENCHMARKS,"accounts":accounts,
         "source_ledger_sha256":days[-1]["sha256"],"source_registry_sha256":F.digest(registry),"supplemental_sha256":cache_out["sha256"],
+        "price_revisions":[{"ticker":t, "recorded_on":d["date"], **p["previous_close_revision"]}
+            for d in days for t,p in d["prices"].items() if p.get("previous_close_revision")],
         "methodology":{
             "start":"10 000 $ CA pour tous à la clôture du 19 octobre 2026, avec les pondérations figées propres à chaque portefeuille; aucun rééquilibrage.",
             "simulation":"Les portefeuilles ajoutés après cette date sont simulés depuis le départ commun. Leur allocation était inconnue au début de la comparaison : biais rétrospectif. La courbe entière reste une simulation, distincte du compte réellement enregistré après publication.",
@@ -129,22 +131,48 @@ def run(root, now, sources=None):
         if same: result["updated_at"] = previous["updated_at"]
     F.write(root / CACHE,cache);F.write(prior_file,result)
     unavailable = [a["id"] for a in result["accounts"] if a["status"] != "complete"]
-    F.write(root / STATUS,{"schema_version":1,"status":"retrying" if unavailable else "current","checked_at":now.isoformat(timespec="seconds"),
-        "as_of":result["as_of"],"unavailable":unavailable,"errors":errors})
+    expected = F.completed_session(now).isoformat()
+    stale = result["as_of"] < expected
+    F.write(root / STATUS,{"schema_version":1,"status":"retrying" if unavailable or stale else "current","checked_at":now.isoformat(timespec="seconds"),
+        "as_of":result["as_of"],"expected_session":expected,"unavailable":unavailable,"errors":errors,
+        "message": "Clôture attendue du " + expected + " non encore intégrée; reprise automatique." if stale else
+            "Historiques incomplets; reprise automatique." if unavailable else "Toutes les clôtures attendues sont intégrées."})
     print(f"Common start {F.START}: {len(result['accounts'])-len(unavailable)}/{len(result['accounts'])} complete; as of {result['as_of']}")
     return result
 
 
+def check_freshness(root, now):
+    expected = F.completed_session(now).isoformat()
+    for name, status_path in [("fnb-performance.json", "data/fnb-performance-status.json"), ("fnb-comparison.json", STATUS)]:
+        data, status = F.read(root / "data" / name), F.read(root / status_path)
+        if data["as_of"] != expected or status.get("status") != "current" or status.get("expected_session") != expected:
+            raise ValueError(f"FNB daily update incomplete: {name} as of {data['as_of']}; expected {expected}; status {status.get('status')}")
+        for account in data["accounts"]:
+            if account["launch_date"] <= expected and (not account["history"] or account["history"][-1]["date"] != expected):
+                raise ValueError("FNB closing history incomplete: " + account["id"])
+    print("All FNB portfolios and benchmarks current through", expected)
+
+
 def main():
-    p=argparse.ArgumentParser();p.add_argument("--root",type=Path,default=Path(__file__).resolve().parents[1]);p.add_argument("--check",action="store_true")
+    p=argparse.ArgumentParser();p.add_argument("--root",type=Path,default=Path(__file__).resolve().parents[1]);p.add_argument("--check",action="store_true");p.add_argument("--check-freshness",action="store_true")
     args=p.parse_args();root=args.root
+    if args.check_freshness:
+        check_freshness(root,datetime.now(F.TZ));return 0
     if args.check:
         registry,days=F.load_state(root);saved=F.read(root / DATA)
         expected,cache,_=build(root,registry,days,cached_prices(root),saved["updated_at"])
         if saved != expected: raise ValueError("Common comparison disagrees with source records")
         if cache != F.read(root / CACHE): raise ValueError("Common price cache disagrees")
         print("Validated common-start comparison:",len(saved["accounts"]),"accounts");return 0
-    run(root,datetime.now(F.TZ));return 0
+    now=datetime.now(F.TZ)
+    try: run(root,now)
+    except Exception as exc:
+        saved = F.read(root / DATA) if (root / DATA).exists() else {}
+        F.write(root / STATUS,{"schema_version":1,"status":"retrying","checked_at":now.isoformat(timespec="seconds"),
+            "as_of":saved.get("as_of"),"expected_session":F.completed_session(now).isoformat(),
+            "message":"Comparaison non actualisée; dernier relevé conservé. Reprise automatique.","error":str(exc)[:1600]})
+        raise
+    return 0
 
 
 if __name__ == "__main__": raise SystemExit(main())

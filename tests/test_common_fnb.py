@@ -59,3 +59,19 @@ class CommonStart(unittest.TestCase):
         result,_,_=C.build(self.root,registry,days,C.cached_prices(self.root),"now",sources={"NEW":{}})
         late=result["accounts"][-1];self.assertEqual(late["history"],[]);self.assertEqual(late["status"],"unavailable");self.assertIn("NEW",late["unavailable_reason"])
         self.assertTrue(all(a["history"] for a in result["accounts"][:-1]))
+
+    def test_complete_but_old_ledger_is_not_reported_current(self):
+        now=datetime.fromisoformat("2026-10-22T06:17:00-04:00")
+        result=C.run(self.root,now,self.quotes);status=F.read(self.root / C.STATUS)
+        self.assertEqual(result["as_of"],"2026-10-20");self.assertEqual(status["expected_session"],"2026-10-21")
+        self.assertEqual(status["status"],"retrying")
+        with self.assertRaisesRegex(ValueError,"incomplete"):C.check_freshness(self.root,now)
+        F.run(self.root,now,self.quotes);C.run(self.root,now,self.quotes)
+        C.check_freshness(self.root,now)
+        self.assertEqual(F.read(self.root / C.STATUS)["status"],"current")
+
+    def test_fresh_date_with_missing_portfolio_cannot_pass_health_check(self):
+        now=datetime.fromisoformat("2026-10-20T21:37:00-04:00")
+        C.run(self.root,now,self.quotes)
+        data=F.read(self.root / C.DATA);data["accounts"][0]["history"]=[];F.write(self.root / C.DATA,data)
+        with self.assertRaisesRegex(ValueError,"history incomplete"):C.check_freshness(self.root,now)

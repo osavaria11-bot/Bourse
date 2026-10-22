@@ -6,6 +6,8 @@ on:
       timezone: "America/Toronto"
     - cron: "47 7 * * *"
       timezone: "America/Toronto"
+    - cron: "17 6 * * *"
+      timezone: "America/Toronto"
   workflow_dispatch:
   workflow_run:
     workflows: ["Monthly FNB optimization"]
@@ -24,7 +26,8 @@ permissions:
   contents: write
 
 concurrency:
-  group: macro-data-refresh
+  # Macro releases must not replace a pending daily performance retry.
+  group: fnb-performance-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -78,12 +81,15 @@ jobs:
           if [ "$COMPARISON_OUTCOME" = 'success' ]; then
             git add data/fnb-comparison.json data/fnb-comparison data/fnb-comparison-status.json
           else
+            git add data/fnb-comparison-status.json
             echo "::warning::Common-start comparison pending; last validated comparison retained."
           fi
           if git diff --cached --quiet; then exit 0; fi
           git commit -m "chore: record permanent daily FNB performance"
           git pull --rebase origin main
           git push origin HEAD:main
+      - name: Require yesterday's completed session for every portfolio and benchmark
+        run: python scripts/common_fnb.py --check-freshness
       - name: Performance summary
         if: always()
         run: |

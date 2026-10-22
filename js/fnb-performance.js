@@ -55,21 +55,29 @@ window.SavyFnbPerformance=(()=>{
   $("performanceSlider").max=String(Math.max(0,dates.length-1));$("performanceSlider").disabled=dates.length<2;chart();persist();
  }
  function download(name,body,type){const url=URL.createObjectURL(new Blob([body],{type})),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);}
- async function show(){
+ async function show(force=false){
   if(!$("performance"))return;
   if(location.pathname.includes('/fnb-history/')){$("performanceStatus").innerHTML='Archive figée. <a href="'+new URL('reports/portefeuilles-fnb.html',root).href+'">Ouvrir la comparaison courante ↗</a>';return;}
-  if(data&&Date.now()-loaded<600000){requestAnimationFrame(chart);return;}if(loading)return;loading=true;$("performanceRetry").hidden=true;
+  if(!force&&data&&Date.now()-loaded<300000){requestAnimationFrame(chart);return;}if(loading)return;loading=true;$("performanceRetry").hidden=true;
   try{
-   const response=await fetch(new URL('data/fnb-comparison.json',root),{cache:'no-cache'});if(!response.ok)throw Error('Comparaison indisponible');data=U.validateComparison(await response.json());loaded=Date.now();restore();
+   const [response,statusResponse]=await Promise.all([fetch(new URL('data/fnb-comparison.json',root),{cache:'no-store'}),fetch(new URL('data/fnb-comparison-status.json',root),{cache:'no-store'}).catch(()=>null)]);
+   if(!response.ok)throw Error('Comparaison indisponible');
+   const next=U.validateComparison(await response.json()),status=statusResponse?.ok?await statusResponse.json().catch(()=>null):null;
+   // A delayed HTTP cache must never roll an already displayed session back.
+   if(data&&next.as_of<data.as_of)throw Error('Clôture plus ancienne reçue');
+   const positionId=$("performancePositions").value;data=next;loaded=Date.now();restore();
    $("performanceStart").textContent=date(data.inception);
    $("performanceFocus").innerHTML='<option value="">Sélection libre des courbes</option>'+data.accounts.filter(a=>a.kind!=='benchmark').map(a=>`<option value="${esc(a.id)}">${esc(label(a))}</option>`).join('');
-   $("performancePositions").innerHTML=data.accounts.map(a=>`<option value="${esc(a.id)}">${esc(label(a))}${simulated(a)?' · simulation':''}</option>`).join('');if(focus)$("performancePositions").value=focus;positions();
+   $("performancePositions").innerHTML=data.accounts.map(a=>`<option value="${esc(a.id)}">${esc(label(a))}${simulated(a)?' · simulation':''}</option>`).join('');if(focus||data.accounts.some(a=>a.id===positionId))$("performancePositions").value=focus||positionId;positions();
    $("performanceRecorded").href=new URL('data/fnb-performance.json',root).href;
    $("performanceLedger").href='https://github.com/osavaria11-bot/Bourse/tree/main/data/fnb-performance/days';$("performanceContent").hidden=false;
    const unavailable=data.accounts.filter(a=>!a.history.length).length;
-   $("performanceStatus").textContent='Départ commun le '+date(data.inception)+' · clôture du '+date(data.as_of)+' · actualisation après les marchés.'+(unavailable?' '+unavailable+' historique(s) incomplet(s), signalés dans le tableau.':'');
+   const health=U.freshness(data,status);
+   $("performanceStatus").textContent='Départ commun le '+date(data.inception)+' · clôture intégrée du '+date(data.as_of)+'. '+(health.stale?'Mise à jour en retard : clôture du '+date(health.expected)+' attendue. Reprise automatique.':health.current?'Toutes les clôtures attendues sont intégrées.':'Vérification de l’actualisation en cours; dernière clôture validée affichée.')+(unavailable?' '+unavailable+' historique(s) incomplet(s), signalés dans le tableau.':'');
+   $("performanceStatus").classList.toggle('warning',!health.current);$("performanceRetry").hidden=health.current;
+   const revisions=data.price_revisions||[];$("performanceRevisions").textContent=revisions.length?'Corrections de fournisseur vérifiées : '+revisions.map(r=>r.ticker+' au '+date(r.date)+' : '+money(r.accepted_close)+' → '+money(r.revised_close)).join('; ')+'. Les valeurs déjà enregistrées sont conservées pour l’audit. Le rendement du jour relie les deux dernières valeurs enregistrées.':'';$("performanceRevisions").hidden=!revisions.length;
    render();$("performance").dataset.ready='true';
-  }catch(e){$("performanceStatus").textContent='La comparaison commune n’a pas pu être chargée. Réessayer pour afficher les dernières données validées.';$("performanceRetry").hidden=false;}finally{loading=false;}
+  }catch(e){$("performanceStatus").textContent=data?'Actualisation indisponible. Les rendements affichés restent ceux de la clôture du '+date(data.as_of)+'. Reprise automatique.':'La comparaison commune n’a pas pu être chargée. Réessayer pour afficher les dernières données validées.';$("performanceStatus").classList.add('warning');$("performanceRetry").hidden=false;}finally{loading=false;}
  }
  document.addEventListener('change',e=>{const el=e.target;if(!data)return;if(el.id==='performanceFocus')follow(el.value);if(el.id==='performanceBenchmark'){reference=el.value;if(focus)selected=new Set([focus,reference]);else selected.add(reference);render();}if(el.dataset.performanceChoice){focus="";el.checked?selected.add(el.dataset.performanceChoice):selected.delete(el.dataset.performanceChoice);render();}if(el.id==='performancePositions')positions();});
  document.addEventListener('input',e=>{if(e.target.id==='performanceSlider')readout(e.target.value);});
@@ -80,5 +88,11 @@ window.SavyFnbPerformance=(()=>{
   if(id==='performanceCsv'){const cell=v=>'"'+String(v??'').replaceAll('"','""')+'"',lines=[['Date',...rows.map(a=>label(a)+(simulated(a)?' · simulation':''))],...dates.map(d=>[d,...rows.map(a=>a.history.find(p=>p.date===d)?.value??'')])];download('SAVY_Suivi_quotidien_depart_commun.csv','\uFEFF'+lines.map(r=>r.map(cell).join(',')).join('\n'),'text/csv;charset=utf-8');}
  });
  let resize;addEventListener('resize',()=>{cancelAnimationFrame(resize);if(data&&!$("performance").hidden)resize=requestAnimationFrame(chart);});
- return{show};
+ const visible=()=>document.visibilityState==='visible'&&$("performance")&&!$("performance").hidden&&(!window.frameElement||window.frameElement.getClientRects().length>0);
+ const refresh=()=>show(true);
+ setInterval(()=>{if(visible())refresh();},300000);
+ document.addEventListener('visibilitychange',()=>{if(visible())refresh();});
+ addEventListener('focus',()=>{if(visible())refresh();});
+ addEventListener('online',()=>{if(visible())refresh();});
+ return{show,refresh};
 })();

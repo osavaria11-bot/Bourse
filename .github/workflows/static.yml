@@ -18,7 +18,9 @@ concurrency:
 
 jobs:
   validate:
-    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    # A failed daily close still publishes its diagnostic status, so a stale
+    # comparison must be visibly flagged on the site after normal validation.
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' || github.event.workflow_run.name == 'Daily FNB performance'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     outputs:

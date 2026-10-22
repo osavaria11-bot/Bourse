@@ -3,9 +3,9 @@
   "currency": "CAD",
   "capital": 10000.0,
   "inception": "2026-10-19",
-  "as_of": "2026-10-20",
-  "updated_at": "2026-10-20T20:05:20-04:00",
-  "ledger_sha256": "73855548ca65897dac1d7f4c5f16e3d7edecc793c4dc913eadbfe2510e4ccf57",
+  "as_of": "2026-10-21",
+  "updated_at": "2026-10-22T07:14:32-04:00",
+  "ledger_sha256": "db41dd0468ac31707f420c295e3494ec1c9a3059ab474d96943d1d29e77206fc",
   "benchmarks": [
     "FEQT",
     "VEQT",
@@ -40,6 +40,10 @@
         {
           "date": "2026-10-20",
           "value": 10028.764227488233
+        },
+        {
+          "date": "2026-10-21",
+          "value": 10097.217317284863
         }
       ],
       "initial_positions": [
@@ -109,6 +113,10 @@
         {
           "date": "2026-10-20",
           "value": 10045.15543743715
+        },
+        {
+          "date": "2026-10-21",
+          "value": 10087.144922756235
         }
       ],
       "initial_positions": [
@@ -191,6 +199,10 @@
         {
           "date": "2026-10-20",
           "value": 10042.457005488062
+        },
+        {
+          "date": "2026-10-21",
+          "value": 10044.48983580526
         }
       ],
       "initial_positions": [
@@ -269,6 +281,10 @@
         {
           "date": "2026-10-20",
           "value": 10041.300058017914
+        },
+        {
+          "date": "2026-10-21",
+          "value": 10076.531128483677
         }
       ],
       "initial_positions": [
@@ -368,6 +384,10 @@
         {
           "date": "2026-10-20",
           "value": 10028.799989211824
+        },
+        {
+          "date": "2026-10-21",
+          "value": 10076.298927837875
         }
       ],
       "initial_positions": [
@@ -466,6 +486,10 @@
         {
           "date": "2026-10-20",
           "value": 10016.065454720432
+        },
+        {
+          "date": "2026-10-21",
+          "value": 10061.54415200238
         }
       ],
       "initial_positions": [
@@ -557,6 +581,10 @@
         {
           "date": "2026-10-20",
           "value": 10038.50721665887
+        },
+        {
+          "date": "2026-10-21",
+          "value": 10104.712071317592
         }
       ],
       "initial_positions": [
@@ -646,6 +674,10 @@
         {
           "date": "2026-10-20",
           "value": 10041.13391171326
+        },
+        {
+          "date": "2026-10-21",
+          "value": 10102.97250519993
         }
       ],
       "initial_positions": [
@@ -721,6 +753,10 @@
         {
           "date": "2026-10-20",
           "value": 10041.790914563433
+        },
+        {
+          "date": "2026-10-21",
+          "value": 10112.28193433029
         }
       ],
       "initial_positions": [
@@ -795,6 +831,10 @@
         {
           "date": "2026-10-20",
           "value": 10019.696518900662
+        },
+        {
+          "date": "2026-10-21",
+          "value": 10064.997779287081
         }
       ],
       "initial_positions": [
@@ -862,6 +902,10 @@
         {
           "date": "2026-10-20",
           "value": 10040.381432411463
+        },
+        {
+          "date": "2026-10-21",
+          "value": 10094.396134995024
         }
       ],
       "initial_positions": [
@@ -925,6 +969,10 @@
         {
           "date": "2026-10-20",
           "value": 10031.29862582347
+        },
+        {
+          "date": "2026-10-21",
+          "value": 10073.030458576557
         }
       ],
       "initial_positions": [
@@ -960,6 +1008,10 @@
         {
           "date": "2026-10-20",
           "value": 10011.312167681957
+        },
+        {
+          "date": "2026-10-21",
+          "value": 10056.560838409785
         }
       ],
       "initial_positions": [
@@ -995,6 +1047,10 @@
         {
           "date": "2026-10-20",
           "value": 10018.983369094612
+        },
+        {
+          "date": "2026-10-21",
+          "value": 10056.950107283836
         }
       ],
       "initial_positions": [
@@ -1030,6 +1086,10 @@
         {
           "date": "2026-10-20",
           "value": 10025.425494397545
+        },
+        {
+          "date": "2026-10-21",
+          "value": 10058.479413050705
         }
       ],
       "initial_positions": [
@@ -1072,6 +1132,10 @@
         {
           "date": "2026-10-20",
           "value": 10043.966629537332
+        },
+        {
+          "date": "2026-10-21",
+          "value": 10067.192642402793
         }
       ],
       "initial_positions": [
@@ -1154,56 +1218,61 @@
       "published_at": "2026-10-20T19:50:14-04:00",
       "method": "buy_hold_fractional_ex_date_close_v1",
       "definition_sha256": "db4c1cb645687482917cd42ea8db4c6f6fcbce07e743176eac4bda03da076215",
-      "history": [],
+      "history": [
+        {
+          "date": "2026-10-21",
+          "value": 10000.000000000013
+        }
+      ],
       "initial_positions": [
         {
           "ticker": "CGL.C",
           "name": "iShares Gold Bullion ETF",
           "weight": 0.05,
-          "close": null,
-          "units": null
+          "close": 48.400001525878906,
+          "units": 10.33057818671051
         },
         {
           "ticker": "FCIV",
           "name": "Fidelity International Value ETF",
           "weight": 0.2726373480084818,
-          "close": null,
-          "units": null
+          "close": 53.25,
+          "units": 51.19950197342381
         },
         {
           "ticker": "FCMO",
           "name": "Fidelity U.S. Momentum ETF",
           "weight": 0.22146539041505411,
-          "close": null,
-          "units": null
+          "close": 23.309999465942383,
+          "units": 95.00874967356017
         },
         {
           "ticker": "FINN",
           "name": "Fidelity Global Innovators ETF",
           "weight": 0.14888191335716783,
-          "close": null,
-          "units": null
+          "close": 33.790000915527344,
+          "units": 44.0609379471052
         },
         {
           "ticker": "VEE",
           "name": "Vanguard FTSE Emerging Markets All Cap Index ETF",
           "weight": 0.052388084039207444,
-          "close": null,
-          "units": null
+          "close": 49.130001068115234,
+          "units": 10.663155485499606
         },
         {
           "ticker": "XMV",
           "name": "iShares MSCI Min Vol Canada Index ETF",
           "weight": 0.20462726418009014,
-          "close": null,
-          "units": null
+          "close": 61.43000030517578,
+          "units": 33.31064026754519
         },
         {
           "ticker": "ZEO",
           "name": "BMO Equal Weight Oil & Gas Index ETF",
           "weight": 0.05,
-          "close": null,
-          "units": null
+          "close": 115.58999633789062,
+          "units": 4.325633842382077
         }
       ]
     },
@@ -1232,84 +1301,89 @@
       "published_at": "2026-10-20T19:50:14-04:00",
       "method": "buy_hold_fractional_ex_date_close_v1",
       "definition_sha256": "3deacef48098a0ee25a53cc30dd147943dfdad24609a0306c42e639857de99f1",
-      "history": [],
+      "history": [
+        {
+          "date": "2026-10-21",
+          "value": 10000.00000000001
+        }
+      ],
       "initial_positions": [
         {
           "ticker": "CGL.C",
           "name": "iShares Gold Bullion ETF",
           "weight": 0.05,
-          "close": null,
-          "units": null
+          "close": 48.400001525878906,
+          "units": 10.33057818671051
         },
         {
           "ticker": "FCIV",
           "name": "Fidelity International Value ETF",
           "weight": 0.19084614360593724,
-          "close": null,
-          "units": null
+          "close": 53.25,
+          "units": 35.83965138139666
         },
         {
           "ticker": "FCMO",
           "name": "Fidelity U.S. Momentum ETF",
           "weight": 0.15502577329053788,
-          "close": null,
-          "units": null
+          "close": 23.309999465942383,
+          "units": 66.50612477149213
         },
         {
           "ticker": "FCUQ",
           "name": "Fidelity U.S. High Quality ETF",
           "weight": 0.024000000000000004,
-          "close": null,
-          "units": null
+          "close": 77.44,
+          "units": 3.099173553719009
         },
         {
           "ticker": "FINN",
           "name": "Fidelity Global Innovators ETF",
           "weight": 0.10421733935001748,
-          "close": null,
-          "units": null
+          "close": 33.790000915527344,
+          "units": 30.842656562973644
         },
         {
           "ticker": "VCN",
           "name": "Vanguard FTSE Canada All Cap Index ETF",
           "weight": 0.08400000000000002,
-          "close": null,
-          "units": null
+          "close": 73.87999725341797,
+          "units": 11.369789269464796
         },
         {
           "ticker": "VEE",
           "name": "Vanguard FTSE Emerging Markets All Cap Index ETF",
           "weight": 0.05467165882744521,
-          "close": null,
-          "units": null
+          "close": 49.130001068115234,
+          "units": 11.12795799691656
         },
         {
           "ticker": "VFV",
           "name": "Vanguard S&P 500 Index ETF",
           "weight": 0.10500000000000001,
-          "close": null,
-          "units": null
+          "close": 193.27999877929688,
+          "units": 5.432533146893161
         },
         {
           "ticker": "XEF",
           "name": "iShares Core MSCI EAFE IMI Index ETF",
           "weight": 0.054000000000000006,
-          "close": null,
-          "units": null
+          "close": 51.33000183105469,
+          "units": 10.520163271712562
         },
         {
           "ticker": "XMV",
           "name": "iShares MSCI Min Vol Canada Index ETF",
           "weight": 0.14323908492606308,
-          "close": null,
-          "units": null
+          "close": 61.43000030517578,
+          "units": 23.317448187281627
         },
         {
           "ticker": "ZEO",
           "name": "BMO Equal Weight Oil & Gas Index ETF",
           "weight": 0.034999999999999996,
-          "close": null,
-          "units": null
+          "close": 115.58999633789062,
+          "units": 3.0279436896674534
         }
       ]
     },
@@ -1338,84 +1412,89 @@
       "published_at": "2026-10-20T19:50:14-04:00",
       "method": "buy_hold_fractional_ex_date_close_v1",
       "definition_sha256": "cc95d5f106792e799c10aee0fabe50a77ff286c1316c98102fd2ce1e744f19a2",
-      "history": [],
+      "history": [
+        {
+          "date": "2026-10-21",
+          "value": 10000.000000000007
+        }
+      ],
       "initial_positions": [
         {
           "ticker": "CGL.C",
           "name": "iShares Gold Bullion ETF",
           "weight": 0.05,
-          "close": null,
-          "units": null
+          "close": 48.400001525878906,
+          "units": 10.33057818671051
         },
         {
           "ticker": "FCIV",
           "name": "Fidelity International Value ETF",
           "weight": 0.1363186740042409,
-          "close": null,
-          "units": null
+          "close": 53.25,
+          "units": 25.599750986711904
         },
         {
           "ticker": "FCMO",
           "name": "Fidelity U.S. Momentum ETF",
           "weight": 0.11073269520752706,
-          "close": null,
-          "units": null
+          "close": 23.309999465942383,
+          "units": 47.50437483678009
         },
         {
           "ticker": "FCUQ",
           "name": "Fidelity U.S. High Quality ETF",
           "weight": 0.04,
-          "close": null,
-          "units": null
+          "close": 77.44,
+          "units": 5.1652892561983474
         },
         {
           "ticker": "FINN",
           "name": "Fidelity Global Innovators ETF",
           "weight": 0.07444095667858391,
-          "close": null,
-          "units": null
+          "close": 33.790000915527344,
+          "units": 22.0304689735526
         },
         {
           "ticker": "VCN",
           "name": "Vanguard FTSE Canada All Cap Index ETF",
           "weight": 0.14,
-          "close": null,
-          "units": null
+          "close": 73.87999725341797,
+          "units": 18.949648782441326
         },
         {
           "ticker": "VEE",
           "name": "Vanguard FTSE Emerging Markets All Cap Index ETF",
           "weight": 0.05619404201960372,
-          "close": null,
-          "units": null
+          "close": 49.130001068115234,
+          "units": 11.437826337861196
         },
         {
           "ticker": "VFV",
           "name": "Vanguard S&P 500 Index ETF",
           "weight": 0.175,
-          "close": null,
-          "units": null
+          "close": 193.27999877929688,
+          "units": 9.054221911488602
         },
         {
           "ticker": "XEF",
           "name": "iShares Core MSCI EAFE IMI Index ETF",
           "weight": 0.09,
-          "close": null,
-          "units": null
+          "close": 51.33000183105469,
+          "units": 17.533605452854268
         },
         {
           "ticker": "XMV",
           "name": "iShares MSCI Min Vol Canada Index ETF",
           "weight": 0.10231363209004507,
-          "close": null,
-          "units": null
+          "close": 61.43000030517578,
+          "units": 16.655320133772594
         },
         {
           "ticker": "ZEO",
           "name": "BMO Equal Weight Oil & Gas Index ETF",
           "weight": 0.025,
-          "close": null,
-          "units": null
+          "close": 115.58999633789062,
+          "units": 2.1628169211910384
         }
       ]
     }
@@ -1427,6 +1506,7 @@
     "history": "Registre quotidien figé, distinct des backtests. Les nouvelles optimisations ont leur propre date de lancement et ne remplacent aucun compte.",
     "source": "Clôtures quotidiennes Yahoo Finance, complétées par l’historique daté TMX Money si nécessaire; distributions et fractionnements Yahoo Finance, contrôle par clôtures ajustées.",
     "source_url": "https://help.yahoo.com/kb/SLN28256.html",
-    "schedule": "Chaque jour à 18 h 37 (Québec); reprises à 21 h 37 et 7 h 47. Séances complètes uniquement."
+    "schedule": "Chaque jour à 18 h 37 (Québec); reprises à 21 h 37, 6 h 17 et 7 h 47. Séances complètes uniquement.",
+    "revisions": "Une correction de cours historique exige l’accord de Yahoo et TMX sur les deux clôtures adjacentes et est consignée dans la séance suivante. Les cours, parts et valeurs déjà archivés restent figés; le rendement quotidien relie les deux valeurs réellement enregistrées."
   }
 }

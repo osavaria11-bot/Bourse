@@ -6,6 +6,7 @@ const root=path.resolve(__dirname,".."),D=JSON.parse(fs.readFileSync(path.join(r
 const server=http.createServer((req,res)=>{const p=path.resolve(root,'.'+new URL(req.url,'http://localhost').pathname);if(!p.startsWith(root+path.sep)||!fs.existsSync(p)||!fs.statSync(p).isFile()){res.writeHead(404);res.end();return;}res.setHeader('Content-Type',p.endsWith('.html')?'text/html':p.endsWith('.json')?'application/json':p.endsWith('.css')?'text/css':'text/javascript');fs.createReadStream(p).pipe(res);});
 async function check(browser,engine){
  const context=await browser.newContext({viewport:{width:1280,height:900},acceptDownloads:true}),page=await context.newPage(),errors=[];
+ await page.clock.install();
  page.on('pageerror',e=>errors.push(e.message));await page.route('https://**',r=>r.abort());
  const url='http://127.0.0.1:'+server.address().port;
  await page.goto(url+'/reports/portefeuilles-fnb.html');await page.waitForSelector('html[data-ready="true"]');
@@ -91,6 +92,27 @@ async function check(browser,engine){
  for(const b of ['FEQT','VEQT','VGRO','VBAL']){await page.locator('#performanceBenchmark').selectOption(b);assert.match(await page.locator('#performanceGap').textContent(),new RegExp(b));}
  await page.locator('#performanceAll').click();
  const trackedDownload=page.waitForEvent('download');await page.locator('#performanceCsv').click();const dailyCsv=await trackedDownload;assert.match(dailyCsv.suggestedFilename(),/Suivi_quotidien/);const dailyContents=fs.readFileSync(await dailyCsv.path(),'utf8');assert.match(dailyContents,/simulation/);assert.match(dailyContents,/2026-10-19/);
+ // An open tab must detect a missed close without a reload, then integrate
+ // the next daily payload while retaining the user's portfolio/benchmark.
+ const PU=require('../js/fnb-performance-utils.js');let next=new Date(tracking.as_of+'T12:00:00Z');
+ do{next.setUTCDate(next.getUTCDate()+1);}while(!PU.tradingDay(next.toISOString().slice(0,10)));
+ const nextDay=next.toISOString().slice(0,10);let comparison=tracking,requests=0,failRefresh=false;
+ await page.route('**/data/fnb-comparison.json',async route=>{requests++;await route.fulfill({status:failRefresh?503:200,contentType:'application/json',body:JSON.stringify(comparison)});});
+ await page.route('**/data/fnb-comparison-status.json',route=>route.fulfill({contentType:'application/json',body:JSON.stringify({status:'current',as_of:comparison.as_of,expected_session:comparison.as_of})}));
+ await page.locator('#performanceFocus').selectOption('savy-5');
+ await page.clock.setSystemTime(new Date(nextDay+'T23:30:00Z'));await page.clock.runFor(300001);
+ await page.waitForFunction(()=>document.querySelector('#performanceStatus').textContent.includes('Mise à jour en retard'));
+ assert.ok(requests>=1);comparison=structuredClone(tracking);comparison.as_of=nextDay;
+ for(const a of comparison.accounts)if(a.history.length)a.history.push({date:nextDay,value:a.history.at(-1).value*1.01});
+ await page.evaluate(()=>window.dispatchEvent(new Event('focus')));
+ await page.waitForFunction(()=>document.querySelector('#performanceStatus').textContent.includes('Toutes les clôtures attendues'));
+ assert.equal(await page.locator('#performanceFocus').inputValue(),'savy-5');assert.equal(await page.locator('#performanceBenchmark').inputValue(),'VBAL');
+ assert.equal(await page.locator('#performanceChart .performance-series').count(),2);
+ assert.match(await page.locator('#performanceDate').innerText(),new RegExp(String(next.getUTCDate())));
+ failRefresh=true;await page.evaluate(()=>window.dispatchEvent(new Event('focus')));
+ await page.waitForFunction(()=>document.querySelector('#performanceStatus').textContent.includes('Actualisation indisponible'));
+ assert.equal(await page.locator('#performanceChart .performance-series').count(),2);
+ await page.unroute('**/data/fnb-comparison.json');await page.unroute('**/data/fnb-comparison-status.json');
  await page.reload();await page.waitForSelector('html[data-ready="true"]');await page.locator('.nav [data-tab="performance"]').click();await page.waitForSelector('#performance[data-ready="true"]');
  assert.equal(await page.locator('#performanceBenchmark').inputValue(),'VBAL');
  await page.locator('.nav [data-tab="methods"]').click();await page.locator('.monthly-details summary').click();

@@ -157,5 +157,42 @@ class PermanentTracking(unittest.TestCase):
         with patch.object(F,"tmx_closes",return_value=official):
             with self.assertRaisesRegex(ValueError,"consistent TMX"): F.collect(cfg,{"TEST"},"2026-10-19","2026-10-20",Client(),preferred_tmx={"TEST"})
 
+    def test_confirmed_cboe_revision_advances_without_rewriting_prior_session(self):
+        self.run_day(); q=self.quotes("2026-10-20")
+        symbol="FBAL.NE";stamp=lambda day:int(datetime.fromisoformat(day+"T13:30:00+00:00").timestamp())
+        payload={"chart":{"result":[{"meta":{"symbol":symbol,"currency":"CAD","instrumentType":"ETF","exchangeTimezoneName":"America/Toronto"},
+            "timestamp":[stamp(F.START),stamp("2026-10-20")],"indicators":{"quote":[{"close":[99.99,101.]}],"adjclose":[{"adjclose":[99.99,101.]}]}}]}}
+        class Client:
+            def json(self,url):return payload
+        official={day:{"close":p,"adjusted_close":p,"source_url":"https://money.tmx.com/en/quote/FBAL%3ACC"} for day,p in [(F.START,99.99),("2026-10-20",101.)]}
+        cfg={"funds":{"FBAL":{"quote_symbol":symbol}}}
+        # A one-cent correction exceeds the accepted nominal tolerance at $15,
+        # represented here by a 0.02 correction at the fixture's $100 price.
+        for source in [payload["chart"]["result"][0]["indicators"]["quote"][0]["close"],payload["chart"]["result"][0]["indicators"]["adjclose"][0]["adjclose"]]:source[0]=99.98
+        official[F.START].update(close=99.98,adjusted_close=99.98)
+        with patch.object(F,"tmx_closes",return_value=official) as fallback:
+            collected=F.collect(cfg,{"FBAL"},F.START,"2026-10-20",Client(),anchors={"FBAL":{"date":F.START,"close":100.}})["FBAL"]
+        self.assertEqual(fallback.call_args.args[1],"FBAL:CC")
+        # Apply this verified observation to the existing FEQT fixture account.
+        q["FEQT"]=collected
+        archive=self.root / "data/fnb-performance/days/2026-10-19.json";frozen=archive.read_bytes()
+        result=self.run_day("2026-10-20",q)
+        self.assertEqual(archive.read_bytes(),frozen)
+        self.assertAlmostEqual(next(a for a in result["accounts"] if a["id"]=="FEQT")["history"][-1]["value"],10100.)
+        _,days=F.load_state(self.root);self.assertEqual(days[-1]["prices"]["FEQT"]["previous_close_revision"]["accepted_close"],100.)
+        self.assertEqual(days[0]["accounts"]["FEQT"]["units"],days[1]["accounts"]["FEQT"]["units"])
+        # A disagreeing second source cannot authorize the correction.
+        official["2026-10-20"]["close"]=102.
+        with patch.object(F,"tmx_closes",return_value=official):
+            with self.assertRaisesRegex(ValueError,"Unconfirmed"):F.collect(cfg,{"FBAL"},F.START,"2026-10-20",Client(),anchors={"FBAL":{"date":F.START,"close":100.}})
+
+    def test_fallback_recovers_a_whole_missing_yahoo_session(self):
+        symbol="TEST.TO";stamp=int(datetime.fromisoformat(F.START+"T13:30:00+00:00").timestamp())
+        payload={"chart":{"result":[{"meta":{"symbol":symbol,"currency":"CAD","instrumentType":"ETF","exchangeTimezoneName":"America/Toronto"},
+            "timestamp":[stamp],"indicators":{"quote":[{"close":[100.]}],"adjclose":[{"adjclose":[100.]}]}}]}}
+        official={"2026-10-20":{"close":101.,"adjusted_close":101.,"source_url":"https://money.tmx.com/en/quote/TEST"}}
+        parsed=F.parse_prices(payload,symbol,F.START,"2026-10-20",official)
+        self.assertEqual(parsed["2026-10-20"]["close"],101.)
+
 
 if __name__ == "__main__": unittest.main()

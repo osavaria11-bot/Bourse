@@ -1,6 +1,19 @@
 "use strict";
 const{test}=require('node:test'),assert=require('node:assert/strict'),U=require('../js/fnb-performance-utils.js');
 const h=(date,value)=>({date,value});
+test('daily freshness follows Toronto completed sessions, holidays and daylight saving time',()=>{
+ for(const [now,expected] of [['2026-10-22T07:00:00-04:00','2026-10-21'],['2026-10-22T17:59:00-04:00','2026-10-21'],['2026-10-22T18:00:00-04:00','2026-10-22'],['2026-10-12T20:00:00-04:00','2026-10-09'],['2026-12-28T20:00:00-05:00','2026-12-24'],['2027-03-29T07:00:00-04:00','2027-03-25'],['2026-11-02T07:00:00-05:00','2026-10-30']])assert.equal(U.expectedSession(new Date(now)),expected,now);
+ for(const day of ['2026-05-18','2026-07-01','2026-08-03','2026-09-07'])assert.equal(U.tradingDay(day),false,day);
+ assert.equal(U.tradingDay('2026-09-30'),true);
+});
+test('a green collector status cannot conceal an old or incomplete comparison',()=>{
+ const now=new Date('2026-10-22T07:00:00-04:00'),data={as_of:'2026-10-20',accounts:[{history:[h('2026-10-20',10000)]}]};
+ const status={status:'current',as_of:'2026-10-20',expected_session:'2026-10-20'};
+ assert.equal(U.freshness(data,status,now).stale,true);assert.equal(U.freshness(data,status,now).current,false);
+ data.as_of='2026-10-21';status.as_of=status.expected_session=data.as_of;assert.equal(U.freshness(data,status,now).current,true);
+ assert.equal(U.freshness(data,null,now).current,false);
+ data.accounts[0].history=[];assert.equal(U.freshness(data,status,now).current,false);
+});
 test('initial session has zero total gain and insufficient daily/weekly/monthly history',()=>{assert.deepEqual(U.metrics([h('2026-10-19',10000)]),{value:10000,gain:0,total:0,day:null,week:null,month:null});});
 test('daily, trailing week and trailing month use available preceding closes',()=>{const m=U.metrics([h('2026-10-19',10000),h('2026-10-23',10100),h('2026-11-12',10200),h('2026-11-18',10500),h('2026-11-19',10600)]);assert.ok(Math.abs(m.day-(10600/10500-1))<1e-10);assert.ok(Math.abs(m.week-(10600/10200-1))<1e-10);assert.ok(Math.abs(m.month-.06)<1e-10);assert.equal(m.gain,600);});
 test('calendar month clamps March 31 to February 28',()=>{assert.equal(U.monthBefore('2027-03-31'),'2027-02-28');assert.equal(U.monthBefore('2028-03-31'),'2028-02-29');});

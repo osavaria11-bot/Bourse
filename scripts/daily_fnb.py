@@ -132,10 +132,11 @@ def parse_prices(payload, symbol, first, last, fallback=None, prefer_fallback=Fa
     adjusted = d["indicators"].get("adjclose", [{}])[0].get("adjclose", [])
     if len(adjusted) != len(d["timestamp"]): raise ValueError("Missing adjusted-close cross-check")
     out = {}
-    for i, ts in enumerate(d["timestamp"]):
-        day = day_of(ts)
+    observations = {day_of(ts): i for i, ts in enumerate(d["timestamp"])}
+    for day in sorted(set(observations) | set(fallback or {})):
         if not first <= day <= last: continue
-        close, adj = quote_data["close"][i], adjusted[i]
+        i = observations.get(day)
+        close, adj = (quote_data["close"][i], adjusted[i]) if i is not None else (None, None)
         replacement = (fallback or {}).get(day) if prefer_fallback or close is None or adj is None else None
         if replacement: close, adj = replacement["close"], replacement["adjusted_close"]
         if close is None or adj is None: continue
@@ -170,7 +171,7 @@ def tmx_closes(client, ticker, first, last):
         if row["datetime"][:10] in adjusted and row["closePrice"] is not None and adjusted[row["datetime"][:10]] is not None}
 
 
-def collect(config, tickers, first, last, client=None, preferred_tmx=()):
+def collect(config, tickers, first, last, client=None, preferred_tmx=(), anchors=None):
     client = client or Client()
     def one(ticker):
         symbol = config["funds"][ticker]["quote_symbol"]
@@ -180,19 +181,41 @@ def collect(config, tickers, first, last, client=None, preferred_tmx=()):
                   "interval": "1d", "events": "div,splits,capitalGains"}
         url = "https://query1.finance.yahoo.com/v8/finance/chart/" + quote(symbol) + "?" + urlencode(params)
         payload = client.json(url)
-        parsed = parse_prices(payload, symbol, first, last)
+        yahoo = parse_prices(payload, symbol, first, last)
+        parsed = yahoo
         expected = []; day = date.fromisoformat(first)
         while day.isoformat() <= last:
             if trading_day(day): expected.append(day.isoformat())
             day += timedelta(days=1)
-        if ticker in preferred_tmx or any(day not in parsed for day in expected):
-            official = tmx_closes(client, ticker, first, last)
+        anchor = (anchors or {}).get(ticker)
+        revised = anchor and anchor["date"] in yahoo and abs(yahoo[anchor["date"]]["close"] / anchor["close"] - 1) > .0001
+        if ticker in preferred_tmx or revised or any(day not in parsed for day in expected):
+            # TMX identifies Canadian Cboe listings with :CC, not the bare TSX symbol.
+            market_symbol = ticker + ":CC" if symbol.endswith(".NE") else ticker
+            official = tmx_closes(client, market_symbol, first, last)
             if any(day not in official for day in expected):
                 raise ValueError("Missing consistent TMX closing history: " + ticker)
             # Use one source for both ends of each return. Mixing a newly
             # populated Yahoo anchor with an accepted TMX close can fabricate a
             # revision even when TMX still confirms the immutable ledger price.
             parsed = parse_prices(payload, symbol, first, last, official, prefer_fallback=True)
+            if anchor and anchor["date"] in parsed and abs(parsed[anchor["date"]]["close"] / anchor["close"] - 1) > .0001:
+                # A revision is accepted only when two independent histories
+                # agree on BOTH endpoints. Preserve the original ledger and
+                # carry the evidence into the next daily record, never rebase units.
+                revised_day = anchor["date"]
+                following = next_session(date.fromisoformat(revised_day)).isoformat()
+                if any(day not in yahoo or day not in parsed or abs(yahoo[day]["close"] / parsed[day]["close"] - 1) > .0001
+                       for day in [revised_day, following]):
+                    raise ValueError("Unconfirmed historical close revision: " + ticker)
+                parsed[revised_day]["verified_revision"] = {
+                    "date": revised_day, "accepted_close": anchor["close"],
+                    "revised_close": parsed[revised_day]["close"], "next_date": following,
+                    "next_close": parsed[following]["close"],
+                    "evidence": [{"source": "Yahoo Finance", "source_url": yahoo[revised_day]["source_url"],
+                                  "close": yahoo[revised_day]["close"], "next_close": yahoo[following]["close"]},
+                                 {"source": "TMX Money", "source_url": parsed[revised_day]["source_url"],
+                                  "close": parsed[revised_day]["close"], "next_close": parsed[following]["close"]}]}
         return ticker, parsed
     with ThreadPoolExecutor(max_workers=4) as pool: return dict(pool.map(one, sorted(tickers)))
 
@@ -212,7 +235,7 @@ def make_day(day, registry, quotes, previous, recorded_at):
     prices = {}
     for t in sorted(required):
         if day not in quotes.get(t, {}): raise ValueError(f"Missing official closing observation: {t} {day}")
-        prices[t] = quotes[t][day]
+        prices[t] = deepcopy(quotes[t][day])
         if previous and t in previous["prices"]:
             p, old = prices[t], previous["prices"][t]
             anchor = quotes[t].get(previous["date"])
@@ -226,7 +249,15 @@ def make_day(day, registry, quotes, previous, recorded_at):
             if not min(low, high) - .0002 <= gross <= max(low, high) + .0002:
                 raise ValueError("Distribution/split does not reconcile with total return: " + t)
             if abs(anchor["close"] / old["close"] - 1) > .0001:
-                raise ValueError("Previously accepted nominal close revised: " + t)
+                revision = anchor.get("verified_revision", {})
+                if (revision.get("date") != previous["date"] or revision.get("accepted_close") != old["close"] or
+                    revision.get("revised_close") != anchor["close"] or revision.get("next_date") != day or
+                    revision.get("next_close") != p["close"] or
+                    {e.get("source") for e in revision.get("evidence", [])} != {"Yahoo Finance", "TMX Money"} or
+                    any(abs(e["close"] / anchor["close"] - 1) > .0001 or abs(e["next_close"] / p["close"] - 1) > .0001
+                        for e in revision["evidence"])):
+                    raise ValueError("Previously accepted nominal close revised: " + t)
+                prices[t]["previous_close_revision"] = revision
     accounts = {}
     for a in active:
         prev = previous["accounts"].get(a["id"]) if previous else None
@@ -285,7 +316,8 @@ def snapshot(registry, days, config):
                 "costs": "CAD, frais internes des FNB inclus dans leurs cours; courtage, fiscalité et écarts d’exécution exclus.",
                 "history": "Registre quotidien figé, distinct des backtests. Les nouvelles optimisations ont leur propre date de lancement et ne remplacent aucun compte.",
                 "source": "Clôtures quotidiennes Yahoo Finance, complétées par l’historique daté TMX Money si nécessaire; distributions et fractionnements Yahoo Finance, contrôle par clôtures ajustées.",
-                "source_url": "https://help.yahoo.com/kb/SLN28256.html", "schedule": "Chaque jour à 18 h 37 (Québec); reprises à 21 h 37 et 7 h 47. Séances complètes uniquement."}}
+                "source_url": "https://help.yahoo.com/kb/SLN28256.html", "schedule": "Chaque jour à 18 h 37 (Québec); reprises à 21 h 37, 6 h 17 et 7 h 47. Séances complètes uniquement.",
+                "revisions": "Une correction de cours historique exige l’accord de Yahoo et TMX sur les deux clôtures adjacentes et est consignée dans la séance suivante. Les cours, parts et valeurs déjà archivés restent figés; le rendement quotidien relie les deux valeurs réellement enregistrées."}}
 
 
 def load_state(root):
@@ -307,10 +339,11 @@ def run(root, now, sources=None):
     day = next_session(date.fromisoformat(days[-1]["date"])) if days else date.fromisoformat(START)
     additions = []
     if day <= last:
-        first = (day - timedelta(days=10)).isoformat()
+        first = days[-1]["date"] if days else START
         required = {t for a in registry["accounts"] if a["launch_date"] <= last.isoformat() for t in a["weights"]}
         preferred_tmx = {t for t,p in (days[-1]["prices"].items() if days else []) if p.get("price_source") == "TMX Money"}
-        quotes = sources if sources is not None else collect(read(root / "data/fnb-model.json"), required, first, last.isoformat(), preferred_tmx=preferred_tmx)
+        anchors = {t: {"date": days[-1]["date"], "close": p["close"]} for t,p in days[-1]["prices"].items()} if days else {}
+        quotes = sources if sources is not None else collect(read(root / "data/fnb-model.json"), required, first, last.isoformat(), preferred_tmx=preferred_tmx, anchors=anchors)
         while day <= last:
             record = make_day(day.isoformat(), registry, quotes, (additions or days or [None])[-1], now.isoformat(timespec="seconds"))
             additions.append(record); day = next_session(day)

@@ -4,8 +4,8 @@
   "currency": "CAD",
   "capital": 10000.0,
   "inception": "2026-10-19",
-  "as_of": "2026-10-20",
-  "updated_at": "2026-10-20T23:04:59-04:00",
+  "as_of": "2026-10-21",
+  "updated_at": "2026-10-22T07:14:50-04:00",
   "benchmarks": [
     "FEQT",
     "VEQT",
@@ -44,6 +44,10 @@
         {
           "date": "2026-10-20",
           "value": 10028.764227488233
+        },
+        {
+          "date": "2026-10-21",
+          "value": 10097.217317284863
         }
       ],
       "initial_positions": [
@@ -117,6 +121,10 @@
         {
           "date": "2026-10-20",
           "value": 10045.15543743715
+        },
+        {
+          "date": "2026-10-21",
+          "value": 10087.144922756235
         }
       ],
       "initial_positions": [
@@ -203,6 +211,10 @@
         {
           "date": "2026-10-20",
           "value": 10042.457005488062
+        },
+        {
+          "date": "2026-10-21",
+          "value": 10044.48983580526
         }
       ],
       "initial_positions": [
@@ -285,6 +297,10 @@
         {
           "date": "2026-10-20",
           "value": 10041.300058017914
+        },
+        {
+          "date": "2026-10-21",
+          "value": 10076.531128483677
         }
       ],
       "initial_positions": [
@@ -388,6 +404,10 @@
         {
           "date": "2026-10-20",
           "value": 10028.799989211824
+        },
+        {
+          "date": "2026-10-21",
+          "value": 10076.298927837875
         }
       ],
       "initial_positions": [
@@ -490,6 +510,10 @@
         {
           "date": "2026-10-20",
           "value": 10016.065454720432
+        },
+        {
+          "date": "2026-10-21",
+          "value": 10061.54415200238
         }
       ],
       "initial_positions": [
@@ -585,6 +609,10 @@
         {
           "date": "2026-10-20",
           "value": 10038.50721665887
+        },
+        {
+          "date": "2026-10-21",
+          "value": 10104.712071317592
         }
       ],
       "initial_positions": [
@@ -678,6 +706,10 @@
         {
           "date": "2026-10-20",
           "value": 10041.13391171326
+        },
+        {
+          "date": "2026-10-21",
+          "value": 10102.97250519993
         }
       ],
       "initial_positions": [
@@ -757,6 +789,10 @@
         {
           "date": "2026-10-20",
           "value": 10041.790914563433
+        },
+        {
+          "date": "2026-10-21",
+          "value": 10112.28193433029
         }
       ],
       "initial_positions": [
@@ -835,6 +871,10 @@
         {
           "date": "2026-10-20",
           "value": 10019.696518900662
+        },
+        {
+          "date": "2026-10-21",
+          "value": 10064.997779287081
         }
       ],
       "initial_positions": [
@@ -906,6 +946,10 @@
         {
           "date": "2026-10-20",
           "value": 10040.381432411463
+        },
+        {
+          "date": "2026-10-21",
+          "value": 10094.396134995024
         }
       ],
       "initial_positions": [
@@ -973,6 +1017,10 @@
         {
           "date": "2026-10-20",
           "value": 10031.29862582347
+        },
+        {
+          "date": "2026-10-21",
+          "value": 10073.030458576557
         }
       ],
       "initial_positions": [
@@ -1012,6 +1060,10 @@
         {
           "date": "2026-10-20",
           "value": 10011.312167681957
+        },
+        {
+          "date": "2026-10-21",
+          "value": 10056.560838409785
         }
       ],
       "initial_positions": [
@@ -1051,6 +1103,10 @@
         {
           "date": "2026-10-20",
           "value": 10018.983369094612
+        },
+        {
+          "date": "2026-10-21",
+          "value": 10056.950107283836
         }
       ],
       "initial_positions": [
@@ -1090,6 +1146,10 @@
         {
           "date": "2026-10-20",
           "value": 10025.425494397545
+        },
+        {
+          "date": "2026-10-21",
+          "value": 10058.479413050705
         }
       ],
       "initial_positions": [
@@ -1136,6 +1196,10 @@
         {
           "date": "2026-10-20",
           "value": 10043.966629537332
+        },
+        {
+          "date": "2026-10-21",
+          "value": 10067.192642402793
         }
       ],
       "initial_positions": [
@@ -1230,6 +1294,10 @@
         {
           "date": "2026-10-20",
           "value": 10019.691924660037
+        },
+        {
+          "date": "2026-10-21",
+          "value": 10056.470893721382
         }
       ],
       "initial_positions": [
@@ -1321,6 +1389,10 @@
         {
           "date": "2026-10-20",
           "value": 10017.833252980525
+        },
+        {
+          "date": "2026-10-21",
+          "value": 10056.35620229122
         }
       ],
       "initial_positions": [
@@ -1440,6 +1512,10 @@
         {
           "date": "2026-10-20",
           "value": 10016.594138527515
+        },
+        {
+          "date": "2026-10-21",
+          "value": 10056.279741337778
         }
       ],
       "initial_positions": [
@@ -1523,9 +1599,34 @@
       ]
     }
   ],
-  "source_ledger_sha256": "73855548ca65897dac1d7f4c5f16e3d7edecc793c4dc913eadbfe2510e4ccf57",
+  "source_ledger_sha256": "db41dd0468ac31707f420c295e3494ec1c9a3059ab474d96943d1d29e77206fc",
   "source_registry_sha256": "ae0af73613c785f9f4cafd4a6594e17d7458c5ebca314c085734a764737cdc70",
   "supplemental_sha256": "f4ea924f772f3e96d64317a74f3b73451488ebbcf2a314a351862035d649af61",
+  "price_revisions": [
+    {
+      "ticker": "FBAL",
+      "recorded_on": "2026-10-21",
+      "date": "2026-10-20",
+      "accepted_close": 15.65999984741211,
+      "revised_close": 15.65,
+      "next_date": "2026-10-21",
+      "next_close": 15.71,
+      "evidence": [
+        {
+          "source": "Yahoo Finance",
+          "source_url": "https://finance.yahoo.com/quote/FBAL.NE/history/",
+          "close": 15.649999618530273,
+          "next_close": 15.710000038146973
+        },
+        {
+          "source": "TMX Money",
+          "source_url": "https://money.tmx.com/en/quote/FBAL%3ACC",
+          "close": 15.65,
+          "next_close": 15.71
+        }
+      ]
+    }
+  ],
   "methodology": {
     "start": "10 000 $ CA pour tous à la clôture du 19 octobre 2026, avec les pondérations figées propres à chaque portefeuille; aucun rééquilibrage.",
     "simulation": "Les portefeuilles ajoutés après cette date sont simulés depuis le départ commun. Leur allocation était inconnue au début de la comparaison : biais rétrospectif. La courbe entière reste une simulation, distincte du compte réellement enregistré après publication.",

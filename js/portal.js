@@ -142,7 +142,7 @@
   const fundAnalysis = pane("analyses", "overview"), fundHeading = el("div", "portal-section-heading"), fundTitle = el("div");
   fundTitle.append(el("h2", "", "Portefeuilles FNB"));
   const fundFullScreen = el("a", "button quiet", "Ouvrir en plein écran ↗");
-  const fundReportUrl = () => "reports/portefeuilles-fnb.html?v=20261021-feqt50&month=" + new Intl.DateTimeFormat("fr-CA",{timeZone:"America/Toronto",year:"numeric",month:"2-digit"}).format(new Date());
+  const fundReportUrl = () => "reports/portefeuilles-fnb.html?v=20261022-daily&month=" + new Intl.DateTimeFormat("fr-CA",{timeZone:"America/Toronto",year:"numeric",month:"2-digit"}).format(new Date());
   fundFullScreen.href = fundReportUrl(); fundFullScreen.target = "_blank"; fundFullScreen.rel = "noopener noreferrer";
   fundHeading.append(fundTitle, fundFullScreen);
   const fundFrame = el("iframe", "portal-report-frame"); fundFrame.id = "fundAnalysisFrame";
@@ -313,7 +313,7 @@
   });
   window.addEventListener("hashchange", () => applyRoute()); window.addEventListener("popstate", () => applyRoute());
   document.addEventListener("savy:quotes", () => homeMarkets());
-  $("#refreshButton").addEventListener("click", archives);
+  $("#refreshButton").addEventListener("click", () => {archives();fundFrame.contentWindow?.SavyFnbPerformance?.refresh();});
   window.SavyPortal = {navigate, syncIndicators, syncMarkets, homeMarkets, homeBriefing, homeReports, preserveRoute: url => R.preserveRoute(url, location.href)};
   applyRoute(); archives();
 })();
