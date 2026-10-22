@@ -305,14 +305,18 @@ async function main() {
     const recovery = await componentPage(recoveryContext), J = require("../js/index-quote-utils.js");
     const zone = new Intl.DateTimeFormat("sv-SE", {timeZone: "America/Toronto", dateStyle: "short", timeStyle: "medium", hourCycle: "h23"});
     const offset = new Intl.DateTimeFormat("en", {timeZone: "America/Toronto", timeZoneName: "longOffset"}).formatToParts(now).find(p => p.type === "timeZoneName").value.replace("GMT", "");
+    const barTime = Math.min(now, Date.parse(day + "T19:50:00Z"));
     const backup = {data: {}};
     for (const d of J.definitions) {
       backup.data["q" + d.id] = {symbol: d.symbol, currency: d.currency, datatype: d.type, prevClose: 100};
-      backup.data["c" + d.id] = [20, 15, 10].map((minutes, i) => ({dateTime: zone.format(Math.floor(now / 300000) * 300000 - minutes * 60000).replace(" ", "T") + offset, close: 101 + i}));
+      backup.data["c" + d.id] = [20, 15, 10].map((minutes, i) => ({dateTime: zone.format(Math.floor(barTime / 300000) * 300000 - minutes * 60000).replace(" ", "T") + offset, close: 101 + i}));
     }
-    let backupDown = false;
-    await recovery.route("https://**", route => route.request().url().startsWith("https://app-money.tmx.com/graphql") && !backupDown ?
-      route.fulfill({status: 200, contentType: "application/json", headers: {"Access-Control-Allow-Origin": "*"}, body: JSON.stringify(backup)}) : route.abort());
+    await recovery.addInitScript(payload => {
+      const originalFetch = window.fetch.bind(window);
+      window.fetch = (input, init) => String(input?.url || input).startsWith("https://app-money.tmx.com/graphql") ?
+        window.__indexBackupDown ? Promise.reject(new Error("TMX unavailable")) : Promise.resolve(new Response(JSON.stringify(payload), {status: 200, headers: {"Content-Type": "application/json"}})) : originalFetch(input, init);
+    }, backup);
+    await recovery.route("https://**", route => route.abort());
     unavailable = true;
     await recovery.goto(url);
     await recovery.waitForFunction(() => document.querySelector('.market-card[data-id="TSX"] .market-value')?.textContent.includes("103"));
@@ -321,8 +325,7 @@ async function main() {
     assert.equal(await recovery.locator('.market-card[data-id="TSX"] .chart-line').count(), 1);
     assert.match(await recovery.locator('.market-card[data-id="TSX"] a').last().getAttribute("href"), /money\.tmx\.com/);
     const savedBackup = await recovery.evaluate(() => window.SavyLiveQuotes.dataset().quotes.find(q => q.id === "TSX"));
-    backupDown = true;
-    await recovery.evaluate(time => {Date.now = () => time;}, now + 20 * 60000);
+    await recovery.evaluate(time => {Date.now = () => time; window.__indexBackupDown = true;}, now + 20 * 60000);
     await recovery.evaluate(() => window.SavyLiveQuotes.refresh());
     assert.equal(await recovery.locator('.market-card[data-id="TSX"] .market-value').innerText(), "103,00");
     assert.match(await recovery.locator('.market-card[data-id="TSX"] .meta').first().innerText(), /Cotation conservée/);

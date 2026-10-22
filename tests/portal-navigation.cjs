@@ -5,6 +5,14 @@
 // without this helper. Data/calculation assertions in the original suites stay unchanged.
 async function componentPage(parent, options) {
   const page = await parent.newPage(options), locate = page.locator.bind(page);
+  // Component fixtures own their quotes. Intercept fetch as well as network
+  // routing so a live backup cannot replace synthetic prices during a test.
+  // Provider recovery tests install their explicit response after this hook.
+  await page.addInitScript(() => {
+    const originalFetch = window.fetch.bind(window);
+    window.fetch = (input, init) => String(input?.url || input).startsWith("https://app-money.tmx.com/graphql") ?
+      Promise.reject(new Error("Direct index provider disabled in component fixtures")) : originalFetch(input, init);
+  });
   async function reveal(locator) {
     await locator.first().waitFor({state: "attached"});
     const target = await locator.first().evaluate(node => ({
