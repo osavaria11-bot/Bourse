@@ -13,7 +13,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: pages-${{ github.ref }}
+  group: pages-build-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -203,6 +203,9 @@ jobs:
   deploy:
     needs: validate
     if: github.ref == 'refs/heads/main'
+    concurrency:
+      group: pages-${{ github.ref }}
+      cancel-in-progress: false
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -221,14 +224,12 @@ jobs:
         uses: actions/configure-pages@v5
       - name: Refresh exchange quotes, sentiment and Polymarket before publishing
         run: |
-          python3 scripts/collect_intraday_quotes.py
           python3 scripts/collect_fear_greed.py
           python3 scripts/collect_polymarket.py
           python3 scripts/collect_rate_odds.py
           python3 scripts/collect_yield_curves.py
           python3 scripts/refresh_interest_rates.py --published-baseline https://osavaria11-bot.github.io/Bourse/data/macro-data.json
           node scripts/validate_polymarket.cjs
-          node scripts/validate_intraday_quotes.cjs
       - name: Setup Python for natural narration
         uses: actions/setup-python@v6
         with:
@@ -262,7 +263,21 @@ jobs:
             data/briefing-audio.json
             data/audio
           key: ${{ steps.narration_cache.outputs.cache-primary-key }}
+      - name: Collect and validate exchange quotes immediately before publication
+        run: |
+          python3 scripts/collect_intraday_quotes.py
+          node scripts/validate_intraday_quotes.cjs
+      - name: Check source is still current before publication
+        id: current
+        uses: actions/github-script@v8
+        env:
+          SOURCE_SHA: ${{ needs.validate.outputs.source_sha }}
+        with:
+          script: |
+            const {data} = await github.rest.repos.getBranch({...context.repo, branch: 'main'});
+            core.setOutput('publish', data.commit.sha === process.env.SOURCE_SHA ? 'true' : 'false');
       - name: Prepare static site
+        if: steps.current.outputs.publish == 'true'
         run: |
           mkdir -p _site
           cp index.html 221.png 2121.png _site/
@@ -270,10 +285,12 @@ jobs:
           node scripts/build_report_archive.cjs
           cp -R css js data reports _site/
       - name: Upload site
+        if: steps.current.outputs.publish == 'true'
         uses: actions/upload-pages-artifact@v3
         with:
           path: _site
       - name: Deploy
+        if: steps.current.outputs.publish == 'true'
         id: deployment
         uses: actions/deploy-pages@v4
 

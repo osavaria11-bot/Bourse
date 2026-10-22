@@ -1,5 +1,8 @@
 import copy
 import unittest
+import io
+import json
+from unittest.mock import patch
 from datetime import datetime, timezone
 from scripts import collect_intraday_quotes as quotes
 
@@ -15,6 +18,28 @@ def fixture(symbol="MSFT", currency="USD", stamp=None, start=None, end=None):
             "end": end or NOW.timestamp() + 21600}}}}]}}
 
 class QuoteTests(unittest.TestCase):
+    def test_cboe_backup_preserves_index_time_instead_of_file_generation_time(self):
+        definition = {"id": "SPX", "title": "S&P 500", "quote_symbol": "^GSPC", "currency": "USD"}
+        source = {"symbol": "_SPX", "timestamp": "2026-10-12 14:00:00", "data": {"symbol": "^SPX", "security_type": "index",
+            "current_price": 100, "prev_day_close": 99, "last_trade_time": "2026-10-12T09:44:00"}}
+        parsed = quotes.parse_cboe(source, definition, NOW)
+        self.assertEqual(parsed["timestamp"], "2026-10-12T13:44:00Z")
+        self.assertEqual(parsed["fetched_at"], "2026-10-12T14:00:00Z")
+        self.assertEqual(parsed["provider_delay_minutes"], 15)
+        self.assertEqual(parsed["source_provider"], "cboe")
+        for field, value in [("symbol", "SPY"), ("security_type", "future"), ("current_price", True),
+                ("last_trade_time", "2026-10-12T11:00:00"), ("last_trade_time", "2026-10-12T09:44:00Z")]:
+            wrong = copy.deepcopy(source); wrong["data"][field] = value
+            with self.subTest(field=field, value=value), self.assertRaises(quotes.markets.macro.SourceError):
+                quotes.parse_cboe(wrong, definition, NOW)
+        with patch.object(quotes, "urlopen", side_effect=OSError("Yahoo down")), patch.object(quotes, "fetch_cboe", return_value=parsed) as backup:
+            self.assertEqual(quotes.fetch_quote(definition, NOW)["timestamp"], parsed["timestamp"])
+            backup.assert_called_once()
+        old = fixture("^GSPC", stamp=NOW.timestamp() - 3600)
+        with patch.object(quotes, "urlopen", side_effect=lambda *a, **kw: io.StringIO(json.dumps(old))), patch.object(quotes, "fetch_cboe", return_value=parsed) as backup:
+            self.assertEqual(quotes.fetch_quote(definition, NOW)["source_provider"], "cboe")
+            backup.assert_called_once()
+
     def test_forex_history_keeps_the_recent_closed_equity_session(self):
         data = fixture("CAD=X", "CAD"); result = data["chart"]["result"][0]
         result["meta"]["regularMarketPrice"] = 1.4

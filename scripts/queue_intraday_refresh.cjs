@@ -7,12 +7,16 @@ module.exports = async function queueRefresh({github, context, core, sourceSha, 
   const collected = Date.parse(collectedAt), initial = now();
   if (!Number.isFinite(collected) || collected > initial + 300000)
     throw new Error("Invalid collection time; refusing an unthrottled refresh loop");
+  const repo = {owner: context.repo.owner, repo: context.repo.repo};
+  const current = async () => (await github.rest.repos.getBranch({...repo, branch: "main"})).data.commit.sha === sourceSha;
+  if (!await current()) {
+    core.info("Source changed; leaving the publication queue immediately.");
+    return "source_changed";
+  }
   // Always wait between attempts, including when the provider failed and the
   // start of the attempted run is used instead of a successful collection.
   await wait(Math.max(0, collected + 5 * 60000 - initial));
-  const repo = {owner: context.repo.owner, repo: context.repo.repo};
-  const {data: branch} = await github.rest.repos.getBranch({...repo, branch: "main"});
-  if (branch.commit.sha !== sourceSha) {
+  if (!await current()) {
     core.info("Source changed; the validated full deployment will restart the feed.");
     return "source_changed";
   }

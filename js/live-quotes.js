@@ -3,27 +3,54 @@
   const I = window.IntradayUtils, KEY = "savy:intraday-quotes:v1";
   let data = null, pending = null;
   try {data = I.normalize(JSON.parse(localStorage.getItem(KEY)));} catch { /* Daily closes remain available. */ }
-  async function refresh() {
-    if (pending) return pending;
-    pending = (async () => {
+  function merge(rows) {
+    const byId = new Map((data?.quotes || []).map(q => [q.id, q]));
+    for (const q of rows) {
+      const old = byId.get(q.id);
+      if (!old || (old.quote_symbol === q.quote_symbol && old.currency === q.currency &&
+          (Date.parse(q.timestamp) > Date.parse(old.timestamp) ||
+           (Date.parse(q.timestamp) === Date.parse(old.timestamp) && Date.parse(q.fetched_at) >= Date.parse(old.fetched_at))))) byId.set(q.id, q);
+    }
+    if (data) data = {...data, quotes: [...byId.values()]};
+  }
+  async function directIndices() {
+    const J = window.IndexQuoteUtils;
+    if (!J || J.definitions.every(d => {
+      const q = I.choose(data, d.id);
+      return q && I.collectionIsCurrent(q) && Date.now() - Date.parse(q.fetched_at) < 5 * 60000 && !q.stale;
+    })) return;
+    const controller = new AbortController(), timeout = setTimeout(() => controller.abort(), 8000);
+    try {
+      const response = await fetch("https://app-money.tmx.com/graphql?" + new URLSearchParams(J.request()),
+        {cache: "no-store", signal: controller.signal});
+      if (!response.ok) throw new Error("Indices TMX indisponibles");
+      const checked = Date.now(), rows = J.parse(await response.json(), checked);
+      if (!data && rows.length) data = {schema_version: 1, kind: "intraday_quotes", generated_at: new Date(checked).toISOString(), quotes: []};
+      merge(I.normalize({schema_version: 1, kind: "intraday_quotes", generated_at: new Date(checked).toISOString(), quotes: rows}).quotes);
+    } catch { /* Keep actual dated observations from the other provider. */ }
+    finally {clearTimeout(timeout); document.dispatchEvent(new Event("savy:quotes"));}
+  }
+  async function publishedQuotes() {
       const controller = new AbortController(), timeout = setTimeout(() => controller.abort(), 12000);
       try {
         const response = await fetch("data/intraday-quotes.json?v=" + Date.now(), {cache: "no-store", signal: controller.signal});
         if (!response.ok) throw new Error("Cotations en séance indisponibles");
         const next = I.normalize(await response.json());
-        if (data && Date.parse(next.generated_at) < Date.parse(data.generated_at)) return;
-        const byId = new Map(next.quotes.map(q => [q.id, q]));
-        for (const old of data?.quotes || []) {
-          const fresh = byId.get(old.id);
-          if (!fresh || (fresh.quote_symbol === old.quote_symbol && Date.parse(old.timestamp) > Date.parse(fresh.timestamp)))
-            byId.set(old.id, {...old, fetch_status: "cached"});
-        }
-        data = {...next, quotes: [...byId.values()]};
-        try {localStorage.setItem(KEY, JSON.stringify(data));} catch { /* Session still usable. */ }
+        if (!data) data = {...next, quotes: []};
+        const quotes = data.quotes;
+        if (Date.parse(next.generated_at) >= Date.parse(data.generated_at)) data = {...next, quotes};
+        merge(next.quotes);
       } catch { /* Keep the last dated quote; never relabel it as fresh. */ }
       finally {clearTimeout(timeout); document.dispatchEvent(new Event("savy:quotes"));}
+  }
+  async function refresh() {
+    if (pending) return pending;
+    pending = (async () => {
+      try {await Promise.allSettled([publishedQuotes(), directIndices()]);
+        try {localStorage.setItem(KEY, JSON.stringify(data));} catch { /* Session still usable. */ }
+      } finally {pending = null; document.dispatchEvent(new Event("savy:quotes"));}
     })();
-    try {await pending;} finally {pending = null;}
+    return pending;
   }
   window.SavyLiveQuotes = {refresh, dataset: () => data, current: (id, base) => I.choose(data, id, base),
     marketPoint: point => I.marketPoint(point, data), marketSession: point => I.marketSession(point, data),
@@ -31,4 +58,6 @@
   refresh();
   setInterval(() => {if (document.visibilityState === "visible") refresh();}, 60000);
   document.addEventListener("visibilitychange", () => {if (document.visibilityState === "visible") refresh();});
+  window.addEventListener("focus", refresh);
+  window.addEventListener("online", refresh);
 })();

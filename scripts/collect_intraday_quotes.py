@@ -106,17 +106,68 @@ def parse_quote(payload, definition, now):
         **({"intraday_sessions": {day: [[tick, value] for tick, value in sorted(rows.items())] for day, rows in fx_sessions.items()}} if definition["id"] == "USDCAD" else {}),
         "source_label": "Yahoo Finance", "source_url": "https://finance.yahoo.com/quote/" + quote(meta["symbol"], safe="") + "/"}
 
+def parse_cboe(payload, definition, now):
+    """Use the index observation time, never Cboe's later file-generation time."""
+    try:
+        row = payload["data"]
+        if definition["id"] != "SPX" or definition["quote_symbol"] != "^GSPC" or payload["symbol"] != "_SPX" or row["symbol"] != "^SPX" or row["security_type"] != "index":
+            raise ValueError("Wrong Cboe index")
+        price, previous = row["current_price"], row["prev_day_close"]
+        raw = row["last_trade_time"]
+        if not isinstance(raw, str) or len(raw) != 19:
+            raise ValueError("Missing exchange-local index time")
+        local = datetime.fromisoformat(raw).replace(tzinfo=ZoneInfo("America/New_York"))
+        instant = local.astimezone(timezone.utc)
+        if not finite(price) or price <= 0 or not finite(previous) or previous <= 0 or not -300 <= (now - instant).total_seconds() <= 7 * 86400:
+            raise ValueError("Invalid Cboe observation")
+        start, end = local.replace(hour=9, minute=30, second=0), local.replace(hour=16, minute=0, second=0)
+        if local.weekday() > 4 or not start <= local <= end:
+            raise ValueError("Cboe observation outside the index session")
+    except (KeyError, TypeError, ValueError, OSError) as error:
+        raise markets.macro.SourceError(f"SPX: invalid Cboe quote ({error})") from error
+    stamp = instant.isoformat().replace("+00:00", "Z")
+    return {"id": "SPX", "title": definition["title"], "quote_symbol": "^GSPC", "currency": "USD",
+        "price": price, "previous_close": previous, "timestamp": stamp, "session_date": local.date().isoformat(),
+        "exchange_timezone": "America/New_York", "instrument_type": "INDEX", "exchange": "S&P index / Cboe",
+        "market_state": "regular" if start <= now < end else "closed",
+        "session_start": start.astimezone(timezone.utc).isoformat().replace("+00:00", "Z"),
+        "session_end": end.astimezone(timezone.utc).isoformat().replace("+00:00", "Z"),
+        "provider_delay_minutes": 15, "fetch_status": "fresh", "fetched_at": now.isoformat().replace("+00:00", "Z"),
+        "history_interval_minutes": 5, "intraday_history": [[stamp, price]], "source_provider": "cboe", "source_symbol": "_SPX",
+        "source_label": "Cboe", "source_url": "https://www.cboe.com/delayed_quotes/spx/quote_table"}
+
+def fetch_cboe(definition, now):
+    request = Request("https://cdn.cboe.com/api/global/delayed_quotes/quotes/_SPX.json",
+        headers={"User-Agent": "Mozilla/5.0 SAVY/4.0", "Accept": "application/json"})
+    with urlopen(request, timeout=8) as response:
+        return parse_cboe(json.load(response), definition, now)
+
 def fetch_quote(definition, now):
     last_error = None
+    candidates = []
     for host in ("query1.finance.yahoo.com", "query2.finance.yahoo.com"):
         try:
             history_range = "5d" if definition["id"] == "USDCAD" else "1d"
             request = Request(f"https://{host}/v8/finance/chart/{quote(definition['quote_symbol'], safe='')}?range={history_range}&interval=5m",
                 headers={"User-Agent": "Mozilla/5.0 SAVY/4.0", "Accept": "application/json"})
-            with urlopen(request, timeout=12) as response:
-                return parse_quote(json.load(response), definition, now)
+            with urlopen(request, timeout=8) as response:
+                parsed = parse_quote(json.load(response), definition, now)
+            candidates.append(parsed)
+            # An old HTTP-200 response must also trigger provider recovery.
+            age = (now - datetime.fromisoformat(parsed["timestamp"].replace("Z", "+00:00"))).total_seconds()
+            local_now = now.astimezone(ZoneInfo("America/New_York"))
+            spx_expected_open = definition["id"] == "SPX" and local_now.weekday() < 5 and (9, 30) <= (local_now.hour, local_now.minute) < (16, 0)
+            if age <= 25 * 60 or (parsed["market_state"] == "closed" and not spx_expected_open):
+                return parsed
         except (OSError, ValueError, markets.macro.SourceError) as error:
             last_error = error
+    if definition["id"] == "SPX":
+        try:
+            candidates.append(fetch_cboe(definition, now))
+        except (OSError, ValueError, markets.macro.SourceError) as error:
+            last_error = error
+    if candidates:
+        return max(candidates, key=lambda p: p["timestamp"])
     raise markets.macro.SourceError(str(last_error))
 
 def collect(config, previous, now, fetcher=fetch_quote):
@@ -143,7 +194,7 @@ def collect(config, previous, now, fetcher=fetch_quote):
         raise markets.macro.SourceError("No valid exchange quotes; existing file kept")
     rows = [by_id[p["id"]] for p in config if p["id"] in by_id]
     return {"schema_version": 1, "kind": "intraday_quotes", "generated_at": now.isoformat().replace("+00:00", "Z"),
-        "collection_interval_minutes": 5, "data_provider": "Yahoo Finance — regular-session exchange quotes",
+        "collection_interval_minutes": 5, "data_provider": "Yahoo Finance; Cboe S&P 500 fallback; direct TMX indices in browser",
         "note": "Collecte prévue toutes les cinq minutes. Délai fournisseur possible; l’heure est celle de la cotation. Aucun prix de CFD.",
         "quotes": rows, "coverage": {"fresh": sum(p["fetch_status"] == "fresh" for p in rows),
             "cached": sum(p["fetch_status"] == "cached" for p in rows), "missing": len(config) - len(rows)}, "errors": errors}

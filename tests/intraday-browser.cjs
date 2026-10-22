@@ -300,6 +300,36 @@ async function main() {
       assert.equal(await direct.locator("#portfolioRisk .table-wrap").isVisible(), false);
     }
     assert.deepEqual(errors, []);
+    // A stalled Pages snapshot cannot block the independent index provider.
+    const recoveryContext = await liveContext({viewport: {width: 390, height: 900}}, null);
+    const recovery = await componentPage(recoveryContext), J = require("../js/index-quote-utils.js");
+    const zone = new Intl.DateTimeFormat("sv-SE", {timeZone: "America/Toronto", dateStyle: "short", timeStyle: "medium", hourCycle: "h23"});
+    const offset = new Intl.DateTimeFormat("en", {timeZone: "America/Toronto", timeZoneName: "longOffset"}).formatToParts(now).find(p => p.type === "timeZoneName").value.replace("GMT", "");
+    const backup = {data: {}};
+    for (const d of J.definitions) {
+      backup.data["q" + d.id] = {symbol: d.symbol, currency: d.currency, datatype: d.type, prevClose: 100};
+      backup.data["c" + d.id] = [20, 15, 10].map((minutes, i) => ({dateTime: zone.format(Math.floor(now / 300000) * 300000 - minutes * 60000).replace(" ", "T") + offset, close: 101 + i}));
+    }
+    let backupDown = false;
+    await recovery.route("https://**", route => route.request().url().startsWith("https://app-money.tmx.com/graphql") && !backupDown ?
+      route.fulfill({status: 200, contentType: "application/json", headers: {"Access-Control-Allow-Origin": "*"}, body: JSON.stringify(backup)}) : route.abort());
+    unavailable = true;
+    await recovery.goto(url);
+    await recovery.waitForFunction(() => document.querySelector('.market-card[data-id="TSX"] .market-value')?.textContent.includes("103"));
+    assert.match(await recovery.locator('.market-card[data-id="TSX"] .meta').first().innerText(), /TMX Money/);
+    assert.match(await recovery.locator('.market-card[data-id="IXIC"] .meta').first().innerText(), /TMX Money/);
+    assert.equal(await recovery.locator('.market-card[data-id="TSX"] .chart-line').count(), 1);
+    assert.match(await recovery.locator('.market-card[data-id="TSX"] a').last().getAttribute("href"), /money\.tmx\.com/);
+    const savedBackup = await recovery.evaluate(() => window.SavyLiveQuotes.dataset().quotes.find(q => q.id === "TSX"));
+    backupDown = true;
+    await recovery.evaluate(time => {Date.now = () => time;}, now + 20 * 60000);
+    await recovery.evaluate(() => window.SavyLiveQuotes.refresh());
+    assert.equal(await recovery.locator('.market-card[data-id="TSX"] .market-value').innerText(), "103,00");
+    assert.match(await recovery.locator('.market-card[data-id="TSX"] .meta').first().innerText(), /Cotation conservée/);
+    const retainedBackup = await recovery.evaluate(() => window.SavyLiveQuotes.dataset().quotes.find(q => q.id === "TSX"));
+    assert.equal(retainedBackup.timestamp, savedBackup.timestamp); assert.equal(retainedBackup.fetched_at, savedBackup.fetched_at);
+    unavailable = false;
+    await recoveryContext.close();
     console.log("Intraday UI verified: current and explicitly retained macro headlines, older VXEEM quote rejected, after-close refresh pause, minute charts for indices and all three portfolios, 320–1440px layout, contributions, daily risk, shared access and source/currency fallback.");
   } finally {await browser.close(); await new Promise(resolve => server.close(resolve));}
 }

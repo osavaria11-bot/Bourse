@@ -65,6 +65,8 @@ jobs:
       cancel-in-progress: false
     runs-on: ubuntu-latest
     timeout-minutes: 12
+    outputs:
+      collected_at: ${{ steps.collect.outputs.collected_at }}
     permissions:
       contents: read
       actions: write
@@ -91,25 +93,17 @@ jobs:
           python -m unittest discover -s tests -p 'test_polymarket.py' -v
           python -m unittest discover -s tests -p 'test_interest_rates.py' -v
           npm test
-      - name: Collect actual exchange quotes without touching daily histories
-        id: collect
+      - name: Refresh companion market data
+        continue-on-error: true
+        timeout-minutes: 2
         run: |
-          python scripts/collect_intraday_quotes.py
           python scripts/collect_fear_greed.py
           python scripts/collect_polymarket.py
           python scripts/collect_rate_odds.py
           python scripts/collect_yield_curves.py
           python scripts/refresh_interest_rates.py --published-baseline https://osavaria11-bot.github.io/Bourse/data/macro-data.json
-          python - <<'PY'
-          import json, os
-          from pathlib import Path
-          stamp = json.loads(Path('data/intraday-quotes.json').read_text())['generated_at']
-          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
-              output.write('collected_at=' + stamp + '\n')
-          PY
       - name: Validate generated snapshots
         run: |
-          node scripts/validate_intraday_quotes.cjs
           node scripts/validate_polymarket.cjs
       - name: Restore narration for this exact public edition
         id: narration_cache
@@ -119,19 +113,13 @@ jobs:
             data/briefing-audio.json
             data/audio
           key: briefing-audio-v2-${{ hashFiles('data/daily-briefing.json', 'js/briefing-audio-utils.js', 'scripts/generate_briefing_audio.py', 'scripts/requirements-audio.txt') }}
-      - name: Generate or reuse natural Canadian French narration
+      - name: Reuse narration for this exact edition
         id: narration
         continue-on-error: true
-        timeout-minutes: 7
-        run: |
-          if ! python scripts/generate_briefing_audio.py --reuse-only; then
-            if ! command -v ffprobe >/dev/null || ! command -v ffmpeg >/dev/null; then
-              sudo apt-get update -qq
-              sudo apt-get install --no-install-recommends -y ffmpeg
-            fi
-            python -m pip install --disable-pip-version-check -r scripts/requirements-audio.txt
-            python scripts/generate_briefing_audio.py
-          fi
+        timeout-minutes: 1
+        # Full publication generates narration. Quote publication must not wait
+        # up to seven minutes for unrelated speech synthesis.
+        run: python scripts/generate_briefing_audio.py --reuse-only
       - name: Save the complete verified narration
         if: steps.narration.outcome == 'success' && steps.narration_cache.outputs.cache-hit != 'true'
         uses: actions/cache/save@v4
@@ -141,24 +129,61 @@ jobs:
             data/audio
           key: ${{ steps.narration_cache.outputs.cache-primary-key }}
       - uses: actions/configure-pages@v5
+      - name: Collect and validate exchange quotes immediately before publication
+        id: collect
+        run: |
+          python scripts/collect_intraday_quotes.py
+          node scripts/validate_intraday_quotes.cjs
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          stamp = json.loads(Path('data/intraday-quotes.json').read_text())['generated_at']
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              output.write('collected_at=' + stamp + '\n')
+          PY
+      - name: Check source is still current before publication
+        id: current
+        uses: actions/github-script@v8
+        env:
+          SOURCE_SHA: ${{ needs.source.outputs.sha }}
+        with:
+          script: |
+            const {data} = await github.rest.repos.getBranch({...context.repo, branch: 'main'});
+            core.setOutput('publish', data.commit.sha === process.env.SOURCE_SHA ? 'true' : 'false');
       - name: Package validated source and generated quote data
+        if: steps.current.outputs.publish == 'true'
         run: |
           mkdir -p _site
           cp index.html 221.png 2121.png _site/
           node scripts/build_report_archive.cjs
           cp -R css js data reports _site/
       - uses: actions/upload-pages-artifact@v3
+        if: steps.current.outputs.publish == 'true'
         with:
           path: _site
       - name: Publish snapshot
+        if: steps.current.outputs.publish == 'true'
         id: deployment
         uses: actions/deploy-pages@v4
+
+  next:
+    needs: [source, refresh]
+    if: ${{ always() && !cancelled() && needs.source.outputs.ready == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    permissions:
+      contents: read
+      actions: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.source.outputs.sha }}
+          persist-credentials: false
       - name: Continue the actual quote feed without depending only on cron delivery
-        if: ${{ always() && !cancelled() }}
         uses: actions/github-script@v8
         env:
           SOURCE_SHA: ${{ needs.source.outputs.sha }}
-          COLLECTED_AT: ${{ steps.collect.outputs.collected_at || needs.source.outputs.started_at }}
+          COLLECTED_AT: ${{ needs.refresh.outputs.collected_at || needs.source.outputs.started_at }}
         with:
           script: |
             await require('./scripts/queue_intraday_refresh.cjs')({

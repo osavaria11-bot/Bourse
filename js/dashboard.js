@@ -554,12 +554,19 @@
     const data = state.marketDataset;
     const available = data?.series.filter(point => point.value !== null).length || 0;
     $("#marketStatus").textContent = data ? (state.marketCached ? "Copie conservée · " : "") +
-      "Collecte du " + U.timestampLabel(data.generated_at) + " · " + available + "/" + MARKET_DEFINITIONS.length + " marchés disponibles" : "Cotations indisponibles. Réessaie avec « Actualiser » ou consulte les sources ci-dessous.";
+      "Historiques de clôture · collecte du " + U.timestampLabel(data.generated_at) + " · " + available + "/" + MARKET_DEFINITIONS.length + " marchés disponibles" : "Cotations indisponibles. Réessaie avec « Actualiser » ou consulte les sources ci-dessous.";
     const oldCollection = data && Date.now() - U.parseTimestamp(data.generated_at) > 36 * 3600000;
     if (oldCollection) $("#marketStatus").textContent += " · collecte ancienne";
     const liveData = window.SavyLiveQuotes?.dataset();
-    const delayed = liveData && Date.now() - U.parseTimestamp(liveData.generated_at) > 12 * 60000;
-    if (liveData) $("#marketStatus").textContent += " · dernière collecte des cotations : " + U.timestampLabel(liveData.generated_at) + (delayed ? " · actualisation en attente, courbes datées conservées" : " · délai fournisseur possible");
+    const checked = MARKET_DEFINITIONS.map(([id]) => window.SavyLiveQuotes?.current(id)).filter(Boolean);
+    const current = checked.filter(q => window.IntradayUtils.isCurrent(q));
+    const delayed = Boolean(liveData) && current.length !== MARKET_DEFINITIONS.length;
+    if (liveData) {
+      const last = checked.map(q => q.fetched_at).sort().at(-1);
+      $("#marketStatus").textContent += " · cotations vérifiées : " + current.length + "/" + MARKET_DEFINITIONS.length +
+        (last ? " · dernière vérification : " + U.timestampLabel(last) : "") + " · vérification automatique chaque minute" +
+        (delayed ? " · certaines cotations sont anciennes; voir leur heure et leur source" : " · délai fournisseur possible");
+    }
     $("#marketStatus").classList.toggle("warning", !data || state.marketCached || available !== MARKET_DEFINITIONS.length || oldCollection || Boolean(delayed));
     const fragment = document.createDocumentFragment();
     const periodLabel = MARKET_CHART_RANGES.find(item => item.key === state.marketRange).label, intraday = state.marketRange === "INTRADAY";
@@ -585,8 +592,9 @@
       if (intraday && !session.available) host.append(el("p", "chart-placeholder", "La courbe apparaîtra dès la réception de points intraday. Les autres périodes restent consultables."));
       else if (point) drawChart(host, point, state.marketRange, {history: selected.history, showPercent: true, incomplete: selected.incomplete, intraday, baseline: session?.baseline});
       else host.append(el("p", "chart-placeholder", "Historique indisponible pour cette collecte."));
-      const link = el("a", "", "Voir " + (isETF ? "le FNB" : "cet indice") + " sur Yahoo Finance ↗");
-      link.href = "https://finance.yahoo.com/quote/" + encodeURIComponent(symbol) + "/";
+      const source = point?.current_quote;
+      const link = el("a", "", "Voir " + (isETF ? "le FNB" : "cet indice") + " sur " + (source?.source_label || "Yahoo Finance") + " ↗");
+      link.href = source?.source_url || "https://finance.yahoo.com/quote/" + encodeURIComponent(symbol) + "/";
       link.target = "_blank"; link.rel = "noopener noreferrer";
       card.append(host, link); fragment.append(card);
     }

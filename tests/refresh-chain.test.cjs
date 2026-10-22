@@ -32,6 +32,12 @@ test("overlapping manual, scheduled and deployment refreshes cannot multiply the
 test("changed source waits for its full validation and publication before restarting", async () => {
   const f = fixture([], "new-source");
   assert.equal(await queue(f.args), "source_changed"); assert.equal(f.dispatches.length, 0);
+  assert.deepEqual(f.delays, [], "An obsolete source cannot occupy a runner for another five minutes");
+});
+test("a source change during the interval prevents the next dispatch", async () => {
+  const f = fixture(); let calls = 0;
+  f.args.github.rest.repos.getBranch = async () => ({data: {commit: {sha: ++calls === 1 ? "validated-source" : "new-source"}}});
+  assert.equal(await queue(f.args), "source_changed"); assert.deepEqual(f.delays, [300000]); assert.equal(f.dispatches.length, 0);
 });
 test("invalid or future timing cannot start a runaway dispatcher", async () => {
   for (const collectedAt of ["bad", "2026-10-13T18:20:00Z"]) {

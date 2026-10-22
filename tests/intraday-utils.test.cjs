@@ -24,6 +24,10 @@ test("a validated last trade survives a missing or empty candle history without 
     assert.equal(normalized.timestamp, row.timestamp);
     assert.equal(I.marketSession(point("AAPL", 100), data([normalized]), now).available, false,
       "One observed trade alone is not a standalone instrument curve");
+    assert.equal(I.marketSession(point("AAPL", 100), data([normalized]), now).quote.price, 110,
+      "A missing curve must not hide a valid backup provider's last quote");
+    assert.ok(Math.abs(I.marketSession(point("AAPL", 100), data([normalized]), now).percent - 10) < 1e-10,
+      "A validated previous close supports a return even before a full curve is available");
   }
 });
 test("one-session return includes the current trade and preserves the immutable close history", () => {

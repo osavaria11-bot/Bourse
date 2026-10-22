@@ -4,6 +4,16 @@
 })(typeof globalThis !== "undefined" ? globalThis : this, function (U) {
   "use strict";
   const DAY = 86400000;
+  const TMX = {IXIC: ["^COMPX:US", "^IXIC", "USD"], TSX: ["^TSX", "^GSPTSE", "CAD"],
+    EEM: ["EEM:US", "EEM", "USD"], FEQT: ["FEQT:CC", "FEQT.NE", "CAD"]};
+  function attribution(row) {
+    const expected = TMX[row.id];
+    if (row.source_provider === "tmx" && expected && row.source_symbol === expected[0] && row.quote_symbol === expected[1] && row.currency === expected[2])
+      return {source_provider: "tmx", source_label: "TMX Money", source_url: "https://money.tmx.com/en/quote/" + encodeURIComponent(expected[0])};
+    if (row.source_provider === "cboe" && row.id === "SPX" && row.quote_symbol === "^GSPC" && row.source_symbol === "_SPX" && row.currency === "USD")
+      return {source_provider: "cboe", source_label: "Cboe", source_url: "https://www.cboe.com/delayed_quotes/spx/quote_table"};
+    return {source_provider: "yahoo", source_label: "Yahoo Finance", source_url: "https://finance.yahoo.com/quote/" + encodeURIComponent(row.quote_symbol) + "/"};
+  }
   function normalize(payload, now = Date.now()) {
     const generated = U.parseTimestamp(payload?.generated_at);
     if (payload?.schema_version !== 1 || payload.kind !== "intraday_quotes" || !Array.isArray(payload.quotes) ||
@@ -48,7 +58,7 @@
         }
       }
       quotes.push({...row, intraday_history, intraday_sessions, previous_close: U.validNumber(row.previous_close) && row.previous_close > 0 ? row.previous_close : null,
-        source_label: "Yahoo Finance", source_url: "https://finance.yahoo.com/quote/" + encodeURIComponent(row.quote_symbol) + "/"});
+        ...attribution(row)});
     }
     return {...payload, quotes};
   }
@@ -65,7 +75,8 @@
   function label(row) {
     if (!row) return "Clôture quotidienne · cotation en séance indisponible";
     return (row.stale ? "Cotation conservée · " : row.active ? "En séance · " : "Marché fermé · dernier cours · ") +
-      U.timestampLabel(row.timestamp) + " · Yahoo Finance" + (row.provider_delay_minutes > 0 ? " · retard fournisseur " + row.provider_delay_minutes + " min" : "");
+      U.timestampLabel(row.timestamp) + " · " + attribution(row).source_label + (row.observation_kind === "candle_close" ? " · point de courbe 5 min" : "") +
+      (row.provider_delay_minutes > 0 ? " · retard fournisseur " + row.provider_delay_minutes + " min" : "");
   }
   function collectionIsCurrent(row, now = Date.now()) {
     const age = now - U.parseTimestamp(row?.fetched_at);
@@ -97,8 +108,8 @@
     const current = isCurrent(received, now), quote = received ? {...received, stale: !current} : null;
     // A delayed refresh does not invalidate the actual, dated session history.
     const history = quote?.intraday_history || [], available = history.length >= 2;
-    const base = quote?.previous_close, comparable = available && U.validNumber(base) && base > 0;
-    return {quote: available ? quote : null, history: available ? history : [], available, current, incomplete: !comparable,
+    const base = quote?.previous_close, comparable = Boolean(quote) && U.validNumber(base) && base > 0;
+    return {quote, history: available ? history : [], available, current, incomplete: !comparable,
       start: available ? history[0][0] : null, end: available ? history.at(-1)[0] : null,
       baseline: comparable ? base : null, change: comparable ? quote.price - base : null,
       percent: comparable ? (quote.price / base - 1) * 100 : null};
