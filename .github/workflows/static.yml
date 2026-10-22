@@ -14,7 +14,9 @@ permissions:
 
 concurrency:
   group: pages-build-${{ github.ref }}
-  cancel-in-progress: false
+  # A new source supersedes an older build. Quote publication uses a separate
+  # group, so it cannot cancel full validation of the current source.
+  cancel-in-progress: true
 
 jobs:
   validate:
