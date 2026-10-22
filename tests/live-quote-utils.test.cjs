@@ -33,4 +33,9 @@ test("direct indices recover without Pages, survive a provider outage and never 
   snapshot.quotes[0].timestamp = new Date(clock - 60000).toISOString(); snapshot.quotes[0].price = 110;
   await live.refresh(); assert.equal(live.current("TSX").price, 110); assert.equal(live.current("TSX").source_label, "Yahoo Finance");
   assert.equal(live.current("TSX").stale, false);
+  snapshot.quotes[0].currency = "USD";
+  await live.refresh(); assert.equal(live.current("TSX"), null, "A provider's explicit currency violation must fall back to the daily close");
+  tmxDown = false;
+  await live.refresh(); assert.equal(live.current("TSX").currency, "CAD"); assert.equal(live.current("TSX").source_label, "TMX Money",
+    "An independently verified Canadian listing can recover while the other provider still reports the wrong currency");
 });

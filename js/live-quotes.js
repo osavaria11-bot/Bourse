@@ -7,6 +7,13 @@
     const byId = new Map((data?.quotes || []).map(q => [q.id, q]));
     for (const q of rows) {
       const old = byId.get(q.id);
+      if (old && (old.quote_symbol !== q.quote_symbol || old.currency !== q.currency)) {
+        // An explicit listing/currency violation invalidates that provider's
+        // previous quote. A separately verified source remains usable.
+        if (q.source_provider !== "yahoo") byId.set(q.id, q);
+        else if (old.source_provider === q.source_provider && Date.parse(q.fetched_at) >= Date.parse(old.fetched_at)) byId.delete(q.id);
+        continue;
+      }
       if (!old || (old.quote_symbol === q.quote_symbol && old.currency === q.currency &&
           (Date.parse(q.timestamp) > Date.parse(old.timestamp) ||
            (Date.parse(q.timestamp) === Date.parse(old.timestamp) && Date.parse(q.fetched_at) >= Date.parse(old.fetched_at))))) byId.set(q.id, q);
