@@ -57,7 +57,10 @@ def apply(analysis, selections, previous=None):
 def apply_frozen(analysis, selections, previous=None, *, family, validator):
     """Shared dashboard calculations; each frozen family retains its own policy."""
     # Import lazily: monthly_fnb calls this after defining its common calculators.
-    from monthly_fnb import portfolio_returns, stats, period_stats
+    try:
+        from .monthly_fnb import portfolio_returns, stats, period_stats
+    except ImportError:
+        from monthly_fnb import portfolio_returns, stats, period_stats
     d = analysis
     prior = previous or {}
     u, dates, rf = d["universe"], d["dates"], d["assumptions"]["risk_free"]

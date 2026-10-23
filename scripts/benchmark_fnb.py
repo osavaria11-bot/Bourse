@@ -19,7 +19,10 @@ def validate_catalog(catalog):
 
 
 def apply(d, selections, previous=None):
-    from monthly_fnb import portfolio_returns, stats
+    try:
+        from .monthly_fnb import portfolio_returns, stats
+    except ImportError:
+        from monthly_fnb import portfolio_returns, stats
     prior = previous or {}
     d["additional_benchmarks"] = deepcopy(selections)
     for c in selections:

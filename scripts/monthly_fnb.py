@@ -14,8 +14,12 @@ from zoneinfo import ZoneInfo
 
 try:
     from scripts.fnb_sources import Client, collect, month_end, previous_month
+    from scripts import benchmark_fnb, recommended_fnb, robust_fnb
 except ModuleNotFoundError:
     from fnb_sources import Client, collect, month_end, previous_month
+    import benchmark_fnb
+    import recommended_fnb
+    import robust_fnb
 
 ROOT = Path(__file__).resolve().parents[1]
 MODEL_VERSION = "1.3.0"
@@ -326,14 +330,11 @@ def refresh_analysis(current, baseline, sources, config, generated_at):
         "performance_type": "Simulation rétrospective, distributions réinvesties. Le suivi après publication commence au premier mois complet suivant la publication.",
         "source_digest": hashlib.sha256(json.dumps(sources, sort_keys=True).encode()).hexdigest()}
     if current.get("additional_benchmarks"):
-        from benchmark_fnb import apply
-        apply(d, current["additional_benchmarks"], current)
+        benchmark_fnb.apply(d, current["additional_benchmarks"], current)
     if current.get("robust_selections"):
-        from robust_fnb import apply
-        apply(d, current["robust_selections"], current)
+        robust_fnb.apply(d, current["robust_selections"], current)
     if current.get("recommended_selections"):
-        from recommended_fnb import apply
-        apply(d, current["recommended_selections"], current)
+        recommended_fnb.apply(d, current["recommended_selections"], current)
     return d
 
 
@@ -354,9 +355,8 @@ def validate(d, baseline):
     for p in expected_robust:
         if d["results"][p["id"]]["weights"] != p["weights"]:
             raise ValueError("Frozen robust allocation changed")
-    from recommended_fnb import validate_catalog
     recommended = d.get("recommended_selections", [])
-    for c in recommended: validate_catalog(c)
+    for c in recommended: recommended_fnb.validate_catalog(c)
     expected_recommended = [p for c in recommended for p in c["portfolios"]]
     if d.get("recommended_order", []) != [p["id"] for p in expected_recommended]:
         raise ValueError("Recommended portfolio identities changed")
@@ -364,9 +364,8 @@ def validate(d, baseline):
         q = d["results"][p["id"]]
         if q["weights"] != p["weights"] or q["historical_backtest"] != p["historical_backtest"]:
             raise ValueError("Frozen recommended allocation or research changed")
-    from benchmark_fnb import validate_catalog
     for c in d.get("additional_benchmarks", []):
-        validate_catalog(c)
+        benchmark_fnb.validate_catalog(c)
         for p in c["benchmarks"]:
             if p["id"] not in d["benchmark_order"] or d["results"][p["id"]]["weights"] != p["weights"]:
                 raise ValueError("Additional benchmark changed")
@@ -429,19 +428,16 @@ def main(argv=None):
     current_file = root / "data/fnb-analysis.json"
     if args.check:
         current = read(current_file); validate(current, baseline)
-        from robust_fnb import catalogs, validate_sources
-        selections = catalogs(root)
-        for selection in selections: validate_sources(root, selection)
+        selections = robust_fnb.catalogs(root)
+        for selection in selections: robust_fnb.validate_sources(root, selection)
         if current.get("robust_selections", []) != selections:
             raise ValueError("Current robustness selections disagree with frozen catalogs")
-        from recommended_fnb import catalogs, validate_sources
-        selections = catalogs(root)
-        for selection in selections: validate_sources(root, selection)
+        selections = recommended_fnb.catalogs(root)
+        for selection in selections: recommended_fnb.validate_sources(root, selection)
         if current.get("recommended_selections", []) != selections:
             raise ValueError("Current long-history selections disagree with frozen catalogs")
-        from benchmark_fnb import catalogs, validate_catalog
-        benchmarks = catalogs(root)
-        for c in benchmarks: validate_catalog(c)
+        benchmarks = benchmark_fnb.catalogs(root)
+        for c in benchmarks: benchmark_fnb.validate_catalog(c)
         if current.get("additional_benchmarks", []) != benchmarks:
             raise ValueError("Current benchmarks disagree with dated catalogs")
         for file in (root / "data/fnb-history").glob("????-??.json"): validate(read(file), baseline)

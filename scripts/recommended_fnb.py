@@ -8,7 +8,10 @@ import hashlib
 import json
 import math
 
-from robust_fnb import apply_frozen
+try:
+    from .robust_fnb import apply_frozen
+except ImportError:
+    from robust_fnb import apply_frozen
 
 
 def catalogs(root):
@@ -39,7 +42,10 @@ def validate_catalog(catalog):
 
 
 def research_period(returns, dates, benchmark, rf, sp500):
-    from monthly_fnb import stats
+    try:
+        from .monthly_fnb import stats
+    except ImportError:
+        from monthly_fnb import stats
     q = stats(returns, sp500, rf, dates)
     keys = ("cagr", "vol", "sharpe", "beta", "information", "tracking_error", "treynor", "sortino", "max_drawdown", "end")
     result = {k: q[k] for k in keys}
@@ -55,7 +61,10 @@ def research_period(returns, dates, benchmark, rf, sp500):
 
 
 def backtest(item, source, catalog):
-    from monthly_fnb import months_between, portfolio_returns
+    try:
+        from .monthly_fnb import months_between, portfolio_returns
+    except ImportError:
+        from monthly_fnb import months_between, portfolio_returns
     dates = months_between(item["history_start"], catalog["as_of"][:7])
     funds, w = source["funds"], item["weights"]
     if any(t not in funds or any(m not in funds[t]["returns"] for m in dates) for t in [*w, "VFV", "VEQT"]):
@@ -90,7 +99,10 @@ def validate_sources(root, catalog):
 
 
 def apply(analysis, selections, previous=None):
-    from monthly_fnb import stats, period_stats
+    try:
+        from .monthly_fnb import stats, period_stats
+    except ImportError:
+        from monthly_fnb import stats, period_stats
     d = apply_frozen(analysis, selections, previous, family="recommended", validator=validate_catalog)
     dates, rf = d["dates"], d["assumptions"]["risk_free"]
     for c in selections:
