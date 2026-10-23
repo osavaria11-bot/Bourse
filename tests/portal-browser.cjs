@@ -4,7 +4,8 @@ const assert = require("node:assert/strict"), fs = require("node:fs"), path = re
 const {chromium, webkit} = require(process.env.PLAYWRIGHT_MODULE_PATH || "playwright");
 const root = path.resolve(__dirname, ".."), R = require("../js/portal-utils.js");
 const fnbData=JSON.parse(fs.readFileSync(path.join(root,"data/fnb-analysis.json"),"utf8"));
-const fnbOwn=[...(fnbData.robust_order||[]),...fnbData.proposal_order,...fnbData.custom_order];
+const fnbOwn=[...(fnbData.recommended_order||[]),...(fnbData.robust_order||[]),...fnbData.proposal_order,...fnbData.custom_order];
+const fnbDefaultBenchmarks=['VBAL','VGRO','VEQT',...(fnbData.results.VFV?['VFV']:[])],fnbDefaultChartCount=4+fnbDefaultBenchmarks.length;
 const fnbBeta=new Intl.NumberFormat("fr-CA",{minimumFractionDigits:2,maximumFractionDigits:2}).format(fnbData.pairwise.find(p=>p.portfolio==="10"&&p.comparable==="VBAL").beta_vs_comparable);
 const types = {".html":"text/html", ".js":"text/javascript", ".css":"text/css", ".json":"application/json", ".pdf":"application/pdf", ".png":"image/png"};
 const server = http.createServer((req, res) => {
@@ -47,7 +48,7 @@ async function check(browser, engine) {
   await fundReport.locator('html[data-ready="true"]').waitFor();
   assert.equal(await fundReport.locator('.nav [data-tab]').first().textContent(), "Vue d’ensemble");
   assert.equal(await fundReport.locator("#allPortfolios").isVisible(), true);
-  assert.equal(await fundReport.locator("#allPortfolioBody tr").count(), fnbOwn.length+3);
+  assert.equal(await fundReport.locator("#allPortfolioBody tr").count(), fnbOwn.length+fnbDefaultBenchmarks.length);
   assert.equal(await fundReport.locator("#allPortfolioBody [data-open-portfolio]").count(), fnbOwn.length);
   assert.equal(await fundReport.locator("#monthlyTitle").count(),0);
   assert.equal(await fundReport.locator("[data-preference]").count(), fnbData.preference_ranking.entries.length);
@@ -57,7 +58,7 @@ async function check(browser, engine) {
   assert.equal(await fundReport.locator('#allPortfolioBody tr').filter({has:fundReport.locator('[data-open-portfolio="10"]')}).locator('td').nth(3).textContent(), fnbBeta);
   await fundReport.locator("#referenceSelect").selectOption("VEQT");
   await fundReport.locator('[data-overview-benchmark="FBAL"]').check();
-  assert.equal(await fundReport.locator("#allPortfolioBody tr").count(), fnbOwn.length+4);
+  assert.equal(await fundReport.locator("#allPortfolioBody tr").count(), fnbOwn.length+fnbDefaultBenchmarks.length+1);
   await fundReport.locator('[data-overview-benchmark="FBAL"]').uncheck();
   await fundReport.locator('[data-all-sort="cagr"]').click();
   assert.equal(await fundReport.locator("#allPortfolioBody [data-open-portfolio]").first().getAttribute("data-open-portfolio"), [...fnbOwn].sort((a,b)=>fnbData.results[b].cagr-fnbData.results[a].cagr)[0]);
@@ -96,16 +97,16 @@ async function check(browser, engine) {
   }
   assert.ok((await fundReport.locator('#statsBody [data-open-portfolio="2"]').textContent()).includes("Équilibre"));
   assert.ok((await fundReport.locator('#growthReadout [data-portfolio="11"]').textContent()).includes("80/20"));
-  assert.equal(await fundReport.locator("#riskSvg .risk-point:visible").count(), 7);
-  for (const ticker of ["VBAL", "VGRO", "VEQT"]) {
+  assert.equal(await fundReport.locator("#riskSvg .risk-point:visible").count(), fnbDefaultChartCount);
+  for (const ticker of fnbDefaultBenchmarks) {
     assert.equal(await fundReport.locator('#compass .benchmark-controls [data-series="' + ticker + '"]').isVisible(), true);
     assert.equal(await fundReport.locator('#capital .benchmark-controls [data-series="' + ticker + '"]').isVisible(), true);
   }
   await fundReport.locator("#compass .chart-chooser summary").click();
   await fundReport.locator("#risk-series-6").check();
   await fundReport.locator("#compass .chart-chooser summary").click();
-  assert.equal(await fundReport.locator("#riskSvg .risk-point:visible").count(), 8);
-  assert.equal(await fundReport.locator("#growthSvg .wealth-line:visible").count(), 7, "Each report chart keeps its own selection");
+  assert.equal(await fundReport.locator("#riskSvg .risk-point:visible").count(), fnbDefaultChartCount+1);
+  assert.equal(await fundReport.locator("#growthSvg .wealth-line:visible").count(), fnbDefaultChartCount, "Each report chart keeps its own selection");
   await fundReport.locator("#summaryFocus").selectOption("10");
   await fundReport.locator("#referenceSelect").selectOption("VBAL");
   assert.equal(await fundReport.locator("#summaryMetrics .kpi").nth(3).locator("strong").textContent(), fnbBeta);
