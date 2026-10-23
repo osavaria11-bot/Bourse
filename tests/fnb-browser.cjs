@@ -18,6 +18,7 @@ async function check(browser,engine){
  await page.locator('#recommendedCharts').click();
  assert.equal(await page.locator('#referenceSelect').inputValue(),'VFV');
  for(const chart of ['risk','growth'])assert.equal(await page.locator('#'+(chart==='risk'?'riskSvg .risk-point':'growthSvg .wealth-line')+':visible').count(),D.recommended_order.length+2);
+ await page.locator('#tableScope').selectOption('all');
  for(const k of D.recommended_order){
   await page.locator('.nav [data-tab="portfolios"]').click();await page.locator('#ficheFocus').selectOption(k);
   assert.equal(await page.locator('[data-fiche="'+k+'"] [data-fund]').count(),Object.keys(D.results[k].weights).length);
