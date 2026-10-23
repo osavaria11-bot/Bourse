@@ -9,6 +9,7 @@
   const ACTIVE_KEY = "savy:portfolio-active:v1", VIEW_KEY = "savy:portfolio-view:v1";
   const portfolioIds = ["1", "2", "3"];
   const portfolioBenchmarks = {"1": "FEQT", "2": "VBAL", "3": "VGRO"};
+  const portfolioNames = {"1": "OS", "2": "JMC", "3": "MCL"};
   const chartRanges = [{key: "INTRADAY", label: "Intraday"}, ...P.RANGES];
   const scopedKeys = new Set([HOLDINGS_KEY, POSITIONS_VISIBLE_KEY, PROFILE_STATE_KEY, PROFILE_CACHE_KEY, EXPOSURE_VIEWS_KEY, VIEW_KEY]);
   const initialFragment = new URLSearchParams(location.hash.slice(1));
@@ -37,7 +38,7 @@
   const labelWalker = document.createTreeWalker($("#portfolio"), NodeFilter.SHOW_TEXT);
   while (labelWalker.nextNode()) if (labelWalker.currentNode.nodeValue.includes("FEQT") && !labelWalker.currentNode.parentElement.closest("[data-portfolio-id]")) referenceLabels.push({node: labelWalker.currentNode, template: labelWalker.currentNode.nodeValue});
   function renderPortfolioChoice() {
-    $("#portfolioTitle").textContent = activePortfolio === "1" ? "Mon portefeuille" : "Portefeuille " + activePortfolio;
+    $("#portfolioTitle").textContent = "Portefeuille " + portfolioNames[activePortfolio];
     $("#portfolio").dataset.portfolio = activePortfolio;
     for (const button of document.querySelectorAll("[data-portfolio-id]")) button.setAttribute("aria-pressed", String(button.dataset.portfolioId === activePortfolio));
     for (const label of referenceLabels) label.node.nodeValue = label.template.replaceAll("FEQT", benchmarkId);
@@ -79,7 +80,7 @@
     finally {clearTimeout(timeout);}
   }
   function applyPositions(input) {
-    if (input?.portfolio_id && input.portfolio_id !== activePortfolio) throw new Error("Choisis le portefeuille " + input.portfolio_id + " avant d’importer ce fichier");
+    if (input?.portfolio_id && input.portfolio_id !== activePortfolio) throw new Error("Choisis le portefeuille " + (portfolioNames[input.portfolio_id] || input.portfolio_id) + " avant d’importer ce fichier");
     const next = P.normalizePositions(input, catalog);
     positions = next;
     holdingsAvailable = true;
@@ -133,7 +134,7 @@
       if (requestedPortfolio !== activePortfolio) return;
       if (!holdingsAvailable || profileState?.key !== personalKey || profileState?.revision !== profile.revision) {
         applyPositions(loaded);
-        $("#portfolioMessage").textContent = loaded.length + " positions chargées automatiquement dans le portefeuille " + requestedPortfolio + ". Ton lien personnel fonctionne aussi depuis l’écran d’accueil.";
+        $("#portfolioMessage").textContent = loaded.length + " positions chargées automatiquement dans le portefeuille " + portfolioNames[requestedPortfolio] + ". Ton lien personnel fonctionne aussi depuis l’écran d’accueil.";
       }
       profileState = {key: personalKey, revision: profile.revision};
       save(ACCESS_KEY, {key: personalKey});
@@ -186,7 +187,7 @@
   }
   function renderBenchmark(comparison) {
     const legend = document.createDocumentFragment();
-    for (const [label, value, className] of [["Mon portefeuille", comparison.portfolio_percent, ""], [benchmarkId, comparison.benchmark_percent, "feqt"]]) {
+    for (const [label, value, className] of [[portfolioNames[activePortfolio], comparison.portfolio_percent, ""], [benchmarkId, comparison.benchmark_percent, "feqt"]]) {
       const item = el("span", "portfolio-benchmark-item"), swatch = el("span", "portfolio-swatch " + className); swatch.setAttribute("aria-hidden", "true");
       item.append(swatch, el("span", "", label + " : "), el("strong", "", delta(value, true))); legend.append(item);
     }
@@ -507,7 +508,7 @@
     heatmapModel = H.model(current, prices, quoteData, heatmapRange);
     const config = H.RANGES.find(item => item.key === heatmapRange);
     for (const button of $("#portfolioHeatmapRanges").querySelectorAll("button")) button.setAttribute("aria-pressed", String(button.dataset.range === heatmapRange));
-    $("#portfolioHeatmapTitle").textContent = "Heatmap · portefeuille " + activePortfolio;
+    $("#portfolioHeatmapTitle").textContent = "Heatmap · portefeuille " + portfolioNames[activePortfolio];
     $("#portfolioHeatmapStatus").textContent = !heatmapModel.end ? "Cours indisponibles." :
       (heatmapRange === "1D" ? "Séance du " + heatmapModel.end + " · depuis la clôture précédente" : heatmapModel.start ? "Du " + heatmapModel.start + " au " + heatmapModel.end : "Historique insuffisant au " + heatmapModel.end) +
       " · " + heatmapModel.valued.length + "/" + heatmapModel.rows.length + " positions valorisées" +
@@ -547,7 +548,7 @@
     if (!positions.length) {
       renderHeatmap(null);
       const needsLink = !holdingsAvailable && !personalKey;
-      $("#portfolioStatus").textContent = needsLink ? "Portefeuille " + activePortfolio + " : ouvre ton lien personnel pour retrouver tes positions." : "Importe ta sauvegarde ou ajoute tes positions. Les quantités restent sur cet appareil.";
+      $("#portfolioStatus").textContent = needsLink ? "Portefeuille " + portfolioNames[activePortfolio] + " : ouvre ton lien personnel pour retrouver tes positions." : "Importe ta sauvegarde ou ajoute tes positions. Les quantités restent sur cet appareil.";
       $("#portfolioEmpty").textContent = needsLink ? "Ton lien personnel donne accès aux trois portefeuilles et mémorise cet accès sur cet appareil. Tu peux aussi importer une sauvegarde." : "Ajoute des titres ci-dessous ou importe une sauvegarde de ce portefeuille.";
       return;
     }
@@ -752,7 +753,7 @@
   }
   $("#portfolioImport").addEventListener("change", async event => {const file = event.target.files[0]; if (!file || !catalog) return; try {if (file.size > 100000) throw new Error("Fichier trop volumineux"); applyPositions(JSON.parse(await file.text()));} catch (error) {$("#portfolioMessage").textContent = "Import impossible : " + error.message;} finally {event.target.value = "";}});
   $("#positionForm").addEventListener("submit", event => {event.preventDefault(); if (!catalog) return; try {const ticker = $("#positionTicker").value; const existing = positions.find(p => p.ticker === ticker); const quantity = Number($("#positionQuantity").value.trim().replace(",", ".")); const costText = $("#positionAverageCost").value.trim(); const average_cost = costText ? Number(costText.replace(",", ".")) : existing?.average_cost; const next = {ticker, quantity, ...(average_cost !== undefined ? {average_cost} : {})}; applyPositions(existing ? positions.map(p => p.ticker === ticker ? next : p) : [...positions, next]); $("#positionQuantity").value = ""; $("#positionAverageCost").value = "";} catch (error) {$("#portfolioMessage").textContent = error.message;}});
-  $("#portfolioExport").addEventListener("click", () => {const blob = new Blob([JSON.stringify({schema_version: 1, base_currency: "CAD", portfolio_id: activePortfolio, benchmark: benchmarkId, positions}, null, 2) + "\n"], {type: "application/json"}); const url = URL.createObjectURL(blob), anchor = el("a"); anchor.href = url; anchor.download = activePortfolio === "1" ? "portefeuille-savy.json" : "portefeuille-" + activePortfolio + "-savy.json"; anchor.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);});
+  $("#portfolioExport").addEventListener("click", () => {const blob = new Blob([JSON.stringify({schema_version: 1, base_currency: "CAD", portfolio_id: activePortfolio, portfolio_name: portfolioNames[activePortfolio], benchmark: benchmarkId, positions}, null, 2) + "\n"], {type: "application/json"}); const url = URL.createObjectURL(blob), anchor = el("a"); anchor.href = url; anchor.download = "portefeuille-" + portfolioNames[activePortfolio] + "-savy.json"; anchor.click(); setTimeout(() => URL.revokeObjectURL(url), 1000);});
   $("#portfolioPositionsToggle").addEventListener("click", () => {positionsVisible = !positionsVisible; save(POSITIONS_VISIBLE_KEY, positionsVisible); renderPositionsVisibility();});
   for (const view of ["Sectors", "Geography"]) $("#portfolio" + view + "Toggle").addEventListener("click", () => {exposureViews[view] = exposureViews[view] !== true; save(EXPOSURE_VIEWS_KEY, exposureViews); renderExposureVisibility();});
   function currentEarningsValuation() {return prices && history.length ? P.valuationAt(positions, prices, history.at(-1)[0], window.SavyLiveFX?.current()) : null;}

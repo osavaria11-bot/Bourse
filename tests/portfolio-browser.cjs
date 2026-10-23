@@ -51,7 +51,7 @@ async function checkHeatmap(page, positions, range = "1D", portfolio = "1") {
   await page.waitForFunction(() => document.querySelectorAll('#portfolioHeatmapTiles button').length > 0);
   const history = P.historyFor(positions, prices), current = P.valuationAt(positions, prices, history.at(-1)[0]);
   const model = H.model(current, prices, prices, range);
-  assert.equal(await page.locator('#portfolioHeatmapTitle').innerText(), 'Heatmap · portefeuille ' + portfolio);
+  assert.equal(await page.locator('#portfolioHeatmapTitle').innerText(), 'Heatmap · portefeuille ' + ({'1':'OS','2':'JMC','3':'MCL'})[portfolio]);
   assert.equal(await page.locator('#portfolioHeatmapTiles button').count(), model.valued.length);
   assert.equal(await page.locator('#portfolioHeatmapPosition option').count(), positions.length);
   const geometry = await page.locator('#portfolioHeatmapTiles').evaluate(host => {
@@ -474,6 +474,10 @@ async function main() {
     const personalURL = A.personalURL(url + "/?v=synthetic-direct", personalKey);
     await direct.goto(personalURL);
     await direct.waitForFunction(() => document.querySelectorAll("#portfolioRows tr").length === 6);
+    assert.equal(await direct.locator('#portfolioTitle').textContent(), 'Portefeuille OS');
+    assert.match(await direct.locator('[data-portfolio-id="1"]').innerText(), /^OS\s+FEQT$/);
+    assert.match(await direct.locator('[data-portfolio-id="2"]').innerText(), /^JMC\s+VBAL$/);
+    assert.match(await direct.locator('[data-portfolio-id="3"]').innerText(), /^MCL\s+VGRO$/);
     assert.equal(await direct.locator('#portfolioRanges button[aria-pressed="true"]').textContent(), 'Intraday');
     assert.deepEqual(await direct.evaluate(() => JSON.parse(localStorage.getItem("savy:private-holdings:v1")).positions), syntheticPositions);
     assert.equal(new URLSearchParams(new URL(direct.url()).hash.slice(1)).get('portfolio-key'), personalKey);
@@ -495,7 +499,7 @@ async function main() {
     // The same personal key opens three independently authenticated profiles.
     await direct.locator('#portfolioRanges button').filter({hasText: /^1 mois$/}).click();
     await direct.locator('[data-portfolio-id="2"]').click();
-    await direct.waitForFunction(() => document.querySelector('#portfolioTitle').textContent === 'Portefeuille 2' && document.querySelector('#portfolioRows tr[data-ticker="VBAL"]') && document.querySelector('#portfolioMessage').textContent.includes('chargées automatiquement'));
+    await direct.waitForFunction(() => document.querySelector('#portfolioTitle').textContent === 'Portefeuille JMC' && document.querySelector('#portfolioRows tr[data-ticker="VBAL"]') && document.querySelector('#portfolioMessage').textContent.includes('chargées automatiquement'));
     assert.equal(await direct.locator('#portfolioRanges button[aria-pressed="true"]').textContent(), 'Intraday');
     await direct.locator('#portfolioRanges [data-range="YTD"]').click();
     assert.deepEqual(await direct.evaluate(() => JSON.parse(localStorage.getItem('savy:private-holdings:v1:2')).positions), secondSyntheticPositions);
@@ -544,7 +548,7 @@ async function main() {
     const editedSecond = secondSyntheticPositions.map(row => row.ticker === 'XSP' ? {...row, quantity: 8.5} : row);
     const secondDownload = direct.waitForEvent('download'); await direct.locator('#portfolioExport').click();
     const secondFile = await secondDownload, secondBackup = JSON.parse(fs.readFileSync(await secondFile.path(), 'utf8'));
-    assert.equal(secondFile.suggestedFilename(), 'portefeuille-2-savy.json'); assert.equal(secondBackup.portfolio_id, '2'); assert.equal(secondBackup.benchmark, 'VBAL'); assert.deepEqual(secondBackup.positions, editedSecond);
+    assert.equal(secondFile.suggestedFilename(), 'portefeuille-JMC-savy.json'); assert.equal(secondBackup.portfolio_id, '2'); assert.equal(secondBackup.portfolio_name, 'JMC'); assert.equal(secondBackup.benchmark, 'VBAL'); assert.deepEqual(secondBackup.positions, editedSecond);
     const secondManifest = await direct.evaluate(async () => (await fetch(document.querySelector('#savyPersonalManifest').href)).json());
     assert.equal(new URLSearchParams(new URL(secondManifest.start_url).hash.slice(1)).get('portfolio'), '2');
     assert.equal(new URLSearchParams(new URL(direct.url()).hash.slice(1)).get('portfolio-key'), personalKey);
@@ -582,7 +586,7 @@ async function main() {
     assert.deepEqual(await direct.evaluate(() => JSON.parse(localStorage.getItem('savy:private-holdings:v1:2')).positions), editedSecond);
     secondProfileFixture = goodSecondProfile;
     await direct.locator('[data-portfolio-id="3"]').click();
-    await direct.waitForFunction(() => document.querySelector('#portfolioTitle').textContent === 'Portefeuille 3' && document.querySelector('#portfolioRows tr[data-ticker="MSFTCDR"]') && document.querySelector('#portfolioMessage').textContent.includes('chargées automatiquement'));
+    await direct.waitForFunction(() => document.querySelector('#portfolioTitle').textContent === 'Portefeuille MCL' && document.querySelector('#portfolioRows tr[data-ticker="MSFTCDR"]') && document.querySelector('#portfolioMessage').textContent.includes('chargées automatiquement'));
     assert.equal(await direct.locator('#portfolioRanges button[aria-pressed="true"]').textContent(), 'Intraday');
     await direct.locator('#portfolioRanges [data-range="YTD"]').click();
     assert.deepEqual(await direct.evaluate(() => JSON.parse(localStorage.getItem('savy:private-holdings:v1:3')).positions), thirdSyntheticPositions);
@@ -636,7 +640,7 @@ async function main() {
     const editedThird = thirdSyntheticPositions.map(row => row.ticker === 'MSFTCDR' ? {...row, quantity: 4.25} : row);
     const thirdDownload = direct.waitForEvent('download'); await direct.locator('#portfolioExport').click();
     const thirdFile = await thirdDownload, thirdBackup = JSON.parse(fs.readFileSync(await thirdFile.path(), 'utf8'));
-    assert.equal(thirdFile.suggestedFilename(), 'portefeuille-3-savy.json'); assert.equal(thirdBackup.portfolio_id, '3'); assert.equal(thirdBackup.benchmark, 'VGRO'); assert.deepEqual(thirdBackup.positions, editedThird);
+    assert.equal(thirdFile.suggestedFilename(), 'portefeuille-MCL-savy.json'); assert.equal(thirdBackup.portfolio_id, '3'); assert.equal(thirdBackup.portfolio_name, 'MCL'); assert.equal(thirdBackup.benchmark, 'VGRO'); assert.deepEqual(thirdBackup.positions, editedThird);
     const thirdManifest = await direct.evaluate(async () => (await fetch(document.querySelector('#savyPersonalManifest').href)).json());
     assert.equal(new URLSearchParams(new URL(thirdManifest.start_url).hash.slice(1)).get('portfolio'), '3');
     if (process.env.SCREENSHOT_LOGS) {
