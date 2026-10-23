@@ -259,7 +259,7 @@ async function main() {
       await direct.locator('#portfolioHeatmap').scrollIntoViewIfNeeded();
       await direct.waitForFunction(expected => document.querySelectorAll('#portfolioHeatmapTiles button').length === expected, profiles[id].length);
       assert.equal(await direct.locator('#portfolioHeatmapTiles button').count(), profiles[id].length);
-      assert.equal(await direct.locator('#portfolioHeatmapTitle').innerText(), 'Heatmap · portefeuille ' + id);
+      assert.equal(await direct.locator('#portfolioHeatmapTitle').innerText(), 'Heatmap · portefeuille ' + ({'1':'OS','2':'JMC','3':'MCL'})[id]);
       const value = await direct.locator("#portfolioValue").innerText();
       await direct.locator("#portfolioChart svg").focus(); await direct.keyboard.press("End");
       assert.ok((await direct.locator("#portfolioChart .chart-tooltip").innerText()).includes(value), "Chart and headline value agree in portfolio " + id);
