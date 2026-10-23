@@ -2,7 +2,7 @@
 const test=require('node:test'),assert=require('node:assert/strict'),D=require('../data/fnb-analysis.json'),rank=require('../scripts/fnb_preferences.cjs');
 test('all equity candidates use aligned common windows, explicit flags and one disclosed score',()=>{
  const before=JSON.stringify(D),ranking=rank(D);
- assert.equal(ranking.as_of,D.assumptions.as_of);assert.equal(ranking.entries.length,13);
+ assert.equal(ranking.as_of,D.assumptions.as_of);assert.equal(ranking.entries.length,D.custom_order.length-2+D.proposal_order.length+D.robust_order.length+(D.recommended_order||[]).length);
  assert.ok(!ranking.entries.some(e=>['10','11'].includes(e.id)));
  for(const e of ranking.entries){
   assert.equal(e.diagnostics.debut_28.months,28);assert.equal(e.diagnostics.derniers_12.end,D.dates.at(-1));

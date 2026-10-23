@@ -13,7 +13,26 @@ async function check(browser,engine){
  assert.equal(await page.locator('.monthly-proposal').count(),0);
  assert.equal(await page.locator('[data-preference="proposal"]').count(),1);
  assert.equal(await page.locator('[data-preference="proposal"] .preference-rank').textContent(),String(D.preference_ranking.entries.find(e=>e.id==='proposal').rank));
- assert.equal(await page.locator('#allPortfolioBody [data-open-portfolio]').count(),D.custom_order.length+D.proposal_order.length+D.robust_order.length);
+ assert.equal(await page.locator('#allPortfolioBody [data-open-portfolio]').count(),D.custom_order.length+D.proposal_order.length+D.robust_order.length+D.recommended_order.length);
+ assert.equal(await page.locator('#referenceSelect').inputValue(),'VEQT','Existing default benchmark is preserved');
+ await page.locator('#recommendedCharts').click();
+ assert.equal(await page.locator('#referenceSelect').inputValue(),'VFV');
+ for(const chart of ['risk','growth'])assert.equal(await page.locator('#'+(chart==='risk'?'riskSvg .risk-point':'growthSvg .wealth-line')+':visible').count(),D.recommended_order.length+2);
+ await page.locator('#tableScope').selectOption('all');
+ for(const k of D.recommended_order){
+  await page.locator('.nav [data-tab="portfolios"]').click();await page.locator('#ficheFocus').selectOption(k);
+  assert.equal(await page.locator('[data-fiche="'+k+'"] [data-fund]').count(),Object.keys(D.results[k].weights).length);
+  assert.equal(await page.locator('[data-fiche="'+k+'"] [data-history-period]').count(),3);
+  assert.match(await page.locator('[data-fiche="'+k+'"] .mini-metrics').innerText(),/Bêta \/ VFV/);
+  assert.equal(await page.locator('[data-fiche="'+k+'"] .holdings-section tbody tr').count(),10);
+ }
+ await page.locator('#ficheFocus').selectOption('2');assert.equal(await page.locator('#referenceSelect').inputValue(),'VEQT');
+ const newId=D.recommended_order[0],ratios=require('../js/fnb-dashboard.js'),betaText=ref=>new Intl.NumberFormat('fr-CA',{minimumFractionDigits:2,maximumFractionDigits:2}).format(ratios.relativeMetrics(D.results[newId],D.results[ref],D.assumptions.risk_free).beta);
+ const newStatsRow=page.locator('#statsBody tr').filter({has:page.locator('[data-open-portfolio="'+newId+'"]')});
+ assert.equal(await newStatsRow.locator('td').nth(2).textContent(),betaText('VEQT'),'Hidden risk table follows the reference when opening a legacy card');
+ await page.locator('#ficheFocus').selectOption(newId);
+ assert.equal(await newStatsRow.locator('td').nth(2).textContent(),betaText('VFV'),'Opening a new card immediately recalculates risk against VFV');
+ await page.locator('#ficheFocus').selectOption('2');
  // Changing the followed portfolio must change the actual curves, amounts
  // and companion selectors, not only the four summary figures.
  await page.locator('.nav [data-tab="overview"]').click();
@@ -66,11 +85,21 @@ async function check(browser,engine){
  await page.locator('.nav [data-tab="performance"]').click();await page.waitForSelector('#performance[data-ready="true"]');
  const tracking=JSON.parse(fs.readFileSync(path.join(root,'data/fnb-comparison.json'),'utf8'));
  assert.equal(await page.locator('#performanceBody tr').count(),tracking.accounts.length);
- assert.equal(await page.locator('#performanceBenchmark option').count(),4);
+ assert.equal(await page.locator('#performanceBenchmark option').count(),tracking.benchmarks.length);
  assert.equal(await page.locator('#performanceFocus option').count(),tracking.accounts.filter(a=>a.kind!=='benchmark').length+1);
  assert.equal(await page.locator('#performanceCohort').count(),0);
  assert.match(await page.locator('#performanceStart').innerText(),/19 oct/);
  assert.equal(await page.locator('#performanceChart .performance-series').count(),tracking.accounts.filter(a=>a.history.length).length);
+ await page.locator('#performanceRecommended').click();
+ assert.equal(await page.locator('#performanceBenchmark').inputValue(),'VFV');
+ assert.equal(await page.locator('#performanceChart .performance-series').count(),D.recommended_order.length+1);
+ for(const k of D.recommended_order){
+  await page.locator('#performanceFocus').selectOption(k);
+  assert.equal(await page.locator('#performanceBenchmark').inputValue(),'VFV');
+  assert.equal(await page.locator('#performanceChart .performance-series').count(),2);
+  assert.match(await page.locator('#performanceBody [data-performance-row="'+k+'"]').innerText(),/Simulation depuis le 19 oct/);
+  await page.locator('#performanceSlider').fill('0');assert.match(await page.locator('#performanceReadout').innerText(),/10\s000,00/);
+ }
  for(const k of ['savy-5','savy-2']){
   await page.locator('#performanceFocus').selectOption(k);
   assert.equal(await page.locator('#performancePositions').inputValue(),k);
@@ -85,7 +114,7 @@ async function check(browser,engine){
  assert.match(await page.locator('#performanceDate').innerText(),/19 oct/);
  assert.match(await page.locator('#performanceReadout').innerText(),/10\s000,00/);
  await page.locator('#performanceRobust').click();assert.equal(await page.locator('#performanceBody tr').count(),tracking.accounts.length);
- assert.equal(await page.locator('#performanceChart .performance-series').count(),D.robust_order.length+4);
+ assert.equal(await page.locator('#performanceChart .performance-series').count(),D.robust_order.length+tracking.benchmarks.length);
  for(const k of D.robust_order)assert.ok((await page.locator('#performanceBody').innerText()).includes(D.results[k].name));
  await page.locator('#performanceAll').click();assert.equal(await page.locator('#performanceChart .performance-series').count(),tracking.accounts.filter(a=>a.history.length).length);
  await page.locator('#performanceNone').click();assert.equal(await page.locator('#performanceChart .performance-series').count(),0);

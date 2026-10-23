@@ -122,6 +122,21 @@
       "name": "Vanguard All-Equity ETF Portfolio",
       "description": "Actions mondiales",
       "source_url": "https://www.vanguard.ca/en/product/etf/asset-allocation/9692/vanguard-all-equity-etf-portfolio"
+    },
+    "VVL": {
+      "name": "Vanguard Global Value Factor ETF",
+      "description": "Valeur mondiale",
+      "source_url": "https://www.vanguard.ca/en/product/etf/equity/9795/vanguard-global-value-factor-etf"
+    },
+    "ZUQ": {
+      "name": "BMO MSCI USA High Quality Index ETF",
+      "description": "Qualité américaine",
+      "source_url": "https://www.bmoetfs.ca/etfs/zuq-bmo-msci-usa-high-quality-index-etf"
+    },
+    "VFV": {
+      "name": "Vanguard S&P 500 Index ETF",
+      "description": "Actions américaines",
+      "source_url": "https://www.vanguard.ca/en/product/etf/equity/9563/vanguard-sp-500-index-etf"
     }
   }
 }

@@ -400,6 +400,89 @@
       "published_at": "2026-10-20T19:50:14-04:00",
       "method": "buy_hold_fractional_ex_date_close_v1",
       "definition_sha256": "cc95d5f106792e799c10aee0fabe50a77ff286c1316c98102fd2ce1e744f19a2"
+    },
+    {
+      "id": "recommended-2026-10-sp500-surperformance",
+      "name": "S&P 500 · Surperformance",
+      "color": "#7db5e8",
+      "kind": "portfolio",
+      "launch_date": "2026-10-23",
+      "capital": 10000.0,
+      "currency": "CAD",
+      "weights": {
+        "VCN": 0.05,
+        "VDY": 0.188,
+        "VEE": 0.066,
+        "XEF": 0.12,
+        "ZNQ": 0.35,
+        "ZUQ": 0.226
+      },
+      "definition_source": "data/fnb-recommended/2026-10-23-sp500.json",
+      "published_at": "2026-10-23T18:06:35+00:00",
+      "method": "buy_hold_fractional_ex_date_close_v1",
+      "definition_sha256": "0cb3e1e9ece8aecf511ab0ca9a2c8f268329a5b255a5c17223b34bb069cd355c"
+    },
+    {
+      "id": "recommended-2026-10-sp500-sharpe-or",
+      "name": "S&P 500 · Sharpe et or",
+      "color": "#db92be",
+      "kind": "portfolio",
+      "launch_date": "2026-10-23",
+      "capital": 10000.0,
+      "currency": "CAD",
+      "weights": {
+        "CGL.C": 0.05,
+        "VDY": 0.09,
+        "VEE": 0.063,
+        "XEF": 0.114,
+        "ZEO": 0.05,
+        "ZLB": 0.088,
+        "ZNQ": 0.35,
+        "ZUQ": 0.195
+      },
+      "definition_source": "data/fnb-recommended/2026-10-23-sp500.json",
+      "published_at": "2026-10-23T18:06:35+00:00",
+      "method": "buy_hold_fractional_ex_date_close_v1",
+      "definition_sha256": "3d5da9192d734111e377a0358959f857b5b95b14437594ef62602b53c6b08150"
+    },
+    {
+      "id": "recommended-2026-10-sp500-noyau-veqt",
+      "name": "S&P 500 · Noyau VEQT",
+      "color": "#a1bc78",
+      "kind": "portfolio",
+      "launch_date": "2026-10-23",
+      "capital": 10000.0,
+      "currency": "CAD",
+      "weights": {
+        "VDY": 0.128,
+        "VEE": 0.051,
+        "VEQT": 0.2,
+        "VVL": 0.025,
+        "XEF": 0.082,
+        "ZEO": 0.05,
+        "ZNQ": 0.35,
+        "ZUQ": 0.114
+      },
+      "definition_source": "data/fnb-recommended/2026-10-23-sp500.json",
+      "published_at": "2026-10-23T18:06:35+00:00",
+      "method": "buy_hold_fractional_ex_date_close_v1",
+      "definition_sha256": "b2f8efdd18bfd393fe94aac9352727db7de816ab0e275b518a06011b347a572c"
+    },
+    {
+      "id": "VFV",
+      "name": "S&P 500 · VFV (CAD)",
+      "color": "#f0c75e",
+      "kind": "benchmark",
+      "launch_date": "2026-10-23",
+      "capital": 10000.0,
+      "currency": "CAD",
+      "weights": {
+        "VFV": 1
+      },
+      "definition_source": "data/fnb-benchmarks/2026-10-23-sp500.json",
+      "published_at": "2026-10-23T18:06:35+00:00",
+      "method": "buy_hold_fractional_ex_date_close_v1",
+      "definition_sha256": "eb8b614b39e743b606c8f69a4e1fa1c73457411295a8441cb01135d4057c5efd"
     }
   ]
 }

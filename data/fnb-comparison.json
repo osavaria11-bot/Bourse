@@ -5,12 +5,13 @@
   "capital": 10000.0,
   "inception": "2026-10-19",
   "as_of": "2026-10-22",
-  "updated_at": "2026-10-22T20:54:19-04:00",
+  "updated_at": "2026-10-23T14:13:01-04:00",
   "benchmarks": [
     "FEQT",
     "VEQT",
     "VGRO",
-    "VBAL"
+    "VBAL",
+    "VFV"
   ],
   "accounts": [
     {
@@ -1673,11 +1674,351 @@
           "units": 2.171269770064599
         }
       ]
+    },
+    {
+      "id": "recommended-2026-10-sp500-surperformance",
+      "name": "S&P 500 · Surperformance",
+      "color": "#7db5e8",
+      "kind": "portfolio",
+      "launch_date": "2026-10-19",
+      "capital": 10000.0,
+      "currency": "CAD",
+      "weights": {
+        "VCN": 0.05,
+        "VDY": 0.188,
+        "VEE": 0.066,
+        "XEF": 0.12,
+        "ZNQ": 0.35,
+        "ZUQ": 0.226
+      },
+      "definition_source": "data/fnb-recommended/2026-10-23-sp500.json",
+      "published_at": "2026-10-23T18:06:35+00:00",
+      "method": "buy_hold_fractional_ex_date_close_v1",
+      "source_definition_sha256": "0cb3e1e9ece8aecf511ab0ca9a2c8f268329a5b255a5c17223b34bb069cd355c",
+      "actual_launch_date": "2026-10-23",
+      "series_type": "simulation",
+      "status": "complete",
+      "unavailable_reason": null,
+      "history": [
+        {
+          "date": "2026-10-19",
+          "value": 10000.0
+        },
+        {
+          "date": "2026-10-20",
+          "value": 10000.003937775838
+        },
+        {
+          "date": "2026-10-21",
+          "value": 10061.816246883758
+        },
+        {
+          "date": "2026-10-22",
+          "value": 9894.376781059436
+        }
+      ],
+      "initial_positions": [
+        {
+          "ticker": "VCN",
+          "name": "Vanguard FTSE Canada All Cap Index ETF",
+          "weight": 0.05,
+          "close": 73.0199966430664,
+          "units": 6.847439372588322
+        },
+        {
+          "ticker": "VDY",
+          "name": "Vanguard FTSE Canadian High Dividend Yield Index ETF",
+          "weight": 0.188,
+          "close": 77.13999938964844,
+          "units": 24.371273202943282
+        },
+        {
+          "ticker": "VEE",
+          "name": "Vanguard FTSE Emerging Markets All Cap Index ETF",
+          "weight": 0.066,
+          "close": 49.20000076293945,
+          "units": 13.414633938322083
+        },
+        {
+          "ticker": "XEF",
+          "name": "iShares Core MSCI EAFE IMI Index ETF",
+          "weight": 0.12,
+          "close": 51.029998779296875,
+          "units": 23.515579633657488
+        },
+        {
+          "ticker": "ZNQ",
+          "name": "BMO Nasdaq 100 Equity Index ETF",
+          "weight": 0.35,
+          "close": 134.72000122070312,
+          "units": 25.97980974084297
+        },
+        {
+          "ticker": "ZUQ",
+          "name": "BMO MSCI USA High Quality Index ETF",
+          "weight": 0.226,
+          "close": 114.16000366210938,
+          "units": 19.796775819043813
+        }
+      ]
+    },
+    {
+      "id": "recommended-2026-10-sp500-sharpe-or",
+      "name": "S&P 500 · Sharpe et or",
+      "color": "#db92be",
+      "kind": "portfolio",
+      "launch_date": "2026-10-19",
+      "capital": 10000.0,
+      "currency": "CAD",
+      "weights": {
+        "CGL.C": 0.05,
+        "VDY": 0.09,
+        "VEE": 0.063,
+        "XEF": 0.114,
+        "ZEO": 0.05,
+        "ZLB": 0.088,
+        "ZNQ": 0.35,
+        "ZUQ": 0.195
+      },
+      "definition_source": "data/fnb-recommended/2026-10-23-sp500.json",
+      "published_at": "2026-10-23T18:06:35+00:00",
+      "method": "buy_hold_fractional_ex_date_close_v1",
+      "source_definition_sha256": "3d5da9192d734111e377a0358959f857b5b95b14437594ef62602b53c6b08150",
+      "actual_launch_date": "2026-10-23",
+      "series_type": "simulation",
+      "status": "complete",
+      "unavailable_reason": null,
+      "history": [
+        {
+          "date": "2026-10-19",
+          "value": 10000.0
+        },
+        {
+          "date": "2026-10-20",
+          "value": 9993.132677983322
+        },
+        {
+          "date": "2026-10-21",
+          "value": 10048.442313235453
+        },
+        {
+          "date": "2026-10-22",
+          "value": 9885.620197861339
+        }
+      ],
+      "initial_positions": [
+        {
+          "ticker": "CGL.C",
+          "name": "iShares Gold Bullion ETF",
+          "weight": 0.05,
+          "close": 48.709999084472656,
+          "units": 10.264832876159621
+        },
+        {
+          "ticker": "VDY",
+          "name": "Vanguard FTSE Canadian High Dividend Yield Index ETF",
+          "weight": 0.09,
+          "close": 77.13999938964844,
+          "units": 11.667098873749444
+        },
+        {
+          "ticker": "VEE",
+          "name": "Vanguard FTSE Emerging Markets All Cap Index ETF",
+          "weight": 0.063,
+          "close": 49.20000076293945,
+          "units": 12.804877850216535
+        },
+        {
+          "ticker": "XEF",
+          "name": "iShares Core MSCI EAFE IMI Index ETF",
+          "weight": 0.114,
+          "close": 51.029998779296875,
+          "units": 22.339800651974613
+        },
+        {
+          "ticker": "ZEO",
+          "name": "BMO Equal Weight Oil & Gas Index ETF",
+          "weight": 0.05,
+          "close": 115.13999938964844,
+          "units": 4.342539540129198
+        },
+        {
+          "ticker": "ZLB",
+          "name": "BMO Low Volatility Canadian Equity ETF",
+          "weight": 0.088,
+          "close": 60.290000915527344,
+          "units": 14.59611853768211
+        },
+        {
+          "ticker": "ZNQ",
+          "name": "BMO Nasdaq 100 Equity Index ETF",
+          "weight": 0.35,
+          "close": 134.72000122070312,
+          "units": 25.97980974084297
+        },
+        {
+          "ticker": "ZUQ",
+          "name": "BMO MSCI USA High Quality Index ETF",
+          "weight": 0.195,
+          "close": 114.16000366210938,
+          "units": 17.08128887041391
+        }
+      ]
+    },
+    {
+      "id": "recommended-2026-10-sp500-noyau-veqt",
+      "name": "S&P 500 · Noyau VEQT",
+      "color": "#a1bc78",
+      "kind": "portfolio",
+      "launch_date": "2026-10-19",
+      "capital": 10000.0,
+      "currency": "CAD",
+      "weights": {
+        "VDY": 0.128,
+        "VEE": 0.051,
+        "VEQT": 0.2,
+        "VVL": 0.025,
+        "XEF": 0.082,
+        "ZEO": 0.05,
+        "ZNQ": 0.35,
+        "ZUQ": 0.114
+      },
+      "definition_source": "data/fnb-recommended/2026-10-23-sp500.json",
+      "published_at": "2026-10-23T18:06:35+00:00",
+      "method": "buy_hold_fractional_ex_date_close_v1",
+      "source_definition_sha256": "b2f8efdd18bfd393fe94aac9352727db7de816ab0e275b518a06011b347a572c",
+      "actual_launch_date": "2026-10-23",
+      "series_type": "simulation",
+      "status": "complete",
+      "unavailable_reason": null,
+      "history": [
+        {
+          "date": "2026-10-19",
+          "value": 10000.0
+        },
+        {
+          "date": "2026-10-20",
+          "value": 9997.120844531813
+        },
+        {
+          "date": "2026-10-21",
+          "value": 10058.70449143431
+        },
+        {
+          "date": "2026-10-22",
+          "value": 9881.210388770567
+        }
+      ],
+      "initial_positions": [
+        {
+          "ticker": "VDY",
+          "name": "Vanguard FTSE Canadian High Dividend Yield Index ETF",
+          "weight": 0.128,
+          "close": 77.13999938964844,
+          "units": 16.593207287110317
+        },
+        {
+          "ticker": "VEE",
+          "name": "Vanguard FTSE Emerging Markets All Cap Index ETF",
+          "weight": 0.051,
+          "close": 49.20000076293945,
+          "units": 10.365853497794337
+        },
+        {
+          "ticker": "VEQT",
+          "name": "Vanguard All-Equity ETF Portfolio",
+          "weight": 0.2,
+          "close": 61.880001068115234,
+          "units": 32.320619998026075
+        },
+        {
+          "ticker": "VVL",
+          "name": "Vanguard Global Value Factor ETF",
+          "weight": 0.025,
+          "close": 74.1500015258789,
+          "units": 3.3715440978480373
+        },
+        {
+          "ticker": "XEF",
+          "name": "iShares Core MSCI EAFE IMI Index ETF",
+          "weight": 0.082,
+          "close": 51.029998779296875,
+          "units": 16.068979416332617
+        },
+        {
+          "ticker": "ZEO",
+          "name": "BMO Equal Weight Oil & Gas Index ETF",
+          "weight": 0.05,
+          "close": 115.13999938964844,
+          "units": 4.342539540129198
+        },
+        {
+          "ticker": "ZNQ",
+          "name": "BMO Nasdaq 100 Equity Index ETF",
+          "weight": 0.35,
+          "close": 134.72000122070312,
+          "units": 25.97980974084297
+        },
+        {
+          "ticker": "ZUQ",
+          "name": "BMO MSCI USA High Quality Index ETF",
+          "weight": 0.114,
+          "close": 114.16000366210938,
+          "units": 9.985984262703516
+        }
+      ]
+    },
+    {
+      "id": "VFV",
+      "name": "S&P 500 · VFV (CAD)",
+      "color": "#f0c75e",
+      "kind": "benchmark",
+      "launch_date": "2026-10-19",
+      "capital": 10000.0,
+      "currency": "CAD",
+      "weights": {
+        "VFV": 1
+      },
+      "definition_source": "data/fnb-benchmarks/2026-10-23-sp500.json",
+      "published_at": "2026-10-23T18:06:35+00:00",
+      "method": "buy_hold_fractional_ex_date_close_v1",
+      "source_definition_sha256": "eb8b614b39e743b606c8f69a4e1fa1c73457411295a8441cb01135d4057c5efd",
+      "actual_launch_date": "2026-10-23",
+      "series_type": "simulation",
+      "status": "complete",
+      "unavailable_reason": null,
+      "history": [
+        {
+          "date": "2026-10-19",
+          "value": 10000.0
+        },
+        {
+          "date": "2026-10-20",
+          "value": 9988.05216999797
+        },
+        {
+          "date": "2026-10-21",
+          "value": 10040.51941710633
+        },
+        {
+          "date": "2026-10-22",
+          "value": 9891.947956828328
+        }
+      ],
+      "initial_positions": [
+        {
+          "ticker": "VFV",
+          "name": "Vanguard S&P 500 Index ETF",
+          "weight": 1,
+          "close": 192.5,
+          "units": 51.94805194805195
+        }
+      ]
     }
   ],
   "source_ledger_sha256": "5b991bfa50443c8273dbd9d0cdb5b77f583485b7b2950acab158a53433f862d4",
-  "source_registry_sha256": "ae0af73613c785f9f4cafd4a6594e17d7458c5ebca314c085734a764737cdc70",
-  "supplemental_sha256": "f4ea924f772f3e96d64317a74f3b73451488ebbcf2a314a351862035d649af61",
+  "source_registry_sha256": "aff94282ed57dc59f30bc99d617c7588bf4f11e5d1fbddc83066e0ac40470d8a",
+  "supplemental_sha256": "8314fc438930ff916223cf877ed7d6ce976db32dc9d95649882695d75886824a",
   "price_revisions": [
     {
       "ticker": "FBAL",

@@ -325,9 +325,15 @@ def refresh_analysis(current, baseline, sources, config, generated_at):
         "history_policy": "Pondérations existantes et rendements mensuels acquis inchangés; ajouts des seuls mois complétés. Les ratios de chaque publication sont archivés séparément.",
         "performance_type": "Simulation rétrospective, distributions réinvesties. Le suivi après publication commence au premier mois complet suivant la publication.",
         "source_digest": hashlib.sha256(json.dumps(sources, sort_keys=True).encode()).hexdigest()}
+    if current.get("additional_benchmarks"):
+        from benchmark_fnb import apply
+        apply(d, current["additional_benchmarks"], current)
     if current.get("robust_selections"):
         from robust_fnb import apply
         apply(d, current["robust_selections"], current)
+    if current.get("recommended_selections"):
+        from recommended_fnb import apply
+        apply(d, current["recommended_selections"], current)
     return d
 
 
@@ -348,6 +354,22 @@ def validate(d, baseline):
     for p in expected_robust:
         if d["results"][p["id"]]["weights"] != p["weights"]:
             raise ValueError("Frozen robust allocation changed")
+    from recommended_fnb import validate_catalog
+    recommended = d.get("recommended_selections", [])
+    for c in recommended: validate_catalog(c)
+    expected_recommended = [p for c in recommended for p in c["portfolios"]]
+    if d.get("recommended_order", []) != [p["id"] for p in expected_recommended]:
+        raise ValueError("Recommended portfolio identities changed")
+    for p in expected_recommended:
+        q = d["results"][p["id"]]
+        if q["weights"] != p["weights"] or q["historical_backtest"] != p["historical_backtest"]:
+            raise ValueError("Frozen recommended allocation or research changed")
+    from benchmark_fnb import validate_catalog
+    for c in d.get("additional_benchmarks", []):
+        validate_catalog(c)
+        for p in c["benchmarks"]:
+            if p["id"] not in d["benchmark_order"] or d["results"][p["id"]]["weights"] != p["weights"]:
+                raise ValueError("Additional benchmark changed")
     p = d["results"][PROPOSAL]
     if not set(p["weights"]) <= set(d["optimization"]["eligible_funds"]): raise ValueError("Non-equity proposal holding")
     constraints = d["optimization"]["constraints"]
@@ -412,6 +434,16 @@ def main(argv=None):
         for selection in selections: validate_sources(root, selection)
         if current.get("robust_selections", []) != selections:
             raise ValueError("Current robustness selections disagree with frozen catalogs")
+        from recommended_fnb import catalogs, validate_sources
+        selections = catalogs(root)
+        for selection in selections: validate_sources(root, selection)
+        if current.get("recommended_selections", []) != selections:
+            raise ValueError("Current long-history selections disagree with frozen catalogs")
+        from benchmark_fnb import catalogs, validate_catalog
+        benchmarks = catalogs(root)
+        for c in benchmarks: validate_catalog(c)
+        if current.get("additional_benchmarks", []) != benchmarks:
+            raise ValueError("Current benchmarks disagree with dated catalogs")
         for file in (root / "data/fnb-history").glob("????-??.json"): validate(read(file), baseline)
         print("Validated", len(current["order"]), "series; allocations and acquired historical returns preserved."); return 0
     if archive.exists():
@@ -443,7 +475,7 @@ def main(argv=None):
         # Snapshot names are month-unique; reruns never append duplicate recommendations.
         write(archive, d)
         write(root / "data/fnb-analysis.json", d)
-        required = {t for k in d["custom_order"] + d["proposal_order"] + d.get("robust_order", []) for t in d["results"][k]["weights"]}
+        required = {t for k in d["custom_order"] + d["proposal_order"] + d.get("robust_order", []) + d.get("recommended_order", []) for t in d["results"][k]["weights"]}
         write(root / "data/fnb-holdings.json", {**holdings, "funds": {t: value for t, value in holdings["funds"].items() if t in required}})
         write(root / "data/fnb-lookthrough.json", d["lookthrough"])
         write(root / "data/fnb-history/index.json", history_index(root, d, baseline))

@@ -45,7 +45,91 @@
         "price_source": "Yahoo Finance",
         "corporate_actions_source": "Yahoo Finance"
       }
+    },
+    "VVL": {
+      "2026-10-19": {
+        "close": 74.1500015258789,
+        "adjusted_close": 74.1500015258789,
+        "distribution": 0,
+        "split": 1,
+        "symbol": "VVL.TO",
+        "source_url": "https://finance.yahoo.com/quote/VVL.TO/history/",
+        "price_source": "Yahoo Finance",
+        "corporate_actions_source": "Yahoo Finance"
+      },
+      "2026-10-20": {
+        "close": 74.79000091552734,
+        "adjusted_close": 74.79000091552734,
+        "distribution": 0,
+        "split": 1,
+        "symbol": "VVL.TO",
+        "source_url": "https://finance.yahoo.com/quote/VVL.TO/history/",
+        "price_source": "Yahoo Finance",
+        "corporate_actions_source": "Yahoo Finance"
+      },
+      "2026-10-21": {
+        "close": 74.54000091552734,
+        "adjusted_close": 74.54000091552734,
+        "distribution": 0,
+        "split": 1,
+        "symbol": "VVL.TO",
+        "source_url": "https://finance.yahoo.com/quote/VVL.TO/history/",
+        "price_source": "Yahoo Finance",
+        "corporate_actions_source": "Yahoo Finance"
+      },
+      "2026-10-22": {
+        "close": 74.97000122070312,
+        "adjusted_close": 74.97000122070312,
+        "distribution": 0,
+        "split": 1,
+        "symbol": "VVL.TO",
+        "source_url": "https://finance.yahoo.com/quote/VVL.TO/history/",
+        "price_source": "Yahoo Finance",
+        "corporate_actions_source": "Yahoo Finance"
+      }
+    },
+    "ZUQ": {
+      "2026-10-19": {
+        "close": 114.16000366210938,
+        "adjusted_close": 114.16000366210938,
+        "distribution": 0,
+        "split": 1,
+        "symbol": "ZUQ.TO",
+        "source_url": "https://finance.yahoo.com/quote/ZUQ.TO/history/",
+        "price_source": "Yahoo Finance",
+        "corporate_actions_source": "Yahoo Finance"
+      },
+      "2026-10-20": {
+        "close": 114.05000305175781,
+        "adjusted_close": 114.05000305175781,
+        "distribution": 0,
+        "split": 1,
+        "symbol": "ZUQ.TO",
+        "source_url": "https://finance.yahoo.com/quote/ZUQ.TO/history/",
+        "price_source": "Yahoo Finance",
+        "corporate_actions_source": "Yahoo Finance"
+      },
+      "2026-10-21": {
+        "close": 114.19000244140625,
+        "adjusted_close": 114.19000244140625,
+        "distribution": 0,
+        "split": 1,
+        "symbol": "ZUQ.TO",
+        "source_url": "https://finance.yahoo.com/quote/ZUQ.TO/history/",
+        "price_source": "Yahoo Finance",
+        "corporate_actions_source": "Yahoo Finance"
+      },
+      "2026-10-22": {
+        "close": 113.29000091552734,
+        "adjusted_close": 113.29000091552734,
+        "distribution": 0,
+        "split": 1,
+        "symbol": "ZUQ.TO",
+        "source_url": "https://finance.yahoo.com/quote/ZUQ.TO/history/",
+        "price_source": "Yahoo Finance",
+        "corporate_actions_source": "Yahoo Finance"
+      }
     }
   },
-  "sha256": "f4ea924f772f3e96d64317a74f3b73451488ebbcf2a314a351862035d649af61"
+  "sha256": "8314fc438930ff916223cf877ed7d6ce976db32dc9d95649882695d75886824a"
 }

@@ -3,7 +3,7 @@ window.SavyFnbPerformance=(()=>{
  const U=SavyPerformanceUtils,$=id=>document.getElementById(id),esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
  const num=(n,d=2)=>n==null?"—":new Intl.NumberFormat("fr-CA",{minimumFractionDigits:d,maximumFractionDigits:d}).format(Math.abs(n)<1e-9?0:n),money=n=>n==null?"—":num(n)+" $",pct=n=>n==null?"—":num(n*100)+" %",date=d=>new Date(d+"T12:00:00Z").toLocaleDateString("fr-CA",{day:"numeric",month:"short",year:"numeric",timeZone:"UTC"});
  let data=null,loading=false,loaded=0,reference="VEQT",focus="",index=0,rows=[],dates=[],selected=new Set();
- const storage="savy-fnb-common-v1",root=new URL("../",document.currentScript.src),label=a=>a.kind==="benchmark"?a.id:a.name,ink=a=>a.color==="#142333"?"var(--text)":a.color==="#9ce3cb"?"var(--accent)":a.color;
+ const storage="savy-fnb-common-v1",root=new URL("../",document.currentScript.src),label=a=>a.kind==="benchmark"&&a.id!=="VFV"?a.id:a.name,ink=a=>a.color==="#142333"?"var(--text)":a.color==="#9ce3cb"?"var(--accent)":a.color;
  const simulated=a=>a.series_type==='simulation';
  function persist(){try{localStorage.setItem(storage,JSON.stringify({reference,focus,selected:[...selected],known:data.accounts.map(a=>a.id)}));}catch{}}
  function restore(){
@@ -15,7 +15,7 @@ window.SavyFnbPerformance=(()=>{
    if(focus)selected=new Set([focus,reference]);
   }catch{}
  }
- function follow(id){const a=data.accounts.find(a=>a.id===id&&a.kind!=='benchmark');focus=a?.id||'';if(a){selected=new Set([a.id,reference]);$("performancePositions").value=a.id;positions();}render();}
+ function follow(id){const a=data.accounts.find(a=>a.id===id&&a.kind!=='benchmark'),wasRecommended=focus.startsWith('recommended-');focus=a?.id||'';if(a){if(a.id.startsWith('recommended-')&&data.benchmarks.includes('VFV'))reference='VFV';else if(wasRecommended)reference='VEQT';selected=new Set([a.id,reference]);$("performancePositions").value=a.id;positions();}render();}
  function positions(){
   const a=data.accounts.find(a=>a.id===$("performancePositions").value);if(!a)return;
   if(!a.history.length){$("performanceWeights").textContent=a.unavailable_reason;return;}
@@ -65,7 +65,7 @@ window.SavyFnbPerformance=(()=>{
    const next=U.validateComparison(await response.json()),status=statusResponse?.ok?await statusResponse.json().catch(()=>null):null;
    // A delayed HTTP cache must never roll an already displayed session back.
    if(data&&next.as_of<data.as_of)throw Error('Clôture plus ancienne reçue');
-   const positionId=$("performancePositions").value;data=next;loaded=Date.now();restore();
+   const positionId=$("performancePositions").value;data=next;loaded=Date.now();if(!data.benchmarks.includes(reference))reference='VEQT';restore();
    $("performanceStart").textContent=date(data.inception);
    $("performanceFocus").innerHTML='<option value="">Sélection libre des courbes</option>'+data.accounts.filter(a=>a.kind!=='benchmark').map(a=>`<option value="${esc(a.id)}">${esc(label(a))}</option>`).join('');
    $("performancePositions").innerHTML=data.accounts.map(a=>`<option value="${esc(a.id)}">${esc(label(a))}${simulated(a)?' · simulation':''}</option>`).join('');if(focus||data.accounts.some(a=>a.id===positionId))$("performancePositions").value=focus||positionId;positions();
@@ -83,6 +83,7 @@ window.SavyFnbPerformance=(()=>{
  document.addEventListener('input',e=>{if(e.target.id==='performanceSlider')readout(e.target.value);});
  document.addEventListener('click',e=>{const id=e.target.closest('button')?.id;if(id==='performanceRetry'){loaded=0;show();}if(!data)return;
   if(id==='performanceRobust'){focus="";selected=new Set([...rows.filter(a=>a.id.startsWith('robust-')).map(a=>a.id),...data.benchmarks]);render();}
+  if(id==='performanceRecommended'){focus="";if(data.benchmarks.includes('VFV'))reference='VFV';selected=new Set([...rows.filter(a=>a.id.startsWith('recommended-')).map(a=>a.id),reference]);render();}
   if(id==='performanceAll'){focus="";selected=new Set(rows.map(a=>a.id));render();}if(id==='performanceNone'){focus="";selected.clear();render();}
   if(id==='performanceJson')download('SAVY_Depart_Commun.json',JSON.stringify(data,null,2),'application/json');
   if(id==='performanceCsv'){const cell=v=>'"'+String(v??'').replaceAll('"','""')+'"',lines=[['Date',...rows.map(a=>label(a)+(simulated(a)?' · simulation':''))],...dates.map(d=>[d,...rows.map(a=>a.history.find(p=>p.date===d)?.value??'')])];download('SAVY_Suivi_quotidien_depart_commun.csv','\uFEFF'+lines.map(r=>r.map(cell).join(',')).join('\n'),'text/csv;charset=utf-8');}

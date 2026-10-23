@@ -12,6 +12,11 @@ on:
       - ".github/workflows/monthly-fnb.yml"
       - "scripts/monthly_fnb.py"
       - "scripts/robust_fnb.py"
+      - "scripts/recommended_fnb.py"
+      - "scripts/benchmark_fnb.py"
+      - "data/fnb-benchmarks/**"
+      - "data/fnb-recommended/**"
+      - "data/fnb-recommended-history/**"
       - "scripts/fnb_sources.py"
       - "scripts/build_monthly_fnb.cjs"
       - "scripts/fnb_preferences.cjs"
@@ -54,7 +59,9 @@ jobs:
         if: steps.due.outputs.due == 'true'
         run: python -m pip install --requirement scripts/requirements-fnb.txt
       - name: Verify financial research and source guards
-        run: python -m unittest discover -s tests -p 'test_monthly_fnb.py' -v
+        run: |
+          python -m unittest discover -s tests -p 'test_monthly_fnb.py' -v
+          python -m unittest discover -s tests -p 'test_recommended_fnb.py' -v
       - name: Research using fresh issuer data
         if: steps.due.outputs.due == 'true'
         id: optimize
