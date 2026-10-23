@@ -23,13 +23,13 @@ const SavyFnb = (() => {
     try {document.documentElement.dataset.theme = window.parent !== window ? window.parent.document.documentElement.dataset.theme : JSON.parse(localStorage.getItem("savy:preferences:v2") || "{}").theme || "dark";} catch {document.documentElement.dataset.theme = "dark";}
 
     const D = JSON.parse(document.getElementById("analysis").textContent), R = D.results;
-    const ids = D.order, custom = D.custom_order, proposed = D.proposal_order || [], robust = D.robust_order || [], own = [...robust, ...proposed, ...custom], benchmarks = ["VBAL", "VGRO", "VEQT", "FBAL", "FGRO", "FEQT"];
+    const ids = D.order, custom = D.custom_order, proposed = D.proposal_order || [], robust = D.robust_order || [], recommended = D.recommended_order || [], frozen = [...recommended,...robust], own = [...frozen, ...proposed, ...custom], benchmarks = D.benchmark_order;
     const $ = id => document.getElementById(id), escape = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
     const number = (v, digits = 2) => v === null || !Number.isFinite(v) ? "—" : new Intl.NumberFormat("fr-CA", {minimumFractionDigits:digits, maximumFractionDigits:digits}).format(v);
     const pct = (v, digits = 1) => v === null || !Number.isFinite(v) ? "—" : number(v * 100, digits) + " %";
     const money = v => new Intl.NumberFormat("fr-CA", {style:"currency", currency:"CAD", currencyDisplay:"narrowSymbol", maximumFractionDigits:0}).format(v);
-    const short = k => robust.includes(k) ? R[k].chart_name : proposed.includes(k) ? "Proposition" : custom.includes(k) ? "Nº " + k : k;
-    const name = k => robust.includes(k) || proposed.includes(k) ? R[k].name : custom.includes(k) ? short(k) + " · " + R[k].short_name : k;
+    const short = k => frozen.includes(k) ? R[k].chart_name : proposed.includes(k) ? "Proposition" : custom.includes(k) ? "Nº " + k : k;
+    const name = k => k==='VFV'?'S&P 500 · VFV':frozen.includes(k) || proposed.includes(k) ? R[k].name : custom.includes(k) ? short(k) + " · " + R[k].short_name : k;
     const fundNote = k => D.fund_labels?.[k] ? '<span class="fund-name">' + escape(D.fund_labels[k].name) + '</span><span class="fund-description">' + escape(D.fund_labels[k].description) + '</span>' : "";
     const dot = k => '<span class="dot" style="background:' + R[k].color + '"></span>';
     const text = (x, y, s, attrs = "") => `<text x="${x}" y="${y}" ${attrs}>${escape(s)}</text>`;
@@ -52,7 +52,7 @@ const SavyFnb = (() => {
       }
     }
     function setPreset(key, chart) {
-      const sets = {all:ids, none:[], robust:[...robust,"VEQT","FEQT"], comparables:["2","10","11","VBAL","VGRO","VEQT"], balanced:["10","VBAL","FBAL"], growth:["11","VGRO","FGRO"], equity:[...proposed,"2","VEQT","FEQT"], monthly:[...proposed,"2","FEQT","VEQT","VGRO","VBAL"]};
+      const sets = {all:ids, none:[], recommended:[...recommended,"VEQT",...(R.VFV?['VFV']:[])], robust:[...robust,"VEQT","FEQT"], comparables:["2","10","11","VBAL","VGRO","VEQT"], balanced:["10","VBAL","FBAL"], growth:["11","VGRO","FGRO"], equity:[...proposed,"2","VEQT","FEQT"], monthly:[...proposed,"2","FEQT","VEQT","VGRO","VBAL"]};
       if (!sets[key]) return;
       $(chart === "risk" ? "compass" : "capital").querySelectorAll("[data-series]").forEach(input => {input.checked = sets[key].includes(input.dataset.series);});
       refreshCharts();
@@ -159,6 +159,8 @@ const SavyFnb = (() => {
     }
     function choosePortfolio(k, charts = false) {
       if(!own.includes(k))return;
+      if(recommended.includes(k)){reference="VFV";$("referenceSelect").value=reference;}
+      else if(recommended.includes(summary)){reference="VEQT";$("referenceSelect").value=reference;}
       const previous=summary;summary=k;focus=k;
       $("summaryFocus").value=k;$("sectorFocus").value=k;$("ficheFocus").value=k;
       document.querySelectorAll("[data-fiche]").forEach(n=>{n.hidden=n.dataset.fiche!==k;});
@@ -191,6 +193,7 @@ const SavyFnb = (() => {
       if(target.dataset.openExposure){choosePortfolio(target.dataset.openExposure,true);switchView("exposures");}
       if(target.id==="monthlyCharts"){setPreset("monthly","risk");setPreset("monthly","growth");switchView("overview");}
       if(target.id==="robustCharts"){setPreset("robust","risk");setPreset("robust","growth");switchView("overview");}
+      if(target.id==="recommendedCharts"){reference="VFV";$("referenceSelect").value=reference;drawSummary();setPreset("recommended","risk");setPreset("recommended","growth");switchView("overview");}
       if(target.matches(".risk-point")){const k=target.dataset.portfolio,q=R[k];$("riskDetail").innerHTML=`<b>${escape(name(k))}</b> · ${pct(q.cagr)} rendement · ${pct(q.vol)} vol. · Sharpe ${number(q.sharpe)} ${own.includes(k)?`<button data-open-portfolio="${k}">Fiche ↗</button>`:''}`;}
       if(target.id==="metricsCsv"){const keys=["cagr","vol","beta","sharpe","information","treynor","tracking_error","vol_diff","max_drawdown","mer","end"];download("SAVY_Ratios.csv",csv([["Référence",reference],["Portefeuille",...keys],...ids.map(k=>[name(k),...keys.map(key=>key==="end"?R[k].end*capital/10000:metric(k,key))])]),"text/csv;charset=utf-8");}
       if(["monthlyCsv","monthlyCsvSource"].includes(target.id))download("SAVY_Rendements_Mensuels.csv",csv([["Mois",...ids.map(name)],...D.dates.map((date,i)=>[date,...ids.map(k=>R[k].monthly[i])])]),"text/csv;charset=utf-8");

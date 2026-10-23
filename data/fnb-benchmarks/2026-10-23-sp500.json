@@ -1,0 +1,1 @@
+{"schema_version":1,"catalog_path":"data/fnb-benchmarks/2026-10-23-sp500.json","published_at":"2026-10-23T18:06:35+00:00","benchmarks":[{"id":"VFV","name":"S&P 500 · VFV (CAD)","color":"#f0c75e","weights":{"VFV":1},"description":"S&P 500 en CAD non couvert, distributions réinvesties."}]}

@@ -51,18 +51,23 @@ def validate_sources(root, catalog):
 
 
 def apply(analysis, selections, previous=None):
+    return apply_frozen(analysis, selections, previous, family="robust", validator=validate_catalog)
+
+
+def apply_frozen(analysis, selections, previous=None, *, family, validator):
+    """Shared dashboard calculations; each frozen family retains its own policy."""
     # Import lazily: monthly_fnb calls this after defining its common calculators.
     from monthly_fnb import portfolio_returns, stats, period_stats
     d = analysis
     prior = previous or {}
     u, dates, rf = d["universe"], d["dates"], d["assumptions"]["risk_free"]
-    d["robust_selections"] = deepcopy(selections)
-    old_ids = set(d.get("robust_order", []))
+    d[family + "_selections"] = deepcopy(selections)
+    old_ids = set(d.get(family + "_order", []))
     d["order"] = [k for k in d["order"] if k not in old_ids]
     d["exposure_order"] = [k for k in d["exposure_order"] if k not in old_ids]
-    d["robust_order"] = []
+    d[family + "_order"] = []
     for catalog in selections:
-        validate_catalog(catalog)
+        validator(catalog)
         for item in catalog["portfolios"]:
             k, w = item["id"], item["weights"]
             if any(t not in u["returns"] or len(u["returns"][t]) != len(dates) for t in w):
@@ -113,10 +118,10 @@ def apply(analysis, selections, previous=None):
             d["checks"][k] = {"weight_sum": sum(w.values()), "allocation_sum": sum(q["geo_total"]),
                 "sector_sum": sum(q["sectors"]), "months": len(dates), "geo_limit_pass": q["max_geo_gap"] <= .1+1e-8,
                 "sector_limit_pass": q["max_sector_gap"] <= .07+1e-8, "allocation_preserved": True}
-            d["robust_order"].append(k)
-    d["order"] = d["robust_order"] + d["order"]
-    d["exposure_order"] = d["robust_order"] + d["exposure_order"]
-    for k in d["robust_order"]:
+            d[family + "_order"].append(k)
+    d["order"] = d[family + "_order"] + d["order"]
+    d["exposure_order"] = d[family + "_order"] + d["exposure_order"]
+    for k in d[family + "_order"]:
         q = d["results"][k]
         q["dominated_by"] = [z for z,r in d["results"].items() if z != k and r["cagr"] >= q["cagr"] and r["vol"] <= q["vol"] and (r["cagr"] > q["cagr"] or r["vol"] < q["vol"])]
     return d

@@ -77,6 +77,10 @@ def definition(key, result, launch, source, kind="portfolio", published=None):
     return {**d, "definition_sha256": digest(d)}
 
 
+def benchmark_ids(registry):
+    return [a["id"] for a in registry["accounts"] if a["kind"] == "benchmark"]
+
+
 def register(root, registry):
     """Only add new identities. Never edit a definition after registration."""
     registry = deepcopy(registry)
@@ -89,13 +93,21 @@ def register(root, registry):
         launch = START if month == "2026-10" else publication_launch(opt["generated_at"]).isoformat()
         candidates.append(definition("proposal-" + month, d["results"]["proposal"], launch,
                                      file.relative_to(root).as_posix(), published=opt["generated_at"]))
-    from robust_fnb import catalogs, validate_catalog
-    for catalog in catalogs(root):
-        validate_catalog(catalog)
+    import robust_fnb
+    import recommended_fnb
+    for module in (robust_fnb, recommended_fnb):
+        for catalog in module.catalogs(root):
+            module.validate_catalog(catalog)
+            launch = publication_launch(catalog["published_at"]).isoformat()
+            for portfolio in catalog["portfolios"]:
+                candidates.append(definition(portfolio["id"], portfolio, launch, catalog["catalog_path"],
+                                             published=catalog["published_at"]))
+    import benchmark_fnb
+    for catalog in benchmark_fnb.catalogs(root):
+        benchmark_fnb.validate_catalog(catalog)
         launch = publication_launch(catalog["published_at"]).isoformat()
-        for portfolio in catalog["portfolios"]:
-            candidates.append(definition(portfolio["id"], portfolio, launch, catalog["catalog_path"],
-                                         published=catalog["published_at"]))
+        for p in catalog["benchmarks"]:
+            candidates.append(definition(p["id"], p, launch, catalog["catalog_path"], "benchmark", catalog["published_at"]))
     for candidate in candidates:
         if candidate["id"] not in known:
             registry["accounts"].append(candidate); known.add(candidate["id"])
@@ -311,7 +323,7 @@ def snapshot(registry, days, config):
         accounts.append({**a, "history": history, "initial_positions": positions})
     return {"schema_version": 1, "currency": "CAD", "capital": CAPITAL, "inception": START,
             "as_of": days[-1]["date"] if days else None, "updated_at": days[-1]["recorded_at"] if days else None,
-            "ledger_sha256": days[-1]["sha256"] if days else None, "benchmarks": BENCHMARKS, "accounts": accounts,
+            "ledger_sha256": days[-1]["sha256"] if days else None, "benchmarks": benchmark_ids(registry), "accounts": accounts,
             "methodology": {"model": METHOD, "distributions": "Distributions en espèces réinvesties en parts fractionnaires à la clôture de la date ex-distribution; fractionnements appliqués aux parts. Aucun rééquilibrage.",
                 "costs": "CAD, frais internes des FNB inclus dans leurs cours; courtage, fiscalité et écarts d’exécution exclus.",
                 "history": "Registre quotidien figé, distinct des backtests. Les nouvelles optimisations ont leur propre date de lancement et ne remplacent aucun compte.",

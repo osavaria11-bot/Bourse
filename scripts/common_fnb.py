@@ -108,7 +108,7 @@ def build(root, registry, days, cache, updated_at, sources=None, fetch=False):
     cache_out = {"schema_version":1,"inception":F.START,"prices":supplemental}
     cache_out["sha256"] = F.digest(cache_out)
     result = {"schema_version":1,"model":MODEL,"currency":"CAD","capital":F.CAPITAL,"inception":F.START,
-        "as_of":dates[-1],"updated_at":updated_at,"benchmarks":F.BENCHMARKS,"accounts":accounts,
+        "as_of":dates[-1],"updated_at":updated_at,"benchmarks":F.benchmark_ids(registry),"accounts":accounts,
         "source_ledger_sha256":days[-1]["sha256"],"source_registry_sha256":F.digest(registry),"supplemental_sha256":cache_out["sha256"],
         "price_revisions":[{"ticker":t, "recorded_on":d["date"], **p["previous_close_revision"]}
             for d in days for t,p in d["prices"].items() if p.get("previous_close_revision")],

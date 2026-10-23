@@ -1,6 +1,8 @@
 # Comparaison au départ commun du 19 octobre 2026
 
-Dans Suivi des performances, tous les portefeuilles et les quatre benchmarks partent de 10 000 CAD à la clôture du **19 octobre 2026**. Le tableau, le classement, les écarts, les courbes et les exports utilisent la même grille de séances et la même date de fin. Choisir un portefeuille ou les Robuste change les courbes, jamais la date de départ.
+Dans Suivi des performances, tous les portefeuilles et les benchmarks partent de 10 000 CAD à la clôture du **19 octobre 2026**. Le tableau, le classement, les écarts, les courbes et les exports utilisent la même grille de séances et la même date de fin. Choisir un portefeuille ou les Robuste change les courbes, jamais la date de départ.
+
+Les trois ajouts du 23 octobre — **S&P 500 · Surperformance**, **S&P 500 · Sharpe et or**, **S&P 500 · Noyau VEQT** — et VFV rejoignent le même départ commun. Leurs courbes sont des simulations explicites depuis le 19 octobre; les registres permanents conservent la véritable date de publication. Leurs comparaisons de rendement utilisent VFV en CAD, tandis que les portefeuilles précédents conservent VEQT. Voir `docs/fnb-sp500.md` pour les pondérations et les méthodes.
 
 Le script `scripts/common_fnb.py` lit les définitions figées du registre permanent. Une nouvelle proposition ou un nouveau catalogue Robuste ajouté au registre rejoint automatiquement cette comparaison. Leurs poids propres sont appliqués aux clôtures du départ commun : parts fractionnaires, dérive des poids sans rééquilibrage, distributions réinvesties aux clôtures ex-distribution et fractionnements appliqués une seule fois. Les frais internes sont déjà inclus dans les cours; courtage, impôts et écarts d’exécution sont exclus.
 

@@ -9,7 +9,7 @@ const SavyPerformanceUtils=(()=>{
    let last="";for(const h of a.history){if(!/^\d{4}-\d{2}-\d{2}$/.test(h.date)||h.date<=last||!finite(h.value)||h.date<a.launch_date||h.date>data.as_of)throw Error("Historique invalide");last=h.date;}
    if(a.history.length&&(a.history[0].date!==a.launch_date||Math.abs(a.history[0].value-a.capital)>.001||last!==data.as_of))throw Error("Lancement ou clôture invalide");
   }
-  if(!["FEQT","VEQT","VGRO","VBAL"].every(id=>ids.has(id)))throw Error("Benchmarks manquants");return data;
+  if(!["FEQT","VEQT","VGRO","VBAL",...(data.benchmarks||[])].every(id=>data.accounts.some(a=>a.id===id&&a.kind==='benchmark')))throw Error("Benchmarks manquants");return data;
  }
  function period(history,target){const end=history.at(-1),base=history.findLast(p=>p.date<=target);return end&&base?end.value/base.value-1:null;}
  function monthBefore(day){const d=new Date(day+"T12:00:00Z"),last=new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),0)).getUTCDate();return new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth()-1,Math.min(d.getUTCDate(),last),12)).toISOString().slice(0,10);}

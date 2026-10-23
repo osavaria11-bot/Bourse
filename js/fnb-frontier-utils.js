@@ -52,6 +52,11 @@
    for(const [id,f] of Object.entries(extra.funds)){
     if(["VEQT","XEQT"].includes(id)||f.currency!=="CAD"||!["TSX","Cboe Canada"].includes(f.exchange)||f.equity<.92||f.returns.length!==d.dates.length)throw Error("FNB supplémentaire non admissible : "+id);
     for(const key of ["returns","geo","sector","equity","mer"])d.universe[key][id]=f[key];
+    // A fund may now also be held by a dashboard portfolio. Use the complete
+    // dated asset mix of the frontier snapshot, including its cash residual.
+    // Retaining newer base cash alongside older frontier equity breaks NAV sums.
+    for(const key of ["bond","crypto","gold"])d.universe[key][id]=0;
+    d.universe.cash[id]=Math.max(0,1-f.equity);
     d.fund_labels[id]=f.label;d.source_urls[id]=f.source_url;d.source_dates[id]=f.source_dates;d.data_methods[id]=f.method;d.frontier_caps[id]=FUND_CAPS[id]??f.max_weight;
     if(!d.optimization.eligible_funds.includes(id))d.optimization.eligible_funds.push(id);
    }

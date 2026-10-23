@@ -3,9 +3,10 @@ const {relativeMetrics, parseCapital} = require("../js/fnb-dashboard.js");
 const html = fs.readFileSync(path.join(__dirname, "../reports/portefeuilles-fnb.html"), "utf8");
 const D = JSON.parse(html.match(/<script id="analysis" type="application\/json">([\s\S]*?)<\/script>/)[1]);
 function close(a, b, context) {if (a === null || b === null) assert.equal(a, b, context); else assert.ok(Math.abs(a - b) < 1e-9, context + ": " + a + " / " + b);}
-test("changing the benchmark to VEQT reproduces every stored relative ratio", () => {
+test("each portfolio's declared benchmark reproduces every stored relative ratio", () => {
   for (const k of D.order) {
-    const actual = relativeMetrics(D.results[k], D.results.VEQT, D.assumptions.risk_free);
+    const benchmark=D.results[k].benchmark||'VEQT';
+    const actual = relativeMetrics(D.results[k], D.results[benchmark], D.assumptions.risk_free);
     for (const key of ["beta", "information", "treynor", "tracking_error", "vol_diff", "cagr_gap"]) close(actual[key], D.results[k][key], k + " " + key);
   }
 });
