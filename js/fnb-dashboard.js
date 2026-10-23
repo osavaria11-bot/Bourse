@@ -159,6 +159,7 @@ const SavyFnb = (() => {
     }
     function choosePortfolio(k, charts = false) {
       if(!own.includes(k))return;
+      const previousReference=reference;
       if(recommended.includes(k)){reference="VFV";$("referenceSelect").value=reference;}
       else if(recommended.includes(summary)){reference="VEQT";$("referenceSelect").value=reference;}
       const previous=summary;summary=k;focus=k;
@@ -174,6 +175,7 @@ const SavyFnb = (() => {
         month=D.dates.length;refreshCharts();
         $("riskDetail").textContent=name(k)+" · Pointillés : "+reference;
       }
+      else if(reference!==previousReference)refreshCharts();
       drawSummary();drawSector();
     }
     function openPortfolio(k) {if(!own.includes(k))return;choosePortfolio(k,true);switchView("portfolios");}

@@ -26,6 +26,12 @@ async function check(browser,engine){
   assert.equal(await page.locator('[data-fiche="'+k+'"] .holdings-section tbody tr').count(),10);
  }
  await page.locator('#ficheFocus').selectOption('2');assert.equal(await page.locator('#referenceSelect').inputValue(),'VEQT');
+ const newId=D.recommended_order[0],ratios=require('../js/fnb-dashboard.js'),betaText=ref=>new Intl.NumberFormat('fr-CA',{minimumFractionDigits:2,maximumFractionDigits:2}).format(ratios.relativeMetrics(D.results[newId],D.results[ref],D.assumptions.risk_free).beta);
+ const newStatsRow=page.locator('#statsBody tr').filter({has:page.locator('[data-open-portfolio="'+newId+'"]')});
+ assert.equal(await newStatsRow.locator('td').nth(2).textContent(),betaText('VEQT'),'Hidden risk table follows the reference when opening a legacy card');
+ await page.locator('#ficheFocus').selectOption(newId);
+ assert.equal(await newStatsRow.locator('td').nth(2).textContent(),betaText('VFV'),'Opening a new card immediately recalculates risk against VFV');
+ await page.locator('#ficheFocus').selectOption('2');
  // Changing the followed portfolio must change the actual curves, amounts
  // and companion selectors, not only the four summary figures.
  await page.locator('.nav [data-tab="overview"]').click();
