@@ -217,7 +217,8 @@ async function main() {
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
     for (const id of ["2", "3"]) {
       await page.locator('[data-portfolio-id="' + id + '"]').click();
-      assert.match(await page.locator("#portfolioStatus").innerText(), new RegExp("Portefeuille " + id + ".*lien personnel"));
+      const name = id === "2" ? "JMC" : "MCL";
+      assert.match(await page.locator("#portfolioStatus").innerText(), new RegExp("Portefeuille " + name + ".*lien personnel"));
       assert.equal(await page.locator("#portfolioContent").isVisible(), false);
     }
     const directContext = await liveContext({viewport: {width: 320, height: 1000}}), direct = await componentPage(directContext,);
