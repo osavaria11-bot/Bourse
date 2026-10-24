@@ -3,9 +3,9 @@
   "currency": "CAD",
   "capital": 10000.0,
   "inception": "2026-10-19",
-  "as_of": "2026-10-22",
-  "updated_at": "2026-10-22T20:54:08-04:00",
-  "ledger_sha256": "5b991bfa50443c8273dbd9d0cdb5b77f583485b7b2950acab158a53433f862d4",
+  "as_of": "2026-10-23",
+  "updated_at": "2026-10-23T21:00:55-04:00",
+  "ledger_sha256": "d5592572a92f574c736ebfde05676a532d35d558281d072a7325df8132108101",
   "benchmarks": [
     "FEQT",
     "VEQT",
@@ -49,6 +49,10 @@
         {
           "date": "2026-10-22",
           "value": 9996.949791040759
+        },
+        {
+          "date": "2026-10-23",
+          "value": 9944.682038552792
         }
       ],
       "initial_positions": [
@@ -126,6 +130,10 @@
         {
           "date": "2026-10-22",
           "value": 10041.26964242071
+        },
+        {
+          "date": "2026-10-23",
+          "value": 9998.835049273235
         }
       ],
       "initial_positions": [
@@ -216,6 +224,10 @@
         {
           "date": "2026-10-22",
           "value": 10034.379214286964
+        },
+        {
+          "date": "2026-10-23",
+          "value": 9991.825336290673
         }
       ],
       "initial_positions": [
@@ -302,6 +314,10 @@
         {
           "date": "2026-10-22",
           "value": 10030.878655748947
+        },
+        {
+          "date": "2026-10-23",
+          "value": 9986.161568738775
         }
       ],
       "initial_positions": [
@@ -409,6 +425,10 @@
         {
           "date": "2026-10-22",
           "value": 9992.194389532211
+        },
+        {
+          "date": "2026-10-23",
+          "value": 9950.011515324024
         }
       ],
       "initial_positions": [
@@ -515,6 +535,10 @@
         {
           "date": "2026-10-22",
           "value": 9977.194184553386
+        },
+        {
+          "date": "2026-10-23",
+          "value": 9952.845567450013
         }
       ],
       "initial_positions": [
@@ -614,6 +638,10 @@
         {
           "date": "2026-10-22",
           "value": 10002.697450401336
+        },
+        {
+          "date": "2026-10-23",
+          "value": 9987.448988111611
         }
       ],
       "initial_positions": [
@@ -711,6 +739,10 @@
         {
           "date": "2026-10-22",
           "value": 9948.149686419247
+        },
+        {
+          "date": "2026-10-23",
+          "value": 9907.215358204237
         }
       ],
       "initial_positions": [
@@ -794,6 +826,10 @@
         {
           "date": "2026-10-22",
           "value": 9925.809622080813
+        },
+        {
+          "date": "2026-10-23",
+          "value": 9891.663085529839
         }
       ],
       "initial_positions": [
@@ -876,6 +912,10 @@
         {
           "date": "2026-10-22",
           "value": 9988.840254933486
+        },
+        {
+          "date": "2026-10-23",
+          "value": 9949.824519919046
         }
       ],
       "initial_positions": [
@@ -951,6 +991,10 @@
         {
           "date": "2026-10-22",
           "value": 10005.245680799684
+        },
+        {
+          "date": "2026-10-23",
+          "value": 9962.443682240133
         }
       ],
       "initial_positions": [
@@ -1022,6 +1066,10 @@
         {
           "date": "2026-10-22",
           "value": 9984.350189605577
+        },
+        {
+          "date": "2026-10-23",
+          "value": 9926.969541423443
         }
       ],
       "initial_positions": [
@@ -1065,6 +1113,10 @@
         {
           "date": "2026-10-22",
           "value": 9919.198450004935
+        },
+        {
+          "date": "2026-10-23",
+          "value": 9872.33340305574
         }
       ],
       "initial_positions": [
@@ -1108,6 +1160,10 @@
         {
           "date": "2026-10-22",
           "value": 9953.596030075681
+        },
+        {
+          "date": "2026-10-23",
+          "value": 9915.629291886458
         }
       ],
       "initial_positions": [
@@ -1151,6 +1207,10 @@
         {
           "date": "2026-10-22",
           "value": 9997.456868607982
+        },
+        {
+          "date": "2026-10-23",
+          "value": 9956.775495619646
         }
       ],
       "initial_positions": [
@@ -1201,6 +1261,10 @@
         {
           "date": "2026-10-22",
           "value": 10047.232698215868
+        },
+        {
+          "date": "2026-10-23",
+          "value": 10016.111446839692
         }
       ],
       "initial_positions": [
@@ -1291,6 +1355,10 @@
         {
           "date": "2026-10-22",
           "value": 9870.891152749822
+        },
+        {
+          "date": "2026-10-23",
+          "value": 9847.82120621308
         }
       ],
       "initial_positions": [
@@ -1378,6 +1446,10 @@
         {
           "date": "2026-10-22",
           "value": 9869.153255364621
+        },
+        {
+          "date": "2026-10-23",
+          "value": 9835.895994509716
         }
       ],
       "initial_positions": [
@@ -1493,6 +1565,10 @@
         {
           "date": "2026-10-22",
           "value": 9867.99465710782
+        },
+        {
+          "date": "2026-10-23",
+          "value": 9827.94585337414
         }
       ],
       "initial_positions": [
@@ -1595,49 +1671,54 @@
       "published_at": "2026-10-23T18:06:35+00:00",
       "method": "buy_hold_fractional_ex_date_close_v1",
       "definition_sha256": "0cb3e1e9ece8aecf511ab0ca9a2c8f268329a5b255a5c17223b34bb069cd355c",
-      "history": [],
+      "history": [
+        {
+          "date": "2026-10-23",
+          "value": 10000.0
+        }
+      ],
       "initial_positions": [
         {
           "ticker": "VCN",
           "name": "Vanguard FTSE Canada All Cap Index ETF",
           "weight": 0.05,
-          "close": null,
-          "units": null
+          "close": 72.79000091552734,
+          "units": 6.869075336051294
         },
         {
           "ticker": "VDY",
           "name": "Vanguard FTSE Canadian High Dividend Yield Index ETF",
           "weight": 0.188,
-          "close": null,
-          "units": null
+          "close": 78.0999984741211,
+          "units": 24.071703415243334
         },
         {
           "ticker": "VEE",
           "name": "Vanguard FTSE Emerging Markets All Cap Index ETF",
           "weight": 0.066,
-          "close": null,
-          "units": null
+          "close": 47.84000015258789,
+          "units": 13.795986578070641
         },
         {
           "ticker": "XEF",
           "name": "iShares Core MSCI EAFE IMI Index ETF",
           "weight": 0.12,
-          "close": null,
-          "units": null
+          "close": 50.439998626708984,
+          "units": 23.790642995072883
         },
         {
           "ticker": "ZNQ",
           "name": "BMO Nasdaq 100 Equity Index ETF",
           "weight": 0.35,
-          "close": null,
-          "units": null
+          "close": 131.13999938964844,
+          "units": 26.68903474370668
         },
         {
           "ticker": "ZUQ",
           "name": "BMO MSCI USA High Quality Index ETF",
           "weight": 0.226,
-          "close": null,
-          "units": null
+          "close": 112.16999816894531,
+          "units": 20.147989987448263
         }
       ]
     },
@@ -1663,63 +1744,68 @@
       "published_at": "2026-10-23T18:06:35+00:00",
       "method": "buy_hold_fractional_ex_date_close_v1",
       "definition_sha256": "3d5da9192d734111e377a0358959f857b5b95b14437594ef62602b53c6b08150",
-      "history": [],
+      "history": [
+        {
+          "date": "2026-10-23",
+          "value": 10000.0
+        }
+      ],
       "initial_positions": [
         {
           "ticker": "CGL.C",
           "name": "iShares Gold Bullion ETF",
           "weight": 0.05,
-          "close": null,
-          "units": null
+          "close": 46.72999954223633,
+          "units": 10.6997647099928
         },
         {
           "ticker": "VDY",
           "name": "Vanguard FTSE Canadian High Dividend Yield Index ETF",
           "weight": 0.09,
-          "close": null,
-          "units": null
+          "close": 78.0999984741211,
+          "units": 11.523687805169681
         },
         {
           "ticker": "VEE",
           "name": "Vanguard FTSE Emerging Markets All Cap Index ETF",
           "weight": 0.063,
-          "close": null,
-          "units": null
+          "close": 47.84000015258789,
+          "units": 13.16889627906743
         },
         {
           "ticker": "XEF",
           "name": "iShares Core MSCI EAFE IMI Index ETF",
           "weight": 0.114,
-          "close": null,
-          "units": null
+          "close": 50.439998626708984,
+          "units": 22.60111084531924
         },
         {
           "ticker": "ZEO",
           "name": "BMO Equal Weight Oil & Gas Index ETF",
           "weight": 0.05,
-          "close": null,
-          "units": null
+          "close": 115.6500015258789,
+          "units": 4.323389480354788
         },
         {
           "ticker": "ZLB",
           "name": "BMO Low Volatility Canadian Equity ETF",
           "weight": 0.088,
-          "close": null,
-          "units": null
+          "close": 61.25,
+          "units": 14.36734693877551
         },
         {
           "ticker": "ZNQ",
           "name": "BMO Nasdaq 100 Equity Index ETF",
           "weight": 0.35,
-          "close": null,
-          "units": null
+          "close": 131.13999938964844,
+          "units": 26.68903474370668
         },
         {
           "ticker": "ZUQ",
           "name": "BMO MSCI USA High Quality Index ETF",
           "weight": 0.195,
-          "close": null,
-          "units": null
+          "close": 112.16999816894531,
+          "units": 17.384327644037217
         }
       ]
     },
@@ -1745,63 +1831,68 @@
       "published_at": "2026-10-23T18:06:35+00:00",
       "method": "buy_hold_fractional_ex_date_close_v1",
       "definition_sha256": "b2f8efdd18bfd393fe94aac9352727db7de816ab0e275b518a06011b347a572c",
-      "history": [],
+      "history": [
+        {
+          "date": "2026-10-23",
+          "value": 10000.0
+        }
+      ],
       "initial_positions": [
         {
           "ticker": "VDY",
           "name": "Vanguard FTSE Canadian High Dividend Yield Index ETF",
           "weight": 0.128,
-          "close": null,
-          "units": null
+          "close": 78.0999984741211,
+          "units": 16.389244878463547
         },
         {
           "ticker": "VEE",
           "name": "Vanguard FTSE Emerging Markets All Cap Index ETF",
           "weight": 0.051,
-          "close": null,
-          "units": null
+          "close": 47.84000015258789,
+          "units": 10.660535083054585
         },
         {
           "ticker": "VEQT",
           "name": "Vanguard All-Equity ETF Portfolio",
           "weight": 0.2,
-          "close": null,
-          "units": null
+          "close": 61.09000015258789,
+          "units": 32.738582337608264
         },
         {
           "ticker": "VVL",
           "name": "Vanguard Global Value Factor ETF",
           "weight": 0.025,
-          "close": null,
-          "units": null
+          "close": 74.4000015258789,
+          "units": 3.3602149848483713
         },
         {
           "ticker": "XEF",
           "name": "iShares Core MSCI EAFE IMI Index ETF",
           "weight": 0.082,
-          "close": null,
-          "units": null
+          "close": 50.439998626708984,
+          "units": 16.25693937996647
         },
         {
           "ticker": "ZEO",
           "name": "BMO Equal Weight Oil & Gas Index ETF",
           "weight": 0.05,
-          "close": null,
-          "units": null
+          "close": 115.6500015258789,
+          "units": 4.323389480354788
         },
         {
           "ticker": "ZNQ",
           "name": "BMO Nasdaq 100 Equity Index ETF",
           "weight": 0.35,
-          "close": null,
-          "units": null
+          "close": 131.13999938964844,
+          "units": 26.68903474370668
         },
         {
           "ticker": "ZUQ",
           "name": "BMO MSCI USA High Quality Index ETF",
           "weight": 0.114,
-          "close": null,
-          "units": null
+          "close": 112.16999816894531,
+          "units": 10.16314539189868
         }
       ]
     },
@@ -1820,14 +1911,19 @@
       "published_at": "2026-10-23T18:06:35+00:00",
       "method": "buy_hold_fractional_ex_date_close_v1",
       "definition_sha256": "eb8b614b39e743b606c8f69a4e1fa1c73457411295a8441cb01135d4057c5efd",
-      "history": [],
+      "history": [
+        {
+          "date": "2026-10-23",
+          "value": 10000.0
+        }
+      ],
       "initial_positions": [
         {
           "ticker": "VFV",
           "name": "Vanguard S&P 500 Index ETF",
           "weight": 1,
-          "close": null,
-          "units": null
+          "close": 189.3699951171875,
+          "units": 52.806676125284355
         }
       ]
     }
