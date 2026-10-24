@@ -81,6 +81,7 @@
   $("#indicators .eyebrow").textContent = "Économie · Données et cycles";
   move(".policy-odds", pane("marches", "rates")); move("#yieldCurves", pane("marches", "rates"));
   const resources = move(".resources", pane("marches", "resources")); resources.open = true;
+  const breadthPanel = el("section", "market-breadth"); breadthPanel.id = "marketBreadth"; pane("marches", "breadth").append(breadthPanel);
   const portfolio = move("#portfolio", pages.get("portefeuilles"));
   // Portfolio subpanels belong inside the existing component, so benchmark labels stay scoped to it.
   for (const tab of Object.keys(R.PAGES.portefeuilles.tabs)) portfolio.append(pane("portefeuilles", tab));
@@ -143,7 +144,7 @@
   const fundAnalysis = pane("analyses", "overview"), fundHeading = el("div", "portal-section-heading"), fundTitle = el("div");
   fundTitle.append(el("h2", "", "Portefeuilles FNB"));
   const fundFullScreen = el("a", "button quiet", "Ouvrir en plein écran ↗");
-  const fundReportUrl = () => "reports/portefeuilles-fnb.html?v=20261024-factors&month=" + new Intl.DateTimeFormat("fr-CA",{timeZone:"America/Toronto",year:"numeric",month:"2-digit"}).format(new Date());
+  const fundReportUrl = () => "reports/portefeuilles-fnb.html?v=20261024-risk-breadth&month=" + new Intl.DateTimeFormat("fr-CA",{timeZone:"America/Toronto",year:"numeric",month:"2-digit"}).format(new Date());
   fundFullScreen.href = fundReportUrl(); fundFullScreen.target = "_blank"; fundFullScreen.rel = "noopener noreferrer";
   fundHeading.append(fundTitle, fundFullScreen);
   const fundFrame = el("iframe", "portal-report-frame"); fundFrame.id = "fundAnalysisFrame";

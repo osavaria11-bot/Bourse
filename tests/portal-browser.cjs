@@ -124,6 +124,9 @@ async function check(browser, engine) {
   assert.equal(await fundReport.locator("#capitalError").isVisible(), false);
   await fundReport.locator('.nav [data-tab="exposures"]').click();
   assert.equal(await fundReport.locator("#exposures").isVisible(), true);
+  assert.equal(await fundReport.locator('#riskSnapshotTitle').isVisible(),true);
+  assert.equal(await fundReport.locator('.risk-snapshot-metrics>div').count(),4);
+  assert.equal(await fundReport.locator('[data-risk-contribution]').count(),4);
   assert.equal(await fundReport.locator("#overview").isVisible(), false);
   await fundReport.locator("#sectorFocus").selectOption("11");
   assert.equal(await fundReport.locator("#geoValues tr").count(), 9);
@@ -140,6 +143,17 @@ async function check(browser, engine) {
   await page.locator('[data-theme-choice="light"]').click(); assert.equal(await page.locator("html").getAttribute("data-theme"), "light"); await shot("home-light");
   await page.locator("#homeNews a").first().click(); assert.equal(await page.locator("#briefingCard").isVisible(), true);
   assert.equal(await page.locator("#briefingAudio").isVisible(), true);
+  await go("marches", "breadth");
+  await page.waitForSelector('#breadthGrid .breadth-card svg');
+  assert.equal(await page.locator('#breadthGrid .breadth-card').count(),4);
+  assert.equal(await page.locator('#breadthGrid [data-breadth-sma]').count(),16);
+  const breadthFirst=page.locator('#breadthGrid svg').first();
+  const breadthReading=page.locator('.breadth-reading').first();
+  const latestBreadth=await breadthReading.innerText();await breadthFirst.press('Home');
+  assert.notEqual(await breadthReading.innerText(),latestBreadth,'Keyboard selection changes the actual historical observation');
+  await breadthFirst.press('End');
+  for(const period of ['1M','3M','6M','1Y','ALL']){await page.locator('[data-breadth-period="'+period+'"]').click();assert.equal(await page.locator('#breadthGrid .breadth-card svg').count(),4);}
+  await shot("market-breadth");
   await go("marches", "rates");
   const oddsNow = new Date().toISOString(), oddsDay = oddsNow.slice(0,10), oddsMeeting = new Date(Date.now()+14*86400000).toISOString().slice(0,10);
   let oddsMode = "new";

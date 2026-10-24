@@ -83,6 +83,9 @@ async function check(browser,engine){
    await page.locator('#referenceSelect').selectOption(ref);
    const c = factors.compare(D, id, ref), row = page.locator('#factorValues [data-factor="market"]');
    assert.equal(await page.locator('#factorContent').isVisible(), true);
+   assert.equal(await page.locator('#riskSnapshotContent').isVisible(),true);
+   assert.equal(await page.locator('.risk-snapshot-metrics>div').count(),4);
+   assert.equal(await page.locator('[data-risk-contribution]').count(),Math.min(4,Object.keys(D.results[id].weights).length));
    assert.equal(await page.locator('#factorValues [data-factor]').count(), 5);
    assert.match(await page.locator('#factorStatus').innerText(), new RegExp(ref + '.*' + D.dates.length + ' mois'));
    assert.equal(await row.locator('td').nth(0).innerText(), (c.factors[0].portfolio > .0005 ? '+' : '') + new Intl.NumberFormat('fr-CA', {minimumFractionDigits:2,maximumFractionDigits:2}).format(c.factors[0].portfolio));

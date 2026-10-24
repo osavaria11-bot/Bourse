@@ -141,6 +141,22 @@ const SavyFnb = (() => {
       $("geoSvg").innerHTML=svg(body,W,H,"Géographie : portefeuille et référence");
       $("geoValues").innerHTML=D.geo_names.map((n,i)=>`<tr><th scope="row"><span class="dot" style="background:${colors[i]}"></span>${escape(n)}</th><td>${pct(R[focus].geo_total?.[i])}</td><td>${pct(R[reference].geo_total?.[i])}</td></tr>`).join("");
     }
+    function drawRiskSnapshot() {
+      if (!$("riskSnapshotStatus")) return;
+      const c = window.SavyFnbRisk?.compare(D, focus, reference);
+      $("riskSnapshotContent").hidden = !c?.available;
+      if (!c?.available) {$("riskSnapshotStatus").textContent = c?.reason || "Mesures indisponibles pour cette publication."; return;}
+      $("riskSnapshotStatus").textContent = name(focus) + " face à " + name(reference) + " · " + c.start + " → " + c.end + " · " + c.observations + " mois en CAD.";
+      $("riskVar").textContent = pct(c.var, 2); $("riskCvar").textContent = pct(c.cvar, 2);
+      $("riskRelative").textContent = c.relativeVar === null ? "—" : number(c.relativeVar) + "×";
+      $("riskRelativeNote").textContent = "VaR / " + reference + " · " + pct(c.benchmarkVar, 2);
+      $("riskStress").textContent = pct(c.stress, 1);
+      const maximum = Math.max(.01, ...c.top.map(t => Math.abs(t.share)));
+      $("riskContributions").innerHTML = c.top.map(t => '<div class="risk-contribution" data-risk-contribution="' + escape(t.id) + '"><span><b>' + escape(t.id) + '</b><small>' + escape(D.fund_labels[t.id]?.description || t.id) + '</small></span><div class="risk-contribution-track"><i style="width:' + (Math.abs(t.share) / maximum * 100).toFixed(2) + '%" title="' + escape(pct(t.share)) + '"></i></div><strong>' + pct(t.share, 1) + '</strong></div>').join("");
+      if (!c.contributions) $("riskContributions").textContent = "Contributions non estimables : historique incomplet ou variance nulle.";
+      $("riskContributionNote").textContent = c.other === null ? "" : "Autres FNB : " + pct(c.other, 1) + " · calcul aux poids cibles, toutes contributions = 100 % avant arrondis.";
+      $("riskSampleNote").textContent = "Queue de 5 % : environ " + number(c.tailObservations, 1) + " observations mensuelles. Estimation fragile des pertes extrêmes; le stress est un scénario hypothétique.";
+    }
     function drawFactors() {
       if (!$("factorStatus")) return;
       const comparison = window.SavyFnbFactors?.compare(D, focus, reference);
@@ -163,7 +179,7 @@ const SavyFnb = (() => {
       const q=R[focus],b=R[reference];
       $("sectorFocusName").textContent=name(focus);$("sectorFocusDot").style.background=seriesInk(focus);
       $("sectorValues").innerHTML=D.sector_names.map((n,i)=>`<tr><th scope="row">${escape(n)}</th><td><div class="sector-meter"><span style="width:${(q.sectors?.[i]||0)*200}%;background:${seriesInk(focus)}"></span><b>${pct(q.sectors?.[i])}</b></div></td><td>${pct(b.sectors?.[i])}</td></tr>`).join("");
-      document.querySelectorAll("[data-exposure-name]").forEach(n=>{n.textContent=name(focus);});drawGeo();drawFactors();
+      document.querySelectorAll("[data-exposure-name]").forEach(n=>{n.textContent=name(focus);});drawGeo();drawFactors();drawRiskSnapshot();
     }
     const reportPeriod=document.querySelector('.report-header p').textContent;
     function switchView(id) {

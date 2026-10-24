@@ -5,7 +5,7 @@ on:
     branches: ["main", "codex/**"]
   workflow_dispatch:
   workflow_run:
-    workflows: ["Daily briefing", "Fresh macro releases", "Monthly FNB optimization", "Daily FNB performance", "Expanded FNB frontier sources"]
+    workflows: ["Daily briefing", "Fresh macro releases", "Monthly FNB optimization", "Daily FNB performance", "Expanded FNB frontier sources", "Market breadth"]
     types: [completed]
     branches: ["main"]
 
@@ -60,6 +60,7 @@ jobs:
           python scripts/monthly_fnb.py --check
           python scripts/daily_fnb.py --check
           python scripts/common_fnb.py --check
+          python scripts/collect_market_breadth.py --check
           node scripts/build_frontier_monthly.cjs --check
           node --check scripts/build_monthly_fnb.cjs
           node --check js/fnb-dashboard.js
