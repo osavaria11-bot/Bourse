@@ -52,7 +52,7 @@ button,input,select,textarea {font-family:inherit}
 .savy-portal footer {margin-top:20px;padding:14px 0;font-size:11px}
 
 /* Appearance stays above the content, with an explicit choice of three themes. */
-.savy-portal .portal-utility-bar {display:flex;justify-content:flex-end;min-height:36px;margin:0 0 14px}
+.savy-portal .portal-utility-bar {display:flex;justify-content:flex-end;min-height:36px;margin:0 0 10px}
 .savy-portal .portal-utility-bar .header-actions {display:flex;align-items:center;gap:8px;margin:0;padding:0;border:0}
 .savy-portal .portal-utility-bar .header-actions .button {flex:none;min-height:36px;padding:7px 12px;font-size:12px;background:var(--surface);border:1px solid var(--border);color:var(--text)}
 .savy-portal .portal-utility-bar .header-actions .button:hover {background:var(--raised);border-color:var(--accent)}
@@ -60,6 +60,7 @@ button,input,select,textarea {font-family:inherit}
 .savy-portal .theme-choice button {min-height:28px;border:0;border-radius:4px;background:transparent;padding:5px 10px;font-size:12px;line-height:1.3;font-weight:500;color:var(--muted-strong);white-space:nowrap}
 .savy-portal .theme-choice button:hover {background:var(--raised)}
 .savy-portal .theme-choice button[aria-pressed="true"] {color:var(--accent);background:var(--accent-soft)}
+.savy-portal .portal-utility-bar .button:focus-visible,.savy-portal .theme-choice button:focus-visible {outline:2px solid var(--focus);outline-offset:-3px}
 .savy-portal .theme-short {display:none}
 
 /* Home: compact financial cards and an editorial reading rhythm. */
@@ -77,6 +78,9 @@ button,input,select,textarea {font-family:inherit}
 .savy-portal .portal-section-heading h3,.savy-portal .portal-latest h3 {font-size:16px}
 .savy-portal .portal-section-heading a {font-size:12px}
 .savy-portal .portal-headline h4 {font-size:15px;line-height:1.4}
+.savy-portal .portal-headline {padding:8px 0;gap:3px}
+.savy-portal .portal-headline:first-child {padding-top:2px}
+.savy-portal .portal-headline:last-child {padding-bottom:0}
 .savy-portal .portal-headline:first-child h4 {font-size:20px;line-height:1.3}
 .savy-portal .portal-headline .eyebrow {font-size:11px}
 .savy-portal .portal-headline p {font-size:13px;line-height:1.5;margin:3px 0}
@@ -115,7 +119,7 @@ button,input,select,textarea {font-family:inherit}
 .savy-portal .portfolio-overview {padding:12px 0 14px;gap:16px}
 .savy-portal .portfolio-overview .meta {font-size:12px}
 .savy-portal .portfolio-choice {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:min(100%,660px);gap:4px;padding:4px;margin:12px 0;border-radius:8px;background:var(--raised)}
-.savy-portal .portfolio-choice button {min-height:50px;min-width:0;font-size:14px!important;padding:7px!important;border-radius:5px}
+.savy-portal .portfolio-choice button {min-height:50px;min-width:0;font-size:14px!important;padding:7px!important;border-radius:5px;color:var(--muted-strong)}
 .savy-portal .portfolio-choice button span {font-size:11px;letter-spacing:.01em}
 .savy-portal .portfolio-choice button[aria-pressed="true"] {background:var(--surface);box-shadow:0 1px 4px var(--shadow-color);color:var(--accent)}
 .savy-portal .segmented {border-radius:6px;border-color:var(--border)}
@@ -127,7 +131,7 @@ button,input,select,textarea {font-family:inherit}
 .savy-portal :is(.portfolio-risk-card strong,.portfolio-analysis-total) {font-size:24px;font-weight:600}
 .savy-portal :is(.portfolio-table,.portfolio-exposure,.portfolio-risk,.research-performance-table,.yield-curves,.weekly-report) table {font-family:var(--font-sans);font-size:12.5px;line-height:1.4;font-variant-numeric:tabular-nums}
 .savy-portal :is(.portfolio-table,.portfolio-exposure,.portfolio-risk,.research-performance-table,.yield-curves,.weekly-report) :is(th,td) {padding:7px 9px;border-color:var(--border)}
-.savy-portal :is(.portfolio-table,.research-performance-table) thead th {font-size:12px;font-weight:600;background:var(--raised)}
+.savy-portal :is(.portfolio-table,.research-performance-table) thead th {font-size:12px;font-weight:600;background:var(--raised);color:var(--muted-strong)}
 .savy-portal :is(.portfolio-table,.portfolio-exposure,.portfolio-risk,.research-performance-table,.yield-curves) td {text-align:right}
 .savy-portal tbody tr:hover {background:var(--raised)}
 .savy-portal .portfolio-table th button {font:inherit;color:inherit}
