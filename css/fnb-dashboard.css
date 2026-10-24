@@ -1,4 +1,4 @@
-@import url("savy-tokens.css?v=20261024-petrol");
+@import url("savy-tokens.css?v=20261024-final");
 /* Shared SAVY palette; the parent dashboard synchronizes data-theme. */
 .performance-controls{max-width:100%;min-width:0}.performance-controls .field{min-width:0;max-width:100%}.performance-controls select{max-width:100%;min-width:0}
 /* Frontier laboratory: local scenarios, same SAVY surfaces and one outer scroll. */

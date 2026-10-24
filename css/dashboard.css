@@ -1,4 +1,4 @@
-@import url("savy-tokens.css?v=20261024-petrol");
+@import url("savy-tokens.css?v=20261024-final");
 * {box-sizing:border-box}
 body {margin:0; background:var(--bg); color:var(--text); font-family:var(--font-sans); font-size:15px; line-height:1.5}
 button,input,select {font:inherit}
