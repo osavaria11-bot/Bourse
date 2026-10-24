@@ -13,3 +13,7 @@ for (const [folder, kind] of [["stocks", "stocks"], ["real-estate", "real_estate
 documents.sort((a, b) => b.date.localeCompare(a.date) || a.kind.localeCompare(b.kind));
 fs.writeFileSync(path.join(root, "data/report-archive.json"), JSON.stringify({schema_version: 1, documents}, null, 2) + "\n");
 console.log("Published report archive:", documents.length, "documents");
+// The full and quote-only publishers both run this packaging step. Render the
+// financial report from the same source so a quote refresh cannot restore an
+// older ranking from the committed HTML. Calculators and schedules are unchanged.
+require("./build_monthly_fnb.cjs");
