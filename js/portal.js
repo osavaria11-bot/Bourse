@@ -28,7 +28,7 @@
 
   document.body.classList.add("savy-portal");
   const header = $(".page-header"); document.body.prepend(header);
-  $(".brand .eyebrow").textContent = "VOTRE PERSPECTIVE FINANCIÈRE";
+  $(".brand .eyebrow").textContent = "Votre perspective financière";
   $(".header-actions a[href='#portfolio']").remove();
   const nav = el("nav", "portal-nav"); nav.setAttribute("aria-label", "Navigation principale");
   const mobileLabels = {portefeuilles: "Portef.", recherche: "Rech.", immobilier: "Immo.", polymarket: "Polym.", analyses: "FNB", dashboard: "Tout"};
@@ -40,6 +40,7 @@
     item.append(icon, el("span", "nav-label", config.navLabel || config.label), el("span", "nav-label-mobile", mobileLabels[id] || config.label)); nav.append(item);
   }
   header.insertBefore(nav, $(".header-actions"));
+  const utilityBar = el("div", "portal-utility-bar"); utilityBar.append($(".header-actions")); main.prepend(utilityBar);
   $(".intro-line").remove();
   for (const [id, config] of Object.entries(R.PAGES)) {
     const page = el("section", "portal-page"); page.id = "page-" + id; page.dataset.page = id;
@@ -55,7 +56,7 @@
   }
   const home = pane("accueil", "overview");
   const heading = el("div", "portal-home-heading"), headingText = el("div");
-  headingText.append(el("p", "eyebrow", "SAVY / LE POINT SUR LES MARCHÉS"), el("h2", "", "L’essentiel, en perspective."));
+  headingText.append(el("p", "eyebrow", "Le point sur les marchés"), el("h2", "", "L’essentiel, en perspective."));
   const today = el("time", "meta", new Intl.DateTimeFormat("fr-CA", {timeZone: "America/Toronto", weekday: "long", day: "numeric", month: "long", year: "numeric"}).format(new Date()));
   heading.append(headingText, today); home.append(heading); move("#updated", home);
   const ticker = el("div", "portal-ticker"); ticker.id = "homeMarkets"; ticker.setAttribute("aria-label", "Dernières cotations des grands marchés");
@@ -77,7 +78,7 @@
   move("#briefingCard", pane("accueil", "news"));
   move("#indicators", pane("marches", "economy"));
   $("#indicatorsTitle").textContent = "Les indicateurs économiques";
-  $("#indicators .eyebrow").textContent = "ÉCONOMIE / DONNÉES & CYCLES";
+  $("#indicators .eyebrow").textContent = "Économie · Données et cycles";
   move(".policy-odds", pane("marches", "rates")); move("#yieldCurves", pane("marches", "rates"));
   const resources = move(".resources", pane("marches", "resources")); resources.open = true;
   const portfolio = move("#portfolio", pages.get("portefeuilles"));
@@ -105,17 +106,17 @@
   move("#polymarket", pane("polymarket", "overview"));
   move("#weeklyReports", pane("recherche", "latest")); $("#weeklyReportsTitle").textContent = "La sélection Finviz";
   const property = el("section", "weekly-reports"); property.id = "propertyReport";
-  property.append(el("p", "eyebrow", "IMMOBILIER / ÉDITION HEBDOMADAIRE"), el("h2", "", "Le briefing immobilier"));
+  property.append(el("p", "eyebrow", "Immobilier · Édition hebdomadaire"), el("h2", "", "Le briefing immobilier"));
   const propertyStatus = el("p", "meta"); propertyStatus.id = "propertyReportsStatus"; propertyStatus.setAttribute("role", "status"); property.append(propertyStatus);
   const propertyGrid = el("div", "weekly-reports-grid"); propertyGrid.id = "propertyReportsGrid"; property.append(propertyGrid); pane("immobilier", "latest").append(property);
   const research = pane("recherche", "latest"), plan = el("section", "research-plan"); plan.id = "researchPlan";
   const planHeading = el("div", "portal-section-heading"), planTitle = el("div");
-  planTitle.append(el("p", "eyebrow", "RECHERCHE / FINVIZ"), el("h2", "", "Recherche & suivi"));
+  planTitle.append(el("p", "eyebrow", "Recherche · Finviz"), el("h2", "", "Recherche & suivi"));
   planHeading.append(planTitle, el("span", "meta", "Deux volets · une seule livraison")); plan.append(planHeading);
   const schedule = el("div", "research-schedule");
   for (const [step, title, time, note, detail] of [
-    ["1 · RECHERCHE", "Top 5 du screener Finviz", "Mercredi · 22 h", "Heure de Toronto · tâche hebdomadaire unique", "Admissibles, classement et instructions pour la prochaine clôture admissible."],
-    ["2 · SUIVI", "Suivi des portefeuilles Finviz", "Mercredi · 22 h", "Même livraison · heure de Toronto", "Valeurs à la dernière clôture, rendements A/B/SPY et instructions en attente."],
+    ["1 · Recherche", "Top 5 du screener Finviz", "Mercredi · 22 h", "Heure de Toronto · tâche hebdomadaire unique", "Admissibles, classement et instructions pour la prochaine clôture admissible."],
+    ["2 · Suivi", "Suivi des portefeuilles Finviz", "Mercredi · 22 h", "Même livraison · heure de Toronto", "Valeurs à la dernière clôture, rendements A/B/SPY et instructions en attente."],
   ]) {
     const card = el("article", "research-schedule-card");
     card.append(el("span", "eyebrow", step), el("h3", "", title), el("strong", "research-time", time), el("span", "meta", note), el("p", "meta", detail)); schedule.append(card);
@@ -142,7 +143,7 @@
   const fundAnalysis = pane("analyses", "overview"), fundHeading = el("div", "portal-section-heading"), fundTitle = el("div");
   fundTitle.append(el("h2", "", "Portefeuilles FNB"));
   const fundFullScreen = el("a", "button quiet", "Ouvrir en plein écran ↗");
-  const fundReportUrl = () => "reports/portefeuilles-fnb.html?v=20261022-daily&month=" + new Intl.DateTimeFormat("fr-CA",{timeZone:"America/Toronto",year:"numeric",month:"2-digit"}).format(new Date());
+  const fundReportUrl = () => "reports/portefeuilles-fnb.html?v=20261024-petrol&month=" + new Intl.DateTimeFormat("fr-CA",{timeZone:"America/Toronto",year:"numeric",month:"2-digit"}).format(new Date());
   fundFullScreen.href = fundReportUrl(); fundFullScreen.target = "_blank"; fundFullScreen.rel = "noopener noreferrer";
   fundHeading.append(fundTitle, fundFullScreen);
   const fundFrame = el("iframe", "portal-report-frame"); fundFrame.id = "fundAnalysisFrame";
@@ -175,7 +176,7 @@
   fundAnalysis.append(fundHeading, fundFrame);
 
   const dashboard = pane("dashboard", "overview"), dashboardMoves = [];
-  dashboard.append(el("p", "eyebrow", "SAVY / VUE INTÉGRALE"), el("h2", "", "Dashboard complet"),
+  dashboard.append(el("p", "eyebrow", "SAVY · Vue intégrale"), el("h2", "", "Dashboard complet"),
     el("p", "meta dashboard-intro", "Tous les graphiques, portefeuilles et dernières analyses sur une seule page, comme dans la vue d’origine."));
   function syncDashboard(show) {
     if (show && !dashboardMoves.length) {

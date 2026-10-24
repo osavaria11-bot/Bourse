@@ -68,14 +68,14 @@ async function main() {
     assert.equal(await page.locator("#researchPerformance tbody tr").count(),3,"Preserve tracking in outage");
     for (const width of [1440, 800, 375, 320]) {
       await page.setViewportSize({width,height:1000}); await page.locator("#weeklyReportsTitle").scrollIntoViewIfNeeded();
-      for (let theme = 0; theme < 2; theme++) {
+      for (const theme of ["petrol", "light", "dark"]) {
+        await page.locator('[data-theme-choice="' + theme + '"]').click();
         assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, "no horizontal overflow at " + width);
         for (const section of ["recherche", "immobilier"]) {
           await page.locator('.portal-nav [data-page="' + section + '"]').click();
           assert.equal(await page.locator('#page-' + section + ' .weekly-report-document a').isVisible(), true);
           assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false, "report fits " + width);
         }
-        await page.locator("#themeToggle").click();
       }
     }
     const empty = await componentPage(browser,); await empty.route("https://**", route => route.abort()); await empty.goto(url);

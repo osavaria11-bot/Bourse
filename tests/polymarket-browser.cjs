@@ -38,14 +38,14 @@ async function main(){
     }
     for(const width of [1440,800,375,320]){
       await page.setViewportSize({width,height:1000});
-      for(let theme=0;theme<2;theme++){
+      for (const theme of ["petrol", "light", "dark"]) {
+        await page.locator('[data-theme-choice="' + theme + '"]').click();
         assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,"page overflow at "+width);
         const layout=await page.locator("#polymarketRow").evaluate(n=>({width:n.clientWidth,scroll:n.scrollWidth,tops:[...n.children].map(x=>x.offsetTop)}));
         const columns=width>1000?5:width>650?3:2;
         assert.equal(new Set(layout.tops).size,Math.ceil(10/columns),"responsive grid rows at "+width);
         assert.equal(layout.tops.filter(top=>top===layout.tops[0]).length,columns,"cards per row at "+width);
         assert.equal(layout.scroll>layout.width,false,"no horizontal scrolling is needed at "+width);
-        await page.locator("#themeToggle").click();
       }
     }
     for(const nextMode of ["older","partial","invalid"]){

@@ -353,7 +353,7 @@ async function run() {
     const snapshot = await snapshotDownload;
     const csv = fs.readFileSync(await snapshot.path(), "utf8");
     assert.match(csv, /Code de série/); assert.match(csv, /DEXCAUS/); assert.match(csv, /V39079/); assert.match(csv, /bankofcanada\.ca/);
-    await page.locator("#themeToggle").click();
+    await page.locator('[data-theme-choice="light"]').click();
     assert.equal(await page.locator("html").getAttribute("data-theme"), "light");
     await page.reload(); await waitCount(page, indicatorCount);
     assert.equal(await page.locator("html").getAttribute("data-theme"), "light");

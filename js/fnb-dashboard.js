@@ -20,7 +20,11 @@ const SavyFnb = (() => {
     return Number.isFinite(value) && value >= 1 && value <= 1e9 ? value : null;
   }
   function start(document) {
-    try {document.documentElement.dataset.theme = window.parent !== window ? window.parent.document.documentElement.dataset.theme : JSON.parse(localStorage.getItem("savy:preferences:v2") || "{}").theme || "dark";} catch {document.documentElement.dataset.theme = "dark";}
+    try {
+      const appearance = JSON.parse(localStorage.getItem("savy:preferences:v2") || "{}");
+      const remembered = appearance.theme_edition === "petrol-20261024" && ["petrol", "light", "dark"].includes(appearance.theme) ? appearance.theme : "petrol";
+      document.documentElement.dataset.theme = window.parent !== window ? window.parent.document.documentElement.dataset.theme : remembered;
+    } catch {document.documentElement.dataset.theme = "petrol";}
 
     const D = JSON.parse(document.getElementById("analysis").textContent), R = D.results;
     const ids = D.order, custom = D.custom_order, proposed = D.proposal_order || [], robust = D.robust_order || [], recommended = D.recommended_order || [], frozen = [...recommended,...robust], own = [...frozen, ...proposed, ...custom], benchmarks = D.benchmark_order;
@@ -31,7 +35,8 @@ const SavyFnb = (() => {
     const short = k => frozen.includes(k) ? R[k].chart_name : proposed.includes(k) ? "Proposition" : custom.includes(k) ? "Nº " + k : k;
     const name = k => k==='VFV'?'S&P 500 · VFV':frozen.includes(k) || proposed.includes(k) ? R[k].name : custom.includes(k) ? short(k) + " · " + R[k].short_name : k;
     const fundNote = k => D.fund_labels?.[k] ? '<span class="fund-name">' + escape(D.fund_labels[k].name) + '</span><span class="fund-description">' + escape(D.fund_labels[k].description) + '</span>' : "";
-    const dot = k => '<span class="dot" style="background:' + R[k].color + '"></span>';
+    const seriesInk = k => benchmarks.includes(k) ? ({VEQT:"var(--benchmark)",VFV:"var(--benchmark-soft)",FEQT:"var(--benchmark-3)",VBAL:"var(--benchmark-4)",VGRO:"var(--benchmark-5)",FBAL:"var(--benchmark-6)"}[k] || "var(--benchmark)") : proposed.includes(k) ? "var(--chart)" : R[k].color;
+    const dot = k => '<span class="dot" style="background:' + seriesInk(k) + '"></span>';
     const text = (x, y, s, attrs = "") => `<text x="${x}" y="${y}" ${attrs}>${escape(s)}</text>`;
     const line = (x1, y1, x2, y2, attrs = "") => `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="var(--grid)" ${attrs}/>`;
     const svg = (body, W, H, title) => `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${escape(title)}" xmlns="http://www.w3.org/2000/svg"><rect width="${W}" height="${H}" fill="var(--surface)"/>${body}</svg>`;
@@ -85,7 +90,7 @@ const SavyFnb = (() => {
         }
         if (chosen.has(k)) boxes.push({x:xx+best[0],y:yy+best[1]-10,w:tw,h:13});
         const desc = name(k) + " · rendement " + pct(q.cagr) + " · volatilité " + pct(q.vol) + " · bêta / " + reference + " " + number(relative(k).beta);
-        body += `<g class="risk-point" data-portfolio="${k}" tabindex="0" role="button" aria-label="${escape(desc)}"><title>${escape(desc)}</title><circle cx="${xx}" cy="${yy}" r="5" fill="${q.color}" stroke="var(--surface)" stroke-width="1.5"/>${text(xx+best[0],yy+best[1],label,`fill="${q.color}" font-weight="700"`)}</g>`;
+        body += `<g class="risk-point" data-portfolio="${k}" tabindex="0" role="button" aria-label="${escape(desc)}"><title>${escape(desc)}</title><circle cx="${xx}" cy="${yy}" r="5" fill="${seriesInk(k)}" stroke="var(--surface)" stroke-width="1.5"/>${text(xx+best[0],yy+best[1],label,`fill="${seriesInk(k)}" font-weight="700"`)}</g>`;
       }
       $("riskSvg").innerHTML = svg(body,W,H,"Boussole risque et rendement");
     }
@@ -102,7 +107,7 @@ const SavyFnb = (() => {
       for(let i=0;i<=4;i++){const v=ymin+i/4*(ymax-ymin);body+=line(p.l,y(v),W-p.r,y(v))+text(p.l-7,y(v)+4,money(v*scale),'text-anchor="end"');}
       const count=W<440?2:4,ticks=[...new Set(Array.from({length:count+1},(_,i)=>Math.round(i*D.dates.length/count)))];
       for(const i of ticks){const label=new Date(D.wealth_dates[i]+"T12:00:00Z").toLocaleDateString("fr-CA",{month:"short",year:"2-digit",timeZone:"UTC"});body+=text(x(i),H-p.b+23,label,`text-anchor="${i===0?'start':i===D.dates.length?'end':'middle'}"`);}
-      for(const k of ids){const q=R[k],path=q.wealth.map((v,i)=>(i?"L":"M")+x(i).toFixed(2)+","+y(v).toFixed(2)).join(" ");body+=`<path class="wealth-line" data-portfolio="${k}" d="${path}" fill="none" stroke="${q.color}" stroke-width="${k===reference?2.8:2}" ${benchmarks.includes(k)?'stroke-dasharray="6 3"':''}><title>${escape(name(k)+" · "+money(q.end*scale))}</title></path>`;}
+      for(const k of ids){const q=R[k],path=q.wealth.map((v,i)=>(i?"L":"M")+x(i).toFixed(2)+","+y(v).toFixed(2)).join(" ");body+=`<path class="wealth-line" data-portfolio="${k}" d="${path}" fill="none" stroke="${seriesInk(k)}" stroke-width="${k===reference?2.8:2}" ${benchmarks.includes(k)?'stroke-dasharray="6 3"':''}><title>${escape(name(k)+" · "+money(q.end*scale))}</title></path>`;}
       body+=`<line id="growthCross" x1="0" x2="0" y1="${p.t}" y2="${H-p.b}" stroke="#8395A4" stroke-dasharray="3 3" opacity="0"/>`;
       const host=$("growthSvg"),tip=$("growthTip");host.innerHTML=svg(body,W,H,"Évolution du capital");tip.hidden=true;
       const chart=host.querySelector("svg");
@@ -138,8 +143,8 @@ const SavyFnb = (() => {
     }
     function drawSector() {
       const q=R[focus],b=R[reference];
-      $("sectorFocusName").textContent=name(focus);$("sectorFocusDot").style.background=q.color;
-      $("sectorValues").innerHTML=D.sector_names.map((n,i)=>`<tr><th scope="row">${escape(n)}</th><td><div class="sector-meter"><span style="width:${(q.sectors?.[i]||0)*200}%;background:${q.color}"></span><b>${pct(q.sectors?.[i])}</b></div></td><td>${pct(b.sectors?.[i])}</td></tr>`).join("");
+      $("sectorFocusName").textContent=name(focus);$("sectorFocusDot").style.background=seriesInk(focus);
+      $("sectorValues").innerHTML=D.sector_names.map((n,i)=>`<tr><th scope="row">${escape(n)}</th><td><div class="sector-meter"><span style="width:${(q.sectors?.[i]||0)*200}%;background:${seriesInk(focus)}"></span><b>${pct(q.sectors?.[i])}</b></div></td><td>${pct(b.sectors?.[i])}</td></tr>`).join("");
       document.querySelectorAll("[data-exposure-name]").forEach(n=>{n.textContent=name(focus);});drawGeo();
     }
     const reportPeriod=document.querySelector('.report-header p').textContent;

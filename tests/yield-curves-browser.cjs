@@ -100,7 +100,7 @@ async function main() {
       await page.locator("#yieldTableCA summary").click();
       if (width === 320 && process.env.YIELD_SCREENSHOT_LOGS) console.log("SCREENSHOT_YIELD_MOBILE " + (await page.locator('[data-yield-country="US"]').screenshot()).toString("base64"));
     }
-    await page.locator("#themeToggle").click(); assert.equal(await page.locator("html").getAttribute("data-theme"), "light");
+    await page.locator('[data-theme-choice="light"]').click(); assert.equal(await page.locator("html").getAttribute("data-theme"), "light");
     await check(page, "2026-09-14", "2026-10-14");
     for (const version of ["v1", "v2"]) {
       const legacyContext = await browser.newContext(), legacyPage = await componentPage(legacyContext,); await legacyPage.route("https://**", route => route.abort());

@@ -1,0 +1,85 @@
+/* SAVY · shared visual language. No financial values or chart geometry. */
+@font-face {
+  font-family:"Source Sans 3";
+  font-style:normal;
+  font-weight:400 700;
+  font-display:swap;
+  src:url("../assets/fonts/source-sans-3-latin-variable.woff2") format("woff2");
+}
+:root {
+  --font-sans:"Source Sans 3",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --petrol-deep:#103B46;
+  --petrol-soft:#275563;
+  --terracotta:#C47055;
+  --terracotta-hover:#A95742;
+  --warm-white:#F7F6F2;
+  --paper:#FFFFFF;
+  --charcoal:#20323B;
+  --slate:#68777D;
+  --green:#168064;
+  --red:#B84F48;
+  --warm-border:#E6E5DF;
+  --radius:9px;
+  --space-1:4px;
+  --space-2:8px;
+  --space-3:12px;
+  --space-4:16px;
+  --space-5:24px;
+  --sidebar-width:208px;
+  --nav-bg:var(--petrol-deep);
+  --nav-text:#EDF3F3;
+  --nav-muted:#C0D1D4;
+  --nav-border:#FFFFFF25;
+  --nav-hover:#FFFFFF0C;
+  --nav-active:#C4705530;
+  --selection-mark:var(--terracotta);
+  color-scheme:light;
+  --bg:var(--warm-white);
+  --surface:var(--paper);
+  --raised:#F0F0EA;
+  --text:var(--charcoal);
+  --muted:var(--slate);
+  --muted-strong:#5D6D73;
+  --border:var(--warm-border);
+  --accent:var(--terracotta-hover);
+  --accent-hover:#904632;
+  --accent-soft:#F6EAE4;
+  --chart:var(--terracotta);
+  --benchmark:var(--petrol-deep);
+  --benchmark-soft:var(--petrol-soft);
+  --benchmark-3:#447B87;
+  --benchmark-4:#7B7961;
+  --benchmark-5:#4F7D72;
+  --benchmark-6:#626F8B;
+  --up:var(--green);
+  --down:var(--red);
+  --gold:#87653A;
+  --grid:#EBEBE5;
+  --focus:var(--petrol-soft);
+  --tooltip:var(--paper);
+  --shadow-color:#20323B12;
+  --shadow:0 1px 2px #20323B05,0 3px 12px #20323B06;
+  --frontier-sharpe:var(--benchmark);
+  --frontier-ir:var(--chart);
+}
+/* The two existing appearances remain available beside the new default. */
+:root[data-theme="light"] {
+  color-scheme:light;
+  --bg:#F5F6F7;--surface:#FFFFFF;--raised:#EDF1F3;
+  --text:#17252F;--muted:#526573;--muted-strong:#526573;--border:#D7DFE4;
+  --accent:#12664F;--accent-hover:#0D503D;--accent-soft:#E1F1EA;
+  --chart:#17745B;--grid:#E1E6EA;--gold:#7B5F20;--down:#B13743;
+  --selection-mark:#12664F;--nav-active:#FFFFFF18;
+}
+:root[data-theme="dark"] {
+  color-scheme:dark;
+  --bg:#0B1016;--surface:#101820;--raised:#18232E;
+  --text:#EEF3F7;--muted:#A0AFBC;--muted-strong:#AABAC6;--border:#26313C;
+  --accent:#9CE3CB;--accent-hover:#C4EDDE;--accent-soft:#16392F;
+  --chart:#91DFC4;--up:#63C5A5;--down:#EC999F;--grid:#25323E;--gold:#E2C88F;
+  --benchmark:#83B5BF;--benchmark-soft:#A9CAD0;--benchmark-3:#689DAA;
+  --benchmark-4:#B4BEB0;--benchmark-5:#7EA9A0;--benchmark-6:#A8B1C8;
+  --focus:#9CE3CB;--tooltip:#18232E;--shadow-color:#00000024;
+  --shadow:0 1px 2px #00000014,0 4px 14px #0000000C;
+  --nav-bg:#101820;--nav-active:#9CE3CB1A;--selection-mark:#9CE3CB;
+}

@@ -1,0 +1,246 @@
+/* Presentation only. Shared tokens also style the standalone FNB report. */
+html {scroll-padding-top:20px}
+body.savy-portal {font-family:var(--font-sans);font-size:14px;line-height:1.45}
+button,input,select,textarea {font-family:inherit}
+.savy-portal h2,.savy-portal h3,.savy-portal h4 {font-weight:600;letter-spacing:-.012em}
+.savy-portal .eyebrow {font-size:11px;font-weight:500;letter-spacing:.015em;text-transform:none}
+.savy-portal .meta,.savy-portal .update-status {font-size:12px;line-height:1.5}
+.savy-portal>.container .update-status,.savy-portal footer {color:var(--muted-strong)}
+.savy-portal .section-heading h2,.savy-portal .portal-section-heading h2,
+.savy-portal .market-heading h3,.savy-portal .research-plan h2,
+.savy-portal #panel-analyses-overview h2,.savy-portal .weekly-reports h2 {font-size:17px}
+.savy-portal :is(button,a,input,select,summary,svg[tabindex]):focus-visible {
+  outline:2px solid var(--focus);outline-offset:3px;
+}
+.savy-portal a:hover {color:var(--accent-hover)}
+.savy-portal .button {border-radius:6px;font-size:13px;min-height:36px;padding:7px 12px;background:var(--surface)}
+.savy-portal .button:hover {background:var(--accent-soft);border-color:var(--accent)}
+.savy-portal .button[aria-pressed="true"] {background:var(--accent-soft)}
+.savy-portal input,.savy-portal select {border-color:var(--border);border-radius:6px;accent-color:var(--accent)}
+
+/* Desktop: the existing navigation becomes a compact, fixed sidebar. */
+.savy-portal .page-header {
+  inset:0 auto 0 0;width:var(--sidebar-width);height:100dvh;min-height:0;
+  padding:25px 14px 18px;display:flex;flex-direction:column;align-items:stretch;
+  gap:0;margin:0;background:var(--nav-bg);color:var(--nav-text);border:0;
+  border-right:1px solid var(--nav-border);overflow-y:auto;
+}
+.savy-portal .brand {padding:0 12px;flex-shrink:0;gap:0}
+.savy-portal .brand h1 {font:400 36px/1.1 Georgia,"Times New Roman",serif;letter-spacing:.035em;color:var(--nav-text)}
+.savy-portal .brand-dot {color:var(--selection-mark)}
+.savy-portal .brand .eyebrow {display:block;color:var(--nav-muted);font-size:10px;letter-spacing:0;margin-top:7px}
+.savy-portal .portal-nav {position:static;display:flex;flex-direction:column;align-items:stretch;flex:0 0 auto;gap:4px;min-height:0;margin:30px 0 24px;padding:0;background:transparent;border:0}
+.savy-portal .portal-nav a {display:flex;flex:0 0 auto;align-items:center;justify-content:flex-start;gap:11px;min-height:44px;padding:10px 12px;border:0;border-radius:7px;color:var(--nav-muted);font-size:14px;font-weight:500;line-height:1.3;white-space:normal}
+.savy-portal .portal-nav a:hover {background:var(--nav-hover);color:var(--nav-text)}
+.savy-portal .portal-nav a[aria-current] {background:var(--nav-active);box-shadow:inset 3px 0 var(--selection-mark);color:var(--nav-text)}
+.savy-portal .portal-nav a:focus-visible,.savy-portal .header-actions .button:focus-visible {outline-color:var(--nav-text);outline-offset:-3px}
+.savy-portal .portal-nav a[data-page="polymarket"] {margin-top:18px}
+.savy-portal .portal-nav a[data-page="dashboard"] {margin-left:0;border-left:0}
+.savy-portal .nav-icon {display:block;width:19px;height:19px;flex-shrink:0}
+.savy-portal .nav-label {display:block;white-space:nowrap}
+.savy-portal .nav-label-mobile {display:none}
+.savy-portal .header-actions {display:flex;gap:7px;margin-top:auto;padding:16px 0 0;border-top:1px solid var(--nav-border)}
+.savy-portal .header-actions .button {flex:1;min-width:0;min-height:36px;padding:7px 5px;font-size:12px;background:transparent;border-color:var(--nav-border);color:var(--nav-text)}
+.savy-portal .header-actions .button:hover {background:var(--nav-hover)}
+.savy-portal .container {width:calc(100% - var(--sidebar-width) - 48px);max-width:1600px;margin:0 24px 0 calc(var(--sidebar-width) + 24px);padding:24px 0 0;min-width:0}
+.savy-portal .portal-page {min-height:calc(100dvh - 115px)}
+.savy-portal .portal-panel {scroll-margin-top:20px}
+.savy-portal .portal-tabs {gap:22px;margin-bottom:18px;border-color:var(--border)}
+.savy-portal .portal-tabs a {padding:6px 0 11px;font-size:13px;font-weight:500;line-height:1.35}
+.savy-portal .portal-tabs a,.savy-portal .portal-chart-tools label,.savy-portal .portal-home-heading .eyebrow {color:var(--muted-strong)}
+.savy-portal .portal-tabs a[aria-current] {color:var(--accent);border-bottom-color:var(--selection-mark);font-weight:600}
+.savy-portal footer {margin-top:20px;padding:14px 0;font-size:11px}
+
+/* Appearance stays above the content, with an explicit choice of three themes. */
+.savy-portal .portal-utility-bar {display:flex;justify-content:flex-end;min-height:36px;margin:0 0 14px}
+.savy-portal .portal-utility-bar .header-actions {display:flex;align-items:center;gap:8px;margin:0;padding:0;border:0}
+.savy-portal .portal-utility-bar .header-actions .button {flex:none;min-height:36px;padding:7px 12px;font-size:12px;background:var(--surface);border:1px solid var(--border);color:var(--text)}
+.savy-portal .portal-utility-bar .header-actions .button:hover {background:var(--raised);border-color:var(--accent)}
+.savy-portal .theme-choice {display:inline-flex;align-items:stretch;gap:3px;padding:3px;border:1px solid var(--border);border-radius:7px;background:var(--surface)}
+.savy-portal .theme-choice button {min-height:28px;border:0;border-radius:4px;background:transparent;padding:5px 10px;font-size:12px;line-height:1.3;font-weight:500;color:var(--muted-strong);white-space:nowrap}
+.savy-portal .theme-choice button:hover {background:var(--raised)}
+.savy-portal .theme-choice button[aria-pressed="true"] {color:var(--accent);background:var(--accent-soft)}
+.savy-portal .theme-short {display:none}
+
+/* Home: compact financial cards and an editorial reading rhythm. */
+.savy-portal .portal-home-heading {align-items:center;gap:16px;margin:0 0 8px}
+.savy-portal .portal-home-heading h2 {font-size:26px;line-height:1.2;letter-spacing:-.025em;margin-top:4px}
+.savy-portal .portal-home-heading time {font-size:12px;color:var(--muted-strong)}
+.savy-portal .portal-ticker {border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:16px;overflow:hidden}
+.savy-portal .portal-ticker-item {padding:12px 13px;gap:3px 7px}
+.savy-portal .portal-ticker-item>span:first-child {font-size:12px}
+.savy-portal .portal-ticker-item strong {font-size:25px;font-weight:600;letter-spacing:-.025em;line-height:1.15}
+.savy-portal .portal-ticker-item .change,.savy-portal .portal-ticker-item small {font-size:11px}
+.savy-portal .portal-editorial {grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:16px;border:0;padding-bottom:0}
+.savy-portal .portal-news {padding:16px 18px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+.savy-portal .portal-section-heading {margin:0 0 10px}
+.savy-portal .portal-section-heading h3,.savy-portal .portal-latest h3 {font-size:16px}
+.savy-portal .portal-section-heading a {font-size:12px}
+.savy-portal .portal-headline h4 {font-size:15px;line-height:1.4}
+.savy-portal .portal-headline:first-child h4 {font-size:20px;line-height:1.3}
+.savy-portal .portal-headline .eyebrow {font-size:11px}
+.savy-portal .portal-headline p {font-size:13px;line-height:1.5;margin:3px 0}
+.savy-portal .portal-headline .meta {font-size:11px}
+.savy-portal .fear-greed {padding:16px;gap:14px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow)}
+.savy-portal .fear-greed h2 {font-size:17px}
+.savy-portal .fear-greed-history {padding-left:4px}
+.savy-portal .fear-greed-history h3 {font-size:12px}
+.savy-portal .fear-greed-heading>.meta,.savy-portal .fear-greed-meta .meta {font-size:11px}
+.savy-portal .fear-greed[data-rating="greed"] .fear-greed-rating,
+.savy-portal .fear-greed[data-rating="extreme-greed"] .fear-greed-rating {color:var(--up)}
+.savy-portal .fear-greed[data-rating="fear"] .fear-greed-rating,
+.savy-portal .fear-greed[data-rating="extreme-fear"] .fear-greed-rating {color:var(--down)}
+.savy-portal .portal-latest {margin-top:12px;padding:14px 16px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow)}
+.savy-portal .portal-report-link strong {font-size:14px;font-weight:600}
+.savy-portal .portal-report-link .meta,.savy-portal .portal-report-link .eyebrow {font-size:11px}
+.savy-portal .kpi-grid {gap:10px;border:0;background:transparent;border-radius:0}
+.savy-portal .kpi,.savy-portal .kpi:last-child {padding:12px 13px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow)}
+.savy-portal .kpi .eyebrow {font-size:11px;line-height:1.3}
+.savy-portal .kpi-value {font-size:25px;font-weight:600;line-height:1.2;margin:5px 0;letter-spacing:-.025em}
+.savy-portal .kpi .meta,.savy-portal .kpi .change {font-size:11px}
+#panel-accueil-overview>.portal-section-heading {margin-top:18px}
+
+/* Consistent surfaces and financial typography across the original components. */
+.savy-portal :is(.card,.market-card,.portfolio,.weekly-report,.research-schedule-card,.polymarket-card,.yield-curve-card) {border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);background:var(--surface)}
+.savy-portal .portfolio {padding:18px}
+.savy-portal .section-heading {gap:12px;align-items:center}
+.savy-portal .market-card {padding:17px}
+.savy-portal .market-card h4 {font-size:17px}
+.savy-portal .market-card .market-value {font-size:28px;font-weight:600}
+.savy-portal .market-card .chart-host {min-height:200px}
+.savy-portal .portal-macro-all .indicator-card {padding:13px}
+.savy-portal .portal-macro-all .indicator-card h3 {font-size:14px}
+.savy-portal .portal-macro-all .indicator-card .value {font-size:26px;font-weight:600}
+.savy-portal .portfolio-value {font-size:28px;font-weight:600;letter-spacing:-.025em}
+.savy-portal .portfolio-overview {padding:12px 0 14px;gap:16px}
+.savy-portal .portfolio-overview .meta {font-size:12px}
+.savy-portal .portfolio-choice {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:min(100%,660px);gap:4px;padding:4px;margin:12px 0;border-radius:8px;background:var(--raised)}
+.savy-portal .portfolio-choice button {min-height:50px;min-width:0;font-size:14px!important;padding:7px!important;border-radius:5px}
+.savy-portal .portfolio-choice button span {font-size:11px;letter-spacing:.01em}
+.savy-portal .portfolio-choice button[aria-pressed="true"] {background:var(--surface);box-shadow:0 1px 4px var(--shadow-color);color:var(--accent)}
+.savy-portal .segmented {border-radius:6px;border-color:var(--border)}
+.savy-portal .segmented button {font-size:12px;min-height:32px;padding:6px 10px;font-weight:500}
+.savy-portal .segmented button:hover {background:var(--raised)}
+.savy-portal .segmented button[aria-pressed="true"] {background:var(--accent-soft);color:var(--accent)}
+.savy-portal :is(.portfolio-risk,.portfolio-contributions,.portfolio-exposure,.portfolio-earnings-card,.portfolio-analysis,.yield-curve-card) {border-color:var(--border);border-radius:var(--radius)}
+.savy-portal :is(.portfolio-risk-card h4,.portfolio-analysis h3,.portfolio-movers h3,.yield-curve-card h3) {font-size:16px}
+.savy-portal :is(.portfolio-risk-card strong,.portfolio-analysis-total) {font-size:24px;font-weight:600}
+.savy-portal :is(.portfolio-table,.portfolio-exposure,.portfolio-risk,.research-performance-table,.yield-curves,.weekly-report) table {font-family:var(--font-sans);font-size:12.5px;line-height:1.4;font-variant-numeric:tabular-nums}
+.savy-portal :is(.portfolio-table,.portfolio-exposure,.portfolio-risk,.research-performance-table,.yield-curves,.weekly-report) :is(th,td) {padding:7px 9px;border-color:var(--border)}
+.savy-portal :is(.portfolio-table,.research-performance-table) thead th {font-size:12px;font-weight:600;background:var(--raised)}
+.savy-portal :is(.portfolio-table,.portfolio-exposure,.portfolio-risk,.research-performance-table,.yield-curves) td {text-align:right}
+.savy-portal tbody tr:hover {background:var(--raised)}
+.savy-portal .portfolio-table th button {font:inherit;color:inherit}
+.savy-portal .weekly-report {padding:18px}
+.savy-portal .weekly-report>h3 {font-size:22px;line-height:1.3}
+.savy-portal .weekly-report-summary {font-size:14px;line-height:1.6;max-width:90ch}
+.savy-portal .weekly-report-highlights,.savy-portal .weekly-stock p,.savy-portal .weekly-opportunities li {font-size:13px;line-height:1.55}
+.savy-portal .weekly-stock h4,.savy-portal .weekly-opportunities h4,.savy-portal .research-schedule-card h3 {font-size:15px}
+.savy-portal .research-schedule-card .eyebrow {font-size:11px}
+.savy-portal .research-time {font-size:18px;font-weight:600}
+.savy-portal .portal-archive-row {font-size:13px;border-color:var(--border)}
+.savy-portal .polymarket-card h3 {font-size:14px}
+.savy-portal .polymarket-category {font-size:11px;letter-spacing:0}
+.savy-portal .polymarket-outcomes li {font-size:12px}
+.savy-portal .polymarket-outcomes strong {font-size:18px}
+.savy-portal .portal-method {font-size:12px}
+.savy-portal .portal-report-frame {background:var(--bg);border-radius:0}
+
+/* Meaningful colours: returns remain green/red, independently of selection. */
+.savy-portal .change.up,.savy-portal .positive,.savy-portal .portfolio-positive {color:var(--up)}
+.savy-portal .change.down,.savy-portal .negative,.savy-portal .portfolio-negative {color:var(--down)}
+.savy-portal :is(.portfolio-value,.market-value,.kpi-value,.portfolio-change,.portfolio-benchmark,.portfolio-risk,.change,td,output) {font-variant-numeric:tabular-nums}
+.savy-portal .chart-line {stroke:var(--chart)}
+.savy-portal .market-card .chart-line {stroke:var(--benchmark)}
+.savy-portal .chart-line.chart-benchmark {stroke:var(--benchmark)}
+.savy-portal .chart-dot.chart-benchmark-dot {fill:var(--benchmark)}
+.savy-portal .portfolio-swatch.feqt {background:var(--benchmark)}
+.savy-portal .yield-line.yield-a {stroke:var(--benchmark)}
+.savy-portal .yield-line.yield-b {stroke:var(--chart)}
+.savy-portal :is(.chart-tooltip,.fear-history-tooltip,.portfolio-chart-tooltip) {background:var(--tooltip);color:var(--text);border:1px solid var(--border);border-radius:6px;box-shadow:var(--shadow);font-family:var(--font-sans);font-size:12px}
+.savy-portal .portal-expand {border-radius:var(--radius);border:1px solid var(--border);background:var(--surface);box-shadow:var(--shadow)}
+.savy-portal .portal-expand .dialog-header h2 {font-size:17px}
+
+@media(max-width:1180px) and (min-width:901px) {
+  .savy-portal .portal-ticker {grid-template-columns:repeat(3,minmax(0,1fr))}
+  .savy-portal .portal-ticker-item:nth-child(3) {border-right:0}
+  .savy-portal .portal-ticker-item:nth-child(n+4) {border-top:1px solid var(--border)}
+  .savy-portal .portal-market-layout {grid-template-columns:190px minmax(0,1fr)}
+  .savy-portal .fear-greed {display:block}
+  .savy-portal .fear-greed-history {padding:12px 0 0}
+  .savy-portal .kpi-grid {grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:900px) {
+  html {scroll-padding-top:82px}
+  .savy-portal .portal-utility-bar {position:fixed;top:13px;right:16px;z-index:33;min-height:0;margin:0;max-width:calc(100% - 112px)}
+  .savy-portal .portal-utility-bar .header-actions {gap:6px;min-width:0}
+  .savy-portal .portal-utility-bar #refreshButton {font-size:0;padding:0;width:34px;min-height:36px}
+  .savy-portal .portal-utility-bar #refreshButton:before {content:"↻";font-size:22px;line-height:1}
+  .savy-portal .page-header {inset:0 0 auto;width:100%;height:64px;min-height:64px;padding:0 16px;display:flex;flex-direction:row;align-items:center;justify-content:space-between;overflow:visible;border-right:0;border-bottom:1px solid var(--nav-border)}
+  .savy-portal .brand {padding:0}
+  .savy-portal .brand h1 {font-size:27px}
+  .savy-portal .brand .eyebrow {display:none}
+  .savy-portal .header-actions {margin:0;padding:0;border:0;gap:6px;flex-shrink:0}
+  .savy-portal .header-actions .button {flex:none;min-height:34px;padding:6px 9px;font-size:12px}
+  .savy-portal .portal-nav {position:fixed;inset:auto 0 0;z-index:35;display:flex;flex-direction:row;align-items:stretch;gap:0;margin:0;min-height:64px;padding:0 4px env(safe-area-inset-bottom);background:var(--nav-bg);border-top:1px solid var(--nav-border)}
+  .savy-portal .portal-nav a {flex:1 1 0;min-width:0;min-height:62px;flex-direction:column;justify-content:center;gap:4px;padding:8px 1px 6px;font-size:10px;line-height:1.2;border-radius:0;border-top:3px solid transparent;white-space:nowrap}
+  .savy-portal .portal-nav a[aria-current] {box-shadow:none;border-top-color:var(--selection-mark)}
+  .savy-portal .portal-nav a[data-page="polymarket"] {margin-top:0}
+  .savy-portal .nav-icon {width:18px;height:18px}
+  .savy-portal .nav-label {display:none}
+  .savy-portal .nav-label-mobile {display:block}
+  .savy-portal .container {width:calc(100% - 32px);max-width:none;margin:0 auto;padding:84px 0 calc(88px + env(safe-area-inset-bottom))}
+  .savy-portal .portal-panel {scroll-margin-top:82px}
+  .savy-portal .portal-home-heading h2 {font-size:24px}
+  .savy-portal .portal-ticker-item strong {font-size:24px}
+  .savy-portal .portfolio {padding:16px}
+}
+@media(max-width:600px) {
+  .savy-portal .portal-utility-bar {right:12px;max-width:calc(100% - 106px)}
+  .savy-portal .theme-full {display:none}
+  .savy-portal .theme-short {display:inline}
+  .savy-portal .theme-choice {gap:2px;padding:3px}
+  .savy-portal .theme-choice button {font-size:11px;padding:5px 7px}
+  .savy-portal .container {width:calc(100% - 24px);padding-top:80px}
+  .savy-portal .page-header {padding:0 12px}
+  .savy-portal .brand h1 {font-size:25px}
+  .savy-portal .header-actions .button {font-size:11px;padding:6px 8px}
+  .savy-portal .portal-nav a {font-size:9px}
+  .savy-portal .portal-home-heading h2 {font-size:23px}
+  .savy-portal .portal-home-heading time {display:none}
+  .savy-portal .portal-ticker-item {padding:10px 8px}
+  .savy-portal .portal-ticker-item>span:first-child {font-size:11px}
+  .savy-portal .portal-ticker-item strong {font-size:clamp(17px,5.2vw,21px)}
+  .savy-portal .portal-editorial {grid-template-columns:minmax(0,1fr);gap:12px}
+  .savy-portal .portal-news,.savy-portal .fear-greed {padding:14px}
+  .savy-portal .portal-headline:not(:first-child) {display:grid}
+  .savy-portal .portal-headline:first-child {border-bottom:1px solid var(--border)}
+  .savy-portal .portal-headline:last-child {border:0}
+  .savy-portal .portal-headline:first-child h4 {font-size:19px}
+  .savy-portal .portal-headline h4 {font-size:14px}
+  .savy-portal .fear-greed {display:grid;grid-template-columns:minmax(0,1fr)}
+  .savy-portal .fear-greed-history {padding:12px 0 0;border-top:1px solid var(--border)}
+  .savy-portal .kpi-grid {gap:8px}
+  .savy-portal .kpi,.savy-portal .kpi:last-child {padding:10px 8px}
+  .savy-portal .kpi-value {font-size:20px;overflow-wrap:anywhere}
+  .savy-portal .kpi .eyebrow,.savy-portal .kpi .meta {font-size:10px}
+  .savy-portal .portfolio {padding:13px}
+  .savy-portal .section-heading {align-items:flex-start}
+  .savy-portal .portfolio-value {font-size:27px}
+  .savy-portal .portfolio-actions .button {font-size:11px;padding:6px 8px}
+  .savy-portal .portfolio-choice button {min-height:50px;font-size:13px!important}
+  .savy-portal .portfolio-period-controls {width:100%}
+  .savy-portal .segmented button {min-height:36px;padding:6px 8px;font-size:12px}
+  .savy-portal .portal-tabs {gap:0 16px}
+  .savy-portal .portal-tabs a {font-size:12px}
+  .savy-portal .weekly-report {padding:14px}
+  .savy-portal .weekly-report>h3 {font-size:20px}
+  .savy-portal .portal-expand {padding:12px}
+}
+@media(prefers-reduced-motion:reduce) {html {scroll-behavior:auto}}
+@media print {
+  .savy-portal .portal-utility-bar {display:none}
+  .savy-portal .page-header {display:none}
+  .savy-portal .container {width:100%;max-width:none;margin:0;padding:0}
+  .savy-portal :is(.card,.portfolio,.weekly-report) {box-shadow:none}
+}

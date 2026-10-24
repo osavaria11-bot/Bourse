@@ -1,17 +1,6 @@
-:root {
-  color-scheme: dark;
-  --bg:#0b1119; --surface:#111b27; --raised:#152131; --text:#eef2f6;
-  --muted:#9aaabd; --border:#253447; --accent:#78ddc3; --accent-soft:#143c36;
-  --gold:#ddc895; --chart:#78ddc3; --grid:#29384a; --down:#c5b5eb;
-  --shadow:0 18px 50px #0002;
-}
-:root[data-theme="light"] {
-  color-scheme:light; --bg:#f3f5f7; --surface:#fff; --raised:#eaf0f4; --text:#162c3a;
-  --muted:#52697a; --border:#d6e0e7; --accent:#136c58; --accent-soft:#dcf1e9;
-  --gold:#775825; --chart:#19836a; --grid:#e0e7ed; --down:#685197; --shadow:0 15px 40px #1a364310;
-}
+@import url("savy-tokens.css?v=20261024-petrol");
 * {box-sizing:border-box}
-body {margin:0; background:var(--bg); color:var(--text); font-family:Inter,"Segoe UI",system-ui,sans-serif; font-size:15px; line-height:1.5}
+body {margin:0; background:var(--bg); color:var(--text); font-family:var(--font-sans); font-size:15px; line-height:1.5}
 button,input,select {font:inherit}
 button,a,input,select,summary,svg[tabindex] { -webkit-tap-highlight-color:transparent }
 button,summary {cursor:pointer}
@@ -19,7 +8,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,su
 a {color:var(--accent);text-decoration:none}
 a:hover {text-decoration:underline}
 h1,h2,h3,p {margin:0}
-h2 {font-size:1.4rem;font-weight:650;letter-spacing:-.03em}
+h2 {font-size:1.4rem;font-weight:600;letter-spacing:-.03em}
 button {color:var(--text)}
 .container {width:min(1450px,calc(100% - 64px));margin:auto}
 .page-header {display:flex;align-items:center;justify-content:space-between;gap:24px;padding:30px 0 20px;border-bottom:1px solid var(--border)}
@@ -44,7 +33,7 @@ button {color:var(--text)}
 .kpi-grid {display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
 .kpi {padding:16px 18px;background:var(--surface);border:1px solid var(--border);border-radius:12px;min-width:0}
 .kpi .eyebrow {font-size:9px;line-height:1.3;min-height:2.6em}
-.kpi-value {font-size:clamp(18px,1.7vw,25px);font-weight:650;letter-spacing:-.035em;margin:6px 0 4px;line-height:1.3;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.kpi-value {font-size:clamp(18px,1.7vw,25px);font-weight:600;letter-spacing:-.035em;margin:6px 0 4px;line-height:1.3;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
 .kpi .meta {font-size:10px}
 .kpi a.meta {display:inline-block;font-size:10px;margin-top:4px}
 .kpi .change {white-space:normal;overflow-wrap:anywhere}
@@ -54,9 +43,9 @@ button {color:var(--text)}
 .fear-greed-heading .eyebrow {font-size:9px}
 .fear-greed-reading {margin-top:16px}
 .fear-greed-score {display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
-#fearGreedValue {font-size:32px;line-height:1;font-weight:650;font-variant-numeric:tabular-nums;letter-spacing:-.04em}
+#fearGreedValue {font-size:32px;line-height:1;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-.04em}
 .fear-greed-total {color:var(--muted);font-size:13px}
-.fear-greed-rating {font-size:12px;font-weight:650;color:var(--gold);text-align:right}
+.fear-greed-rating {font-size:12px;font-weight:600;color:var(--gold);text-align:right}
 .fear-greed[data-rating="extreme-fear"] .fear-greed-rating,.fear-greed[data-rating="fear"] .fear-greed-rating {color:#f1aa91}
 :root[data-theme="light"] .fear-greed[data-rating="extreme-fear"] .fear-greed-rating,:root[data-theme="light"] .fear-greed[data-rating="fear"] .fear-greed-rating {color:#a33c24}
 .fear-greed[data-rating="greed"] .fear-greed-rating,.fear-greed[data-rating="extreme-greed"] .fear-greed-rating {color:var(--accent)}
@@ -132,7 +121,7 @@ button {color:var(--text)}
 .weekly-stock-rank {font-size:10px;color:var(--muted);font-variant-numeric:tabular-nums}
 .weekly-stock-badges {display:flex;align-items:center;gap:8px;font-size:10px;white-space:nowrap}
 .weekly-stock-rating {color:var(--gold)}
-.weekly-stock-decision {padding:2px 6px;border-radius:4px;background:var(--accent-soft);color:var(--accent);font-weight:650;font-size:9px}
+.weekly-stock-decision {padding:2px 6px;border-radius:4px;background:var(--accent-soft);color:var(--accent);font-weight:600;font-size:9px}
 .weekly-stock p {font-size:12px;line-height:1.65}
 .weekly-stock-central {color:var(--accent);font-variant-numeric:tabular-nums;margin:5px 0 3px}
 .weekly-stock .meta {font-size:11px}
@@ -147,7 +136,7 @@ button {color:var(--text)}
 .live-companion {margin-top:10px;padding-top:10px;border-top:1px solid var(--border);min-width:0;overflow-wrap:anywhere}
 .compact-companion {margin-top:7px;padding-top:7px}
 .live-companion-title {font-size:11px;color:var(--muted);line-height:1.4;margin-bottom:3px}
-.live-companion-value {display:inline-block;font-size:16px;font-weight:550;font-variant-numeric:tabular-nums}
+.live-companion-value {display:inline-block;font-size:16px;font-weight:500;font-variant-numeric:tabular-nums}
 .live-companion .meta {font-size:11px;margin-top:3px}
 .kpi .live-companion-title,.kpi .live-companion .meta {font-size:10px}
 .kpi .live-companion-value {font-size:12px}
@@ -210,7 +199,7 @@ details[open]>summary:after {content:"−"}
 .market-grid {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:14px}
 .market-card {min-width:0;padding:15px;border:1px solid var(--border);border-radius:10px;background:var(--bg)}
 .market-card h4 {font-size:14px;font-weight:600;margin:4px 0}
-.market-card .market-value {font-size:24px;font-weight:650;font-variant-numeric:tabular-nums;margin-top:8px}
+.market-card .market-value {font-size:24px;font-weight:600;font-variant-numeric:tabular-nums;margin-top:8px}
 .market-card .market-return {font-size:15px;font-weight:600;white-space:normal;margin-top:7px}
 .market-card .meta {font-size:10px;margin-top:5px}
 .market-card .chart-host {margin-top:12px}
@@ -261,7 +250,7 @@ details[open]>summary:after {content:"−"}
 .portfolio {margin-top:24px;padding:22px;scroll-margin-top:16px}
 .portfolio-actions {display:flex;flex-wrap:wrap;gap:8px}
 .portfolio-overview {display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-top:22px}
-.portfolio-value {font-size:38px;font-weight:650;letter-spacing:-.04em;margin:6px 0;font-variant-numeric:tabular-nums}
+.portfolio-value {font-size:38px;font-weight:600;letter-spacing:-.04em;margin:6px 0;font-variant-numeric:tabular-nums}
 .portfolio .portfolio-change {font-size:17px;margin-bottom:5px;white-space:normal}
 .portfolio-period-controls {max-width:100%;text-align:right}
 .portfolio-period-controls .segmented {flex-wrap:wrap;justify-content:flex-end}
@@ -269,7 +258,7 @@ details[open]>summary:after {content:"−"}
 .portfolio-chart {max-width:100%;margin:18px 0}
 .portfolio-relative {min-width:0;border-top:1px solid var(--border);padding-top:12px;margin:10px 0 18px}
 .portfolio-relative-heading {display:flex;align-items:center;justify-content:space-between;gap:12px}
-.portfolio-relative-heading h3 {font-size:13px;font-weight:550}
+.portfolio-relative-heading h3 {font-size:13px;font-weight:500}
 .portfolio-relative-heading strong {font-size:15px;flex-shrink:0}
 .portfolio-relative>.meta {font-size:10px;margin:3px 0 6px}
 .portfolio-relative-chart svg {display:block;width:100%;height:128px;touch-action:pan-y;overflow:visible}
@@ -333,7 +322,7 @@ details[open]>summary:after {content:"−"}
 .portfolio-earnings-grid {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:15px}
 .portfolio-earnings-card {min-width:0;padding:17px;border:1px solid var(--border);border-radius:10px;background:var(--bg);scroll-margin:20px}
 .portfolio-earnings-card-heading {display:flex;justify-content:space-between;gap:10px;align-items:start;margin-bottom:7px}
-.portfolio-earnings-card h4 {font-size:15px;font-weight:550;line-height:1.5;overflow-wrap:anywhere;margin:3px 0}
+.portfolio-earnings-card h4 {font-size:15px;font-weight:500;line-height:1.5;overflow-wrap:anywhere;margin:3px 0}
 .portfolio-earnings-card h5 {font-size:11px;margin:16px 0 7px}
 .portfolio-earnings-state {font-size:9px;letter-spacing:.07em;color:var(--gold);white-space:nowrap}
 .portfolio-earnings-table {width:100%;font-size:11px;font-variant-numeric:tabular-nums;margin-top:12px;table-layout:fixed}
@@ -385,7 +374,7 @@ details[open]>summary:after {content:"−"}
 .portfolio-movers-list li {display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 0}
 .portfolio-movers-list li + li {border-top:1px solid var(--border)}
 .portfolio-mover-name {min-width:0;font-size:12px;overflow-wrap:anywhere}
-.portfolio-mover-name strong {display:block;font-weight:550}
+.portfolio-mover-name strong {display:block;font-weight:500}
 .portfolio-movers-list .change {font-size:15px}
 .portfolio-positions-heading {display:flex;align-items:center;flex-wrap:wrap;gap:8px 14px;margin-top:20px}
 .portfolio-positions-heading .meta {flex:1 1 250px}
@@ -436,7 +425,7 @@ select {background:var(--raised);border:1px solid var(--border);color:var(--text
 .category-tag {font-size:9px;letter-spacing:.07em;color:var(--muted);text-transform:uppercase}
 .favorite-button {border:0;background:transparent;color:var(--muted);font-size:20px;width:36px;height:34px;margin:-6px -7px -3px 0;padding:0;border-radius:6px}
 .favorite-button[aria-pressed="true"] {color:var(--gold)}
-.indicator-card h3 {font-size:14px;font-weight:550;line-height:1.4;min-height:40px;margin:6px 0 10px}
+.indicator-card h3 {font-size:14px;font-weight:500;line-height:1.4;min-height:40px;margin:6px 0 10px}
 .value-row {display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .current-value {font-size:26px;font-weight:600;letter-spacing:-.035em;line-height:1.3;font-variant-numeric:tabular-nums;min-width:0;max-width:100%;overflow-wrap:anywhere}
 .indicator-card .change {max-width:100%;white-space:normal;overflow-wrap:anywhere}

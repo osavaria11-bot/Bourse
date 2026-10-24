@@ -70,13 +70,13 @@ async function main() {
     assert.equal(await page.locator("#fearGreedValue").innerText(), "0");
     for (const width of [375, 320]) {
       await page.setViewportSize({width, height: 1000});
-      for (let theme = 0; theme < 2; theme++) {
+      for (const theme of ["petrol", "light", "dark"]) {
+        await page.locator('[data-theme-choice="' + theme + '"]').click();
         assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false);
         assert.equal(await page.locator("#fearGreedChart").isVisible(), true);
         assert.equal(await page.locator("#fearGreedTimeline svg").isVisible(), true);
         const upper = await page.locator(".fear-greed-overview").boundingBox(), lower = await page.locator(".fear-greed-history").boundingBox();
         assert.ok(lower.y >= upper.y + upper.height, "timeline stacks below the gauge on mobile");
-        await page.locator("#themeToggle").click();
       }
     }
     const fresh = await componentPage(browser,); await fresh.route("https://**", route => route.abort());

@@ -28,7 +28,7 @@
     ["FEQT", "FEQT · Fidelity All-in-One Equity", "Monde · FNB en CAD", "FEQT.NE"],
   ];
   const MARKET_CHART_RANGES = [{key: "INTRADAY", label: "Intraday"}, ...U.MARKET_RANGES];
-  const PREFS_KEY = "savy:preferences:v2";
+  const PREFS_KEY = "savy:preferences:v2", THEME_EDITION = "petrol-20261024";
   function readStored(key, fallback) {
     try { return JSON.parse(localStorage.getItem(key)) ?? fallback; } catch { return fallback; }
   }
@@ -44,7 +44,7 @@
     favorites: new Set(Array.isArray(prefs.favorites) ? prefs.favorites
       .filter(id => typeof id === "string" && /^[A-Z0-9]+$/.test(id))
       .map(id => id === "PURANUSDM" ? "URANIUMSPOT" : id) : []),
-    favoritesOnly: false, theme: prefs.theme === "light" ? "light" : "dark",
+    favoritesOnly: false, theme: prefs.theme_edition === THEME_EDITION && ["petrol", "light", "dark"].includes(prefs.theme) ? prefs.theme : "petrol",
     detailId: null, detailRange: "10Y", loading: false,
     marketDataset: null, marketRange: "INTRADAY", marketCached: false,
   };
@@ -55,13 +55,13 @@
     return node;
   }
   function savePreferences() {
-    writeStored(PREFS_KEY, { category: state.category, range: state.range, sort: state.sort, favorites: [...state.favorites], theme: state.theme });
+    writeStored(PREFS_KEY, { category: state.category, range: state.range, sort: state.sort, favorites: [...state.favorites], theme: state.theme, theme_edition: THEME_EDITION });
   }
   function applyTheme() {
     document.documentElement.dataset.theme = state.theme;
-    const label = state.theme === "dark" ? "Mode clair" : "Mode sombre";
-    $("#themeToggle").textContent = label;
-    $("#themeToggle").setAttribute("aria-label", "Activer le " + label.toLowerCase());
+    document.querySelectorAll("[data-theme-choice]").forEach(button => {
+      button.setAttribute("aria-pressed", String(button.dataset.themeChoice === state.theme));
+    });
   }
   async function fetchJSON(path) {
     const controller = new AbortController();
@@ -641,7 +641,9 @@
     }
   }
   $("#refreshButton").addEventListener("click", loadDataset);
-  $("#themeToggle").addEventListener("click", () => { state.theme = state.theme === "dark" ? "light" : "dark"; applyTheme(); savePreferences(); });
+  document.querySelectorAll("[data-theme-choice]").forEach(button => button.addEventListener("click", () => {
+    state.theme = button.dataset.themeChoice; applyTheme(); savePreferences();
+  }));
   $("#searchInput").addEventListener("input", event => { state.search = event.target.value; if (state.dataset) renderCards(); });
   $("#sortSelect").value = state.sort;
   $("#sortSelect").addEventListener("change", event => { state.sort = event.target.value; savePreferences(); if (state.dataset) renderCards(); });

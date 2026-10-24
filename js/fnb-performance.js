@@ -3,7 +3,7 @@ window.SavyFnbPerformance=(()=>{
  const U=SavyPerformanceUtils,$=id=>document.getElementById(id),esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
  const num=(n,d=2)=>n==null?"—":new Intl.NumberFormat("fr-CA",{minimumFractionDigits:d,maximumFractionDigits:d}).format(Math.abs(n)<1e-9?0:n),money=n=>n==null?"—":num(n)+" $",pct=n=>n==null?"—":num(n*100)+" %",date=d=>new Date(d+"T12:00:00Z").toLocaleDateString("fr-CA",{day:"numeric",month:"short",year:"numeric",timeZone:"UTC"});
  let data=null,loading=false,loaded=0,reference="VEQT",focus="",index=0,rows=[],dates=[],selected=new Set();
- const storage="savy-fnb-common-v1",root=new URL("../",document.currentScript.src),label=a=>a.kind==="benchmark"&&a.id!=="VFV"?a.id:a.name,ink=a=>a.color==="#142333"?"var(--text)":a.color==="#9ce3cb"?"var(--accent)":a.color;
+ const storage="savy-fnb-common-v1",root=new URL("../",document.currentScript.src),label=a=>a.kind==="benchmark"&&a.id!=="VFV"?a.id:a.name,ink=a=>a.kind==="benchmark"?({VEQT:"var(--benchmark)",VFV:"var(--benchmark-soft)",FEQT:"var(--benchmark-3)",VBAL:"var(--benchmark-4)",VGRO:"var(--benchmark-5)",FBAL:"var(--benchmark-6)"}[a.id]||"var(--benchmark)"):a.id===focus?"var(--chart)":a.color==="#142333"?"var(--text)":a.color==="#9ce3cb"?"var(--chart)":a.color;
  const simulated=a=>a.series_type==='simulation';
  function persist(){try{localStorage.setItem(storage,JSON.stringify({reference,focus,selected:[...selected],known:data.accounts.map(a=>a.id)}));}catch{}}
  function restore(){

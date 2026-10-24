@@ -396,7 +396,8 @@
   function saveEarningsImage() {
     const result = earningsSelection; if (!result?.inWindow || !earnings) return;
     const canvas = document.createElement("canvas"), width = 1200, cardWidth = 544, rows = Math.max(1, Math.ceil(result.rows.length / 2));
-    const ctx = canvas.getContext("2d"), ink = "#e8e9ed", muted = "#a5adb8";
+    const ctx = canvas.getContext("2d"), theme = getComputedStyle(document.documentElement);
+    const tone = name => theme.getPropertyValue(name).trim(), ink = tone("--text"), muted = tone("--muted");
     function messageLines(text) {
       const lines = []; let line = "";
       for (const word of ("• " + text).split(/\s+/)) {
@@ -406,13 +407,13 @@
       if (line) lines.push(line);
       return lines;
     }
-    ctx.font = "15px Arial";
+    ctx.font = "15px \"Source Sans 3\"";
     const cardHeight = Math.max(420, ...result.rows.map(report => 290 + F.earningsMessages(report).reduce((height, message) => height + messageLines(message.text).length * 19 + 14, 0)));
     canvas.width = width; canvas.height = 160 + rows * (cardHeight + 20) + 70;
-    ctx.fillStyle = "#0c1119"; ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = "#d4b06a"; ctx.font = "600 18px Arial"; ctx.fillText("SAVY · RÉSULTATS DE MES TITRES", 46, 44);
-    ctx.fillStyle = ink; ctx.font = "600 30px Arial"; ctx.fillText(earningsWeekLabel(result.week), 46, 90);
-    ctx.fillStyle = muted; ctx.font = "17px Arial"; ctx.fillText(result.reported + " publiés · " + result.pending + " en attente · " + result.unavailable.length + " calendriers N/D · Sources : voir SAVY", 46, 122);
+    ctx.fillStyle = tone("--bg"); ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = tone("--accent"); ctx.font = "600 18px \"Source Sans 3\""; ctx.fillText("SAVY · RÉSULTATS DE MES TITRES", 46, 44);
+    ctx.fillStyle = ink; ctx.font = "600 30px \"Source Sans 3\""; ctx.fillText(earningsWeekLabel(result.week), 46, 90);
+    ctx.fillStyle = muted; ctx.font = "17px \"Source Sans 3\""; ctx.fillText(result.reported + " publiés · " + result.pending + " en attente · " + result.unavailable.length + " calendriers N/D · Sources : voir SAVY", 46, 122);
     function wrapped(text, x, y, maxWidth, lineHeight, maxLines = 3) {
       let line = "", lines = 0; const words = text.split(/\s+/);
       for (let i = 0; i < words.length; i++) {
@@ -423,16 +424,16 @@
     }
     result.rows.forEach((report, index) => {
       const x = 46 + index % 2 * (cardWidth + 20), y = 160 + Math.floor(index / 2) * (cardHeight + 20);
-      ctx.fillStyle = "#151e2a"; ctx.fillRect(x, y, cardWidth, cardHeight); ctx.fillStyle = "#d4b06a"; ctx.font = "600 18px Arial"; ctx.fillText(report.holdings.map(row => row.ticker).join(" / "), x + 20, y + 32);
-      ctx.fillStyle = ink; ctx.font = "600 21px Arial"; wrapped(report.holdings[0].title, x + 20, y + 62, cardWidth - 40, 23, 1);
-      ctx.fillStyle = muted; ctx.font = "15px Arial"; ctx.fillText(U.observationLabel(report.report_date) + (report.quarter ? " · " + report.quarter : "") + (report.date_status === "estimated" ? " · Date estimée" : ""), x + 20, y + 90);
+      ctx.fillStyle = tone("--surface"); ctx.fillRect(x, y, cardWidth, cardHeight); ctx.fillStyle = tone("--accent"); ctx.font = "600 18px \"Source Sans 3\""; ctx.fillText(report.holdings.map(row => row.ticker).join(" / "), x + 20, y + 32);
+      ctx.fillStyle = ink; ctx.font = "600 21px \"Source Sans 3\""; wrapped(report.holdings[0].title, x + 20, y + 62, cardWidth - 40, 23, 1);
+      ctx.fillStyle = muted; ctx.font = "15px \"Source Sans 3\""; ctx.fillText(U.observationLabel(report.report_date) + (report.quarter ? " · " + report.quarter : "") + (report.date_status === "estimated" ? " · Date estimée" : ""), x + 20, y + 90);
       let lineY = y + 130;
       for (const [key, label] of [["eps", "BPA"], ["revenue", "Revenus"]]) {
         const metric = report[key], outcome = F.earningsOutcome(metric);
-        ctx.fillStyle = ink; ctx.font = "17px Arial"; ctx.fillText(label + " : " + earningsAmount(metric.actual, metric.currency, key === "revenue") + " / attendu " + earningsAmount(metric.estimate, metric.currency, key === "revenue"), x + 20, lineY);
-        ctx.fillStyle = outcome.status === "beat" ? "#7bd7b5" : outcome.status === "miss" ? "#ef9b9b" : muted; ctx.font = "14px Arial"; ctx.fillText(report.date_status !== "reported" ? earningsPendingLabel(report) : outcome.status === "pending" ? "Montant publié N/D" : outcome.label, x + 20, lineY + 23); lineY += 59;
+        ctx.fillStyle = ink; ctx.font = "17px \"Source Sans 3\""; ctx.fillText(label + " : " + earningsAmount(metric.actual, metric.currency, key === "revenue") + " / attendu " + earningsAmount(metric.estimate, metric.currency, key === "revenue"), x + 20, lineY);
+        ctx.fillStyle = outcome.status === "beat" ? tone("--up") : outcome.status === "miss" ? tone("--down") : muted; ctx.font = "14px \"Source Sans 3\""; ctx.fillText(report.date_status !== "reported" ? earningsPendingLabel(report) : outcome.status === "pending" ? "Montant publié N/D" : outcome.label, x + 20, lineY + 23); lineY += 59;
       }
-      ctx.fillStyle = muted; ctx.font = "15px Arial";
+      ctx.fillStyle = muted; ctx.font = "15px \"Source Sans 3\"";
       const messages = F.earningsMessages(report);
       for (const message of messages) {
         for (const line of messageLines(message.text)) {ctx.fillText(line, x + 20, lineY); lineY += 19;}
@@ -440,8 +441,8 @@
       }
       if (!messages.length) wrapped(report.date_status === "reported" ? "Analyse du compte rendu en attente de vérification." : "Analyse après publication.", x + 20, lineY, cardWidth - 40, 19, 2);
     });
-    if (!result.rows.length) {ctx.fillStyle = muted; ctx.font = "23px Arial"; wrapped("Aucun résultat repéré pour mes titres cette semaine." + (result.unavailable.length ? " Calendriers indisponibles : " + result.unavailable.join(", ") : ""), 46, 215, width - 92, 32);}
-    ctx.fillStyle = muted; ctx.font = "13px Arial"; ctx.fillText("Collecte : " + U.timestampLabel(earnings.generated_at) + (earningsCached || result.cached.length ? " · COPIE CONSERVÉE" : "") + " · Attentes absentes = N/D · BPA et consensus du même fournisseur", 46, canvas.height - 33);
+    if (!result.rows.length) {ctx.fillStyle = muted; ctx.font = "23px \"Source Sans 3\""; wrapped("Aucun résultat repéré pour mes titres cette semaine." + (result.unavailable.length ? " Calendriers indisponibles : " + result.unavailable.join(", ") : ""), 46, 215, width - 92, 32);}
+    ctx.fillStyle = muted; ctx.font = "13px \"Source Sans 3\""; ctx.fillText("Collecte : " + U.timestampLabel(earnings.generated_at) + (earningsCached || result.cached.length ? " · COPIE CONSERVÉE" : "") + " · Attentes absentes = N/D · BPA et consensus du même fournisseur", 46, canvas.height - 33);
     canvas.toBlob(blob => {if (!blob) return; const url = URL.createObjectURL(blob), link = el("a"); link.href = url; link.download = "savy-resultats-" + (activePortfolio !== "1" ? "portefeuille-" + activePortfolio + "-" : "") + result.week.start + ".png"; document.body.append(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(url), 30000);}, "image/png");
   }
   function renderAnalysis(selected, current, quoteData = prices, closedSelected = selected) {
@@ -683,7 +684,7 @@
       if (!row) return;
       index = valid.findIndex(item => item[0] === row[0]); const detail = details.get(row[0]);
       guide.setAttribute("x1", x(row[0])); guide.setAttribute("x2", x(row[0])); guide.setAttribute("visibility", "visible");
-      dot.setAttribute("cx", x(row[0])); dot.setAttribute("cy", y(row[1])); dot.setAttribute("visibility", "visible"); dot.style.fill = row[1] < 0 ? "var(--down)" : "var(--accent)";
+      dot.setAttribute("cx", x(row[0])); dot.setAttribute("cy", y(row[1])); dot.setAttribute("visibility", "visible"); dot.style.fill = row[1] < 0 ? "var(--down)" : "var(--up)";
       tooltip.textContent = (range === "INTRADAY" ? window.IntradayUtils.clock(row[0]) : row[0]) + " · portefeuille " + delta(detail.portfolio, true) + " · " + benchmarkId + " " + delta(detail.benchmark, true) + " · écart " + points(Math.abs(row[1]) < .005 ? 0 : row[1]);
     }
     svg.addEventListener("focus", () => select(valid[index]));
