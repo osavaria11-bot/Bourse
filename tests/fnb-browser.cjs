@@ -75,6 +75,34 @@ async function check(browser,engine){
  assert.equal(await page.locator('#geoValues tr').count(),D.geo_names.length);
  assert.equal(await page.locator('#sectorValues tr').count(),D.sector_names.length);
  for(const ref of ['FEQT','VEQT','VGRO','VBAL','FBAL','FGRO']){await page.locator('#referenceSelect').selectOption(ref);assert.equal(await page.locator('#geoSvg svg').count(),1);}
+ // All portfolio/benchmark choices update the same factor sample and estimates.
+ const factors = require('../js/fnb-factor-utils.js');
+ for (const id of [...D.custom_order, ...D.robust_order, ...D.recommended_order, ...D.proposal_order]) {
+  await page.locator('#sectorFocus').selectOption(id);
+  for (const ref of ['VEQT', 'VFV', 'VBAL']) {
+   await page.locator('#referenceSelect').selectOption(ref);
+   const c = factors.compare(D, id, ref), row = page.locator('#factorValues [data-factor="market"]');
+   assert.equal(await page.locator('#factorContent').isVisible(), true);
+   assert.equal(await page.locator('#factorValues [data-factor]').count(), 5);
+   assert.match(await page.locator('#factorStatus').innerText(), new RegExp(ref + '.*' + D.dates.length + ' mois'));
+   assert.equal(await row.locator('td').nth(0).innerText(), (c.factors[0].portfolio > .0005 ? '+' : '') + new Intl.NumberFormat('fr-CA', {minimumFractionDigits:2,maximumFractionDigits:2}).format(c.factors[0].portfolio));
+   assert.equal(await page.locator('#factorValues .factor-unavailable').innerText().then(t => t.includes('Non estimé')), true);
+  }
+ }
+ await page.locator('#sectorFocus').selectOption('VEQT');await page.locator('#referenceSelect').selectOption('VEQT');
+ assert.match(await page.locator('#factorReading').innerText(), /risque actif est nul/);
+ assert.equal(await page.locator('#factorValues [data-factor="market"] td').last().innerText(), '—');
+ for (const width of [390, 768, 1280]) {
+  await page.setViewportSize({width, height:900});
+  for (const theme of ['petrol', 'light', 'dark']) {
+   await page.evaluate(theme => document.documentElement.dataset.theme = theme, theme);
+   assert.equal(await page.locator('#factorTitle').isVisible(), true);
+   assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), 'Factor table scrolls inside its container');
+  }
+ }
+ await page.setViewportSize({width:1280,height:900});
+ await page.locator('#sectorFocus').selectOption('proposal');
+
  await page.locator('.nav [data-tab="methods"]').click();await page.locator('#monthlyCharts').click();
  assert.equal(await page.locator('#overview').isVisible(),true);
  for(const chart of ['risk','growth']){assert.equal(await page.locator('#'+chart+'-series-proposal').isChecked(),true);}
@@ -165,3 +193,4 @@ async function check(browser,engine){
  assert.deepEqual(errors,[]);console.log(engine+': monthly proposal, all benchmarks/exposures, separate chart choices, exports, frozen archives and 320/375/768px passed.');await context.close();
 }
 (async()=>{await new Promise(r=>server.listen(0,'127.0.0.1',r));for(const [name,type] of [['chromium',chromium],...(process.env.PORTAL_WEBKIT==='1'?[['webkit',webkit]]:[])]){const browser=await type.launch({headless:true});try{await check(browser,name);}finally{await browser.close();}}})().catch(e=>{console.error(e);process.exitCode=1;}).finally(()=>server.close());
+

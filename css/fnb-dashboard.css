@@ -191,3 +191,32 @@ th:not(:first-child),td{text-align:right}
  .in-dashboard .all-comparison,.in-dashboard .preference-panel{box-shadow:none}
 }
 @media print{.section,.portfolio-card,.kpis,.performance-kpis{box-shadow:none}}
+
+
+/* Factor sensitivities share the existing portfolio and benchmark selectors. */
+.factor-panel{margin:0 0 16px}
+.factor-panel .section-head{align-items:flex-start;gap:12px}
+.factor-panel .section-head p{margin:4px 0 0}
+.factor-badge{padding:4px 9px;border-radius:6px;background:var(--raised);border:1px solid var(--border);font-size:12px;color:var(--muted);white-space:nowrap}
+.factor-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:12px 0}
+.factor-metrics>div{padding:10px 12px;border:1px solid var(--border);border-radius:8px;background:var(--surface)}
+.factor-metrics span{display:block;font-size:12px;color:var(--muted)}
+.factor-metrics strong{display:block;margin-top:3px;font-size:23px;font-weight:600;font-variant-numeric:tabular-nums}
+.factor-table table{min-width:760px;width:100%;font-variant-numeric:tabular-nums}
+.factor-table th:first-child{min-width:165px}
+.factor-table small{display:block;font-size:11px;font-weight:400;color:var(--muted);white-space:normal}
+.factor-table th:not(:first-child),.factor-table td{text-align:right}
+.factor-table td{vertical-align:middle}
+.factor-table .factor-unavailable td{color:var(--muted);text-align:left}
+.factor-delta{min-width:105px}
+.factor-delta b{font-weight:600}
+.factor-track{display:block;height:5px;margin:5px 0 0;position:relative;background:var(--grid);border-radius:3px}
+.factor-track:after{content:"";position:absolute;left:50%;top:-2px;bottom:-2px;border-left:1px solid var(--muted)}
+.factor-track i{position:absolute;height:5px;top:0;background:var(--chart);border-radius:3px}
+.factor-band{white-space:nowrap;font-size:12px}
+.factor-residual{border-top:1px solid var(--border)}
+.factor-method{margin-top:12px;font-size:13px;color:var(--muted)}
+.factor-method summary{color:var(--text);cursor:pointer}
+.factor-method p{line-height:1.5}
+@media(max-width:780px){.factor-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.factor-panel .section-head{flex-wrap:wrap}.factor-metrics strong{font-size:22px}}
+@media print{.factor-table{overflow:visible}.factor-table table{min-width:0}.factor-badge{white-space:normal}}

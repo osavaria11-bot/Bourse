@@ -141,11 +141,29 @@ const SavyFnb = (() => {
       $("geoSvg").innerHTML=svg(body,W,H,"Géographie : portefeuille et référence");
       $("geoValues").innerHTML=D.geo_names.map((n,i)=>`<tr><th scope="row"><span class="dot" style="background:${colors[i]}"></span>${escape(n)}</th><td>${pct(R[focus].geo_total?.[i])}</td><td>${pct(R[reference].geo_total?.[i])}</td></tr>`).join("");
     }
+    function drawFactors() {
+      if (!$("factorStatus")) return;
+      const comparison = window.SavyFnbFactors?.compare(D, focus, reference);
+      $("factorContent").hidden = !comparison?.available;
+      if (!comparison?.available) {
+        $("factorStatus").textContent = comparison?.reason || "Analyse factorielle indisponible pour cette publication.";
+        return;
+      }
+      const c = comparison, signed = v => Math.abs(v) < .0005 ? number(0) : (v > 0 ? "+" : "") + number(v);
+      $("factorStatus").textContent = name(focus) + " face à " + name(reference) + " · " + c.start + " → " + c.end + " · " + c.months + " mois communs en CAD.";
+      $("factorMetrics").innerHTML = [["Risque d’écart annualisé", pct(c.trackingError, 2)], ["Variance active expliquée · R²", pct(c.activeR2, 0)], ["Variance du portefeuille expliquée", pct(c.portfolioR2, 0)], ["Variance du benchmark expliquée", pct(c.benchmarkR2, 0)]].map(([label, value]) => '<div><span>' + escape(label) + '</span><strong>' + value + '</strong></div>').join("");
+      const scale = Math.max(.1, ...c.factors.map(f => Math.abs(f.delta)));
+      $("factorValues").innerHTML = c.factors.map(f => {
+        const span = Math.abs(f.delta) / scale * 50, left = f.delta < 0 ? 50 - span : 50;
+        return '<tr data-factor="' + f.id + '"><th scope="row">' + escape(f.name) + '<small>' + escape(f.short ? f.long + ' − ' + f.short : 'VEQT − taux sans risque') + '</small></th><td>' + signed(f.portfolio) + '</td><td>' + signed(f.benchmark) + '</td><td><div class="factor-delta"><b>' + signed(f.delta) + '</b><span class="factor-track" aria-hidden="true"><i style="left:' + left.toFixed(2) + '%;width:' + span.toFixed(2) + '%"></i></span></div></td><td class="factor-band">[' + signed(f.low) + ' ; ' + signed(f.high) + ']</td><td>' + (f.contribution === null ? '—' : pct(f.contribution, 1)) + '</td></tr>';
+      }).join("") + '<tr class="factor-residual"><th scope="row">Risques non expliqués<small>Résiduel du modèle</small></th><td>—</td><td>—</td><td>—</td><td>—</td><td>' + pct(c.residualContribution, 1) + '</td></tr><tr class="factor-unavailable"><th scope="row">Taille / petites capitalisations<small>Séries comparables insuffisantes</small></th><td colspan="5">Non estimé</td></tr>';
+      $("factorReading").textContent = (c.activeR2 === null ? "Le risque actif est nul : les contributions à sa variance ne sont pas définies. " : "Les contributions et le résiduel totalisent 100 % avant arrondis. Une part négative représente une compensation du risque. ") + (c.unstable ? "Stratégies fortement corrélées : interpréter les sensibilités avec prudence. " : "") + "Les sensibilités décrivent l’historique disponible; elles ne sont ni une note de qualité ni une prévision de rendement.";
+    }
     function drawSector() {
       const q=R[focus],b=R[reference];
       $("sectorFocusName").textContent=name(focus);$("sectorFocusDot").style.background=seriesInk(focus);
       $("sectorValues").innerHTML=D.sector_names.map((n,i)=>`<tr><th scope="row">${escape(n)}</th><td><div class="sector-meter"><span style="width:${(q.sectors?.[i]||0)*200}%;background:${seriesInk(focus)}"></span><b>${pct(q.sectors?.[i])}</b></div></td><td>${pct(b.sectors?.[i])}</td></tr>`).join("");
-      document.querySelectorAll("[data-exposure-name]").forEach(n=>{n.textContent=name(focus);});drawGeo();
+      document.querySelectorAll("[data-exposure-name]").forEach(n=>{n.textContent=name(focus);});drawGeo();drawFactors();
     }
     const reportPeriod=document.querySelector('.report-header p').textContent;
     function switchView(id) {
