@@ -11,10 +11,10 @@ test('frozen robust selections retain their published limits and complete source
   assert.ok(D.order.includes(k)&&D.exposure_order.includes(k));assert.ok(D.preference_ranking.entries.some(e=>e.id===k));
  }
 });
-test('the tighter current sector rule flags the former Compromis without changing its allocation',()=>{
+test('the current sector rule remains diagnostic without downgrading Compromis or changing its allocation',()=>{
  const before=JSON.stringify(D.results),ranking=require('../scripts/fnb_preferences.cjs')(D),entry=ranking.entries.find(e=>e.id===D.robust_order[0]);
  assert.ok(entry.limit_flags.includes('Limite sectorielle dépassée'));
- assert.equal(entry.eligible,false);assert.equal(JSON.stringify(D.results),before);
+ assert.equal(entry.eligible,true);assert.ok(!entry.signals.includes('Limite sectorielle dépassée'));assert.equal(JSON.stringify(D.results),before);
 });
 test('robust cards and choices render idempotently without editing historical publications',()=>{
  const stage=fs.mkdtempSync(path.join(os.tmpdir(),'savy-robust-'));
@@ -26,10 +26,11 @@ test('robust cards and choices render idempotently without editing historical pu
   const archived=read('data/fnb-history/2026-10.json');assert.equal(archived.robust_order,undefined);assert.equal(archived.custom_order.length,11);
  }finally{fs.rmSync(stage,{recursive:true,force:true});}
 });
-test('a deteriorating robustness selection leaves the first preferences without changing its weights',()=>{
+test('an archived review remains advisory without changing the score, rank or weights',()=>{
  const copy=structuredClone(D),id=copy.robust_order[0],weights=structuredClone(copy.results[id].weights);
  copy.results[id].robust_review={review_required:true,signals:['Retard cumulé sur 6 mois face à VEQT']};
  const ranking=require('../scripts/fnb_preferences.cjs')(copy);
  const entry=ranking.entries.find(e=>e.id===id);
- assert.equal(entry.eligible,false);assert.ok(entry.rank>ranking.entries.filter(e=>e.eligible).length);assert.match(entry.reason,/Réévaluation requise/);assert.deepEqual(copy.results[id].weights,weights);
+ const previous=require('../scripts/fnb_preferences.cjs')(D).entries.find(e=>e.id===id);
+ assert.equal(entry.eligible,true);assert.equal(entry.performance_review_required,true);assert.equal(entry.rank,previous.rank);assert.equal(entry.score,previous.score);assert.match(entry.reason,/Points à surveiller/);assert.deepEqual(copy.results[id].weights,weights);
 });

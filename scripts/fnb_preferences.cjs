@@ -4,6 +4,10 @@
 const mean=a=>a.reduce((s,v)=>s+v,0)/a.length;
 const sd=a=>{const m=mean(a);return Math.sqrt(a.reduce((s,v)=>s+(v-m)**2,0)/(a.length-1));};
 const total=a=>a.reduce((s,v)=>s*(1+v),1)-1;
+const effectiveDate='2026-10-24';
+// Construction checks remain diagnostics, never a ranking gate or penalty.
+const exposureFlags=new Set(['Limite géographique dépassée','Limite sectorielle dépassée']);
+const constructionFlag=flag=>exposureFlags.has(flag)||['Limite crypto dépassée','Crypto au-dessus de 3 %','Benchmark détenu dans l’allocation'].includes(flag)||flag.endsWith(' au-dessus du plafond par fonds');
 function period(p,b,rf,dates){
  if(p.length<2||p.length!==b.length||p.some(v=>!Number.isFinite(v)||v<=-1)||b.some(v=>!Number.isFinite(v)||v<=-1))throw Error('Périodes de classement incompatibles');
  const vol=sd(p)*Math.sqrt(12),active=p.map((v,i)=>v-b[i]),te=sd(active)*Math.sqrt(12);
@@ -38,22 +42,23 @@ module.exports=function preferences(D){
   if(diagnostics.derniers_6.gap<0)performance_flags.push('Retard cumulé sur 6 mois face à '+benchmark);
   if(benchmark==='VFV'&&['full','before','after'].some(k=>!q.historical_backtest.periods[k].beats_sp500))performance_flags.push('S&P 500 non battu sur toutes les périodes longues avant/après');
   const limit_flags=limits(q,D,id),review_signals=q.robust_review?.review_required?q.robust_review.signals||['Revue de robustesse requise']:[];
-  const signals=[...new Set([...performance_flags,...limit_flags,...review_signals])];
+  const ranking_limit_flags=[];
+  const signals=[...new Set([...performance_flags,...review_signals.filter(flag=>!constructionFlag(flag))])];
   // A disclosed preference score, not a probability or a fitted forecast.
   // Fees are already included in returns; this is an additional cost preference.
   const score=worst_information===null||worst_sharpe===null?null:worst_information+worst_sharpe-25*q.mer;
-  const eligible=signals.length===0;
+  const eligible=score!==null,performance_review_required=signals.length>0;
   const num=v=>v===null?'indisponible':new Intl.NumberFormat('fr-CA',{maximumFractionDigits:2,minimumFractionDigits:2}).format(v);
-  const reason=(eligible?'Critères actuels respectés. ':'Réévaluation requise : '+signals.join('; ')+'. ')+
+  const reason=(!eligible?'Score indisponible. ':performance_review_required?'Points à surveiller : '+signals.join('; ')+'. ':'')+
    'IR minimal 28 / 24 / 12 mois : '+num(worst_information)+'; Sharpe minimal : '+num(worst_sharpe)+'. '+(benchmark==='VFV'?'Référence : S&P 500 via VFV en CAD. ':'')+
    'RFG '+num(q.mer*100)+' %. '+(diagnostics.derniers_3.gap<0?'Retard sur les 3 derniers mois à surveiller. ':'')+
    (id==='proposal'?'Le rejeu chronologique de la recherche reste distinct de ce backtest à allocation fixe. ':'');
-  return {id,benchmark,eligible,score,worst_information,worst_sharpe,mer:q.mer,signals,performance_flags,limit_flags,diagnostics,reason};
+  return {id,benchmark,eligible,performance_review_required,score,worst_information,worst_sharpe,mer:q.mer,signals,performance_flags,limit_flags,ranking_limit_flags,diagnostics,reason};
  });
- entries.sort((a,b)=>Number(b.eligible)-Number(a.eligible)||(b.score??-Infinity)-(a.score??-Infinity)||a.mer-b.mer||a.id.localeCompare(b.id));
- const date=['2026-10-21',D.assumptions.analysis_date,D.optimization.generated_at.slice(0,10),...[...(D.robust_selections||[]),...(D.recommended_selections||[])].map(c=>c.published_at.slice(0,10))].filter(Boolean).sort().at(-1);
- return {date,as_of:D.assumptions.as_of,method_version:'common-robustness-v3-scoped-benchmarks',
-  policy:{effective_date:'2026-10-23',feqt_cap:.50,recommended_veqt_cap:.40,recommended_benchmark:'VFV',existing_benchmark:'VEQT',geo_tolerance:.10,sector_tolerance:.07},
-  criteria:'Même règle pour tous les candidats : limites actuelles et absence de signal défavorable sur 6 / 12 mois d’abord; puis IR minimal + Sharpe minimal des fenêtres début 28 mois / derniers 24 mois / derniers 12 mois, moins 25 × RFG annuel (en décimal). Frais déjà inclus dans les rendements; la pénalité exprime une préférence pour des coûts plus faibles. Les 3 derniers mois servent d’alerte. Les allocations historiques hors limites restent suivies et signalées. Nº 10 et 11, mandats mixtes, exclus. Classement rétrospectif, sans test indépendant ni garantie de robustesse future; les variantes Robuste ne sont pas prioritaires par leur nom.',
+ entries.sort((a,b)=>(b.score??-Infinity)-(a.score??-Infinity)||a.mer-b.mer||a.id.localeCompare(b.id));
+ const date=[effectiveDate,D.assumptions.analysis_date,D.optimization.generated_at.slice(0,10),...[...(D.robust_selections||[]),...(D.recommended_selections||[])].map(c=>c.published_at.slice(0,10))].filter(Boolean).sort().at(-1);
+ return {date,as_of:D.assumptions.as_of,method_version:'financial-quality-v4-no-construction-gates',
+  policy:{effective_date:effectiveDate,feqt_cap:.50,recommended_veqt_cap:.40,recommended_benchmark:'VFV',existing_benchmark:'VEQT',geo_tolerance:.10,sector_tolerance:.07,exposure_limits_affect_ranking:false,construction_limits_affect_ranking:false,review_flags_affect_ranking:false},
+  criteria:'Qualité historique : IR minimal + Sharpe minimal des fenêtres début 28 mois / derniers 24 mois / derniers 12 mois, moins 25 × RFG annuel (en décimal). Les limites de construction, notamment géographiques, sectorielles, par fonds et crypto, ne changent ni le score ni le rang. Les signaux sur 3 / 6 / 12 mois restent des points à surveiller, sans déclassement automatique. Frais déjà inclus dans les rendements; la pénalité exprime une préférence pour des coûts plus faibles. Les contraintes de construction et de robustesse des prochaines recherches restent inchangées. Références : VFV pour les trois sélections S&P 500, VEQT pour les autres; les IR de ces deux groupes n’ont donc pas le même benchmark. Nº 10 et 11, mandats mixtes, exclus. Classement rétrospectif, distinct du jugement prospectif et sans probabilité de surperformance estimée.',
   entries:entries.map((e,i)=>({...e,rank:i+1}))};
 };

@@ -15,6 +15,10 @@ async function check(browser,engine){
  assert.equal(await page.locator('[data-preference="proposal"] .preference-rank').textContent(),String(D.preference_ranking.entries.find(e=>e.id==='proposal').rank));
  assert.equal(await page.locator('#allPortfolioBody [data-open-portfolio]').count(),D.custom_order.length+D.proposal_order.length+D.robust_order.length+D.recommended_order.length);
  assert.equal(await page.locator('#referenceSelect').inputValue(),'VEQT','Existing default benchmark is preserved');
+ await page.locator('.horizon-ranking summary').click();
+ assert.equal(await page.locator('.horizon-ranking [data-open-portfolio]:visible').count(),15);
+ assert.match(await page.locator('.horizon-ranking').innerText(),/pas probabilités calculées/);
+ await page.locator('.horizon-ranking summary').click();
  await page.locator('#recommendedCharts').click();
  assert.equal(await page.locator('#referenceSelect').inputValue(),'VFV');
  for(const chart of ['risk','growth'])assert.equal(await page.locator('#'+(chart==='risk'?'riskSvg .risk-point':'growthSvg .wealth-line')+':visible').count(),D.recommended_order.length+2);
