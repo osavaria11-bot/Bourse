@@ -166,6 +166,14 @@ button,input,select,textarea {font-family:inherit}
 .savy-portal .portal-expand {border-radius:var(--radius);border:1px solid var(--border);background:var(--surface);box-shadow:var(--shadow)}
 .savy-portal .portal-expand .dialog-header h2 {font-size:17px}
 
+/* Centre the sidebar identity and menu while preserving a common text column. */
+@media(min-width:901px) {
+  .savy-portal .page-header {gap:24px}
+  .savy-portal .brand {justify-content:center;text-align:center;padding:0}
+  .savy-portal .portal-nav {margin:auto 0;padding:12px 0}
+  .savy-portal .portal-nav a {display:grid;grid-template-columns:19px 112px;justify-content:center;gap:11px;padding:10px 8px}
+}
+
 @media(max-width:1180px) and (min-width:901px) {
   .savy-portal .portal-ticker {grid-template-columns:repeat(3,minmax(0,1fr))}
   .savy-portal .portal-ticker-item:nth-child(3) {border-right:0}
