@@ -93,7 +93,9 @@ async function check(browser,engine){
   }
  }
  await page.locator('#sectorFocus').selectOption('VEQT');await page.locator('#referenceSelect').selectOption('VEQT');
+ await page.locator('.factor-panel > .factor-method > summary').click();
  assert.match(await page.locator('#factorReading').innerText(), /risque actif est nul/);
+ await page.locator('.factor-panel > .factor-method > summary').click();
  assert.equal(await page.locator('#factorValues [data-factor="market"] td').last().innerText(), '—');
  for (const width of [390, 768, 1280]) {
   await page.setViewportSize({width, height:900});
