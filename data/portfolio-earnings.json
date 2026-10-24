@@ -3724,22 +3724,28 @@
           },
           "messages": [
             {
-              "text": "Core business momentum remained strong",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-21-facebook-inc-stock/",
-              "kind": "call_topic"
+              "text": "Activité — Le PDG décrit un cœur de métier solide. Les revenus publicitaires augmentent de 26 %, avec 10 % d’impressions supplémentaires et un prix moyen par publicité en hausse de 14 %. Ma lecture : la monétisation soutient la croissance; il faut vérifier qu’elle absorbe durablement les nouveaux coûts d’IA.",
+              "language": "fr",
+              "source_url": "https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-Third-Quarter-2026-Results/default.aspx",
+              "kind": "reviewed_summary"
             },
             {
-              "text": "Muse showed rapid early adoption",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-21-facebook-inc-stock/",
-              "kind": "call_topic"
+              "text": "Perspectives — Le T4 vise 73–76 G$ US de revenus. La fourchette d’investissements annuels se resserre à 135–145 G$ US, contre 130–145 auparavant : le minimum augmente. Le rendement de ces capacités dépendra de leur utilisation et de revenus qui restent à concrétiser.",
+              "language": "fr",
+              "source_url": "https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-Third-Quarter-2026-Results/default.aspx",
+              "kind": "reviewed_summary"
             },
             {
-              "text": "AI expansion is driving substantial near-term costs.",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-21-facebook-inc-stock/",
-              "kind": "call_topic"
+              "text": "Trésorerie — Les investissements, remboursements de locations-financement compris, atteignent 34,91 G$ US, au-delà des 32,79 G$ US générés par l’exploitation; le cash-flow libre est négatif de 2,12 G$ US. La nouvelle catégorie C prévue en janvier 2027 crée une capacité de financement, sans annoncer un montant de levée immédiat.",
+              "language": "fr",
+              "source_url": "https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-Third-Quarter-2026-Results/default.aspx",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Qualité du résultat — La charge juridique de 9,89 G$ US ramène le BPA dilué GAAP à 3,83 $ US; Meta indique 7,40 $ hors cette charge. Ce dernier montant correspond à celui du tableau fournisseur. Ma lecture : le rebond du bénéfice publié ne suffit pas à mesurer la rentabilité récurrente ni le décaissement futur du règlement.",
+              "language": "fr",
+              "source_url": "https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-Third-Quarter-2026-Results/default.aspx",
+              "kind": "reviewed_summary"
             }
           ],
           "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-21-facebook-inc-stock/",
@@ -3751,6 +3757,10 @@
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=META&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-Third-Quarter-2026-Results/default.aspx"
             }
           ]
         }
@@ -6993,5 +7003,6 @@
       "source_warnings": []
     }
   },
-  "errors": {}
+  "errors": {},
+  "analysis_reviewed_at": "2026-10-24T11:07:32.748485+00:00"
 }

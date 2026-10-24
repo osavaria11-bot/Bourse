@@ -112,7 +112,8 @@
   $("frontierExport").disabled=false;
   $("frontierPriority").disabled=false;
   $("frontierMaxSharpe").disabled=!solution.sharpe;$("frontierMaxIR").disabled=!solution.information;$("frontierBalanced").disabled=!solution.pareto.length;
-  $("frontierStatus").textContent="FNB cotés au Canada · sur la poche actions : régions et secteurs à ±10 points de VEQT, maximum sectoriel 35 %. "+(!solution.sharpe?"Pas d’excédent positif avec un Sharpe fini. ":"")+(!solution.information?"Pas d’excédent positif avec un IR fini face à VEQT. ":"");
+  const limits=prepared.limits, points=v=>new Intl.NumberFormat("fr-CA",{maximumFractionDigits:2}).format(v*100);
+  $("frontierStatus").textContent="FNB cotés au Canada · sur la poche actions : régions à ±"+points(limits.geoTolerance)+" points et secteurs à ±"+points(limits.sectorTolerance)+" points de VEQT, maximum sectoriel "+points(limits.sectorCap)+" %. "+(!solution.sharpe?"Pas d’excédent positif avec un Sharpe fini. ":"")+(!solution.information?"Pas d’excédent positif avec un IR fini face à VEQT. ":"");
   table();dates();draw();updateMetrics();
  }
  function fail(error,id){if(id!==generation)return;loading=false;root.setAttribute("aria-busy","false");root.dataset.ready="error";$("frontierContent").hidden=true;$("frontierError").hidden=false;$("frontierError").textContent=error.message||String(error);$("frontierStatus").textContent="Les autres vues et les portefeuilles enregistrés restent inchangés.";}

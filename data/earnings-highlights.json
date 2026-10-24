@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "reviewed_earnings_highlights",
-  "reviewed_at": "2026-10-22T11:16:36.960Z",
+  "reviewed_at": "2026-10-24T11:07:32.748485+00:00",
   "reports": {
     "NFLX:2026-10-20": {
       "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-20-netflix-inc-stock/",
@@ -294,13 +294,13 @@
       ]
     },
     "META:2026-10-21": {
-      "report_url": null,
-      "source_url": "https://www.globalbankingandfinance.com/meta-issue-new-class-shares-tightens-ai-spending-forecast/",
+      "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-21-facebook-inc-stock/",
+      "source_url": "https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-Third-Quarter-2026-Results/default.aspx",
       "messages": [
-        "Publication du 21 octobre — Ces résultats Q3 2026 apparaissent aussi dans une fiche fournisseur du 22; ce n’est pas un nouveau trimestre. Muse dépasse dix millions de comptes en six semaines. Zuckerberg veut le monétiser plus tôt, car son coût est élevé; ces comptes ne prouvent pas encore sa rentabilité.",
-        "Perspectives — Les revenus prévus au T4 sont de 73–76 G$ US, contre 73,73 G$ US au consensus LSEG. Le minimum du budget annuel d’investissements monte de 130 à 135 G$ US, le plafond restant à 145 : la croissance exige davantage de capital avant sa monétisation.",
-        "Financement — Le cash-flow libre devient négatif de 2,12 G$ US. La catégorie C sans droit de vote, prévue en janvier 2027, facilitera de futures émissions pour les investissements et acquisitions. Ma lecture : surveiller la dilution future et le maintien du contrôle de Zuckerberg.",
-        "Risque juridique — La charge de 9,89 G$ US liée au règlement sur les adolescents réduit le BPA du trimestre. Reuters rapporte séparément une pénalité de 25 G$ US ordonnée le 21 octobre au Nouveau-Mexique. Ce sont deux dossiers distincts; ne pas confondre charge comptable et décaissement immédiat."
+        "Activité — Le PDG décrit un cœur de métier solide. Les revenus publicitaires augmentent de 26 %, avec 10 % d’impressions supplémentaires et un prix moyen par publicité en hausse de 14 %. Ma lecture : la monétisation soutient la croissance; il faut vérifier qu’elle absorbe durablement les nouveaux coûts d’IA.",
+        "Perspectives — Le T4 vise 73–76 G$ US de revenus. La fourchette d’investissements annuels se resserre à 135–145 G$ US, contre 130–145 auparavant : le minimum augmente. Le rendement de ces capacités dépendra de leur utilisation et de revenus qui restent à concrétiser.",
+        "Trésorerie — Les investissements, remboursements de locations-financement compris, atteignent 34,91 G$ US, au-delà des 32,79 G$ US générés par l’exploitation; le cash-flow libre est négatif de 2,12 G$ US. La nouvelle catégorie C prévue en janvier 2027 crée une capacité de financement, sans annoncer un montant de levée immédiat.",
+        "Qualité du résultat — La charge juridique de 9,89 G$ US ramène le BPA dilué GAAP à 3,83 $ US; Meta indique 7,40 $ hors cette charge. Ce dernier montant correspond à celui du tableau fournisseur. Ma lecture : le rebond du bénéfice publié ne suffit pas à mesurer la rentabilité récurrente ni le décaissement futur du règlement."
       ]
     },
     "WCN:2026-10-21": {
@@ -325,4 +325,3 @@
     }
   }
 }
-
