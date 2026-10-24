@@ -64,7 +64,7 @@ test('factor panel is rebuilt once during full and fast quote publication', () =
   const once = render(html), twice = render(once);
   assert.equal(once, twice); assert.equal((once.match(/id="factorTitle"/g) || []).length, 1);
   assert.equal((once.match(/src="\.\.\/js\/fnb-factor-utils.js/g) || []).length, 1);
-  assert.ok(once.indexOf('id="factorTitle"') < once.indexOf('class="exposure-grid"'));
+  assert.ok(once.indexOf('id="factorTitle"') > once.indexOf('class="exposure-grid"'));
   assert.match(fs.readFileSync(path.join(__dirname, '../scripts/build_monthly_fnb.cjs'), 'utf8'), /fnb_factor_view/);
   const report = fs.readFileSync(path.join(__dirname, '../reports/portefeuilles-fnb.html'), 'utf8');
   assert.match(report, /id="factorTitle"/); assert.match(report, /fnb-factor-utils.js\?v=20261024-factors/);

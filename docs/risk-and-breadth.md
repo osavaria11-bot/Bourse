@@ -2,7 +2,11 @@
 
 ## Analyse FNB → Répartition
 
-Le rendu `scripts/fnb_risk_view.cjs` ajoute une carte compacte avant les facteurs.
+Les cartes VaR et facteurs partagent la deuxième rangée de la grille de
+Répartition, sous Géographie et Secteurs. Elles restent côte à côte sur grand
+écran et passent sur une colonne sur mobile. Les explications complètes
+restent accessibles dans les volets de méthode. Le rendu
+`scripts/fnb_risk_view.cjs` place la carte VaR avant celle des facteurs.
 `js/fnb-risk-utils.js` recalcule ses quatre chiffres avec le portefeuille et le
 benchmark sélectionnés, sans changer les allocations ou rendements existants.
 

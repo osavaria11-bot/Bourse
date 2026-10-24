@@ -232,3 +232,41 @@ th:not(:first-child),td{text-align:right}
 .risk-contribution small{display:block;color:var(--muted);font-size:11px}.risk-contribution strong{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
 .risk-contribution-track{height:8px;border-radius:4px;background:var(--grid);overflow:hidden}.risk-contribution-track i{display:block;height:100%;background:var(--chart);border-radius:4px}
 @media(max-width:700px){.risk-snapshot-metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.risk-snapshot-metrics strong{font-size:24px}.risk-contribution{grid-template-columns:105px 1fr 58px;gap:8px}.risk-contribution-head{flex-wrap:wrap}}
+
+/* The four exposure cards share the same two-column grid. */
+.exposure-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.exposure-grid>.risk-snapshot,.exposure-grid>.factor-panel{margin:0;padding:12px;display:flex;flex-direction:column}
+.exposure-grid>.risk-snapshot .section-head,.exposure-grid>.factor-panel .section-head{margin-bottom:5px;gap:4px 10px}
+.exposure-grid>.risk-snapshot h2,.exposure-grid>.factor-panel h2{font-size:14px;line-height:1.3}
+.exposure-grid #riskSnapshotStatus,.exposure-grid #factorStatus{font-size:10.5px;line-height:1.4;margin:5px 0}
+.exposure-grid .risk-snapshot .section-head>.small{font-size:10px}
+.exposure-grid .risk-snapshot-metrics,.exposure-grid .factor-metrics{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin:8px 0 12px}
+.exposure-grid .risk-snapshot-metrics>div{padding:8px 7px;border-radius:6px}
+.exposure-grid .risk-snapshot-metrics span{font-size:10px}
+.exposure-grid .risk-snapshot-metrics small{font-size:9.5px;line-height:1.35}
+.exposure-grid .risk-snapshot-metrics strong{font-size:21px;margin:4px 0}
+.exposure-grid .risk-contribution-head{gap:5px;flex-wrap:wrap}
+.exposure-grid .risk-contribution-head h3{font-size:12px}
+.exposure-grid .risk-contribution-head>.small{font-size:10px}
+.exposure-grid .risk-contribution-bars{gap:8px;margin:9px 0}
+.exposure-grid .risk-contribution{grid-template-columns:minmax(90px,125px) minmax(0,1fr) 48px;gap:8px;font-size:11px}
+.exposure-grid .risk-contribution small{font-size:9.5px;line-height:1.35}
+.exposure-grid .risk-contribution-track{height:6px}
+.exposure-grid #riskContributionNote,.exposure-grid #riskSampleNote{font-size:10px;line-height:1.4;margin:6px 0}
+.exposure-grid .factor-metrics>div{padding:7px 6px;border-radius:6px;min-width:0}
+.exposure-grid .factor-metrics span{font-size:9.5px;line-height:1.35}
+.exposure-grid .factor-metrics strong{font-size:18px;margin-top:4px}
+.exposure-grid .factor-table{margin:0}
+.exposure-grid .factor-table table{min-width:420px;table-layout:fixed;font-size:11px}
+.exposure-grid .factor-table th,.exposure-grid .factor-table td{padding:6px 4px;width:auto;font-size:11px;line-height:1.3}
+.exposure-grid .factor-table thead th{font-size:9.5px;vertical-align:bottom}
+.exposure-grid .factor-table thead span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.exposure-grid .factor-table th:first-child,.exposure-grid .factor-delta{min-width:0}
+.exposure-grid .factor-table small{font-size:9px;line-height:1.3}
+.exposure-grid .factor-table .factor-band{font-size:10px;white-space:nowrap}
+.exposure-grid .factor-track{height:3px;margin-top:3px}
+.exposure-grid .factor-track i{height:3px}
+.exposure-grid>.risk-snapshot>.factor-method,.exposure-grid>.factor-panel>.factor-method{margin-top:auto;padding-top:9px;font-size:11px}
+@media(max-width:1000px){.exposure-grid{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:600px){.exposure-grid .risk-snapshot-metrics,.exposure-grid .factor-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.exposure-grid .risk-snapshot-metrics strong{font-size:22px}}
+@media print{.exposure-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.exposure-grid .factor-table table{min-width:0}}
