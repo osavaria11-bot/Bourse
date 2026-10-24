@@ -42,7 +42,7 @@ button,input,select,textarea {font-family:inherit}
 .savy-portal .header-actions {display:flex;gap:7px;margin-top:auto;padding:16px 0 0;border-top:1px solid var(--nav-border)}
 .savy-portal .header-actions .button {flex:1;min-width:0;min-height:36px;padding:7px 5px;font-size:12px;background:transparent;border-color:var(--nav-border);color:var(--nav-text)}
 .savy-portal .header-actions .button:hover {background:var(--nav-hover)}
-.savy-portal .container {width:calc(100% - var(--sidebar-width) - 48px);max-width:1600px;margin:0 24px 0 calc(var(--sidebar-width) + 24px);padding:24px 0 0;min-width:0}
+.savy-portal .container {width:calc(100% - var(--sidebar-width) - 48px);max-width:1600px;margin:0 24px 0 calc(var(--sidebar-width) + 24px);padding:16px 0 0;min-width:0}
 .savy-portal .portal-page {min-height:calc(100dvh - 115px)}
 .savy-portal .portal-panel {scroll-margin-top:20px}
 .savy-portal .portal-tabs {gap:22px;margin-bottom:18px;border-color:var(--border)}
@@ -85,7 +85,7 @@ button,input,select,textarea {font-family:inherit}
 .savy-portal .portal-headline .eyebrow {font-size:11px}
 .savy-portal .portal-headline p {font-size:13px;line-height:1.5;margin:3px 0}
 .savy-portal .portal-headline .meta {font-size:11px}
-.savy-portal .fear-greed {padding:16px;gap:14px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow)}
+.savy-portal .fear-greed {padding:14px;gap:14px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow)}
 .savy-portal .fear-greed h2 {font-size:17px}
 .savy-portal .fear-greed-history {padding-left:4px}
 .savy-portal .fear-greed-history h3 {font-size:12px}
@@ -94,7 +94,8 @@ button,input,select,textarea {font-family:inherit}
 .savy-portal .fear-greed[data-rating="extreme-greed"] .fear-greed-rating {color:var(--up)}
 .savy-portal .fear-greed[data-rating="fear"] .fear-greed-rating,
 .savy-portal .fear-greed[data-rating="extreme-fear"] .fear-greed-rating {color:var(--down)}
-.savy-portal .portal-latest {margin-top:12px;padding:14px 16px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow)}
+.savy-portal .portal-latest {margin-top:12px;padding:12px 14px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow)}
+.savy-portal .portal-latest-grid {margin-top:8px}
 .savy-portal .portal-report-link strong {font-size:14px;font-weight:600}
 .savy-portal .portal-report-link .meta,.savy-portal .portal-report-link .eyebrow {font-size:11px}
 .savy-portal .kpi-grid {gap:10px;border:0;background:transparent;border-radius:0}
