@@ -80,6 +80,15 @@ async function check(browser,engine){
  await page.locator('#decisionHorizon').selectOption('2');
  await page.waitForSelector('#decisionPanel[data-forecast-ready="true"]',{timeout:30000});
  assert.match(await page.locator('#decisionResultTitle').innerText(),/2 ans/);
+ await page.locator('#decisionLoss').fill('30');
+ for(const width of [320,375,768]){
+  await page.setViewportSize({width,height:900});
+  await page.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))));
+  assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'Forward comparison overflow '+width);
+  assert.equal(await page.locator('[data-decision-choice]').count(),3);
+ }
+ await page.setViewportSize({width:1280,height:900});
+ await page.locator('#decisionLoss').fill('');
  await page.locator('#decisionForecastMethod>summary').click();
  const originalMean=await page.locator('[data-decision-row="7"] td').first().innerText();
  await page.locator('#forecastEquityView').fill('2');await page.locator('#forecastApply').click();
