@@ -56,12 +56,15 @@ async function check(browser, engine) {
   assert.equal(await fundReport.locator('.nav [data-tab]').first().textContent(), "Vue d’ensemble");
   assert.equal(await fundReport.locator("#allPortfolios").isVisible(), true);
   assert.equal(await fundReport.locator('#decisionBody tr').count(),4);
+  await fundReport.locator('.nav [data-tab="decision"]').click();
+  assert.equal(await fundReport.locator('#decision .horizon-columns [data-open-portfolio]:visible').count(),15);
   await fundReport.locator('#decisionGoal').selectOption('balance');
   await fundReport.locator('#decisionDetails>summary').click();
   assert.match(await fundReport.locator('#decisionSensitivity').innerText(),/variantes/);
   assert.match(await fundReport.locator('#decisionSources').innerText(),/2008/);
   await fundReport.locator('#decisionDetails>summary').click();
   await fundReport.locator('#decisionGoal').selectOption('');
+  await fundReport.locator('.nav [data-tab="allPortfolios"]').click();
   assert.equal(await fundReport.locator("#allPortfolioBody tr").count(), fnbOwn.length+fnbDefaultBenchmarks.length);
   assert.equal(await fundReport.locator("#allPortfolioBody [data-open-portfolio]").count(), fnbOwn.length);
   assert.equal(await fundReport.locator("#monthlyTitle").count(),0);
@@ -304,7 +307,7 @@ async function check(browser, engine) {
     }
     await go("accueil"); await shot("mobile-" + width);
     await go("analyses");
-    for(const view of ["allPortfolios","overview","exposures","portfolios","performance","frontier","methods"]){
+    for(const view of ["allPortfolios","overview","exposures","portfolios","performance","frontier","decision","methods"]){
       await fundReport.locator('.nav [data-tab="'+view+'"]').click();
       if(view==="performance")await fundReport.locator('#performance[data-ready="true"]').waitFor();
       if(view==="frontier")await fundReport.locator('#frontier[data-ready="true"]').waitFor({timeout:90000});
