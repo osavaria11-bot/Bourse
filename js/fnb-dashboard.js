@@ -27,6 +27,7 @@ const SavyFnb = (() => {
     } catch {document.documentElement.dataset.theme = "petrol";}
 
     const D = JSON.parse(document.getElementById("analysis").textContent), R = D.results;
+    const dailyRisk = JSON.parse(document.getElementById('fnbDailyRisk')?.textContent || 'null');
     const ids = D.order, custom = D.custom_order, proposed = D.proposal_order || [], robust = D.robust_order || [], recommended = D.recommended_order || [], frozen = [...recommended,...robust], own = [...frozen, ...proposed, ...custom], benchmarks = D.benchmark_order;
     const $ = id => document.getElementById(id), escape = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
     const number = (v, digits = 2) => v === null || !Number.isFinite(v) ? "—" : new Intl.NumberFormat("fr-CA", {minimumFractionDigits:digits, maximumFractionDigits:digits}).format(v);
@@ -143,11 +144,17 @@ const SavyFnb = (() => {
     }
     function drawRiskSnapshot() {
       if (!$("riskSnapshotStatus")) return;
-      const c = window.SavyFnbRisk?.compare(D, focus, reference);
+      const c = window.SavyFnbRisk?.compare(D, focus, reference, dailyRisk);
       $("riskSnapshotContent").hidden = !c?.available;
       if (!c?.available) {$("riskSnapshotStatus").textContent = c?.reason || "Mesures indisponibles pour cette publication."; return;}
       $("riskSnapshotStatus").textContent = name(focus) + " face à " + name(reference) + " · " + c.start + " → " + c.end + " · " + c.observations + " mois en CAD.";
       $("riskVar").textContent = pct(c.var, 2); $("riskCvar").textContent = pct(c.cvar, 2);
+      if ($('riskVarDaily')) {
+        $('riskVarDaily').textContent = c.daily?.available ? pct(c.daily.var, 2) : '—';
+        $('riskDailyNote').textContent = c.daily?.available ? c.daily.observations + ' séances · au ' + c.daily.end + (c.daily.status === 'stale' ? ' · dernier relevé conservé' : '') : c.daily?.reason || 'Historique quotidien indisponible.';
+        $('riskSkewness').textContent = c.daily?.available ? number(c.daily.skewness,2) : '—';
+        $('riskExcessKurtosis').textContent = c.daily?.available ? number(c.daily.excessKurtosis,2) : '—';
+      }
       $("riskRelative").textContent = c.relativeVar === null ? "—" : number(c.relativeVar) + "×";
       $("riskRelativeNote").textContent = "VaR / " + reference + " · " + pct(c.benchmarkVar, 2);
       $("riskStress").textContent = pct(c.stress, 1);

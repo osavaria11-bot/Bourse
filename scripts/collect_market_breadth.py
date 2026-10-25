@@ -5,6 +5,7 @@ Backfill uses the current disclosed membership, not historical index membership.
 Accepted dated aggregates are append-only. Missing quotes never become prices.
 """
 import argparse
+import calendar
 from collections import deque
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import csv
@@ -25,6 +26,14 @@ ROOT = Path(__file__).resolve().parents[1]
 WINDOWS = [20, 50, 100, 200]
 MIN_COVERAGE = .90
 MAX_LOCAL_LAG_DAYS = 3
+HISTORY_YEARS = 10
+RSI_PERIOD = 14
+RSI_SOURCES = {
+    'sp500': {'symbol':'^GSPC','label':'S&P 500 · indice en USD'},
+    'tsx': {'symbol':'^GSPTSE','label':'TSX Composite · indice en CAD'},
+    'europe': {'symbol':'IEUR','label':'IEUR · FNB représentatif en USD'},
+    'emerging': {'symbol':'EEM','label':'EEM · FNB représentatif en USD'},
+}
 MARKETS = [
     {"id":"sp500", "name":"S&P 500", "index":"S&P 500", "proxy":"IVV", "product":"https://www.ishares.com/us/products/239726/ishares-core-sp-500-etf", "minimum":450},
     {"id":"tsx", "name":"TSX Composite", "index":"S&P/TSX Capped Composite", "proxy":"XIC", "product":"https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf", "minimum":180},
@@ -37,6 +46,10 @@ def atomic_json(path, value):
     temp = path.with_suffix(path.suffix + '.tmp')
     temp.write_text(json.dumps(value, ensure_ascii=False, separators=(',', ':'), allow_nan=False))
     temp.replace(path)
+
+def years_before(day, years):
+    d=date.fromisoformat(day);year=d.year-years
+    return date(year,d.month,min(d.day,calendar.monthrange(year,d.month)[1])).isoformat()
 
 def fetch(url, timeout=16):
     with urlopen(Request(url, headers={"User-Agent":"Mozilla/5.0 SAVY market research", "Accept":"application/json,text/csv,text/html"}), timeout=timeout) as response:
@@ -51,6 +64,7 @@ def yahoo_symbol(row):
     country, exchange = row.get('Location', '').strip(), row.get('Exchange', '').strip()
     if not ticker or ticker in {'-', 'NULL'}: return None
     ticker = ticker.replace(' ', '-')
+    if 'Toronto' in exchange or exchange=='TSX':return ticker.replace('.','-')+'.TO'
     if country == 'United States' or exchange in {'NASDAQ','NYSE','New York Stock Exchange Inc.','Nyse Mkt Llc','NYSE Arca'}: return ticker.replace('.', '-')
     if country == 'Canada': return ticker.replace('.', '-') + '.TO'
     if country == 'China':
@@ -159,29 +173,39 @@ def merge_adjusted(old, recent):
     if not math.isfinite(scale) or not .001<scale<1000: raise ValueError('Invalid adjustment bridge')
     merged={d:(v*scale if v is not None else None) for d,v in before.items() if d<min(after)}
     merged.update(after)
-    return sorted(merged.items())[-900:]
+    return sorted(merged.items())[-4200:]
 
 
 def stock_prices(symbol, cutoff, cache, stop):
     if stop.is_set(): return None
     path = cache / (hashlib.sha256(symbol.encode()).hexdigest()+'.json')
     old = json.loads(path.read_text()) if path.exists() else None
-    if old and old.get('symbol') == symbol and old.get('cutoff') == cutoff: return old['history']
-    recent=bool(old and old.get('symbol')==symbol and (date.fromisoformat(cutoff)-date.fromisoformat(old['cutoff'])).days<=20)
-    url='https://query1.finance.yahoo.com/v8/finance/chart/'+quote(symbol,safe='')+'?'+urlencode({'range':'1mo' if recent else '2y','interval':'1d','events':'div,splits','includeAdjustedClose':'true'})
+    requested_start=(date.fromisoformat(years_before(cutoff,HISTORY_YEARS))-timedelta(days=400)).isoformat()
+    long_cache=bool(old and old.get('history_start_requested','9999')<=requested_start)
+    if old and long_cache and old.get('symbol') == symbol and old.get('cutoff') == cutoff: return old['history']
+    recent=bool(old and long_cache and old.get('symbol')==symbol and 0<=(date.fromisoformat(cutoff)-date.fromisoformat(old['cutoff'])).days<=20)
+    params={'interval':'1d','events':'div,splits','includeAdjustedClose':'true'}
+    if recent:params['range']='1mo'
+    else:
+        params['period1']=int(datetime.combine(date.fromisoformat(requested_start),datetime.min.time(),timezone.utc).timestamp())
+        params['period2']=int(datetime.combine(date.fromisoformat(cutoff)+timedelta(days=1),datetime.min.time(),timezone.utc).timestamp())
+    url='https://query1.finance.yahoo.com/v8/finance/chart/'+quote(symbol,safe='')+'?'+urlencode(params)
     try:
-        history=parse_prices(json.loads(fetch(url,12)),symbol,cutoff,5 if recent else 20)
+        payload=json.loads(fetch(url,16));history=parse_prices(payload,symbol,cutoff,5 if recent else 20)
         if recent: history=merge_adjusted(old['history'],history)
     except HTTPError as error:
         if error.code == 429: stop.set()
         raise
-    atomic_json(path,{'symbol':symbol,'cutoff':cutoff,'history':history})
+    meta=payload['chart']['result'][0]['meta'];first_trade=meta.get('firstTradeDate')
+    first_date=datetime.fromtimestamp(first_trade,ZoneInfo(meta.get('exchangeTimezoneName','UTC'))).date().isoformat() if isinstance(first_trade,(int,float)) else (old or {}).get('first_trade_date')
+    atomic_json(path,{'symbol':symbol,'cutoff':cutoff,'history':history,'history_start_requested':old['history_start_requested'] if recent else requested_start,'first_trade_date':first_date,'quote_currency':meta.get('currency')})
     return history
 
-def breadth_history(holdings, histories, cutoff, composition_date, coverage=MIN_COVERAGE):
+def breadth_history(holdings, histories, cutoff, composition_date, coverage=MIN_COVERAGE, first_trade_dates=None, history_start=None):
     # The global observation uses each market's latest actual local close.
     # Carry indicator states across short exchange holidays; never repeat a
     # price in a stock's SMA window. Explicit null quotes reset that window.
+    first_trade_dates=first_trade_dates or {}
     days = sorted({day for h in holdings for day,_ in histories.get(h['symbol'],[])
                    if day<=cutoff and date.fromisoformat(day).weekday()<5})
     counts = {d:{str(w):[0,0,0] for w in WINDOWS} for d in days}
@@ -203,6 +227,7 @@ def breadth_history(holdings, histories, cutoff, composition_date, coverage=MIN_
             states.append((day,state))
         index=-1
         for day in days:
+            if first_trade_dates.get(holding['symbol'],'')>day:continue
             while index+1<len(states) and states[index+1][0]<=day:index+=1
             if index<0:continue
             local_day,state=states[index];lag=(date.fromisoformat(day)-date.fromisoformat(local_day)).days
@@ -212,16 +237,48 @@ def breadth_history(holdings, histories, cutoff, composition_date, coverage=MIN_
                 counts[day][w][0]+=int(value);counts[day][w][1]+=1;counts[day][w][2]+=int(lag>0)
     size=len(holdings);result=[]
     for day,groups in sorted(counts.items()):
-        values={str(w):round(groups[str(w)][0]/groups[str(w)][1]*100,4) if groups[str(w)][1]>0 and groups[str(w)][1]>=size*coverage else None for w in WINDOWS}
+        if history_start and day<history_start:continue
+        # Exclude a current constituent before its first quoted date stated by
+        # the feed. Unknown listing dates remain in the expected cohort. This
+        # is a survivor cohort, never historical official index membership.
+        active=sum(not first_trade_dates.get(h['symbol']) or first_trade_dates[h['symbol']]<=day for h in holdings)
+        values={str(w):round(groups[str(w)][0]/groups[str(w)][1]*100,4) if groups[str(w)][1]>0 and groups[str(w)][1]>=active*coverage else None for w in WINDOWS}
         result.append({'date':day,'values':values,'above':{w:c[0] for w,c in groups.items()},'eligible':{w:c[1] for w,c in groups.items()},
-            'lagged':{w:c[2] for w,c in groups.items()},'universe':size,'composition_date':composition_date,'kind':'reconstructed'})
-    return result[-300:]
+            'lagged':{w:c[2] for w,c in groups.items()},'universe':active,'current_universe':size,'composition_date':composition_date,'kind':'reconstructed','cohort_basis':'current_members_first_quoted_by_date'})
+    return result
+
+def rsi_history(points, start, period=RSI_PERIOD):
+    out=[];previous=None;gains=[];losses=[];avg_gain=avg_loss=None
+    for day,value in points:
+        if value is None:
+            previous=None;gains=[];losses=[];avg_gain=avg_loss=None
+            if day>=start:out.append({'date':day,'value':None})
+            continue
+        emitted=False
+        if previous is not None:
+            change=value-previous;gain=max(change,0.);loss=max(-change,0.)
+            if avg_gain is None:
+                gains.append(gain);losses.append(loss)
+                if len(gains)==period:avg_gain=sum(gains)/period;avg_loss=sum(losses)/period
+            else:avg_gain=(avg_gain*(period-1)+gain)/period;avg_loss=(avg_loss*(period-1)+loss)/period
+            if avg_gain is not None and day>=start:
+                rsi=50. if avg_gain==avg_loss==0 else 100. if avg_loss==0 else 100-100/(1+avg_gain/avg_loss)
+                out.append({'date':day,'value':round(rsi,4)})
+                emitted=True
+        if day>=start and not emitted:out.append({'date':day,'value':None})
+        previous=value
+    return out
 
 def validate(data):
     if data.get('schema_version')!=1 or data.get('windows')!=WINDOWS or [m['id'] for m in data.get('markets',[])]!=[m['id'] for m in MARKETS]:raise ValueError('Invalid breadth schema')
     for market in data['markets']:
         seen=set();previous_date=''
         if market.get('status') not in {'current','stale','unavailable'}:raise ValueError('Invalid source status')
+        for p in market.get('rsi_history',[]):
+            date.fromisoformat(p['date']);v=p['value']
+            if p['date']<=previous_date or p['date']>data['expected_cutoff'] or v is not None and (not isinstance(v,(int,float)) or not math.isfinite(v) or not 0<=v<=100):raise ValueError('Invalid dated RSI value')
+            previous_date=p['date']
+        previous_date=''
         for point in market.get('history',[]):
             date.fromisoformat(point['date'])
             if point['date'] in seen or point['date']<=previous_date or point['date']>data['expected_cutoff']:raise ValueError('Duplicate, unordered or future breadth date')
@@ -241,10 +298,10 @@ def main(argv=None):
     while date.fromisoformat(cutoff).weekday()>=5:cutoff=(date.fromisoformat(cutoff)-timedelta(days=1)).isoformat()
     previous=json.loads(args.output.read_text()) if args.output.exists() else {};old={m['id']:m for m in previous.get('markets',[])}
     if args.due:
-        print('false' if previous.get('expected_cutoff')==cutoff and all(old.get(m['id'],{}).get('status')=='current' for m in MARKETS) else 'true');return 0
+        print('false' if previous.get('expected_cutoff')==cutoff and previous.get('method_version')=='current_survivor_cohort_v2' and all(old.get(m['id'],{}).get('status')=='current' and old[m['id']].get('rsi_status')=='current' for m in MARKETS) else 'true');return 0
     result={'schema_version':1,'generated_at':now.isoformat(timespec='seconds'),'expected_cutoff':cutoff,'windows':WINDOWS,'minimum_coverage':MIN_COVERAGE,
-        'max_local_lag_days':MAX_LOCAL_LAG_DAYS,
-        'method':'Nombre de titres au-dessus de leur propre SMA en séances locales, sans pondération. Dernière clôture locale disponible depuis 3 jours calendaires maximum; aucun prix répété dans les SMA. Cours ajustés Yahoo Finance. Univers des positions actions des FNB iShares publiées. Historique reconstitué sur les composantes courantes : biais de survivance; pas un historique officiel des membres des indices.', 'markets':[]}
+        'max_local_lag_days':MAX_LOCAL_LAG_DAYS,'history_years':HISTORY_YEARS,'history_start':years_before(cutoff,HISTORY_YEARS),'rsi_period':RSI_PERIOD,'method_version':'current_survivor_cohort_v2','history_revisions':previous.get('history_revisions',[]),
+        'method':'Nombre de titres au-dessus de leur propre SMA en séances locales, sans pondération. Cohorte historique des composantes courantes dont la première cotation indiquée par Yahoo précède la date; dates inconnues conservées au dénominateur de couverture. Historique reconstitué avec biais de survivance, pas les membres historiques officiels des indices. Couverture minimale 90 % de cette cohorte; effectifs variables affichés. Dernière clôture locale depuis 3 jours calendaires maximum; aucun prix répété dans les SMA. Cours ajustés Yahoo Finance. Univers iShares / BlackRock.', 'markets':[]}
     args.cache.mkdir(parents=True,exist_ok=True)
     universes={};all_symbols=set()
     for definition in MARKETS:
@@ -255,6 +312,7 @@ def main(argv=None):
             universes[definition['id']]=(dated,holdings,url)
             all_symbols.update(h['symbol'] for h in holdings if h['symbol']);print(definition['id'],dated,len(holdings),'equities',flush=True)
         except Exception as error:universes[definition['id']]=str(error);print(definition['id'],'holdings unavailable:',str(error)[:180],flush=True)
+    all_symbols.update(r['symbol'] for r in RSI_SOURCES.values())
     histories={};failures=[];stop=threading.Event()
     with ThreadPoolExecutor(max_workers=max(1,min(args.workers,16))) as executor:
         futures={executor.submit(stock_prices,symbol,cutoff,args.cache,stop):symbol for symbol in sorted(all_symbols)}
@@ -265,18 +323,26 @@ def main(argv=None):
                 if points:histories[symbol]=points
             except Exception as error:failures.append([symbol,str(error)[:100]])
             if index%100==0:print(index,'/',len(futures),'quotes;',len(histories),'valid;',len(failures),'failed',flush=True)
+    first_trade_dates={}
+    for symbol in histories:
+        saved=json.loads((args.cache/(hashlib.sha256(symbol.encode()).hexdigest()+'.json')).read_text())
+        if saved.get('first_trade_date'):first_trade_dates[symbol]=saved['first_trade_date']
     for definition in MARKETS:
         key=definition['id'];prior=old.get(key,{});item={**definition,'history':prior.get('history',[])};entry=universes[key]
+        source=RSI_SOURCES[key];rsi=rsi_history(histories.get(source['symbol'],[]),result['history_start'])
+        item.update(rsi_symbol=source['symbol'],rsi_label=source['label'],rsi_source_url='https://finance.yahoo.com/quote/'+quote(source['symbol'],safe='')+'/history/',rsi_history=rsi or prior.get('rsi_history',[]),rsi_status='current' if rsi and rsi[-1]['value'] is not None and (date.fromisoformat(cutoff)-date.fromisoformat(rsi[-1]['date'])).days<=5 else 'stale')
         try:
             if isinstance(entry,str):raise ValueError(entry)
-            dated,holdings,url=entry;history=breadth_history(holdings,histories,cutoff,dated)
+            dated,holdings,url=entry;history=breadth_history(holdings,histories,cutoff,dated,first_trade_dates=first_trade_dates,history_start=result['history_start'])
             complete=[p for p in history if all(v is not None for v in p['values'].values())]
             if not complete:raise ValueError('Insufficient complete coverage across the four SMAs')
             latest=complete[-1]['date']
             if (date.fromisoformat(cutoff)-date.fromisoformat(latest)).days>5:raise ValueError('Latest complete observation is stale')
-            frozen={p['date']:p for p in prior.get('history',[])};last=max(frozen,default='')
+            # Dated observations stay frozen. Reconstructed seed history can
+            # be extended using the explicitly versioned survivor cohort.
+            frozen={p['date']:p for p in prior.get('history',[]) if p.get('kind')!='reconstructed'}
             for point in history:
-                if point['date']>last:frozen[point['date']]=point
+                if point['date'] not in frozen:frozen[point['date']]=point
             item.update(history=[frozen[d] for d in sorted(frozen)],holdings_date=dated,holdings_url=url,universe_size=len(holdings),quote_series=len([h for h in holdings if h['symbol'] in histories]),latest_date=latest,status='current',error=None)
             # The latest point is a dated aggregate; earlier initial backfill
             # remains explicitly reconstructed and is never relabelled PIT.
@@ -285,6 +351,6 @@ def main(argv=None):
         result['markets'].append(item);print(key,item['status'],item['latest_date'],len(item['history']),'points',flush=True)
     result['quote_failures_count']=len(failures);result['rate_limited']=stop.is_set()
     validate(result);atomic_json(args.output,result)
-    return 0 if all(m['status']=='current' for m in result['markets']) else 1
+    return 0 if all(m['status']=='current' and m.get('rsi_status')=='current' for m in result['markets']) else 1
 
 if __name__=='__main__':raise SystemExit(main())

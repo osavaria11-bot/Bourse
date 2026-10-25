@@ -7,3 +7,5 @@ data/briefing-audio.json
 data/audio/
 
 .cache/market-breadth/
+
+.cache/fnb-daily-risk/

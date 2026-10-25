@@ -270,3 +270,9 @@ th:not(:first-child),td{text-align:right}
 @media(max-width:1000px){.exposure-grid{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:600px){.exposure-grid .risk-snapshot-metrics,.exposure-grid .factor-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.exposure-grid .risk-snapshot-metrics strong{font-size:22px}}
 @media print{.exposure-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.exposure-grid .factor-table table{min-width:0}}
+
+.exposure-grid .risk-snapshot-metrics{grid-template-columns:repeat(5,minmax(0,1fr))}
+@media(max-width:600px){.exposure-grid .risk-snapshot-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+.risk-distribution{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:4px 10px;padding:8px 0 10px;margin-bottom:7px;border-bottom:1px solid var(--border)}
+.risk-distribution>div{display:flex;align-items:baseline;justify-content:space-between;gap:6px}.risk-distribution span{font-size:10px;color:var(--muted)}.risk-distribution strong{font-size:17px;font-weight:600;font-variant-numeric:tabular-nums}.risk-distribution>small{grid-column:1/-1;font-size:9px;color:var(--muted)}

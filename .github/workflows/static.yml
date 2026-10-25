@@ -45,6 +45,8 @@ jobs:
         with:
           node-version: "24"
           cache: npm
+      - name: Restore verified ten-year breadth bootstrap
+        run: python scripts/restore_breadth_seed.py
       - name: Collector regression tests
         # The recession source is the NY Fed's legacy XLS workbook.
         # Install the same pinned reader used by scheduled macro updates.
@@ -61,6 +63,7 @@ jobs:
           python scripts/daily_fnb.py --check
           python scripts/common_fnb.py --check
           python scripts/collect_market_breadth.py --check
+          python scripts/collect_fnb_daily_risk.py --check
           node scripts/build_frontier_monthly.cjs --check
           node --check scripts/build_monthly_fnb.cjs
           node --check js/fnb-dashboard.js
@@ -284,6 +287,7 @@ jobs:
         run: |
           mkdir -p _site
           cp index.html 221.png 2121.png _site/
+          python3 scripts/restore_breadth_seed.py
           node scripts/build_monthly_fnb.cjs
           node scripts/build_report_archive.cjs
           cp -R css js data reports _site/

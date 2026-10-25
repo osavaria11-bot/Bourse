@@ -36,6 +36,7 @@ class BreadthTests(unittest.TestCase):
         flat=B.breadth_history([{'symbol':'A'}],{'A':list(zip(dates,[.1]*len(dates)))},dates[-1],dates[-1]);self.assertEqual(flat[-1]['values']['200'],0.)
 
     def test_exchange_mapping_handles_share_classes_and_adr_listings(self):
+        self.assertEqual(B.yahoo_symbol({'Ticker':'WCN','Location':'United States','Exchange':'Toronto Stock Exchange'}),'WCN.TO')
         self.assertEqual(B.yahoo_symbol({'Ticker':'BRK.B','Location':'United States'}),'BRK-B')
         self.assertEqual(B.yahoo_symbol({'Ticker':'700','Location':'China','Exchange':'Hong Kong Exchanges And Clearing Ltd'}),'0700.HK')
         self.assertEqual(B.yahoo_symbol({'Ticker':'BABA','Location':'China','Exchange':'New York Stock Exchange Inc.'}),'BABA')
@@ -89,5 +90,26 @@ class BreadthTests(unittest.TestCase):
         payload={'chart':{'result':[{'meta':{'symbol':'A','exchangeTimezoneName':'America/Toronto'},'timestamp':[datetime(2026,10,20,20,tzinfo=timezone.utc).timestamp(),datetime(2026,10,21,20,tzinfo=timezone.utc).timestamp()],'indicators':{'adjclose':[{'adjclose':[10.,11.]}]}}]}}
         points=B.parse_prices(payload,'A','2026-10-20',1);self.assertEqual(points,[('2026-10-20',10.)])
         with self.assertRaises(ValueError):B.parse_prices(payload,'B','2026-10-20',1)
+
+    def test_historical_survivor_cohort_excludes_only_verified_future_first_quotes(self):
+        from datetime import date,timedelta
+        dates=[(date(2025,1,1)+timedelta(days=i)).isoformat() for i in range(230)]
+        histories={'A':list(zip(dates,range(1,231))),'B':list(zip(dates[-20:],range(1,21)))}
+        rows=B.breadth_history([{'symbol':'A'},{'symbol':'B'}],histories,dates[-1],dates[-1],first_trade_dates={'B':dates[-20]})
+        before=next(p for p in rows if p['date']==dates[205])
+        self.assertEqual(before['universe'],1);self.assertEqual(before['values']['200'],100.)
+        self.assertEqual(rows[-1]['universe'],2);self.assertIsNone(rows[-1]['values']['200'])
+
+    def test_wilder_rsi_uses_fourteen_changes_then_one_fourteenth_smoothing_and_preserves_gaps(self):
+        from datetime import date,timedelta
+        dates=[(date(2025,1,1)+timedelta(days=i)).isoformat() for i in range(40)]
+        prices=[100.]
+        for change in [1.]*7+[-1.]*7+[1.]:prices.append(prices[-1]+change)
+        rows=B.rsi_history(list(zip(dates,prices)),dates[0])
+        self.assertAlmostEqual(rows[14]['value'],50.)
+        self.assertAlmostEqual(rows[15]['value'],53.5714)
+        rows=B.rsi_history(list(zip(dates,[100.]*40)),dates[0]);self.assertEqual(rows[-1]['value'],50.)
+        series=list(zip(dates,range(1,41)));series[-10]=(dates[-10],None)
+        rows=B.rsi_history(series,dates[0]);self.assertIsNone(rows[-1]['value'])
 
 if __name__=='__main__':unittest.main()

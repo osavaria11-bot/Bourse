@@ -84,7 +84,7 @@ async function check(browser,engine){
    const c = factors.compare(D, id, ref), row = page.locator('#factorValues [data-factor="market"]');
    assert.equal(await page.locator('#factorContent').isVisible(), true);
    assert.equal(await page.locator('#riskSnapshotContent').isVisible(),true);
-   assert.equal(await page.locator('.risk-snapshot-metrics>div').count(),4);
+   assert.equal(await page.locator('.risk-snapshot-metrics>div').count(),5);
    assert.equal(await page.locator('[data-risk-contribution]').count(),Math.min(4,Object.keys(D.results[id].weights).length));
    assert.equal(await page.locator('#factorValues [data-factor]').count(), 5);
    assert.match(await page.locator('#factorStatus').innerText(), new RegExp(ref + '.*' + D.dates.length + ' mois'));

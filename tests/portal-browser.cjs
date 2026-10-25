@@ -125,7 +125,7 @@ async function check(browser, engine) {
   await fundReport.locator('.nav [data-tab="exposures"]').click();
   assert.equal(await fundReport.locator("#exposures").isVisible(), true);
   assert.equal(await fundReport.locator('#riskSnapshotTitle').isVisible(),true);
-  assert.equal(await fundReport.locator('.risk-snapshot-metrics>div').count(),4);
+  assert.equal(await fundReport.locator('.risk-snapshot-metrics>div').count(),5);
   assert.equal(await fundReport.locator('[data-risk-contribution]').count(),4);
   assert.equal(await fundReport.locator("#overview").isVisible(), false);
   await fundReport.locator("#sectorFocus").selectOption("11");
@@ -153,6 +153,13 @@ async function check(browser, engine) {
   assert.notEqual(await breadthReading.innerText(),latestBreadth,'Keyboard selection changes the actual historical observation');
   await breadthFirst.press('End');
   for(const period of ['1M','3M','6M','1Y','ALL']){await page.locator('[data-breadth-period="'+period+'"]').click();assert.equal(await page.locator('#breadthGrid .breadth-card svg').count(),4);}
+  assert.equal(await page.locator('[data-breadth-rsi="14"]').count(),4);
+  assert.equal(await page.locator('[data-rsi-threshold="30"]').count(),4);
+  assert.equal(await page.locator('[data-rsi-threshold="70"]').count(),4);
+  await page.locator('#breadthSmaChoice').selectOption('200');assert.equal(await page.locator('[data-breadth-sma]').count(),4);
+  await page.locator('#breadthMarketChoice').selectOption('emerging');assert.equal(await page.locator('.breadth-card').count(),1);
+  await page.locator('[data-breadth-period="10Y"]').click();assert.ok((await page.locator('.breadth-card svg text.breadth-axis').allTextContents()).some(s=>/\b16$/.test(s)));
+  await page.locator('#breadthMarketChoice').selectOption('ALL');await page.locator('#breadthSmaChoice').selectOption('ALL');
   await shot("market-breadth");
   await go("marches", "rates");
   const oddsNow = new Date().toISOString(), oddsDay = oddsNow.slice(0,10), oddsMeeting = new Date(Date.now()+14*86400000).toISOString().slice(0,10);

@@ -26,3 +26,10 @@ test('the compact card is idempotent and survives the shared report renderer',()
  const a=view(html);assert.equal(view(a),a);assert.equal((a.match(/id="riskSnapshotTitle"/g)||[]).length,1);
  assert.match(fs.readFileSync(require.resolve('../scripts/build_monthly_fnb.cjs'),'utf8'),/fnb_risk_view/);
 });
+
+test('one-session VaR and distribution shape require the current weights and a real daily sample',()=>{
+ const daily=require('../data/fnb-daily-risk.json');
+ for(const id of D.order){const c=R.dailyMeasure(D,id,daily);assert.equal(c.available,true);assert.equal(c.var,daily.results[id].var95);assert.equal(c.skewness,daily.results[id].skewness);assert.equal(c.excessKurtosis,daily.results[id].excess_kurtosis);}
+ const short=structuredClone(daily);short.observations=5;assert.equal(R.dailyMeasure(D,'7',short).available,false);
+ const changed=structuredClone(D);changed.results['7'].weights.FINN+=.01;assert.equal(R.dailyMeasure(changed,'7',daily).available,false);
+});

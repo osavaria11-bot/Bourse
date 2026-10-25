@@ -1,0 +1,394 @@
+{
+  "schema_version": 1,
+  "confidence": 0.95,
+  "horizon_sessions": 1,
+  "method": "historical_current_target_weights_v1",
+  "generated_at": "2026-10-24T18:26:20-04:00",
+  "as_of": "2026-10-23",
+  "sample_start": "2023-06-01",
+  "sample_end": "2026-10-23",
+  "observations": 853,
+  "expected_observations": 853,
+  "missing_sessions": [],
+  "weights_signature": "1395170bca378fd4c66cac43de3ca8ae9ced68ced71cedd0d95b16941490e21d",
+  "shape_estimators": "bias_corrected_fisher",
+  "status": "current",
+  "error": null,
+  "results": {
+    "recommended-2026-10-sp500-surperformance": {
+      "weights": {
+        "ZNQ": 0.35,
+        "ZUQ": 0.226,
+        "VDY": 0.188,
+        "XEF": 0.12,
+        "VEE": 0.066,
+        "VCN": 0.05
+      },
+      "var95": 0.012204044879850747,
+      "skewness": 0.2150422880856544,
+      "excess_kurtosis": 11.375256008482738
+    },
+    "recommended-2026-10-sp500-sharpe-or": {
+      "weights": {
+        "ZNQ": 0.35,
+        "ZUQ": 0.195,
+        "VDY": 0.09,
+        "XEF": 0.114,
+        "VEE": 0.063,
+        "ZLB": 0.088,
+        "CGL.C": 0.05,
+        "ZEO": 0.05
+      },
+      "var95": 0.011209132403207794,
+      "skewness": 0.23070071248786428,
+      "excess_kurtosis": 12.042451947249653
+    },
+    "recommended-2026-10-sp500-noyau-veqt": {
+      "weights": {
+        "ZNQ": 0.35,
+        "ZUQ": 0.114,
+        "VDY": 0.128,
+        "XEF": 0.082,
+        "VEE": 0.051,
+        "ZEO": 0.05,
+        "VEQT": 0.2,
+        "VVL": 0.025
+      },
+      "var95": 0.011611051674686393,
+      "skewness": 0.15499585541625446,
+      "excess_kurtosis": 12.919144188195641
+    },
+    "robust-2026-10-1": {
+      "weights": {
+        "CGL.C": 0.05,
+        "FCIV": 0.2726373480084818,
+        "FCMO": 0.22146539041505411,
+        "FINN": 0.14888191335716783,
+        "VEE": 0.052388084039207444,
+        "XMV": 0.20462726418009014,
+        "ZEO": 0.05
+      },
+      "var95": 0.010910094885673384,
+      "skewness": -0.6572193092457437,
+      "excess_kurtosis": 6.425550897764566
+    },
+    "robust-2026-10-2": {
+      "weights": {
+        "CGL.C": 0.05,
+        "FCIV": 0.19084614360593724,
+        "FCMO": 0.15502577329053788,
+        "FCUQ": 0.024000000000000004,
+        "FINN": 0.10421733935001748,
+        "VCN": 0.08400000000000002,
+        "VEE": 0.05467165882744521,
+        "VFV": 0.10500000000000001,
+        "XEF": 0.054000000000000006,
+        "XMV": 0.14323908492606308,
+        "ZEO": 0.034999999999999996
+      },
+      "var95": 0.011199364477270816,
+      "skewness": -0.6150997760216127,
+      "excess_kurtosis": 6.981717389987699
+    },
+    "robust-2026-10-3": {
+      "weights": {
+        "CGL.C": 0.05,
+        "FCIV": 0.1363186740042409,
+        "FCMO": 0.11073269520752706,
+        "FCUQ": 0.04,
+        "FINN": 0.07444095667858391,
+        "VCN": 0.14,
+        "VEE": 0.05619404201960372,
+        "VFV": 0.175,
+        "XEF": 0.09,
+        "XMV": 0.10231363209004507,
+        "ZEO": 0.025
+      },
+      "var95": 0.01074548902562818,
+      "skewness": -0.510072723984449,
+      "excess_kurtosis": 7.81811013916113
+    },
+    "proposal": {
+      "weights": {
+        "FCUL": 0.194,
+        "FCUQ": 0.066,
+        "VDY": 0.098,
+        "VEE": 0.085,
+        "XMI": 0.257,
+        "ZEO": 0.05,
+        "ZLB": 0.136,
+        "ZNQ": 0.114
+      },
+      "var95": 0.0072757773275529125,
+      "skewness": -0.579800858034016,
+      "excess_kurtosis": 8.631622751171243
+    },
+    "1": {
+      "weights": {
+        "FEQT": 0.4,
+        "FINN": 0.1,
+        "VDY": 0.25,
+        "FCUQ": 0.2,
+        "FCMO": 0.05
+      },
+      "var95": 0.009882720892671898,
+      "skewness": -0.4457273719211037,
+      "excess_kurtosis": 7.591399926203301
+    },
+    "2": {
+      "weights": {
+        "FEQT": 0.25,
+        "FINN": 0.15,
+        "FCUL": 0.2,
+        "ZLB": 0.15,
+        "VDY": 0.1,
+        "FCIV": 0.1,
+        "VEE": 0.05
+      },
+      "var95": 0.009012764214219194,
+      "skewness": -0.5534753084997686,
+      "excess_kurtosis": 5.920878175109543
+    },
+    "3": {
+      "weights": {
+        "FEQT": 0.15,
+        "FCUL": 0.35,
+        "ZLB": 0.12,
+        "VDY": 0.06,
+        "FCIV": 0.17,
+        "VEE": 0.15
+      },
+      "var95": 0.007957841398247407,
+      "skewness": -0.7234377670815839,
+      "excess_kurtosis": 8.206879238053567
+    },
+    "4": {
+      "weights": {
+        "FEQT": 0.25,
+        "FINN": 0.1,
+        "FCUL": 0.15,
+        "ZLB": 0.15,
+        "VDY": 0.1,
+        "FCIV": 0.1,
+        "VEE": 0.05,
+        "XMI": 0.05,
+        "CGL.C": 0.05
+      },
+      "var95": 0.008606389545043374,
+      "skewness": -0.5498082662156212,
+      "excess_kurtosis": 6.274457599862732
+    },
+    "5": {
+      "weights": {
+        "FEQT": 0.25,
+        "FINN": 0.1,
+        "FCUL": 0.1,
+        "ZLB": 0.15,
+        "VDY": 0.1,
+        "FCIV": 0.1,
+        "VEE": 0.05,
+        "CGL.C": 0.05,
+        "ZNQ": 0.1
+      },
+      "var95": 0.00937843844297232,
+      "skewness": -0.36722906209137574,
+      "excess_kurtosis": 6.51509825524323
+    },
+    "6": {
+      "weights": {
+        "ZLB": 0.211,
+        "VDY": 0.053,
+        "FCIV": 0.106,
+        "XMI": 0.106,
+        "CGL.C": 0.05,
+        "ZNQ": 0.263,
+        "ZEO": 0.106,
+        "RUD": 0.105
+      },
+      "var95": 0.008070940643982182,
+      "skewness": 0.05513846377999007,
+      "excess_kurtosis": 14.382360721275838
+    },
+    "7": {
+      "weights": {
+        "FINN": 0.19,
+        "VDY": 0.169,
+        "FCIV": 0.127,
+        "XMI": 0.116,
+        "CGL.C": 0.05,
+        "ZEO": 0.074,
+        "ZEB": 0.084,
+        "RUD": 0.19
+      },
+      "var95": 0.009479706997828727,
+      "skewness": -0.5965841682665274,
+      "excess_kurtosis": 6.595738847428753
+    },
+    "8": {
+      "weights": {
+        "FEQT": 0.4,
+        "FINN": 0.1,
+        "VEE": 0.05,
+        "XEF": 0.05,
+        "VMO": 0.15,
+        "VCN": 0.25
+      },
+      "var95": 0.012081689730588225,
+      "skewness": -0.2800951676110482,
+      "excess_kurtosis": 6.284210308014843
+    },
+    "9": {
+      "weights": {
+        "FEQT": 0.35,
+        "FINN": 0.15,
+        "VEE": 0.05,
+        "XEF": 0.05,
+        "VMO": 0.25,
+        "VCN": 0.15
+      },
+      "var95": 0.012941756642614415,
+      "skewness": -0.3089441170932371,
+      "excess_kurtosis": 5.125916686164425
+    },
+    "10": {
+      "weights": {
+        "FBAL": 0.7,
+        "ZNQ": 0.1,
+        "VDY": 0.1,
+        "ZEO": 0.05,
+        "CGL.C": 0.05
+      },
+      "var95": 0.0075874854782220225,
+      "skewness": -0.5436638818229468,
+      "excess_kurtosis": 4.831055175791302
+    },
+    "11": {
+      "weights": {
+        "FGRO": 0.59,
+        "FINN": 0.11,
+        "VDY": 0.16,
+        "XMI": 0.09,
+        "CGL.C": 0.05
+      },
+      "var95": 0.008429915744204142,
+      "skewness": -0.39755887853285893,
+      "excess_kurtosis": 5.412792236790483
+    },
+    "FBAL": {
+      "weights": {
+        "FBAL": 1
+      },
+      "var95": 0.006997494178309749,
+      "skewness": -0.15306476980707923,
+      "excess_kurtosis": 3.834003653185681
+    },
+    "VBAL": {
+      "weights": {
+        "VBAL": 1
+      },
+      "var95": 0.0077601999664013155,
+      "skewness": -0.04369096476688841,
+      "excess_kurtosis": 6.999509950135519
+    },
+    "FGRO": {
+      "weights": {
+        "FGRO": 1
+      },
+      "var95": 0.008940962999836044,
+      "skewness": -0.14683019593480706,
+      "excess_kurtosis": 6.279319614380665
+    },
+    "VGRO": {
+      "weights": {
+        "VGRO": 1
+      },
+      "var95": 0.009461528933342844,
+      "skewness": -0.06153529231539786,
+      "excess_kurtosis": 9.628325927027054
+    },
+    "FEQT": {
+      "weights": {
+        "FEQT": 1
+      },
+      "var95": 0.010299999999999976,
+      "skewness": 0.06255229739604848,
+      "excess_kurtosis": 11.140328955064115
+    },
+    "VEQT": {
+      "weights": {
+        "VEQT": 1
+      },
+      "var95": 0.011656196490624438,
+      "skewness": -0.004767887897005136,
+      "excess_kurtosis": 11.195493922839006
+    },
+    "VFV": {
+      "weights": {
+        "VFV": 1
+      },
+      "var95": 0.012544737771988501,
+      "skewness": 0.17531423845141333,
+      "excess_kurtosis": 14.489643954845546
+    }
+  },
+  "source": "CAD, rendement total. FEQT : rendements quotidiens officiels Fidelity sur valeur liquidative, utilisés sur toute la fenêtre. Autres FNB : clôtures boursières ajustées Yahoo Finance. Distributions et fractionnements ajustés.",
+  "return_basis": {
+    "CGL.C": "adjusted_market_close_total_return",
+    "FBAL": "adjusted_market_close_total_return",
+    "FCIV": "adjusted_market_close_total_return",
+    "FCMO": "adjusted_market_close_total_return",
+    "FCUL": "adjusted_market_close_total_return",
+    "FCUQ": "adjusted_market_close_total_return",
+    "FEQT": "issuer_nav_total_return",
+    "FGRO": "adjusted_market_close_total_return",
+    "FINN": "adjusted_market_close_total_return",
+    "RUD": "adjusted_market_close_total_return",
+    "VBAL": "adjusted_market_close_total_return",
+    "VCN": "adjusted_market_close_total_return",
+    "VDY": "adjusted_market_close_total_return",
+    "VEE": "adjusted_market_close_total_return",
+    "VEQT": "adjusted_market_close_total_return",
+    "VFV": "adjusted_market_close_total_return",
+    "VGRO": "adjusted_market_close_total_return",
+    "VMO": "adjusted_market_close_total_return",
+    "VVL": "adjusted_market_close_total_return",
+    "XEF": "adjusted_market_close_total_return",
+    "XMI": "adjusted_market_close_total_return",
+    "XMV": "adjusted_market_close_total_return",
+    "ZEB": "adjusted_market_close_total_return",
+    "ZEO": "adjusted_market_close_total_return",
+    "ZLB": "adjusted_market_close_total_return",
+    "ZNQ": "adjusted_market_close_total_return",
+    "ZUQ": "adjusted_market_close_total_return"
+  },
+  "source_urls": [
+    "https://finance.yahoo.com/quote/CGL-C.TO/history/",
+    "https://finance.yahoo.com/quote/FBAL.NE/history/",
+    "https://finance.yahoo.com/quote/FCIV.TO/history/",
+    "https://finance.yahoo.com/quote/FCMO.NE/history/",
+    "https://finance.yahoo.com/quote/FCUL.NE/history/",
+    "https://finance.yahoo.com/quote/FCUQ.TO/history/",
+    "https://finance.yahoo.com/quote/FGRO.NE/history/",
+    "https://finance.yahoo.com/quote/FINN.NE/history/",
+    "https://finance.yahoo.com/quote/RUD.TO/history/",
+    "https://finance.yahoo.com/quote/VBAL.TO/history/",
+    "https://finance.yahoo.com/quote/VCN.TO/history/",
+    "https://finance.yahoo.com/quote/VDY.TO/history/",
+    "https://finance.yahoo.com/quote/VEE.TO/history/",
+    "https://finance.yahoo.com/quote/VEQT.TO/history/",
+    "https://finance.yahoo.com/quote/VFV.TO/history/",
+    "https://finance.yahoo.com/quote/VGRO.TO/history/",
+    "https://finance.yahoo.com/quote/VMO.TO/history/",
+    "https://finance.yahoo.com/quote/VVL.TO/history/",
+    "https://finance.yahoo.com/quote/XEF.TO/history/",
+    "https://finance.yahoo.com/quote/XMI.TO/history/",
+    "https://finance.yahoo.com/quote/XMV.TO/history/",
+    "https://finance.yahoo.com/quote/ZEB.TO/history/",
+    "https://finance.yahoo.com/quote/ZEO.TO/history/",
+    "https://finance.yahoo.com/quote/ZLB.TO/history/",
+    "https://finance.yahoo.com/quote/ZNQ.TO/history/",
+    "https://finance.yahoo.com/quote/ZUQ.TO/history/",
+    "https://www.fidelity.ca/en/products/etfs/feqt/"
+  ],
+  "method_note": "Simulation historique à poids cibles actuels constants : somme des poids × rendements réels de chaque séance. Échantillon commun à tous les portefeuilles et benchmarks. FEQT utilise les rendements totaux quotidiens de valeur liquidative de son émetteur sur toute la fenêtre, sans raccorder des prix de fournisseurs différents. Les autres fonds utilisent deux clôtures ajustées consécutives d’une même source. Les séances manquantes sont exclues; aucun rendement sur plusieurs séances ne devient une observation à un jour. Distinct du backtest mensuel rééquilibré en janvier et du suivi réel depuis lancement."
+}
