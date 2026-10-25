@@ -15,6 +15,7 @@ window.SavyFnbDecision=(()=>{
     try{recorded=P.validate(JSON.parse($('fnbRecordedInput')?.textContent||'null'));}catch{recordError='Suivi enregistré indisponible.';}
     try{
       const p=JSON.parse(localStorage.getItem(storage)||'{}');
+      if(['historical','forward'].includes(p.mode))$('decisionMode').value=p.mode;
       if(U.GOALS[p.goal])$('decisionGoal').value=p.goal;
       if(['2','5','10'].includes(p.horizon))$('decisionHorizon').value=p.horizon;
       if(Number.isFinite(p.loss)&&p.loss>0&&p.loss<=100)$('decisionLoss').value=String(p.loss);
@@ -25,7 +26,9 @@ window.SavyFnbDecision=(()=>{
     const reference=()=>$('referenceSelect').value;
     const capital=()=>actions.capital();
     const limit=()=>{const raw=$('decisionLoss').value.trim().replace(/%/g,'').replace(',','.');return /^\d+(?:\.\d+)?$/.test(raw)&&Number(raw)>0&&Number(raw)<=100?Number(raw)/100:null;};
-    const persist=()=>{try{localStorage.setItem(storage,JSON.stringify({goal:$('decisionGoal').value,horizon:$('decisionHorizon').value,loss:limit()===null?null:limit()*100,capital:capital(),selected}));}catch{}};
+    const persist=()=>{try{localStorage.setItem(storage,JSON.stringify({mode:$('decisionMode').value,goal:$('decisionGoal').value,horizon:$('decisionHorizon').value,loss:limit()===null?null:limit()*100,capital:capital(),selected}));}catch{}};
+    const historicalHead=$('decisionHead').innerHTML;
+    const forward=window.SavyFnbForward.start(D,stress,{selected:()=>selected,reference,capital,limit,label,allowed:()=>U.candidates(D,reference()),open:actions.open});
     function model(){
       selected=U.choices(D,reference(),selected);const key=selected.join('|')+'|'+reference();
       if(key!==signature){signature=key;analysis=U.analyse(D,selected,reference(),daily,stress);sensKey='';}
@@ -45,23 +48,25 @@ window.SavyFnbDecision=(()=>{
     function table(a){
       const goal=$('decisionGoal').value,g=U.GOALS[goal],rank=U.ranks(a.rows,goal),allowed=U.candidates(D,reference());
       $('decisionBody').innerHTML=a.rows.map(row=>{
-        const chosen=selected.indexOf(row.id),first=rank.get(row.id)===1;
+        const chosen=selected.indexOf(row.id),first=rank.get(row.id)===1,global=goal==='global'?window.SavyFnbForecast.global(a.rows):null;
         const title=row.isBenchmark?'<b>'+esc(label(row.id))+'</b><small>Référence commune</small>':'<div class="decision-selector"><select data-decision-choice="'+chosen+'" aria-label="Candidat '+(chosen+1)+'">'+allowed.map(id=>'<option value="'+esc(id)+'"'+(id===row.id?' selected':'')+(selected.includes(id)&&id!==row.id?' disabled':'')+'>'+esc(label(id))+'</option>').join('')+'</select><div class="decision-actions"><button type="button" data-decision-open="'+esc(row.id)+'">Fiche</button><button type="button" data-decision-risk="'+esc(row.id)+'">Risque</button></div></div>';
         const value=(key,formatted,note='')=>'<td data-decision-value="'+key+'" class="'+(g?.key===key?'decision-highlight ':'')+(first&&g?.key===key?'decision-best':'')+'">'+formatted+(note?'<small>'+note+'</small>':'')+'</td>';
-        return '<tr data-decision-row="'+esc(row.id)+'"'+(row.isBenchmark?' class="benchmark"':'')+'><th scope="row">'+title+threshold(row)+'</th>'+value('annualReturn',pct(row.annualReturn,1))+value('sharpe',num(row.sharpe))+value('maxDrawdown',pct(row.maxDrawdown,1),Number.isFinite(row.maxDrawdown)?money(row.maxDrawdown*capital()):'Non estimable')+value('cvar',pct(row.cvar,2),row.cvar===null?'Échantillon insuffisant':money(row.cvar*capital())+(row.tailFragile?' · fragile':''))+value('mer',pct(row.mer,2))+'<td>'+afterPublication(row)+'</td></tr>';
+        return '<tr data-decision-row="'+esc(row.id)+'"'+(row.isBenchmark?' class="benchmark"':'')+'><th scope="row">'+title+(global&&!row.isBenchmark?'<small>Rang global '+rank.get(row.id)+' · '+esc(global.comparisons.find(r=>r.id===row.id)?.strengths.join(' / ')||'Compromis')+'</small>':'')+threshold(row)+'</th>'+value('annualReturn',pct(row.annualReturn,1))+value('sharpe',num(row.sharpe))+value('maxDrawdown',pct(row.maxDrawdown,1),Number.isFinite(row.maxDrawdown)?money(row.maxDrawdown*capital()):'Non estimable')+value('cvar',pct(row.cvar,2),row.cvar===null?'Échantillon insuffisant':money(row.cvar*capital())+(row.tailFragile?' · fragile':''))+value('mer',pct(row.mer,2))+'<td>'+afterPublication(row)+'</td></tr>';
       }).join('');
       document.querySelectorAll('[data-decision-metric]').forEach(th=>th.classList.toggle('decision-highlight',th.dataset.decisionMetric===g?.key));
     }
     function reading(a){
       const goal=$('decisionGoal').value,g=U.GOALS[goal],ranks=U.ranks(a.rows,goal),leaders=a.rows.filter(r=>ranks.get(r.id)===1),eligible=a.rows.filter(r=>!r.isBenchmark&&Number.isFinite(r[g?.key]));
-      let text=g?(leaders.length&&eligible.length===selected.length?'En tête sur le critère « '+g.metric+' » parmi ces candidats : '+leaders.map(r=>label(r.id)).join(', ')+'. ':'Critère « '+g.metric+' » non comparable pour tous les candidats. '):'Choisis les candidats, puis un objectif pour mettre en évidence un critère de comparaison. ';
-      if(goal==='protection')text+='CVaR estimée dans un historique limité; ce classement est exploratoire. ';
-      const years=Number($('decisionHorizon').value);
-      if(years)text+='Horizon personnel : '+years+' ans; '+(a.dates.length/a.frequency<years?'l’historique est plus court que cet horizon. ':'aucun rendement futur n’est extrapolé. ');
-      if(limit()!==null)text+='Seuil personnel : '+pct(limit(),1)+' ('+money(limit()*capital())+'). Les pertes futures peuvent le dépasser.';
-      $('decisionReading').textContent=text;
-      $('decisionLossMoney').textContent=limit()===null?'':money(limit()*capital());
-      const invalid=$('decisionLoss').value.trim()!==''&&limit()===null;$('decisionLossError').hidden=!invalid;$('decisionLoss').setAttribute('aria-invalid',String(invalid));
+      const years=Number($('decisionHorizon').value),h=U.horizon(a,years),complete=leaders.length&&eligible.length===selected.length,leader=complete?leaders[0]:null;
+      const criterionValue=row=>goal==='balance'?num(row.sharpe):pct(row[g.key],2);
+      const referenceRow=a.rows.find(r=>r.isBenchmark);
+      let choice=g?(complete?'En tête selon le '+g.metric+' historique : '+leaders.map(r=>label(r.id)+' ('+criterionValue(r)+')').join(', ')+'. '+(referenceRow&&Number.isFinite(referenceRow[g.key])?'Référence '+reference()+' : '+criterionValue(referenceRow)+'. ':'')+(g.higher?'Plus élevé est préférable sur ce critère. ':'Plus faible est préférable sur ce critère. ')+'Période : '+a.start+' → '+a.end+'.':'Critère « '+g.metric+' » non comparable pour tous les candidats.'):'Choisis aussi un objectif : croissance compare le rendement passé, compromis le Sharpe et protection la CVaR. Le menu ne calcule pas de probabilité de succès.';
+      if(goal==='global'){const g=window.SavyFnbForecast.global(a.rows);choice='Comparaison globale : '+g.front.map(label).join(', ')+(g.front.length>1?' partagent les compromis non dominés. ':' occupe le premier rang. ')+g.method;}
+      let horizonText='Précise ton horizon pour vérifier sa couverture et, si possible, afficher un rejeu historique sur cette durée.';
+      if(h)horizonText=h.available?'Rejeu sur '+years+' ans : '+h.results.map(r=>label(r.id)+' '+pct(r.total,1)).join(' · ')+'. Rendements cumulés du '+h.start+' au '+h.end+', référence sur les mêmes dates. Une seule période passée; ce ne sont pas des rendements futurs.':h.reason+' Données disponibles : '+a.start+' → '+a.end+'. Aucune projection ou probabilité de gain à '+years+' ans n’est estimée.';
+      let riskText=leader?'Pour '+money(capital())+', '+label(leader.id)+' présente un recul maximal historique simulé de '+(Number.isFinite(leader.maxDrawdown)?money(leader.maxDrawdown*capital()):'non estimable')+'. Sa CVaR estimée à 21 séances est '+(Number.isFinite(leader.cvar)?money(leader.cvar*capital())+(leader.tailFragile?' (fragile)':''):'indisponible')+'. Les pertes futures peuvent être plus fortes.':'Le tableau permet de comparer rendement, pertes et frais. Indique ta perte supportable pour repérer les dépassements dans les mesures et scénarios disponibles.';
+      if(limit()!==null){const breached=a.rows.filter(r=>!r.isBenchmark&&U.tolerance(r,limit()).status==='exceeded');riskText='Seuil personnel : '+pct(limit(),1)+' ('+money(limit()*capital())+'). '+breached.length+' candidat(s) sur '+selected.length+' le dépassent dans les mesures ou scénarios disponibles. '+(leader&&U.tolerance(leader,limit()).status==='exceeded'?label(leader.id)+' dépasse aussi ce seuil. ':'')+'Ce seuil ne limite pas les pertes futures.';}
+      $('decisionReading').innerHTML='<strong id="decisionResultTitle">'+esc(h?'Lecture pour ton horizon de '+years+' ans':g?'Résultat selon ton objectif':'Comment choisir entre ces candidats ?')+'</strong><div class="decision-result-lines"><p data-result-choice><b>Critère de choix</b>'+esc(choice)+(goal==='protection'&&a.rows.some(r=>r.tailFragile)?'<small>Estimation de queue fragile : lecture exploratoire.</small>':'')+'</p><p id="decisionHorizonResult"><b>'+esc(h?'Ce que permet cet horizon':'Durée de placement')+'</b>'+esc(horizonText)+'</p><p data-result-risk><b>Pertes à examiner</b>'+esc(riskText)+'</p></div>';
       const short=a.rows.filter(r=>!r.isBenchmark).map(r=>U.recorded(D,r.id,reference(),recorded));
       const latest=recorded?.as_of,expected=P?.expectedSession(),stale=latest&&expected&&latest<expected,riskStale=daily?.status==='stale'||(expected&&daily?.as_of<expected);
       $('decisionDataStatus').textContent=(a.basis==='daily'?a.rows[0].observations+' séances communes · '+a.rows[0].blocks+' blocs de 21 séances'+(a.rows.some(r=>r.tailFragile)?' · estimations de queue fragiles. ':'. '):'Historique quotidien incompatible : toutes les lignes utilisent le même backtest mensuel. ')+(riskStale?'Données de risque périmées. ':'')+(stale?'Suivi enregistré en retard : '+latest+'. ':'')+(recordError?recordError+' ':'')+(short.some(s=>s.available&&s.short)?'Suivi après publication encore trop court; ses dates propres ne permettent pas de classer les rendements ensemble.':'Les suivis après publication ont leurs propres dates, distinctes du comparatif historique.');
@@ -95,7 +100,12 @@ window.SavyFnbDecision=(()=>{
       }
     }
     function render(){
-      const a=model();if(!a.available){$('decisionPeriod').textContent=a.reason;for(const id of ['decisionBody','decisionReading','decisionDataStatus','decisionProtection','decisionSensitivity','decisionSources'])$(id).textContent='';renderCards();$('decisionPanel').dataset.ready='true';return;}
+      $('decisionLossMoney').textContent=limit()===null?'':money(limit()*capital());
+      const invalid=$('decisionLoss').value.trim()!==''&&limit()===null;$('decisionLossError').hidden=!invalid;$('decisionLoss').setAttribute('aria-invalid',String(invalid));
+      const a=model();
+      if($('decisionMode').value==='forward'){forward.render();renderCards();persist();return;}
+      forward.pause();$('decisionHead').innerHTML=historicalHead;
+      if(!a.available){$('decisionPeriod').textContent=a.reason;for(const id of ['decisionBody','decisionReading','decisionDataStatus','decisionProtection','decisionSensitivity','decisionSources'])$(id).textContent='';renderCards();$('decisionPanel').dataset.ready='true';return;}
       $('decisionPeriod').textContent=a.start+' → '+a.end+' · '+a.method+' Frais des FNB inclus; courtage et impôts exclus. Capital comparé : '+money(capital())+'.';
       table(a);reading(a);if($('decisionDetails').open){protection(a);diagnostics(a);}renderCards();persist();
       $('decisionPanel').dataset.ready='true';
@@ -113,7 +123,7 @@ window.SavyFnbDecision=(()=>{
     document.addEventListener('change',e=>{
       const el=e.target;
       if(el.hasAttribute('data-decision-choice')){selected[Number(el.dataset.decisionChoice)]=el.value;signature='';render();}
-      else if(['decisionGoal','decisionHorizon','referenceSelect'].includes(el.id))render();
+      else if(['decisionMode','decisionGoal','decisionHorizon','referenceSelect'].includes(el.id))render();
       else if(['ficheFocus','sectorFocus','summaryFocus'].includes(el.id))renderCards();
     });
     document.addEventListener('input',e=>{
@@ -127,13 +137,14 @@ window.SavyFnbDecision=(()=>{
     document.addEventListener('click',e=>{
       // Prepare the disclosure in the same interaction, before the browser's
       // deferred toggle event (which may be throttled in an embedded report).
-      if(e.target.closest('#decisionDetails>summary')){const a=model();if(a.available){protection(a);diagnostics(a);}}
+      if($('decisionMode').value!=='forward'&&e.target.closest('#decisionDetails>summary')){const a=model();if(a.available){protection(a);diagnostics(a);}}
       const b=e.target.closest('button');if(!b)return;
+      if(['recommendedCharts','robustCharts'].includes(b.id)){selected=(b.id==='robustCharts'?D.robust_order:D.recommended_order).slice(0,3);signature='';render();}
       if(b.dataset.decisionOpen)actions.open(b.dataset.decisionOpen,reference(),'portfolios');
       if(b.dataset.decisionRisk)actions.open(b.dataset.decisionRisk,reference(),'exposures');
       if(b.dataset.openPortfolio||b.dataset.decisionOpen)renderCards();
     });
-    document.addEventListener('toggle',e=>{if(e.target.id==='decisionDetails'&&e.target.open){const a=model();protection(a);diagnostics(a);}if(e.target.matches?.('.decision-card')&&e.target.open)renderCards();},true);
+    document.addEventListener('toggle',e=>{if($('decisionMode').value!=='forward'&&e.target.id==='decisionDetails'&&e.target.open){const a=model();protection(a);diagnostics(a);}if(e.target.matches?.('.decision-card')&&e.target.open)renderCards();},true);
     const visible=()=>document.visibilityState==='visible'&&(!$('allPortfolios').hidden||!$('portfolios').hidden);
     setInterval(()=>{if(visible())refreshRecorded();},300000);
     document.addEventListener('visibilitychange',()=>{if(visible())refreshRecorded();});

@@ -75,3 +75,18 @@ test('shared holdings are a documented partial view of the top ten, retaining is
   close(o.top10,D.lookthrough.results['2'].top10_weight);
   for(const p of o.sharedTop){assert.ok(p.funds.length>1);assert.ok(D.lookthrough.results['2'].top10.some(x=>x.name===p.name));}
 });
+test('the selected horizon compounds one real common trailing period without including the base-day return',()=>{
+  const dates=Array.from({length:36},(_,i)=>String(2022+Math.floor(i/12))+'-'+String(i%12+1).padStart(2,'0'));
+  const a={available:true,dates,rows:[{id:'p',returns:Array(36).fill(.01)},{id:'b',isBenchmark:true,returns:Array(36).fill(.005)}]};
+  const before=JSON.stringify(a),h=U.horizon(a,2);
+  assert.equal(h.available,true);assert.equal(h.start,'2022-12');assert.equal(h.end,'2024-12');assert.equal(h.observations,24);
+  close(h.results[0].total,1.01**24-1);close(h.results[1].total,1.005**24-1);assert.equal(JSON.stringify(a),before);
+  for(const years of [5,10]){const h=U.horizon(a,years);assert.equal(h.available,false);assert.deepEqual(h.results,[]);assert.match(h.reason,/plus court/);}
+  for(const years of ['',0,1,NaN])assert.equal(U.horizon(a,years),null);
+});
+test('daily horizon anniversaries use the prior common session, handle leap years and reject incomplete histories',()=>{
+  const a={available:true,dates:['2022-02-25','2022-02-28','2022-03-01','2024-02-29'],rows:[{id:'p',returns:[.7,.8,.1,.2]}]};
+  const h=U.horizon(a,2);assert.equal(h.requestedStart,'2022-02-28');assert.equal(h.start,'2022-02-28');close(h.results[0].total,.32);
+  a.dates=['2022-02-25','2022-02-28','2022-03-01','2024-02-27'];assert.equal(U.horizon(a,2).start,'2022-02-25','Closed anniversary uses the previous common close');
+  a.rows[0].returns.pop();assert.equal(U.horizon(a,2).available,false);a.rows[0].returns.push(NaN);assert.equal(U.horizon(a,2).available,false);
+});

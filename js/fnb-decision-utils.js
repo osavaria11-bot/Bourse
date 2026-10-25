@@ -1,9 +1,9 @@
 (function(root,factory){
-  if(typeof module==='object'&&module.exports)module.exports=factory(require('./fnb-risk-utils.js'),require('./fnb-factor-utils.js'),require('./fnb-stress-utils.js'));
-  else root.SavyFnbDecisionUtils=factory(root.SavyFnbRisk,root.SavyFnbFactors,root.SavyFnbStress);
-})(typeof globalThis!=='undefined'?globalThis:this,function(R,F,S){
+  if(typeof module==='object'&&module.exports)module.exports=factory(require('./fnb-risk-utils.js'),require('./fnb-factor-utils.js'),require('./fnb-stress-utils.js'),require('./fnb-forecast-utils.js'));
+  else root.SavyFnbDecisionUtils=factory(root.SavyFnbRisk,root.SavyFnbFactors,root.SavyFnbStress,root.SavyFnbForecast);
+})(typeof globalThis!=='undefined'?globalThis:this,function(R,F,S,Forward){
   'use strict';
-  const GOALS={growth:{label:'Croissance',key:'annualReturn',metric:'rendement annualisé',higher:true},balance:{label:'Compromis',key:'sharpe',metric:'Sharpe',higher:true},protection:{label:'Protection',key:'cvar',metric:'CVaR à 21 séances',higher:false}};
+  const GOALS={global:{label:'Comparaison globale',key:null,metric:'comparaison globale',higher:true},growth:{label:'Croissance',key:'annualReturn',metric:'rendement annualisé',higher:true},balance:{label:'Compromis',key:'sharpe',metric:'Sharpe',higher:true},protection:{label:'Protection',key:'cvar',metric:'CVaR à 21 séances',higher:false}};
   const mean=a=>a.reduce((s,v)=>s+v,0)/a.length;
   const sameWeights=(a,b)=>!!a&&!!b&&Object.keys(a).length===Object.keys(b).length&&Object.keys(a).every(k=>Number.isFinite(b[k])&&Math.abs(a[k]-b[k])<1e-10);
   const own=D=>[...(D.recommended_order||[]),...(D.robust_order||[]),...(D.proposal_order||[]),...(D.custom_order||[])];
@@ -43,9 +43,27 @@
       method:dailyBasis?'Rendements totaux CAD aux poids cibles quotidiens constants; annualisation à 252 séances.':'Backtest mensuel CAD, rééquilibrage annuel en janvier; creux intramensuels et CVaR à 21 séances non estimables ici.'};
   }
   function ranks(rows,goal){
+    if(goal==='global')return Forward.global(rows,'historical').ranks;
     const g=GOALS[goal];if(!g)return new Map();
     const valid=rows.filter(r=>!r.isBenchmark&&Number.isFinite(r[g.key])).sort((a,b)=>(a[g.key]-b[g.key])*(g.higher?-1:1)||a.id.localeCompare(b.id));
     let rank=0,previous=null;return new Map(valid.map((r,i)=>{if(previous===null||Math.abs(r[g.key]-previous)>1e-10)rank=i+1;previous=r[g.key];return [r.id,rank];}));
+  }
+  function horizon(analysis,years){
+    years=Number(years);
+    if(![2,5,10].includes(years)||!analysis?.available||!analysis.dates?.length)return null;
+    const end=analysis.dates.at(-1),year=Number(end.slice(0,4))-years;
+    let requestedStart=String(year)+end.slice(4);
+    // A leap-day anniversary falls on February 28 in a non-leap year.
+    if(end.length===10){const month=Number(end.slice(5,7)),day=Number(end.slice(8,10));
+      const last=new Date(Date.UTC(year,month,0)).getUTCDate();
+      requestedStart=String(year)+'-'+String(month).padStart(2,'0')+'-'+String(Math.min(day,last)).padStart(2,'0');}
+    const base=analysis.dates.findLastIndex(d=>d<=requestedStart);
+    if(base<0)return {years,available:false,requestedStart,end,observations:0,results:[],reason:'L’historique est plus court que '+years+' ans; aucun rendement sur cet horizon n’est calculable.'};
+    const dates=analysis.dates.slice(base+1);
+    if(!dates.length||analysis.rows.some(r=>r.returns?.length!==analysis.dates.length||r.returns.some(x=>!Number.isFinite(x)||x<=-1)))return {years,available:false,requestedStart,end,observations:0,results:[],reason:'Rendements communs incomplets sur cet horizon.'};
+    return {years,available:true,requestedStart,start:analysis.dates[base],end,observations:dates.length,
+      results:analysis.rows.map(r=>({id:r.id,isBenchmark:r.isBenchmark,total:r.returns.slice(base+1).reduce((v,x)=>v*(1+x),1)-1})),
+      note:'Rejeu rétrospectif sur une seule période commune terminée à la dernière observation; aucune projection ni probabilité de gain future. Si l’anniversaire est fermé, la clôture commune précédente est utilisée.'};
   }
   function tolerance(row,limit){
     const available=row.scenarios.filter(s=>s.portfolio.available),missing=row.scenarios.length-available.length;
@@ -56,7 +74,7 @@
     return {status:breaches.length?'exceeded':points.length?'not_exceeded_in_available':'unavailable',missing,breaches,worst};
   }
   function sensitivity(D,analysis,goal){
-    const g=GOALS[goal];if(!g||!analysis.available)return [];
+    const g=GOALS[goal];if(!g?.key||!analysis.available)return [];
     const rows=analysis.rows.filter(r=>!r.isBenchmark),windows=[...new Set([analysis.frequency,analysis.frequency*2,analysis.dates.length])].filter(n=>n<=analysis.dates.length);
     const byWindow=windows.map(n=>({n,ranks:ranks(rows.map(r=>({id:r.id,...metrics(r.returns.slice(-n),analysis.frequency,D.assumptions.risk_free,analysis.indices?.slice(-n))})),goal)}));
     return rows.map(row=>{
@@ -97,5 +115,5 @@
       sharedTop:(holdings?.top10||[]).filter(p=>Object.keys(p.contributions||{}).length>1).map(p=>({name:p.name,weight:p.weight,funds:Object.keys(p.contributions)})),
       maxGeoGap:q.max_geo_gap??null,maxSectorGap:q.max_sector_gap??null};
   }
-  return {GOALS,own,candidates,choices,metrics,analyse,ranks,tolerance,sensitivity,recorded,overlap,sameWeights};
+  return {GOALS,own,candidates,choices,metrics,analyse,ranks,horizon,tolerance,sensitivity,recorded,overlap,sameWeights};
 });
