@@ -62,5 +62,51 @@ class StressSourceTests(unittest.TestCase):
         self.assertIn('aucune renormalisation',event['unavailable_reason'])
         self.assertIn('indisponible',event['market_method'])
 
+    def test_forward_proxies_preserve_missing_inception_and_complete_months(self):
+        histories = {'CA': {'2023-12-29': 100., '2024-01-31': 110., '2024-02-29': 99.},
+                     'XBB': {'2024-01-31': 100., '2024-02-29': 102.}}
+        h = S.forward_history(histories, '2024-03-14', {'CA': 'https://example.org/ca'})
+        self.assertEqual(h['dates'][-1], '2024-02')
+        self.assertNotIn('2024-03', h['dates'])
+        self.assertIsNone(h['returns']['CA'][0])
+        self.assertAlmostEqual(h['returns']['CA'][-2], .1)
+        self.assertAlmostEqual(h['returns']['CA'][-1], -.1)
+        self.assertIsNone(h['returns']['XBB'][-2])
+        self.assertAlmostEqual(h['returns']['XBB'][-1], .02)
+        self.assertEqual(h['currency'], 'CAD')
+        self.assertTrue(h['total_return'])
+        self.assertEqual(S.forward_history(histories, '2024-02-29', {})['dates'][-1], '2024-02')
+
+    def test_fx_conversion_preserves_the_quarantine_of_both_price_sources(self):
+        p = S.ValidatedHistory({'2024-01-31': 100., '2024-02-29': 110.})
+        fx = S.ValidatedHistory({'2024-01-31': 1.2, '2024-02-29': 1.3})
+        fx.suspect_sessions = ('2024-02-12',)
+        out = S.converted_cad(p, fx)
+        self.assertAlmostEqual(out['2024-02-29'], 143.)
+        self.assertIsNone(S.period_return(out, '2024-01-31', '2024-02-29'))
+
+    def test_us_holiday_carries_last_close_with_same_valuation_date_fx_without_lookahead(self):
+        # TSX opened on US Memorial Day, Monday 31 May 2021. Values supplied
+        # to forward_history are already USD adjusted prices times dated FX.
+        histories = {'US': {'2021-04-30': 120., '2021-05-28': 132., '2021-06-01': 999.},
+                     'FX': {'2021-04-30': 1.2, '2021-05-28': 1.2, '2021-05-31': 1.3}}
+        h = S.forward_history(histories, '2021-06-15', {})
+        self.assertAlmostEqual(h['returns']['US'][-1], (132.*1.3/1.2)/120.-1)
+        # An extended quote outage is not disguised as an exchange holiday.
+        histories['US'].pop('2021-05-28')
+        h = S.forward_history(histories, '2021-06-15', {})
+        self.assertIsNone(h['returns']['US'][-1])
+
+    def test_forward_proxy_schema_rejects_currency_nonfinite_and_inconsistent_dates(self):
+        d = S.build({'universe': {'dates': [], 'geo': {}}}, {}, '2024-03-14', {})
+        S.validate(d)
+        for field, value in [('currency', 'USD'), ('total_return', False)]:
+            bad = copy.deepcopy(d)
+            bad['forward_history'][field] = value
+            with self.assertRaises(ValueError): S.validate(bad)
+        bad = copy.deepcopy(d)
+        bad['forward_history']['returns']['CA'][-1] = float('nan')
+        with self.assertRaises(ValueError): S.validate(bad)
+
 
 if __name__=='__main__':unittest.main()

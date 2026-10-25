@@ -58,6 +58,55 @@ def period_return(prices, start, end):
     return prices[end] / prices[start] - 1
 
 
+def converted_cad(prices, fx):
+    out = ValidatedHistory({day: value*fx[day] for day, value in prices.items() if day in fx})
+    out.suspect_sessions = tuple(sorted(set(getattr(prices, 'suspect_sessions', ())) | set(getattr(fx, 'suspect_sessions', ()))))
+    return out
+
+
+def forward_history(histories, cutoff, source_urls):
+    """Retain already-downloaded, complete CAD total-return proxy months.
+
+    These are proxy histories, never backfilled ETF or portfolio returns. Exact
+    TSX month-end endpoints, FX conversion and suspect-price quarantine remain
+    the same as for the stress inputs. The current incomplete month is omitted.
+    """
+    end_date = date.fromisoformat(cutoff)
+    last = cutoff[:7] if end_date >= F.previous_trading_day(month_end(cutoff[:7])) else (end_date.replace(day=1)-timedelta(days=1)).strftime('%Y-%m')
+    dates = []
+    year, month = 2008, 1
+    while f'{year:04d}-{month:02d}' <= last:
+        dates.append(f'{year:04d}-{month:02d}')
+        year, month = (year+1, 1) if month == 12 else (year, month+1)
+    returns = {}
+    def proxy_return(ticker, prices, start, end):
+        if ticker not in ['US', 'DEV', 'EM']:
+            return period_return(prices, start, end)
+        # A US exchange holiday can fall on an open TSX month-end. Value the
+        # last available US adjusted close using FX at the CAD valuation date.
+        # Never use a future close or carry a quote across an extended outage.
+        def level(day):
+            prior = max((d for d in prices if d <= day), default=None)
+            fx = histories.get('FX', {})
+            if prior is None or (date.fromisoformat(day)-date.fromisoformat(prior)).days > 4 or day not in fx or prior not in fx:
+                return None
+            return prices[prior]*fx[day]/fx[prior]
+        a, b = level(start), level(end)
+        if a is None or b is None or any(start < d <= end for d in getattr(prices, 'suspect_sessions', ())):
+            return None
+        return b/a-1
+    for ticker in ['US', 'CA', 'DEV', 'EM', 'XBB', 'XCB', 'XGB', 'FX']:
+        prices = histories.get(ticker, {})
+        returns[ticker] = []
+        for mon in dates:
+            end = F.previous_trading_day(month_end(mon)).isoformat()
+            start = F.previous_trading_day(date.fromisoformat(mon+'-01')-timedelta(days=1)).isoformat()
+            returns[ticker].append(proxy_return(ticker, prices, start, end))
+    return {'dates': dates, 'returns': returns, 'currency': 'CAD', 'total_return': True,
+            'source_urls': {k: source_urls[k] for k in returns if k in source_urls},
+            'method': 'Observed adjusted proxy returns, complete calendar months at TSX valuation dates. On a US exchange holiday, last US adjusted close (at most four calendar days old) valued at same-date FX; no future price. FX is a currency return. No historical ETF allocation is inferred.'}
+
+
 def build(analysis, histories, cutoff, source_urls, errors=None):
     events = {}
     for key, (start, end) in EVENTS.items():
@@ -110,6 +159,7 @@ def build(analysis, histories, cutoff, source_urls, errors=None):
     return {'schema_version': 1, 'as_of': cutoff, 'generated_at': datetime.now(F.TZ).isoformat(timespec='seconds'),
             'status': 'partial' if errors or any(not e['factor_shocks'] for e in events.values()) else 'current', 'errors': errors or {}, 'scenarios': events,
             'model_factors': {'dates': dates, 'returns': factors}, 'source_urls': source_urls,
+            'forward_history': forward_history(histories, cutoff, source_urls),
             'indices': {}, 'reconstructions': {},
             'method': 'Actual adjusted ETF endpoint returns in CAD. USD proxies converted as (1+rUSD)*(1+rUSD/CAD)-1. Portfolio scenarios use current starting weights and buy-and-hold. No historical portfolio holdings inferred. No invented index data. XBB total return = rate proxy; XCB-XGB = imperfect credit proxy, with duration mismatch. FX = USD/CAD. All sensitivities are conditional estimates, not contractual hedge ratios.'}
 
@@ -127,6 +177,10 @@ def validate(d):
     n = len(d['model_factors']['dates'])
     if any(len(v) != n or any(x is not None and not math.isfinite(x) for x in v) for v in d['model_factors']['returns'].values()):
         raise ValueError('Invalid model factor dates')
+    h = d.get('forward_history')
+    if h is not None:
+        if h.get('currency') != 'CAD' or h.get('total_return') is not True or h['dates'] != sorted(set(h['dates'])) or any(len(v) != len(h['dates']) or any(x is not None and (not math.isfinite(x) or x <= -1) for x in v) for v in h['returns'].values()):
+            raise ValueError('Invalid forward proxy history')
     return d
 
 
@@ -142,7 +196,7 @@ def main():
     config = json.loads((ROOT/'data/fnb-model.json').read_text())
     cutoff = F.completed_session(datetime.now(F.TZ)).isoformat()
     old = json.loads(args.output.read_text()) if args.output.exists() else None
-    if old and old['as_of'] == cutoff and old['status'] == 'current' and old['model_factors']['dates'] == analysis['universe']['dates']:
+    if old and old.get('forward_history') and old['as_of'] == cutoff and old['status'] == 'current' and old['model_factors']['dates'] == analysis['universe']['dates']:
         validate(old); print('Stress inputs already current:', cutoff); return 0
     tickers = {t for p in analysis['results'].values() for t in p['weights']} | {'VEQT','VFV','VVL','VMO','FCUQ','FCUL'}
     specs = {t:(config['funds'][t]['quote_symbol'],'CAD','ETF') for t in tickers}
@@ -166,7 +220,7 @@ def main():
             if error: errors[ticker] = error
     fx = histories.get('FX', {})
     for ticker in ['US','DEV','EM']:
-        histories[ticker] = {day:value*fx[day] for day,value in histories[ticker].items() if day in fx}
+        histories[ticker] = converted_cad(histories[ticker], fx)
     try:
         if not any(histories.get(t) for t in tickers): raise ValueError('All stress sources unavailable')
         data = validate(build(analysis,histories,cutoff,urls,errors))

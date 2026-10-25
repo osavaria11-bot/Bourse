@@ -28,12 +28,18 @@ async function check(browser,engine){
   assert.equal(await actual.locator('[data-decision-value="sharpe"]').innerText(),new Intl.NumberFormat('fr-CA',{minimumFractionDigits:2,maximumFractionDigits:2}).format(row.sharpe));
   assert.equal(await actual.locator('[data-decision-value="cvar"]').innerText().then(t=>t.includes('fragile')),true);
  }
+ await page.locator('#decisionHorizon').selectOption('2');
+ assert.match(await page.locator('#decisionResultTitle').innerText(),/2 ans/);
+ const trailing=decision.horizon(expectedDecision,2);
+ for(const row of trailing.results)assert.ok((await page.locator('#decisionHorizonResult').innerText()).includes(new Intl.NumberFormat('fr-CA',{minimumFractionDigits:1,maximumFractionDigits:1}).format(row.total*100)+' %'));
+ const readingBox=await page.locator('#decisionReading').boundingBox(),decisionTable=await page.locator('.decision-table').boundingBox();assert.ok(readingBox.y+readingBox.height<=decisionTable.y,'The result is immediately above the table');
  await page.locator('#decisionGoal').selectOption('balance');
  assert.deepEqual(await page.locator('[data-decision-choice]').evaluateAll(nodes=>nodes.map(n=>n.value)),initialChoices);
  assert.match(await page.locator('#decisionReading').innerText(),/Sharpe/);
  await page.locator('#decisionHorizon').selectOption('5');await page.locator('#decisionLoss').fill('10,5');await page.locator('#decisionCapital').fill('20 000');
  assert.match((await page.locator('#decisionLossMoney').innerText()).replace(/\s/g,''),/2100/);
  assert.match(await page.locator('#decisionReading').innerText(),/historique est plus court/);
+ assert.match(await page.locator('#decisionHorizonResult').innerText(),/Aucune projection/);
  assert.ok(await page.locator('#decisionBody .decision-warning').count()>0);
  await page.locator('#decisionLoss').fill('abc');assert.equal(await page.locator('#decisionLoss').getAttribute('aria-invalid'),'true');
  await page.locator('#decisionLoss').fill('10');
@@ -45,6 +51,56 @@ async function check(browser,engine){
  assert.match(await page.locator('#decisionSources').innerText(),/2008/);
  await page.locator('#decisionDetails>summary').click();
  await page.locator('#decisionGoal').selectOption('');await page.locator('#decisionHorizon').selectOption('');await page.locator('#decisionLoss').fill('');await page.locator('#decisionCapital').fill('10 000');
+ // Prospectif reuses this table and controls; three paired benchmarks,
+ // all horizons, honest validation, persisted assumptions and cancellation.
+ await page.locator('#decisionGoal').selectOption('global');
+ assert.match(await page.locator('#decisionReading').innerText(),/Comparaison globale/);
+ await page.locator('#decisionMode').selectOption('forward');
+ await page.waitForSelector('#decisionPanel[data-forecast-ready="true"]',{timeout:30000});
+ assert.equal(await page.locator('#decisionHorizon').inputValue(),'5');
+ assert.equal(await page.locator('#decisionBody tr').count(),6);
+ assert.match(await page.locator('#decisionForecastStatus').innerText(),/calibration à long terme non établie/);
+ assert.match(await page.locator('#decisionDataStatus').innerText(),/Repli/);
+ for(const ref of ['VFV','FEQT','VEQT'])assert.equal(await page.locator('[data-decision-row="'+ref+'"]').count(),1);
+ const firstForward=await page.locator('[data-forward-value="7"]').innerText();
+ await page.locator('#decisionCapital').fill('100 000');
+ assert.notEqual(await page.locator('[data-forward-value="7"]').innerText(),firstForward);
+ assert.match(await page.locator('#decisionPeriod').innerText(),/25 000 trajectoires communes/);
+ await page.locator('#decisionForecastDetails>summary').click();
+ await page.locator('#decisionForecastMetrics .forecast-row>summary').first().click();
+ assert.match(await page.locator('#decisionForecastMetrics').innerText(),/Atteindre 8 \/ 10 \/ 15 %/);
+ assert.match(await page.locator('#decisionForecastValidation').innerText(),/walk-forward/);
+ assert.match(await page.locator('#decisionForecastValidation').innerText(),/Moyenne historique/);
+ assert.match(await page.locator('#decisionForecastSensitivity').innerText(),/sans probabilité attribuée/);
+ await page.locator('#decisionForecastDetails>summary').click();
+ await page.locator('#decisionHorizon').selectOption('10');
+ await page.waitForSelector('#decisionPanel[data-forecast-ready="true"]',{timeout:30000});
+ assert.match(await page.locator('#decisionResultTitle').innerText(),/10 ans/);
+ assert.notEqual(await page.locator('[data-forward-value="7"]').innerText(),firstForward);
+ await page.locator('#decisionHorizon').selectOption('2');
+ await page.waitForSelector('#decisionPanel[data-forecast-ready="true"]',{timeout:30000});
+ assert.match(await page.locator('#decisionResultTitle').innerText(),/2 ans/);
+ await page.locator('#decisionForecastMethod>summary').click();
+ const originalMean=await page.locator('[data-decision-row="7"] td').first().innerText();
+ await page.locator('#forecastEquityView').fill('2');await page.locator('#forecastApply').click();
+ await page.waitForSelector('#decisionPanel[data-forecast-ready="true"]',{timeout:30000});
+ assert.notEqual(await page.locator('[data-decision-row="7"] td').first().innerText(),originalMean);
+ await page.locator('#forecastReset').click();
+ await page.waitForSelector('#decisionPanel[data-forecast-ready="true"]',{timeout:30000});
+ assert.equal(await page.locator('[data-decision-row="7"] td').first().innerText(),originalMean);
+ await page.locator('#decisionForecastMethod>summary').click();
+ // Returning to historical cancels any in-flight worker; old results cannot
+ // overwrite the historical table on a delayed worker message.
+ await page.locator('#decisionHorizon').selectOption('10');
+ await page.locator('#decisionForecastMethod>summary').click();
+ await page.locator('#forecastEquityView').fill('1.5');await page.locator('#forecastApply').click();
+ assert.equal(await page.locator('#decisionPanel').getAttribute('data-forecast-ready'),'loading');
+ await page.locator('#decisionMode').selectOption('historical');
+ assert.equal(await page.locator('#decisionBody tr').count(),4);
+ assert.equal(await page.locator('#decisionForecastDetails').isVisible(),false);
+ await page.locator('#decisionHorizon').selectOption('');
+ await page.locator('#decisionGoal').selectOption('');
+ await page.locator('#decisionCapital').fill('10 000');
  await page.locator('.decision-perspectives>summary').click();
  assert.equal(await page.locator('.horizon-leader:visible').count(),3);
  const horizonTop=await page.locator('.horizon-panel').boundingBox(),comparisonTop=await page.locator('.all-layout').boundingBox();

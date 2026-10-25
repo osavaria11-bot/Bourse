@@ -70,6 +70,9 @@ jobs:
           node --check js/fnb-factor-utils.js
           node --check js/fnb-decision-utils.js
           node --check js/fnb-decision.js
+          node --check js/fnb-forecast-utils.js
+          node --check js/fnb-forecast-worker.js
+          node --check js/fnb-forecast-ui.js
           node scripts/build_frontier_monthly.cjs --check
           node --check scripts/build_monthly_fnb.cjs
           node --check js/fnb-dashboard.js

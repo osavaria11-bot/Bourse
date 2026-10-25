@@ -9,7 +9,7 @@ cartes Risque de perte et Facteurs gardent leurs dimensions.
 
 L’objectif met en évidence un critère historique explicite : rendement annualisé
 pour Croissance, Sharpe pour Compromis, CVaR à 21 séances pour Protection. Il ne
-crée aucun score composite, aucune prévision, aucune allocation et aucun ordre.
+crée aucun score composite, aucune allocation et aucun ordre. Le mode Prospectif possède son propre moteur, décrit dans [fnb-forward.md](fnb-forward.md). La comparaison globale utilise une dominance multicritère explicite, sans pondération arbitraire.
 Le classement financier existant et ses contraintes mensuelles sont conservés.
 Les candidats initiaux viennent de ce classement; changer d’objectif ne les
 remplace pas. Les références VBAL / FBAL utilisent le mandat 60/40; VGRO / FGRO
@@ -21,6 +21,19 @@ simulateur de capital existant. Un seuil de perte non renseigné ou invalide ne
 produit aucun jugement de compatibilité. Les dépassements signalés portent sur
 le drawdown du comparatif et les scénarios estimables. L’absence de dépassement
 ne borne pas la perte future; les scénarios manquants restent signalés.
+
+La lecture est affichée immédiatement au-dessus du tableau. En mode Historique, un horizon de
+2 / 5 / 10 ans déclenche un diagnostic de couverture et, s’il existe, un rejeu
+cumulé sur la période terminée à la dernière observation. L’anniversaire civil
+détermine la clôture de départ commune (précédente si le marché était fermé).
+Le rendement du jour de cette clôture n’est pas recompté. Un anniversaire du
+29 février devient le 28 février dans une année non bissextile. Si la clôture
+de départ précède les séries, le résultat est indisponible, sans extrapolation.
+Les ratios du tableau gardent leur période complète indiquée; le rejeu à
+l’horizon choisi possède ses propres dates explicites. Le candidat en tête
+reste celui du critère historique sélectionné, sans prétendre qu’il gagnera
+sur l’horizon futur. Le seuil personnel peut signaler que ce candidat dépasse
+la perte supportable, même si son rendement ou son Sharpe historique est élevé.
 
 ## Une convention commune dans le tableau
 
