@@ -8,6 +8,10 @@ colonne et s’empilent sur mobile. Les méthodes complètes restent dans les vo
 repliables. Les rendus partagés conservent cette disposition lors des publications
 mensuelles et des mises à jour de cotations.
 
+Le [comparateur de décision](fnb-decision.md) complète ces cartes dans Vue
+d’ensemble, avec objectif personnel, seuil en dollars, sensibilité et suivi
+après publication. Il ne change ni leurs dimensions ni les allocations.
+
 Les quatre KPI de gauche sont VaR 95 % à un jour, VaR 95 % sur 21 séances,
 CVaR sur 21 séances et Relative VaR (ratio au benchmark; dénominateur positif).
 Les rendements quotidiens totaux en CAD sont conservés dans le schéma 2 de

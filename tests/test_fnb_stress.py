@@ -52,5 +52,15 @@ class StressSourceTests(unittest.TestCase):
         self.assertEqual(d['indices'],{})
         self.assertEqual(d['reconstructions'],{})
 
+    def test_unknown_geography_is_not_normalized_away_or_reported_as_a_zero_shock(self):
+        analysis={'universe':{'dates':[], 'geo':{'VEQT':[.5,.3,.15,.04995,.00005]}}}
+        h={t:{'2007-12-31':100,'2008-12-31':60} for t in ['US','CA','DEV','EM']}
+        d=S.build(analysis,h,'2026-10-23',{t:'https://example.org/'+t for t in h})
+        event=d['scenarios']['gfc2008']
+        self.assertEqual(event['factor_shocks'],{})
+        self.assertEqual(d['status'],'partial')
+        self.assertIn('aucune renormalisation',event['unavailable_reason'])
+        self.assertIn('indisponible',event['market_method'])
+
 
 if __name__=='__main__':unittest.main()

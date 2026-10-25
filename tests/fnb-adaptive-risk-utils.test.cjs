@@ -54,6 +54,14 @@ test('12/24/full stability and significance are descriptive and respect minimum 
 });
 function fixture(){return {as_of:'2026-10-23',status:'current',scenarios:{gfc2008:{assets:{}}},indices:{},reconstructions:{}};}
 function observed(value){return {return:value,start:'2007-12-31',end:'2008-12-31',currency:'CAD',total_return:true,source_url:'https://example.org/synthetic-test-source'};}
+test('missing, empty, nonfinite or all-zero shocks never manufacture a zero-return crisis projection',()=>{
+ for(const shocks of [undefined,null,{},[],{market:NaN},{market:Infinity},{market:0}]){
+  const h=fixture();h.scenarios.gfc2008.factor_shocks=shocks;
+  const r=S.estimate(D,'FEQT',S.SCENARIOS[0],h);assert.equal(r.classification,'insufficient');assert.equal(r.return,null);
+  const c=S.compare(D,'2','VEQT',h)[0];assert.equal(c.available,false);assert.equal(c.gap,null);
+  h.scenarios.gfc2008.assets.FEQT=observed(-.3);close(S.estimate(D,'FEQT',S.SCENARIOS[0],h).return,-.3);
+ }
+});
 test('adaptive hierarchy prefers observed, then verified index, then complete dated reconstruction',()=>{
  const h=fixture(),s=S.SCENARIOS[0];h.scenarios.gfc2008.assets.FEQT=observed(-.37);
  h.indices.FEQT={representative:true,methodology_url:'https://example.org/index',scenarios:{gfc2008:observed(-.23)}};

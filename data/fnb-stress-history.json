@@ -69,7 +69,7 @@
         }
       },
       "factor_shocks": {},
-      "market_method": "Allocation géographique actuelle de VEQT, proxys SPY/XIC/EFA/EEM en CAD",
+      "market_method": "Reconstruction du marché indisponible",
       "source_urls": [
         "https://finance.yahoo.com/quote/XIC.TO/history/",
         "https://finance.yahoo.com/quote/CGL-C.TO/history/",
@@ -106,7 +106,8 @@
         "https://finance.yahoo.com/quote/ZLB.TO/history/",
         "https://finance.yahoo.com/quote/ZNQ.TO/history/",
         "https://finance.yahoo.com/quote/ZUQ.TO/history/"
-      ]
+      ],
+      "unavailable_reason": "Choc de marché indisponible : historique ou couverture géographique incomplets; aucune renormalisation des régions connues."
     },
     "covid2020": {
       "start": "2020-02-19",

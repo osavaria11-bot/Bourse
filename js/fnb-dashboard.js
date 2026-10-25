@@ -181,7 +181,7 @@ const SavyFnb = (() => {
       const renderStress=()=>{
         const v=scenarios.find(x=>x.id===stressScenario)||selected;if(!v)return;
         const max=Math.max(.01,Math.abs(v.portfolio.return||0),Math.abs(v.benchmark.return||0));
-        $('riskStressComparison').innerHTML='<div class="stress-result"><strong id="riskStress">'+pct(v.portfolio.return,1)+'</strong><span>/ '+escape(reference)+' '+pct(v.benchmark.return,1)+'</span><b class="'+(v.gap>0?'protection':'')+'">'+pp(v.gap)+'</b></div><div class="stress-bars" aria-label="Pertes comparées">'+[['portfolio',v.portfolio],['benchmark',v.benchmark]].map(([kind,row])=>'<i class="'+kind+'" style="width:'+(Math.abs(row.return||0)/max*100).toFixed(1)+'%"></i>').join('')+'</div><small>'+escape(coverageText(v.portfolio.coverage))+(v.status==='stale'?' · sources périmées':'')+'</small>';
+        $('riskStressComparison').innerHTML='<div class="stress-result"><strong id="riskStress">'+pct(v.portfolio.return,1)+'</strong><span>/ '+escape(reference)+' '+pct(v.benchmark.return,1)+'</span><b class="'+(v.gap>0?'protection':'')+'">'+pp(v.gap)+'</b></div><div class="stress-bars" aria-label="Pertes comparées">'+[['portfolio',v.portfolio],['benchmark',v.benchmark]].map(([kind,row])=>'<i class="'+kind+'" style="width:'+(Math.abs(row.return||0)/max*100).toFixed(1)+'%"></i>').join('')+'</div><small>'+escape(coverageText(v.portfolio.coverage))+(!v.available?' · comparaison indisponible':'')+(v.status==='stale'?' · sources périmées':'')+'</small>';
         $('riskStressComparison').title=(v.historical?v.start+' → '+v.end+' · simulation de l’allocation actuelle':v.horizon)+' · '+v.interpretation+' · '+(v.portfolio.positions.some(p=>p.method==='Projection linéaire fondée sur le bêta')?'Projection linéaire fondée sur le bêta. ':'')+(v.portfolio.available?'':'Estimation complète non défendable.');
         drawBetaReading(c,v);
       };
@@ -319,7 +319,9 @@ const SavyFnb = (() => {
       if(location.pathname.includes("/fnb-history/")){$("monthlyStatus").textContent="Archive figée à sa publication · "+D.optimization.generated_at.slice(0,10);return;}
       try{const response=await fetch(new URL("data/fnb-status.json",root),{cache:"no-cache"});if(!response.ok)return;const s=await response.json();$("monthlyStatus").textContent=s.status==="retrying"?s.message:"Dernière mise à jour validée : "+s.last_success.slice(0,10)+" · prochaine recherche au début de "+s.next_run.slice(0,7)+" · reprise quotidienne automatique si une source tarde.";}catch{}
     }
-    document.documentElement.classList.remove("no-js");drawSummary();syncSelection();statsRows();drawRisk();drawGrowth();drawSector();switchView("allPortfolios");monthlyHistory();document.documentElement.dataset.ready="true";
+    document.documentElement.classList.remove("no-js");drawSummary();syncSelection();statsRows();drawRisk();drawGrowth();drawSector();switchView("allPortfolios");monthlyHistory();
+    window.SavyFnbDecision?.start(D,dailyRisk,stressInput,{capital:()=>capital,parseCapital,open:(id,ref,view)=>{choosePortfolio(id,true);$('referenceSelect').value=ref;$('referenceSelect').dispatchEvent(new Event('change',{bubbles:true}));switchView(view);}});
+    document.documentElement.dataset.ready="true";
   }
   return {relativeMetrics,parseCapital,start};
 })();
