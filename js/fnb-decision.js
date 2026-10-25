@@ -144,7 +144,7 @@ window.SavyFnbDecision=(()=>{
       if(b.dataset.openPortfolio||b.dataset.decisionOpen)renderCards();
     });
     document.addEventListener('toggle',e=>{if($('decisionMode').value!=='forward'&&e.target.id==='decisionDetails'&&e.target.open){const a=model();protection(a);diagnostics(a);}if(e.target.matches?.('.decision-card')&&e.target.open)renderCards();},true);
-    const visible=()=>document.visibilityState==='visible'&&(!$('allPortfolios').hidden||!$('portfolios').hidden);
+    const visible=()=>document.visibilityState==='visible'&&(!$('decision').hidden||!$('allPortfolios').hidden||!$('portfolios').hidden);
     setInterval(()=>{if(visible())refreshRecorded();},300000);
     document.addEventListener('visibilitychange',()=>{if(visible())refreshRecorded();});
     render();refreshRecorded();

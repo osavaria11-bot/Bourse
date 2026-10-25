@@ -227,11 +227,11 @@ const SavyFnb = (() => {
     }
     const reportPeriod=document.querySelector('.report-header p').textContent;
     function switchView(id) {
-      if(!["allPortfolios","overview","exposures","portfolios","methods","performance","frontier"].includes(id))id="allPortfolios";activeView=id;
-      document.querySelector(".dashboard-toolbar").hidden=!["allPortfolios","overview","exposures"].includes(id);
-      document.querySelector('.report-header p').textContent=id==='performance'?'Comparaison commune · depuis le 19 octobre 2026 · CAD':reportPeriod;
-      document.querySelector('.report-tools').hidden=['performance','frontier'].includes(id);
-      const footer=document.querySelector('.footer');if(footer)footer.textContent=id==='performance'?'Départ commun au 19 octobre 2026 · Ajouts ultérieurs simulés · Distributions réinvesties':'Simulation historique · Distributions réinvesties · Sans versements ni retraits';
+      if(!["allPortfolios","overview","exposures","portfolios","methods","performance","frontier","decision"].includes(id))id="allPortfolios";activeView=id;
+      document.querySelector(".dashboard-toolbar").hidden=!["allPortfolios","overview","exposures","decision"].includes(id);
+      document.querySelector('.report-header p').textContent=id==='performance'?'Comparaison commune · depuis le 19 octobre 2026 · CAD':id==='decision'?'Comparaisons historiques et projections · CAD':reportPeriod;
+      document.querySelector('.report-tools').hidden=['performance','frontier','decision'].includes(id);
+      const footer=document.querySelector('.footer');if(footer)footer.textContent=id==='performance'?'Départ commun au 19 octobre 2026 · Ajouts ultérieurs simulés · Distributions réinvesties':id==='decision'?'Historique et scénarios prospectifs · CAD · Distributions réinvesties · Frais des FNB inclus':'Simulation historique · Distributions réinvesties · Sans versements ni retraits';
       $("summaryFocus").closest(".field").hidden=id!=="overview";
       document.querySelectorAll("[data-dashboard-view]").forEach(n=>{n.hidden=n.id!==id;});
       document.querySelectorAll(".nav [data-tab]").forEach(n=>{const on=n.dataset.tab===id;n.classList.toggle("active",on);if(on)n.setAttribute("aria-current","page");else n.removeAttribute("aria-current");});

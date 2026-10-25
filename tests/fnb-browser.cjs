@@ -17,6 +17,12 @@ async function check(browser,engine){
  assert.equal(await page.locator('#referenceSelect').inputValue(),'VEQT','Existing default benchmark is preserved');
  // The decision aid shares one daily convention and keeps the historical
  // leaderboard / allocations unchanged when a personal objective is selected.
+ assert.equal(await page.locator('#decision').isVisible(),false);
+ assert.equal(await page.locator('.nav [data-tab="frontier"] + [data-tab="decision"]').innerText(),'Comparer pour choisir');
+ await page.locator('.nav [data-tab="decision"]').click();
+ assert.equal(await page.locator('#allPortfolios').isVisible(),false);
+ assert.equal(await page.locator('#decision').isVisible(),true);
+ assert.equal(await page.locator('#referenceSelect').isVisible(),true);
  await page.waitForSelector('#decisionPanel[data-ready="true"]');
  assert.equal(await page.locator('#decisionBody tr').count(),4);
  const initialChoices=await page.locator('[data-decision-choice]').evaluateAll(nodes=>nodes.map(n=>n.value));
@@ -43,7 +49,7 @@ async function check(browser,engine){
  assert.ok(await page.locator('#decisionBody .decision-warning').count()>0);
  await page.locator('#decisionLoss').fill('abc');assert.equal(await page.locator('#decisionLoss').getAttribute('aria-invalid'),'true');
  await page.locator('#decisionLoss').fill('10');
- await page.reload();await page.waitForSelector('#decisionPanel[data-ready="true"]');
+ await page.reload();await page.locator('.nav [data-tab="decision"]').click();await page.waitForSelector('#decisionPanel[data-ready="true"]');
  assert.equal(await page.locator('#decisionGoal').inputValue(),'balance');assert.equal(await page.locator('#decisionLoss').inputValue(),'10');
  await page.locator('#decisionDetails>summary').click();
  assert.match(await page.locator('#decisionProtection').innerText(),/projection linéaire fondée sur le bêta/);
@@ -130,15 +136,17 @@ async function check(browser,engine){
  await page.locator('#decisionHorizon').selectOption('');
  await page.locator('#decisionGoal').selectOption('');
  await page.locator('#decisionCapital').fill('10 000');
- await page.locator('.decision-perspectives>summary').click();
- assert.equal(await page.locator('.horizon-leader:visible').count(),3);
- const horizonTop=await page.locator('.horizon-panel').boundingBox(),comparisonTop=await page.locator('.all-layout').boundingBox();
- assert.ok(horizonTop.y+horizonTop.height<=comparisonTop.y,'Prospective choices are above the historical comparison');
+ assert.equal(await page.locator('#decision .horizon-columns [data-open-portfolio]:visible').count(),15,'All three top fives are visible in the dedicated comparison tab');
+ const tops=require('../data/fnb-horizon-ranking.json');
+ for(const h of tops.horizons){
+  assert.deepEqual(await page.locator('[data-horizon-top="'+h.years+'"] [data-open-portfolio]').evaluateAll(ns=>ns.map(n=>n.dataset.openPortfolio)),h.order);
+ }
+ assert.match(await page.locator('.horizon-note').innerText(),/qualitative/);
+ assert.equal(await page.locator('#allPortfolios .horizon-panel').count(),0);
  await page.locator('.horizon-ranking summary').click();
- assert.equal(await page.locator('.horizon-ranking [data-open-portfolio]:visible').count(),15);
  assert.match(await page.locator('.horizon-ranking').innerText(),/pas probabilités calculées/);
  await page.locator('.horizon-ranking summary').click();
- await page.locator('.decision-perspectives>summary').click();
+ await page.locator('.nav [data-tab="allPortfolios"]').click();
  await page.locator('#recommendedCharts').click();
  assert.equal(await page.locator('#referenceSelect').inputValue(),'VFV');
  for(const chart of ['risk','growth'])assert.equal(await page.locator('#'+(chart==='risk'?'riskSvg .risk-point':'growthSvg .wealth-line')+':visible').count(),D.recommended_order.length+2);
@@ -335,7 +343,7 @@ async function check(browser,engine){
  assert.equal(await page.locator('#allPortfolioBody [data-open-portfolio]').count(),11);
  assert.equal(await page.locator('.monthly-proposal').count(),0);
  await page.goto(url+'/reports/portefeuilles-fnb.html');await page.waitForSelector('html[data-ready="true"]');
- for(const width of [768,375,320]){await page.setViewportSize({width,height:900});for(const view of ['allPortfolios','overview','exposures','portfolios','methods','performance','frontier']){await page.locator('.nav [data-tab="'+view+'"]').click();if(view==='frontier')await page.waitForSelector('#frontier[data-ready="true"]',{timeout:90000});if(view==='overview'){await page.locator('#summaryFocus').selectOption('robust-2026-10-3');assert.equal(await page.locator('#growthSvg .wealth-line[data-portfolio="robust-2026-10-3"]').isVisible(),true);}if(view==='performance'){await page.locator('#performanceFocus').selectOption('savy-1');assert.equal(await page.locator('#performanceChart .performance-series').count(),2);}await page.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))));assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'FNB viewport overflow '+width+' '+view);}}
+ for(const width of [768,375,320]){await page.setViewportSize({width,height:900});for(const view of ['allPortfolios','overview','exposures','portfolios','methods','performance','frontier','decision']){await page.locator('.nav [data-tab="'+view+'"]').click();if(view==='frontier')await page.waitForSelector('#frontier[data-ready="true"]',{timeout:90000});if(view==='overview'){await page.locator('#summaryFocus').selectOption('robust-2026-10-3');assert.equal(await page.locator('#growthSvg .wealth-line[data-portfolio="robust-2026-10-3"]').isVisible(),true);}if(view==='performance'){await page.locator('#performanceFocus').selectOption('savy-1');assert.equal(await page.locator('#performanceChart .performance-series').count(),2);}await page.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))));assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'FNB viewport overflow '+width+' '+view);}}
  assert.deepEqual(errors,[]);console.log(engine+': monthly proposal, all benchmarks/exposures, separate chart choices, exports, frozen archives and 320/375/768px passed.');await context.close();
 }
 (async()=>{await new Promise(r=>server.listen(0,'127.0.0.1',r));for(const [name,type] of [['chromium',chromium],...(process.env.PORTAL_WEBKIT==='1'?[['webkit',webkit]]:[])]){const browser=await type.launch({headless:true});try{await check(browser,name);}finally{await browser.close();}}})().catch(e=>{console.error(e);process.exitCode=1;}).finally(()=>server.close());

@@ -12,9 +12,11 @@ test('opinion rendering is idempotent, retains historical rankings, and never ed
  const before=JSON.stringify(D),html=fs.readFileSync(path.join(root,'reports/portefeuilles-fnb.html'),'utf8');
  const first=render(html,D,root);assert.equal(render(first,D,root),first);assert.equal(JSON.stringify(D),before);
  const body=first.match(/<!-- fnb-horizon:start -->([\s\S]*?)<!-- fnb-horizon:end -->/)[1];
- assert.equal((body.match(/data-open-portfolio=/g)||[]).length,18);assert.match(body,/pas probabilités calculées/);
+ assert.equal((body.match(/data-open-portfolio=/g)||[]).length,15);assert.match(body,/pas probabilités calculées/);
  assert.match(body,/S&amp;P 500 en CAD/);assert.match(body,/Avis du 2026-10-24/);assert.ok(!body.includes('<details class="horizon-ranking" open'));
  assert.equal((first.match(/data-preference=/g)||[]).length,D.preference_ranking.entries.length);
- assert.ok(first.indexOf('class="section horizon-panel"')<first.indexOf('class="all-layout"'),'Horizon choices appear before the comparison table and historical list');
- assert.equal((body.match(/class="horizon-leader"/g)||[]).length,3,'The three first choices are visible without opening details');
+ assert.ok(first.indexOf('class="horizon-panel"')<first.indexOf('class="all-layout"'),'Horizon choices appear before the comparison table and historical list');
+ assert.equal((body.match(/class="horizon-first"/g)||[]).length,3,'The first choice is highlighted for each horizon');
+ assert.equal((body.match(/data-horizon-top=/g)||[]).length,3,'The three top fives are outside the methodology disclosure');
+ assert.ok(body.indexOf('class="horizon-columns"')<body.indexOf('<details'),'Top fives remain visible without opening details');
 });
