@@ -328,3 +328,6 @@ th:not(:first-child),td{text-align:right}
 }
 
 .factor-metric-note{display:block;font-size:9px;line-height:1.2;color:var(--muted);margin-top:2px}
+/* Give the native details element an explicit anchor in Safari as well. */
+.exposure-grid>.risk-snapshot>.factor-method,.exposure-grid>.factor-panel>.factor-method{position:relative}
+.exposure-grid>.section>.factor-method>.risk-detail-content{top:calc(100% + 8px);left:-12px;right:-12px}

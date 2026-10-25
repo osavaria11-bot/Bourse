@@ -104,6 +104,8 @@ async function check(browser,engine){
   assert.equal(await page.locator('#riskStress').textContent(),expected);
  }
  await page.locator('.risk-snapshot>.factor-method>summary').click();
+ const methodToggle=await page.locator('.risk-snapshot>.factor-method>summary').boundingBox(),methodPopup=await page.locator('.risk-snapshot>.factor-method>.risk-detail-content').boundingBox();
+ assert.ok(methodPopup.y>=methodToggle.y+methodToggle.height,'The details panel must not cover its close toggle in Safari');
  assert.equal(await page.locator('#riskScenarios>.stress-scenario-detail').count(),8);
  assert.match(await page.locator('#riskValidation').innerText(),/blocs disjoints de 21 séances/);
  assert.match(await page.locator('#riskAttribution').innerText(),/bêta plus faible/i);
