@@ -61,8 +61,9 @@ def build(analysis, prices, cutoff, generated_at, return_series=None):
         if any(not math.isfinite(w) or w<0 for w in weights.values()) or abs(sum(weights.values())-1)>1e-8:raise ValueError('Invalid target weights: '+key)
         values=[sum(w*daily[t][i] for t,w in weights.items()) for i in range(len(accepted))]
         results[key]={'weights':weights,'var95':historical_var(values),**distribution_shape(values)}
-    return {'schema_version':1,'confidence':CONFIDENCE,'horizon_sessions':1,'method':'historical_current_target_weights_v1',
+    return {'schema_version':2,'confidence':CONFIDENCE,'horizon_sessions':1,'method':'historical_current_target_weights_v1',
         'generated_at':generated_at,'as_of':cutoff,'sample_start':accepted[0],'sample_end':accepted[-1],
+        'daily_series':{'currency':'CAD','total_return':True,'dates':accepted,'session_indices':[sessions.index(d) for d in accepted],'returns':daily},
         'observations':len(accepted),'expected_observations':expected,'missing_sessions':missing,
         'weights_signature':signature(analysis),'shape_estimators':'bias_corrected_fisher','status':'current','error':None,'results':results,
         'source':'CAD, rendement total. FEQT : rendements quotidiens officiels Fidelity sur valeur liquidative, utilisés sur toute la fenêtre. Autres FNB : clôtures boursières ajustées Yahoo Finance. Distributions et fractionnements ajustés.',
@@ -71,13 +72,23 @@ def build(analysis, prices, cutoff, generated_at, return_series=None):
         'method_note':'Simulation historique à poids cibles actuels constants : somme des poids × rendements réels de chaque séance. Échantillon commun à tous les portefeuilles et benchmarks. FEQT utilise les rendements totaux quotidiens de valeur liquidative de son émetteur sur toute la fenêtre, sans raccorder des prix de fournisseurs différents. Les autres fonds utilisent deux clôtures ajustées consécutives d’une même source. Les séances manquantes sont exclues; aucun rendement sur plusieurs séances ne devient une observation à un jour. Distinct du backtest mensuel rééquilibré en janvier et du suivi réel depuis lancement.'}
 
 def validate(data):
-    if data.get('schema_version')!=1 or data.get('horizon_sessions')!=1 or data.get('confidence')!=CONFIDENCE or data.get('method')!='historical_current_target_weights_v1':raise ValueError('Invalid daily VaR schema')
+    if data.get('schema_version') not in (1,2) or data.get('horizon_sessions')!=1 or data.get('confidence')!=CONFIDENCE or data.get('method')!='historical_current_target_weights_v1':raise ValueError('Invalid daily VaR schema')
     if data['observations']<MIN_OBSERVATIONS or not data['sample_start']<=data['sample_end']==data['as_of']:raise ValueError('Invalid daily VaR sample')
     if data.get('status') not in ['current','stale']:raise ValueError('Invalid daily VaR source status')
     for key,row in data['results'].items():
         if not math.isfinite(row['var95']) or not -1<=row['var95']<=1 or abs(sum(row['weights'].values())-1)>1e-8:raise ValueError('Invalid daily VaR result: '+key)
         for metric in ['skewness','excess_kurtosis']:
             if metric not in row or row[metric] is not None and not math.isfinite(row[metric]):raise ValueError('Invalid daily distribution shape: '+key)
+    if data.get('schema_version')==2:
+        series=data['daily_series'];n=data['observations']
+        if series.get('currency')!='CAD' or series.get('total_return') is not True or len(series['dates'])!=n or len(set(series['dates']))!=n or sorted(series['dates'])!=series['dates']:raise ValueError('Invalid joint daily dates/currency')
+        if len(series['session_indices'])!=n or any(b<=a for a,b in zip(series['session_indices'],series['session_indices'][1:])):raise ValueError('Invalid session indices')
+        for ticker,values in series['returns'].items():
+            if len(values)!=n or any(not math.isfinite(v) or abs(v)>.5 for v in values):raise ValueError('Invalid joint return series: '+ticker)
+        for row in data['results'].values():
+            if any(t not in series['returns'] for t in row['weights']):raise ValueError('Missing position returns')
+            recomputed=[sum(w*series['returns'][t][i] for t,w in row['weights'].items()) for i in range(n)]
+            if abs(historical_var(recomputed)-row['var95'])>1e-10:raise ValueError('Daily VaR inconsistent with retained returns')
     return data
 
 def main(argv=None):
@@ -88,7 +99,7 @@ def main(argv=None):
         data=validate(json.loads(args.output.read_text()));print('Validated actual one-session VaR:',data['observations'],'sessions,',len(data['results']),'series');return 0
     analysis=json.loads((ROOT/'data/fnb-analysis.json').read_text());cutoff=F.completed_session(datetime.now(ZoneInfo('America/Toronto'))).isoformat()
     old=json.loads(args.output.read_text()) if args.output.exists() else None
-    if old and old.get('as_of')==cutoff and old.get('weights_signature')==signature(analysis) and old.get('shape_estimators')=='bias_corrected_fisher' and old.get('status')=='current':validate(old);print('Daily VaR already current:',cutoff);return 0
+    if old and old.get('schema_version')==2 and old.get('as_of')==cutoff and old.get('weights_signature')==signature(analysis) and old.get('shape_estimators')=='bias_corrected_fisher' and old.get('status')=='current':validate(old);print('Daily VaR already current:',cutoff);return 0
     try:
         config=json.loads((ROOT/'data/fnb-model.json').read_text());tickers={t for key in analysis['order'] for t in analysis['results'][key]['weights']}
         first=F.previous_trading_day(date.fromisoformat(analysis['dates'][0]+'-01')-timedelta(days=1)).isoformat()

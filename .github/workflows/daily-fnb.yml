@@ -23,6 +23,8 @@ on:
       - scripts/recommended_fnb.py
       - scripts/benchmark_fnb.py
       - scripts/collect_fnb_daily_risk.py
+      - scripts/collect_fnb_stress.py
+      - tests/test_fnb_stress.py
       - tests/test_fnb_daily_risk.py
       - data/fnb-robust/**
       - data/fnb-recommended/**
@@ -73,8 +75,13 @@ jobs:
         id: daily_risk
         continue-on-error: true
         run: python scripts/collect_fnb_daily_risk.py
+      - name: Refresh adaptive historical stress inputs
+        continue-on-error: true
+        run: python scripts/collect_fnb_stress.py
       - name: Validate the retained daily risk sample
-        run: python scripts/collect_fnb_daily_risk.py --check
+        run: |
+          python scripts/collect_fnb_daily_risk.py --check
+          python scripts/collect_fnb_stress.py --check
       - name: Publish daily history without overwriting an accepted session
         env:
           OUTCOME: ${{ steps.collect.outcome }}
@@ -83,6 +90,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           if [ -f data/fnb-daily-risk.json ]; then git add data/fnb-daily-risk.json; fi
+          if [ -f data/fnb-stress-history.json ]; then git add data/fnb-stress-history.json; fi
           if [ "$OUTCOME" = 'success' ]; then
             git add data/fnb-performance.json data/fnb-performance data/fnb-performance-status.json
             git diff --cached --name-only --diff-filter=MD -- data/fnb-performance/days/ | python -c 'import sys; p=sys.stdin.read().strip(); assert not p, "Refusing to rewrite daily investment history: " + p'

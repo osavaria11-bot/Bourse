@@ -276,3 +276,63 @@ th:not(:first-child),td{text-align:right}
 
 .risk-distribution{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:4px 10px;padding:8px 0 10px;margin-bottom:7px;border-bottom:1px solid var(--border)}
 .risk-distribution>div{display:flex;align-items:baseline;justify-content:space-between;gap:6px}.risk-distribution span{font-size:10px;color:var(--muted)}.risk-distribution strong{font-size:17px;font-weight:600;font-variant-numeric:tabular-nums}.risk-distribution>small{grid-column:1/-1;font-size:9px;color:var(--muted)}
+
+/* Risk analysis: four compact KPIs, equal cards, details in a scrollable popover. */
+.exposure-grid>.risk-snapshot,.exposure-grid>.factor-panel{height:530px;position:relative;min-width:0;box-sizing:border-box}
+.exposure-grid .risk-snapshot-metrics,.exposure-grid .factor-metrics{grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;margin:6px 0 8px}
+.exposure-grid .risk-snapshot-metrics>div,.exposure-grid .factor-metrics>div{padding:7px 6px;background:var(--raised);border:0}
+.exposure-grid .risk-snapshot-metrics strong,.exposure-grid .factor-metrics strong{font-size:18px;margin:3px 0}
+.exposure-grid .risk-snapshot-metrics small{font-size:9px}
+.exposure-grid #riskSnapshotStatus,.exposure-grid #factorStatus{font-size:10px;line-height:1.3;margin:3px 0;min-height:26px}
+.stress-heading{display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:10px;color:var(--muted)}
+.stress-heading select{max-width:69%;min-width:0;padding:3px 5px;font-size:10px}
+.stress-comparison{padding:6px 0 7px;border-bottom:1px solid var(--border)}
+.stress-result{display:flex;align-items:baseline;gap:6px;font-variant-numeric:tabular-nums}
+.stress-result strong{font-size:19px;font-weight:600}.stress-result span{font-size:10px;color:var(--muted)}
+.stress-result>b{margin-left:auto;font-size:12px}.stress-result>.protection{color:var(--accent)}
+.stress-comparison>small{display:block;font-size:9px;margin-top:4px;color:var(--muted)}
+.stress-bars{display:grid;gap:3px;margin-top:5px}.stress-bars i{height:4px;border-radius:2px;display:block;background:#176572}.stress-bars .benchmark{background:#b76c50}
+.risk-secondary{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:8px 0 4px}
+.risk-secondary span{display:block;font-size:10px;color:var(--muted)}.risk-secondary strong{display:block;font-size:14px;font-weight:600;font-variant-numeric:tabular-nums;margin-top:3px}
+.risk-secondary small{display:block;font-size:9px;color:var(--muted);margin-top:2px}
+.capture-bars{margin-top:4px}.capture-bars>div{display:flex;gap:4px;align-items:center;height:10px;font-size:8px}.capture-bars span{font-size:8px;width:27px}.capture-bars i{display:block;height:3px;background:#176572}.capture-bars i.benchmark{background:#b76c50}.capture-bars b{font-size:8px;font-weight:400;margin-left:auto;white-space:nowrap}
+.exposure-grid .risk-distribution{padding:5px 0;margin:0 0 5px;gap:6px}.risk-distribution strong{font-size:13px}
+.exposure-grid .risk-contribution-head h3{margin:3px 0;font-size:11px}.exposure-grid .risk-contribution-bars{gap:6px;margin:5px 0}
+.exposure-grid .risk-contribution{grid-template-columns:55px minmax(0,1fr) 48px;font-size:10px;gap:6px;min-height:13px}
+.risk-contribution-track i.negative{background:#b76c50}
+.exposure-grid #riskContributionNote,.exposure-grid #riskSampleNote{font-size:9px;line-height:1.3;margin:4px 0}
+.risk-quality{color:var(--muted)}
+.exposure-grid .factor-table th,.exposure-grid .factor-table td{font-size:10px;padding:5px 3px}
+.exposure-grid .factor-table thead th{font-size:9px}.exposure-grid .factor-table .factor-band{font-size:9px}.exposure-grid .factor-table small{font-size:8px}
+.factor-not-significant{color:var(--muted)}.factor-not-significant .factor-track i{background:var(--muted);opacity:.55}.factor-significant .factor-delta b{color:var(--accent)}
+.risk-detail-content{display:none;position:absolute;z-index:20;top:calc(100% - 5px);left:0;right:0;max-height:420px;overflow:auto;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:8px;padding:14px;box-shadow:0 8px 30px var(--shadow-color);font-size:11px;line-height:1.5}
+.factor-method[open]>.risk-detail-content{display:block}.risk-detail-content h3{font-size:12px;margin:14px 0 6px}.risk-detail-content small{display:block;font-size:10px;color:var(--muted)}
+.risk-detail-content table{font-size:10px;min-width:0;table-layout:auto}.risk-detail-content th,.risk-detail-content td{padding:6px 4px;width:auto;white-space:normal}.risk-detail-content .table-wrap{overflow:auto}
+.stress-scenario-detail{padding:6px 0;border-bottom:1px solid var(--border)}.stress-scenario-detail>summary{font-size:11px;font-weight:600}
+.exposure-grid>.risk-snapshot>.factor-method,.exposure-grid>.factor-panel>.factor-method{padding-top:7px;font-size:10px}
+@media(max-width:900px){.exposure-grid>.risk-snapshot,.exposure-grid>.factor-panel{height:560px}.exposure-grid .risk-snapshot-metrics strong,.exposure-grid .factor-metrics strong{font-size:16px}}
+@media(max-width:700px){.exposure-grid{grid-template-columns:minmax(0,1fr)}.exposure-grid>.risk-snapshot,.exposure-grid>.factor-panel{height:530px}.exposure-grid .factor-table table{min-width:0}.exposure-grid .risk-snapshot-metrics,.exposure-grid .factor-metrics{grid-template-columns:repeat(4,minmax(0,1fr))}.risk-detail-content{max-height:65vh}.exposure-grid .risk-snapshot-metrics span,.exposure-grid .factor-metrics span{font-size:9px}}
+@media print{.exposure-grid>.risk-snapshot,.exposure-grid>.factor-panel{height:auto;min-height:500px}.risk-detail-content{position:static;max-height:none;box-shadow:none}.factor-method[open]>.risk-detail-content{display:block}}
+/* Keep the desktop row within the previous 487px footprint. */
+@media(min-width:901px){
+ .exposure-grid>.risk-snapshot,.exposure-grid>.factor-panel{height:484px}
+ .exposure-grid #riskSnapshotStatus,.exposure-grid #factorStatus{min-height:14px}
+ .exposure-grid .risk-snapshot-metrics>div,.exposure-grid .factor-metrics>div{padding:5px 6px}
+ .exposure-grid .risk-snapshot-metrics,.exposure-grid .factor-metrics{margin:5px 0 6px}
+ .exposure-grid .risk-snapshot-metrics strong,.exposure-grid .factor-metrics strong{font-size:17px;margin:2px 0}
+ .stress-comparison{padding:4px 0}.stress-result strong{font-size:18px}.stress-bars{gap:2px;margin-top:3px}
+ .risk-secondary{padding:5px 0 2px}.risk-secondary strong{font-size:13px;margin-top:2px}.capture-bars>div{height:8px}
+ .exposure-grid .risk-distribution{padding:4px 0;margin-bottom:4px}
+ .exposure-grid .risk-contribution-bars{gap:4px;margin:4px 0}.exposure-grid .risk-contribution{min-height:12px}
+ .exposure-grid #riskContributionNote,.exposure-grid #riskSampleNote{margin:3px 0}
+}
+
+.factor-metric-note{display:block;font-size:9px;line-height:1.2;color:var(--muted);margin-top:2px}
+/* Give the native details element an explicit anchor in Safari as well. */
+.exposure-grid>.risk-snapshot>.factor-method,.exposure-grid>.factor-panel>.factor-method{position:relative}
+.exposure-grid>.section>.factor-method>.risk-detail-content{top:calc(100% + 8px);left:-12px;right:-12px}
+/* Explicit numeric line heights leave room for WebKit font metrics. */
+.exposure-grid .risk-snapshot-metrics strong,.exposure-grid .factor-metrics strong{line-height:1.12}
+.stress-result strong,.risk-secondary strong,.risk-distribution strong{line-height:1.15}
+.exposure-grid .risk-contribution{line-height:1.15}
+.exposure-grid .risk-contribution-head h3{line-height:1.2}

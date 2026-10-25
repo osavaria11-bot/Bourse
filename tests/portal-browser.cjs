@@ -125,7 +125,7 @@ async function check(browser, engine) {
   await fundReport.locator('.nav [data-tab="exposures"]').click();
   assert.equal(await fundReport.locator("#exposures").isVisible(), true);
   assert.equal(await fundReport.locator('#riskSnapshotTitle').isVisible(),true);
-  assert.equal(await fundReport.locator('.risk-snapshot-metrics>div').count(),5);
+  assert.equal(await fundReport.locator('.risk-snapshot-metrics>div').count(),4);
   assert.equal(await fundReport.locator('[data-risk-contribution]').count(),4);
   assert.equal(await fundReport.locator("#overview").isVisible(), false);
   await fundReport.locator("#sectorFocus").selectOption("11");
