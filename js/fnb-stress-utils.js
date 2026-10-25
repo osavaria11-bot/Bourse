@@ -56,8 +56,13 @@
       const parts=Object.entries(reconstruction.weights).map(([t,w])=>({w,r:historicalReturn(event?.assets?.[t],scenario)}));
       if(parts.every(p=>p.r!==null))return {ticker,return:parts.reduce((s,p)=>s+p.w*p.r,0),classification:'reconstructed',method:reconstruction.weight_basis==='historical'?'Positions datées au début du scénario':'Allocation actuelle dans un environnement historique',source:reconstruction.source_url};
     }
-    const model=models(D,input)[ticker],shocks=scenario.historical?event?.factor_shocks:scenario.shocks;
-    if(!model||!shocks)return {ticker,return:null,classification:'insufficient',method:'Sources et sensibilités insuffisantes'};
+    const shocks=scenario.historical?event?.factor_shocks:scenario.shocks;
+    // An empty object is truthy; summing its coefficients used to manufacture
+    // a zero return. Missing or invalid shocks cannot support a projection.
+    const entries=shocks&&typeof shocks==='object'&&!Array.isArray(shocks)?Object.entries(shocks):[];
+    if(!entries.length||entries.some(([,v])=>!Number.isFinite(v))||!entries.some(([,v])=>v!==0))return {ticker,return:null,classification:'insufficient',method:'Chocs du scénario absents ou invalides'};
+    const model=models(D,input)[ticker];
+    if(!model)return {ticker,return:null,classification:'insufficient',method:'Sources et sensibilités insuffisantes'};
     if(scenario.id==='technology'){
       const sector=D.universe?.sector?.[ticker],equity=D.universe?.equity?.[ticker];
       const gold=D.universe?.gold?.[ticker],bond=D.universe?.bond?.[ticker],cash=D.universe?.cash?.[ticker],crypto=D.universe?.crypto?.[ticker];
@@ -67,7 +72,7 @@
       }
       return {ticker,return:null,classification:'insufficient',method:'Expositions sectorielles ou actifs complémentaires incomplets'};
     }
-    const nonzero=Object.entries(shocks).filter(([,v])=>v!==0);
+    const nonzero=entries.filter(([,v])=>v!==0);
     if(nonzero.length===1&&nonzero[0][0]==='market'&&Number.isFinite(model.beta)&&validReturn(model.beta*shocks.market))return {ticker,return:model.beta*shocks.market,classification:'modeled',method:'Projection linéaire fondée sur le bêta',components:{market:model.beta*shocks.market},limitations:'Bêta estimé sur l’historique récent; taux, crédit, devises et résiduel non isolés. Aucune trajectoire historique du FNB créée.'};
     if(model.fit&&nonzero.every(([key])=>model.ids.includes(key))){
       const components=Object.fromEntries(nonzero.map(([key,shock])=>[key,shock*model.fit.coefficients[model.ids.indexOf(key)]]));

@@ -40,5 +40,5 @@ module.exports=function riskView(html,dailyRisk=null,stressInput=null){
  html=html.slice(0,target)+view+html.slice(target);
  if(!html.includes('src="../js/fnb-stress-utils.js'))html=html.replace(/(<script[^>]+src="\.\.\/js\/fnb-dashboard.js)/,'<script src="../js/fnb-stress-utils.js?v=20261024-adaptive-risk"></script>$1');
  if(!html.includes('src="../js/fnb-risk-utils.js'))html=html.replace(/(<script[^>]+src="\.\.\/js\/fnb-dashboard.js)/,'<script src="../js/fnb-risk-utils.js?v=20261024-adaptive-risk"></script>$1');
- return html.replace(/fnb-risk-utils\.js\?v=[^"']+/g,'fnb-risk-utils.js?v=20261024-adaptive-risk');
+ return html.replace(/fnb-risk-utils\.js\?v=[^"']+/g,'fnb-risk-utils.js?v=20261024-adaptive-risk').replace(/fnb-stress-utils\.js\?v=[^"']+/g,'fnb-stress-utils.js?v=20261025-missing-shock');
 };

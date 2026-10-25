@@ -15,6 +15,37 @@ async function check(browser,engine){
  assert.equal(await page.locator('[data-preference="proposal"] .preference-rank').textContent(),String(D.preference_ranking.entries.find(e=>e.id==='proposal').rank));
  assert.equal(await page.locator('#allPortfolioBody [data-open-portfolio]').count(),D.custom_order.length+D.proposal_order.length+D.robust_order.length+D.recommended_order.length);
  assert.equal(await page.locator('#referenceSelect').inputValue(),'VEQT','Existing default benchmark is preserved');
+ // The decision aid shares one daily convention and keeps the historical
+ // leaderboard / allocations unchanged when a personal objective is selected.
+ await page.waitForSelector('#decisionPanel[data-ready="true"]');
+ assert.equal(await page.locator('#decisionBody tr').count(),4);
+ const initialChoices=await page.locator('[data-decision-choice]').evaluateAll(nodes=>nodes.map(n=>n.value));
+ assert.deepEqual(initialChoices,['7',...D.robust_order.slice(0,2)]);
+ const decision=require('../js/fnb-decision-utils'),daily=require('../data/fnb-daily-risk.json');
+ const expectedDecision=decision.analyse(D,initialChoices,'VEQT',daily,require('../data/fnb-stress-history.json'));
+ for(const row of expectedDecision.rows){
+  const actual=page.locator('[data-decision-row="'+row.id+'"]');
+  assert.equal(await actual.locator('[data-decision-value="sharpe"]').innerText(),new Intl.NumberFormat('fr-CA',{minimumFractionDigits:2,maximumFractionDigits:2}).format(row.sharpe));
+  assert.equal(await actual.locator('[data-decision-value="cvar"]').innerText().then(t=>t.includes('fragile')),true);
+ }
+ await page.locator('#decisionGoal').selectOption('balance');
+ assert.deepEqual(await page.locator('[data-decision-choice]').evaluateAll(nodes=>nodes.map(n=>n.value)),initialChoices);
+ assert.match(await page.locator('#decisionReading').innerText(),/Sharpe/);
+ await page.locator('#decisionHorizon').selectOption('5');await page.locator('#decisionLoss').fill('10,5');await page.locator('#decisionCapital').fill('20 000');
+ assert.match((await page.locator('#decisionLossMoney').innerText()).replace(/\s/g,''),/2100/);
+ assert.match(await page.locator('#decisionReading').innerText(),/historique est plus court/);
+ assert.ok(await page.locator('#decisionBody .decision-warning').count()>0);
+ await page.locator('#decisionLoss').fill('abc');assert.equal(await page.locator('#decisionLoss').getAttribute('aria-invalid'),'true');
+ await page.locator('#decisionLoss').fill('10');
+ await page.reload();await page.waitForSelector('#decisionPanel[data-ready="true"]');
+ assert.equal(await page.locator('#decisionGoal').inputValue(),'balance');assert.equal(await page.locator('#decisionLoss').inputValue(),'10');
+ await page.locator('#decisionDetails>summary').click();
+ assert.match(await page.locator('#decisionProtection').innerText(),/projection linéaire fondée sur le bêta/);
+ assert.match(await page.locator('#decisionSensitivity').innerText(),/variantes/);
+ assert.match(await page.locator('#decisionSources').innerText(),/2008/);
+ await page.locator('#decisionDetails>summary').click();
+ await page.locator('#decisionGoal').selectOption('');await page.locator('#decisionHorizon').selectOption('');await page.locator('#decisionLoss').fill('');await page.locator('#decisionCapital').fill('10 000');
+ await page.locator('.decision-perspectives>summary').click();
  assert.equal(await page.locator('.horizon-leader:visible').count(),3);
  const horizonTop=await page.locator('.horizon-panel').boundingBox(),comparisonTop=await page.locator('.all-layout').boundingBox();
  assert.ok(horizonTop.y+horizonTop.height<=comparisonTop.y,'Prospective choices are above the historical comparison');
@@ -22,6 +53,7 @@ async function check(browser,engine){
  assert.equal(await page.locator('.horizon-ranking [data-open-portfolio]:visible').count(),15);
  assert.match(await page.locator('.horizon-ranking').innerText(),/pas probabilités calculées/);
  await page.locator('.horizon-ranking summary').click();
+ await page.locator('.decision-perspectives>summary').click();
  await page.locator('#recommendedCharts').click();
  assert.equal(await page.locator('#referenceSelect').inputValue(),'VFV');
  for(const chart of ['risk','growth'])assert.equal(await page.locator('#'+(chart==='risk'?'riskSvg .risk-point':'growthSvg .wealth-line')+':visible').count(),D.recommended_order.length+2);
@@ -65,7 +97,7 @@ async function check(browser,engine){
   await page.locator('[data-fiche="'+k+'"] [data-open-exposure]').click();assert.equal(await page.locator('#sectorFocus').inputValue(),k);
  }
  await page.locator('.nav [data-tab="overview"]').click();await page.locator('#capitalInput').fill('10 000');await page.locator('.nav [data-tab="allPortfolios"]').click();
- await page.locator('#allPortfolios [data-open-portfolio="proposal"]').first().click();
+ await page.locator('#allPortfolioBody [data-open-portfolio="proposal"]').click();
  assert.equal(await page.locator('[data-fiche="proposal"]').isVisible(),true);
  assert.equal(await page.locator('[data-fiche="proposal"] [data-fund]').count(),Object.keys(D.results.proposal.weights).length);
  assert.equal(await page.locator('[data-fiche="proposal"] .holdings-section tbody tr').count(),10);

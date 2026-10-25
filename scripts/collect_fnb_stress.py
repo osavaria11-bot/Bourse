@@ -93,7 +93,8 @@ def build(analysis, histories, cutoff, source_urls, errors=None):
         if not all(k in shocks for k in full):
             shocks = {'market': shocks['market']} if 'market' in shocks else {}
         events[key] = {'start': start, 'end': end, 'assets': assets, 'factor_shocks': shocks,
-                       'market_method': 'VEQT observé' if 'VEQT' in assets else 'Allocation géographique actuelle de VEQT, proxys SPY/XIC/EFA/EEM en CAD',
+                       'unavailable_reason': None if shocks else 'Choc de marché indisponible : historique ou couverture géographique incomplets; aucune renormalisation des régions connues.',
+                       'market_method': ('VEQT observé' if 'VEQT' in assets else 'Allocation géographique actuelle de VEQT, proxys SPY/XIC/EFA/EEM en CAD') if shocks else 'Reconstruction du marché indisponible',
                        'source_urls': list(source_urls.values())}
     dates = analysis['universe']['dates']
     factors = {name: [] for name in ['bond', 'credit', 'fx']}
@@ -107,7 +108,7 @@ def build(analysis, histories, cutoff, source_urls, errors=None):
         factors['credit'].append(corp-govt if corp is not None and govt is not None else None)
         factors['fx'].append(period_return(histories.get('FX', {}), start, end))
     return {'schema_version': 1, 'as_of': cutoff, 'generated_at': datetime.now(F.TZ).isoformat(timespec='seconds'),
-            'status': 'partial' if errors else 'current', 'errors': errors or {}, 'scenarios': events,
+            'status': 'partial' if errors or any(not e['factor_shocks'] for e in events.values()) else 'current', 'errors': errors or {}, 'scenarios': events,
             'model_factors': {'dates': dates, 'returns': factors}, 'source_urls': source_urls,
             'indices': {}, 'reconstructions': {},
             'method': 'Actual adjusted ETF endpoint returns in CAD. USD proxies converted as (1+rUSD)*(1+rUSD/CAD)-1. Portfolio scenarios use current starting weights and buy-and-hold. No historical portfolio holdings inferred. No invented index data. XBB total return = rate proxy; XCB-XGB = imperfect credit proxy, with duration mismatch. FX = USD/CAD. All sensitivities are conditional estimates, not contractual hedge ratios.'}

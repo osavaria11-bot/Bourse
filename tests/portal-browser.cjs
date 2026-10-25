@@ -55,6 +55,13 @@ async function check(browser, engine) {
   await fundReport.locator('html[data-ready="true"]').waitFor();
   assert.equal(await fundReport.locator('.nav [data-tab]').first().textContent(), "Vue d’ensemble");
   assert.equal(await fundReport.locator("#allPortfolios").isVisible(), true);
+  assert.equal(await fundReport.locator('#decisionBody tr').count(),4);
+  await fundReport.locator('#decisionGoal').selectOption('balance');
+  await fundReport.locator('#decisionDetails>summary').click();
+  assert.match(await fundReport.locator('#decisionSensitivity').innerText(),/variantes/);
+  assert.match(await fundReport.locator('#decisionSources').innerText(),/2008/);
+  await fundReport.locator('#decisionDetails>summary').click();
+  await fundReport.locator('#decisionGoal').selectOption('');
   assert.equal(await fundReport.locator("#allPortfolioBody tr").count(), fnbOwn.length+fnbDefaultBenchmarks.length);
   assert.equal(await fundReport.locator("#allPortfolioBody [data-open-portfolio]").count(), fnbOwn.length);
   assert.equal(await fundReport.locator("#monthlyTitle").count(),0);
@@ -62,6 +69,7 @@ async function check(browser, engine) {
   assert.equal(await fundReport.locator('[data-preference="5"]').first().textContent().then(t=>t.includes("Élan")), true);
   assert.equal(await fundReport.locator('[data-preference="10"], [data-preference="11"]').count(), 0);
   await fundReport.locator("#referenceSelect").selectOption("VBAL");
+  assert.equal(await fundReport.locator('#decisionBody tr').count(),2,'60/40 comparisons stay in their own mandate');
   assert.equal(await fundReport.locator('#allPortfolioBody tr').filter({has:fundReport.locator('[data-open-portfolio="10"]')}).locator('td').nth(3).textContent(), fnbBeta);
   await fundReport.locator("#referenceSelect").selectOption("VEQT");
   await fundReport.locator('[data-overview-benchmark="FBAL"]').check();

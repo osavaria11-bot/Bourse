@@ -1,0 +1,77 @@
+'use strict';
+const {test}=require('node:test'),assert=require('node:assert/strict');
+const U=require('../js/fnb-decision-utils'),R=require('../js/fnb-risk-utils');
+const D=require('../data/fnb-analysis.json'),A=require('../data/fnb-daily-risk.json'),H=require('../data/fnb-stress-history.json'),P=require('../data/fnb-performance.json');
+const close=(a,b)=>assert.ok(Number.isFinite(a)&&Number.isFinite(b)&&Math.abs(a-b)<1e-10,`${a} ≈ ${b}`);
+test('daily decision metrics recover compounded returns, sample volatility and arithmetic Sharpe',()=>{
+  const x=Array.from({length:252},(_,i)=>i%2?.01:-.01),m=U.metrics(x,252,.02,x.map((_,i)=>i));
+  close(m.annualReturn,(1-.0001)**126-1);close(m.vol,.01*Math.sqrt(252*252/251));close(m.sharpe,-.02/m.vol);
+  assert.equal(m.cvar,null);assert.equal(m.blocks,12);assert.equal(m.tailFragile,true);
+  assert.equal(U.metrics([.01],252,.02),null);assert.equal(U.metrics([NaN,.01]),null);assert.equal(U.metrics([-1,.01]),null);
+  assert.equal(U.metrics(x.slice(0,251),252,.02).annualReturn,null);assert.equal(U.metrics(x.slice(0,251),252,.02).sharpe,null);
+});
+test('every candidate and benchmark uses identical dates, conventions and daily source weights',()=>{
+  const before=JSON.stringify([D,A,H]),ids=U.choices(D,'VEQT'),a=U.analyse(D,ids,'VEQT',A,H);
+  assert.deepEqual(ids,['7',...D.robust_order.slice(0,2)]);assert.equal(a.basis,'daily');assert.equal(a.rows.length,4);
+  for(const row of a.rows){
+    const x=A.daily_series.dates.map((_,i)=>Object.entries(D.results[row.id].weights).reduce((s,[t,w])=>s+w*A.daily_series.returns[t][i],0));
+    assert.deepEqual(row.returns,x);close(row.annualReturn,x.reduce((s,v)=>s*(1+v),1)**(252/x.length)-1);
+    close(row.maxDrawdown,R.maximumDrawdown(x).value);close(row.cvar,R.losses(R.compoundBlocks(x,A.daily_series.session_indices)).cvar);
+    assert.equal(row.observations,a.dates.length);assert.equal(row.tailFragile,true);
+  }
+  assert.equal(JSON.stringify([D,A,H]),before,'No allocation, historical rank or daily dataset is mutated');
+});
+test('short histories and absent daily weights never produce a fabricated monthly CVaR',()=>{
+  for(const n of [100,251,252,400,503,504,755]){
+    const a=structuredClone(A);a.observations=n;a.daily_series.dates=a.daily_series.dates.slice(-n);a.daily_series.session_indices=a.daily_series.session_indices.slice(-n);
+    for(const t in a.daily_series.returns)a.daily_series.returns[t]=a.daily_series.returns[t].slice(-n);
+    const result=U.analyse(structuredClone(D),['2','7'],'VEQT',a,H);assert.equal(result.basis,n>=252?'daily':'monthly');
+    for(const row of result.rows)assert.equal(row.cvar!==null,n>=504);
+  }
+  const bad=structuredClone(A);bad.results['7'].weights={FEQT:1};
+  const a=U.analyse(structuredClone(D),['7','2'],'VEQT',bad,H);assert.equal(a.basis,'monthly');assert.ok(a.rows.every(r=>r.cvar===null));
+  const missing=U.analyse(D,['2'],'VEQT',null,H);assert.equal(missing.basis,'monthly');
+  const incomplete=structuredClone(D);incomplete.results['2'].monthly=[];assert.equal(U.analyse(incomplete,['2','7'],'VEQT',null,H).available,false);
+  const gaps=structuredClone(A);gaps.daily_series.session_indices[gaps.daily_series.session_indices.length-1]++;
+  assert.equal(U.analyse(structuredClone(D),['2'],'VEQT',gaps,H).basis,'monthly');
+});
+test('mandates and benchmark-relative rankings stay separate, with distinct user choices',()=>{
+  assert.deepEqual(U.candidates(D,'VBAL'),['10']);assert.deepEqual(U.candidates(D,'FBAL'),['10']);assert.deepEqual(U.candidates(D,'VGRO'),['11']);
+  assert.ok(!U.candidates(D,'VEQT').some(k=>['10','11'].includes(k)));
+  assert.deepEqual(U.choices(D,'VEQT',['2','2','7']),['2','7',D.robust_order[0]]);
+  const rows=[{id:'a',annualReturn:.2,sharpe:1,cvar:.1},{id:'b',annualReturn:.1,sharpe:2,cvar:.05},{id:'c',annualReturn:null,sharpe:2,cvar:null},{id:'ref',isBenchmark:true,annualReturn:1,sharpe:5,cvar:0}];
+  assert.equal(U.ranks(rows,'growth').get('a'),1);assert.equal(U.ranks(rows,'balance').get('b'),1);assert.equal(U.ranks(rows,'balance').get('c'),1);
+  assert.equal(U.ranks(rows,'protection').get('b'),1);assert.equal(U.ranks(rows,'protection').has('c'),false);assert.equal(U.ranks(rows,'growth').has('ref'),false);
+  assert.equal(U.ranks(rows,'unknown').size,0);
+});
+test('personal loss thresholds flag available shocks without turning missing scenarios into safety',()=>{
+  const row={maxDrawdown:-.15,scenarios:[{name:'loss',portfolio:{available:true,return:-.3,classification:'modeled'}},{name:'gain',portfolio:{available:true,return:.2,classification:'observed'}},{name:'missing',portfolio:{available:false,return:null}}]};
+  const t=U.tolerance(row,.2);assert.equal(t.status,'exceeded');assert.equal(t.breaches.length,1);assert.equal(t.missing,1);close(t.worst,.3);
+  assert.equal(U.tolerance(row,.4).status,'not_exceeded_in_available');assert.equal(U.tolerance(row,null).status,'unset');
+  assert.equal(U.tolerance({maxDrawdown:null,scenarios:[row.scenarios[2]]},.2).status,'unavailable');
+});
+test('post-publication returns use actual launch dates and the identical allocation, never the common-start simulation',()=>{
+  for(const id of [...D.custom_order,...D.robust_order,...D.recommended_order,...D.proposal_order]){
+    const r=U.recorded(D,id,'VEQT',P);assert.equal(r.available,true,id);assert.ok(r.start<=r.end);assert.equal(r.short,true);
+  }
+  const id=D.robust_order[0],r=U.recorded(D,id,'VEQT',P);assert.equal(r.start,'2026-10-21');assert.equal(r.observations,2);
+  const a=P.accounts.find(a=>a.id===id),b=P.accounts.find(a=>a.id==='VEQT');close(r.total,a.history.at(-1).value/a.history[0].value-1);
+  close(r.gap,r.total-(b.history.find(h=>h.date===r.end).value/b.history.find(h=>h.date===r.start).value-1));
+  assert.equal(U.recorded(D,id,'VEQT',require('../data/fnb-comparison.json')).available,false);
+  const changed=structuredClone(D);changed.results[id].weights={VEQT:1};assert.equal(U.recorded(changed,id,'VEQT',P).available,false);
+  assert.equal(U.recorded(D,id,'NONEXISTENT',P).gap,null);
+  const pending=structuredClone(P);pending.accounts.find(a=>a.id===id).history=[];assert.equal(U.recorded(D,id,'VEQT',pending).available,false);
+});
+test('date windows and bounded weight transfers produce descriptive ranks without optimizing allocations',()=>{
+  const before=JSON.stringify(D),a=U.analyse(D,['7',D.robust_order[0],D.robust_order[1]],'VEQT',A,H);
+  const s=U.sensitivity(D,a,'balance');assert.equal(s.length,3);
+  for(const row of s){assert.deepEqual(row.windows.map(w=>w.observations),[252,504,A.observations]);assert.ok(row.weightVariants>0);assert.ok(row.weightRank.every(v=>v>=1&&v<=3));assert.ok(row.weightMetric[0]<=row.weightMetric[1]);}
+  const protect=U.sensitivity(D,a,'protection');assert.ok(protect.every(s=>s.windows[0].rank===null),'12 months do not support 24 disjoint blocks');
+  const monthly=U.analyse(D,['2','7'],'VEQT',null,H);assert.ok(U.sensitivity(D,monthly,'balance').every(s=>s.weightRank===null));
+  assert.equal(JSON.stringify(D),before);
+});
+test('shared holdings are a documented partial view of the top ten, retaining issuer contributions',()=>{
+  const o=U.overlap(D,'2');assert.equal(o.funds,Object.keys(D.results['2'].weights).length);
+  close(o.top10,D.lookthrough.results['2'].top10_weight);
+  for(const p of o.sharedTop){assert.ok(p.funds.length>1);assert.ok(D.lookthrough.results['2'].top10.some(x=>x.name===p.name));}
+});

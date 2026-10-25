@@ -91,7 +91,8 @@ const stressFile=path.join(root,'data/fnb-stress-history.json');
 const stressInput=fs.existsSync(stressFile)?JSON.parse(fs.readFileSync(stressFile,'utf8')):null;
 const dailyRiskFile=path.join(root,'data/fnb-daily-risk.json');
 html=require('./fnb_risk_view.cjs')(html,fs.existsSync(dailyRiskFile)?JSON.parse(fs.readFileSync(dailyRiskFile,'utf8')):null,stressInput);
-html=html.replace(/fnb-dashboard\.(js|css)\?v=[^"']+/g,'fnb-dashboard.$1?v=20261024-adaptive-risk');
+html=require('./fnb_decision_view.cjs')(html,D,root);
+html=html.replace(/fnb-dashboard\.(js|css)\?v=[^"']+/g,'fnb-dashboard.$1?v=20261025-decision');
 // Remove any archived data from the serialized payload before replacing it.
 html=html.replace(/(<script[^>]*id="analysis"[^>]*>)[\s\S]*?(<\/script>)/,(_,a,b)=>a+JSON.stringify(D).replace(/</g,"\\u003c")+b);
 html=require("./fnb_frontier_overlay.cjs")(html,root);
