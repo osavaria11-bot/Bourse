@@ -1,11 +1,10 @@
 {
   "schema_version": 1,
   "as_of": "2026-10-23",
-  "generated_at": "2026-10-25T11:02:39-04:00",
+  "generated_at": "2026-10-25T11:03:29-04:00",
   "status": "partial",
   "errors": {
-    "FCMO": "Séances suspectes exclues des périodes qui les traversent : 2020-06-10",
-    "FX": "Unexpected stress source identity: CAD=X"
+    "FCMO": "Séances suspectes exclues des périodes qui les traversent : 2020-06-10"
   },
   "scenarios": {
     "gfc2008": {
@@ -13,15 +12,39 @@
       "end": "2008-12-31",
       "assets": {
         "CA": {
-          "return": -0.333621470166904,
+          "return": -0.3336217598628296,
           "start": "2007-12-31",
           "end": "2008-12-31",
           "currency": "CAD",
           "total_return": true,
           "source_url": "https://finance.yahoo.com/quote/XIC.TO/history/"
         },
+        "DEV": {
+          "return": -0.281272209355959,
+          "start": "2007-12-31",
+          "end": "2008-12-31",
+          "currency": "CAD",
+          "total_return": true,
+          "source_url": "https://finance.yahoo.com/quote/EFA/history/"
+        },
+        "EM": {
+          "return": -0.3769225271054526,
+          "start": "2007-12-31",
+          "end": "2008-12-31",
+          "currency": "CAD",
+          "total_return": true,
+          "source_url": "https://finance.yahoo.com/quote/EEM/history/"
+        },
+        "US": {
+          "return": -0.2296417080078984,
+          "start": "2007-12-31",
+          "end": "2008-12-31",
+          "currency": "CAD",
+          "total_return": true,
+          "source_url": "https://finance.yahoo.com/quote/SPY/history/"
+        },
         "XBB": {
-          "return": 0.06217539193952182,
+          "return": 0.06217533465141001,
           "start": "2007-12-31",
           "end": "2008-12-31",
           "currency": "CAD",
@@ -29,7 +52,7 @@
           "source_url": "https://finance.yahoo.com/quote/XBB.TO/history/"
         },
         "XCB": {
-          "return": 0.0009052762085624,
+          "return": 0.0009055710368310876,
           "start": "2007-12-31",
           "end": "2008-12-31",
           "currency": "CAD",
@@ -37,7 +60,7 @@
           "source_url": "https://finance.yahoo.com/quote/XCB.TO/history/"
         },
         "XGB": {
-          "return": 0.08914632435770553,
+          "return": 0.08914728300870256,
           "start": "2007-12-31",
           "end": "2008-12-31",
           "currency": "CAD",
@@ -90,7 +113,7 @@
       "end": "2020-03-23",
       "assets": {
         "CA": {
-          "return": -0.37167822525766814,
+          "return": -0.37167837531647263,
           "start": "2020-02-19",
           "end": "2020-03-23",
           "currency": "CAD",
@@ -105,8 +128,24 @@
           "total_return": true,
           "source_url": "https://finance.yahoo.com/quote/CGL-C.TO/history/"
         },
+        "DEV": {
+          "return": -0.2646740194976196,
+          "start": "2020-02-19",
+          "end": "2020-03-23",
+          "currency": "CAD",
+          "total_return": true,
+          "source_url": "https://finance.yahoo.com/quote/EFA/history/"
+        },
+        "EM": {
+          "return": -0.24497810667159503,
+          "start": "2020-02-19",
+          "end": "2020-03-23",
+          "currency": "CAD",
+          "total_return": true,
+          "source_url": "https://finance.yahoo.com/quote/EEM/history/"
+        },
         "FCUL": {
-          "return": -0.27289271447628405,
+          "return": -0.27289265153151243,
           "start": "2020-02-19",
           "end": "2020-03-23",
           "currency": "CAD",
@@ -114,7 +153,7 @@
           "source_url": "https://finance.yahoo.com/quote/FCUL.NE/history/"
         },
         "FCUQ": {
-          "return": -0.2519977375688398,
+          "return": -0.25199767810624085,
           "start": "2020-02-19",
           "end": "2020-03-23",
           "currency": "CAD",
@@ -122,15 +161,23 @@
           "source_url": "https://finance.yahoo.com/quote/FCUQ.TO/history/"
         },
         "RUD": {
-          "return": -0.2955296527386737,
+          "return": -0.2955295386172043,
           "start": "2020-02-19",
           "end": "2020-03-23",
           "currency": "CAD",
           "total_return": true,
           "source_url": "https://finance.yahoo.com/quote/RUD.TO/history/"
         },
+        "US": {
+          "return": -0.27687461667885427,
+          "start": "2020-02-19",
+          "end": "2020-03-23",
+          "currency": "CAD",
+          "total_return": true,
+          "source_url": "https://finance.yahoo.com/quote/SPY/history/"
+        },
         "VBAL": {
-          "return": -0.20203857913423495,
+          "return": -0.20203851485730717,
           "start": "2020-02-19",
           "end": "2020-03-23",
           "currency": "CAD",
@@ -138,7 +185,7 @@
           "source_url": "https://finance.yahoo.com/quote/VBAL.TO/history/"
         },
         "VCN": {
-          "return": -0.3721637967416862,
+          "return": -0.37216354912434135,
           "start": "2020-02-19",
           "end": "2020-03-23",
           "currency": "CAD",
@@ -146,7 +193,7 @@
           "source_url": "https://finance.yahoo.com/quote/VCN.TO/history/"
         },
         "VDY": {
-          "return": -0.39144961417222846,
+          "return": -0.39144940291290853,
           "start": "2020-02-19",
           "end": "2020-03-23",
           "currency": "CAD",
@@ -154,7 +201,7 @@
           "source_url": "https://finance.yahoo.com/quote/VDY.TO/history/"
         },
         "VEE": {
-          "return": -0.2373993107020944,
+          "return": -0.23739950059829962,
           "start": "2020-02-19",
           "end": "2020-03-23",
           "currency": "CAD",
@@ -162,7 +209,7 @@
           "source_url": "https://finance.yahoo.com/quote/VEE.TO/history/"
         },
         "VEQT": {
-          "return": -0.30336683177677337,
+          "return": -0.3033670226735844,
           "start": "2020-02-19",
           "end": "2020-03-23",
           "currency": "CAD",
@@ -170,7 +217,7 @@
           "source_url": "https://finance.yahoo.com/quote/VEQT.TO/history/"
         },
         "VFV": {
-          "return": -0.27428823262753343,
+          "return": -0.2742882845184811,
           "start": "2020-02-19",
           "end": "2020-03-23",
           "currency": "CAD",
@@ -178,7 +225,7 @@
           "source_url": "https://finance.yahoo.com/quote/VFV.TO/history/"
         },
         "VGRO": {
-          "return": -0.2530640855494105,
+          "return": -0.25306416442412705,
           "start": "2020-02-19",
           "end": "2020-03-23",
           "currency": "CAD",
@@ -186,7 +233,7 @@
           "source_url": "https://finance.yahoo.com/quote/VGRO.TO/history/"
         },
         "VMO": {
-          "return": -0.30528274665065147,
+          "return": -0.30528261790249245,
           "start": "2020-02-19",
           "end": "2020-03-23",
           "currency": "CAD",
@@ -194,7 +241,7 @@
           "source_url": "https://finance.yahoo.com/quote/VMO.TO/history/"
         },
         "VVL": {
-          "return": -0.39680089458266987,
+          "return": -0.39680100106535887,
           "start": "2020-02-19",
           "end": "2020-03-23",
           "currency": "CAD",
@@ -202,7 +249,7 @@
           "source_url": "https://finance.yahoo.com/quote/VVL.TO/history/"
         },
         "XBB": {
-          "return": -0.06896122237611646,
+          "return": -0.06896093555725036,
           "start": "2020-02-19",
           "end": "2020-03-23",
           "currency": "CAD",
@@ -210,7 +257,7 @@
           "source_url": "https://finance.yahoo.com/quote/XBB.TO/history/"
         },
         "XCB": {
-          "return": -0.2093678771054095,
+          "return": -0.2093681058363268,
           "start": "2020-02-19",
           "end": "2020-03-23",
           "currency": "CAD",
@@ -218,7 +265,7 @@
           "source_url": "https://finance.yahoo.com/quote/XCB.TO/history/"
         },
         "XEF": {
-          "return": -0.26309172028659833,
+          "return": -0.2630919147900106,
           "start": "2020-02-19",
           "end": "2020-03-23",
           "currency": "CAD",
@@ -226,7 +273,7 @@
           "source_url": "https://finance.yahoo.com/quote/XEF.TO/history/"
         },
         "XGB": {
-          "return": 0.004060010631534494,
+          "return": 0.004059606441465746,
           "start": "2020-02-19",
           "end": "2020-03-23",
           "currency": "CAD",
@@ -234,7 +281,7 @@
           "source_url": "https://finance.yahoo.com/quote/XGB.TO/history/"
         },
         "XMI": {
-          "return": -0.19821245775807705,
+          "return": -0.1982123996156553,
           "start": "2020-02-19",
           "end": "2020-03-23",
           "currency": "CAD",
@@ -242,7 +289,7 @@
           "source_url": "https://finance.yahoo.com/quote/XMI.TO/history/"
         },
         "XMV": {
-          "return": -0.35578324997088284,
+          "return": -0.3557832737310026,
           "start": "2020-02-19",
           "end": "2020-03-23",
           "currency": "CAD",
@@ -250,7 +297,7 @@
           "source_url": "https://finance.yahoo.com/quote/XMV.TO/history/"
         },
         "ZEB": {
-          "return": -0.3953481589699056,
+          "return": -0.39534809373625324,
           "start": "2020-02-19",
           "end": "2020-03-23",
           "currency": "CAD",
@@ -258,7 +305,7 @@
           "source_url": "https://finance.yahoo.com/quote/ZEB.TO/history/"
         },
         "ZEO": {
-          "return": -0.5914230407213459,
+          "return": -0.5914232299791655,
           "start": "2020-02-19",
           "end": "2020-03-23",
           "currency": "CAD",
@@ -266,7 +313,7 @@
           "source_url": "https://finance.yahoo.com/quote/ZEO.TO/history/"
         },
         "ZLB": {
-          "return": -0.3383314040318366,
+          "return": -0.33833150640640186,
           "start": "2020-02-19",
           "end": "2020-03-23",
           "currency": "CAD",
@@ -274,7 +321,7 @@
           "source_url": "https://finance.yahoo.com/quote/ZLB.TO/history/"
         },
         "ZNQ": {
-          "return": -0.21045026280155466,
+          "return": -0.2104501890282069,
           "start": "2020-02-19",
           "end": "2020-03-23",
           "currency": "CAD",
@@ -282,7 +329,7 @@
           "source_url": "https://finance.yahoo.com/quote/ZNQ.TO/history/"
         },
         "ZUQ": {
-          "return": -0.24505065766913947,
+          "return": -0.24505043498751644,
           "start": "2020-02-19",
           "end": "2020-03-23",
           "currency": "CAD",
@@ -291,7 +338,14 @@
         }
       },
       "factor_shocks": {
-        "market": -0.30336683177677337
+        "market": -0.3033670226735844,
+        "value": -0.09343397839177447,
+        "momentum": -0.0019155952289080513,
+        "quality": 0.022290606412240233,
+        "lowvol": 0.0013956329869686535,
+        "credit": -0.21342771227779256,
+        "bond": -0.06896093555725036,
+        "fx": 0.09097087437148144
       },
       "market_method": "VEQT observé",
       "source_urls": [
@@ -337,7 +391,7 @@
       "end": "2022-12-30",
       "assets": {
         "CA": {
-          "return": -0.05818233009195817,
+          "return": -0.058182333840532396,
           "start": "2021-12-31",
           "end": "2022-12-30",
           "currency": "CAD",
@@ -352,8 +406,24 @@
           "total_return": true,
           "source_url": "https://finance.yahoo.com/quote/CGL-C.TO/history/"
         },
+        "DEV": {
+          "return": -0.0896063552926093,
+          "start": "2021-12-31",
+          "end": "2022-12-30",
+          "currency": "CAD",
+          "total_return": true,
+          "source_url": "https://finance.yahoo.com/quote/EFA/history/"
+        },
+        "EM": {
+          "return": -0.1552988471438973,
+          "start": "2021-12-31",
+          "end": "2022-12-30",
+          "currency": "CAD",
+          "total_return": true,
+          "source_url": "https://finance.yahoo.com/quote/EEM/history/"
+        },
         "FBAL": {
-          "return": -0.09603692293168653,
+          "return": -0.09603700626909106,
           "start": "2021-12-31",
           "end": "2022-12-30",
           "currency": "CAD",
@@ -361,7 +431,7 @@
           "source_url": "https://finance.yahoo.com/quote/FBAL.NE/history/"
         },
         "FCIV": {
-          "return": -0.003727948901576572,
+          "return": -0.0037279486290959785,
           "start": "2021-12-31",
           "end": "2022-12-30",
           "currency": "CAD",
@@ -369,7 +439,7 @@
           "source_url": "https://finance.yahoo.com/quote/FCIV.TO/history/"
         },
         "FCMO": {
-          "return": -0.13499983358040246,
+          "return": -0.13499991892378582,
           "start": "2021-12-31",
           "end": "2022-12-30",
           "currency": "CAD",
@@ -377,7 +447,7 @@
           "source_url": "https://finance.yahoo.com/quote/FCMO.NE/history/"
         },
         "FCUL": {
-          "return": -0.026881935811773228,
+          "return": -0.026882034256391685,
           "start": "2021-12-31",
           "end": "2022-12-30",
           "currency": "CAD",
@@ -385,7 +455,7 @@
           "source_url": "https://finance.yahoo.com/quote/FCUL.NE/history/"
         },
         "FCUQ": {
-          "return": -0.11479953125236386,
+          "return": -0.11479943858680808,
           "start": "2021-12-31",
           "end": "2022-12-30",
           "currency": "CAD",
@@ -401,12 +471,20 @@
           "source_url": "https://finance.yahoo.com/quote/FGRO.NE/history/"
         },
         "RUD": {
-          "return": -0.07101781750438974,
+          "return": -0.0710168073472599,
           "start": "2021-12-31",
           "end": "2022-12-30",
           "currency": "CAD",
           "total_return": true,
           "source_url": "https://finance.yahoo.com/quote/RUD.TO/history/"
+        },
+        "US": {
+          "return": -0.12990213255883865,
+          "start": "2021-12-31",
+          "end": "2022-12-30",
+          "currency": "CAD",
+          "total_return": true,
+          "source_url": "https://finance.yahoo.com/quote/SPY/history/"
         },
         "VBAL": {
           "return": -0.1139362955504033,
@@ -417,7 +495,7 @@
           "source_url": "https://finance.yahoo.com/quote/VBAL.TO/history/"
         },
         "VCN": {
-          "return": -0.05761762236629875,
+          "return": -0.05761781993340387,
           "start": "2021-12-31",
           "end": "2022-12-30",
           "currency": "CAD",
@@ -425,7 +503,7 @@
           "source_url": "https://finance.yahoo.com/quote/VCN.TO/history/"
         },
         "VDY": {
-          "return": -0.0023390265648295383,
+          "return": -0.002339351632821618,
           "start": "2021-12-31",
           "end": "2022-12-30",
           "currency": "CAD",
@@ -433,7 +511,7 @@
           "source_url": "https://finance.yahoo.com/quote/VDY.TO/history/"
         },
         "VEE": {
-          "return": -0.12783503461089651,
+          "return": -0.127835246713353,
           "start": "2021-12-31",
           "end": "2022-12-30",
           "currency": "CAD",
@@ -441,7 +519,7 @@
           "source_url": "https://finance.yahoo.com/quote/VEE.TO/history/"
         },
         "VEQT": {
-          "return": -0.10761739607662124,
+          "return": -0.10761755101486714,
           "start": "2021-12-31",
           "end": "2022-12-30",
           "currency": "CAD",
@@ -449,7 +527,7 @@
           "source_url": "https://finance.yahoo.com/quote/VEQT.TO/history/"
         },
         "VFV": {
-          "return": -0.12583474351921664,
+          "return": -0.12583473403792012,
           "start": "2021-12-31",
           "end": "2022-12-30",
           "currency": "CAD",
@@ -457,7 +535,7 @@
           "source_url": "https://finance.yahoo.com/quote/VFV.TO/history/"
         },
         "VGRO": {
-          "return": -0.11181066134075512,
+          "return": -0.11181082602335646,
           "start": "2021-12-31",
           "end": "2022-12-30",
           "currency": "CAD",
@@ -465,7 +543,7 @@
           "source_url": "https://finance.yahoo.com/quote/VGRO.TO/history/"
         },
         "VMO": {
-          "return": -0.09069508393403047,
+          "return": -0.09069492647560917,
           "start": "2021-12-31",
           "end": "2022-12-30",
           "currency": "CAD",
@@ -473,7 +551,7 @@
           "source_url": "https://finance.yahoo.com/quote/VMO.TO/history/"
         },
         "VVL": {
-          "return": 0.0049660514238327735,
+          "return": 0.004965947757334277,
           "start": "2021-12-31",
           "end": "2022-12-30",
           "currency": "CAD",
@@ -481,7 +559,7 @@
           "source_url": "https://finance.yahoo.com/quote/VVL.TO/history/"
         },
         "XBB": {
-          "return": -0.11664530666539619,
+          "return": -0.11664513783632491,
           "start": "2021-12-31",
           "end": "2022-12-30",
           "currency": "CAD",
@@ -489,7 +567,7 @@
           "source_url": "https://finance.yahoo.com/quote/XBB.TO/history/"
         },
         "XCB": {
-          "return": -0.09793890605993416,
+          "return": -0.09793892680973537,
           "start": "2021-12-31",
           "end": "2022-12-30",
           "currency": "CAD",
@@ -497,7 +575,7 @@
           "source_url": "https://finance.yahoo.com/quote/XCB.TO/history/"
         },
         "XEF": {
-          "return": -0.09527206299824909,
+          "return": -0.09527217403801747,
           "start": "2021-12-31",
           "end": "2022-12-30",
           "currency": "CAD",
@@ -505,7 +583,7 @@
           "source_url": "https://finance.yahoo.com/quote/XEF.TO/history/"
         },
         "XGB": {
-          "return": -0.12255113103667992,
+          "return": -0.122551341305697,
           "start": "2021-12-31",
           "end": "2022-12-30",
           "currency": "CAD",
@@ -513,7 +591,7 @@
           "source_url": "https://finance.yahoo.com/quote/XGB.TO/history/"
         },
         "XMI": {
-          "return": -0.10495360925761321,
+          "return": -0.10495344974945475,
           "start": "2021-12-31",
           "end": "2022-12-30",
           "currency": "CAD",
@@ -521,7 +599,7 @@
           "source_url": "https://finance.yahoo.com/quote/XMI.TO/history/"
         },
         "XMV": {
-          "return": -0.014583708962233932,
+          "return": -0.014583482682641424,
           "start": "2021-12-31",
           "end": "2022-12-30",
           "currency": "CAD",
@@ -529,7 +607,7 @@
           "source_url": "https://finance.yahoo.com/quote/XMV.TO/history/"
         },
         "ZEB": {
-          "return": -0.10384318322451302,
+          "return": -0.10384333565780945,
           "start": "2021-12-31",
           "end": "2022-12-30",
           "currency": "CAD",
@@ -537,7 +615,7 @@
           "source_url": "https://finance.yahoo.com/quote/ZEB.TO/history/"
         },
         "ZEO": {
-          "return": 0.3967366952234552,
+          "return": 0.3967364954557848,
           "start": "2021-12-31",
           "end": "2022-12-30",
           "currency": "CAD",
@@ -545,7 +623,7 @@
           "source_url": "https://finance.yahoo.com/quote/ZEO.TO/history/"
         },
         "ZLB": {
-          "return": -0.0035481567789323876,
+          "return": -0.0035478412750395982,
           "start": "2021-12-31",
           "end": "2022-12-30",
           "currency": "CAD",
@@ -553,7 +631,7 @@
           "source_url": "https://finance.yahoo.com/quote/ZLB.TO/history/"
         },
         "ZNQ": {
-          "return": -0.2806188389783699,
+          "return": -0.28061889692491593,
           "start": "2021-12-31",
           "end": "2022-12-30",
           "currency": "CAD",
@@ -561,7 +639,7 @@
           "source_url": "https://finance.yahoo.com/quote/ZNQ.TO/history/"
         },
         "ZUQ": {
-          "return": -0.18298251431957724,
+          "return": -0.18298257761822023,
           "start": "2021-12-31",
           "end": "2022-12-30",
           "currency": "CAD",
@@ -570,7 +648,14 @@
         }
       },
       "factor_shocks": {
-        "market": -0.10761739607662124
+        "market": -0.10761755101486714,
+        "value": 0.11258349877220142,
+        "momentum": 0.01692262453925797,
+        "quality": 0.011035295451112037,
+        "lowvol": 0.09895269978152843,
+        "credit": 0.024612414495961632,
+        "bond": -0.11664513783632491,
+        "fx": 0.06336900831726178
       },
       "market_method": "VEQT observé",
       "source_urls": [
@@ -658,39 +743,39 @@
     "returns": {
       "bond": [
         0.0007829510647470173,
-        -0.012666764327061819,
-        -0.0010051145792295824,
-        -0.025103352792459233,
-        0.0008670814769891066,
-        0.0447712308694419,
-        0.03561521966156844,
-        -0.014705476662477235,
-        -0.0037772635319077708,
-        0.005279782220693807,
-        -0.021511064602560803,
-        0.018030141609604255,
-        0.01302555694426033,
-        0.02167710840215009,
-        0.004172610990497372,
-        0.018014723229847762,
-        -0.009801213262831565,
-        0.017367429573902138,
-        -0.007341482939065003,
-        0.011613788824969218,
-        0.010473799007975293,
-        -0.0024437866974349465,
-        -0.005934085206968476,
-        7.527132851681273e-06,
-        0.0006763816599060224,
-        -0.008814434794272241,
-        0.005020221528631685,
-        0.019259214303659178,
+        -0.012666687104819996,
+        -0.0010055837782606547,
+        -0.025103206036037218,
+        0.0008674832241337693,
+        0.044770902732554685,
+        0.03561537873134957,
+        -0.014705402504005316,
+        -0.0037772632476109624,
+        0.005279555169844352,
+        -0.02151054175872391,
+        0.018029750655424115,
+        0.013025783281494618,
+        0.021676731180694464,
+        0.004172684494331502,
+        0.0180148697227811,
+        -0.009801212563926742,
+        0.017367356309389903,
+        -0.007341624508021338,
+        0.01161421832924936,
+        0.010473514097546044,
+        -0.002443995973527957,
+        -0.005933806733451785,
+        7.527132322326935e-06,
+        0.0006762409193219465,
+        -0.008814435413917798,
+        0.00502008003644927,
+        0.019259430090575735,
         0.006656595078538219,
         0.0014232348995106836,
         -0.01190135566320738,
         0.005674776936475334,
-        0.015232578609075453,
-        -0.019936952199473668,
+        0.015232647724917392,
+        -0.01993701892101063,
         0.0021321194409227306,
         0.01332758195950312,
         0.005353933597652016,
@@ -699,88 +784,88 @@
         -0.012655559770502034
       ],
       "credit": [
-        0.0050309081585023785,
-        0.009324165453307054,
-        0.0014006590865801583,
-        0.006549789720141752,
-        0.0031200455114255288,
-        -0.004866908113517532,
-        0.00039213132305659926,
-        0.0062545471858885815,
-        0.008783358952357712,
-        0.00031929739291625125,
-        0.009321514985464074,
-        -0.0038559176579122667,
-        -0.005610165401913614,
-        0.0024995198224084803,
-        0.00026419201037430895,
-        0.0025887705850942133,
-        0.002260219937909702,
-        0.0045420346219591234,
-        0.002681031493159569,
-        0.00011772403205956294,
-        -0.004452829001136527,
-        0.00253309989622863,
-        0.004628336503847863,
-        0.009456731320133693,
-        -0.0001202477870345664,
-        0.01276676067823157,
-        -0.005257790456798528,
-        -0.0008656562417939107,
-        -0.0013449875302511405,
-        -0.002085369204489096,
-        0.011451331387309693,
-        0.0021632733133405413,
-        -0.008288920290436819,
-        0.002865007048468482,
-        0.004449327514226997,
-        -0.002669350120166447,
-        -0.0002310687057593963,
-        0.004671225301059123,
-        0.0010499903310644543,
+        0.005031799983954199,
+        0.009323722321341488,
+        0.0014005420258937917,
+        0.006549449934180274,
+        0.003120273647455374,
+        -0.00486643482787219,
+        0.00039168208342710287,
+        0.006254977086438296,
+        0.008783467513928556,
+        0.00031831457318531875,
+        0.009322150824603193,
+        -0.003855915986027192,
+        -0.005610055446171103,
+        0.0024993021018739903,
+        0.00026440202551847314,
+        0.0025883514426601195,
+        0.002260320710685937,
+        0.004542038006627003,
+        0.0026814391262386383,
+        0.00011751406954041421,
+        -0.004453132516189173,
+        0.00253329889654208,
+        0.0046283352090101815,
+        0.009456836211926944,
+        -0.00012075715260873032,
+        0.012767567418186299,
+        -0.005257898990904786,
+        -0.0008657627236110521,
+        -0.0013450820450340295,
+        -0.002085663112839198,
+        0.011451525296176546,
+        0.0021634643712584722,
+        -0.008288915803988495,
+        0.0028648140113889387,
+        0.004449530435025828,
+        -0.002669554164536292,
+        -0.00023096830167701476,
+        0.0046713246727122515,
+        0.0010498893950696697,
         0.006157176418465804
       ],
       "fx": [
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null,
-        null
+        -0.02571374850930308,
+        7.539424984792653e-05,
+        0.021455064096474352,
+        -0.0032729643649200835,
+        0.025024054368838033,
+        -0.0172395987334778,
+        -0.026533808011483195,
+        0.013008712633223452,
+        0.013117762679257128,
+        0.0006260078792705848,
+        0.005939932242163826,
+        0.0012146233851941801,
+        0.0011693283653866349,
+        0.01097138256597785,
+        -0.026029690252625137,
+        0.001460477538861138,
+        0.029551086423115214,
+        0.0071325863067370765,
+        0.024458874403610942,
+        0.009979244003211596,
+        -0.0034154739294977032,
+        -0.009305232729447499,
+        -0.03370577679901343,
+        -0.0015260250642288309,
+        -0.009003579205739465,
+        0.010510604446016591,
+        -0.005453800147584564,
+        0.01210204325097397,
+        0.0046636236583688095,
+        0.0032114910757381487,
+        -0.023620453818003262,
+        -0.014801339177487494,
+        0.013622921546469158,
+        0.018463239445496216,
+        -0.01845162212462359,
+        0.008163097674829034,
+        0.030915067417348396,
+        -0.013920782578076829,
+        -0.00800071740662267,
+        0.02102293340743655
       ]
     }
   },
