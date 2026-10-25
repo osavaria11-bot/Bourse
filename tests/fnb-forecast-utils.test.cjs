@@ -108,8 +108,8 @@ test('persistent mean uncertainty widens long-term results; it is not reduced by
 });
 test('walk-forward trains strictly before the forecast month and compares all models on identical eligible dates',()=>{
  const v=F.walkForward(prepared,D);assert.ok(v.records.length>0);
- for(const r of v.records){assert.ok(r.origin<r.date);assert.ok(r.trainMonths>=24);if(r.model==='hybrid')assert.ok(r.date>'2026-04');}
- for(const row of v.rows){const counts=row.models.map(m=>m.observations);assert.ok(counts.every(n=>n===counts[0]));assert.equal(counts[0],5);}
+ for(const r of v.records){assert.ok(r.origin<r.date);assert.ok(r.trainMonths>=24);if(r.model==='hybrid'&&prepared.options.returnBasis==='planning')assert.ok(r.date>'2026-04');}
+ for(const row of v.rows){const counts=row.models.map(m=>m.observations);assert.ok(counts.every(n=>n===counts[0]));assert.equal(counts[0],D.dates.length-24);}
  const d=structuredClone(D),cut=D.dates.indexOf('2026-09');
  for(const s of Object.values(d.universe.returns))s[cut]=.5;
  const changed=F.walkForward(F.prepare(d,H,M),d);
@@ -134,4 +134,49 @@ test('production forecasts actually compute 25 000 joint trajectories with the t
   const a=F.simulate(prepared,years,{ids});assert.equal(a.available,true);assert.equal(a.paths,25000);assert.equal(a.rows.length,6);
   for(const r of a.rows){assert.ok(Number.isFinite(r.expectedAnnual));assert.ok(r.futureValue>0);assert.equal(r.fan.length,years+1);}
  }
+});
+test('historical and planning bases are explicit, measured on a common CAD period, with proxy fees restored before current ETF fees',()=>{
+ const h=F.returnAssumptions(H,D.dates.at(-1),'history'),p=F.returnAssumptions(H,D.dates.at(-1),'planning');
+ assert.equal(h.basis,'history');assert.equal(h.months,H.forward_history.dates.length);assert.equal(p.rates.us,.064);
+ for(const [key,name] of [['US','us'],['CA','canada'],['DEV','developed'],['EM','emerging'],['XBB','bond']]){
+  const a=H.forward_history.returns[key];close(h.net[key],Math.expm1(a.reduce((s,v)=>s+Math.log1p(v),0)*12/a.length));
+  close(h.rates[name],(1+h.net[key])*Math.exp(h.feeAdjustment.proxies[key].fee)-1);
+ }
+ const old=F.prepare(D,H,M,{returnBasis:'planning'});assert.ok(prepared.rows.find(r=>r.id==='VFV').mean>old.rows.find(r=>r.id==='VFV').mean);
+ const missing=F.returnAssumptions({},D.dates.at(-1),'history');assert.equal(missing.basis,'planning');assert.match(missing.reason,/incomplet/);
+ assert.equal(F.prepare(D,H,M,{returnBasis:'unknown'}).available,false);
+});
+test('historical anchors never consume future proxy prices, partial months, or disconnected old observations',()=>{
+ const h=structuredClone(H),cut='2025-05',before=F.returnAssumptions(h,cut,'history');
+ h.forward_history.dates.forEach((d,i)=>{if(d>cut)for(const a of Object.values(h.forward_history.returns))a[i]=.8;});
+ assert.deepEqual(F.returnAssumptions(h,cut,'history'),before);
+ const p=F.prepare(D,h,M),v=F.walkForward(p,D),original=F.walkForward(prepared,D);
+ const map=new Map(v.records.map(r=>[[r.id,r.model,r.date].join('|'),r]));
+ for(const r of original.records)if(r.date==='2025-06')close(r.estimate,map.get([r.id,r.model,r.date].join('|')).estimate);
+ const bad=structuredClone(H);bad.forward_history.returns.US[bad.forward_history.dates.indexOf('2025-01')]=null;
+ assert.equal(F.returnAssumptions(bad,D.dates.at(-1),'history').basis,'planning');
+});
+test('planning walk-forward still respects the April 2026 publication date; bases have no invented calibration claim',()=>{
+ const p=F.prepare(D,H,M,{returnBasis:'planning'}),v=F.walkForward(p,D);
+ for(const r of v.records.filter(r=>r.model==='hybrid'))assert.ok(r.date>'2026-04');
+ assert.equal(v.rows[0].models[0].observations,5);assert.equal(v.longHorizonCalibrated,false);
+});
+test('recent advantage is an explicit decaying scenario, with paired paths and uncertainty, never the default expected alpha',()=>{
+ assert.equal(F.defaults().recentCarry,0);const p=F.prepare(D,H,M,{recentCarry:.5}),a=small(p,2),base=small(prepared,2),long=small(p,10);
+ const r=a.rows.find(r=>r.id==='7');assert.ok(r.recentAlphaAnnual>0);assert.ok(r.medianAnnual>base.rows.find(r=>r.id==='7').medianAnnual);
+ for(const row of a.rows)assert.deepEqual(row.fan,long.rows.find(r=>r.id===row.id).fan.slice(0,3));
+ assert.ok(a.comparisons.every(c=>c.indistinguishable===null&&c.scope==='base_without_assumed_alpha'));
+ assert.equal(F.prepare(D,H,M,{recentCarry:1.1}).available,false);
+});
+test('a recent fund reconstructed from exposures receives no invented historical advantage',()=>{
+ const d=structuredClone(D),t='NEW';d.universe.returns[t]=Array(d.dates.length).fill(null);d.universe.geo[t]=[1,0,0,0,0];d.universe.equity[t]=1;d.universe.mer[t]=.001;
+ for(const k of ['gold','crypto','bond','cash'])d.universe[k][t]=0;
+ d.results.new={weights:{NEW:1},mer:.001,geo_total:[1,0,0,0,0,0,0,0,0]};
+ const p=F.prepare(d,H,M,{recentCarry:1}),q=F.prepare(d,H,M,{recentCarry:0});assert.equal(p.rows.find(r=>r.id==='new').activeAvailable,false);
+ const a=small(p,2,{ids:['new']}),b=small(q,2,{ids:['new']});close(a.rows.find(r=>r.id==='new').median,b.rows.find(r=>r.id==='new').median);
+});
+test('a hypothetical increase in current fees is not refunded as supposed historical alpha',()=>{
+ const d=structuredClone(D),before=F.prepare(d,H,M,{recentCarry:1});d.results['7'].mer+=.01;
+ const after=F.prepare(d,H,M,{recentCarry:1}),a=before.rows.find(r=>r.id==='7'),b=after.rows.find(r=>r.id==='7');
+ close(a.activeAnnualLog,b.activeAnnualLog);close(a.mean-b.mean,.01);
 });
