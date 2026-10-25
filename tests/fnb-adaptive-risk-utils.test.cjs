@@ -23,6 +23,7 @@ test('conditional downside beta recovers a known crisis slope and refuses fewer 
 test('21-session observations are disjoint and never bridge a missing exchange session',()=>{
  const x=Array(63).fill(.01),i=Array.from({length:63},(_,i)=>i);
  assert.equal(R.compoundBlocks(x,i).length,3);close(R.compoundBlocks(x,i)[0],1.01**21-1);
+ const latest=Array(43).fill(0);latest[42]=-.1;const ends=R.compoundBlocks(latest,latest.map((_,i)=>i));assert.equal(ends.length,2);close(ends.at(-1),-.1);
  const gap=i.map(v=>v>=10?v+1:v);assert.equal(R.compoundBlocks(x,gap).length,2);
  assert.equal(R.compoundBlocks(x.slice(0,20),i.slice(0,20)).length,0);
 });

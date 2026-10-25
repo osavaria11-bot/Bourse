@@ -16,7 +16,9 @@ Les rendements quotidiens totaux en CAD sont conservés dans le schéma 2 de
 ### Échantillon et queues de perte
 
 Le mélange aux poids actuels se rééquilibre chaque séance. La distribution à
-21 séances utilise des blocs disjoints, sans franchir une séance manquante.
+21 séances utilise des blocs disjoints alignés sur la dernière séance disponible,
+sans franchir une séance manquante. Le fragment incomplet le plus ancien est
+écarté; une nouvelle clôture entre ainsi dans l’estimation à chaque actualisation.
 Minimum : 252 séances pour le quotidien, 24 blocs complets pour le mensuel.
 La CVaR intègre une fraction de l’observation frontière lorsque 5 % de
 l’échantillon n’est pas entier. Aucun changement d’horizon par racine du temps.

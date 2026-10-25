@@ -41,8 +41,10 @@
     return {ratio:n>=3&&br<0?pr/br:null,portfolio:pr,benchmark:br,observations:n,fragile:n<12,
       interpretation:n<3?'Échantillon baissier insuffisant':pr>=0?'Gain du portefeuille pendant les mois baissiers du benchmark':pr>br?'Pertes cumulées plus faibles que le benchmark':'Pertes cumulées au moins aussi fortes que le benchmark'};
   }
-  function compoundBlocks(returns,indices,horizon=21,offset=0) {
+  function compoundBlocks(returns,indices,horizon=21,offset=null) {
     if(!Array.isArray(returns)||returns.length!==indices?.length||!returns.every(Number.isFinite))return [];
+    // End-align the disjoint sample so every refresh includes the newest close.
+    if(offset===null)offset=returns.length%horizon;
     const values=[];
     for(let i=offset;i+horizon<=returns.length;i+=horizon){
       if(indices[i+horizon-1]-indices[i]!==horizon-1)continue;
@@ -117,7 +119,7 @@
     const dp=contiguous?joint.p:p.monthly,db=contiguous?joint.b:b.monthly;
     const offsets=a?Array.from({length:21},(_,i)=>losses(compoundBlocks(joint.p,joint.session_indices,21,i))).filter(Boolean):[];
     const effective=a?effectiveObservations(blocks):0;
-    const result={available:true,var:a?.var??null,cvar:a?.cvar??null,confidence:.95,horizonSessions:21,observations:blocks.length,tailObservations:a?.tailObservations??0,effectiveObservations:effective,
+    const result={available:true,var:a?.var??null,cvar:a?.cvar??null,confidence:.95,horizonSessions:21,monthlyStart:joint&&blocks.length?joint.dates[joint.dates.length%21]:null,monthlyEnd:joint&&blocks.length?joint.dates.at(-1):null,observations:blocks.length,tailObservations:a?.tailObservations??0,effectiveObservations:effective,
       benchmarkVar:benchmark?.var??null,relativeVar:benchmark?.var>1e-12?a.var/benchmark.var:null,interval:a?bootstrapTail(blocks):null,
       stability:offsets.length?{minimum:Math.min(...offsets.map(x=>x.var)),maximum:Math.max(...offsets.map(x=>x.var)),note:'Sensibilité au décalage de début des blocs; échantillons dépendants, jamais additionnés.'}:null,
       coherence:a?{cvarAboveVar:a.cvar>=a.var-1e-12,monthlyAboveDaily:a.var>=daily.var,note:'La VaR ne croît pas nécessairement avec l’horizon pour toute distribution; aucune règle racine de 21 imposée.'}:null,
