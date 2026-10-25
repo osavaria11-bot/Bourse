@@ -111,9 +111,10 @@ async function check(browser,engine){
  assert.match(await page.locator('#riskAttribution').innerText(),/bêta plus faible/i);
  await page.locator('.risk-snapshot>.factor-method>summary').click();
  await page.setViewportSize({width:1440,height:1000});
+ await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
  const row=await page.locator('.risk-snapshot,.factor-panel').evaluateAll(ns=>ns.map(n=>{const r=n.getBoundingClientRect();return {top:r.top,height:r.height,bottom:r.bottom,left:r.left,width:r.width,client:n.clientHeight,scroll:n.scrollHeight};}));
  assert.ok(Math.abs(row[0].top-row[1].top)<1);assert.ok(row.every(x=>x.height<=487),'Cards stay within the previous desktop height');
- assert.ok(row.every(x=>x.scroll<=x.client+2),'No content clipped in the compact cards');
+ assert.ok(row.every(x=>x.scroll<=x.client+2),'No content clipped in the compact cards: '+JSON.stringify(row));
  await page.setViewportSize({width:1280,height:900});
  await page.locator('#sectorFocus').selectOption('VEQT');await page.locator('#referenceSelect').selectOption('VEQT');
  await page.locator('.factor-panel > .factor-method > summary').click();

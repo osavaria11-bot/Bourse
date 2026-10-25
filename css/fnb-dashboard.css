@@ -331,3 +331,8 @@ th:not(:first-child),td{text-align:right}
 /* Give the native details element an explicit anchor in Safari as well. */
 .exposure-grid>.risk-snapshot>.factor-method,.exposure-grid>.factor-panel>.factor-method{position:relative}
 .exposure-grid>.section>.factor-method>.risk-detail-content{top:calc(100% + 8px);left:-12px;right:-12px}
+/* Explicit numeric line heights leave room for WebKit font metrics. */
+.exposure-grid .risk-snapshot-metrics strong,.exposure-grid .factor-metrics strong{line-height:1.12}
+.stress-result strong,.risk-secondary strong,.risk-distribution strong{line-height:1.15}
+.exposure-grid .risk-contribution{line-height:1.15}
+.exposure-grid .risk-contribution-head h3{line-height:1.2}
