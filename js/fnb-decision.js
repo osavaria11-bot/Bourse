@@ -125,6 +125,9 @@ window.SavyFnbDecision=(()=>{
       if(e.target.id==='decisionLoss')render();
     });
     document.addEventListener('click',e=>{
+      // Prepare the disclosure in the same interaction, before the browser's
+      // deferred toggle event (which may be throttled in an embedded report).
+      if(e.target.closest('#decisionDetails>summary')){const a=model();if(a.available){protection(a);diagnostics(a);}}
       const b=e.target.closest('button');if(!b)return;
       if(b.dataset.decisionOpen)actions.open(b.dataset.decisionOpen,reference(),'portfolios');
       if(b.dataset.decisionRisk)actions.open(b.dataset.decisionRisk,reference(),'exposures');
