@@ -8,63 +8,146 @@ colonne et s’empilent sur mobile. Les méthodes complètes restent dans les vo
 repliables. Les rendus partagés conservent cette disposition lors des publications
 mensuelles et des mises à jour de cotations.
 
-La carte affiche cinq mesures, puis deux statistiques de distribution :
+Les quatre KPI de gauche sont VaR 95 % à un jour, VaR 95 % sur 21 séances,
+CVaR sur 21 séances et Relative VaR (ratio au benchmark; dénominateur positif).
+Les rendements quotidiens totaux en CAD sont conservés dans le schéma 2 de
+`data/fnb-daily-risk.json`. Les historiques et registres existants restent distincts.
 
-- **VaR 95 % · 1 jour** : quantile empirique des pertes d’une séance, avec les
-  poids cibles actuels appliqués aux rendements quotidiens historiques.
-- **VaR 95 % · 1 mois** : inverse de la CDF empirique des pertes mensuelles du
-  backtest, qui rééquilibre en janvier.
-- **CVaR 95 % · 1 mois** : moyenne du pire 5 % de la distribution mensuelle,
-  avec fraction de l’observation frontière lorsque nécessaire.
-- **Relative VaR** : VaR mensuelle du portefeuille / VaR mensuelle du benchmark,
-  en ×. Indisponible si le dénominateur est nul ou négatif; distinct de la VaR
-  des rendements actifs.
-- **Stress principal** : choc hypothétique VEQT −20 % × coefficient de marché
-  conditionnel du modèle factoriel. Autres facteurs constants; interception et
-  résiduel exclus. Ce n’est pas une perte maximale.
-- **Skewness · 1 jour** : coefficient de Fisher–Pearson ajusté pour la taille
-  d’échantillon, sur les mêmes rendements quotidiens que la VaR à un jour.
-- **Excess kurtosis · 1 jour** : excès d’aplatissement de Fisher avec correction
-  de biais d’échantillon, sur ces mêmes rendements. Repère normal : 0, plutôt que
-  la kurtosis de Pearson dont le repère normal est 3.
+### Échantillon et queues de perte
 
-Les deux statistiques de forme sont sans unité et indisponibles lorsque la
-variance est nulle. Elles restent sensibles aux observations extrêmes.
+Le mélange aux poids actuels se rééquilibre chaque séance. La distribution à
+21 séances utilise des blocs disjoints, sans franchir une séance manquante.
+Minimum : 252 séances pour le quotidien, 24 blocs complets pour le mensuel.
+La CVaR intègre une fraction de l’observation frontière lorsque 5 % de
+l’échantillon n’est pas entier. Aucun changement d’horizon par racine du temps.
+Un seuil de perte négatif est possible quand tous les rendements sont positifs.
 
-Le mini graphique conserve les quatre plus fortes contributions à la variance
-**mensuelle** du mélange aux poids cibles :
-`w_i cov(r_i, r_cible) / var(r_cible)`. Tous les FNB totalisent 100 % avant arrondis;
-une part négative compense le risque. Cette photographie diffère du backtest à
-rééquilibrage annuel. Les estimations mensuelles reposent sur environ 40 mois,
-soit environ deux observations dans la queue de 5 %; cette limite reste visible.
+Les blocs disjoints ne sont pas supposés indépendants. Le nombre effectif est
+estimé par la séquence initiale positive des paires d’autocorrélations et plafonné
+au nombre de blocs. Cet effectif est un diagnostic approximatif sur les rendements,
+pas une mesure certaine de l’information contenue dans la queue. La fragilité est signalée si la queue effective compte moins
+de dix observations; il s’agit d’une règle de publication, pas d’un score de
+confiance. Le nombre brut de blocs et la masse de la queue sont aussi affichés.
+Le bootstrap circulaire rééchantillonne par blocs de trois périodes de 21 séances,
+400 réplications reproductibles, pour des intervalles percentiles à 95 %. Il ne
+crée pas de crises absentes. Les 21 décalages possibles servent à vérifier la
+stabilité du seuil, sans additionner des observations dépendantes.
 
-### Source quotidienne
+Le backtesting prévoit chaque séance avec les 252 observations précédentes.
+Pour 21 séances, il utilise les 504 observations précédentes puis avance de
+21 séances, sans chevauchement des réalisations. Les données futures ne modifient
+jamais une prévision passée. Les dépassements sont rapportés avec leur nombre
+attendu à 5 %; les petits échantillons ne sont pas présentés comme une validation
+statistique concluante. Les poids ont été choisis après une partie de l’historique :
+ce rejeu valide des calculs, pas une sélection de portefeuille hors échantillon.
 
-`scripts/collect_fnb_daily_risk.py` publie `data/fnb-daily-risk.json`, indépendant
-des registres d’investissements et des rendements déjà acquis. La fenêtre débute
-au début de la période mensuelle commune et va jusqu’à la dernière séance
-terminée. Au moins 252 séances et 98 % de couverture commune sont exigés.
-Une clôture manquante exclut les deux rendements affectés : un mouvement sur
-plusieurs séances ne devient jamais une observation à un jour.
+### Drawdown, marchés baissiers et contributions
 
-FEQT utilise, sur toute la fenêtre, les rendements totaux quotidiens officiels
-Fidelity (série L, CAD, valeur liquidative), car les cours de marché comportent
-un trou au printemps 2024. Le risque d’écart entre cours et valeur liquidative
-de FEQT n’est donc pas capté. Les autres FNB utilisent les clôtures boursières
-ajustées Yahoo Finance, avec contrôle d’identité, de devise et de fractionnements.
-Aucun raccord de prix de fournisseurs différents n’est effectué. Les mouvements
-ajustés de plus de 50 % sont refusés pour vérification de source.
+Le Maximum Drawdown compose la richesse à partir de 1 et conserve le pire
+rapport au sommet antérieur, initial compris. Portefeuille et référence partagent
+les mêmes séances. En cas de trou, le backtest mensuel commun est utilisé et
+les creux intramensuels ne sont pas prétendus mesurés. Une allocation actuelle
+rejouée dans le passé reste une reconstruction, même avec des rendements de
+FNB observés. Le downside capture utilise les rendements composés des seuls
+mois négatifs du benchmark, avec minimum trois mois et prudence sous douze.
+Un ratio négatif peut indiquer un gain du portefeuille, pas une erreur.
 
-La VaR quotidienne n’est pas obtenue en divisant une VaR mensuelle par une racine
-carrée du temps. Les poids de chaque résultat sont vérifiés contre la sélection
-courante avant affichage. Une source tardive conserve le dernier relevé daté avec
-un statut visible. Le workflow Daily FNB performance actualise ces mesures.
+Le bêta simple et le downside beta sont relatifs au benchmark sélectionné.
+Le second est une covariance / variance conditionnelle sur ses seuls mois
+négatifs : huit mois minimum; fragilité sous douze. Il n’est pas confondu avec
+le coefficient marché conditionnel du modèle multifactoriel, dont le facteur
+marché est VEQT. Downside capture, bêta et facteurs utilisent le backtest
+mensuel existant à rééquilibrage annuel en janvier.
 
-Références : [CFA Institute, market risk](https://www.cfainstitute.org/insights/professional-learning/refresher-readings/2026/measuring-managing-market-risk),
-[ESMA, Relative VaR](https://www.esma.europa.eu/sites/default/files/library/2015/11/10_108.pdf),
-[NIST, skewness de Fisher–Pearson](https://www.itl.nist.gov/div898/software/dataplot/refman2/auxillar/skewness.htm),
-[SciPy, excess kurtosis](https://docs.scipy.org/doc/scipy/reference/generated/scipy.stats.kurtosis.html).
-Le ratio Relative VaR sert à la comparaison, sans appliquer de limite UCITS.
+Les contributions d’Euler à la variance absolue et active utilisent les mélanges
+aux poids quotidiens constants lorsque ces données sont disponibles. Les poids
+actifs valent poids portefeuille moins poids benchmark. Chaque décomposition
+non dégénérée totalise 100 %, avec contributions négatives conservées. Ces
+contributions peuvent différer de la TE du backtest mensuel; les conventions
+sont nommées dans les détails. Les quatre contributions absolues dominantes
+restent visibles, les autres dans le volet.
+
+### Stress adaptatif
+
+`js/fnb-stress-utils.js` choisit pour chaque position, séparément :
+
+1. Rendement total réel du FNB entre les deux dates exactes, en CAD.
+2. Indice documenté, explicitement représentatif, sur les mêmes dates/devise.
+3. Reconstruction complète avec poids, date, source, devise et absence de levier
+   validés. Les poids historiques ne peuvent être datés après le début du scénario.
+4. Projection factorielle conditionnelle; si seul le marché est choqué, le libellé
+   est **Projection linéaire fondée sur le bêta**.
+
+Les registres d’indices et de reconstructions sont vides tant que ces données
+ne sont pas validées : aucune affiliation à un indice ni composition historique
+n’est inventée. Le moteur sait les consommer sans modification de la logique.
+L’agrégation par poids au début de la période, achat et conservation, n’ajoute
+aucun facteur de corrélation. Toute position non estimable rend le total complet
+indisponible : aucune renormalisation des seules positions connues.
+
+Scénarios historiques : année civile 2008, 19 février–23 mars 2020,
+31 décembre 2021–30 décembre 2022. Les autres scénarios sont des hypothèses
+explicitement affichées : marché mondial −20 %; technologie −35 % / autres
+actions −10 % / crypto −45 %; récession marché −25 %, proxy taux +5 %, crédit
+−8 %; hausse des taux proxy obligataire −12 % et marché −8 %; CAD +15 % face
+au USD, soit USD/CAD −13,04 %. Le choc de taux n’invente pas de duration.
+Le facteur technologie n’isole pas toute la croissance. Les autres actifs et
+le change restent constants dans le scénario sectoriel.
+
+`scripts/collect_fnb_stress.py` collecte les clôtures ajustées Yahoo avec contrôle
+d’identité, devise, dates et valeurs extrêmes. Les périodes traversant un saut
+suspect de plus de 50 % sont refusées; les périodes distinctes restent utilisables.
+Un fonds doit avoir les deux dates exactes : son lancement n’est jamais avancé.
+Les proxys US SPY/EFA/EEM sont convertis par prix USD × USD/CAD avant agrégation;
+XIC sert de proxy Canada. Le facteur marché 2008 reconstruit l’allocation
+**actuelle** de VEQT avec ces proxys; il n’est pas un historique réel de VEQT.
+
+Pour les projections à plusieurs facteurs, les cinq stratégies existantes sont
+complétées par XBB (taux), XCB − XGB (proxy crédit imparfait, durations différentes)
+et USD/CAD. Au moins max(36, 4 × nombre de paramètres) observations communes
+sont nécessaires. VIF >25 refuse l’estimation. Les effets FX empiriques ne sont
+pas des ratios de couverture contractuels. Les séries CAD observées ne reçoivent
+jamais un deuxième choc de conversion. Les rendements d’un levier quotidien ne
+sont pas reconstruits par simple multiplication d’un choc de période.
+
+Les classifications observé/reconstruit/modélisé/insuffisant sont publiées avec
+leurs poids. Elles qualifient les sources des positions, pas un historique réel
+du portefeuille actuel. Une décomposition marché/autres facteurs n’est fournie
+que lorsque tous les termes projetés peuvent être réconciliés. Le résiduel n’est
+pas simulé; un écart favorable non identifié n’est pas appelé diversification.
+Aucun intervalle global de stress n’est donné sans modèle défendable.
+
+### Régression, stabilité et mises à jour
+
+Le module de droite conserve cinq facteurs, leurs écarts, bandes HAC Newey–West
+à trois retards, contributions signées et résiduel. Les écarts dont la bande
+contient zéro restent numériques et sont visuellement atténués. Le VIF est
+signalé au-dessus de 10, refusé au-dessus de 25. Un R² élevé ne prouve pas la
+qualité prédictive du modèle. Taille, autres styles, secteurs, taux et devises
+non isolés peuvent rester dans le résiduel de cette régression à cinq facteurs.
+
+La stabilité affiche 12 mois (non estimable avec cette politique de cinq facteurs),
+24 mois (exploratoire, minimum 24 mois) et historique complet (minimum 36 mois).
+Les fenêtres imbriquées sont comparées descriptivement; aucun test de changement
+de régime n’est revendiqué.
+
+Les portefeuilles 60/40 et 80/20 sélectionnent respectivement VBAL et VGRO;
+les recommandations S&P 500 sélectionnent VFV. Le sélecteur permet ensuite
+de changer explicitement la référence.
+
+Daily FNB performance actualise les séries quotidiennes et les entrées de stress,
+après la recherche mensuelle également. Le rendu partagé réinjecte ces sources
+lors des publications complètes et rapides. Les données périmées restent datées;
+les poids doivent correspondre à l’analyse courante avant tout affichage quotidien.
+FEQT utilise la série officielle Fidelity de rendement total en valeur liquidative
+sur toute la fenêtre; les autres FNB utilisent des clôtures ajustées Yahoo. Le
+risque de prime/décote de marché de FEQT n’est donc pas capté. Pas de raccord de
+prix entre fournisseurs. Les archives et registres de performance restent inchangés.
+
+Références méthodologiques : [arch, bootstrap de séries temporelles](https://bashtage.github.io/arch/bootstrap/timeseries-bootstraps.html),
+[statsmodels, covariance HAC](https://www.statsmodels.org/devel/generated/statsmodels.stats.sandwich_covariance.cov_hac.html),
+[BSIF, risque de marché et proxys](https://www.osfi-bsif.gc.ca/en/guidance/guidance-library/capital-adequacy-requirements-car-2026-chapter-9-market-risk).
+Ces références n’impliquent aucune certification réglementaire de SAVY.
 
 ## Marchés → Participation SMA
 

@@ -27,6 +27,8 @@ const SavyFnb = (() => {
     } catch {document.documentElement.dataset.theme = "petrol";}
 
     const D = JSON.parse(document.getElementById("analysis").textContent), R = D.results;
+    const stressInput = JSON.parse(document.getElementById('fnbStressInput')?.textContent || 'null');
+    let stressScenario = 'world20';
     const dailyRisk = JSON.parse(document.getElementById('fnbDailyRisk')?.textContent || 'null');
     const ids = D.order, custom = D.custom_order, proposed = D.proposal_order || [], robust = D.robust_order || [], recommended = D.recommended_order || [], frozen = [...recommended,...robust], own = [...frozen, ...proposed, ...custom], benchmarks = D.benchmark_order;
     const $ = id => document.getElementById(id), escape = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -142,27 +144,59 @@ const SavyFnb = (() => {
       $("geoSvg").innerHTML=svg(body,W,H,"Géographie : portefeuille et référence");
       $("geoValues").innerHTML=D.geo_names.map((n,i)=>`<tr><th scope="row"><span class="dot" style="background:${colors[i]}"></span>${escape(n)}</th><td>${pct(R[focus].geo_total?.[i])}</td><td>${pct(R[reference].geo_total?.[i])}</td></tr>`).join("");
     }
+    const pp = value => value === null || !Number.isFinite(value) ? '—' : (value>0?'+':'')+number(value*100,1)+' pp';
+    const stressFactorName = key => ({market:'Marché',value:'Valeur',momentum:'Momentum',quality:'Qualité',lowvol:'Faible volatilité',technology:'Technologie',crypto:'Crypto',bond:'Taux',credit:'Crédit',fx:'Change'}[key]||key);
+    const coverageText = coverage => Object.entries(coverage).filter(([,w])=>w>1e-10).map(([k,w])=>(window.SavyFnbStress?.LABELS[k]||k)+' '+pct(w,0)).join(' · ');
     function drawRiskSnapshot() {
-      if (!$("riskSnapshotStatus")) return;
-      const c = window.SavyFnbRisk?.compare(D, focus, reference, dailyRisk);
-      $("riskSnapshotContent").hidden = !c?.available;
-      if (!c?.available) {$("riskSnapshotStatus").textContent = c?.reason || "Mesures indisponibles pour cette publication."; return;}
-      $("riskSnapshotStatus").textContent = name(focus) + " face à " + name(reference) + " · " + c.start + " → " + c.end + " · " + c.observations + " mois en CAD.";
-      $("riskVar").textContent = pct(c.var, 2); $("riskCvar").textContent = pct(c.cvar, 2);
-      if ($('riskVarDaily')) {
-        $('riskVarDaily').textContent = c.daily?.available ? pct(c.daily.var, 2) : '—';
-        $('riskDailyNote').textContent = c.daily?.available ? c.daily.observations + ' séances · au ' + c.daily.end + (c.daily.status === 'stale' ? ' · dernier relevé conservé' : '') : c.daily?.reason || 'Historique quotidien indisponible.';
-        $('riskSkewness').textContent = c.daily?.available ? number(c.daily.skewness,2) : '—';
-        $('riskExcessKurtosis').textContent = c.daily?.available ? number(c.daily.excessKurtosis,2) : '—';
-      }
-      $("riskRelative").textContent = c.relativeVar === null ? "—" : number(c.relativeVar) + "×";
-      $("riskRelativeNote").textContent = "VaR / " + reference + " · " + pct(c.benchmarkVar, 2);
-      $("riskStress").textContent = pct(c.stress, 1);
-      const maximum = Math.max(.01, ...c.top.map(t => Math.abs(t.share)));
-      $("riskContributions").innerHTML = c.top.map(t => '<div class="risk-contribution" data-risk-contribution="' + escape(t.id) + '"><span><b>' + escape(t.id) + '</b><small>' + escape(D.fund_labels[t.id]?.description || t.id) + '</small></span><div class="risk-contribution-track"><i style="width:' + (Math.abs(t.share) / maximum * 100).toFixed(2) + '%" title="' + escape(pct(t.share)) + '"></i></div><strong>' + pct(t.share, 1) + '</strong></div>').join("");
-      if (!c.contributions) $("riskContributions").textContent = "Contributions non estimables : historique incomplet ou variance nulle.";
-      $("riskContributionNote").textContent = c.other === null ? "" : "Autres FNB : " + pct(c.other, 1) + " · calcul aux poids cibles, toutes contributions = 100 % avant arrondis.";
-      $("riskSampleNote").textContent = "Queue de 5 % : environ " + number(c.tailObservations, 1) + " observations mensuelles. Estimation fragile des pertes extrêmes; le stress est un scénario hypothétique.";
+      if (!$('riskSnapshotStatus')) return;
+      const c=window.SavyFnbRisk?.compare(D,focus,reference,dailyRisk);
+      $('riskSnapshotContent').hidden=!c?.available;
+      if(!c?.available){$('riskSnapshotStatus').textContent=c?.reason||'Mesures indisponibles.';return;}
+      const stale=c.daily.status==='stale'||Date.now()-Date.parse(c.end+'T21:00:00Z')>5*86400000;
+      $('riskSnapshotStatus').textContent=name(focus)+' / '+name(reference)+' · '+c.start+' → '+c.end+(stale?' · données périmées':'');
+      $('riskVarDaily').textContent=c.daily.available?pct(c.daily.var,2):'—';
+      $('riskDailyNote').textContent=c.daily.available?c.daily.observations+' séances':'Indisponible';
+      $('riskDailyNote').title=c.daily.reason||c.daily.error||'';
+      $('riskVar').textContent=pct(c.var,2);$('riskCvar').textContent=pct(c.cvar,2);
+      $('riskRelative').textContent=c.relativeVar===null?'—':number(c.relativeVar)+'×';
+      $('riskRelativeNote').textContent=reference+' : '+pct(c.benchmarkVar,2);
+      $('riskSkewness').textContent=number(c.daily.skewness,2);$('riskExcessKurtosis').textContent=number(c.daily.excessKurtosis,2);
+      const dd=c.drawdown;
+      $('riskDrawdown').textContent=pct(dd.portfolio?.value,1)+' / '+pct(dd.benchmark?.value,1);
+      $('riskDrawdownNote').textContent='Simulation · port. / '+reference+' · '+dd.frequency;
+      $('riskDrawdownNote').title=dd.start+' → '+dd.end+' · '+dd.method;
+      const capture=c.capture;
+      $('riskCapture').textContent=pct(capture?.ratio,1);
+      $('riskCaptureNote').textContent=(capture?.portfolio>=0&&capture?.observations>=3?'Gain pendant les baisses · ':'')+(capture?.observations||0)+' mois baissiers'+(capture?.fragile?' · fragile':'');
+      $('riskCaptureNote').title=capture?.interpretation||'';
+      const capMax=Math.max(.01,Math.abs(capture?.portfolio||0),Math.abs(capture?.benchmark||0));
+      $('riskCaptureBars').innerHTML=[['Port.',capture?.portfolio,'portfolio'],[reference,capture?.benchmark,'benchmark']].map(([label,value,kind])=>'<div title="'+escape(label+' : '+pct(value,1))+'"><span>'+escape(label)+'</span><i class="'+kind+'" style="width:'+Math.max(0,Math.abs(value||0)/capMax*65).toFixed(1)+'%"></i><b>'+pct(value,1)+'</b></div>').join('');
+      const max=Math.max(.01,...c.top.map(t=>Math.abs(t.share)));
+      $('riskContributions').innerHTML=c.top.map(t=>'<div class="risk-contribution" data-risk-contribution="'+escape(t.id)+'" title="'+escape(D.fund_labels[t.id]?.description||t.id)+'"><b>'+escape(t.id)+'</b><div class="risk-contribution-track"><i class="'+(t.share<0?'negative':'')+'" style="width:'+(Math.abs(t.share)/max*100).toFixed(2)+'%"></i></div><strong>'+pct(t.share,1)+'</strong></div>').join('')||'Contributions non estimables.';
+      $('riskContributionNote').textContent=c.other===null?'':'Autres : '+pct(c.other,1)+' · variance '+c.contributionFrequency;
+      $('riskSampleNote').textContent=c.var===null?c.reason:number(c.effectiveObservations,1)+' blocs effectifs · queue ≈ '+number(c.tailObservations,1)+(c.fragile?' · estimation fragile':'');
+      const scenarios=window.SavyFnbStress?.compare(D,focus,reference,stressInput)||[];
+      $('riskScenario').innerHTML=scenarios.map(v=>'<option value="'+v.id+'"'+(v.id===stressScenario?' selected':'')+'>'+escape(v.name)+'</option>').join('');
+      const selected=scenarios.find(v=>v.id===stressScenario)||scenarios[0];
+      const renderStress=()=>{
+        const v=scenarios.find(x=>x.id===stressScenario)||selected;if(!v)return;
+        const max=Math.max(.01,Math.abs(v.portfolio.return||0),Math.abs(v.benchmark.return||0));
+        $('riskStressComparison').innerHTML='<div class="stress-result"><strong id="riskStress">'+pct(v.portfolio.return,1)+'</strong><span>/ '+escape(reference)+' '+pct(v.benchmark.return,1)+'</span><b class="'+(v.gap>0?'protection':'')+'">'+pp(v.gap)+'</b></div><div class="stress-bars" aria-label="Pertes comparées">'+[['portfolio',v.portfolio],['benchmark',v.benchmark]].map(([kind,row])=>'<i class="'+kind+'" style="width:'+(Math.abs(row.return||0)/max*100).toFixed(1)+'%"></i>').join('')+'</div><small>'+escape(coverageText(v.portfolio.coverage))+(v.status==='stale'?' · sources périmées':'')+'</small>';
+        $('riskStressComparison').title=(v.historical?v.start+' → '+v.end+' · simulation de l’allocation actuelle':v.horizon)+' · '+v.interpretation+' · '+(v.portfolio.positions.some(p=>p.method==='Projection linéaire fondée sur le bêta')?'Projection linéaire fondée sur le bêta. ':'')+(v.portfolio.available?'':'Estimation complète non défendable.');
+        drawBetaReading(c,v);
+      };
+      $('riskScenario').onchange=event=>{stressScenario=event.target.value;renderStress();};renderStress();
+      $('riskScenarios').innerHTML=scenarios.map(v=>'<details class="stress-scenario-detail"><summary>'+escape(v.name)+' · '+pct(v.portfolio.return,1)+' / '+escape(reference)+' '+pct(v.benchmark.return,1)+' · '+pp(v.gap)+'</summary><p>'+escape(v.historical?v.start+' → '+v.end+'; simulation du portefeuille actuel':v.horizon)+'</p><p>Portefeuille : '+escape(coverageText(v.portfolio.coverage))+'<br>Benchmark : '+escape(coverageText(v.benchmark.coverage))+'</p><p>'+escape(v.interpretation)+'. Intervalle d’incertitude de stress non estimable avec les données présentes.</p><div class="table-wrap"><table><thead><tr><th>FNB / poids</th><th>Rendement</th><th>Méthode et source</th></tr></thead><tbody>'+v.portfolio.positions.map(x=>'<tr><th>'+escape(x.ticker)+' · '+pct(x.weight,1)+'</th><td>'+pct(x.return,1)+'</td><td>'+escape(window.SavyFnbStress.LABELS[x.classification]+' · '+x.method)+(x.source?.startsWith('https://')?' <a href="'+escape(x.source)+'" target="_blank" rel="noopener noreferrer">Source</a>':'')+(x.limitations?'<small>'+escape(x.limitations)+'</small>':'')+'</td></tr>').join('')+'</tbody></table></div><p>Principales différences : '+(v.drivers.map(x=>escape(x.ticker)+' '+pp(x.contribution)).join(' · ')||'Non attribuables sur cet échantillon.')+'</p><p>Facteurs : '+(v.components?Object.entries(v.components).map(([k,x])=>escape(stressFactorName(k))+' '+pp(x)).join(' · '):'Décomposition factorielle complète non identifiable pour cette combinaison de méthodes.')+'</p></details>').join('');
+      const bt=c.backtesting;
+      $('riskValidation').innerHTML='<p>'+c.observations+' blocs disjoints de 21 séances · '+number(c.effectiveObservations,1)+' effectifs approximatifs (autocorrélation des rendements) · environ '+number(c.tailObservations,1)+' observations dans la queue de 5 %. '+(c.fragile?'Queue trop courte pour une estimation stable des pertes extrêmes.':'')+'</p>'+(c.interval?'<p>Intervalles bootstrap 95 % : VaR ['+pct(c.interval.var[0],2)+' ; '+pct(c.interval.var[1],2)+'] · CVaR ['+pct(c.interval.cvar[0],2)+' ; '+pct(c.interval.cvar[1],2)+']. '+escape(c.interval.method)+' '+c.interval.replications+' réplications; elles n’augmentent pas l’historique effectif.</p>':'<p>'+escape(c.reason||'Intervalle non estimable.')+'</p>')+(c.stability?'<p>VaR selon les 21 décalages de début des blocs : '+pct(c.stability.minimum,2)+' à '+pct(c.stability.maximum,2)+'. '+escape(c.stability.note)+'</p>':'')+(bt?'<p>Rejeu quotidien : '+bt.daily.exceptions+' dépassements / '+bt.daily.observations+' prévisions ('+pct(bt.daily.rate,1)+', attendu 5 %). Rejeu 21 séances : '+bt.monthly.exceptions+' / '+bt.monthly.observations+(bt.monthly.fragile?' · échantillon de validation insuffisant.':'.')+' '+escape(bt.daily.note)+'</p>':'<p>Rejeu chronologique indisponible sans série quotidienne complète.</p>')+(c.coherence?'<p>CVaR ≥ VaR : '+(c.coherence.cvarAboveVar?'oui':'non')+'. VaR 21 séances ≥ VaR 1 jour : '+(c.coherence.monthlyAboveDaily?'oui':'non')+'. '+escape(c.coherence.note)+'</p>':'');
+      const absolute=new Map((c.contributions||[]).map(x=>[x.id,x.share])),active=new Map((c.activeContributions||[]).map(x=>[x.id,x.share])),all=[...new Set([...absolute.keys(),...active.keys()])];
+      $('riskActiveContributions').innerHTML='<p>Contributions d’Euler signées à la variance '+c.contributionFrequency+' des mélanges aux poids cibles constants. La variance active porte sur portefeuille − benchmark avec les mêmes rendements et poids; elle peut différer du backtest mensuel rééquilibré en janvier utilisé par les ratios et facteurs.</p><div class="table-wrap"><table><thead><tr><th>FNB</th><th>Risque absolu</th><th>Risque actif</th></tr></thead><tbody>'+all.map(t=>'<tr><th>'+escape(t)+'</th><td>'+pct(absolute.get(t)??null,1)+'</td><td>'+pct(active.get(t)??null,1)+'</td></tr>').join('')+'</tbody></table></div>';
+      $('riskSourceStatus').textContent='Quotidien : '+(dailyRisk?.as_of||'indisponible')+' · '+(dailyRisk?.status||'absent')+'. '+(dailyRisk?.source||'')+' Stress : '+(stressInput?.as_of||'indisponible')+' · '+(stressInput?.status||'absent')+'. '+Object.entries(stressInput?.errors||{}).map(([t,e])=>t+' : '+e).join(' · ');
+      $('riskPerformanceLink').onclick=()=>{document.querySelector('.risk-snapshot>.factor-method').open=false;switchView('overview');};
+    }
+    function drawBetaReading(c,scenario){
+      const f=window.SavyFnbFactors?.compare(D,focus,reference),decomp=scenario.decomposition;
+      $('riskAttribution').innerHTML='<p>Bêta / '+escape(reference)+' : '+number(c.beta)+' · Downside Beta : '+number(c.downside.beta)+' ('+c.downside.observations+' mois baissiers) · Downside Capture : '+pct(c.capture?.ratio,1)+' · risque actif annualisé : '+pct(f?.trackingError,2)+'. '+escape(c.downside.reason||'')+'</p><p>Stress '+escape(scenario.name)+' : écart '+pp(scenario.gap)+'. '+(decomp?'Effet marché : '+pp(decomp.market)+'; autres facteurs : '+pp(decomp.other)+'; écart de réconciliation : '+pp(decomp.residual)+'. '+escape(decomp.note):'Les rendements observés et les méthodes mixtes ne permettent pas d’isoler précisément marché, secteurs, facteurs et devises. L’écart restant n’est pas attribué automatiquement à la diversification.')+'</p><p>Un bêta plus faible peut suffire à réduire la perte. Un meilleur downside capture ou un écart favorable en stress n’établit pas à lui seul une diversification durable. Les scénarios projetés sur le seul bêta mesurent uniquement cet effet de marché.</p>';
     }
     function drawFactors() {
       if (!$("factorStatus")) return;
@@ -174,13 +208,16 @@ const SavyFnb = (() => {
       }
       const c = comparison, signed = v => Math.abs(v) < .0005 ? number(0) : (v > 0 ? "+" : "") + number(v);
       $("factorStatus").textContent = name(focus) + " face à " + name(reference) + " · " + c.start + " → " + c.end + " · " + c.months + " mois communs en CAD.";
-      $("factorMetrics").innerHTML = [["Risque d’écart annualisé", pct(c.trackingError, 2)], ["Variance active expliquée · R²", pct(c.activeR2, 0)], ["Variance du portefeuille expliquée", pct(c.portfolioR2, 0)], ["Variance du benchmark expliquée", pct(c.benchmarkR2, 0)]].map(([label, value]) => '<div><span>' + escape(label) + '</span><strong>' + value + '</strong></div>').join("");
+      $("factorMetrics").innerHTML = [["Tracking Error", pct(c.trackingError, 2),"Volatilité annualisée des rendements actifs mensuels."], ["R² actif", pct(c.activeR2, 0),"Part de variance active expliquée dans cet échantillon; ce n’est pas une mesure de pouvoir prédictif."], ["Bêta / "+reference, number(c.beta),"Bêta simple relatif au benchmark sélectionné."], ["Downside Beta", number(c.downside.beta),c.downside.observations+" mois baissiers. "+(c.downside.reason||"Covariance conditionnelle divisée par la variance conditionnelle du benchmark.")]].map(([label, value,tip]) => '<div title="'+escape(tip)+'"><span>' + escape(label) + '</span><strong>' + value + '</strong>'+(label==='Downside Beta'?'<small class="factor-metric-note">'+c.downside.observations+' mois'+(c.downside.fragile?' · fragile':'')+'</small>':'')+'</div>').join("");
       const scale = Math.max(.1, ...c.factors.map(f => Math.abs(f.delta)));
       $("factorValues").innerHTML = c.factors.map(f => {
         const span = Math.abs(f.delta) / scale * 50, left = f.delta < 0 ? 50 - span : 50;
-        return '<tr data-factor="' + f.id + '"><th scope="row">' + escape(f.name) + '<small>' + escape(f.short ? f.long + ' − ' + f.short : 'VEQT − taux sans risque') + '</small></th><td>' + signed(f.portfolio) + '</td><td>' + signed(f.benchmark) + '</td><td><div class="factor-delta"><b>' + signed(f.delta) + '</b><span class="factor-track" aria-hidden="true"><i style="left:' + left.toFixed(2) + '%;width:' + span.toFixed(2) + '%"></i></span></div></td><td class="factor-band">[' + signed(f.low) + ' ; ' + signed(f.high) + ']</td><td>' + (f.contribution === null ? '—' : pct(f.contribution, 1)) + '</td></tr>';
+        return '<tr data-factor="' + f.id + '" data-significant="'+f.significant+'" class="'+(f.significant?'factor-significant':'factor-not-significant')+'" title="'+(f.significant?'Écart significatif à 95 % dans ce modèle':'Bande 95 % contenant zéro : écart non significatif')+'"><th scope="row">' + escape(f.name) + '<small>' + escape(f.short ? f.long + ' − ' + f.short : 'VEQT − taux sans risque') + '</small></th><td>' + signed(f.portfolio) + '</td><td>' + signed(f.benchmark) + '</td><td><div class="factor-delta"><b>' + signed(f.delta) + '</b><span class="factor-track" aria-hidden="true"><i style="left:' + left.toFixed(2) + '%;width:' + span.toFixed(2) + '%"></i></span></div></td><td class="factor-band">[' + signed(f.low) + ' ; ' + signed(f.high) + ']</td><td>' + (f.contribution === null ? '—' : pct(f.contribution, 1)) + '</td></tr>';
       }).join("") + '<tr class="factor-residual"><th scope="row">Risques non expliqués<small>Résiduel du modèle</small></th><td>—</td><td>—</td><td>—</td><td>—</td><td>' + pct(c.residualContribution, 1) + '</td></tr><tr class="factor-unavailable"><th scope="row">Taille / petites capitalisations<small>Séries comparables insuffisantes</small></th><td colspan="5">Non estimé</td></tr>';
       $("factorReading").textContent = (c.activeR2 === null ? "Le risque actif est nul : les contributions à sa variance ne sont pas définies. " : "Les contributions et le résiduel totalisent 100 % avant arrondis. Une part négative représente une compensation du risque. ") + (c.unstable ? "Stratégies fortement corrélées : interpréter les sensibilités avec prudence. " : "") + "Les sensibilités décrivent l’historique disponible; elles ne sont ni une note de qualité ni une prévision de rendement.";
+      const windows=window.SavyFnbFactors.stability(D,focus,reference);
+      $('factorStability').innerHTML='<div class="table-wrap"><table><thead><tr><th>Fenêtre</th><th>Marché</th><th>Valeur</th><th>Mom.</th><th>Qual.</th><th>Faible vol.</th></tr></thead><tbody>'+windows.map(w=>'<tr><th>'+(w.windowMonths?w.windowMonths+' mois':'Complet')+'</th>'+(w.available?w.factors.map(f=>'<td title="'+escape(f.significant?'Écart significatif':'Écart non significatif')+'">'+number(f.portfolio)+'</td>').join(''):'<td colspan="5">'+escape(w.reason)+'</td>')+'</tr>').join('')+'</tbody></table></div><p>'+c.factors.map((f,i)=>{const recent=windows[1];return escape(f.name)+' : '+(recent.available?(Math.sign(recent.factors[i].delta)===Math.sign(f.delta)?'écart de même signe sur 24 mois et historique complet':'signe de l’écart différent sur 24 mois et historique complet'):'comparaison non estimable');}).join(' · ')+'. Comparaison descriptive, fenêtres imbriquées.</p>';
+      $('factorDiagnostics').textContent='VIF maximal : '+number(c.maxVif,1)+' · '+c.months+' mois · erreurs-types HAC Newey–West, trois retards et correction des paramètres. R² portefeuille : '+pct(c.portfolioR2,0)+'; benchmark : '+pct(c.benchmarkR2,0)+'. Les expositions non significatives restent affichées en teinte atténuée.';
     }
     function drawSector() {
       const q=R[focus],b=R[reference];
@@ -206,8 +243,9 @@ const SavyFnb = (() => {
     function choosePortfolio(k, charts = false) {
       if(!own.includes(k))return;
       const previousReference=reference;
-      if(recommended.includes(k)){reference="VFV";$("referenceSelect").value=reference;}
-      else if(recommended.includes(summary)){reference="VEQT";$("referenceSelect").value=reference;}
+      const familyBenchmark=id=>R[id]?.benchmark||({"10":"VBAL","11":"VGRO"}[id])||(recommended.includes(id)?"VFV":null);
+      if(familyBenchmark(k)){reference=familyBenchmark(k);$("referenceSelect").value=reference;}
+      else if(familyBenchmark(summary)){reference="VEQT";$("referenceSelect").value=reference;}
       const previous=summary;summary=k;focus=k;
       $("summaryFocus").value=k;$("sectorFocus").value=k;$("ficheFocus").value=k;
       document.querySelectorAll("[data-fiche]").forEach(n=>{n.hidden=n.dataset.fiche!==k;});

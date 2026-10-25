@@ -84,7 +84,7 @@ async function check(browser,engine){
    const c = factors.compare(D, id, ref), row = page.locator('#factorValues [data-factor="market"]');
    assert.equal(await page.locator('#factorContent').isVisible(), true);
    assert.equal(await page.locator('#riskSnapshotContent').isVisible(),true);
-   assert.equal(await page.locator('.risk-snapshot-metrics>div').count(),5);
+   assert.equal(await page.locator('.risk-snapshot-metrics>div').count(),4);
    assert.equal(await page.locator('[data-risk-contribution]').count(),Math.min(4,Object.keys(D.results[id].weights).length));
    assert.equal(await page.locator('#factorValues [data-factor]').count(), 5);
    assert.match(await page.locator('#factorStatus').innerText(), new RegExp(ref + '.*' + D.dates.length + ' mois'));
@@ -92,6 +92,27 @@ async function check(browser,engine){
    assert.equal(await page.locator('#factorValues .factor-unavailable').innerText().then(t => t.includes('Non estimé')), true);
   }
  }
+ for(const [id,ref] of [['10','VBAL'],['11','VGRO'],['2','VEQT']]){await page.locator('#sectorFocus').selectOption(id);assert.equal(await page.locator('#referenceSelect').inputValue(),ref);}
+ // Exercise the adaptive details, source classes, model explanations and compact row.
+ await page.locator('#sectorFocus').selectOption('2');await page.locator('#referenceSelect').selectOption('VEQT');
+ assert.equal(await page.locator('#factorMetrics>div').count(),4);
+ assert.equal(await page.locator('#riskScenario option').count(),8);
+ const stress=require('../js/fnb-stress-utils.js'),stressInput=require('../data/fnb-stress-history.json');
+ for(const scenario of stress.compare(D,'2','VEQT',stressInput)){
+  await page.locator('#riskScenario').selectOption(scenario.id);
+  const expected=scenario.portfolio.return===null?'—':new Intl.NumberFormat('fr-CA',{minimumFractionDigits:1,maximumFractionDigits:1}).format(scenario.portfolio.return*100)+' %';
+  assert.equal(await page.locator('#riskStress').textContent(),expected);
+ }
+ await page.locator('.risk-snapshot>.factor-method>summary').click();
+ assert.equal(await page.locator('#riskScenarios>.stress-scenario-detail').count(),8);
+ assert.match(await page.locator('#riskValidation').innerText(),/blocs disjoints de 21 séances/);
+ assert.match(await page.locator('#riskAttribution').innerText(),/bêta plus faible/i);
+ await page.locator('.risk-snapshot>.factor-method>summary').click();
+ await page.setViewportSize({width:1440,height:1000});
+ const row=await page.locator('.risk-snapshot,.factor-panel').evaluateAll(ns=>ns.map(n=>{const r=n.getBoundingClientRect();return {top:r.top,height:r.height,bottom:r.bottom,left:r.left,width:r.width,client:n.clientHeight,scroll:n.scrollHeight};}));
+ assert.ok(Math.abs(row[0].top-row[1].top)<1);assert.ok(row.every(x=>x.height<=487),'Cards stay within the previous desktop height');
+ assert.ok(row.every(x=>x.scroll<=x.client+2),'No content clipped in the compact cards');
+ await page.setViewportSize({width:1280,height:900});
  await page.locator('#sectorFocus').selectOption('VEQT');await page.locator('#referenceSelect').selectOption('VEQT');
  await page.locator('.factor-panel > .factor-method > summary').click();
  assert.match(await page.locator('#factorReading').innerText(), /risque actif est nul/);

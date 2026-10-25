@@ -1,5 +1,6 @@
 'use strict';
 const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs');
+const daily=require('../data/fnb-daily-risk.json');
 const R=require('../js/fnb-risk-utils.js'),D=require('../data/fnb-analysis.json'),view=require('../scripts/fnb_risk_view.cjs');
 const close=(a,b,e=1e-10)=>assert.ok(Math.abs(a-b)<e,`${a} ≈ ${b}`);
 test('historical loss quantile and integrated expected shortfall use the actual empirical tail',()=>{
@@ -14,12 +15,12 @@ test('Euler contributions reconcile and retain hedges with negative risk contrib
 });
 test('every selectable portfolio and benchmark recalculates monthly tail risk without changing data',()=>{
  const original=JSON.stringify(D);
- for(const id of D.order)for(const reference of D.benchmark_order){const c=R.compare(D,id,reference);assert.equal(c.available,true);assert.ok(c.cvar>=c.var-1e-12);assert.ok(c.top.length<=4);close(c.contributions.reduce((s,v)=>s+v.share,0),1);close(c.top.reduce((s,v)=>s+v.share,0)+c.other,1);if(id===reference&&c.benchmarkVar>0)close(c.relativeVar,1);}
+ for(const id of D.order)for(const reference of D.benchmark_order){const c=R.compare(D,id,reference,daily);assert.equal(c.available,true);assert.ok(c.cvar>=c.var-1e-12);assert.ok(c.top.length<=4);close(c.contributions.reduce((s,v)=>s+v.share,0),1);close(c.top.reduce((s,v)=>s+v.share,0)+c.other,1);if(id===reference&&c.benchmarkVar>0)close(c.relativeVar,1);}
  assert.equal(JSON.stringify(D),original);assert.equal(R.compare(D,'missing','VEQT').available,false);
 });
 test('relative VaR uses the stated benchmark and is undefined when its loss threshold is nonpositive',()=>{
- const d=structuredClone(D);d.results.VEQT.monthly=Array(d.dates.length).fill(.01);assert.equal(R.compare(d,'7','VEQT').relativeVar,null);
- const a=R.compare(D,'7','VEQT'),b=R.compare(D,'7','VFV');close(a.var,b.var);close(a.cvar,b.cvar);close(a.stress,b.stress);assert.notEqual(a.relativeVar,b.relativeVar);
+ const d=structuredClone(D),aDaily=structuredClone(daily);aDaily.daily_series.returns.VEQT.fill(.01);assert.equal(R.compare(d,'7','VEQT',aDaily).relativeVar,null);
+ const a=R.compare(D,'7','VEQT',daily),b=R.compare(D,'7','VFV',daily);close(a.var,b.var);close(a.cvar,b.cvar);assert.notEqual(a.relativeVar,b.relativeVar);
 });
 test('the compact card is idempotent and survives the shared report renderer',()=>{
  const html='<section id="exposures"><!-- fnb-factors:start --></section><script src="../js/fnb-dashboard.js?v=old"></script>';

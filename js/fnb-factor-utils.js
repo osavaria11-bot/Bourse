@@ -70,7 +70,7 @@
       standardErrors: scales.map((s, j) => Math.sqrt(Math.max(0, covariance[j + 1][j + 1] * n / (n - k))) / s),
       residual, rSquared, totalSquares, errorSquares};
   }
-  function compare(data, portfolioId, benchmarkId) {
+  function compare(data, portfolioId, benchmarkId, options = {}) {
     const unavailable = reason => ({available: false, reason, minimumMonths: MIN_MONTHS});
     const universe = data?.universe, portfolio = data?.results?.[portfolioId], benchmark = data?.results?.[benchmarkId];
     const dates = data?.dates, ud = universe?.dates, returns = universe?.returns;
@@ -83,12 +83,14 @@
     const annualRate = data.assumptions?.risk_free;
     if (!Number.isFinite(annualRate) || annualRate <= -1) return unavailable("Hypothèse de taux sans risque indisponible.");
     const rf = Math.expm1(Math.log1p(annualRate) / 12), byDate = new Map(ud.map((d, i) => [d, i]));
-    const rows = dates.flatMap((date, i) => {
+    let rows = dates.flatMap((date, i) => {
       const u = byDate.get(date), p = portfolio.monthly[i], b = benchmark.monthly[i];
       if (u === undefined || !Number.isFinite(p) || !Number.isFinite(b) || required.some(id => !Number.isFinite(returns[id][u]))) return [];
       return [{date, p, b, x: FACTORS.map(f => returns[f.long][u] - (f.short ? returns[f.short][u] : rf))}];
     });
-    if (rows.length < MIN_MONTHS) return unavailable("Historique commun insuffisant : au moins 36 mois requis.");
+    const minimum = options.windowMonths === 24 ? 24 : MIN_MONTHS;
+    if (options.windowMonths) rows = rows.slice(-options.windowMonths);
+    if (rows.length < minimum) return unavailable(`Historique commun insuffisant : au moins ${minimum} mois requis.`);
     if (rows.some((row, i) => i && monthNumber(row.date) !== monthNumber(rows[i - 1].date) + 1)) return unavailable("Mois manquants dans l’historique commun.");
     const values = rows.map(row => row.x), prepared = prepare(values);
     if (!prepared) return unavailable("Sensibilités non estimables : séries constantes ou trop corrélées.");
@@ -99,13 +101,34 @@
       const delta = a.coefficients[j], band = 1.96 * a.standardErrors[j];
       const cross = rows.reduce((s, row, t) => s + (row.x[j] - prepared.means[j]) * (active[t] - am), 0);
       return {...f, portfolio: p.coefficients[j], benchmark: b.coefficients[j], delta,
-        low: delta - band, high: delta + band, contribution: hasActiveRisk ? delta * cross / a.totalSquares : null};
+        low: delta - band, high: delta + band, significant: Math.abs(delta) > band, contribution: hasActiveRisk ? delta * cross / a.totalSquares : null};
     });
     return {available: true, portfolioId, benchmarkId, start: rows[0].date, end: rows.at(-1).date, months: rows.length,
       factors, portfolioR2: p.rSquared, benchmarkR2: b.rSquared, activeR2: a.rSquared,
       trackingError: Math.sqrt(a.totalSquares / (rows.length - 1) * 12),
       residualContribution: hasActiveRisk ? a.errorSquares / a.totalSquares : null,
+      beta: beta(rows.map(r=>r.p),rows.map(r=>r.b)), downside: downside(rows.map(r=>r.p),rows.map(r=>r.b)),
       maxVif: prepared.maxVif, unstable: prepared.maxVif > 10, riskFree: annualRate};
   }
-  return {compare, FACTORS, MIN_MONTHS, HAC_LAGS};
+  function beta(p,b) {
+    if(!Array.isArray(p)||p.length!==b?.length||p.length<2||!p.every(Number.isFinite)||!b.every(Number.isFinite))return null;
+    const pm=mean(p),bm=mean(b),v=b.reduce((s,x)=>s+(x-bm)**2,0);
+    return v>1e-16?p.reduce((s,x,i)=>s+(x-pm)*(b[i]-bm),0)/v:null;
+  }
+  function downside(p,b) {
+    const valid=Array.isArray(p)&&p.length===b?.length&&p.every(Number.isFinite)&&b.every(Number.isFinite);
+    if(!valid)return {beta:null,observations:0,reason:'Périodes incompatibles.'};
+    const indices=b.flatMap((v,i)=>v<0?[i]:[]),n=indices.length;
+    return {beta:n>=8?beta(indices.map(i=>p[i]),indices.map(i=>b[i])):null,observations:n,
+      fragile:n<12,reason:n<8?'Au moins 8 mois baissiers requis.':n<12?'Moins de 12 mois baissiers : estimation fragile.':null};
+  }
+  function regress(values,y) {
+    if(!Array.isArray(values)||values.length<Math.max(36,4*(values[0]?.length+1))||y?.length!==values.length||!y.every(Number.isFinite))return null;
+    const design=prepare(values);if(!design)return null;
+    return {...fit(design,y),maxVif:design.maxVif,observations:values.length};
+  }
+  function stability(data,p,b) {
+    return [12,24,null].map(windowMonths=>({windowMonths,...compare(data,p,b,{windowMonths})}));
+  }
+  return {compare, FACTORS, MIN_MONTHS, HAC_LAGS, beta, downside, regress, stability};
 });

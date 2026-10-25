@@ -64,6 +64,10 @@ jobs:
           python scripts/common_fnb.py --check
           python scripts/collect_market_breadth.py --check
           python scripts/collect_fnb_daily_risk.py --check
+          python scripts/collect_fnb_stress.py --check
+          node --check js/fnb-stress-utils.js
+          node --check js/fnb-risk-utils.js
+          node --check js/fnb-factor-utils.js
           node scripts/build_frontier_monthly.cjs --check
           node --check scripts/build_monthly_fnb.cjs
           node --check js/fnb-dashboard.js
