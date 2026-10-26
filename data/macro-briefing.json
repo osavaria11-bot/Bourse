@@ -1,16 +1,16 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-10-26T19:51:40.878725+00:00",
-  "last_successful_update": "2026-10-26T19:51:40.878725+00:00",
-  "update_status": "fresh_data",
+  "generated_at": "2026-10-26T22:50:59.933768+00:00",
+  "last_successful_update": "2026-10-26T22:50:59.933768+00:00",
+  "update_status": "partial_data",
   "coverage": {
     "total": 42,
-    "fresh": 42,
-    "cached": 0,
+    "fresh": 40,
+    "cached": 2,
     "unavailable": 0
   },
   "data_provider": "FRED / Banque du Canada / Statistique Canada / Numerco / Fed de New York / U.S. Treasury",
-  "briefing_paragraph": "Dernières observations publiées — Inflation CPI · annuelle : 3,72 % (période : 2026-09-01); Inflation PCE sous-jacente · annuelle : 3,01 % (période : 2026-08-01); Inflation Canada · IPC global annuel : 3,1 % (période : 2026-09-01); Inflation Canada · CPI-trim annuel : 1,8 % (période : 2026-09-01); Inflation Canada · CPI-median annuel : 1,9 % (période : 2026-09-01); Taux de chômage · États-Unis : 4,20 % (période : 2026-09-01); Taux de chômage · Canada : 6,50 % (période : 2026-09-01); Assurance-chômage US · demandes initiales : 194000 demandes (période : 2026-10-17); Assurance-chômage US · moyenne de 4 semaines : 197750 demandes (période : 2026-10-17); Créations nettes d’emplois · mensuelles : 29 milliers (période : 2026-09-01); Croissance du PIB réel · trimestre annualisé : 2,22 % (période : 2026-04-01); Taux directeur américain · borne inférieure : 3,75 % (période : 2026-10-26); Taux directeur américain · borne supérieure : 4,00 % (période : 2026-10-26); Trésor américain · 10 ans : 5,00 % (période : 2026-10-26); Taux réel américain · 10 ans (TIPS) : 2,66 % (période : 2026-10-26); Courbe des taux · 10 ans – 2 ans : 0,32 pt (période : 2026-10-26); Volatilité anticipée · VIX : 19,45 points (période : 2026-10-23); USD/CAD · dollars canadiens pour 1 $ US : 1,4157 $ CA/$ US (période : 2026-10-16); Taux directeur canadien : 2,25 % (période : 2026-10-23).",
+  "briefing_paragraph": "Dernières observations publiées — Inflation CPI · annuelle : 3,72 % (période : 2026-09-01); Inflation PCE sous-jacente · annuelle : 3,01 % (période : 2026-08-01); Inflation Canada · IPC global annuel : 3,1 % (période : 2026-09-01); Inflation Canada · CPI-trim annuel : 1,8 % (période : 2026-09-01); Inflation Canada · CPI-median annuel : 1,9 % (période : 2026-09-01); Taux de chômage · États-Unis : 4,20 % (période : 2026-09-01); Taux de chômage · Canada : 6,50 % (période : 2026-09-01); Assurance-chômage US · demandes initiales : 194000 demandes (période : 2026-10-17); Assurance-chômage US · moyenne de 4 semaines : 197750 demandes (période : 2026-10-17); Créations nettes d’emplois · mensuelles : 29 milliers (période : 2026-09-01); Croissance du PIB réel · trimestre annualisé : 2,22 % (période : 2026-04-01); Taux directeur américain · borne inférieure : 3,75 % (période : 2026-10-26); Taux directeur américain · borne supérieure : 4,00 % (période : 2026-10-26); Trésor américain · 10 ans : 5,00 % (période : 2026-10-26); Taux réel américain · 10 ans (TIPS) : 2,66 % (période : 2026-10-26); Courbe des taux · 10 ans – 2 ans : 0,32 pt (période : 2026-10-26); Volatilité anticipée · VIX : 19,45 points (période : 2026-10-23); USD/CAD · dollars canadiens pour 1 $ US : 1,3993 $ CA/$ US (période : 2026-10-23); Taux directeur canadien : 2,25 % (période : 2026-10-23).",
   "news_digest_note": "Veille complémentaire. Les données suivent le calendrier de publication de chaque source.",
   "news_sources": [
     {
@@ -73,7 +73,7 @@
       "previous_value": 5.0,
       "previous_date": "2026-10-23",
       "unit": "%",
-      "fetch_status": "fresh"
+      "fetch_status": "cached"
     },
     {
       "id": "DFII10",
@@ -83,7 +83,7 @@
       "previous_value": 2.66,
       "previous_date": "2026-10-23",
       "unit": "%",
-      "fetch_status": "fresh"
+      "fetch_status": "cached"
     },
     {
       "id": "CPIAUCSL",
@@ -208,10 +208,10 @@
     {
       "id": "DEXCAUS",
       "title": "USD/CAD · dollars canadiens pour 1 $ US",
-      "date": "2026-10-16",
-      "value": 1.4157,
-      "previous_value": 1.4197,
-      "previous_date": "2026-10-15",
+      "date": "2026-10-23",
+      "value": 1.3993,
+      "previous_value": 1.402,
+      "previous_date": "2026-10-22",
       "unit": "$ CA/$ US",
       "fetch_status": "fresh"
     },
