@@ -4,7 +4,8 @@ const root=path.resolve(__dirname,'..'),D=require('../data/fnb-analysis.json'),r
 test('the shared quote-publication command cannot restore a stale financial ranking or remove horizon opinions',()=>{
  const stage=fs.mkdtempSync(path.join(os.tmpdir(),'savy-ranking-publication-'));
  try{
-  const files=['data/fnb-analysis.json','data/fnb-catalog.json','data/fnb-frontier-universe.json','data/fnb-horizon-ranking.json','reports/portefeuilles-fnb.html','js/fnb-frontier-utils.js',...['build_report_archive','build_monthly_fnb','fnb_preferences','fnb_horizon_view','fnb_performance_view','fnb_frontier_view','fnb_frontier_overlay','fnb_factor_view','fnb_risk_view','fnb_decision_view'].map(s=>'scripts/'+s+'.cjs')];
+  const files=['data/fnb-analysis.json','data/fnb-catalog.json','data/fnb-frontier-universe.json','data/fnb-horizon-ranking.json','reports/portefeuilles-fnb.html','js/fnb-frontier-utils.js',...['build_report_archive','build_monthly_fnb','fnb_preferences','fnb_horizon_view','fnb_performance_view','fnb_frontier_view','fnb_frontier_overlay','fnb_factor_view','fnb_risk_view','fnb_decision_view','fnb_prospective_view'].map(s=>'scripts/'+s+'.cjs')];
+  files.push('data/fnb-prospective-proposals.json',require('../data/fnb-prospective-proposals.json').source);
   for(const file of files){fs.mkdirSync(path.dirname(path.join(stage,file)),{recursive:true});fs.copyFileSync(path.join(root,file),path.join(stage,file));}
   for(const folder of ['stocks','real-estate'])fs.mkdirSync(path.join(stage,'reports',folder),{recursive:true});
   const stale=structuredClone(D);stale.preference_ranking={method_version:'stale',entries:[],criteria:'Ancien classement'};fs.writeFileSync(path.join(stage,'data/fnb-analysis.json'),JSON.stringify(stale));
@@ -16,6 +17,7 @@ test('the shared quote-publication command cannot restore a stale financial rank
   assert.match(html,/Top 5 · 2, 5 et 10 ans/);assert.match(html,/financial-quality-v4-no-construction-gates/);
   assert.equal((html.match(/data-tab="decision"/g)||[]).length,1);
   assert.match(html,/<section id="decision" data-dashboard-view hidden/);
+  assert.equal((html.match(/data-prospective-project=/g)||[]).length,2);
   delete current.preference_ranking;const financial=structuredClone(D);delete financial.preference_ranking;assert.deepEqual(current,financial);
   command();assert.equal(fs.readFileSync(path.join(stage,'reports/portefeuilles-fnb.html'),'utf8'),html);
  }finally{fs.rmSync(stage,{recursive:true,force:true});}

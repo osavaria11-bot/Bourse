@@ -23,6 +23,17 @@ async function check(browser,engine){
  assert.equal(await page.locator('#allPortfolios').isVisible(),false);
  assert.equal(await page.locator('#decision').isVisible(),true);
  assert.equal(await page.locator('#referenceSelect').isVisible(),true);
+ const projects=require('../data/fnb-prospective-proposals.json');
+ assert.equal(await page.locator('.prospective-project:visible').count(),2);
+ for(const q of projects.portfolios){
+  const card=page.locator('[data-prospective-project="'+q.years+'"]');
+  assert.match(await card.innerText(),projects.as_of!==D.dates.at(-1)?/à réévaluer/:q.robustThreshold?/maintenu/:q.centralThreshold?/fragile/:/non validé/);
+  const allocation=page.locator('[data-prospective-allocation="'+(await page.locator('[data-prospective-allocation="'+q.years+'"]').count()?q.years:2)+'"]');
+  await allocation.locator('summary').click();
+  for(const [ticker,w] of Object.entries(q.weights))assert.equal(await allocation.locator('[data-prospective-fund="'+ticker+'"] td').innerText(),new Intl.NumberFormat('fr-CA',{style:'percent',minimumFractionDigits:1,maximumFractionDigits:1}).format(w));
+  await allocation.locator('summary').click();
+ }
+
  await page.waitForSelector('#decisionPanel[data-ready="true"]');
  assert.equal(await page.locator('#decisionBody tr').count(),4);
  const initialChoices=await page.locator('[data-decision-choice]').evaluateAll(nodes=>nodes.map(n=>n.value));
