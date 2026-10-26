@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "status": "current",
-  "checked_at": "2026-10-26T13:39:13-04:00",
+  "status": "retrying",
+  "checked_at": "2026-10-26T19:22:57-04:00",
   "as_of": "2026-10-23",
-  "expected_session": "2026-10-23",
+  "expected_session": "2026-10-26",
   "unavailable": [],
   "errors": {},
-  "message": "Toutes les clôtures attendues sont intégrées."
+  "message": "Clôture attendue du 2026-10-26 non encore intégrée; reprise automatique."
 }

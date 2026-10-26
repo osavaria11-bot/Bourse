@@ -462,6 +462,18 @@
       "mer": 0.0033,
       "quote_symbol": "ZLU.TO",
       "provider": "bmo"
+    },
+    "HXQ": {
+      "name": "Global X Nasdaq-100 Index Corporate Class ETF",
+      "description": "Nasdaq américain",
+      "source_url": "https://www.globalx.ca/product/hxq",
+      "currency": "CAD",
+      "exchange": "TSX",
+      "equity_eligible": false,
+      "max_weight": 0.35,
+      "mer": 0.0028,
+      "quote_symbol": "HXQ.TO",
+      "provider": "globalx"
     }
   },
   "optimization": {

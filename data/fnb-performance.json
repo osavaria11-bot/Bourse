@@ -2008,6 +2008,202 @@
           "units": null
         }
       ]
+    },
+    {
+      "id": "prospective-2026-10-hybride",
+      "name": "A — Hybride",
+      "color": "#C47055",
+      "kind": "portfolio",
+      "launch_date": "2026-10-27",
+      "capital": 10000.0,
+      "currency": "CAD",
+      "weights": {
+        "HXQ": 0.198,
+        "VFV": 0.15,
+        "XEF": 0.072,
+        "XIC": 0.169,
+        "XIT": 0.055,
+        "ZEB": 0.1,
+        "ZLB": 0.031,
+        "ZLU": 0.025,
+        "ZUQ": 0.2
+      },
+      "definition_source": "data/fnb-prospective/2026-10-26-user-allocations.json",
+      "published_at": "2026-10-26T18:58:48-04:00",
+      "method": "buy_hold_fractional_ex_date_close_v1",
+      "definition_sha256": "993090c0c2791f0c5b11828f6546604ab86a2ab8289f2fa39a8f4705a59dde7a",
+      "history": [],
+      "initial_positions": [
+        {
+          "ticker": "HXQ",
+          "name": "Global X Nasdaq-100 Index Corporate Class ETF",
+          "weight": 0.198,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "VFV",
+          "name": "Vanguard S&P 500 Index ETF",
+          "weight": 0.15,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "XEF",
+          "name": "iShares Core MSCI EAFE IMI Index ETF",
+          "weight": 0.072,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "XIC",
+          "name": "iShares Core S&P/TSX Capped Composite Index ETF",
+          "weight": 0.169,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "XIT",
+          "name": "iShares S&P/TSX Capped Information Technology Index ETF",
+          "weight": 0.055,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "ZEB",
+          "name": "BMO Equal Weight Banks Index ETF",
+          "weight": 0.1,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "ZLB",
+          "name": "BMO Low Volatility Canadian Equity ETF",
+          "weight": 0.031,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "ZLU",
+          "name": "BMO Low Volatility US Equity ETF",
+          "weight": 0.025,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "ZUQ",
+          "name": "BMO MSCI USA High Quality Index ETF",
+          "weight": 0.2,
+          "close": null,
+          "units": null
+        }
+      ]
+    },
+    {
+      "id": "prospective-2026-10-multifactoriel",
+      "name": "B — Multifactoriel",
+      "color": "#275563",
+      "kind": "portfolio",
+      "launch_date": "2026-10-27",
+      "capital": 10000.0,
+      "currency": "CAD",
+      "weights": {
+        "FCIV": 0.021,
+        "FCMO": 0.045,
+        "FINN": 0.15,
+        "HXQ": 0.1,
+        "VDY": 0.11,
+        "VVL": 0.075,
+        "XEF": 0.031,
+        "XIT": 0.072,
+        "ZEB": 0.1,
+        "ZEO": 0.043,
+        "ZUQ": 0.253
+      },
+      "definition_source": "data/fnb-prospective/2026-10-26-user-allocations.json",
+      "published_at": "2026-10-26T18:58:48-04:00",
+      "method": "buy_hold_fractional_ex_date_close_v1",
+      "definition_sha256": "8e189f5211384ac4a4a2319ccf04dc16cf324aef85e29c3348723430d2b7c09b",
+      "history": [],
+      "initial_positions": [
+        {
+          "ticker": "FCIV",
+          "name": "Fidelity International Value ETF",
+          "weight": 0.021,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "FCMO",
+          "name": "Fidelity U.S. Momentum ETF",
+          "weight": 0.045,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "FINN",
+          "name": "Fidelity Global Innovators ETF",
+          "weight": 0.15,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "HXQ",
+          "name": "Global X Nasdaq-100 Index Corporate Class ETF",
+          "weight": 0.1,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "VDY",
+          "name": "Vanguard FTSE Canadian High Dividend Yield Index ETF",
+          "weight": 0.11,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "VVL",
+          "name": "Vanguard Global Value Factor ETF",
+          "weight": 0.075,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "XEF",
+          "name": "iShares Core MSCI EAFE IMI Index ETF",
+          "weight": 0.031,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "XIT",
+          "name": "iShares S&P/TSX Capped Information Technology Index ETF",
+          "weight": 0.072,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "ZEB",
+          "name": "BMO Equal Weight Banks Index ETF",
+          "weight": 0.1,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "ZEO",
+          "name": "BMO Equal Weight Oil & Gas Index ETF",
+          "weight": 0.043,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "ZUQ",
+          "name": "BMO MSCI USA High Quality Index ETF",
+          "weight": 0.253,
+          "close": null,
+          "units": null
+        }
+      ]
     }
   ],
   "methodology": {
