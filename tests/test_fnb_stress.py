@@ -108,5 +108,36 @@ class StressSourceTests(unittest.TestCase):
         bad['forward_history']['returns']['CA'][-1] = float('nan')
         with self.assertRaises(ValueError): S.validate(bad)
 
+    def test_failed_fx_retains_coherent_verified_snapshot_without_advancing_dates(self):
+        analysis = {'universe': {'dates': ['2024-02'], 'geo': {}}}
+        histories = {'CA': {'2024-01-31': 100., '2024-02-29': 102.},
+                     'FX': {'2024-01-31': 1.2, '2024-02-29': 1.3}}
+        old = S.build(analysis, histories, '2024-03-01', {})
+        old['generated_at'] = '2024-03-01T20:00:00-05:00'
+        new = S.build(analysis, {'CA': {'2024-01-31': 100., '2024-02-29': 103.}},
+                      '2024-03-04', {}, {'FX': 'Unexpected stress source identity: CAD=X'})
+        retained = S.retain_on_source_failure(new, old, ['FX'])
+        self.assertEqual(retained['forward_history'], old['forward_history'])
+        self.assertEqual(retained['model_factors'], old['model_factors'])
+        self.assertEqual(retained['scenarios'], old['scenarios'])
+        self.assertEqual(retained['as_of'], '2024-03-01')
+        self.assertEqual(retained['generated_at'], old['generated_at'])
+        self.assertEqual(retained['status'], 'stale')
+        self.assertEqual(retained['retained_snapshot']['attempted_as_of'], '2024-03-04')
+        self.assertIn('FX', retained['errors'])
+        self.assertNotIn('retained_snapshot', old)
+
+    def test_quarantine_is_not_bypassed_and_successful_revisions_are_accepted(self):
+        analysis = {'universe': {'dates': [], 'geo': {}}}
+        old = S.build(analysis, {'CA': {'2024-01-31': 100., '2024-02-29': 102.}}, '2024-03-01', {})
+        missing = S.build(analysis, {}, '2024-03-01', {}, {'CA': 'Suspect session'})
+        self.assertIs(S.retain_on_source_failure(missing, old, []), missing)
+        missing['errors']['FX'] = 'Timeout'
+        self.assertIs(S.retain_on_source_failure(missing, old, ['FX']), missing)
+        new = S.build(analysis, {'CA': {'2024-01-31': 100., '2024-02-29': 103.}}, '2024-03-01', {})
+        self.assertIs(S.retain_on_source_failure(new, old, []), new)
+        # A source without previously verified observations cannot invent them.
+        self.assertIs(S.retain_on_source_failure(missing, S.build(analysis, {}, '2024-03-01', {}), ['CA']), missing)
+
 
 if __name__=='__main__':unittest.main()

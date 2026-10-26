@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Documented CAD total-return stress inputs; preserve last valid data on failure."""
 import argparse
+import copy
 from concurrent.futures import ThreadPoolExecutor
 from datetime import date, datetime, timedelta, timezone
 import json
@@ -184,6 +185,46 @@ def validate(d):
     return d
 
 
+def retain_on_source_failure(data, old, failed_sources):
+    """Keep a coherent verified snapshot when an outage erases known values.
+
+    Never mix cached FX with newly adjusted asset prices. Retain the snapshot's
+    actual dates and generation time; a later requested session stays stale.
+    Suspect-price quarantine is not an outage and must never be bypassed.
+    """
+    if not old or not failed_sources:
+        return data
+    validate(old)
+    if (old['as_of'] > data['as_of']
+            or old['model_factors']['dates'] != data['model_factors']['dates']
+            or any(key not in failed_sources and message != old.get('errors', {}).get(key)
+                   for key, message in data.get('errors', {}).items())):
+        return data
+    previous = old.get('forward_history') or {}
+    current = data.get('forward_history') or {}
+    current_dates = {d: i for i, d in enumerate(current.get('dates', []))}
+    lost = any(
+        value is not None and day in current_dates
+        and current.get('returns', {}).get(key, [None] * len(current_dates))[current_dates[day]] is None
+        for key, values in previous.get('returns', {}).items()
+        for day, value in zip(previous.get('dates', []), values)
+    )
+    if not lost:
+        return data
+    retained = copy.deepcopy(old)
+    retained['status'] = 'partial' if old['as_of'] == data['as_of'] else 'stale'
+    retained['errors'] = {**old.get('errors', {}), **data.get('errors', {})}
+    retained['retained_snapshot'] = {
+        'source_generated_at': old['generated_at'],
+        'source_as_of': old['as_of'],
+        'attempted_as_of': data['as_of'],
+        'checked_at': data['generated_at'],
+        'failed_sources': sorted(failed_sources),
+        'reason': 'Source unavailable; prior verified snapshot retained without mixing FX or price revisions.',
+    }
+    return validate(retained)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--check', action='store_true')
@@ -224,6 +265,7 @@ def main():
     try:
         if not any(histories.get(t) for t in tickers): raise ValueError('All stress sources unavailable')
         data = validate(build(analysis,histories,cutoff,urls,errors))
+        data = retain_on_source_failure(data, old, [t for t in errors if not histories.get(t)])
         F.write(args.output,data)
         print('Stress inputs:',cutoff,data['status'],'; actual returns:',{k:len(v['assets']) for k,v in data['scenarios'].items()},'; source errors:',errors)
         return 0
