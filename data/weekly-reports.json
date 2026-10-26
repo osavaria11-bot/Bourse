@@ -1,29 +1,35 @@
 {
   "schema_version": 1,
   "kind": "savy_weekly_reports",
-  "generated_at": "2026-10-22T02:27:28.315011Z",
+  "generated_at": "2026-10-26T11:39:44Z",
   "reports": {
     "real_estate": {
       "title": "Débriefing immobilier",
-      "edition_date": "2026-10-19",
+      "edition_date": "2026-10-26",
       "document_scope": "full",
-      "summary": "La détente obligataire reste modeste et ne justifie pas de payer davantage. Les nouveaux repères du T3 renforcent la discipline de financement; la construction diverge entre Montréal et Québec. Aucune nouvelle occasion montérégienne suffisamment documentée n’est retenue cette semaine.",
+      "summary": "Les valeurs ont peu réagi au coût du capital : cap rate national de 6,56 % (-2 pb t/t) et spread au Canada 10 ans de 256 pb, plus bas de trois ans. Au 22 octobre, les rendements 5 ans et 10 ans sont à 3,50 % et 3,78 %, tandis que 19 économistes sur 34 anticipent une hausse de 25 pb le 28 octobre. Montréal diverge en industriel avec 8,9 % de disponibilité (+80 pb a/a), mais ses bureaux s’améliorent. Une seule occasion montérégienne est retenue : le 835, boul. d’Iberville, affiché à 1,549 M$, sous réserve de valider le revenu pétrolier et l’environnement.",
       "highlights": [
-        "Financement : au 15 octobre, Canada 5 ans à 3,53 % (-7 pb depuis le 8) et 10 ans à 3,83 % (-10 pb). Taux directeur à 2,25 %. Marges d’enquête, admissibilité et soumissions ne sont pas confondues.",
-        "Québec : publication SCHL du 16 octobre; mises en chantier réelles de septembre à -51 % sur un an à Montréal et +96 % à Québec. Tous modes d’occupation, pas uniquement le locatif.",
-        "Valorisation : nouveaux repères sectoriels Avison Young T3; ils ne mesurent pas une variation hebdomadaire et ne sont pas comparables à une moyenne toutes propriétés d’un autre fournisseur.",
-        "Montérégie : aucune nouvelle vente conclue suffisamment recoupée depuis le 12 octobre. Les trois comparables historiques sont datés et séparés des prix demandés.",
-        "Acquisitions : aucune nouvelle occasion validée. Le RNE du courtier au 194–220 St-Louis est désormais de 816 375 $, sans validation des baux ou des réserves; ce dossier n’est pas une nouvelle inscription de la semaine.",
-        "Rectifications : Granby est en Estrie. À 75 % de levier et 5,5 % sur 30 ans, ce dossier reste positif avant réserve, mais son DSCR de 1,18× échoue au seuil de 1,25×."
+        "Valorisation : CBRE mesure 6,56 % toutes propriétés au T3 (-2 pb t/t); le Canada 10 ans a augmenté de 62 pb sur le trimestre, comprimant le spread à 256 pb, plus bas de trois ans.",
+        "Financement : au 22 octobre, Canada 5 ans à 3,50 % (-3 pb depuis le 15) et 10 ans à 3,78 % (-5 pb). Taux directeur à 2,25 % avant la décision du 28 octobre; 19/34 économistes sondés par Reuters prévoient +25 pb.",
+        "Canada : disponibilité industrielle de 6,2 % (+20 pb a/a), avec 61 % des 3,9 M pi² livrés au T3 encore disponibles. Vacance des bureaux à 15,6 % (-100 pb a/a) et absorption trimestrielle de 1,5 M pi².",
+        "Québec : disponibilité industrielle montréalaise de 8,9 % (+80 pb a/a), soit 270 pb au-dessus du Canada; 69 % des quelque 3 M pi² en chantier sont disponibles. Les bureaux montréalais s’améliorent, mais les métriques de vacance et de disponibilité ne sont pas interchangeables.",
+        "Montérégie — ventes conclues : Place Roberval à Longueuil, 22,4 M$ pour 144 logements (155 556 $/logement), clôture le 5 octobre; détail à Chambly, 6,395 M$ et 249 $/pi², date de clôture non divulguée. RNE et cap rates non divulgués.",
+        "Acquisition : 835, boul. d’Iberville, prix demandé courant de 1,549 M$. Le courtier publie 147 000 $ de revenu annuel net; cap calculé de 9,49 % et DSCR illustratif de 2,00× à 70 % de dette, mais le revenu pétrolier, les baux et l’environnement doivent être validés."
       ],
-      "opportunities": [],
+      "opportunities": [
+        {
+          "address": "835, boul. d’Iberville",
+          "city": "Saint-Jean-sur-Richelieu",
+          "detail": "Inscription active vérifiée le 26 octobre. Prix demandé : 1,549 M$; terrain de 12 656 pi² et bâtiment d’environ 2 060 pi² à confirmer. Revenu annuel net de 147 000 $ publié par le courtier; cap calculé au prix courant : 9,49 %. Catalyseur : baisse de prix de 2,9 % et équipements pétroliers remplacés en 2024. Diligences prioritaires : transférabilité du revenu pétrolier et environnement."
+        }
+      ],
       "document": {
-        "path": "reports/real-estate/2026-10-19.pdf",
-        "label": "Ouvrir le rapport immobilier complet - 19 octobre 2026",
+        "path": "reports/real-estate/2026-10-26.pdf",
+        "label": "Ouvrir le rapport immobilier complet - 26 octobre 2026",
         "mime_type": "application/pdf",
-        "pages": 6,
-        "size_bytes": 67271,
-        "sha256": "0307c0cf787b286b3779262a1d7a976f18026cbb43b5e01aa527e3b69b828053"
+        "pages": 7,
+        "size_bytes": 77888,
+        "sha256": "f58eb5e49c12cb05c8017122f0dd44f68511a926ede79b0c3cae2588bdb4e15c"
       }
     },
     "stocks": {
