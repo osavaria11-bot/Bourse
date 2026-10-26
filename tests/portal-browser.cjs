@@ -4,7 +4,7 @@ const assert = require("node:assert/strict"), fs = require("node:fs"), path = re
 const {chromium, webkit} = require(process.env.PLAYWRIGHT_MODULE_PATH || "playwright");
 const root = path.resolve(__dirname, ".."), R = require("../js/portal-utils.js");
 const fnbData=JSON.parse(fs.readFileSync(path.join(root,"data/fnb-analysis.json"),"utf8"));
-const fnbOwn=[...(fnbData.recommended_order||[]),...(fnbData.robust_order||[]),...fnbData.proposal_order,...fnbData.custom_order];
+const fnbOwn=require('../js/fnb-decision-utils.js').own(fnbData);
 const fnbDefaultBenchmarks=['VBAL','VGRO','VEQT',...(fnbData.results.VFV?['VFV']:[])],fnbDefaultChartCount=4+fnbDefaultBenchmarks.length;
 const fnbBeta=new Intl.NumberFormat("fr-CA",{minimumFractionDigits:2,maximumFractionDigits:2}).format(fnbData.pairwise.find(p=>p.portfolio==="10"&&p.comparable==="VBAL").beta_vs_comparable);
 const types = {".html":"text/html", ".js":"text/javascript", ".css":"text/css", ".json":"application/json", ".pdf":"application/pdf", ".png":"image/png"};
