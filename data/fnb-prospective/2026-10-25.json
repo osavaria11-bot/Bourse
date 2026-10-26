@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "kind": "registered_prospective_allocation",
+  "as_of": "2026-09-30",
+  "published_at": "2026-10-25T20:45:30-04:00",
+  "catalog_path": "data/fnb-prospective/2026-10-25.json",
+  "benchmark": "VFV",
+  "rebalance": "january_targets",
+  "innovation_momentum_cap": 0.3,
+  "source": "data/fnb-prospective-history/2026-10-25-proposals.json",
+  "source_sha256": "1880168555d5ee6cc7ecde00949b0eb7f846d8bd2657b3f6332d893f1cc9acba",
+  "limitations": "Allocation sélectionnée sur les données connues au 25 octobre 2026. Backtest rétrospectif aux poids actuels; projections et classements calculés par les mêmes méthodes que les autres portefeuilles. Aucune garantie de battre le S&P 500.",
+  "portfolios": [
+    {
+      "id": "prospective-2026-10-perspectives",
+      "name": "SAVY Perspectives",
+      "chart_name": "Perspectives",
+      "style_label": "Actions mondiales · petites capitalisations et momentum",
+      "description": "Allocation unique issue des recherches à 2 et 10 ans, comparée aux autres portefeuilles sur chaque horizon.",
+      "color": "#567E88",
+      "benchmark": "VFV",
+      "weights": {
+        "FINN": 0.15,
+        "VCN": 0.118,
+        "VEE": 0.054,
+        "VMO": 0.15,
+        "XEF": 0.09,
+        "XIT": 0.1,
+        "XSU": 0.29,
+        "ZNQ": 0.048
+      },
+      "research_ids": [
+        "research-2y-2026-10-25",
+        "research-10y-2026-10-25"
+      ]
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "as_of": "2026-10-23",
-  "generated_at": "2026-10-25T20:41:02-04:00",
+  "generated_at": "2026-10-25T20:48:44-04:00",
   "status": "partial",
   "errors": {
     "FCMO": "Séances suspectes exclues des périodes qui les traversent : 2020-06-10"
@@ -66,6 +66,22 @@
           "currency": "CAD",
           "total_return": true,
           "source_url": "https://finance.yahoo.com/quote/XGB.TO/history/"
+        },
+        "XSU": {
+          "return": -0.3769206878193644,
+          "start": "2007-12-31",
+          "end": "2008-12-31",
+          "currency": "CAD",
+          "total_return": true,
+          "source_url": "https://finance.yahoo.com/quote/XSU.TO/history/"
+        },
+        "XIT": {
+          "return": -0.497285518579775,
+          "start": "2007-12-31",
+          "end": "2008-12-31",
+          "currency": "CAD",
+          "total_return": true,
+          "source_url": "https://finance.yahoo.com/quote/XIT.TO/history/"
         }
       },
       "factor_shocks": {},
@@ -106,7 +122,9 @@
         "https://finance.yahoo.com/quote/ZEO.TO/history/",
         "https://finance.yahoo.com/quote/ZLB.TO/history/",
         "https://finance.yahoo.com/quote/ZNQ.TO/history/",
-        "https://finance.yahoo.com/quote/ZUQ.TO/history/"
+        "https://finance.yahoo.com/quote/ZUQ.TO/history/",
+        "https://finance.yahoo.com/quote/XSU.TO/history/",
+        "https://finance.yahoo.com/quote/XIT.TO/history/"
       ]
     },
     "covid2020": {
@@ -336,6 +354,22 @@
           "currency": "CAD",
           "total_return": true,
           "source_url": "https://finance.yahoo.com/quote/ZUQ.TO/history/"
+        },
+        "XSU": {
+          "return": -0.42579350836991436,
+          "start": "2020-02-19",
+          "end": "2020-03-23",
+          "currency": "CAD",
+          "total_return": true,
+          "source_url": "https://finance.yahoo.com/quote/XSU.TO/history/"
+        },
+        "XIT": {
+          "return": -0.2766677220158714,
+          "start": "2020-02-19",
+          "end": "2020-03-23",
+          "currency": "CAD",
+          "total_return": true,
+          "source_url": "https://finance.yahoo.com/quote/XIT.TO/history/"
         }
       },
       "factor_shocks": {
@@ -385,7 +419,9 @@
         "https://finance.yahoo.com/quote/ZEO.TO/history/",
         "https://finance.yahoo.com/quote/ZLB.TO/history/",
         "https://finance.yahoo.com/quote/ZNQ.TO/history/",
-        "https://finance.yahoo.com/quote/ZUQ.TO/history/"
+        "https://finance.yahoo.com/quote/ZUQ.TO/history/",
+        "https://finance.yahoo.com/quote/XSU.TO/history/",
+        "https://finance.yahoo.com/quote/XIT.TO/history/"
       ]
     },
     "rates2022": {
@@ -647,6 +683,22 @@
           "currency": "CAD",
           "total_return": true,
           "source_url": "https://finance.yahoo.com/quote/ZUQ.TO/history/"
+        },
+        "XSU": {
+          "return": -0.21663155725055583,
+          "start": "2021-12-31",
+          "end": "2022-12-30",
+          "currency": "CAD",
+          "total_return": true,
+          "source_url": "https://finance.yahoo.com/quote/XSU.TO/history/"
+        },
+        "XIT": {
+          "return": -0.3585088021090693,
+          "start": "2021-12-31",
+          "end": "2022-12-30",
+          "currency": "CAD",
+          "total_return": true,
+          "source_url": "https://finance.yahoo.com/quote/XIT.TO/history/"
         }
       },
       "factor_shocks": {
@@ -696,7 +748,9 @@
         "https://finance.yahoo.com/quote/ZEO.TO/history/",
         "https://finance.yahoo.com/quote/ZLB.TO/history/",
         "https://finance.yahoo.com/quote/ZNQ.TO/history/",
-        "https://finance.yahoo.com/quote/ZUQ.TO/history/"
+        "https://finance.yahoo.com/quote/ZUQ.TO/history/",
+        "https://finance.yahoo.com/quote/XSU.TO/history/",
+        "https://finance.yahoo.com/quote/XIT.TO/history/"
       ]
     }
   },
@@ -907,7 +961,9 @@
     "ZEO": "https://finance.yahoo.com/quote/ZEO.TO/history/",
     "ZLB": "https://finance.yahoo.com/quote/ZLB.TO/history/",
     "ZNQ": "https://finance.yahoo.com/quote/ZNQ.TO/history/",
-    "ZUQ": "https://finance.yahoo.com/quote/ZUQ.TO/history/"
+    "ZUQ": "https://finance.yahoo.com/quote/ZUQ.TO/history/",
+    "XSU": "https://finance.yahoo.com/quote/XSU.TO/history/",
+    "XIT": "https://finance.yahoo.com/quote/XIT.TO/history/"
   },
   "forward_history": {
     "dates": [

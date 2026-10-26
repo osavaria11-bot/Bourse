@@ -14,12 +14,13 @@ from zoneinfo import ZoneInfo
 
 try:
     from scripts.fnb_sources import Client, collect, month_end, previous_month
-    from scripts import benchmark_fnb, recommended_fnb, robust_fnb
+    from scripts import benchmark_fnb, recommended_fnb, robust_fnb, prospective_portfolios
 except ModuleNotFoundError:
     from fnb_sources import Client, collect, month_end, previous_month
     import benchmark_fnb
     import recommended_fnb
     import robust_fnb
+    import prospective_portfolios
 
 ROOT = Path(__file__).resolve().parents[1]
 MODEL_VERSION = "1.3.0"
@@ -335,6 +336,8 @@ def refresh_analysis(current, baseline, sources, config, generated_at):
         robust_fnb.apply(d, current["robust_selections"], current)
     if current.get("recommended_selections"):
         recommended_fnb.apply(d, current["recommended_selections"], current)
+    if current.get("prospective_selections"):
+        prospective_portfolios.apply(d, current["prospective_selections"], current)
     return d
 
 
@@ -364,6 +367,15 @@ def validate(d, baseline):
         q = d["results"][p["id"]]
         if q["weights"] != p["weights"] or q["historical_backtest"] != p["historical_backtest"]:
             raise ValueError("Frozen recommended allocation or research changed")
+    prospective = d.get("prospective_selections", [])
+    for c in prospective:
+        prospective_portfolios.validate_catalog(c)
+    expected_prospective = [p for c in prospective for p in c["portfolios"]]
+    if d.get("prospective_order", []) != [p["id"] for p in expected_prospective]:
+        raise ValueError("Prospective portfolio identities changed")
+    for p in expected_prospective:
+        if d["results"][p["id"]]["weights"] != p["weights"] or d["results"][p["id"]]["benchmark"] != p["benchmark"]:
+            raise ValueError("Frozen prospective allocation changed")
     for c in d.get("additional_benchmarks", []):
         benchmark_fnb.validate_catalog(c)
         for p in c["benchmarks"]:
@@ -436,6 +448,10 @@ def main(argv=None):
         for selection in selections: recommended_fnb.validate_sources(root, selection)
         if current.get("recommended_selections", []) != selections:
             raise ValueError("Current long-history selections disagree with frozen catalogs")
+        selections = prospective_portfolios.catalogs(root)
+        for selection in selections: prospective_portfolios.validate_sources(root, selection)
+        if current.get("prospective_selections", []) != selections:
+            raise ValueError("Current prospective selections disagree with frozen catalogs")
         benchmarks = benchmark_fnb.catalogs(root)
         for c in benchmarks: benchmark_fnb.validate_catalog(c)
         if current.get("additional_benchmarks", []) != benchmarks:
@@ -471,7 +487,7 @@ def main(argv=None):
         # Snapshot names are month-unique; reruns never append duplicate recommendations.
         write(archive, d)
         write(root / "data/fnb-analysis.json", d)
-        required = {t for k in d["custom_order"] + d["proposal_order"] + d.get("robust_order", []) + d.get("recommended_order", []) for t in d["results"][k]["weights"]}
+        required = {t for k in d["custom_order"] + d["proposal_order"] + d.get("robust_order", []) + d.get("recommended_order", []) + d.get("prospective_order", []) for t in d["results"][k]["weights"]}
         write(root / "data/fnb-holdings.json", {**holdings, "funds": {t: value for t, value in holdings["funds"].items() if t in required}})
         write(root / "data/fnb-lookthrough.json", d["lookthrough"])
         write(root / "data/fnb-history/index.json", history_index(root, d, baseline))

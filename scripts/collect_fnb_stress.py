@@ -196,9 +196,9 @@ def main():
     config = json.loads((ROOT/'data/fnb-model.json').read_text())
     cutoff = F.completed_session(datetime.now(F.TZ)).isoformat()
     old = json.loads(args.output.read_text()) if args.output.exists() else None
-    if old and old.get('forward_history') and old['as_of'] == cutoff and old['status'] == 'current' and old['model_factors']['dates'] == analysis['universe']['dates']:
-        validate(old); print('Stress inputs already current:', cutoff); return 0
     tickers = {t for p in analysis['results'].values() for t in p['weights']} | {'VEQT','VFV','VVL','VMO','FCUQ','FCUL'}
+    if old and old.get('forward_history') and old['as_of'] == cutoff and old['status'] == 'current' and old['model_factors']['dates'] == analysis['universe']['dates'] and tickers <= old.get('source_urls', {}).keys():
+        validate(old); print('Stress inputs already current:', cutoff); return 0
     specs = {t:(config['funds'][t]['quote_symbol'],'CAD','ETF') for t in tickers}
     specs.update({'US':('SPY','USD','ETF'),'CA':('XIC.TO','CAD','ETF'),'DEV':('EFA','USD','ETF'),'EM':('EEM','USD','ETF'),
                   'XBB':('XBB.TO','CAD','ETF'),'XCB':('XCB.TO','CAD','ETF'),'XGB':('XGB.TO','CAD','ETF'),'FX':('CAD=X','CAD','CURRENCY')})

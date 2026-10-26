@@ -2106,11 +2106,118 @@
           "units": 51.94805194805195
         }
       ]
+    },
+    {
+      "id": "prospective-2026-10-perspectives",
+      "name": "SAVY Perspectives",
+      "color": "#567E88",
+      "kind": "portfolio",
+      "launch_date": "2026-10-19",
+      "capital": 10000.0,
+      "currency": "CAD",
+      "weights": {
+        "FINN": 0.15,
+        "VCN": 0.118,
+        "VEE": 0.054,
+        "VMO": 0.15,
+        "XEF": 0.09,
+        "XIT": 0.1,
+        "XSU": 0.29,
+        "ZNQ": 0.048
+      },
+      "definition_source": "data/fnb-prospective/2026-10-25.json",
+      "published_at": "2026-10-25T20:45:30-04:00",
+      "method": "buy_hold_fractional_ex_date_close_v1",
+      "source_definition_sha256": "df375cdad620e8f827d220ddd6526a0c188a30091680a4e859c494bca962a203",
+      "actual_launch_date": "2026-10-26",
+      "series_type": "simulation",
+      "status": "complete",
+      "unavailable_reason": null,
+      "history": [
+        {
+          "date": "2026-10-19",
+          "value": 10000.0
+        },
+        {
+          "date": "2026-10-20",
+          "value": 10091.77660399611
+        },
+        {
+          "date": "2026-10-21",
+          "value": 10157.370571608277
+        },
+        {
+          "date": "2026-10-22",
+          "value": 9998.999845546077
+        },
+        {
+          "date": "2026-10-23",
+          "value": 9970.203511724361
+        }
+      ],
+      "initial_positions": [
+        {
+          "ticker": "FINN",
+          "name": "Fidelity Global Innovators ETF",
+          "weight": 0.15,
+          "close": 33.130001068115234,
+          "units": 45.276183267124026
+        },
+        {
+          "ticker": "VCN",
+          "name": "Vanguard FTSE Canada All Cap Index ETF",
+          "weight": 0.118,
+          "close": 73.0199966430664,
+          "units": 16.15995691930844
+        },
+        {
+          "ticker": "VEE",
+          "name": "Vanguard FTSE Emerging Markets All Cap Index ETF",
+          "weight": 0.054,
+          "close": 49.20000076293945,
+          "units": 10.975609585899887
+        },
+        {
+          "ticker": "VMO",
+          "name": "Vanguard Global Momentum Factor ETF",
+          "weight": 0.15,
+          "close": 90.0,
+          "units": 16.666666666666668
+        },
+        {
+          "ticker": "XEF",
+          "name": "iShares Core MSCI EAFE IMI Index ETF",
+          "weight": 0.09,
+          "close": 51.029998779296875,
+          "units": 17.636684725243114
+        },
+        {
+          "ticker": "XIT",
+          "name": "iShares S&P/TSX Capped Information Technology Index ETF",
+          "weight": 0.1,
+          "close": 83.01000213623047,
+          "units": 12.046741046444822
+        },
+        {
+          "ticker": "XSU",
+          "name": "iShares U.S. Small Cap Index ETF (CAD-Hedged)",
+          "weight": 0.29,
+          "close": 50.65999984741211,
+          "units": 57.244374432191044
+        },
+        {
+          "ticker": "ZNQ",
+          "name": "BMO Nasdaq 100 Equity Index ETF",
+          "weight": 0.048,
+          "close": 134.72000122070312,
+          "units": 3.562945335887036
+        }
+      ]
     }
   ],
   "source_ledger_sha256": "d5592572a92f574c736ebfde05676a532d35d558281d072a7325df8132108101",
-  "source_registry_sha256": "aff94282ed57dc59f30bc99d617c7588bf4f11e5d1fbddc83066e0ac40470d8a",
-  "supplemental_sha256": "8314fc438930ff916223cf877ed7d6ce976db32dc9d95649882695d75886824a",
+  "source_registry_sha256": "e7d9015ef864a049314a4f0461c0465592688df672381f3db279a2e22dd1d600",
+  "supplemental_sha256": "486b10b203e90074a2d7c63e4693da86f160bc58d4c65c70eedfbc16cbd8f41d",
   "price_revisions": [
     {
       "ticker": "FBAL",

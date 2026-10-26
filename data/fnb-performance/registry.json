@@ -483,6 +483,29 @@
       "published_at": "2026-10-23T18:06:35+00:00",
       "method": "buy_hold_fractional_ex_date_close_v1",
       "definition_sha256": "eb8b614b39e743b606c8f69a4e1fa1c73457411295a8441cb01135d4057c5efd"
+    },
+    {
+      "id": "prospective-2026-10-perspectives",
+      "name": "SAVY Perspectives",
+      "color": "#567E88",
+      "kind": "portfolio",
+      "launch_date": "2026-10-26",
+      "capital": 10000.0,
+      "currency": "CAD",
+      "weights": {
+        "FINN": 0.15,
+        "VCN": 0.118,
+        "VEE": 0.054,
+        "VMO": 0.15,
+        "XEF": 0.09,
+        "XIT": 0.1,
+        "XSU": 0.29,
+        "ZNQ": 0.048
+      },
+      "definition_source": "data/fnb-prospective/2026-10-25.json",
+      "published_at": "2026-10-25T20:45:30-04:00",
+      "method": "buy_hold_fractional_ex_date_close_v1",
+      "definition_sha256": "df375cdad620e8f827d220ddd6526a0c188a30091680a4e859c494bca962a203"
     }
   ]
 }

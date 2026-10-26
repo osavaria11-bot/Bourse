@@ -26,11 +26,29 @@ test('rounded target weights reconcile fees and actual equity-sleeve regions and
     assert.ok(q.limits.maxGeoGap<=.1);assert.ok(q.limits.maxSectorGap<=.07);assert.ok(q.limits.maxSector<=.35);
   }
 });
-test('the research view is clearly dated, readable, and leaves the registered data untouched',()=>{
-  const D=require('../data/fnb-analysis.json'),before=JSON.stringify(D),html=render(D,root);
+test('one allocation from both dated searches is integrated with the other portfolios, without a separate research panel',()=>{
+  const D=require('../data/fnb-analysis.json'),html=fs.readFileSync(path.join(root,'reports/portefeuilles-fnb.html'),'utf8');
+  assert.equal(D.prospective_order.length,1);
+  const id=D.prospective_order[0],q=D.results[id];
+  assert.ok(C.portfolios.every(p=>JSON.stringify(p.weights)===JSON.stringify(q.weights)));
+  assert.deepEqual(q.research_ids,C.portfolios.map(p=>p.id));assert.equal(q.benchmark,'VFV');
+  assert.equal((html.match(/data-prospective-project=/g)||[]).length,0);
+  assert.equal((html.match(new RegExp('data-fiche="'+id+'"','g'))||[]).length,1);
+  for(const chart of ['risk','growth'])assert.equal((html.match(new RegExp('id="'+chart+'-series-'+id+'"','g'))||[]).length,1);
+  assert.ok(require('../js/fnb-decision-utils.js').candidates(D,'VFV').includes(id));
+  const ranking=require('../scripts/fnb_preferences.cjs')(D);assert.ok(ranking.entries.find(e=>e.id===id)?.eligible);
+  assert.ok(require('../data/fnb-horizon-ranking.json').considered_ids.includes(id));
+});
+test('the same forecast and ranking methods apply to the new portfolio at 2, 5 and 10 years',()=>{
+  const D=require('../data/fnb-analysis.json'),H=require('../data/fnb-stress-history.json'),M=require('../data/macro-data.json'),F=require('../js/fnb-forecast-utils.js'),U=require('../js/fnb-decision-utils.js');
+  const id=D.prospective_order[0],before=JSON.stringify(D),p=F.prepare(D,H,M);
+  assert.equal(p.available,true);assert.ok(p.rows.some(r=>r.id===id));assert.ok(!p.unavailable.some(r=>r.id===id));
+  const historical=U.analyse(D,[id,'7',D.robust_order[0]],'VFV',require('../data/fnb-daily-risk.json'),H);
+  assert.equal(historical.available,true);assert.equal(historical.basis,'daily');assert.ok(historical.rows.find(r=>r.id===id).cvar>0);
+  for(const years of [2,5,10]){
+    const a=F.simulate(p,years,{ids:[id,'7'],paths:300,internal:true}),r=a.rows.find(r=>r.id===id);
+    assert.equal(a.available,true);assert.ok(Number.isFinite(r.medianAnnual));assert.ok(r.benchmarks.VFV.probability>=0&&r.benchmarks.VFV.probability<=1);
+    assert.ok(F.ranking(a.rows,'growth').has(id));assert.ok(F.global(a.rows,'forward').ranks.has(id));
+  }
   assert.equal(JSON.stringify(D),before);
-  assert.equal((html.match(/data-prospective-project=/g)||[]).length,2);
-  assert.equal((html.match(/data-prospective-fund=/g)||[]).length,8);
-  if(C.as_of===D.dates.at(-1)){assert.match(html,/Seuil de 50 % non validé/);assert.match(html,/30 % maximum/);}else assert.match(html,/à réévaluer/);assert.match(html,/rééquilibrage en janvier/);
-  assert.match(html,/pas la performance hors échantillon/);assert.match(html,/distinctes des portefeuilles enregistrés/);
 });
