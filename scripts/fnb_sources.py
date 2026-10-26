@@ -359,6 +359,74 @@ def bmo(client, ticker, fund, cutoff):
          "sectors": p["effectiveDate"], "assets": p["effectiveDate"]}, return_method="BMO : indice officiel de rendement total quotidien composé par mois; positions officielles.")
 
 
+def globalx(client, ticker, fund, cutoff):
+    """Issuer total-return growth, with explicitly partial underlying holdings.
+
+    Global X publishes the reinvested 10K series separately from unadjusted
+    NAV. Its public page exposes only the largest underlying positions.
+    Never turn those ten positions into a complete look-through estimate.
+    """
+    body = client.get(fund["source_url"])
+    if not re.search(r"<title>\s*" + re.escape(ticker) + r"\b", body, re.I):
+        raise ValueError("Global X product identity mismatch")
+
+    def attr(name):
+        match = re.search(r"\b" + name + r"=([\"'])(.*?)\1", body, re.S)
+        if not match:
+            raise ValueError("Global X missing " + name)
+        return json.loads(unescape(match[2]))
+
+    def section(title):
+        match = re.search(r"<h2\b[^>]*>\s*" + re.escape(title) + r"\s*</h2>(.*?)(?=<h2\b|$)", body, re.S | re.I)
+        if not match:
+            raise ValueError("Global X missing " + title)
+        raw = match[1]
+        plain = re.sub(r"\s+", " ", unescape(re.sub(r"<[^>]+>", " ", raw)))
+        stamp = re.search(r"As at\s+([A-Za-z]+ \d{1,2}, \d{4})", plain)
+        if not stamp:
+            raise ValueError("Global X undated " + title)
+        return raw, datetime.strptime(stamp[1], "%B %d, %Y").date().isoformat()
+
+    def chart(raw):
+        match = re.search(r"\bdata-chart=([\"'])(.*?)\1", raw, re.S)
+        if not match:
+            raise ValueError("Global X missing exposure chart")
+        data = json.loads(unescape(match[2]))
+        values = {k: number(v) / 100 for k, v in data.items()}
+        if any(not math.isfinite(v) or v < 0 for v in values.values()):
+            raise ValueError("Global X invalid exposure")
+        return values
+
+    points = [(d, float(v)) for d, v in attr("data-growth").items()]
+    sector_html, sector_date = section("Top Sector Allocations")
+    geo_html, geo_date = section("Top Geographic Exposure")
+    holdings_html, holdings_date = section("Top Underlying Holdings")
+    mapping = {"TECHNOLOGY": "technology", "COMMUNICATION SERVICES": "communication",
+        "CONSUMER SERVICES": "consumer_discretionary", "CONSUMER PRODUCTS": "consumer_staples",
+        "HEALTH CARE SERVICES": "health_care", "INDUSTRIAL PRODUCTS": "industrials",
+        "UTILITIES": "utilities", "MATERIALS": "materials", "ENERGY": "energy", "FINANCIALS SERVICES": "financials"}
+    geo, sectors = [0.] * 5, [0.] * len(SECTORS)
+    for country, w in chart(geo_html).items():
+        geo[geo_group(country.title())] += w
+    for label, w in chart(sector_html).items():
+        sectors[SECTORS.index(mapping.get(label, "other"))] += w
+    equity = sum(sectors)
+    if not .9 <= equity <= 1.0005 or not .98 <= sum(geo) <= 1.02:
+        raise ValueError("Global X incomplete sector/geography totals")
+    equity = min(1., equity)
+    positions = [[unescape(re.sub(r"<[^>]+>", "", name)).strip(), number(weight) / 100]
+        for name, weight in re.findall(r"<p\b[^>]*>([^<]+)</p>\s*<p\b[^>]*>([\d.,]+)%</p>", holdings_html)]
+    if not positions:
+        raise ValueError("Global X underlying positions missing")
+    value = result(fund, monthly_from_levels(points, cutoff), geo, sectors,
+        {"equity": equity, "bond": 0., "cash": 1 - equity, "gold": 0., "crypto": 0.}, positions,
+        {"prices": max(d for d, _ in points if d[:7] <= cutoff), "holdings": holdings_date,
+         "geography": geo_date, "sectors": sector_date, "assets": sector_date},
+        return_method="Global X : croissance officielle de 10 000 $ en CAD, distributions réinvesties, frais inclus. Expositions officielles; positions sous-jacentes détaillées partielles.")
+    value["holdings"].update(complete=False, partial=True)
+    return value
+
+
 def rbc(client, ticker, fund, cutoff):
     body = client.get(fund["source_url"])
     match = re.search(r"const fundData\s*=\s*(.*?);\s*(?:\n|\r)", body)
@@ -410,7 +478,7 @@ def risk_free(client, cutoff):
 
 def collect(config, cutoff, today, client):
     funds, errors = {}, []
-    collectors = {"fidelity": fidelity, "vanguard": vanguard, "ishares": ishares, "bmo": bmo, "rbc": rbc}
+    collectors = {"fidelity": fidelity, "vanguard": vanguard, "ishares": ishares, "bmo": bmo, "rbc": rbc, "globalx": globalx}
     def one(ticker):
         fund = config["funds"][ticker]
         value = collectors[fund["provider"]](client, ticker, fund, cutoff)

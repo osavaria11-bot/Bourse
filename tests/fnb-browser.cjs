@@ -6,6 +6,9 @@ const root=path.resolve(__dirname,".."),D=JSON.parse(fs.readFileSync(path.join(r
 const server=http.createServer((req,res)=>{const p=path.resolve(root,'.'+new URL(req.url,'http://localhost').pathname);if(!p.startsWith(root+path.sep)||!fs.existsSync(p)||!fs.statSync(p).isFile()){res.writeHead(404);res.end();return;}res.setHeader('Content-Type',p.endsWith('.html')?'text/html':p.endsWith('.json')?'application/json':p.endsWith('.css')?'text/css':'text/javascript');fs.createReadStream(p).pipe(res);});
 async function check(browser,engine){
  const context=await browser.newContext({viewport:{width:1280,height:900},acceptDownloads:true}),page=await context.newPage(),errors=[];
+ // Some Chromium versions retain SVG bounding boxes after display:none.
+ // Check the CSS selection state directly for SVG series.
+ const shownSeries=selector=>page.locator(selector).evaluateAll(ns=>ns.filter(n=>getComputedStyle(n).display!=='none').length);
  await page.clock.install();
  page.on('pageerror',e=>errors.push(e.message));await page.route('https://**',r=>r.abort());
  const url='http://127.0.0.1:'+server.address().port;
@@ -23,6 +26,15 @@ async function check(browser,engine){
  assert.equal(await page.locator('#allPortfolios').isVisible(),false);
  assert.equal(await page.locator('#decision').isVisible(),true);
  assert.equal(await page.locator('#referenceSelect').isVisible(),true);
+ const submitted=require('../data/fnb-prospective/2026-10-26-user-allocations.json');
+ for(const q of submitted.portfolios){
+  for(const selector of ['summaryFocus','sectorFocus','ficheFocus'])assert.equal(await page.locator('#'+selector+' option[value="'+q.id+'"]').count(),1);
+  assert.equal(await page.locator('[data-preference="'+q.id+'"]').count(),1);
+  const card=page.locator('[data-fiche="'+q.id+'"]');
+  assert.equal(await card.locator('[data-fund]').count(),Object.keys(q.weights).length);
+  for(const [t,w] of Object.entries(q.weights))assert.equal(await card.locator('[data-fund="'+t+'"] + td').innerText(),new Intl.NumberFormat('fr-CA',{minimumFractionDigits:1,maximumFractionDigits:1}).format(w*100)+' %');
+  assert.match(await card.locator('.holdings-section').innerText(),/Couverture partielle/);
+ }
  const prospectiveId=D.prospective_order[0];
  assert.equal(await page.locator('.prospective-project').count(),0);
  for(const selector of ['summaryFocus','sectorFocus','ficheFocus'])assert.equal(await page.locator('#'+selector+' option[value="'+prospectiveId+'"]').count(),1);
@@ -165,7 +177,7 @@ async function check(browser,engine){
  await page.locator('.nav [data-tab="allPortfolios"]').click();
  await page.locator('#recommendedCharts').click();
  assert.equal(await page.locator('#referenceSelect').inputValue(),'VFV');
- for(const chart of ['risk','growth'])assert.equal(await page.locator('#'+(chart==='risk'?'riskSvg .risk-point':'growthSvg .wealth-line')+':visible').count(),D.recommended_order.length+2);
+ for(const chart of ['risk','growth'])assert.equal(await shownSeries('#'+(chart==='risk'?'riskSvg .risk-point':'growthSvg .wealth-line')),D.recommended_order.length+2);
  await page.locator('#tableScope').selectOption('all');
  for(const k of D.recommended_order){
   await page.locator('.nav [data-tab="portfolios"]').click();await page.locator('#ficheFocus').selectOption(k);
@@ -190,13 +202,13 @@ async function check(browser,engine){
   assert.equal(await page.locator('#sectorFocus').inputValue(),k);assert.equal(await page.locator('#ficheFocus').inputValue(),k);
   assert.equal(await page.locator('#riskSvg .risk-point[data-portfolio="'+k+'"]').isVisible(),true);
   assert.equal(await page.locator('#growthSvg .wealth-line[data-portfolio="'+k+'"]').isVisible(),true);
-  if(previous!==k)assert.equal(await page.locator('#growthSvg .wealth-line[data-portfolio="'+previous+'"]').isVisible(),false);
+  if(previous!==k)assert.equal(await page.locator('#growthSvg .wealth-line[data-portfolio="'+previous+'"]').evaluate(n=>getComputedStyle(n).display!=='none'),false);
   assert.equal(await page.locator('#growthReadout [data-portfolio="'+k+'"] b').innerText(),new Intl.NumberFormat('fr-CA',{style:'currency',currency:'CAD',currencyDisplay:'narrowSymbol',maximumFractionDigits:0}).format(D.results[k].end));
  }
  await page.locator('.nav [data-tab="allPortfolios"]').click();
  await page.locator('#robustCharts').click();assert.equal(await page.locator('#overview').isVisible(),true);
- assert.equal(await page.locator('#riskSvg .risk-point:visible').count(),5);
- assert.equal(await page.locator('#growthSvg .wealth-line:visible').count(),5);
+ assert.equal(await shownSeries('#riskSvg .risk-point'),5);
+ assert.equal(await shownSeries('#growthSvg .wealth-line'),5);
  await page.locator('#capitalInput').fill('20 000');
  for(const k of D.robust_order){
   await page.locator('.nav [data-tab="overview"]').click();
@@ -276,11 +288,11 @@ async function check(browser,engine){
  await page.locator('.nav [data-tab="methods"]').click();await page.locator('#monthlyCharts').click();
  assert.equal(await page.locator('#overview').isVisible(),true);
  for(const chart of ['risk','growth']){assert.equal(await page.locator('#'+chart+'-series-proposal').isChecked(),true);}
- assert.equal(await page.locator('#riskSvg .risk-point:visible').count(),6);
- assert.equal(await page.locator('#growthSvg .wealth-line:visible').count(),6);
+ assert.equal(await shownSeries('#riskSvg .risk-point'),6);
+ assert.equal(await shownSeries('#growthSvg .wealth-line'),6);
  await page.locator('#compass .chart-chooser summary').click();await page.locator('#risk-series-proposal').uncheck();await page.locator('#compass .chart-chooser summary').click();
- assert.equal(await page.locator('#riskSvg .risk-point:visible').count(),5);
- assert.equal(await page.locator('#growthSvg .wealth-line:visible').count(),6);
+ assert.equal(await shownSeries('#riskSvg .risk-point'),5);
+ assert.equal(await shownSeries('#growthSvg .wealth-line'),6);
  await page.locator('#monthSlider').fill(String(D.dates.length));
  assert.ok((await page.locator('#monthLabel').innerText()).includes(D.assumptions.as_of.slice(0,4)));
  const csvEvent=page.waitForEvent('download');await page.locator('#monthlyCsv').click();const csv=await csvEvent;

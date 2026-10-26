@@ -1,6 +1,12 @@
 const test=require("node:test"),assert=require("node:assert/strict");
 const {issuerKey,consolidate}=require("../scripts/fnb_holdings.cjs");
 const fund=positions=>({complete:true,date:"2026-09-30",source_url:"https://issuer.example",positions});
+test('explicit partial issuer positions never become complete counts or top-ten concentration',()=>{
+ const result=consolidate({A:.5,B:.5},{A:fund([['Apple',1]]),B:{...fund([['Microsoft',.1]]),complete:false,partial:true}});
+ assert.equal(result.stock_count,null);assert.equal(result.top10_weight,null);assert.equal(result.complete,false);
+ assert.deepEqual(result.partial_funds,['B']);assert.equal(result.equity_covered,.55);
+ assert.equal(result.top10.length,2);assert.match(result.coverage_note,/partielles/);
+});
 test("look-through adds overlapping issuer weights using the total portfolio as denominator",()=>{
  const result=consolidate({A:.25,B:.70,GOLD:.05},{A:fund([["Apple Inc",.08],["Microsoft Corp",.04]]),B:fund([["Apple",.02],["MICROSOFT CORPORATION",.01]]),GOLD:fund([])});
  assert.equal(result.stock_count,2);assert.ok(Math.abs(result.top10[0].weight-.034)<1e-12);assert.ok(Math.abs(result.top10[1].weight-.017)<1e-12);assert.ok(Math.abs(result.top10_weight-.051)<1e-12);

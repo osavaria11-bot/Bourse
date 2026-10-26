@@ -100,7 +100,7 @@ class PublicationGuards(unittest.TestCase):
         extra = model.read(ROOT / "data/fnb-frontier-universe.json")["funds"] if (ROOT / "data/fnb-frontier-universe.json").exists() else {}
         for t in config["funds"]:
             if t not in u["returns"] and t != "VEQT":
-                f = extra[t]
+                f = extra.get(t) or {"returns":self.current["universe"]["returns"][t], "geo":self.current["universe"]["geo"][t], "sector":self.current["universe"]["sector"][t], "equity":self.current["universe"]["equity"][t], "mer":self.current["universe"]["mer"][t], "source_dates":self.current["source_dates"][t], "source_url":self.current["source_urls"][t], "method":self.current["data_methods"][t]}
                 data["funds"][t] = {"returns":{**dict(zip(current["dates"], f["returns"])), "2026-10":.01},
                     "geo":f["geo"], "sector":f["sector"], "assets":{"equity":f["equity"], "cash":1-f["equity"], "bond":0., "crypto":0., "gold":0.},
                     "mer":f["mer"], "dates":f["source_dates"], "source_url":f["source_url"], "return_method":f["method"]}

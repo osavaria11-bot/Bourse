@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "kind": "registered_user_allocation",
+  "as_of": "2026-09-30",
+  "published_at": "2026-10-26T18:58:48-04:00",
+  "catalog_path": "data/fnb-prospective/2026-10-26-user-allocations.json",
+  "benchmark": "VFV",
+  "rebalance": "january_targets",
+  "source": "data/fnb-prospective-history/2026-10-26-user-allocations.json",
+  "source_sha256": "3d39a07ce10856839a2debe957cf2515823aabbf87f661d4c26be34da49cf44a",
+  "limitations": "Compositions fournies par l’utilisatrice, sans optimisation supplémentaire. Backtest rétrospectif aux poids actuels, mêmes conventions et projections que les autres portefeuilles. Le respect des limites de risque et la surperformance future ne sont pas présumés. Suivi après publication distinct des simulations antérieures.",
+  "portfolios": [
+    {
+      "id": "prospective-2026-10-hybride",
+      "name": "A — Hybride",
+      "chart_name": "A · Hybride",
+      "style_label": "Indices larges, qualité et faible volatilité",
+      "description": "Composition fournie par l’utilisatrice : exposition indicielle large et composante faible volatilité.",
+      "color": "#C47055",
+      "benchmark": "VFV",
+      "weights": {
+        "ZUQ": 0.2,
+        "VFV": 0.15,
+        "HXQ": 0.198,
+        "XIC": 0.169,
+        "ZEB": 0.1,
+        "XIT": 0.055,
+        "XEF": 0.072,
+        "ZLB": 0.031,
+        "ZLU": 0.025
+      }
+    },
+    {
+      "id": "prospective-2026-10-multifactoriel",
+      "name": "B — Multifactoriel",
+      "chart_name": "B · Multifactoriel",
+      "style_label": "Qualité, innovation, valeur et momentum",
+      "description": "Composition fournie par l’utilisatrice : qualité, innovation, valeur et momentum, avec banques et énergie canadiennes.",
+      "color": "#275563",
+      "benchmark": "VFV",
+      "weights": {
+        "ZUQ": 0.253,
+        "FINN": 0.15,
+        "HXQ": 0.1,
+        "VDY": 0.11,
+        "ZEB": 0.1,
+        "VVL": 0.075,
+        "XIT": 0.072,
+        "FCMO": 0.045,
+        "ZEO": 0.043,
+        "XEF": 0.031,
+        "FCIV": 0.021
+      }
+    }
+  ]
+}

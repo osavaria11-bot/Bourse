@@ -28,7 +28,7 @@ test('rounded target weights reconcile fees and actual equity-sleeve regions and
 });
 test('one allocation from both dated searches is integrated with the other portfolios, without a separate research panel',()=>{
   const D=require('../data/fnb-analysis.json'),html=fs.readFileSync(path.join(root,'reports/portefeuilles-fnb.html'),'utf8');
-  assert.equal(D.prospective_order.length,1);
+  assert.equal(D.prospective_order.filter(id=>D.results[id].research_ids).length,1);
   const id=D.prospective_order[0],q=D.results[id];
   assert.ok(C.portfolios.every(p=>JSON.stringify(p.weights)===JSON.stringify(q.weights)));
   assert.deepEqual(q.research_ids,C.portfolios.map(p=>p.id));assert.equal(q.benchmark,'VFV');

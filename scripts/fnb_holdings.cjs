@@ -29,10 +29,11 @@ function issuerKey(value) {
   return aliases[name]||name;
 }
 function consolidate(weights, funds) {
-  const positions=new Map(),sources=[];
+  const positions=new Map(),sources=[],partial=[];
   for(const [ticker,weight] of Object.entries(weights)) {
     if(!Number.isFinite(weight)||weight<0)throw Error("Invalid ETF weight: "+ticker);
-    if(!weight)continue;const fund=funds[ticker];if(!fund||!fund.complete)throw Error("Incomplete holdings: "+ticker);
+    if(!weight)continue;const fund=funds[ticker];if(!fund||(!fund.complete&&!(fund.partial===true&&fund.positions?.length)))throw Error("Incomplete holdings: "+ticker);
+    if(!fund.complete)partial.push(ticker);
     sources.push({fund:ticker,date:fund.date,url:fund.source_url});
     for(const [raw,pct] of fund.positions) {
       if(!Number.isFinite(pct)||pct<0)throw Error("Invalid stock weight: "+ticker+" "+raw);
@@ -43,6 +44,6 @@ function consolidate(weights, funds) {
   }
   const all=[...positions.values()].sort((a,b)=>b.weight-a.weight||a.id.localeCompare(b.id));
   const dates=sources.map(s=>s.date).filter(Boolean).sort();
-  return {stock_count:all.length,top10:all.slice(0,10),top10_weight:all.slice(0,10).reduce((s,p)=>s+p.weight,0),equity_covered:all.reduce((s,p)=>s+p.weight,0),date_min:dates[0],date_max:dates.at(-1),sources,estimated:true};
+  return {stock_count:partial.length?null:all.length,top10:all.slice(0,10),top10_weight:partial.length?null:all.slice(0,10).reduce((s,p)=>s+p.weight,0),equity_covered:all.reduce((s,p)=>s+p.weight,0),date_min:dates[0],date_max:dates.at(-1),sources,estimated:true,...(partial.length?{complete:false,partial_funds:partial,coverage_note:'Positions détaillées partielles pour '+partial.join(', ')+'. Nombre de sociétés et concentration des dix premières indisponibles; positions identifiées seulement.'}:{})};
 }
 module.exports={issuerKey,consolidate};

@@ -18,7 +18,7 @@ test('the shared quote-publication command cannot restore a stale financial rank
   assert.equal((html.match(/data-tab="decision"/g)||[]).length,1);
   assert.match(html,/<section id="decision" data-dashboard-view hidden/);
   assert.equal((html.match(/data-prospective-project=/g)||[]).length,0);
-  assert.equal((html.match(/data-fiche="prospective-/g)||[]).length,1);
+  assert.equal((html.match(/data-fiche="prospective-/g)||[]).length,D.prospective_order.length);
   delete current.preference_ranking;const financial=structuredClone(D);delete financial.preference_ranking;assert.deepEqual(current,financial);
   command();assert.equal(fs.readFileSync(path.join(stage,'reports/portefeuilles-fnb.html'),'utf8'),html);
  }finally{fs.rmSync(stage,{recursive:true,force:true});}

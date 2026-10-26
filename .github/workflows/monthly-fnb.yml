@@ -14,6 +14,8 @@ on:
       - "scripts/robust_fnb.py"
       - "scripts/recommended_fnb.py"
       - "scripts/prospective_portfolios.py"
+      - "scripts/install_submitted_fnb.py"
+      - "data/fnb-submitted-sources/**"
       - "data/fnb-prospective/**"
       - "scripts/benchmark_fnb.py"
       - "data/fnb-benchmarks/**"
@@ -52,6 +54,8 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: "24"
+      - name: Prepare submitted ETF additions from repository sources
+        run: python scripts/install_submitted_fnb.py
       - name: Check monthly publication and preserved data
         id: due
         run: |
@@ -82,6 +86,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/fnb-model.json data/fnb-catalog.json data/fnb-analysis.json data/fnb-holdings.json data/fnb-lookthrough.json data/fnb-performance.json data/fnb-performance/registry.json data/fnb-comparison.json data/fnb-comparison data/fnb-comparison-status.json data/fnb-daily-risk.json data/fnb-stress-history.json
           if [ "$RESEARCH_OUTCOME" = 'success' ]; then
             git add data/fnb-analysis.json data/fnb-holdings.json data/fnb-lookthrough.json data/fnb-history data/fnb-status.json reports/portefeuilles-fnb.html reports/fnb-history
             git diff --cached --name-only --diff-filter=M -- data/fnb-history/ reports/fnb-history/ | python -c 'import sys; paths=[p.strip() for p in sys.stdin if p.strip() and not p.strip().endswith("/index.json")]; assert not paths, "Refusing to overwrite immutable archives: " + str(paths)'

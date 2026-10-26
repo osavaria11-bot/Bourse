@@ -37,7 +37,7 @@ def install(root, snapshots):
             if t not in d["funds"]:
                 d["funds"].append(t)
         if t not in holdings["funds"]:
-            if not source["holdings"]["complete"]:
+            if not source["holdings"]["complete"] and not source["holdings"].get("partial"):
                 raise ValueError("Incomplete ETF look-through: " + t)
             holdings["funds"][t] = source["holdings"]
     P.apply(d, selections, current)
@@ -49,7 +49,11 @@ def install(root, snapshots):
     d["lookthrough"] = lookthrough
     M.validate(d, M.read(root / config["baseline"]))
     for k in current["order"]:
-        if d["results"][k] != current["results"][k]:
+        # New rows may change which portfolios dominate an existing row.
+        # Its allocation, return series and financial metrics remain frozen.
+        before = {key: value for key, value in current["results"][k].items() if key != "dominated_by"}
+        after = {key: value for key, value in d["results"][k].items() if key != "dominated_by"}
+        if after != before:
             raise ValueError("Existing portfolio changed: " + k)
     for file, value in [("data/fnb-analysis.json", d), ("data/fnb-holdings.json", holdings), ("data/fnb-lookthrough.json", lookthrough)]:
         M.write(root / file, value)

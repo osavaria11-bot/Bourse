@@ -22,6 +22,8 @@ on:
       - scripts/robust_fnb.py
       - scripts/recommended_fnb.py
       - scripts/prospective_portfolios.py
+      - scripts/install_submitted_fnb.py
+      - data/fnb-submitted-sources/**
       - scripts/benchmark_fnb.py
       - scripts/collect_fnb_daily_risk.py
       - scripts/collect_fnb_stress.py
@@ -53,6 +55,8 @@ jobs:
       - uses: actions/setup-python@v6
         with:
           python-version: "3.13"
+      - name: Prepare submitted ETF additions from repository sources
+        run: python scripts/install_submitted_fnb.py
       - name: Verify investment accounting and immutable history
         run: |
           python -m unittest discover -s tests -p 'test_daily_fnb.py' -v
@@ -92,6 +96,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/fnb-model.json data/fnb-catalog.json data/fnb-analysis.json data/fnb-holdings.json data/fnb-lookthrough.json data/fnb-performance.json data/fnb-performance/registry.json data/fnb-comparison.json data/fnb-comparison data/fnb-comparison-status.json data/fnb-daily-risk.json data/fnb-stress-history.json
           if [ -f data/fnb-daily-risk.json ]; then git add data/fnb-daily-risk.json; fi
           if [ -f data/fnb-stress-history.json ]; then git add data/fnb-stress-history.json; fi
           if [ "$OUTCOME" = 'success' ]; then
