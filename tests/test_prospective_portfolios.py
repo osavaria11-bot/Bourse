@@ -16,14 +16,16 @@ import prospective_portfolios as prospective
 
 class ProspectiveRegistration(unittest.TestCase):
     def setUp(self):
-        self.catalog = prospective.catalogs(ROOT)[0]
+        self.catalogs = prospective.catalogs(ROOT)
+        self.catalog = self.catalogs[0]
+        self.registered_ids = [p["id"] for c in self.catalogs for p in c["portfolios"]]
         self.data = daily.read(ROOT / "data/fnb-analysis.json")
         self.item = self.catalog["portfolios"][0]
         self.key = self.item["id"]
 
     def test_two_identical_research_allocations_become_one_frozen_investment(self):
         prospective.validate_sources(ROOT, self.catalog)
-        self.assertEqual(self.data["prospective_order"], [self.key])
+        self.assertEqual(self.data["prospective_order"], self.registered_ids)
         self.assertEqual(len(self.item["research_ids"]), 2)
         self.assertEqual(self.data["results"][self.key]["weights"], self.item["weights"])
         self.assertEqual(sum(self.item["weights"].get(t, 0) for t in ("FINN", "FCMO", "VMO", "XMI")), .30)
@@ -59,23 +61,23 @@ class ProspectiveRegistration(unittest.TestCase):
 
     def test_monthly_append_preserves_the_allocation_and_every_acquired_return(self):
         current = deepcopy(self.data)
-        prospective.apply(current, [self.catalog], self.data)
+        prospective.apply(current, self.catalogs, self.data)
         self.assertEqual(current, self.data)
         current["dates"].append("2026-10")
         for t, r in current["universe"]["returns"].items():
             r.append(.01)
         for b in ("VEQT", "VFV"):
             current["results"][b]["monthly"].append(.01)
-        prospective.apply(current, [self.catalog], self.data)
+        prospective.apply(current, self.catalogs, self.data)
         q = current["results"][self.key]
         self.assertEqual(q["weights"], self.item["weights"])
         self.assertEqual(q["monthly"][:-1], self.data["results"][self.key]["monthly"])
         self.assertAlmostEqual(q["monthly"][-1], .01, places=12)
-        self.assertEqual(current["prospective_order"], [self.key])
+        self.assertEqual(current["prospective_order"], self.registered_ids)
         bad = deepcopy(self.data)
         bad["results"][self.key]["monthly"][0] += .001
         with self.assertRaisesRegex(ValueError, "acquired return changed"):
-            prospective.apply(deepcopy(self.data), [self.catalog], bad)
+            prospective.apply(deepcopy(self.data), self.catalogs, bad)
 
     def test_post_publication_launch_is_not_backdated_to_the_common_start_simulation(self):
         registry, days = daily.load_state(ROOT)
