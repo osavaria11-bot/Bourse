@@ -54,7 +54,7 @@ def apply(analysis, selections, previous=None):
     return apply_frozen(analysis, selections, previous, family="robust", validator=validate_catalog)
 
 
-def apply_frozen(analysis, selections, previous=None, *, family, validator):
+def apply_frozen(analysis, selections, previous=None, *, family, validator, benchmark_id="VEQT"):
     """Shared dashboard calculations; each frozen family retains its own policy."""
     # Import lazily: monthly_fnb calls this after defining its common calculators.
     try:
@@ -85,7 +85,7 @@ def apply_frozen(analysis, selections, previous=None, *, family, validator):
                 if old["weights"] != w or any(abs(a-b) > 1e-10 for a,b in zip(rr, old["monthly"])):
                     raise ValueError("Frozen robust allocation or acquired return changed: " + k)
                 rr[:len(old["monthly"])] = old["monthly"]
-            q.update(stats(rr, d["results"]["VEQT"]["monthly"], rf, dates))
+            q.update(stats(rr, d["results"][benchmark_id]["monthly"], rf, dates))
             q["mer"] = sum(v * u["mer"][t] for t, v in w.items())
             for asset in ["equity", "bond", "cash", "gold", "crypto"]:
                 q[asset] = sum(v * u[asset][t] for t, v in w.items())
@@ -94,13 +94,13 @@ def apply_frozen(analysis, selections, previous=None, *, family, validator):
             q["geo_total"] = [v*q["equity"] for v in q["geo_equity"]] + [q[a] for a in ["gold", "crypto", "bond", "cash"]]
             q["max_geo_gap"] = max(abs(a-b) for a,b in zip(q["geo_equity"], u["ref_geo"]))
             q["max_sector_gap"] = max(abs(a-b) for a,b in zip(q["sectors"], u["ref_sector"]))
-            q["vol_diff"], q["cagr_gap"] = q["vol"]-d["results"]["VEQT"]["vol"], q["cagr"]-d["results"]["VEQT"]["cagr"]
+            q["vol_diff"], q["cagr_gap"] = q["vol"]-d["results"][benchmark_id]["vol"], q["cagr"]-d["results"][benchmark_id]["cagr"]
             windows = {"debut_28": (0, min(28,len(dates))), "derniers_12": (max(0,len(dates)-12),len(dates)),
                 "derniers_24": (max(0,len(dates)-24),len(dates)), "derniers_6": (max(0,len(dates)-6),len(dates)),
                 "derniers_3": (max(0,len(dates)-3),len(dates))}
             diagnostics = {}
             for key,(start,end) in windows.items():
-                r, b = rr[start:end], d["results"]["VEQT"]["monthly"][start:end]
+                r, b = rr[start:end], d["results"][benchmark_id]["monthly"][start:end]
                 total = math.prod(1+x for x in r)-1; reference = math.prod(1+x for x in b)-1
                 diagnostics[key] = {**period_stats(r,b,rf), "start": dates[start], "end": dates[end-1],
                     "months": len(r), "total_return": total, "benchmark_return": reference, "gap": total-reference}
@@ -109,7 +109,7 @@ def apply_frozen(analysis, selections, previous=None, *, family, validator):
             recent = diagnostics["derniers_12"]
             signals = []
             if recent["information"] is None or recent["information"] < 0: signals.append("IR 12 mois négatif ou indisponible")
-            if diagnostics["derniers_6"]["gap"] < 0: signals.append("Retard cumulé sur 6 mois face à VEQT")
+            if diagnostics["derniers_6"]["gap"] < 0: signals.append("Retard cumulé sur 6 mois face à " + benchmark_id)
             region = q["geo_equity"]
             if q["max_geo_gap"] > .1+1e-8 or any(not lo-1e-8 <= v <= hi+1e-8 for v,lo,hi in zip(region[:4],[.30,.15,.15,.05],[.60,.40,.40,.20])) or region[4] > .05+1e-8:
                 signals.append("Limite géographique dépassée")

@@ -30,7 +30,7 @@ const SavyFnb = (() => {
     const stressInput = JSON.parse(document.getElementById('fnbStressInput')?.textContent || 'null');
     let stressScenario = 'world20';
     const dailyRisk = JSON.parse(document.getElementById('fnbDailyRisk')?.textContent || 'null');
-    const ids = D.order, custom = D.custom_order, proposed = D.proposal_order || [], robust = D.robust_order || [], recommended = D.recommended_order || [], frozen = [...recommended,...robust], own = [...frozen, ...proposed, ...custom], benchmarks = D.benchmark_order;
+    const ids = D.order, custom = D.custom_order, proposed = D.proposal_order || [], robust = D.robust_order || [], recommended = D.recommended_order || [], prospective = D.prospective_order || [], frozen = [...recommended,...robust,...prospective], own = [...frozen, ...proposed, ...custom], benchmarks = D.benchmark_order;
     const $ = id => document.getElementById(id), escape = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
     const number = (v, digits = 2) => v === null || !Number.isFinite(v) ? "—" : new Intl.NumberFormat("fr-CA", {minimumFractionDigits:digits, maximumFractionDigits:digits}).format(v);
     const pct = (v, digits = 1) => v === null || !Number.isFinite(v) ? "—" : number(v * 100, digits) + " %";

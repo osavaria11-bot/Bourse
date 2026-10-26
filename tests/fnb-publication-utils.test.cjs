@@ -13,11 +13,12 @@ test('the shared quote-publication command cannot restore a stale financial rank
   const current=JSON.parse(fs.readFileSync(path.join(stage,'data/fnb-analysis.json'),'utf8')),html=fs.readFileSync(path.join(stage,'reports/portefeuilles-fnb.html'),'utf8');
   assert.deepEqual(current.preference_ranking,rank(D));assert.equal(current.preference_ranking.entries[0].id,'7');
   assert.match(html,/id="riskSnapshotTitle"/);assert.match(html,/id="factorTitle"/);assert.match(html,/fnb-factor-utils.js/);
-  assert.equal((html.match(/id="decisionPanel"/g)||[]).length,1);assert.equal((html.match(/data-decision-card=/g)||[]).length,18);
+  assert.equal((html.match(/id="decisionPanel"/g)||[]).length,1);assert.equal((html.match(/data-decision-card=/g)||[]).length,require('../js/fnb-decision-utils.js').own(D).length);
   assert.match(html,/Top 5 · 2, 5 et 10 ans/);assert.match(html,/financial-quality-v4-no-construction-gates/);
   assert.equal((html.match(/data-tab="decision"/g)||[]).length,1);
   assert.match(html,/<section id="decision" data-dashboard-view hidden/);
-  assert.equal((html.match(/data-prospective-project=/g)||[]).length,2);
+  assert.equal((html.match(/data-prospective-project=/g)||[]).length,0);
+  assert.equal((html.match(/data-fiche="prospective-/g)||[]).length,1);
   delete current.preference_ranking;const financial=structuredClone(D);delete financial.preference_ranking;assert.deepEqual(current,financial);
   command();assert.equal(fs.readFileSync(path.join(stage,'reports/portefeuilles-fnb.html'),'utf8'),html);
  }finally{fs.rmSync(stage,{recursive:true,force:true});}

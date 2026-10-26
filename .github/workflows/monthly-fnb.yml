@@ -13,6 +13,8 @@ on:
       - "scripts/monthly_fnb.py"
       - "scripts/robust_fnb.py"
       - "scripts/recommended_fnb.py"
+      - "scripts/prospective_portfolios.py"
+      - "data/fnb-prospective/**"
       - "scripts/benchmark_fnb.py"
       - "data/fnb-benchmarks/**"
       - "data/fnb-recommended/**"
@@ -62,6 +64,7 @@ jobs:
         run: |
           python -m unittest discover -s tests -p 'test_monthly_fnb.py' -v
           python -m unittest discover -s tests -p 'test_recommended_fnb.py' -v
+          python -m unittest discover -s tests -p 'test_prospective_portfolios.py' -v
       - name: Research using fresh issuer data
         if: steps.due.outputs.due == 'true'
         id: optimize

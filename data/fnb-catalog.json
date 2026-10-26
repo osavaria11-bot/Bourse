@@ -137,6 +137,16 @@
       "name": "Vanguard S&P 500 Index ETF",
       "description": "Actions américaines",
       "source_url": "https://www.vanguard.ca/en/product/etf/equity/9563/vanguard-sp-500-index-etf"
+    },
+    "XSU": {
+      "name": "iShares U.S. Small Cap Index ETF (CAD-Hedged)",
+      "description": "Petites capitalisations",
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239711/ishares-us-small-cap-index-etf-cadhedged-fund"
+    },
+    "XIT": {
+      "name": "iShares S&P/TSX Capped Information Technology Index ETF",
+      "description": "Technologie canadienne",
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239841/ishares-sptsx-capped-information-technology-index-etf"
     }
   }
 }

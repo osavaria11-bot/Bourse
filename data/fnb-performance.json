@@ -1926,6 +1926,88 @@
           "units": 52.806676125284355
         }
       ]
+    },
+    {
+      "id": "prospective-2026-10-perspectives",
+      "name": "SAVY Perspectives",
+      "color": "#567E88",
+      "kind": "portfolio",
+      "launch_date": "2026-10-26",
+      "capital": 10000.0,
+      "currency": "CAD",
+      "weights": {
+        "FINN": 0.15,
+        "VCN": 0.118,
+        "VEE": 0.054,
+        "VMO": 0.15,
+        "XEF": 0.09,
+        "XIT": 0.1,
+        "XSU": 0.29,
+        "ZNQ": 0.048
+      },
+      "definition_source": "data/fnb-prospective/2026-10-25.json",
+      "published_at": "2026-10-25T20:45:30-04:00",
+      "method": "buy_hold_fractional_ex_date_close_v1",
+      "definition_sha256": "df375cdad620e8f827d220ddd6526a0c188a30091680a4e859c494bca962a203",
+      "history": [],
+      "initial_positions": [
+        {
+          "ticker": "FINN",
+          "name": "Fidelity Global Innovators ETF",
+          "weight": 0.15,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "VCN",
+          "name": "Vanguard FTSE Canada All Cap Index ETF",
+          "weight": 0.118,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "VEE",
+          "name": "Vanguard FTSE Emerging Markets All Cap Index ETF",
+          "weight": 0.054,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "VMO",
+          "name": "Vanguard Global Momentum Factor ETF",
+          "weight": 0.15,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "XEF",
+          "name": "iShares Core MSCI EAFE IMI Index ETF",
+          "weight": 0.09,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "XIT",
+          "name": "iShares S&P/TSX Capped Information Technology Index ETF",
+          "weight": 0.1,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "XSU",
+          "name": "iShares U.S. Small Cap Index ETF (CAD-Hedged)",
+          "weight": 0.29,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "ZNQ",
+          "name": "BMO Nasdaq 100 Equity Index ETF",
+          "weight": 0.048,
+          "close": null,
+          "units": null
+        }
+      ]
     }
   ],
   "methodology": {

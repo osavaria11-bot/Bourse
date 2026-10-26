@@ -95,7 +95,8 @@ def register(root, registry):
                                      file.relative_to(root).as_posix(), published=opt["generated_at"]))
     import robust_fnb
     import recommended_fnb
-    for module in (robust_fnb, recommended_fnb):
+    import prospective_portfolios
+    for module in (robust_fnb, recommended_fnb, prospective_portfolios):
         for catalog in module.catalogs(root):
             module.validate_catalog(catalog)
             launch = publication_launch(catalog["published_at"]).isoformat()

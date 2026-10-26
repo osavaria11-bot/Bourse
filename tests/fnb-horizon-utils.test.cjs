@@ -13,7 +13,7 @@ test('opinion rendering is idempotent, retains historical rankings, and never ed
  const first=render(html,D,root);assert.equal(render(first,D,root),first);assert.equal(JSON.stringify(D),before);
  const body=first.match(/<!-- fnb-horizon:start -->([\s\S]*?)<!-- fnb-horizon:end -->/)[1];
  assert.equal((body.match(/data-open-portfolio=/g)||[]).length,15);assert.match(body,/pas probabilités calculées/);
- assert.match(body,/S&amp;P 500 en CAD/);assert.match(body,/Avis du 2026-10-24/);assert.ok(!body.includes('<details class="horizon-ranking" open'));
+ assert.match(body,/S&amp;P 500 en CAD/);assert.match(body,/Avis du 2026-10-25/);assert.ok(!body.includes('<details class="horizon-ranking" open'));
  assert.equal((first.match(/data-preference=/g)||[]).length,D.preference_ranking.entries.length);
  assert.ok(first.indexOf('class="horizon-panel"')<first.indexOf('class="all-layout"'),'Horizon choices appear before the comparison table and historical list');
  assert.equal((body.match(/class="horizon-first"/g)||[]).length,3,'The first choice is highlighted for each horizon');

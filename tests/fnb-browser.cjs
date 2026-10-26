@@ -13,7 +13,7 @@ async function check(browser,engine){
  assert.equal(await page.locator('.monthly-proposal').count(),0);
  assert.equal(await page.locator('[data-preference="proposal"]').count(),1);
  assert.equal(await page.locator('[data-preference="proposal"] .preference-rank').textContent(),String(D.preference_ranking.entries.find(e=>e.id==='proposal').rank));
- assert.equal(await page.locator('#allPortfolioBody [data-open-portfolio]').count(),D.custom_order.length+D.proposal_order.length+D.robust_order.length+D.recommended_order.length);
+ assert.equal(await page.locator('#allPortfolioBody [data-open-portfolio]').count(),D.custom_order.length+D.proposal_order.length+D.robust_order.length+D.recommended_order.length+(D.prospective_order||[]).length);
  assert.equal(await page.locator('#referenceSelect').inputValue(),'VEQT','Existing default benchmark is preserved');
  // The decision aid shares one daily convention and keeps the historical
  // leaderboard / allocations unchanged when a personal objective is selected.
@@ -23,17 +23,10 @@ async function check(browser,engine){
  assert.equal(await page.locator('#allPortfolios').isVisible(),false);
  assert.equal(await page.locator('#decision').isVisible(),true);
  assert.equal(await page.locator('#referenceSelect').isVisible(),true);
- const projects=require('../data/fnb-prospective-proposals.json');
- assert.equal(await page.locator('.prospective-project:visible').count(),2);
- for(const q of projects.portfolios){
-  const card=page.locator('[data-prospective-project="'+q.years+'"]');
-  assert.match(await card.innerText(),projects.as_of!==D.dates.at(-1)?/à réévaluer/:q.robustThreshold?/maintenu/:q.centralThreshold?/fragile/:/non validé/);
-  const allocation=page.locator('[data-prospective-allocation="'+(await page.locator('[data-prospective-allocation="'+q.years+'"]').count()?q.years:2)+'"]');
-  await allocation.locator('summary').click();
-  for(const [ticker,w] of Object.entries(q.weights))assert.equal(await allocation.locator('[data-prospective-fund="'+ticker+'"] td').innerText(),new Intl.NumberFormat('fr-CA',{style:'percent',minimumFractionDigits:1,maximumFractionDigits:1}).format(w));
-  await allocation.locator('summary').click();
- }
-
+ const prospectiveId=D.prospective_order[0];
+ assert.equal(await page.locator('.prospective-project').count(),0);
+ for(const selector of ['summaryFocus','sectorFocus','ficheFocus'])assert.equal(await page.locator('#'+selector+' option[value="'+prospectiveId+'"]').count(),1);
+ assert.equal(await page.locator('[data-preference="'+prospectiveId+'"]').count(),1);
  await page.waitForSelector('#decisionPanel[data-ready="true"]');
  assert.equal(await page.locator('#decisionBody tr').count(),4);
  const initialChoices=await page.locator('[data-decision-choice]').evaluateAll(nodes=>nodes.map(n=>n.value));
@@ -89,6 +82,18 @@ async function check(browser,engine){
  assert.equal(await page.locator('#decisionForecastValidation').isVisible(),false);
  for(const ref of ['VFV','FEQT','VEQT'])assert.equal(await page.locator('[data-decision-row="'+ref+'"]').count(),1);
  assert.equal(await page.locator('[data-forward-past="7"]').innerText(),new Intl.NumberFormat('fr-CA',{minimumFractionDigits:1,maximumFractionDigits:1}).format(D.results['7'].cagr*100)+' %');
+ // The registered candidate uses the same three-way comparison and forecasts.
+ await page.locator('[data-decision-choice="2"]').selectOption(prospectiveId);
+ for(const years of ['2','5','10']){
+  await page.locator('#decisionHorizon').selectOption(years);
+  await page.waitForSelector('#decisionPanel[data-forecast-ready="true"]',{timeout:30000});
+  assert.equal(await page.locator('[data-decision-row="'+prospectiveId+'"]').count(),1);
+  assert.doesNotMatch(await page.locator('[data-forward-return="'+prospectiveId+'"]').innerText(),/—/);
+  assert.doesNotMatch(await page.locator('[data-forward-value="'+prospectiveId+'"]').innerText(),/—/);
+ }
+ await page.locator('#decisionHorizon').selectOption('2');
+ await page.locator('[data-decision-choice="2"]').selectOption(initialChoices[2]);
+ await page.waitForSelector('#decisionPanel[data-forecast-ready="true"]',{timeout:30000});
  const firstForward=await page.locator('[data-forward-value="7"]').innerText(),historyReturn=await page.locator('[data-forward-return="7"]').innerText();
  await page.locator('#decisionCapital').fill('100 000');
  assert.notEqual(await page.locator('[data-forward-value="7"]').innerText(),firstForward);
@@ -213,7 +218,7 @@ async function check(browser,engine){
  for(const ref of ['FEQT','VEQT','VGRO','VBAL','FBAL','FGRO']){await page.locator('#referenceSelect').selectOption(ref);assert.equal(await page.locator('#geoSvg svg').count(),1);}
  // All portfolio/benchmark choices update the same factor sample and estimates.
  const factors = require('../js/fnb-factor-utils.js');
- for (const id of [...D.custom_order, ...D.robust_order, ...D.recommended_order, ...D.proposal_order]) {
+ for (const id of [...D.custom_order, ...D.robust_order, ...D.recommended_order, ...(D.prospective_order||[]), ...D.proposal_order]) {
   await page.locator('#sectorFocus').selectOption(id);
   for (const ref of ['VEQT', 'VFV', 'VBAL']) {
    await page.locator('#referenceSelect').selectOption(ref);

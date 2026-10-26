@@ -1,31 +1,74 @@
 {
   "kind": "qualitative_investment_judgment",
-  "date": "2026-10-24",
+  "date": "2026-10-25",
   "data_as_of": "2026-09-30",
   "benchmark": "VFV",
   "probabilities_calibrated": false,
-  "scope": "Top 5 parmi les allocations présentes au 24 octobre 2026, pour chercher à battre le S&P 500 en CAD, distributions réinvesties et frais des fonds inclus, avant impôts et courtage. Poids cibles conservés, rééquilibrage annuel en janvier.",
-  "method": "Avis qualitatif distinct du score historique. Sur 2 ans : qualité des résultats récents et persistance possible des moteurs de rendement. Sur 5 ans : équilibre entre potentiel actif et solidité de la construction. Sur 10 ans : frais récurrents, moindre dépendance aux poids optimisés sur une courte fenêtre et capacité à traverser plusieurs régimes. Aucun déclassement pour dépassement d’une limite de construction.",
+  "scope": "Top 5 après examen des 17 portefeuilles d’actions présents au 25 octobre 2026, SAVY Perspectives compris, pour chercher à battre le S&P 500 en CAD, distributions réinvesties et frais des fonds inclus, avant impôts et courtage. Poids cibles conservés, rééquilibrage annuel en janvier.",
+  "method": "Avis qualitatif distinct du score historique. Sur 2 ans : qualité des résultats récents et persistance possible des moteurs de rendement. Sur 5 ans : équilibre entre potentiel actif et solidité de la construction. Sur 10 ans : frais récurrents, moindre dépendance aux poids optimisés sur une courte fenêtre et capacité à traverser plusieurs régimes. Aucun déclassement pour dépassement d’une limite de construction. Perspectives est examiné aux trois horizons : son poids de 29 % en petites capitalisations américaines couvertes et ses 30 % en innovation et momentum constituent des paris spécifiques. Cette nouvelle allocation ne remplace pas les cinq préférences retenues à chaque horizon.",
   "limitations": "Ordre de préférence pour rechercher la surperformance, pas probabilités calculées ou prévisions de rendement. Les 40 mois communs et les backtests longs sélectionnés rétrospectivement ne permettent pas de calibrer des chances fiables sur 2, 5 ou 10 ans. Les écarts entre les places sont incertains. Avis daté, à réexaminer; il n’est pas automatiquement renouvelé par la recherche mensuelle.",
   "horizons": [
     {
       "years": 2,
-      "order": ["7", "robust-2026-10-1", "1", "robust-2026-10-2", "9"],
+      "order": [
+        "7",
+        "robust-2026-10-1",
+        "1",
+        "robust-2026-10-2",
+        "9"
+      ],
       "reason": "Conviction arrive en tête pour sa qualité historique récente sur plusieurs fenêtres. Compromis et Horizon suivent. Cette préférence dépend fortement de la persistance des moteurs récents; elle ne démontre pas une meilleure probabilité future."
     },
     {
       "years": 5,
-      "order": ["robust-2026-10-2", "7", "robust-2026-10-1", "1", "recommended-2026-10-sp500-surperformance"],
+      "order": [
+        "robust-2026-10-2",
+        "7",
+        "robust-2026-10-1",
+        "1",
+        "recommended-2026-10-sp500-surperformance"
+      ],
       "reason": "Diversifié est mon compromis préféré : il conserve une partie du potentiel actif avec un noyau indiciel et des frais inférieurs à Compromis. Conviction reste très bien placé; le recul sur son allocation exacte est plus court."
     },
     {
       "years": 10,
-      "order": ["robust-2026-10-3", "robust-2026-10-2", "recommended-2026-10-sp500-surperformance", "1", "7"],
+      "order": [
+        "robust-2026-10-3",
+        "robust-2026-10-2",
+        "recommended-2026-10-sp500-surperformance",
+        "1",
+        "7"
+      ],
       "reason": "Noyau prend la première place dans mon jugement de long terme pour ses frais plus faibles et sa moindre dépendance à l’optimisation récente. Diversifié suit. Surperformance bénéficie d’un historique plus long, tout en gardant un biais Nasdaq important. Cela ne prouve pas qu’un de ces portefeuilles battra VFV."
     }
   ],
   "sources": [
-    {"label": "Vanguard · incertitude des projections", "url": "https://corporate.vanguard.com/content/corporatesite/us/en/corp/vemo/vemo-return-forecasts.html"},
-    {"label": "Fidelity · stratégie FINN", "url": "https://www.fidelity.ca/en/products/etfs/finn/"}
+    {
+      "label": "Vanguard · incertitude des projections",
+      "url": "https://corporate.vanguard.com/content/corporatesite/us/en/corp/vemo/vemo-return-forecasts.html"
+    },
+    {
+      "label": "Fidelity · stratégie FINN",
+      "url": "https://www.fidelity.ca/en/products/etfs/finn/"
+    }
+  ],
+  "considered_ids": [
+    "recommended-2026-10-sp500-surperformance",
+    "recommended-2026-10-sp500-sharpe-or",
+    "recommended-2026-10-sp500-noyau-veqt",
+    "robust-2026-10-1",
+    "robust-2026-10-2",
+    "robust-2026-10-3",
+    "prospective-2026-10-perspectives",
+    "proposal",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9"
   ]
 }

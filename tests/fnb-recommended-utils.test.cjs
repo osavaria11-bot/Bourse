@@ -17,7 +17,7 @@ test('three accepted portfolios have complete look-through, charts, risk data an
 });
 test('VFV reference and VEQT holding permission are scoped to the three additions',()=>{
  const ranking=rank(D);
- for(const e of ranking.entries)assert.equal(e.benchmark,D.recommended_order.includes(e.id)?'VFV':'VEQT');
+ for(const e of ranking.entries)assert.equal(e.benchmark,[...D.recommended_order,...(D.prospective_order||[])].includes(e.id)?'VFV':'VEQT');
  const id=D.recommended_order[2];assert.deepEqual(ranking.entries.find(e=>e.id===id).limit_flags,[]);
  const bad=structuredClone(D);bad.results[id].weights.VEQT=.401;
  assert.ok(rank(bad).entries.find(e=>e.id===id).limit_flags.some(f=>f.startsWith('VEQT au-dessus')));

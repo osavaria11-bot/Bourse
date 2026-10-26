@@ -22,7 +22,7 @@ class RankingAudit(unittest.TestCase):
                 start = d["dates"].index(window["start"])
                 end = start + window["months"]
                 returns = p["monthly"][start:end]
-                benchmark = "VFV" if entry["id"] in d.get("recommended_order", []) else "VEQT"
+                benchmark = "VFV" if entry["id"] in d.get("recommended_order", []) + d.get("prospective_order", []) else "VEQT"
                 self.assertEqual(entry["benchmark"], benchmark)
                 expected = monthly.period_stats(returns, d["results"][benchmark]["monthly"][start:end], d["assumptions"]["risk_free"])
                 for key in ["sharpe", "information"]:

@@ -6,7 +6,7 @@
   const GOALS={global:{label:'Comparaison globale',key:null,metric:'comparaison globale',higher:true},growth:{label:'Croissance',key:'annualReturn',metric:'rendement annualisé',higher:true},balance:{label:'Compromis',key:'sharpe',metric:'Sharpe',higher:true},protection:{label:'Protection',key:'cvar',metric:'CVaR à 21 séances',higher:false}};
   const mean=a=>a.reduce((s,v)=>s+v,0)/a.length;
   const sameWeights=(a,b)=>!!a&&!!b&&Object.keys(a).length===Object.keys(b).length&&Object.keys(a).every(k=>Number.isFinite(b[k])&&Math.abs(a[k]-b[k])<1e-10);
-  const own=D=>[...(D.recommended_order||[]),...(D.robust_order||[]),...(D.proposal_order||[]),...(D.custom_order||[])];
+  const own=D=>[...(D.recommended_order||[]),...(D.robust_order||[]),...(D.prospective_order||[]),...(D.proposal_order||[]),...(D.custom_order||[])];
   function candidates(D,benchmark){
     const group=['VBAL','FBAL'].includes(benchmark)?['10']:['VGRO','FGRO'].includes(benchmark)?['11']:own(D).filter(k=>!['10','11'].includes(k));
     const order=(D.preference_ranking?.entries||[]).map(e=>e.id);

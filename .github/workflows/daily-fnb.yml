@@ -21,6 +21,7 @@ on:
       - scripts/common_fnb.py
       - scripts/robust_fnb.py
       - scripts/recommended_fnb.py
+      - scripts/prospective_portfolios.py
       - scripts/benchmark_fnb.py
       - scripts/collect_fnb_daily_risk.py
       - scripts/collect_fnb_stress.py
@@ -28,6 +29,7 @@ on:
       - tests/test_fnb_daily_risk.py
       - data/fnb-robust/**
       - data/fnb-recommended/**
+      - data/fnb-prospective/**
       - data/fnb-benchmarks/**
 
 permissions:
@@ -56,6 +58,7 @@ jobs:
           python -m unittest discover -s tests -p 'test_daily_fnb.py' -v
           python -m unittest discover -s tests -p 'test_common_fnb.py' -v
           python -m unittest discover -s tests -p 'test_recommended_fnb.py' -v
+          python -m unittest discover -s tests -p 'test_prospective_portfolios.py' -v
           python scripts/daily_fnb.py --check
       - name: Record completed sessions and register new monthly proposals
         id: collect
