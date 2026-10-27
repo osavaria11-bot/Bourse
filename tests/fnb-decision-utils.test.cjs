@@ -52,15 +52,27 @@ test('personal loss thresholds flag available shocks without turning missing sce
 });
 test('post-publication returns use actual launch dates and the identical allocation, never the common-start simulation',()=>{
   for(const id of [...D.custom_order,...D.robust_order,...D.recommended_order,...D.proposal_order]){
-    const r=U.recorded(D,id,'VEQT',P);assert.equal(r.available,true,id);assert.ok(r.start<=r.end);assert.equal(r.short,true);
+    const accountId=D.custom_order.includes(id)?'savy-'+id:id==='proposal'?'proposal-'+D.optimization.month:id;
+    const account=P.accounts.find(a=>a.id===accountId),r=U.recorded(D,id,'VEQT',P);
+    assert.ok(account,id);
+    if(!account.history.length){assert.equal(r.available,false,id);continue;}
+    assert.equal(r.available,true,id);assert.equal(r.start,account.launch_date);assert.equal(r.end,P.as_of);
   }
-  const id=D.robust_order[0],r=U.recorded(D,id,'VEQT',P);assert.equal(r.start,'2026-10-21');assert.equal(r.observations,2);
-  const a=P.accounts.find(a=>a.id===id),b=P.accounts.find(a=>a.id==='VEQT');close(r.total,a.history.at(-1).value/a.history[0].value-1);
-  close(r.gap,r.total-(b.history.find(h=>h.date===r.end).value/b.history.find(h=>h.date===r.start).value-1));
+  // Fixed synthetic days exercise the period arithmetic independently of the
+  // growing public ledger. Appending a real session must not break this test.
+  const id=D.robust_order[0],sample={methodology:{model:'buy_hold_fractional_ex_date_close_v1'},as_of:'2026-10-23',accounts:[
+    {id,weights:D.results[id].weights,launch_date:'2026-10-21',published_at:'2026-10-20T20:00:00Z',history:[
+      {date:'2026-10-21',value:10000},{date:'2026-10-22',value:10100},{date:'2026-10-23',value:10200}]},
+    {id:'VEQT',kind:'benchmark',history:[{date:'2026-10-19',value:9000},{date:'2026-10-20',value:9500},
+      {date:'2026-10-21',value:10000},{date:'2026-10-22',value:10050},{date:'2026-10-23',value:10100}]}]};
+  const r=U.recorded(D,id,'VEQT',sample);assert.equal(r.start,'2026-10-21');assert.equal(r.observations,2);assert.equal(r.short,true);
+  close(r.total,.02);close(r.gap,.01);
+  const extended=structuredClone(sample);extended.as_of='2026-10-26';extended.accounts[0].history.push({date:'2026-10-26',value:10300});extended.accounts[1].history.push({date:'2026-10-26',value:10150});
+  const next=U.recorded(D,id,'VEQT',extended);assert.equal(next.observations,3);assert.equal(next.start,r.start);close(next.total,.03);close(next.gap,.015);
   assert.equal(U.recorded(D,id,'VEQT',require('../data/fnb-comparison.json')).available,false);
-  const changed=structuredClone(D);changed.results[id].weights={VEQT:1};assert.equal(U.recorded(changed,id,'VEQT',P).available,false);
-  assert.equal(U.recorded(D,id,'NONEXISTENT',P).gap,null);
-  const pending=structuredClone(P);pending.accounts.find(a=>a.id===id).history=[];assert.equal(U.recorded(D,id,'VEQT',pending).available,false);
+  const changed=structuredClone(D);changed.results[id].weights={VEQT:1};assert.equal(U.recorded(changed,id,'VEQT',sample).available,false);
+  assert.equal(U.recorded(D,id,'NONEXISTENT',sample).gap,null);
+  const pending=structuredClone(sample);pending.accounts[0].history=[];assert.equal(U.recorded(D,id,'VEQT',pending).available,false);
 });
 test('date windows and bounded weight transfers produce descriptive ranks without optimizing allocations',()=>{
   const before=JSON.stringify(D),a=U.analyse(D,['7',D.robust_order[0],D.robust_order[1]],'VEQT',A,H);
