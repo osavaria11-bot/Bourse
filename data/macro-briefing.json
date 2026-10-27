@@ -1,12 +1,12 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-10-27T21:21:31.876531+00:00",
-  "last_successful_update": "2026-10-27T21:21:31.876531+00:00",
-  "update_status": "fresh_data",
+  "generated_at": "2026-10-27T22:33:44.911859+00:00",
+  "last_successful_update": "2026-10-27T22:33:44.911859+00:00",
+  "update_status": "partial_data",
   "coverage": {
     "total": 42,
-    "fresh": 42,
-    "cached": 0,
+    "fresh": 40,
+    "cached": 2,
     "unavailable": 0
   },
   "data_provider": "FRED / Banque du Canada / Statistique Canada / Numerco / Fed de New York / U.S. Treasury",
@@ -73,7 +73,7 @@
       "previous_value": 5.0,
       "previous_date": "2026-10-26",
       "unit": "%",
-      "fetch_status": "fresh"
+      "fetch_status": "cached"
     },
     {
       "id": "DFII10",
@@ -83,7 +83,7 @@
       "previous_value": 2.66,
       "previous_date": "2026-10-26",
       "unit": "%",
-      "fetch_status": "fresh"
+      "fetch_status": "cached"
     },
     {
       "id": "CPIAUCSL",
