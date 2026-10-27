@@ -259,19 +259,27 @@ jobs:
             data/briefing-audio.json
             data/audio
           key: briefing-audio-v2-${{ hashFiles('data/daily-briefing.json', 'js/briefing-audio-utils.js', 'scripts/generate_briefing_audio.py', 'scripts/requirements-audio.txt') }}
+      - name: Prepare natural narration dependencies
+        continue-on-error: true
+        timeout-minutes: 12
+        run: |
+          if ! python scripts/generate_briefing_audio.py --reuse-only; then
+            if ! command -v ffprobe >/dev/null || ! command -v ffmpeg >/dev/null; then
+              # Keep Ubuntu's signed packages, using its official archive.
+              # A slow regional mirror must not consume the synthesis budget.
+              if [ -f /etc/apt/apt-mirrors.txt ]; then
+                echo 'https://archive.ubuntu.com/ubuntu/' | sudo tee /etc/apt/apt-mirrors.txt >/dev/null
+              fi
+              sudo apt-get -o Acquire::Retries=2 -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30 update -qq
+              sudo apt-get -o Acquire::Retries=2 -o Acquire::http::Timeout=30 -o Acquire::https::Timeout=30 install --no-install-recommends -y ffmpeg
+            fi
+            python -m pip install --disable-pip-version-check -r scripts/requirements-audio.txt
+          fi
       - name: Generate or reuse natural Canadian French narration
         id: narration
         continue-on-error: true
         timeout-minutes: 7
-        run: |
-          if ! python scripts/generate_briefing_audio.py --reuse-only; then
-            if ! command -v ffprobe >/dev/null || ! command -v ffmpeg >/dev/null; then
-              sudo apt-get update -qq
-              sudo apt-get install --no-install-recommends -y ffmpeg
-            fi
-            python -m pip install --disable-pip-version-check -r scripts/requirements-audio.txt
-            python scripts/generate_briefing_audio.py
-          fi
+        run: python scripts/generate_briefing_audio.py
       - name: Save the complete verified narration
         if: steps.narration.outcome == 'success' && steps.narration_cache.outputs.cache-hit != 'true'
         uses: actions/cache/save@v4
