@@ -2,11 +2,11 @@
   "schema_version": 1,
   "kind": "polymarket_events",
   "provider": "polymarket",
-  "generated_at": "2026-10-27T09:13:38.527468Z",
+  "generated_at": "2026-10-27T09:37:41.986892Z",
   "groups": {
     "finance": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:13:38.527468Z",
+      "fetched_at": "2026-10-27T09:37:41.986892Z",
       "ranking": "volume",
       "events": [
         {
@@ -14,19 +14,19 @@
           "slug": "fed-decision-in-october-20260617190323537",
           "title": "Fed Decision in October?",
           "url": "https://polymarket.com/event/fed-decision-in-october-20260617190323537",
-          "volume": 74700364.763973,
-          "volume_24h": 7560564.055297999,
+          "volume": 74774095.674433,
+          "volume_24h": 7645592.793284001,
           "ends_at": "2026-10-29T03:59:00Z",
           "outcomes": [
             {
               "label": "No change",
-              "probability": 0.9365,
+              "probability": 0.9385,
               "market_id": "2589812",
               "ends_at": "2026-10-29T03:59:00Z"
             },
             {
               "label": "25 bps increase",
-              "probability": 0.065,
+              "probability": 0.055,
               "market_id": "2589813",
               "ends_at": "2026-10-29T03:59:00Z"
             }
@@ -37,8 +37,8 @@
           "slug": "how-many-fed-rate-cuts-in-2026",
           "title": "How many Fed rate cuts in 2026?",
           "url": "https://polymarket.com/event/how-many-fed-rate-cuts-in-2026",
-          "volume": 54911324.277313,
-          "volume_24h": 67015.652007,
+          "volume": 54911541.277313,
+          "volume_24h": 66899.652234,
           "ends_at": "2027-01-01T04:59:00Z",
           "outcomes": [
             {
@@ -61,7 +61,7 @@
           "title": "Which companies will be acquired before 2027?",
           "url": "https://polymarket.com/event/which-companies-will-be-acquired-before-2027",
           "volume": 18407546.113346,
-          "volume_24h": 5751.734344,
+          "volume_24h": 6004.734344,
           "ends_at": "2027-01-01T04:59:00Z",
           "outcomes": [
             {
@@ -82,7 +82,7 @@
     },
     "popular": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:13:38.527468Z",
+      "fetched_at": "2026-10-27T09:37:41.986892Z",
       "ranking": "volume24hr",
       "events": [
         {
@@ -90,13 +90,13 @@
           "slug": "who-will-be-the-next-prime-minister-of-israel-after-the-next-election",
           "title": "Prime Minister of Israel after the next election?",
           "url": "https://polymarket.com/event/who-will-be-the-next-prime-minister-of-israel-after-the-next-election",
-          "volume": 57694708.449958004,
-          "volume_24h": 3614936.1892070007,
+          "volume": 57712823.382423,
+          "volume_24h": 3458971.1640140004,
           "ends_at": "2026-10-28T03:59:00Z",
           "outcomes": [
             {
               "label": "Gadi Eizenkot",
-              "probability": 0.5495,
+              "probability": 0.575,
               "market_id": "682708",
               "ends_at": "2026-10-28T03:59:00Z"
             },
@@ -113,8 +113,8 @@
           "slug": "israeli-legislative-election-winner",
           "title": "Israeli Legislative Election Winner",
           "url": "https://polymarket.com/event/israeli-legislative-election-winner",
-          "volume": 4504729.083199,
-          "volume_24h": 1363693.389658,
+          "volume": 4540912.744951,
+          "volume_24h": 1376859.340041,
           "ends_at": "2026-10-28T03:59:00Z",
           "outcomes": [
             {
@@ -136,8 +136,8 @@
           "slug": "balance-of-power-2026-midterms",
           "title": "Balance of Power: 2026 Midterms",
           "url": "https://polymarket.com/event/balance-of-power-2026-midterms",
-          "volume": 39227322.374126,
-          "volume_24h": 1347650.329979,
+          "volume": 39227406.735438004,
+          "volume_24h": 1347022.034624,
           "ends_at": "2026-11-04T04:59:00Z",
           "outcomes": [
             {
@@ -159,13 +159,13 @@
           "slug": "france-declares-state-of-emergency-byptptpt",
           "title": "France declares state of emergency by...?",
           "url": "https://polymarket.com/event/france-declares-state-of-emergency-byptptpt",
-          "volume": 1989255.89578,
-          "volume_24h": 932452.0822950001,
+          "volume": 1989318.39578,
+          "volume_24h": 929123.9211830001,
           "ends_at": "2027-01-01T04:59:00Z",
           "outcomes": [
             {
               "label": "December 31",
-              "probability": 0.095,
+              "probability": 0.075,
               "market_id": "5880782",
               "ends_at": "2027-01-01T04:59:00Z"
             },
@@ -182,13 +182,13 @@
           "slug": "republican-presidential-nominee-2028",
           "title": "Republican Presidential Nominee 2028",
           "url": "https://polymarket.com/event/republican-presidential-nominee-2028",
-          "volume": 717712663.460484,
-          "volume_24h": 694768.973734,
+          "volume": 717722684.740484,
+          "volume_24h": 681740.019722,
           "ends_at": "2028-11-08T04:59:00Z",
           "outcomes": [
             {
               "label": "J.D. Vance",
-              "probability": 0.383,
+              "probability": 0.3895,
               "market_id": "561974",
               "ends_at": "2028-11-08T04:59:00Z"
             },
@@ -204,7 +204,7 @@
     },
     "trending": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:13:38.527468Z",
+      "fetched_at": "2026-10-27T09:37:41.986892Z",
       "ranking": "volume24hr",
       "events": [
         {
@@ -212,13 +212,13 @@
           "slug": "worlds-2026-winner",
           "title": "Worlds 2026: Winner",
           "url": "https://polymarket.com/event/worlds-2026-winner",
-          "volume": 5688233.796,
-          "volume_24h": 771911.948523,
+          "volume": 5696997.759845,
+          "volume_24h": 777130.931827,
           "ends_at": "2026-11-29T04:59:00Z",
           "outcomes": [
             {
               "label": "Gen.G",
-              "probability": 0.445,
+              "probability": 0.435,
               "market_id": "4397022",
               "ends_at": "2026-11-29T04:59:00Z"
             },
@@ -235,8 +235,8 @@
           "slug": "nba-2027-champion",
           "title": "NBA: 2027 Champion",
           "url": "https://polymarket.com/event/nba-2027-champion",
-          "volume": 32380503.093323,
-          "volume_24h": 706847.5145049999,
+          "volume": 32383327.922657,
+          "volume_24h": 702354.4545049999,
           "ends_at": "2027-07-01T03:59:00Z",
           "outcomes": [
             {
