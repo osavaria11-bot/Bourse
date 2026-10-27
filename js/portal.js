@@ -28,7 +28,7 @@
 
   document.body.classList.add("savy-portal");
   const header = $(".page-header"); document.body.prepend(header);
-  $(".brand .eyebrow").textContent = "Votre perspective financière";
+  $(".brand .eyebrow").textContent = "Dans la tête d’Olivier Savaria";
   $(".header-actions a[href='#portfolio']").remove();
   const nav = el("nav", "portal-nav"); nav.setAttribute("aria-label", "Navigation principale");
   const mobileLabels = {portefeuilles: "Portef.", recherche: "Rech.", immobilier: "Immo.", polymarket: "Polym.", analyses: "FNB", dashboard: "Tout"};
