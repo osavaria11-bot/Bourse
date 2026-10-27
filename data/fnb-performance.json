@@ -2214,6 +2214,6 @@
     "source": "Clôtures quotidiennes Yahoo Finance, complétées par l’historique daté TMX Money si nécessaire; distributions et fractionnements Yahoo Finance, contrôle par clôtures ajustées.",
     "source_url": "https://help.yahoo.com/kb/SLN28256.html",
     "schedule": "Chaque jour à 18 h 37 (Québec); reprises à 21 h 37, 6 h 17 et 7 h 47. Séances complètes uniquement.",
-    "revisions": "Une correction de cours historique exige l’accord de Yahoo et TMX sur les deux clôtures adjacentes et est consignée dans la séance suivante. Les cours, parts et valeurs déjà archivés restent figés; le rendement quotidien relie les deux valeurs réellement enregistrées."
+    "revisions": "Une correction de cours historique exige l’accord de Yahoo et TMX sur le cours révisé. Les deux clôtures adjacentes viennent ensemble de TMX; si Yahoo publie aussi la suivante, elle doit concorder. Une séance Yahoo absente est signalée, jamais inventée. La correction est consignée dans la séance suivante. Les cours, parts et valeurs déjà archivés restent figés; le rendement quotidien relie les deux valeurs réellement enregistrées."
   }
 }

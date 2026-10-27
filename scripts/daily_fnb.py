@@ -213,20 +213,25 @@ def collect(config, tickers, first, last, client=None, preferred_tmx=(), anchors
             # revision even when TMX still confirms the immutable ledger price.
             parsed = parse_prices(payload, symbol, first, last, official, prefer_fallback=True)
             if anchor and anchor["date"] in parsed and abs(parsed[anchor["date"]]["close"] / anchor["close"] - 1) > .0001:
-                # A revision is accepted only when two independent histories
-                # agree on BOTH endpoints. Preserve the original ledger and
-                # carry the evidence into the next daily record, never rebase units.
+                # Confirm the REVISED historical close with two histories. TMX
+                # supplies both adjacent endpoints when Yahoo's newest session
+                # is late, just as in the ordinary missing-session fallback.
+                # Any available Yahoo next close must also agree. Never invent
+                # a missing observation or rebase the immutable ledger/units.
                 revised_day = anchor["date"]
                 following = next_session(date.fromisoformat(revised_day)).isoformat()
-                if any(day not in yahoo or day not in parsed or abs(yahoo[day]["close"] / parsed[day]["close"] - 1) > .0001
-                       for day in [revised_day, following]):
+                if (revised_day not in yahoo or following not in parsed
+                        or abs(yahoo[revised_day]["close"] / parsed[revised_day]["close"] - 1) > .0001
+                        or following in yahoo and abs(yahoo[following]["close"] / parsed[following]["close"] - 1) > .0001):
                     raise ValueError("Unconfirmed historical close revision: " + ticker)
                 parsed[revised_day]["verified_revision"] = {
                     "date": revised_day, "accepted_close": anchor["close"],
                     "revised_close": parsed[revised_day]["close"], "next_date": following,
                     "next_close": parsed[following]["close"],
+                    "confirmation": "Revised historical close confirmed by Yahoo and TMX; adjacent closes taken together from TMX.",
+                    "yahoo_next_close_available": following in yahoo,
                     "evidence": [{"source": "Yahoo Finance", "source_url": yahoo[revised_day]["source_url"],
-                                  "close": yahoo[revised_day]["close"], "next_close": yahoo[following]["close"]},
+                                  "close": yahoo[revised_day]["close"], "next_close": yahoo.get(following, {}).get("close")},
                                  {"source": "TMX Money", "source_url": parsed[revised_day]["source_url"],
                                   "close": parsed[revised_day]["close"], "next_close": parsed[following]["close"]}]}
         return ticker, parsed
@@ -267,7 +272,9 @@ def make_day(day, registry, quotes, previous, recorded_at):
                     revision.get("revised_close") != anchor["close"] or revision.get("next_date") != day or
                     revision.get("next_close") != p["close"] or
                     {e.get("source") for e in revision.get("evidence", [])} != {"Yahoo Finance", "TMX Money"} or
-                    any(abs(e["close"] / anchor["close"] - 1) > .0001 or abs(e["next_close"] / p["close"] - 1) > .0001
+                    any(abs(e["close"] / anchor["close"] - 1) > .0001 or
+                        (e.get("next_close") is None and not (e.get("source") == "Yahoo Finance" and revision.get("yahoo_next_close_available") is False)) or
+                        (e.get("next_close") is not None and abs(e["next_close"] / p["close"] - 1) > .0001)
                         for e in revision["evidence"])):
                     raise ValueError("Previously accepted nominal close revised: " + t)
                 prices[t]["previous_close_revision"] = revision
@@ -330,7 +337,7 @@ def snapshot(registry, days, config):
                 "history": "Registre quotidien figé, distinct des backtests. Les nouvelles optimisations ont leur propre date de lancement et ne remplacent aucun compte.",
                 "source": "Clôtures quotidiennes Yahoo Finance, complétées par l’historique daté TMX Money si nécessaire; distributions et fractionnements Yahoo Finance, contrôle par clôtures ajustées.",
                 "source_url": "https://help.yahoo.com/kb/SLN28256.html", "schedule": "Chaque jour à 18 h 37 (Québec); reprises à 21 h 37, 6 h 17 et 7 h 47. Séances complètes uniquement.",
-                "revisions": "Une correction de cours historique exige l’accord de Yahoo et TMX sur les deux clôtures adjacentes et est consignée dans la séance suivante. Les cours, parts et valeurs déjà archivés restent figés; le rendement quotidien relie les deux valeurs réellement enregistrées."}}
+                "revisions": "Une correction de cours historique exige l’accord de Yahoo et TMX sur le cours révisé. Les deux clôtures adjacentes viennent ensemble de TMX; si Yahoo publie aussi la suivante, elle doit concorder. Une séance Yahoo absente est signalée, jamais inventée. La correction est consignée dans la séance suivante. Les cours, parts et valeurs déjà archivés restent figés; le rendement quotidien relie les deux valeurs réellement enregistrées."}}
 
 
 def load_state(root):

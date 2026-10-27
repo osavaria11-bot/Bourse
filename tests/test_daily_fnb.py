@@ -186,6 +186,36 @@ class PermanentTracking(unittest.TestCase):
         with patch.object(F,"tmx_closes",return_value=official):
             with self.assertRaisesRegex(ValueError,"Unconfirmed"):F.collect(cfg,{"FBAL"},F.START,"2026-10-20",Client(),anchors={"FBAL":{"date":F.START,"close":100.}})
 
+    def test_confirmed_revision_with_late_yahoo_session_uses_one_official_history(self):
+        self.run_day(); q=self.quotes("2026-10-20")
+        symbol="FEQT.NE";stamp=int(datetime.fromisoformat(F.START+"T13:30:00+00:00").timestamp())
+        payload={"chart":{"result":[{"meta":{"symbol":symbol,"currency":"CAD","instrumentType":"ETF","exchangeTimezoneName":"America/Toronto"},
+            "timestamp":[stamp],"indicators":{"quote":[{"close":[99.98]}],"adjclose":[{"adjclose":[99.98]}]}}]}}
+        class Client:
+            def json(self,url):return payload
+        official={day:{"close":price,"adjusted_close":price,"source_url":"https://money.tmx.com/en/quote/FEQT%3ACC"}
+                  for day,price in [(F.START,99.98),("2026-10-20",101.)]}
+        cfg={"funds":{"FEQT":{"quote_symbol":symbol}}}
+        with patch.object(F,"tmx_closes",return_value=official):
+            q["FEQT"]=F.collect(cfg,{"FEQT"},F.START,"2026-10-20",Client(),anchors={"FEQT":{"date":F.START,"close":100.}})["FEQT"]
+        revision=q["FEQT"][F.START]["verified_revision"]
+        self.assertFalse(revision["yahoo_next_close_available"])
+        self.assertIsNone(revision["evidence"][0]["next_close"])
+        archive=self.root / "data/fnb-performance/days/2026-10-19.json";frozen=archive.read_bytes()
+        self.run_day("2026-10-20",q)
+        _,days=F.load_state(self.root)
+        self.assertEqual(archive.read_bytes(),frozen)
+        self.assertEqual(days[0]["accounts"]["FEQT"]["units"],days[1]["accounts"]["FEQT"]["units"])
+        self.assertAlmostEqual(days[1]["accounts"]["FEQT"]["value"],10100.)
+        self.assertEqual(days[1]["prices"]["FEQT"]["previous_close_revision"]["revised_close"],99.98)
+        # Missing a historical confirmation or the official next endpoint still blocks.
+        official[F.START]["close"]=99.97
+        with patch.object(F,"tmx_closes",return_value=official):
+            with self.assertRaisesRegex(ValueError,"Unconfirmed"):F.collect(cfg,{"FEQT"},F.START,"2026-10-20",Client(),anchors={"FEQT":{"date":F.START,"close":100.}})
+        official[F.START]["close"]=99.98;official.pop("2026-10-20")
+        with patch.object(F,"tmx_closes",return_value=official):
+            with self.assertRaisesRegex(ValueError,"consistent TMX"):F.collect(cfg,{"FEQT"},F.START,"2026-10-20",Client(),anchors={"FEQT":{"date":F.START,"close":100.}})
+
     def test_fallback_recovers_a_whole_missing_yahoo_session(self):
         symbol="TEST.TO";stamp=int(datetime.fromisoformat(F.START+"T13:30:00+00:00").timestamp())
         payload={"chart":{"result":[{"meta":{"symbol":symbol,"currency":"CAD","instrumentType":"ETF","exchangeTimezoneName":"America/Toronto"},
