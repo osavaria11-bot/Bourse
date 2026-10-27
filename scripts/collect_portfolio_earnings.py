@@ -27,7 +27,7 @@ except ImportError:
 
 ROOT = Path(__file__).resolve().parents[1]
 TORONTO = ZoneInfo("America/Toronto")
-METHODOLOGY = "Calendrier et résultats du catalogue public; filtrage des titres détenus dans le navigateur. BPA publié et consensus d’un même fournisseur. Chiffres dans leur devise de publication. Messages clés affichés seulement après vérification : trois ou quatre points français sur les moteurs, perspectives et risques du trimestre. Dates estimées signalées; valeurs absentes non extrapolées."
+METHODOLOGY = "Calendrier et résultats du catalogue public; filtrage des titres détenus dans le navigateur. BPA publié et consensus d’un même fournisseur. Corrections des chiffres réalisés vérifiées à la source officielle et tracées; estimations préservées. Chiffres dans leur devise de publication. Messages clés affichés seulement après vérification : trois ou quatre points français sur les moteurs, perspectives et risques du trimestre. Dates estimées signalées; valeurs absentes non extrapolées."
 ETFS = set("ACWV CASH CGL FBAL FCIN FCUV FEQT QQC SPYM VBAL VCN VDY VEE VEQT VFV VGRO VIU XBB XEF XEQT XGD XGRO XHY XIC XIG XIU XLF XSB XSP XSU XUS ZAG ZEB ZLB ZRE ZUH".split())
 NYSE = set("APH APO BAC CLS CRM CVX DIS GS HD JNJ JPM MOD MRK NU NVO PFE TSM UNH V WFC XOM".split())
 # These Canadian listings share the issuer's US results. Keep the local holding ID
@@ -322,6 +322,56 @@ def collect_company(definition: dict, now: datetime, start: date, end: date, fet
             "source_url": marketbeat_url, "events": retained, "source_warnings": errors}
 
 
+def valid_actuals(reviewed: dict) -> bool:
+    actuals = reviewed.get("verified_actuals")
+    if not isinstance(actuals, dict) or set(actuals) - {"currency", "eps", "revenue", "verified_at", "reason"}:
+        return False
+    if ("report_url" not in reviewed or not safe_url(reviewed.get("source_url"))
+            or not re.fullmatch(r"[A-Z]{3}", str(actuals.get("currency", "")))
+            or not isinstance(actuals.get("reason"), str) or not actuals["reason"].strip()
+            or not {"eps", "revenue"} & set(actuals)):
+        return False
+    try:
+        stamp = datetime.fromisoformat(actuals["verified_at"].replace("Z", "+00:00"))
+        if not stamp.tzinfo or stamp > datetime.now(timezone.utc) + timedelta(minutes=5):
+            return False
+    except (KeyError, TypeError, AttributeError, ValueError):
+        return False
+    return all(isinstance(actuals[metric], (int, float)) and not isinstance(actuals[metric], bool)
+               and math.isfinite(actuals[metric]) and (metric != "revenue" or actuals[metric] > 0)
+               for metric in ("eps", "revenue") if metric in actuals)
+
+
+def apply_verified_actuals(feed: dict, highlights: dict) -> dict:
+    """Apply sourced provider corrections during collection, never in notes-only mode.
+
+    Bind corrections to the exact issuer, report and reporting currency. Preserve
+    estimates and record the original provider observation alongside the source.
+    """
+    for event in feed["events"]:
+        key = feed["company_symbol"] + ":" + event["report_date"]
+        reviewed = highlights.get("reports", {}).get(key, {})
+        if (event["date_status"] != "reported" or not valid_actuals(reviewed)
+                or reviewed["report_url"] != event.get("report_url")):
+            continue
+        actuals = reviewed["verified_actuals"]
+        for metric in ("eps", "revenue"):
+            value = event.get(metric)
+            if (metric not in actuals or not isinstance(value, dict)
+                    or value.get("currency") != actuals["currency"] or value.get("actual") == actuals[metric]):
+                continue
+            value["verified_correction"] = {
+                "provider_actual": value.get("actual"), "provider_source_url": value.get("source_url"),
+                "source_url": reviewed["source_url"], "verified_at": actuals["verified_at"],
+                "reason": actuals["reason"],
+            }
+            value["actual"] = actuals[metric]
+            value["source_url"] = reviewed["source_url"]
+            if all(source["url"] != reviewed["source_url"] for source in event["sources"]):
+                event["sources"].append({"label": "Correction vérifiée du résultat publié", "url": reviewed["source_url"]})
+    return feed
+
+
 def apply_reviewed_messages(feed: dict, highlights: dict) -> dict:
     for event in feed["events"]:
         if event["date_status"] != "reported":
@@ -364,6 +414,8 @@ def validate_reviewed_highlights(payload: dict) -> int:
                 or any(not isinstance(text, str) or not text.strip() or len(text) > 450 for text in messages)
                 or len(set(messages)) != len(messages)):
             raise SourceError(f"{key} doit contenir trois ou quatre points distincts")
+        if "verified_actuals" in reviewed and not valid_actuals(reviewed):
+            raise SourceError(f"{key} contient une correction de résultat invalide")
     return len(payload["reports"])
 
 
@@ -389,7 +441,7 @@ def collect(catalog: dict, previous: dict | None, now: datetime, fetcher=fetch_t
         for future in as_completed(tasks):
             group = tasks[future]
             try:
-                feed = apply_reviewed_messages(future.result(), highlights or {})
+                feed = apply_reviewed_messages(apply_verified_actuals(future.result(), highlights or {}), highlights or {})
                 for definition in group:
                     instruments[definition["id"]] = {**feed, "listing_note": "Résultats de l’entreprise sous-jacente; devise des résultats indiquée séparément." if definition["quote_symbol"] != feed["company_symbol"] else None}
             except Exception as error:
@@ -399,7 +451,7 @@ def collect(catalog: dict, previous: dict | None, now: datetime, fetcher=fetch_t
                     old = (previous or {}).get("instruments", {}).get(identifier)
                     if old and old.get("fetch_status") in ("fresh", "cached") and old.get("fetched_at"):
                         retained = [event for event in old.get("events", []) if start.isoformat() <= event.get("report_date", "") <= end.isoformat()]
-                        instruments[identifier] = apply_reviewed_messages({**old, "fetch_status": "cached", "events": retained}, highlights or {})
+                        instruments[identifier] = apply_reviewed_messages(apply_verified_actuals({**old, "fetch_status": "cached", "events": retained}, highlights or {}), highlights or {})
                     else:
                         instruments[identifier] = {"fetch_status": "unavailable", "fetched_at": None, "company_symbol": source_for(definition)[0],
                                                    "source_url": source_for(definition)[1], "events": [], "source_warnings": []}

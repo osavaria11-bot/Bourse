@@ -14,7 +14,7 @@
     "unavailable": 0,
     "not_applicable": 36
   },
-  "methodology": "Calendrier et résultats du catalogue public; filtrage des titres détenus dans le navigateur. BPA publié et consensus d’un même fournisseur. Chiffres dans leur devise de publication. Messages clés affichés seulement après vérification : trois ou quatre points français sur les moteurs, perspectives et risques du trimestre. Dates estimées signalées; valeurs absentes non extrapolées.",
+  "methodology": "Calendrier et résultats du catalogue public; filtrage des titres détenus dans le navigateur. BPA publié et consensus d’un même fournisseur. Corrections des chiffres réalisés vérifiées à la source officielle et tracées; estimations préservées. Chiffres dans leur devise de publication. Messages clés affichés seulement après vérification : trois ou quatre points français sur les moteurs, perspectives et risques du trimestre. Dates estimées signalées; valeurs absentes non extrapolées.",
   "instruments": {
     "AAPL": {
       "fetch_status": "fresh",
@@ -1101,12 +1101,38 @@
             "source_url": "https://www.marketbeat.com/stocks/NYSE/CLS/earnings/"
           },
           "revenue": {
-            "actual": 5740000000.0,
+            "actual": 5830000000.0,
             "estimate": 5390000000.0,
             "currency": "USD",
-            "source_url": "https://www.marketbeat.com/stocks/NYSE/CLS/earnings/"
+            "source_url": "https://celestica.gcs-web.com/news-releases/news-release-details/celestica-announces-third-quarter-2026-financial-results-and",
+            "verified_correction": {
+              "provider_actual": 5740000000.0,
+              "provider_source_url": "https://www.marketbeat.com/stocks/NYSE/CLS/earnings/",
+              "source_url": "https://celestica.gcs-web.com/news-releases/news-release-details/celestica-announces-third-quarter-2026-financial-results-and",
+              "verified_at": "2026-10-27T09:29:55.474202+00:00",
+              "reason": "Le communiqué officiel du 26 octobre 2026 donne 5,83 G$ US de revenus au T3; MarketBeat indiquait 5,74 G$. Consensus du fournisseur conservé."
+            }
           },
-          "messages": [],
+          "messages": [
+            {
+              "text": "Rob Mionis relève les cibles 2026 à 21 G$ US de revenus (20,5 auparavant) et 11,55 $ de BPA ajusté (11,30). Pour 2027, il vise 40 G$ de revenus et une marge ajustée de 9 % : le potentiel repose sur les déploiements des clients, pas sur des commandes toutes fermes.",
+              "language": "fr",
+              "source_url": "https://celestica.gcs-web.com/news-releases/news-release-details/celestica-announces-third-quarter-2026-financial-results-and",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "La connectivité et le nuage réalisent 4,87 G$ US de revenus, en hausse de 102 %. La marge opérationnelle ajustée du groupe passe de 7,6 % à 8,5 % : la croissance des centres de données s’accompagne de gains de rentabilité, à confirmer pendant les prochaines montées en cadence.",
+              "language": "fr",
+              "source_url": "https://celestica.gcs-web.com/news-releases/news-release-details/celestica-announces-third-quarter-2026-financial-results-and",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "La prévision de flux de trésorerie disponible 2026 tombe à 460 M$ US, contre 600 M$, pour financer le fonds de roulement lié à la croissance. Les investissements 2027 visés atteignent 1,5 à 2 G$ US : la conversion du bénéfice en cash devient un test essentiel de l’exécution.",
+              "language": "fr",
+              "source_url": "https://celestica.gcs-web.com/news-releases/news-release-details/celestica-announces-third-quarter-2026-financial-results-and",
+              "kind": "reviewed_summary"
+            }
+          ],
           "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-26-celestica-inc-stock/",
           "sources": [
             {
@@ -1116,6 +1142,10 @@
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=CLS&size=100"
+            },
+            {
+              "label": "Correction vérifiée du résultat publié",
+              "url": "https://celestica.gcs-web.com/news-releases/news-release-details/celestica-announces-third-quarter-2026-financial-results-and"
             }
           ]
         }
@@ -5998,5 +6028,6 @@
       "source_warnings": []
     }
   },
-  "errors": {}
+  "errors": {},
+  "analysis_reviewed_at": "2026-10-27T09:29:55.474202+00:00"
 }

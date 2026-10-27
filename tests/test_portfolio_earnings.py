@@ -169,6 +169,44 @@ class EarningsTests(unittest.TestCase):
         self.assertEqual(feed["events"][0]["messages"][0]["source_url"], primary)
         self.assertTrue(any(source["url"] == primary for source in feed["events"][0]["sources"]))
 
+    def test_verified_provider_actuals_are_traced_and_notes_only_preserves_figures(self):
+        event = earnings.parse_marketbeat(sample(), "MSFT", URL, NOW)[1]
+        original = copy.deepcopy(event)
+        review = {"source_url": "https://example.com/issuer/2026-q4-results", "report_url": event["report_url"],
+                  "messages": ["La demande accélère.", "Les perspectives sont relevées.", "Les marges restent sous pression."],
+                  "verified_actuals": {"currency": "USD", "revenue": 2.3e9, "verified_at": NOW.isoformat(),
+                                       "reason": "Revenus du communiqué officiel; erreur du fournisseur."}}
+        highlights = {"schema_version": 1, "kind": "reviewed_earnings_highlights", "reviewed_at": NOW.isoformat(),
+                      "reports": {"MSFT:2026-07-29": review}}
+        self.assertEqual(earnings.validate_reviewed_highlights(highlights), 1)
+        feed = {"company_symbol": "MSFT", "events": [event], "fetched_at": NOW.isoformat()}
+        earnings.apply_reviewed_messages(feed, highlights)
+        self.assertEqual(event["revenue"], original["revenue"])
+        earnings.apply_verified_actuals(feed, highlights)
+        self.assertEqual(event["revenue"]["actual"], 2.3e9)
+        self.assertEqual(event["revenue"]["estimate"], original["revenue"]["estimate"])
+        self.assertEqual(event["eps"], original["eps"])
+        self.assertEqual(event["report_at"], original["report_at"])
+        self.assertEqual(feed["fetched_at"], NOW.isoformat())
+        trace = event["revenue"]["verified_correction"]
+        self.assertEqual(trace["provider_actual"], original["revenue"]["actual"])
+        self.assertEqual(trace["provider_source_url"], original["revenue"]["source_url"])
+        self.assertEqual(event["revenue"]["source_url"], review["source_url"])
+        once = copy.deepcopy(feed)
+        self.assertEqual(earnings.apply_verified_actuals(feed, highlights), once)
+        for change in ({"report_date": "2026-07-30"}, {"report_url": None}, {"date_status": "estimated"}):
+            other = copy.deepcopy(original); other.update(change)
+            earnings.apply_verified_actuals({"company_symbol": "MSFT", "events": [other]}, highlights)
+            self.assertEqual(other["revenue"], original["revenue"])
+        other = copy.deepcopy(original); other["revenue"]["currency"] = "CAD"
+        earnings.apply_verified_actuals({"company_symbol": "MSFT", "events": [other]}, highlights)
+        self.assertEqual(other["revenue"]["actual"], original["revenue"]["actual"])
+        for value in (float("nan"), float("inf"), -1, True):
+            invalid = copy.deepcopy(highlights)
+            invalid["reports"]["MSFT:2026-07-29"]["verified_actuals"]["revenue"] = value
+            with self.assertRaises(earnings.SourceError):
+                earnings.validate_reviewed_highlights(invalid)
+
 
 if __name__ == "__main__":
     unittest.main()

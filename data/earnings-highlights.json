@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "reviewed_earnings_highlights",
-  "reviewed_at": "2026-10-24T11:07:32.748485+00:00",
+  "reviewed_at": "2026-10-27T09:29:55.474202+00:00",
   "reports": {
     "NFLX:2026-10-20": {
       "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-20-netflix-inc-stock/",
@@ -322,6 +322,21 @@
         "Financement — Le cash-flow libre devient négatif de 2,12 G$ US. La catégorie C sans droit de vote, prévue en janvier 2027, facilitera de futures émissions pour les investissements et acquisitions. Ma lecture : surveiller la dilution future et le maintien du contrôle de Zuckerberg.",
         "Risque juridique — La charge de 9,89 G$ US liée au règlement sur les adolescents réduit le BPA du trimestre. Reuters rapporte séparément une pénalité de 25 G$ US ordonnée le 21 octobre au Nouveau-Mexique. Ce sont deux dossiers distincts; ne pas confondre charge comptable et décaissement immédiat."
       ]
+    },
+    "CLS:2026-10-26": {
+      "source_url": "https://celestica.gcs-web.com/news-releases/news-release-details/celestica-announces-third-quarter-2026-financial-results-and",
+      "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-26-celestica-inc-stock/",
+      "messages": [
+        "Rob Mionis relève les cibles 2026 à 21 G$ US de revenus (20,5 auparavant) et 11,55 $ de BPA ajusté (11,30). Pour 2027, il vise 40 G$ de revenus et une marge ajustée de 9 % : le potentiel repose sur les déploiements des clients, pas sur des commandes toutes fermes.",
+        "La connectivité et le nuage réalisent 4,87 G$ US de revenus, en hausse de 102 %. La marge opérationnelle ajustée du groupe passe de 7,6 % à 8,5 % : la croissance des centres de données s’accompagne de gains de rentabilité, à confirmer pendant les prochaines montées en cadence.",
+        "La prévision de flux de trésorerie disponible 2026 tombe à 460 M$ US, contre 600 M$, pour financer le fonds de roulement lié à la croissance. Les investissements 2027 visés atteignent 1,5 à 2 G$ US : la conversion du bénéfice en cash devient un test essentiel de l’exécution."
+      ],
+      "verified_actuals": {
+        "currency": "USD",
+        "revenue": 5830000000.0,
+        "verified_at": "2026-10-27T09:29:55.474202+00:00",
+        "reason": "Le communiqué officiel du 26 octobre 2026 donne 5,83 G$ US de revenus au T3; MarketBeat indiquait 5,74 G$. Consensus du fournisseur conservé."
+      }
     }
   }
 }

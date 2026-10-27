@@ -248,6 +248,8 @@ def fetch_numerco_observations(today: date) -> list[list]:
     # Reproduce the public history page's read-only download. These are its
     # published browser SDK identifiers; no account or private API key is used.
     page = fetch_text(NUMERCO_URANIUM_URL)
+    if "/.well-known/sgcaptcha/" in page:
+        raise SourceError("Numerco : accès public temporairement bloqué par une vérification automatisée; historique conservé")
     server = re.search(r'Parse\.serverURL\s*=\s*[\'"]([^\'"]+)[\'"]', page)
     identifiers = re.search(r'Parse\.initialize\(\s*[\'"]([^\'"]+)[\'"]\s*,\s*[\'"]([^\'"]+)[\'"]\s*\)', page)
     if not server or server[1] != NUMERCO_API_BASE or not identifiers:

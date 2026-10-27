@@ -89,6 +89,13 @@ class NumercoTests(unittest.TestCase):
                 self.assertEqual(uranium["source_label"], "Numerco")
                 self.assertIn("Numerco", result["data_provider"])
 
+    def test_public_access_challenge_is_not_misreported_as_a_changed_price_format(self):
+        page = '<html><meta http-equiv="refresh" content="0;/.well-known/sgcaptcha/?r=%2FUHistory%2F"></html>'
+        with patch.object(generator, "fetch_text", return_value=page) as fetch:
+            with self.assertRaisesRegex(generator.SourceError, "accès public temporairement bloqué"):
+                generator.fetch_numerco_observations(NOW.date())
+        self.assertEqual(fetch.call_count, 1, "Do not follow or bypass an access challenge")
+
 class TransformationTests(unittest.TestCase):
     def test_year_over_year_uses_calendar_not_row_offset(self):
         rows = [["2025-08-01", 100], ["2026-07-01", 108], ["2026-08-01", 110]]
