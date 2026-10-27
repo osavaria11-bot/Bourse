@@ -4,7 +4,8 @@
   "generated_at": "2026-10-27T05:52:50-04:00",
   "status": "partial",
   "errors": {
-    "FCMO": "Séances suspectes exclues des périodes qui les traversent : 2020-06-10"
+    "FCMO": "Séances suspectes exclues des périodes qui les traversent : 2020-06-10",
+    "FX": "Unexpected stress source identity: CAD=X"
   },
   "scenarios": {
     "gfc2008": {
@@ -3095,5 +3096,15 @@
   },
   "indices": {},
   "reconstructions": {},
-  "method": "Actual adjusted ETF endpoint returns in CAD. USD proxies converted as (1+rUSD)*(1+rUSD/CAD)-1. Portfolio scenarios use current starting weights and buy-and-hold. No historical portfolio holdings inferred. No invented index data. XBB total return = rate proxy; XCB-XGB = imperfect credit proxy, with duration mismatch. FX = USD/CAD. All sensitivities are conditional estimates, not contractual hedge ratios."
+  "method": "Actual adjusted ETF endpoint returns in CAD. USD proxies converted as (1+rUSD)*(1+rUSD/CAD)-1. Portfolio scenarios use current starting weights and buy-and-hold. No historical portfolio holdings inferred. No invented index data. XBB total return = rate proxy; XCB-XGB = imperfect credit proxy, with duration mismatch. FX = USD/CAD. All sensitivities are conditional estimates, not contractual hedge ratios.",
+  "retained_snapshot": {
+    "source_generated_at": "2026-10-27T05:52:50-04:00",
+    "source_as_of": "2026-10-26",
+    "attempted_as_of": "2026-10-26",
+    "checked_at": "2026-10-27T11:54:04-04:00",
+    "failed_sources": [
+      "FX"
+    ],
+    "reason": "Source unavailable; prior verified snapshot retained without mixing FX or price revisions."
+  }
 }
