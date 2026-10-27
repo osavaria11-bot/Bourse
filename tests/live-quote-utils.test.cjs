@@ -39,3 +39,34 @@ test("direct indices recover without Pages, survive a provider outage and never 
   await live.refresh(); assert.equal(live.current("TSX").currency, "CAD"); assert.equal(live.current("TSX").source_label, "TMX Money",
     "An independently verified Canadian listing can recover while the other provider still reports the wrong currency");
 });
+
+test("the independent feed updates SPX and stocks while Pages is frozen, and recovers after an outage", async () => {
+  let clock = Date.parse("2026-10-27T18:00:00Z"), feedDown = false, pagesDown = false;
+  const requests = [], snapshot = (stamp, price) => ({schema_version: 1, kind: "intraday_quotes", generated_at: new Date(stamp).toISOString(),
+    quotes: [["SPX", "^GSPC"], ["AAPL", "AAPL"]].map(([id, quote_symbol]) => ({id, quote_symbol, currency: "USD", price,
+      timestamp: new Date(stamp - 1000).toISOString(), fetched_at: new Date(stamp).toISOString(), session_date: "2026-10-27",
+      exchange_timezone: "America/New_York", market_state: "regular", fetch_status: "fresh", session_end: "2026-10-27T20:00:00Z"}))});
+  const frozen = snapshot(clock - 3600000, 100);
+  const window = {IntradayUtils: {...I, normalize: p => I.normalize(p, clock), choose: (p, id, base) => I.choose(p, id, base, clock)}, addEventListener() {}};
+  vm.runInNewContext(fs.readFileSync("js/live-quotes.js", "utf8"), {window,
+    Date: class extends Date {static now() {return clock;}}, URLSearchParams, AbortController, Event, setTimeout, clearTimeout, setInterval() {},
+    document: {visibilityState: "visible", dispatchEvent() {}, addEventListener() {}},
+    localStorage: {getItem() {}, setItem() {}}, fetch: async url => {
+      requests.push(url); const independent = url.startsWith("https://raw.githubusercontent.com/");
+      if (independent ? feedDown : pagesDown) throw Error("Unavailable");
+      // Make the stale Pages response arrive AFTER the fresh independent one.
+      if (!independent) await new Promise(resolve => setTimeout(resolve, 5));
+      return {ok: true, json: async () => independent ? snapshot(clock, 200) : structuredClone(frozen)};
+    }});
+  const live = window.SavyLiveQuotes; await live.refresh();
+  assert.equal(live.current("SPX").price, 200); assert.equal(live.current("AAPL").price, 200);
+  assert.equal(live.current("SPX").stale, false);
+  assert.ok(requests.some(url => url.startsWith("https://raw.githubusercontent.com/osavaria11-bot/Bourse/savy-live-quotes/")));
+  const received = live.current("SPX").fetched_at;
+  clock += 20 * 60000; feedDown = true; await live.refresh();
+  assert.equal(live.current("SPX").price, 200); assert.equal(live.current("SPX").fetched_at, received);
+  assert.equal(live.current("SPX").stale, true, "An outage retains the genuine dated price and labels it stale");
+  feedDown = false; pagesDown = true; await live.refresh();
+  assert.equal(live.current("SPX").stale, false); assert.equal(live.current("AAPL").stale, false);
+  assert.equal(live.current("SPX").timestamp, new Date(clock - 1000).toISOString());
+});

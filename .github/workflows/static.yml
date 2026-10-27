@@ -130,7 +130,9 @@ jobs:
       - name: Install browser test dependency
         run: npm ci --ignore-scripts --no-audit --no-fund
       - name: Install Chromium and WebKit
-        run: node scripts/install_browser_test_dependencies.cjs
+        run: |
+          sudo python3 scripts/prepare_browser_apt.py
+          node scripts/install_browser_test_dependencies.cjs
       - name: Browser interaction and mobile checks
         run: npm run test:browser
         env:

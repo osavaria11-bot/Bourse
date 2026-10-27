@@ -29,15 +29,20 @@ test("overlapping manual, scheduled and deployment refreshes cannot multiply the
   const done = fixture([{id: 8, head_branch: "main", status: "completed"}]);
   assert.equal(await queue(done.args), "queued");
 });
-test("changed source waits for its full validation and publication before restarting", async () => {
+test("a main change cannot stop the independent feed while full-site validation is pending", async () => {
   const f = fixture([], "new-source");
-  assert.equal(await queue(f.args), "source_changed"); assert.equal(f.dispatches.length, 0);
-  assert.deepEqual(f.delays, [], "An obsolete source cannot occupy a runner for another five minutes");
+  f.args.github.rest.repos.getBranch = async () => {throw Error("Pages/main validation must not be consulted");};
+  assert.equal(await queue(f.args), "queued"); assert.equal(f.dispatches.length, 1);
+  assert.deepEqual(f.delays, [300000]);
 });
-test("a source change during the interval prevents the next dispatch", async () => {
-  const f = fixture(); let calls = 0;
-  f.args.github.rest.repos.getBranch = async () => ({data: {commit: {sha: ++calls === 1 ? "validated-source" : "new-source"}}});
-  assert.equal(await queue(f.args), "source_changed"); assert.deepEqual(f.delays, [300000]); assert.equal(f.dispatches.length, 0);
+test("a source change during the interval still dispatches the latest main", async () => {
+  const f = fixture();
+  f.args.wait = async ms => {f.delays.push(ms); f.args.sourceSha = "changed-source";};
+  assert.equal(await queue(f.args), "queued"); assert.deepEqual(f.delays, [300000]); assert.equal(f.dispatches[0].ref, "main");
+});
+test("weekends do not create an endless closed-market refresh chain", async () => {
+  const f = fixture(); f.args.now = () => Date.parse("2026-10-17T18:20:00Z");
+  assert.equal(await queue(f.args), "weekend"); assert.equal(f.dispatches.length, 0);
 });
 test("invalid or future timing cannot start a runaway dispatcher", async () => {
   for (const collectedAt of ["bad", "2026-10-13T18:20:00Z"]) {

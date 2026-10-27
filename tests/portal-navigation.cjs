@@ -10,7 +10,7 @@ async function componentPage(parent, options) {
   // Provider recovery tests install their explicit response after this hook.
   await page.addInitScript(() => {
     const originalFetch = window.fetch.bind(window);
-    window.fetch = (input, init) => String(input?.url || input).startsWith("https://app-money.tmx.com/graphql") ?
+    window.fetch = (input, init) => /^(https:\/\/app-money\.tmx\.com\/graphql|https:\/\/raw\.githubusercontent\.com\/osavaria11-bot\/Bourse\/savy-live-quotes\/)/.test(String(input?.url || input)) ?
       Promise.reject(new Error("Direct index provider disabled in component fixtures")) : originalFetch(input, init);
   });
   async function reveal(locator) {

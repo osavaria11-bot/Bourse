@@ -2,10 +2,17 @@ name: Intraday quotes
 
 on:
   schedule:
-    # Explicit UTC schedule covers overseas, North American and FX sessions.
-    # Actions may delay scheduled runs; the UI retains their dated history.
     - cron: "2-57/5 * * * 1-5"
   workflow_dispatch:
+  push:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/intraday-quotes.yml"
+      - "scripts/collect_intraday_quotes.py"
+      - "scripts/publish_intraday_quotes.cjs"
+      - "scripts/queue_intraday_refresh.cjs"
+      - "js/intraday-utils.js"
+      - "data/securities.json"
   workflow_run:
     workflows: ["Deploy static content to Pages"]
     types: [completed]
@@ -13,72 +20,30 @@ on:
 
 permissions:
   contents: read
-  actions: read
 
-# Quote orchestration has its own queue. A scheduled run whose source has not
-# passed full validation must never displace a pending full Pages deployment.
+# This queue never deploys Pages and never waits for a site build. Even a
+# cancelled full build can wake the feed; each collection has its own checks.
 concurrency:
-  group: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.conclusion != 'success' && github.event.workflow_run.conclusion != 'failure' && format('quotes-skipped-{0}', github.run_id) || format('intraday-{0}', github.ref) }}
+  group: intraday-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
-  source:
-    # A failed full deployment can recover immediately, including weekends.
-    # Cancelled runs remain cancelled. The source gate still blocks quote publication.
-    if: github.ref == 'refs/heads/main' && (github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' || github.event.workflow_run.conclusion == 'failure')
+  refresh:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     permissions:
-      contents: read
-      actions: write
+      contents: write
     outputs:
-      sha: ${{ steps.commit.outputs.sha }}
-      ready: ${{ steps.validated.outputs.ready }}
-      started_at: ${{ steps.commit.outputs.started_at }}
+      collected_at: ${{ steps.collect.outputs.collected_at }}
+      attempted_at: ${{ steps.clock.outputs.attempted_at }}
     steps:
+      - name: Record this attempt for bounded retries even if setup fails
+        id: clock
+        run: echo "attempted_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_OUTPUT"
       - uses: actions/checkout@v6
         with:
           ref: main
-          persist-credentials: false
-      - id: commit
-        run: |
-          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
-          echo "started_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_OUTPUT"
-      - name: Require the exact source to have passed full browser and collector validation
-        id: validated
-        uses: actions/github-script@v8
-        env:
-          SOURCE_SHA: ${{ steps.commit.outputs.sha }}
-        with:
-          script: |
-            const ready = await require('./scripts/ensure_validated_source.cjs')({
-              github, context, core, sourceSha: process.env.SOURCE_SHA
-            });
-            core.setOutput('ready', ready ? 'true' : 'false');
-
-  refresh:
-    needs: source
-    if: needs.source.outputs.ready == 'true'
-    # Only a validated source joins the publication queue shared with the full
-    # deployment, so quote-only runs cannot cancel a source validation run.
-    concurrency:
-      group: pages-${{ github.ref }}
-      cancel-in-progress: false
-    runs-on: ubuntu-latest
-    timeout-minutes: 12
-    outputs:
-      collected_at: ${{ steps.collect.outputs.collected_at }}
-    permissions:
-      contents: read
-      actions: write
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          ref: ${{ needs.source.outputs.sha }}
           persist-credentials: false
       - uses: actions/setup-python@v6
         with:
@@ -86,92 +51,32 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: "24"
-      - name: Check quote collector and financial calculations
+      - name: Check the quote collector and feed calculations
         run: |
           python -m unittest discover -s tests -p 'test_intraday_quotes.py' -v
-          python -m unittest discover -s tests -p 'test_fear_greed.py' -v
-          python -m unittest discover -s tests -p 'test_polymarket.py' -v
-          python -m unittest discover -s tests -p 'test_interest_rates.py' -v
-          npm test
-      - name: Refresh companion market data
+          node --test tests/intraday-utils.test.cjs tests/live-quote-utils.test.cjs tests/live-feed-utils.test.cjs tests/refresh-chain.test.cjs
+      - name: Restore the independent last successful observations
         continue-on-error: true
-        timeout-minutes: 2
         run: |
-          python scripts/collect_fear_greed.py
-          python scripts/collect_polymarket.py
-          python scripts/collect_rate_odds.py
-          python scripts/collect_yield_curves.py
-          python scripts/refresh_interest_rates.py --published-baseline https://osavaria11-bot.github.io/Bourse/data/macro-data.json
-      - name: Validate generated snapshots
-        run: |
-          node scripts/validate_polymarket.cjs
-      - name: Restore narration for this exact public edition
-        id: narration_cache
-        uses: actions/cache/restore@v4
-        with:
-          path: |
-            data/briefing-audio.json
-            data/audio
-          key: briefing-audio-v2-${{ hashFiles('data/daily-briefing.json', 'js/briefing-audio-utils.js', 'scripts/generate_briefing_audio.py', 'scripts/requirements-audio.txt') }}
-      - name: Reuse narration for this exact edition
-        id: narration
-        continue-on-error: true
-        timeout-minutes: 1
-        # Full publication generates narration. Quote publication must not wait
-        # up to seven minutes for unrelated speech synthesis.
-        run: python scripts/generate_briefing_audio.py --reuse-only
-      - name: Save the complete verified narration
-        if: steps.narration.outcome == 'success' && steps.narration_cache.outputs.cache-hit != 'true'
-        uses: actions/cache/save@v4
-        with:
-          path: |
-            data/briefing-audio.json
-            data/audio
-          key: ${{ steps.narration_cache.outputs.cache-primary-key }}
-      - uses: actions/configure-pages@v5
-      - name: Collect and validate exchange quotes immediately before publication
+          curl --fail --location --max-time 15 --retry 1 "https://raw.githubusercontent.com/$GITHUB_REPOSITORY/savy-live-quotes/intraday-quotes.json?v=$GITHUB_RUN_ID" --output "$RUNNER_TEMP/previous-quotes.json"
+          node -e 'const fs=require("node:fs"),I=require("./js/intraday-utils.js"),p=process.argv[1],d=JSON.parse(fs.readFileSync(p));if(!I.normalize(d).quotes.length)throw Error("Empty feed");fs.copyFileSync(p,"data/intraday-quotes.json")' "$RUNNER_TEMP/previous-quotes.json"
+      - name: Collect and validate actual exchange quotes
         id: collect
         run: |
+          echo "collected_at=$(date -u +%Y-%m-%dT%H:%M:%SZ)" >> "$GITHUB_OUTPUT"
           python scripts/collect_intraday_quotes.py
           node scripts/validate_intraday_quotes.cjs
-          python - <<'PY'
-          import json, os
-          from pathlib import Path
-          stamp = json.loads(Path('data/intraday-quotes.json').read_text())['generated_at']
-          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
-              output.write('collected_at=' + stamp + '\n')
-          PY
-      - name: Check source is still current before publication
-        id: current
+      - name: Publish only the public quote file on its independent branch
         uses: actions/github-script@v8
-        env:
-          SOURCE_SHA: ${{ needs.source.outputs.sha }}
         with:
           script: |
-            const {data} = await github.rest.repos.getBranch({...context.repo, branch: 'main'});
-            core.setOutput('publish', data.commit.sha === process.env.SOURCE_SHA ? 'true' : 'false');
-      - name: Package validated source and generated quote data
-        if: steps.current.outputs.publish == 'true'
-        run: |
-          mkdir -p _site
-          cp index.html 221.png 2121.png _site/
-          node scripts/build_report_archive.cjs
-          cp -R css js data reports _site/
-      - uses: actions/upload-pages-artifact@v3
-        if: steps.current.outputs.publish == 'true'
-        with:
-          path: _site
-      - name: Publish snapshot
-        if: steps.current.outputs.publish == 'true'
-        id: deployment
-        uses: actions/deploy-pages@v4
+            await require('./scripts/publish_intraday_quotes.cjs')({github, context, core});
 
   next:
-    needs: [source, refresh]
-    # GitHub's run index can lag a completed deployment. Keep checking the
-    # current source every five minutes while validation becomes visible;
-    # the refresh job still requires an exact successful full validation.
-    if: ${{ always() && !cancelled() && needs.source.result == 'success' }}
+    needs: refresh
+    # Failed collectors also schedule a retry. New main commits do not stop
+    # this chain, and GitHub's cron remains an independent recovery trigger.
+    if: ${{ always() && !cancelled() && github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
     timeout-minutes: 6
     permissions:
@@ -180,20 +85,15 @@ jobs:
     steps:
       - uses: actions/checkout@v6
         with:
-          ref: ${{ needs.source.outputs.sha }}
+          ref: main
           persist-credentials: false
-      - name: Continue the actual quote feed without depending only on cron delivery
+      - name: Continue the feed after five minutes, including after a failed collection
         uses: actions/github-script@v8
         env:
-          SOURCE_SHA: ${{ needs.source.outputs.sha }}
-          COLLECTED_AT: ${{ needs.refresh.outputs.collected_at || needs.source.outputs.started_at }}
+          COLLECTED_AT: ${{ needs.refresh.outputs.collected_at || needs.refresh.outputs.attempted_at }}
         with:
           script: |
             await require('./scripts/queue_intraday_refresh.cjs')({
-              github, context, core, sourceSha: process.env.SOURCE_SHA,
-              collectedAt: process.env.COLLECTED_AT
+              github, context, core,
+              collectedAt: process.env.COLLECTED_AT || new Date().toISOString()
             });
-
-# Quote snapshots are generated deployment assets. They do not create
-# hundreds of daily commits or change the official closing-price histories.
-

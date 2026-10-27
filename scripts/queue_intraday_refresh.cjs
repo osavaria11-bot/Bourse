@@ -1,25 +1,19 @@
 "use strict";
 
-// Dispatch is supported with GITHUB_TOKEN. Each source check or validated
-// refresh queues its successor, so delayed calendar events or run indexing
-// do not stop the feed. This dispatcher never authorizes quote publication.
-module.exports = async function queueRefresh({github, context, core, sourceSha, collectedAt,
+// Each focused, independently published collection queues its successor.
+// A new main commit or a failed Pages build must not stop the quote feed.
+module.exports = async function queueRefresh({github, context, core, collectedAt,
   now = Date.now, wait = ms => new Promise(resolve => setTimeout(resolve, ms))}) {
   const collected = Date.parse(collectedAt), initial = now();
   if (!Number.isFinite(collected) || collected > initial + 300000)
     throw new Error("Invalid collection time; refusing an unthrottled refresh loop");
   const repo = {owner: context.repo.owner, repo: context.repo.repo};
-  const current = async () => (await github.rest.repos.getBranch({...repo, branch: "main"})).data.commit.sha === sourceSha;
-  if (!await current()) {
-    core.info("Source changed; leaving the publication queue immediately.");
-    return "source_changed";
-  }
   // Always wait between attempts, including when the provider failed and the
   // start of the attempted run is used instead of a successful collection.
   await wait(Math.max(0, collected + 5 * 60000 - initial));
-  if (!await current()) {
-    core.info("Source changed; the validated full deployment will restart the feed.");
-    return "source_changed";
+  if ([0, 6].includes(new Date(now()).getUTCDay())) {
+    core.info("Weekend: keeping the dated last observations; weekday cron will restart the feed.");
+    return "weekend";
   }
   const workflow_id = "intraday-quotes.yml";
   const {data} = await github.rest.actions.listWorkflowRuns({...repo, workflow_id, per_page: 100});

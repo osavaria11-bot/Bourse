@@ -1,22 +1,30 @@
 (() => {
   "use strict";
   const I = window.IntradayUtils, KEY = "savy:intraday-quotes:v1";
+  const LIVE = "https://raw.githubusercontent.com/osavaria11-bot/Bourse/savy-live-quotes/intraday-quotes.json";
   let data = null, pending = null;
+  const rejectedListings = new Map();
   try {data = I.normalize(JSON.parse(localStorage.getItem(KEY)));} catch { /* Daily closes remain available. */ }
   function merge(rows) {
     const byId = new Map((data?.quotes || []).map(q => [q.id, q]));
     for (const q of rows) {
       const old = byId.get(q.id);
+      const rejected = rejectedListings.get(q.id);
+      if (!old && rejected && (rejected.quote_symbol !== q.quote_symbol || rejected.currency !== q.currency)) continue;
       if (old && (old.quote_symbol !== q.quote_symbol || old.currency !== q.currency)) {
         // An explicit listing/currency violation invalidates that provider's
         // previous quote. A separately verified source remains usable.
         if (q.source_provider !== "yahoo") byId.set(q.id, q);
-        else if (old.source_provider === q.source_provider && Date.parse(q.fetched_at) >= Date.parse(old.fetched_at)) byId.delete(q.id);
+        else if (old.source_provider === q.source_provider && Date.parse(q.fetched_at) >= Date.parse(old.fetched_at)) {
+          byId.delete(q.id); rejectedListings.set(q.id, old);
+        }
         continue;
       }
       if (!old || (old.quote_symbol === q.quote_symbol && old.currency === q.currency &&
           (Date.parse(q.timestamp) > Date.parse(old.timestamp) ||
-           (Date.parse(q.timestamp) === Date.parse(old.timestamp) && Date.parse(q.fetched_at) >= Date.parse(old.fetched_at))))) byId.set(q.id, q);
+           (Date.parse(q.timestamp) === Date.parse(old.timestamp) && Date.parse(q.fetched_at) >= Date.parse(old.fetched_at))))) {
+        byId.set(q.id, q); rejectedListings.delete(q.id);
+      }
     }
     if (data) data = {...data, quotes: [...byId.values()]};
   }
@@ -37,10 +45,10 @@
     } catch { /* Keep actual dated observations from the other provider. */ }
     finally {clearTimeout(timeout); document.dispatchEvent(new Event("savy:quotes"));}
   }
-  async function publishedQuotes() {
+  async function publishedQuotes(url) {
       const controller = new AbortController(), timeout = setTimeout(() => controller.abort(), 12000);
       try {
-        const response = await fetch("data/intraday-quotes.json?v=" + Date.now(), {cache: "no-store", signal: controller.signal});
+        const response = await fetch(url + "?v=" + Date.now(), {cache: "no-store", signal: controller.signal});
         if (!response.ok) throw new Error("Cotations en séance indisponibles");
         const next = I.normalize(await response.json());
         if (!data) data = {...next, quotes: []};
@@ -53,7 +61,7 @@
   async function refresh() {
     if (pending) return pending;
     pending = (async () => {
-      try {await Promise.allSettled([publishedQuotes(), directIndices()]);
+      try {await Promise.allSettled([publishedQuotes(LIVE), publishedQuotes("data/intraday-quotes.json"), directIndices()]);
         try {localStorage.setItem(KEY, JSON.stringify(data));} catch { /* Session still usable. */ }
       } finally {pending = null; document.dispatchEvent(new Event("savy:quotes"));}
     })();
