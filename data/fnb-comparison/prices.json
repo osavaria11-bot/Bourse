@@ -284,6 +284,16 @@
         "source_url": "https://finance.yahoo.com/quote/HXQ.TO/history/",
         "price_source": "Yahoo Finance",
         "corporate_actions_source": "Yahoo Finance"
+      },
+      "2026-10-26": {
+        "close": 118.12000274658203,
+        "adjusted_close": 118.12000274658203,
+        "distribution": 0.0,
+        "split": 1.0,
+        "symbol": "HXQ.TO",
+        "source_url": "https://finance.yahoo.com/quote/HXQ.TO/history/",
+        "price_source": "Yahoo Finance",
+        "corporate_actions_source": "Yahoo Finance"
       }
     },
     "XIC": {
@@ -330,6 +340,16 @@
       "2026-10-23": {
         "close": 57.150001525878906,
         "adjusted_close": 57.150001525878906,
+        "distribution": 0.0,
+        "split": 1.0,
+        "symbol": "XIC.TO",
+        "source_url": "https://finance.yahoo.com/quote/XIC.TO/history/",
+        "price_source": "Yahoo Finance",
+        "corporate_actions_source": "Yahoo Finance"
+      },
+      "2026-10-26": {
+        "close": 57.41999816894531,
+        "adjusted_close": 57.41999816894531,
         "distribution": 0.0,
         "split": 1.0,
         "symbol": "XIC.TO",
@@ -388,8 +408,18 @@
         "source_url": "https://finance.yahoo.com/quote/ZLU.TO/history/",
         "price_source": "Yahoo Finance",
         "corporate_actions_source": "Yahoo Finance"
+      },
+      "2026-10-26": {
+        "close": 65.4800033569336,
+        "adjusted_close": 65.4800033569336,
+        "distribution": 0.0,
+        "split": 1.0,
+        "symbol": "ZLU.TO",
+        "source_url": "https://finance.yahoo.com/quote/ZLU.TO/history/",
+        "price_source": "Yahoo Finance",
+        "corporate_actions_source": "Yahoo Finance"
       }
     }
   },
-  "sha256": "1ec1ab3152d40ae84b8faefc62d16b7a9d9f4b52680fcc0944521a47f8d1f488"
+  "sha256": "312ae37261c0247009126e535e523b1f89054c34f555ce4dd3ad97ba025f21d1"
 }

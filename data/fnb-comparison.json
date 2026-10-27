@@ -4,8 +4,8 @@
   "currency": "CAD",
   "capital": 10000.0,
   "inception": "2026-10-19",
-  "as_of": "2026-10-23",
-  "updated_at": "2026-10-26T19:22:54-04:00",
+  "as_of": "2026-10-26",
+  "updated_at": "2026-10-27T05:48:52-04:00",
   "benchmarks": [
     "FEQT",
     "VEQT",
@@ -57,6 +57,10 @@
         {
           "date": "2026-10-23",
           "value": 9944.682038552792
+        },
+        {
+          "date": "2026-10-26",
+          "value": 10009.066195853578
         }
       ],
       "initial_positions": [
@@ -142,6 +146,10 @@
         {
           "date": "2026-10-23",
           "value": 9998.835049273235
+        },
+        {
+          "date": "2026-10-26",
+          "value": 10040.376099642137
         }
       ],
       "initial_positions": [
@@ -240,6 +248,10 @@
         {
           "date": "2026-10-23",
           "value": 9991.825336290673
+        },
+        {
+          "date": "2026-10-26",
+          "value": 10022.840735922098
         }
       ],
       "initial_positions": [
@@ -334,6 +346,10 @@
         {
           "date": "2026-10-23",
           "value": 9986.161568738775
+        },
+        {
+          "date": "2026-10-26",
+          "value": 10027.292709658237
         }
       ],
       "initial_positions": [
@@ -449,6 +465,10 @@
         {
           "date": "2026-10-23",
           "value": 9950.011515324024
+        },
+        {
+          "date": "2026-10-26",
+          "value": 9998.363917278335
         }
       ],
       "initial_positions": [
@@ -563,6 +583,10 @@
         {
           "date": "2026-10-23",
           "value": 9952.845567450013
+        },
+        {
+          "date": "2026-10-26",
+          "value": 10015.007889386434
         }
       ],
       "initial_positions": [
@@ -670,6 +694,10 @@
         {
           "date": "2026-10-23",
           "value": 9987.448988111611
+        },
+        {
+          "date": "2026-10-26",
+          "value": 10046.837615282706
         }
       ],
       "initial_positions": [
@@ -775,6 +803,10 @@
         {
           "date": "2026-10-23",
           "value": 9907.215358204237
+        },
+        {
+          "date": "2026-10-26",
+          "value": 9962.081346128616
         }
       ],
       "initial_positions": [
@@ -866,6 +898,10 @@
         {
           "date": "2026-10-23",
           "value": 9891.663085529839
+        },
+        {
+          "date": "2026-10-26",
+          "value": 9952.445233561059
         }
       ],
       "initial_positions": [
@@ -956,6 +992,10 @@
         {
           "date": "2026-10-23",
           "value": 9949.824519919046
+        },
+        {
+          "date": "2026-10-26",
+          "value": 9998.894029805813
         }
       ],
       "initial_positions": [
@@ -1039,6 +1079,10 @@
         {
           "date": "2026-10-23",
           "value": 9962.443682240133
+        },
+        {
+          "date": "2026-10-26",
+          "value": 10014.462429809217
         }
       ],
       "initial_positions": [
@@ -1118,6 +1162,10 @@
         {
           "date": "2026-10-23",
           "value": 9926.969541423443
+        },
+        {
+          "date": "2026-10-26",
+          "value": 9979.134023925533
         }
       ],
       "initial_positions": [
@@ -1169,6 +1217,10 @@
         {
           "date": "2026-10-23",
           "value": 9872.33340305574
+        },
+        {
+          "date": "2026-10-26",
+          "value": 9964.447120732762
         }
       ],
       "initial_positions": [
@@ -1220,6 +1272,10 @@
         {
           "date": "2026-10-23",
           "value": 9915.629291886458
+        },
+        {
+          "date": "2026-10-26",
+          "value": 9957.81464594323
         }
       ],
       "initial_positions": [
@@ -1271,6 +1327,10 @@
         {
           "date": "2026-10-23",
           "value": 9956.775495619646
+        },
+        {
+          "date": "2026-10-26",
+          "value": 9989.829414272806
         }
       ],
       "initial_positions": [
@@ -1329,6 +1389,10 @@
         {
           "date": "2026-10-23",
           "value": 10016.111446839692
+        },
+        {
+          "date": "2026-10-26",
+          "value": 10060.26317509002
         }
       ],
       "initial_positions": [
@@ -1435,6 +1499,10 @@
         {
           "date": "2026-10-23",
           "value": 9903.22056726525
+        },
+        {
+          "date": "2026-10-26",
+          "value": 9961.190151398976
         }
       ],
       "initial_positions": [
@@ -1538,6 +1606,10 @@
         {
           "date": "2026-10-23",
           "value": 9891.240773288744
+        },
+        {
+          "date": "2026-10-26",
+          "value": 9948.766908563388
         }
       ],
       "initial_positions": [
@@ -1669,6 +1741,10 @@
         {
           "date": "2026-10-23",
           "value": 9883.254243971072
+        },
+        {
+          "date": "2026-10-26",
+          "value": 9940.484746672997
         }
       ],
       "initial_positions": [
@@ -1795,6 +1871,10 @@
         {
           "date": "2026-10-23",
           "value": 9857.299953176664
+        },
+        {
+          "date": "2026-10-26",
+          "value": 9924.077889516659
         }
       ],
       "initial_positions": [
@@ -1888,6 +1968,10 @@
         {
           "date": "2026-10-23",
           "value": 9849.508252106147
+        },
+        {
+          "date": "2026-10-26",
+          "value": 9912.582704335793
         }
       ],
       "initial_positions": [
@@ -1995,6 +2079,10 @@
         {
           "date": "2026-10-23",
           "value": 9856.99553751035
+        },
+        {
+          "date": "2026-10-26",
+          "value": 9932.70186513502
         }
       ],
       "initial_positions": [
@@ -2095,6 +2183,10 @@
         {
           "date": "2026-10-23",
           "value": 9837.40234375
+        },
+        {
+          "date": "2026-10-26",
+          "value": 9916.363604657061
         }
       ],
       "initial_positions": [
@@ -2153,6 +2245,10 @@
         {
           "date": "2026-10-23",
           "value": 9970.203511724361
+        },
+        {
+          "date": "2026-10-26",
+          "value": 10011.780081915407
         }
       ],
       "initial_positions": [
@@ -2261,6 +2357,10 @@
         {
           "date": "2026-10-23",
           "value": 9903.33190321161
+        },
+        {
+          "date": "2026-10-26",
+          "value": 9965.18307315194
         }
       ],
       "initial_positions": [
@@ -2378,6 +2478,10 @@
         {
           "date": "2026-10-23",
           "value": 9933.734622297005
+        },
+        {
+          "date": "2026-10-26",
+          "value": 9986.562541286556
         }
       ],
       "initial_positions": [
@@ -2461,9 +2565,9 @@
       ]
     }
   ],
-  "source_ledger_sha256": "d5592572a92f574c736ebfde05676a532d35d558281d072a7325df8132108101",
+  "source_ledger_sha256": "e053b76823a5b5ba195719edaa8ccdfc0f4bcf918f23b1cb273c8903c2332033",
   "source_registry_sha256": "393798b03466afa012f637e13f404af6e19623e4cb1a236790176fd5fcd30298",
-  "supplemental_sha256": "1ec1ab3152d40ae84b8faefc62d16b7a9d9f4b52680fcc0944521a47f8d1f488",
+  "supplemental_sha256": "312ae37261c0247009126e535e523b1f89054c34f555ce4dd3ad97ba025f21d1",
   "price_revisions": [
     {
       "ticker": "FBAL",
@@ -2508,6 +2612,31 @@
           "source_url": "https://money.tmx.com/en/quote/FCUL%3ACC",
           "close": 58.8,
           "next_close": 58.51
+        }
+      ]
+    },
+    {
+      "ticker": "FEQT",
+      "recorded_on": "2026-10-26",
+      "date": "2026-10-23",
+      "accepted_close": 19.030000686645508,
+      "revised_close": 19.02,
+      "next_date": "2026-10-26",
+      "next_close": 19.13,
+      "confirmation": "Revised historical close confirmed by Yahoo and TMX; adjacent closes taken together from TMX.",
+      "yahoo_next_close_available": true,
+      "evidence": [
+        {
+          "source": "Yahoo Finance",
+          "source_url": "https://finance.yahoo.com/quote/FEQT.NE/history/",
+          "close": 19.020000457763672,
+          "next_close": 19.1299991607666
+        },
+        {
+          "source": "TMX Money",
+          "source_url": "https://money.tmx.com/en/quote/FEQT%3ACC",
+          "close": 19.02,
+          "next_close": 19.13
         }
       ]
     }
