@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "portfolio_earnings",
-  "generated_at": "2026-10-27T09:37:52.827370+00:00",
+  "generated_at": "2026-10-27T09:53:17.791430+00:00",
   "timezone": "America/Toronto",
   "window": {
     "start": "2026-08-03",
@@ -18,7 +18,7 @@
   "instruments": {
     "AAPL": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "AAPL",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/AAPL/earnings/",
       "events": [
@@ -59,7 +59,7 @@
     },
     "ACWV": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "ACWV",
       "source_url": "https://finance.yahoo.com/quote/ACWV/",
       "events": [],
@@ -67,7 +67,7 @@
     },
     "ADBE": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "ADBE",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/ADBE/earnings/",
       "events": [
@@ -131,7 +131,7 @@
     },
     "AMD": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "AMD",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/AMD/earnings/",
       "events": [
@@ -226,7 +226,7 @@
     },
     "AMZN": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "AMZN",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/AMZN/earnings/",
       "events": [
@@ -267,7 +267,7 @@
     },
     "APH": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "APH",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/APH/earnings/",
       "events": [
@@ -308,7 +308,7 @@
     },
     "APO": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "APO",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/APO/earnings/",
       "events": [
@@ -387,7 +387,7 @@
     },
     "ATD": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "ATD.TO",
       "source_url": "https://www.marketbeat.com/stocks/TSE/ATD/earnings/",
       "events": [
@@ -478,7 +478,7 @@
     },
     "AVGO": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "AVGO",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/AVGO/earnings/",
       "events": [
@@ -542,7 +542,7 @@
     },
     "BAC": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "BAC",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/BAC/earnings/",
       "events": [
@@ -612,7 +612,7 @@
     },
     "BAM": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "BAM",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/BAM/earnings/",
       "events": [
@@ -697,7 +697,7 @@
     },
     "BCE": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "BCE",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/BCE/earnings/",
       "events": [
@@ -782,7 +782,7 @@
     },
     "BMO": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "BMO",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/BMO/earnings/",
       "events": [
@@ -867,7 +867,7 @@
     },
     "BN": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "BN",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/BN/earnings/",
       "events": [
@@ -948,7 +948,7 @@
     },
     "BNS": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "BNS",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/BNS/earnings/",
       "events": [
@@ -1027,7 +1027,7 @@
     },
     "CASH": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "CASH",
       "source_url": "https://finance.yahoo.com/quote/CASH.TO/",
       "events": [],
@@ -1035,7 +1035,7 @@
     },
     "CCO": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "CCJ",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/CCJ/earnings/",
       "events": [
@@ -1076,7 +1076,7 @@
     },
     "CGL": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "CGL",
       "source_url": "https://finance.yahoo.com/quote/CGL.TO/",
       "events": [],
@@ -1084,7 +1084,7 @@
     },
     "CLS": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "CLS",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/CLS/earnings/",
       "events": [
@@ -1155,7 +1155,7 @@
     },
     "CM": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "CM",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/CM/earnings/",
       "events": [
@@ -1234,7 +1234,7 @@
     },
     "CNQ": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "CNQ",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/CNQ/earnings/",
       "events": [
@@ -1325,7 +1325,7 @@
     },
     "CNR": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "CNI",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/CNI/earnings/",
       "events": [
@@ -1366,7 +1366,7 @@
     },
     "COST": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "COST",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/COST/earnings/",
       "events": [
@@ -1430,7 +1430,7 @@
     },
     "CP": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "CP",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/CP/earnings/",
       "events": [
@@ -1471,7 +1471,7 @@
     },
     "CRM": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "CRM",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/CRM/earnings/",
       "events": [
@@ -1550,7 +1550,7 @@
     },
     "CSU": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "CSU.TO",
       "source_url": "https://www.marketbeat.com/stocks/TSE/CSU/earnings/",
       "events": [
@@ -1664,7 +1664,7 @@
     },
     "CVE": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "CVE",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/CVE/earnings/",
       "events": [
@@ -1728,7 +1728,7 @@
     },
     "CVX": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "CVX",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/CVX/earnings/",
       "events": [
@@ -1769,7 +1769,7 @@
     },
     "DIS": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "DIS",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/DIS/earnings/",
       "events": [
@@ -1848,7 +1848,7 @@
     },
     "DOL": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "DOL.TO",
       "source_url": "https://www.marketbeat.com/stocks/TSE/DOL/earnings/",
       "events": [
@@ -1912,7 +1912,7 @@
     },
     "DSG": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "DSGX",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/DSGX/earnings/",
       "events": [
@@ -2007,7 +2007,7 @@
     },
     "DXCM": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "DXCM",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/DXCM/earnings/",
       "events": [
@@ -2048,7 +2048,7 @@
     },
     "EMA": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "EMA.TO",
       "source_url": "https://www.marketbeat.com/stocks/TSE/EMA/earnings/",
       "events": [
@@ -2152,7 +2152,7 @@
     },
     "ENB": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "ENB",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/ENB/earnings/",
       "events": [
@@ -2193,7 +2193,7 @@
     },
     "EQB": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "EQB.TO",
       "source_url": "https://www.marketbeat.com/stocks/TSE/EQB/earnings/",
       "events": [
@@ -2268,7 +2268,7 @@
     },
     "EXE": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "EXE.TO",
       "source_url": "https://www.marketbeat.com/stocks/TSE/EXE/earnings/",
       "events": [
@@ -2343,7 +2343,7 @@
     },
     "FBAL": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "FBAL",
       "source_url": "https://finance.yahoo.com/quote/FBAL.NE/",
       "events": [],
@@ -2351,7 +2351,7 @@
     },
     "FCIN": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "FCIN",
       "source_url": "https://finance.yahoo.com/quote/FCIN.NE/",
       "events": [],
@@ -2359,7 +2359,7 @@
     },
     "FCUV": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "FCUV",
       "source_url": "https://finance.yahoo.com/quote/FCUV.TO/",
       "events": [],
@@ -2367,7 +2367,7 @@
     },
     "FEQT": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "FEQT",
       "source_url": "https://finance.yahoo.com/quote/FEQT.NE/",
       "events": [],
@@ -2375,7 +2375,7 @@
     },
     "FSLR": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "FSLR",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/FSLR/earnings/",
       "events": [
@@ -2416,7 +2416,7 @@
     },
     "FTS": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "FTS",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/FTS/earnings/",
       "events": [
@@ -2457,7 +2457,7 @@
     },
     "GOOGL": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "GOOGL",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/GOOGL/earnings/",
       "events": [
@@ -2498,7 +2498,7 @@
     },
     "GRGD": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "GRGD.TO",
       "source_url": "https://www.marketbeat.com/stocks/TSE/GRGD/earnings/",
       "events": [
@@ -2537,7 +2537,7 @@
     },
     "GS": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "GS",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/GS/earnings/",
       "events": [
@@ -2607,7 +2607,7 @@
     },
     "GSY": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "GSY.TO",
       "source_url": "https://www.marketbeat.com/stocks/TSE/GSY/earnings/",
       "events": [
@@ -2682,7 +2682,7 @@
     },
     "HBM": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "HBM",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/HBM/earnings/",
       "events": [
@@ -2746,7 +2746,7 @@
     },
     "HD": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "HD",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/HD/earnings/",
       "events": [
@@ -2825,7 +2825,7 @@
     },
     "JNJ": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "JNJ",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/JNJ/earnings/",
       "events": [
@@ -2895,7 +2895,7 @@
     },
     "JPM": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "JPM",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/JPM/earnings/",
       "events": [
@@ -2965,7 +2965,7 @@
     },
     "L": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "L.TO",
       "source_url": "https://www.marketbeat.com/stocks/TSE/L/earnings/",
       "events": [
@@ -3002,7 +3002,7 @@
     },
     "LULU": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "LULU",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/LULU/earnings/",
       "events": [
@@ -3056,7 +3056,7 @@
     },
     "MAXQ": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "MAXQ.NE",
       "source_url": "https://www.marketbeat.com/stocks/CNSX/MAXQ/earnings/",
       "events": [
@@ -3095,7 +3095,7 @@
     },
     "MDA": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "MDA.TO",
       "source_url": "https://www.marketbeat.com/stocks/TSE/MDA/earnings/",
       "events": [
@@ -3182,7 +3182,7 @@
     },
     "META": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "META",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/META/earnings/",
       "events": [
@@ -3252,7 +3252,7 @@
     },
     "MFC": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "MFC",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/MFC/earnings/",
       "events": [
@@ -3347,7 +3347,7 @@
     },
     "MOD": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "MOD",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/MOD/earnings/",
       "events": [
@@ -3388,7 +3388,7 @@
     },
     "MRK": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "MRK",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/MRK/earnings/",
       "events": [
@@ -3473,7 +3473,7 @@
     },
     "MSFT": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "MSFT",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/MSFT/earnings/",
       "events": [
@@ -3514,7 +3514,7 @@
     },
     "MSFTCDR": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "MSFT",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/MSFT/earnings/",
       "events": [
@@ -3555,7 +3555,7 @@
     },
     "MU": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "MU",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/MU/earnings/",
       "events": [
@@ -3619,7 +3619,7 @@
     },
     "NA": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "NA.TO",
       "source_url": "https://www.marketbeat.com/stocks/TSE/NA/earnings/",
       "events": [
@@ -3683,7 +3683,7 @@
     },
     "NBIX": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "NBIX",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/NBIX/earnings/",
       "events": [
@@ -3724,7 +3724,7 @@
     },
     "NFLX": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "NFLX",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/NFLX/earnings/",
       "events": [
@@ -3794,7 +3794,7 @@
     },
     "NU": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "NU",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/NU/earnings/",
       "events": [
@@ -3902,7 +3902,7 @@
     },
     "NVDA": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "NVDA",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/NVDA/earnings/",
       "events": [
@@ -4020,7 +4020,7 @@
     },
     "NVO": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "NVO",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/NVO/earnings/",
       "events": [
@@ -4122,7 +4122,7 @@
     },
     "NXE": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "NXE",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/NXE/earnings/",
       "events": [
@@ -4190,7 +4190,7 @@
     },
     "PFE": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "PFE",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/PFE/earnings/",
       "events": [
@@ -4269,7 +4269,7 @@
     },
     "POW": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "POW.TO",
       "source_url": "https://www.marketbeat.com/stocks/TSE/POW/earnings/",
       "events": [
@@ -4306,7 +4306,7 @@
     },
     "PRL": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "PRL.TO",
       "source_url": "https://www.marketbeat.com/stocks/TSE/PRL/earnings/",
       "events": [
@@ -4385,7 +4385,7 @@
     },
     "QCOM": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "QCOM",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/QCOM/earnings/",
       "events": [
@@ -4426,7 +4426,7 @@
     },
     "QQC": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "QQC",
       "source_url": "https://finance.yahoo.com/quote/QQC.TO/",
       "events": [],
@@ -4434,7 +4434,7 @@
     },
     "RY": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "RY",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/RY/earnings/",
       "events": [
@@ -4525,7 +4525,7 @@
     },
     "SHOP": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "SHOP",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/SHOP/earnings/",
       "events": [
@@ -4616,7 +4616,7 @@
     },
     "SLF": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "SLF",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/SLF/earnings/",
       "events": [
@@ -4695,7 +4695,7 @@
     },
     "SNDK": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "SNDK",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/SNDK/earnings/",
       "events": [
@@ -4786,7 +4786,7 @@
     },
     "SNDKUS": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "SNDK",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/SNDK/earnings/",
       "events": [
@@ -4877,7 +4877,7 @@
     },
     "SPYM": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "SPYM",
       "source_url": "https://finance.yahoo.com/quote/SPYM/",
       "events": [],
@@ -4885,7 +4885,7 @@
     },
     "SU": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "SU",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/SU/earnings/",
       "events": [
@@ -4970,7 +4970,7 @@
     },
     "T": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "T.TO",
       "source_url": "https://www.marketbeat.com/stocks/TSE/T/earnings/",
       "events": [
@@ -5007,7 +5007,7 @@
     },
     "TD": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "TD",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/TD/earnings/",
       "events": [
@@ -5098,7 +5098,7 @@
     },
     "TOU": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "TOU.TO",
       "source_url": "https://www.marketbeat.com/stocks/TSE/TOU/earnings/",
       "events": [
@@ -5135,7 +5135,7 @@
     },
     "TRP": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "TRP",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/TRP/earnings/",
       "events": [
@@ -5176,7 +5176,7 @@
     },
     "TSM": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "TSM",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/TSM/earnings/",
       "events": [
@@ -5280,7 +5280,7 @@
     },
     "UNH": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "UNH",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/UNH/earnings/",
       "events": [
@@ -5350,7 +5350,7 @@
     },
     "V": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "V",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/V/earnings/",
       "events": [
@@ -5391,7 +5391,7 @@
     },
     "VBAL": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "VBAL",
       "source_url": "https://finance.yahoo.com/quote/VBAL.TO/",
       "events": [],
@@ -5399,7 +5399,7 @@
     },
     "VCN": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "VCN",
       "source_url": "https://finance.yahoo.com/quote/VCN.TO/",
       "events": [],
@@ -5407,7 +5407,7 @@
     },
     "VDY": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "VDY",
       "source_url": "https://finance.yahoo.com/quote/VDY.TO/",
       "events": [],
@@ -5415,7 +5415,7 @@
     },
     "VEE": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "VEE",
       "source_url": "https://finance.yahoo.com/quote/VEE.TO/",
       "events": [],
@@ -5423,7 +5423,7 @@
     },
     "VEQT": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "VEQT",
       "source_url": "https://finance.yahoo.com/quote/VEQT.TO/",
       "events": [],
@@ -5431,7 +5431,7 @@
     },
     "VFV": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "VFV",
       "source_url": "https://finance.yahoo.com/quote/VFV.TO/",
       "events": [],
@@ -5439,7 +5439,7 @@
     },
     "VGRO": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "VGRO",
       "source_url": "https://finance.yahoo.com/quote/VGRO.TO/",
       "events": [],
@@ -5447,7 +5447,7 @@
     },
     "VIU": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "VIU",
       "source_url": "https://finance.yahoo.com/quote/VIU.TO/",
       "events": [],
@@ -5455,7 +5455,7 @@
     },
     "VNP": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "VNP.TO",
       "source_url": "https://www.marketbeat.com/stocks/TSE/VNP/earnings/",
       "events": [
@@ -5530,7 +5530,7 @@
     },
     "WCN": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "WCN",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/WCN/earnings/",
       "events": [
@@ -5600,7 +5600,7 @@
     },
     "WFC": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "WFC",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/WFC/earnings/",
       "events": [
@@ -5670,7 +5670,7 @@
     },
     "WMT": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "WMT",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/WMT/earnings/",
       "events": [
@@ -5749,7 +5749,7 @@
     },
     "WSP": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "WSP.TO",
       "source_url": "https://www.marketbeat.com/stocks/TSE/WSP/earnings/",
       "events": [
@@ -5836,7 +5836,7 @@
     },
     "XBB": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "XBB",
       "source_url": "https://finance.yahoo.com/quote/XBB.TO/",
       "events": [],
@@ -5844,7 +5844,7 @@
     },
     "XEF": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "XEF",
       "source_url": "https://finance.yahoo.com/quote/XEF.TO/",
       "events": [],
@@ -5852,7 +5852,7 @@
     },
     "XEQT": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "XEQT",
       "source_url": "https://finance.yahoo.com/quote/XEQT.TO/",
       "events": [],
@@ -5860,7 +5860,7 @@
     },
     "XGD": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "XGD",
       "source_url": "https://finance.yahoo.com/quote/XGD.TO/",
       "events": [],
@@ -5868,7 +5868,7 @@
     },
     "XGRO": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "XGRO",
       "source_url": "https://finance.yahoo.com/quote/XGRO.TO/",
       "events": [],
@@ -5876,7 +5876,7 @@
     },
     "XHY": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "XHY",
       "source_url": "https://finance.yahoo.com/quote/XHY.TO/",
       "events": [],
@@ -5884,7 +5884,7 @@
     },
     "XIC": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "XIC",
       "source_url": "https://finance.yahoo.com/quote/XIC.TO/",
       "events": [],
@@ -5892,7 +5892,7 @@
     },
     "XIG": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "XIG",
       "source_url": "https://finance.yahoo.com/quote/XIG.TO/",
       "events": [],
@@ -5900,7 +5900,7 @@
     },
     "XIU": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "XIU",
       "source_url": "https://finance.yahoo.com/quote/XIU.TO/",
       "events": [],
@@ -5908,7 +5908,7 @@
     },
     "XLF": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "XLF",
       "source_url": "https://finance.yahoo.com/quote/XLF/",
       "events": [],
@@ -5916,7 +5916,7 @@
     },
     "XOM": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "XOM",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/XOM/earnings/",
       "events": [
@@ -5957,7 +5957,7 @@
     },
     "XSB": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "XSB",
       "source_url": "https://finance.yahoo.com/quote/XSB.TO/",
       "events": [],
@@ -5965,7 +5965,7 @@
     },
     "XSP": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "XSP",
       "source_url": "https://finance.yahoo.com/quote/XSP.TO/",
       "events": [],
@@ -5973,7 +5973,7 @@
     },
     "XSU": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "XSU",
       "source_url": "https://finance.yahoo.com/quote/XSU.TO/",
       "events": [],
@@ -5981,7 +5981,7 @@
     },
     "XUS": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "XUS",
       "source_url": "https://finance.yahoo.com/quote/XUS.TO/",
       "events": [],
@@ -5989,7 +5989,7 @@
     },
     "ZAG": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "ZAG",
       "source_url": "https://finance.yahoo.com/quote/ZAG.TO/",
       "events": [],
@@ -5997,7 +5997,7 @@
     },
     "ZEB": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "ZEB",
       "source_url": "https://finance.yahoo.com/quote/ZEB.TO/",
       "events": [],
@@ -6005,7 +6005,7 @@
     },
     "ZLB": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "ZLB",
       "source_url": "https://finance.yahoo.com/quote/ZLB.TO/",
       "events": [],
@@ -6013,7 +6013,7 @@
     },
     "ZRE": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "ZRE",
       "source_url": "https://finance.yahoo.com/quote/ZRE.TO/",
       "events": [],
@@ -6021,7 +6021,7 @@
     },
     "ZUH": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-10-27T09:37:52.827370+00:00",
+      "fetched_at": "2026-10-27T09:53:17.791430+00:00",
       "company_symbol": "ZUH",
       "source_url": "https://finance.yahoo.com/quote/ZUH.TO/",
       "events": [],
