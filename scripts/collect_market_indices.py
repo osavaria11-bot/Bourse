@@ -6,7 +6,7 @@ import argparse
 import calendar
 import json
 import math
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from urllib.parse import quote, urlencode
 from urllib.request import Request, urlopen
@@ -14,8 +14,10 @@ from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 try:
     from scripts import generate_daily_briefing as macro
+    from scripts import daily_fnb as daily
 except ModuleNotFoundError:
     import generate_daily_briefing as macro
+    import daily_fnb as daily
 
 ROOT = Path(__file__).resolve().parents[1]
 MARKETS = [
@@ -82,6 +84,43 @@ def parse_history(payload: dict, symbol: str, now: datetime, currency: str | Non
         raise macro.SourceError(f"{symbol}: moins de deux clôtures valides")
     return history
 
+def complete_etf_history(definition: dict, history: list[list], now: datetime, instrument_type=None) -> tuple[list[list], dict | None]:
+    """Append missing Cboe ETF closes from the existing official-market pipeline.
+
+    Never overwrite Yahoo history, mix listings or use a live quote. The last
+    Yahoo close must agree with the official anchor before adding later days.
+    """
+    symbol = definition["quote_symbol"]
+    if (definition.get("currency") != "CAD" or not symbol.endswith(".NE")
+            or str(instrument_type or definition.get("instrument_type", "")).upper() != "ETF"):
+        return history, None
+    expected = daily.completed_session(now)
+    last, close = next(row for row in reversed(history) if row[1] is not None)
+    if last >= expected.isoformat():
+        return history, None
+    if (expected - datetime.fromisoformat(last).date()).days > 10:
+        raise macro.SourceError(symbol + ": historique trop ancien pour compléter les clôtures")
+    official = daily.tmx_closes(daily.Client(), symbol[:-3] + ":CC", last, expected.isoformat())
+    anchor = official.get(last, {}).get("close")
+    if (not isinstance(anchor, (int, float)) or isinstance(anchor, bool) or not math.isfinite(anchor) or anchor <= 0
+            or abs(anchor / close - 1) > .0001):
+        raise macro.SourceError(symbol + ": désaccord sur la clôture d’ancrage Yahoo/TMX")
+    additions = {}
+    day = datetime.fromisoformat(last).date() + timedelta(days=1)
+    while day <= expected:
+        if daily.trading_day(day):
+            value = official.get(day.isoformat(), {}).get("close")
+            if not isinstance(value, (int, float)) or isinstance(value, bool) or not math.isfinite(value) or value <= 0:
+                raise macro.SourceError(symbol + ": clôture officielle manquante au " + day.isoformat())
+            additions[day.isoformat()] = round(value, 6)
+        day += timedelta(days=1)
+    merged = dict(history); merged.update(additions)
+    source = {"id": "tmx_closing_history", "source_url": official[expected.isoformat()]["source_url"],
+              "date": expected.isoformat(), "checked_at": now.isoformat(), "anchor_date": last,
+              "anchor_close": close, "dates": list(additions), "history_source_url": definition["source_url"]}
+    return [[day, value] for day, value in sorted(merged.items())], source
+
+
 def fetch_index(definition: dict, now: datetime) -> dict:
     symbol = definition["quote_symbol"]
     if definition.get("history_years"):
@@ -101,7 +140,12 @@ def fetch_index(definition: dict, now: datetime) -> dict:
             with urlopen(request, timeout=20) as response:
                 payload = json.load(response)
             history = parse_history(payload, symbol, now, definition.get("currency"))
-            return {**macro.summarize(definition, history, now), "source_url": definition["source_url"]}
+            history, source = complete_etf_history(definition, history, now,
+                payload["chart"]["result"][0]["meta"].get("instrumentType"))
+            point = {**macro.summarize(definition, history, now), "source_url": definition["source_url"]}
+            if source:
+                point.update(observation_source=source, source_url=source["source_url"], source_label="Yahoo Finance / TMX Money")
+            return point
         except (OSError, ValueError, macro.SourceError) as error:
             last_error = error
     raise macro.SourceError(f"{symbol}: cotations inaccessibles ({last_error})")
@@ -118,7 +162,9 @@ def main(argv=None) -> int:
         data["data_provider"] = "Yahoo Finance — indices boursiers et FNB EEM et FEQT, clôtures quotidiennes"
         urls = {p["id"]: p["source_url"] for p in definitions()}
         for point in data["series"]:
-            point["source_url"] = urls[point["id"]]
+            point["source_url"] = point.get("observation_source", {}).get("source_url") or urls[point["id"]]
+        if any(point.get("observation_source", {}).get("id") == "tmx_closing_history" for point in data["series"]):
+            data["data_provider"] += "; TMX Money pour clôtures FNB manquantes, ancre vérifiée"
         macro.atomic_write_json(output, data, compact=True)
     except macro.SourceError as error:
         print(str(error))

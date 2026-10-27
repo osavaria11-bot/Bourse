@@ -20,6 +20,44 @@ def payload():
         "indicators": {"quote": [{"close": [60.0, 61.0]}]}}]}}
 
 class MarketHistoryTests(unittest.TestCase):
+    def test_missing_cboe_etf_session_uses_a_verified_official_anchor_without_rewriting_history(self):
+        definition = {"id": "FEQT", "quote_symbol": "FEQT.NE", "currency": "CAD",
+                      "source_url": "https://finance.yahoo.com/quote/FEQT.NE/"}
+        history = [["2026-10-07", 60.0], ["2026-10-08", 61.0]]
+        original = copy.deepcopy(history)
+        official = {"2026-10-08": {"close": 61.0}, "2026-10-09": {"close": 62.0,
+                    "source_url": "https://money.tmx.com/en/quote/FEQT%3ACC"}}
+        with patch.object(markets.daily, "tmx_closes", return_value=official) as fetch:
+            merged, source = markets.complete_etf_history(definition, history, NOW, "ETF")
+        self.assertEqual(history, original)
+        self.assertEqual(merged, original + [["2026-10-09", 62.0]])
+        self.assertEqual(source["dates"], ["2026-10-09"])
+        self.assertEqual((source["anchor_date"], source["anchor_close"]), ("2026-10-08", 61.0))
+        self.assertEqual(fetch.call_args.args[1:], ("FEQT:CC", "2026-10-08", "2026-10-09"))
+        response = payload()
+        response["chart"]["result"][0]["meta"].update(symbol="FEQT.NE", currency="CAD", instrumentType="ETF")
+        response["chart"]["result"][0]["timestamp"] = [int(datetime(2026, 10, day, 20, tzinfo=timezone.utc).timestamp()) for day in (7, 8)]
+        registered = next(d for d in markets.definitions() if d["id"] == "FEQT")
+        with patch.object(markets, "urlopen", return_value=io.StringIO(json.dumps(response))), patch.object(markets.daily, "tmx_closes", return_value=official):
+            point = markets.fetch_index(registered, NOW)
+        self.assertEqual((point["date"], point["value"]), ("2026-10-09", 62.0))
+        self.assertEqual(point["source_url"], official["2026-10-09"]["source_url"])
+        self.assertEqual(point["observation_source"]["anchor_date"], "2026-10-08")
+        # Tuesday morning follows Thanksgiving in Toronto; Monday is not a session.
+        holiday = datetime(2026, 10, 13, 10, tzinfo=timezone.utc)
+        with patch.object(markets.daily, "tmx_closes") as fetch:
+            self.assertEqual(markets.complete_etf_history(definition, merged, holiday, "ETF"), (merged, None))
+            fetch.assert_not_called()
+        for invalid in ({"2026-10-08": {"close": 61.0}},
+                        {**official, "2026-10-08": {"close": 60.5}},
+                        {**official, "2026-10-09": {"close": float("nan")}}):
+            with patch.object(markets.daily, "tmx_closes", return_value=invalid), self.assertRaises(markets.macro.SourceError):
+                markets.complete_etf_history(definition, history, NOW, "ETF")
+        with patch.object(markets.daily, "tmx_closes") as fetch:
+            self.assertEqual(markets.complete_etf_history({**definition, "quote_symbol": "MAXQ.NE"}, history, NOW, "EQUITY"), (history, None))
+            self.assertEqual(markets.complete_etf_history({**definition, "currency": "USD"}, history, NOW, "ETF"), (history, None))
+            fetch.assert_not_called()
+
     def test_feqt_uses_the_canadian_etf_listing(self):
         definition = next(d for d in markets.definitions() if d["id"] == "FEQT")
         self.assertEqual(definition["quote_symbol"], "FEQT.NE")

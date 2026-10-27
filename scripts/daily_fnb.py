@@ -16,7 +16,10 @@ from pathlib import Path
 from urllib.parse import quote, urlencode
 from zoneinfo import ZoneInfo
 
-from fnb_sources import Client, previous_trading_day
+try:
+    from .fnb_sources import Client, previous_trading_day
+except ImportError:
+    from fnb_sources import Client, previous_trading_day
 
 TZ = ZoneInfo("America/Toronto")
 START = "2026-10-19"

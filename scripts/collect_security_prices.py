@@ -31,7 +31,9 @@ def main(argv=None) -> int:
         data.update(kind="security_prices", data_provider="Yahoo Finance — clôtures et USD/CAD")
         urls = {p["id"]: p["source_url"] for p in config}
         for point in data["series"]:
-            point["source_url"] = urls[point["id"]]
+            point["source_url"] = point.get("observation_source", {}).get("source_url") or urls[point["id"]]
+        if any(point.get("observation_source", {}).get("id") == "tmx_closing_history" for point in data["series"]):
+            data["data_provider"] += "; TMX Money pour clôtures FNB manquantes, ancre vérifiée"
         markets.macro.atomic_write_json(output, data, compact=True)
     except markets.macro.SourceError as error:
         print(str(error)); return 1
