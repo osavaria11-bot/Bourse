@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "status": "retrying",
-  "checked_at": "2026-10-27T02:49:40-04:00",
+  "checked_at": "2026-10-27T05:13:14-04:00",
   "expected_session": "2026-10-26",
   "message": "Clôtures incomplètes : dernier historique validé conservé. Reprise automatique.",
-  "error": "Unconfirmed historical close revision: FEQT"
+  "error": "Unconfirmed historical close revision: FINN"
 }
