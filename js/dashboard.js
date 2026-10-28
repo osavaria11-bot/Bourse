@@ -7,6 +7,7 @@
   const MARKET_CACHE_KEY = "savy:market-indices:v1";
   const ODDS_CACHE_KEY = "savy:rate-odds:v1";
   let oddsDataset = null;
+  let oddsExpiryTimer = null;
   const MARKET_INDICATORS = {
     VIXCLS: {id: "VIXCLS", symbol: "^VIX", unit: "points"},
     NASDAQXAU: {id: "NASDAQXAU", symbol: "^XAU", unit: "points"},
@@ -162,9 +163,12 @@
     $("#kpis").replaceChildren(fragment);
   }
   function renderOdds(dataset, cached = false) {
+    clearTimeout(oddsExpiryTimer);
+    let expiresIn = Infinity;
     const host = $("#rateOdds"), fragment = document.createDocumentFragment();
     for (const key of ["fed", "canada"]) {
       const odds = U.rateOddsFor(dataset, key), row = odds?.row;
+      if (odds?.expiresIn > 0) expiresIn = Math.min(expiresIn, odds.expiresIn);
       const card = el("article", "odds-card");
       card.append(el("h3", "", key === "fed" ? "Réserve fédérale américaine" : "Banque du Canada"));
       const source = el("a", "meta", "Voir les probabilités chez BlueGamma ↗");
@@ -185,6 +189,8 @@
       card.append(source); fragment.append(card);
     }
     host.replaceChildren(fragment);
+    // Expire already displayed odds even if the next network refresh fails.
+    if (Number.isFinite(expiresIn)) oddsExpiryTimer = setTimeout(() => renderOdds(dataset, cached), expiresIn);
   }
   async function loadOdds() {
     try {

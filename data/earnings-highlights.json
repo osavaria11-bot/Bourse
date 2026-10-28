@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "reviewed_earnings_highlights",
-  "reviewed_at": "2026-10-27T09:29:55.474202+00:00",
+  "reviewed_at": "2026-10-28T09:24:11.928484+00:00",
   "reports": {
     "NFLX:2026-10-20": {
       "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-20-netflix-inc-stock/",
@@ -337,6 +337,16 @@
         "verified_at": "2026-10-27T09:29:55.474202+00:00",
         "reason": "Le communiqué officiel du 26 octobre 2026 donne 5,83 G$ US de revenus au T3; MarketBeat indiquait 5,74 G$. Consensus du fournisseur conservé."
       }
+    },
+    "V:2026-10-27": {
+      "source_url": "https://stockanalysis.com/stocks/v/transcripts/706676-q4-2026/",
+      "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-27-visa-inc-stock/",
+      "messages": [
+        "Pour l’exercice 2027, Chris Suh vise une croissance ajustée des revenus et du BPA proche du bas des taux à deux chiffres, avec une borne haute un peu plus élevée pour le BPA. Ce sont des indications qualitatives, à devises constantes et hors acquisitions; elles supposent une consommation résistante et un environnement macro stable.",
+        "Environ 25 % des volumes seront renouvelés en 2027, contre 20 % en 2026 : Visa prévoit une accélération des incitatifs. Ils montent déjà de 21 % au T4, à 5,1 G$ US. Ma lecture : sécuriser les grands clients protège le réseau, mais réduit le levier immédiat sur le revenu net.",
+        "Les paiements progressent d’environ 9 % à devises constantes, et le transfrontalier hors Europe de 14 %. Chris Suh attribue une partie du dépassement du BPA à un taux d’impôt de 18,4 %, inférieur aux attentes : cet avantage ne doit pas être assimilé à une accélération opérationnelle durable.",
+        "Au T4, Visa rachète environ 4 G$ US d’actions et verse 1,3 G$ de dividendes; il reste 24,4 G$ d’autorisation de rachat. Le dividende trimestriel augmente de 16 %, à 0,78 $. La direction prévoit des dépenses ajustées en croissance un peu inférieure aux revenus, condition à surveiller pour les marges."
+      ]
     }
   }
 }

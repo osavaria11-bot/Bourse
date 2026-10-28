@@ -4,9 +4,10 @@ from __future__ import annotations
 
 import argparse
 import re
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timezone, time
 from html.parser import HTMLParser
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 try:
     from scripts import generate_daily_briefing as macro
@@ -37,7 +38,7 @@ class VisibleText(HTMLParser):
         if not self.hidden:
             self.parts.append(data)
 
-def parse_page(raw: str, key: str, today: date) -> dict:
+def parse_page(raw: str, key: str, today: date, *, now: datetime | None = None) -> dict:
     parser = VisibleText()
     parser.feed(raw)
     visible = " ".join(parser.parts)
@@ -49,7 +50,13 @@ def parse_page(raw: str, key: str, today: date) -> dict:
     meeting_date = datetime.strptime(meeting.group(1), "%d %b %Y").date()
     as_of = datetime.strptime(dated.group(1), "%d %b %Y").date()
     hike, hold, cut = map(int, odds.groups())
-    if not (as_of <= today < meeting_date and 0 <= (today - as_of).days <= 7 and
+    # Scheduled publication times, in Toronto: BoC 09:45, FOMC 14:00.
+    # Sources: bankofcanada.ca/2026/10/fad-announcement-release-mpr-2026-10-28/
+    # and federalreserve.gov/newsevents/2026-october.htm.
+    decision_at = datetime.combine(meeting_date, time(9, 45) if key == "canada" else time(14), ZoneInfo("America/Toronto"))
+    if not (as_of <= today <= meeting_date and as_of <= meeting_date
+            and (now is None or now < decision_at)
+            and 0 <= (today - as_of).days <= 7 and
             all(0 <= n <= 100 for n in (hike, hold, cut)) and 99 <= hike + hold + cut <= 101):
         raise macro.SourceError(f"{key}: date ou probabilités incohérentes")
     label, methodology, url = SOURCES[key]
@@ -63,7 +70,7 @@ def collect(previous: dict | None, now: datetime, fetcher=None) -> dict:
     decisions = []
     for key, (_, methodology, url) in SOURCES.items():
         try:
-            decisions.append(parse_page((fetcher or macro.fetch_text)(url), key, today))
+            decisions.append(parse_page((fetcher or macro.fetch_text)(url), key, today, now=now))
         except Exception as error:
             cached = old.get(key)
             # Preserve the actual observation date; the client hides old or past-meeting odds.

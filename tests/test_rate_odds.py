@@ -1,6 +1,6 @@
 """Check dated swap-implied odds never turn into unsourced current probabilities."""
 import unittest
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 
 from scripts import collect_rate_odds as odds
 
@@ -27,6 +27,20 @@ class RateOddsTests(unittest.TestCase):
         result = odds.collect(previous, NOW, fetcher=lambda url: (_ for _ in ()).throw(ValueError("offline")))
         self.assertEqual([row["status"] for row in result["decisions"]], ["unavailable", "cached"])
         self.assertEqual(result["decisions"][1]["as_of"], "2026-10-09")
+
+    def test_decision_day_odds_remain_valid_only_before_official_release(self):
+        html = HTML.replace("09 Oct 2026", "28 Oct 2026")
+        for key, release in [("canada", "2026-10-28T13:45:00+00:00"), ("fed", "2026-10-28T18:00:00+00:00")]:
+            stamp = datetime.fromisoformat(release)
+            before = stamp - timedelta(seconds=1)
+            row = odds.parse_page(html, key, before.date(), now=before)
+            self.assertEqual(row["as_of"], "2026-10-28")
+            with self.assertRaises(odds.macro.SourceError):
+                odds.parse_page(html, key, stamp.date(), now=stamp)
+            # On outage, the preserved observation remains dated; the UI must
+            # independently apply the same expiry to this cached row.
+            kept = odds.collect({"decisions": [row]}, stamp, fetcher=lambda url: html)
+            self.assertEqual(next(x for x in kept["decisions"] if x["id"] == key)["status"], "cached")
 
 if __name__ == "__main__":
     unittest.main()

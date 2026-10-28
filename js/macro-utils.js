@@ -231,16 +231,22 @@
         dataset?.schema_version !== 1 || dataset.kind !== "rate_odds" || !Array.isArray(dataset.decisions)) return null;
     const row = dataset.decisions.find(item => item?.id === id);
     if (!row || !isDate(row.as_of) || !isDate(row.meeting_date)) return null;
-    const parts = new Intl.DateTimeFormat("en-US", {timeZone: "America/Toronto", year: "numeric", month: "2-digit", day: "2-digit"}).formatToParts(now);
+    const parts = new Intl.DateTimeFormat("en-US", {timeZone: "America/Toronto", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hourCycle: "h23"}).formatToParts(now);
     const part = type => parts.find(item => item.type === type).value;
     const today = part("year") + "-" + part("month") + "-" + part("day");
     // A published source date can match the collection's UTC day before Quebec's day rolls over.
     const sourceDay = new Date(Math.min(stamp, collected)).toISOString().slice(0, 10);
     const age = (stamp - Date.parse(row.as_of + "T23:59:59Z")) / DAY;
-    if (age < -1 || age > 5 || row.as_of > sourceDay || row.as_of >= row.meeting_date || row.meeting_date < today ||
+    // Scheduled BoC/FOMC releases are 09:45/14:00 Toronto. Expire even a cached
+    // observation at the release, rather than showing pre-decision odds all day.
+    const releaseMinute = id === "canada" ? 9 * 60 + 45 : 14 * 60;
+    const released = row.meeting_date === today && Number(part("hour")) * 60 + Number(part("minute")) >= releaseMinute;
+    if (age < -1 || age > 5 || row.as_of > sourceDay || row.as_of > row.meeting_date || row.meeting_date < today || released ||
         ![row.hike, row.hold, row.cut].every(n => Number.isInteger(n) && n >= 0 && n <= 100) ||
         Math.abs(row.hike + row.hold + row.cut - 100) > 1) return null;
-    return {row, age, sourceDayAhead: row.as_of > today};
+    const expiresIn = row.meeting_date === today ?
+      (releaseMinute - Number(part("hour")) * 60 - Number(part("minute"))) * 60000 - now.getSeconds() * 1000 - now.getMilliseconds() : null;
+    return {row, age, sourceDayAhead: row.as_of > today, expiresIn};
   }
   return { RANGES, MARKET_RANGES, isDate, validNumber, parseTimestamp, normalizeDataset, formatNumber, observationLabel, timestampLabel, ratePublicationNote, changeLabel, filterSeries, rangeStart, visibleHistory, marketPeriod, niceExtent, nearestPoint, csvCell, toCSV, snapshotCSV, historyCSV, ageDays, rateOddsFor };
 });

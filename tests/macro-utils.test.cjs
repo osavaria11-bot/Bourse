@@ -265,13 +265,25 @@ test("Odds still reject genuine future dates, uncollected observations, stale da
   assert.equal(U.rateOddsFor(null, "fed", now), null);
   assert.equal(U.rateOddsFor(oddsSample(), "unknown", now), null);
 });
-test("Decision expiry follows Quebec's calendar through winter and summer UTC rollovers", () => {
-  for (const [stamp, as_of, meeting_date] of [["2026-07-14T02:00:00Z", "2026-07-12", "2026-07-13"],
-    ["2026-12-16T04:00:00Z", "2026-12-14", "2026-12-15"]]) {
+test("Decision expiry follows official Toronto release times in summer and winter", () => {
+  for (const [stamp, as_of, meeting_date] of [["2026-07-13T17:59:59Z", "2026-07-13", "2026-07-13"],
+    ["2026-12-15T18:59:59Z", "2026-12-15", "2026-12-15"]]) {
     const now = new Date(stamp), data = {schema_version: 1, kind: "rate_odds", generated_at: stamp,
       decisions: [{id: "fed", as_of, meeting_date, hike: 30, hold: 70, cut: 0, status: "cached"}]};
     assert.equal(U.rateOddsFor(data, "fed", now).row.as_of, as_of);
-    assert.equal(U.rateOddsFor(data, "fed", new Date(now.getTime() + 3 * 3600000)), null);
+    assert.equal(U.rateOddsFor(data, "fed", new Date(now.getTime() + 1000)), null);
   }
+});
+test("Canadian and US decision-day odds expire independently, including preserved cache", () => {
+  const data = {schema_version:1,kind:"rate_odds",generated_at:"2026-10-28T09:00:00Z",decisions:[
+    {id:"fed",as_of:"2026-10-28",meeting_date:"2026-10-28",hike:7,hold:93,cut:0,status:"fresh"},
+    {id:"canada",as_of:"2026-10-27",meeting_date:"2026-10-28",hike:95,hold:5,cut:0,status:"cached"}
+  ]}, before=structuredClone(data);
+  assert.equal(U.rateOddsFor(data,"canada",new Date("2026-10-28T13:44:59Z")).row.hike,95);
+  assert.equal(U.rateOddsFor(data,"canada",new Date("2026-10-28T13:44:59Z")).expiresIn,1000);
+  assert.equal(U.rateOddsFor(data,"canada",new Date("2026-10-28T13:45:00Z")),null);
+  assert.equal(U.rateOddsFor(data,"fed",new Date("2026-10-28T13:45:00Z")).row.hold,93);
+  assert.equal(U.rateOddsFor(data,"fed",new Date("2026-10-28T18:00:00Z")),null);
+  assert.deepEqual(data,before);
 });
 

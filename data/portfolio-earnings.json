@@ -5340,10 +5340,28 @@
           },
           "messages": [
             {
-              "text": "Visa delivered strong fiscal 2026 results",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-27-visa-inc-stock/",
-              "kind": "call_topic"
+              "text": "Pour l’exercice 2027, Chris Suh vise une croissance ajustée des revenus et du BPA proche du bas des taux à deux chiffres, avec une borne haute un peu plus élevée pour le BPA. Ce sont des indications qualitatives, à devises constantes et hors acquisitions; elles supposent une consommation résistante et un environnement macro stable.",
+              "language": "fr",
+              "source_url": "https://stockanalysis.com/stocks/v/transcripts/706676-q4-2026/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Environ 25 % des volumes seront renouvelés en 2027, contre 20 % en 2026 : Visa prévoit une accélération des incitatifs. Ils montent déjà de 21 % au T4, à 5,1 G$ US. Ma lecture : sécuriser les grands clients protège le réseau, mais réduit le levier immédiat sur le revenu net.",
+              "language": "fr",
+              "source_url": "https://stockanalysis.com/stocks/v/transcripts/706676-q4-2026/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Les paiements progressent d’environ 9 % à devises constantes, et le transfrontalier hors Europe de 14 %. Chris Suh attribue une partie du dépassement du BPA à un taux d’impôt de 18,4 %, inférieur aux attentes : cet avantage ne doit pas être assimilé à une accélération opérationnelle durable.",
+              "language": "fr",
+              "source_url": "https://stockanalysis.com/stocks/v/transcripts/706676-q4-2026/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Au T4, Visa rachète environ 4 G$ US d’actions et verse 1,3 G$ de dividendes; il reste 24,4 G$ d’autorisation de rachat. Le dividende trimestriel augmente de 16 %, à 0,78 $. La direction prévoit des dépenses ajustées en croissance un peu inférieure aux revenus, condition à surveiller pour les marges.",
+              "language": "fr",
+              "source_url": "https://stockanalysis.com/stocks/v/transcripts/706676-q4-2026/",
+              "kind": "reviewed_summary"
             }
           ],
           "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-27-visa-inc-stock/",
@@ -5355,6 +5373,10 @@
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=V&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://stockanalysis.com/stocks/v/transcripts/706676-q4-2026/"
             }
           ]
         }
@@ -6001,5 +6023,6 @@
       "source_warnings": []
     }
   },
-  "errors": {}
+  "errors": {},
+  "analysis_reviewed_at": "2026-10-28T09:24:11.928484+00:00"
 }

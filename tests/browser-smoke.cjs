@@ -456,6 +456,26 @@ async function run() {
     await oddsPage.waitForFunction(() => document.querySelectorAll(".odds-bars").length === 2);
     assert.match(await fedOdds.innerText(), /cotes du 2026-10-13.*dernière valeur conservée/);
     await oddsContext.close();
+    const expiryContext = await browser.newContext({timezoneId:"America/Toronto"});
+    const expiryPage = await componentPage(expiryContext);
+    expiryPage.on("pageerror", error => errors.push(error.message));
+    await expiryPage.route("https://**", route => route.abort());
+    await expiryPage.clock.install({time:new Date("2026-10-28T13:44:58Z")});
+    await expiryPage.clock.pauseAt(new Date("2026-10-28T13:44:59Z"));
+    const decisionOdds = {schema_version:1,kind:"rate_odds",generated_at:"2026-10-28T09:00:00Z",decisions:[
+      {id:"fed",as_of:"2026-10-28",meeting_date:"2026-10-28",hike:7,hold:93,cut:0,status:"fresh",methodology:"SOFR OIS"},
+      {id:"canada",as_of:"2026-10-27",meeting_date:"2026-10-28",hike:95,hold:5,cut:0,status:"cached",methodology:"CORRA OIS"}
+    ]};
+    await expiryPage.route("**/data/rate-odds.json?*", route => route.fulfill({status:200,contentType:"application/json",body:JSON.stringify(decisionOdds)}));
+    await expiryPage.goto(url);
+    await expiryPage.waitForFunction(() => document.querySelectorAll(".odds-bars").length === 2);
+    await expiryPage.route("**/data/rate-odds.json?*", route => route.abort());
+    await expiryPage.clock.runFor(1000);
+    assert.equal(await expiryPage.locator(".odds-card").nth(1).locator(".odds-bars").count(),0,"Cached Canadian odds expire at 09:45 without another successful fetch");
+    assert.equal(await expiryPage.locator(".odds-card").first().locator(".odds-bars").count(),1,"Fed odds remain available before 14:00");
+    await expiryPage.clock.fastForward(4.25*3600000);
+    assert.equal(await expiryPage.locator(".odds-bars").count(),0,"US odds expire independently at 14:00 even offline");
+    await expiryContext.close();
     assert.deepEqual(errors, []);
     console.log("Browser checks passed: " + indicatorCount + " macro cards, live FX, both policy rates and meeting odds, Quebec evening UTC odds rollover, sourced selective briefing, offline preservation and 320px mobile.");
     await freshContext.close(); await context.close();
