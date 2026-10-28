@@ -66,5 +66,10 @@ test('median, percentile and windowed RSI use the same historical multiple defin
 test('snapshot validation rejects future, mismatched date, wrong stock, and duplicate observations',()=>{
   const s=snapshot();assert.equal(V.snapshot(s).date,s.date);assert.throws(()=>V.snapshot({...s,observed_at:'2027-01-01T22:00:00Z'},Date.parse('2026-10-28T22:00:00Z')));
   assert.throws(()=>V.snapshot({...s,date:'2026-01-01'}));assert.throws(()=>V.history({schema_version:1,kind:'savy_stock_valuation',id:'BAD',observations:[s]},'TEST'));
+  assert.throws(()=>V.snapshot({...s,consensus_date:'2026-01-03'}));
   assert.throws(()=>V.history({schema_version:1,kind:'savy_stock_valuation',id:'TEST',observations:[s,s]},'TEST'));
+});
+test('old consensus dates are visible inputs and cannot generate a current trading RSI',()=>{
+  const observations=businessDays(35).map((d,i)=>({...snapshot(d,100+i),consensus_date:'2025-12-01'}));
+  const model=V.model({observations},observations.at(-1),1,'5Y');assert.equal(model.pe.latestRsi,null);assert.equal(model.pe.stats.available,false);
 });

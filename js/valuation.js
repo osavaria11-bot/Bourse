@@ -46,7 +46,7 @@
     "L’historique utilise les consensus effectivement archivés à chaque date. Il commence au premier relevé vérifié; choisir 5 ans ou Maximum n’invente pas les années manquantes. La table annuelle et le graphique estimé générique de MarketScreener ne sont pas réétiquetés comme une série Bloomberg 1BF/2BF. Un historique antérieur nécessite une source de consensus datés pour ces mêmes horizons. Les bénéfices négatifs, le consensus manquant et l’EV/EBITDA non pertinent pour les sociétés financières restent N/D.",
     "La médiane, les bornes du 10e au 90e percentile et le percentile du niveau actuel portent sur les clôtures disponibles dans la période choisie. Ils exigent au moins 30 observations. Ils mesurent une position relative dans l’échantillon, sans signal automatique d’achat ou de vente. Le RSI est initialisé avant la fenêtre affichée quand l’historique le permet.",
     "Seules les actions individuelles sont incluses. Les CDR Microsoft et Sandisk sont reliés explicitement à l’action américaine sous-jacente; ses multiples ne sont pas calculés avec le cours du CDR. La composition privée des trois comptes est lue uniquement sur cet appareil. Les quantités et les prix moyens ne sont transmis à aucune source de valorisation.",
-    "Collecte quotidienne après clôture, prévue à 18 h 17, heure de Toronto, avec reprise à 21 h 17. L’onglet ouvert vérifie les données toutes les cinq minutes. Les dates du cours, du consensus et de la collecte sont distinctes; une source inaccessible conserve le dernier relevé avec sa date réelle."
+    "Collecte du consensus prévue chaque jour vers 18 h 17, heure de Toronto. Les clôtures sont aussi reprises à 18 h 47 et 21 h 17 en semaine. L’onglet ouvert vérifie les données toutes les cinq minutes. Quand le consensus ne peut être actualisé, le dernier consensus connu garde sa date et peut être revalorisé avec une nouvelle clôture. Il n’est jamais présenté comme une nouvelle estimation. Un consensus de plus de sept jours est exclu du RSI et des repères historiques."
   ]) method.append(node("p","meta",text));
   const links=node("p","meta");
   for (const [label,href] of [["Bloomberg · consensus datés","https://professional.bloomberg.com/products/data/enterprise-catalog/cofi/"],["Bloomberg · études techniques","https://assets.bbhub.io/professional/sites/10/RMB-Equity-Solutions.pdf"],["RSI de Wilder · Fidelity","https://www.fidelity.com/learning-center/trading-investing/technical-analysis/technical-indicator-guide/RSI"]]) {
@@ -98,7 +98,7 @@
     const model=V.model({...data,financial:member?.financial},latest,horizon,range,basis.value); current={id,model,latest};
     const age=latest?Date.now()-Date.parse(latest.observed_at):Infinity;
     const stale=cached||row?.fetch_status==="cached"||age>36*3600000;
-    status.textContent=(latest?"Consensus observé le "+dateLabel(latest.date)+(stale?" · dernier relevé conservé":"")+" · ":"")+
+    status.textContent=(latest?"Valorisation du "+dateLabel(latest.date)+" · consensus du "+dateLabel(latest.consensus_date||latest.date)+(stale?" conservé":"")+" · ":"")+
       (index?index.instruments.filter(i=>i.latest).length+"/"+config.instruments.length+" actions avec un relevé · ":"")+"Actualisation quotidienne après clôture";
     const mode=basis.value==="fiscal"?"Exercice fiscal FY"+horizon:"Prévisions "+(horizon===1?"des mois 1 à 12":"des mois 13 à 24");
     detail.replaceChildren(node("strong","",mode+" · "+(member?.title||"Choisis une action")));

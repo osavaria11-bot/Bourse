@@ -136,7 +136,28 @@ class ValuationTests(unittest.TestCase):
             with patch.object(C,'fetch',side_effect=C.SourceError('Unavailable')):
                 result=C.collect_one(STOCK,path,NOW)
             self.assertEqual(result['fetch_status'],'cached')
+            self.assertFalse(result.get('quote_collected', False))
             self.assertEqual(result['latest'],old['observations'][-1])
+
+    def test_new_close_uses_retained_consensus_without_redating_it(self):
+        with tempfile.TemporaryDirectory() as folder:
+            path=Path(folder)
+            snap=self.snapshot();snap.update(date='2026-10-27',observed_at='2026-10-27T22:00:00+00:00',price_date='2026-10-27')
+            old={'schema_version':1,'kind':'savy_stock_valuation','id':'TEST','source_url':URL,'observations':[snap]}
+            C.write(path/'TEST.json',old)
+            def quote(s,*args):
+                s.update(price_date='2026-10-28',price=165,price_fetch_status='fresh')
+                return s
+            with patch.object(C,'closing_price',side_effect=quote), patch.object(C,'fetch',side_effect=AssertionError('No MarketScreener request permitted in quotes-only mode')):
+                result=C.collect_one(STOCK,path,NOW,quotes_only=True)
+            self.assertEqual(result['fetch_status'],'cached')
+            self.assertTrue(result['quote_collected'])
+            self.assertEqual(result['latest']['date'],'2026-10-28')
+            self.assertEqual(result['latest']['consensus_date'],'2026-10-27')
+            self.assertEqual(result['latest']['consensus_observed_at'],'2026-10-27T22:00:00+00:00')
+            retained=C.read(path/'TEST.json')['observations']
+            self.assertEqual(retained[0],snap)
+            self.assertEqual(len(retained),2)
 
     def test_repository_universe_has_no_funds_and_keeps_every_archived_screener_member(self):
         config=json.loads((ROOT/'data/valuation-universe.json').read_text())

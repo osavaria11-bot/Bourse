@@ -30,7 +30,7 @@ async function check(browser,engine){
     for(const[suffix,positions]of Object.entries(profiles))localStorage.setItem('savy:private-holdings:v1'+suffix,JSON.stringify({schema_version:1,base_currency:'CAD',positions}));
   });
   await page.goto('http://127.0.0.1:'+server.address().port+'/#view=recherche&tab=valuation');
-  await page.waitForFunction(()=>document.querySelector('#valuationPeChart svg'));
+  await page.waitForFunction(()=>document.querySelector('#valuationPeChart svg')&&document.querySelector('#valuationMembership').textContent.includes('3/3 portefeuilles'));
   assert.equal(await page.locator('#page-recherche .portal-tabs a').allTextContents().then(a=>a.join('|')),'Recherche & suivi|Valorisation|Archives');
   assert.match(await page.locator('#valuationMembership').innerText(),/3\/3 portefeuilles/);
   const privateResult=await page.evaluate(()=>window.SavyPortfolioStocks.list());

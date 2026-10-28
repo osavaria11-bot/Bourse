@@ -35,7 +35,9 @@
         !url(s.source_url) || !/^[A-Z]{3}$/.test(s.currency) || !finite(s.price) || s.price <= 0 ||
         (s.enterprise_value_millions !== null && !finite(s.enterprise_value_millions)) || !Array.isArray(s.forecasts) ||
         !Number.isInteger(s.fiscal_month) || s.fiscal_month < 1 || s.fiscal_month > 12 ||
-        (s.price_date !== null && (!day(s.price_date) || s.price_date > s.date))) throw new Error("Relevé de consensus invalide");
+        (s.price_date !== null && (!day(s.price_date) || s.price_date > s.date)) ||
+        (s.consensus_date !== undefined && (!day(s.consensus_date) || s.consensus_date > s.date)) ||
+        (s.consensus_observed_at !== undefined && (!Number.isFinite(Date.parse(s.consensus_observed_at)) || Date.parse(s.consensus_observed_at) > Date.parse(s.observed_at)))) throw new Error("Relevé de consensus invalide");
     const seen = new Set();
     for (const p of s.forecasts) {
       if (!day(p.period_end) || seen.has(p.period_end) || (p.eps !== null && !finite(p.eps)) || (p.ebitda_millions !== null && !finite(p.ebitda_millions))) throw new Error("Prévision annuelle invalide");
@@ -128,7 +130,8 @@
     const present = latest ? values(latest, horizon, financial, basis) : {};
     const output = {};
     for (const key of ["pe", "ev_ebitda"]) {
-      const all = observations.filter(s=>s.price_date===s.date).map(s => [s.date, s.complete_session === true ? values(s, horizon, financial, basis)[key] : null]);
+      const all = observations.filter(s=>s.price_date===s.date).map(s => [s.date,
+        s.complete_session === true && Date.parse(s.date)-Date.parse(s.consensus_date||s.date)<=7*86400000 ? values(s, horizon, financial, basis)[key] : null]);
       const previousSessions = new Map(observations.filter(s=>s.previous_session_date).map(s=>[s.date,s.previous_session_date]));
       const relativeStrength = rsi(all, 14, previousSessions);
       const shown = all.filter(p => p[0] >= cutoff && p[0] <= end);

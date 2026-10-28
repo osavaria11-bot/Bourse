@@ -3,6 +3,7 @@
 import argparse
 import calendar
 import concurrent.futures
+from copy import deepcopy
 from datetime import date, datetime, timedelta, timezone
 from html.parser import HTMLParser
 import json
@@ -309,9 +310,9 @@ def reprice(payload, snapshot, instrument, now):
     # using the source's implied share count; debt stays at its reported value.
     old_cap = snapshot["market_cap_millions"]
     adjustment = snapshot["enterprise_value_millions"] - old_cap if snapshot["enterprise_value_millions"] is not None else None
-    snapshot["source_table_price"] = snapshot["price"]
-    snapshot["source_table_price_date"] = snapshot.get("price_date")
-    snapshot["source_table_market_cap_millions"] = old_cap
+    snapshot.setdefault("source_table_price", snapshot["price"])
+    snapshot.setdefault("source_table_price_date", snapshot.get("price_date"))
+    snapshot.setdefault("source_table_market_cap_millions", old_cap)
     snapshot["price"] = float(close)
     snapshot["market_cap_millions"] = old_cap * ratio
     snapshot["enterprise_value_millions"] = old_cap * ratio + adjustment if adjustment is not None else None
@@ -331,10 +332,14 @@ def closing_price(snapshot, instrument, now):
     for host in ("query1.finance.yahoo.com", "query2.finance.yahoo.com"):
         try:
             payload = json.loads(fetch("https://" + host + "/v8/finance/chart/" + urllib.parse.quote(symbol) + "?" + query))
-            return reprice(payload, snapshot, instrument, now)
+            result = reprice(payload, snapshot, instrument, now)
+            result["price_fetch_status"] = "fresh"
+            result.pop("price_refresh_error", None)
+            return result
         except Exception as error:
             errors.append(str(error))
     snapshot["price_refresh_error"] = errors[-1]
+    snapshot["price_fetch_status"] = "cached" if snapshot.get("price_date") else "unavailable"
     return snapshot
 
 
@@ -351,16 +356,49 @@ def preserve(previous, snapshot):
     return observations
 
 
-def collect_one(instrument, output, now):
+def closing_from_retained(instrument, previous, now, reason):
+    if not previous.get("observations"):
+        raise SourceError("Aucun consensus antérieur à conserver")
+    snapshot = deepcopy(previous["observations"][-1])
+    snapshot.setdefault("consensus_observed_at", snapshot["observed_at"])
+    snapshot.setdefault("consensus_date", snapshot["date"])
+    closing_price(snapshot, instrument, now)
+    if snapshot.get("price_fetch_status") != "fresh":
+        raise SourceError("Cours de clôture indisponible; consensus antérieur conservé")
+    snapshot["date"] = now.astimezone(TORONTO).date().isoformat()
+    snapshot["observed_at"] = now.isoformat()
+    snapshot["consensus_fetch_status"] = "cached"
+    snapshot["consensus_refresh_error"] = reason
+    snapshot["ratios"] = ratios(snapshot, instrument.get("financial", False))
+    local = now.astimezone(TORONTO)
+    snapshot["complete_session"] = local.hour >= 17 and snapshot["price_date"] == snapshot["date"] and local.weekday() < 5
+    return {**previous, "fetch_status":"cached", "checked_at":now.isoformat(),
+        "observations":preserve(previous, snapshot), "error":reason}
+
+
+def collect_one(instrument, output, now, quotes_only=False):
     path = output / (instrument["id"] + ".json")
     previous = read(path, {})
+    if quotes_only:
+        try:
+            item = closing_from_retained(instrument, previous, now, "Consensus conservé; collecte distincte des clôtures")
+            write(path, item)
+            return {**instrument, "fetch_status":"cached", "quote_collected":True, "source_url":item.get("source_url"), "latest":item["observations"][-1]}
+        except Exception as error:
+            return {**instrument, "fetch_status":"cached" if previous.get("observations") else "unavailable", "quote_collected":False,
+                "source_url":previous.get("source_url"), "error":str(error), "latest":previous.get("observations", [None])[-1]}
     try:
         url = resolve(instrument, previous.get("source_url"))
-        snapshot = table_snapshot(fetch(url), instrument, url, now)
+        financial_source = fetch(url)
+        consensus_time = datetime.now(timezone.utc)
+        snapshot = table_snapshot(financial_source, instrument, url, consensus_time)
+        snapshot.update(consensus_observed_at=consensus_time.isoformat(), consensus_date=consensus_time.astimezone(TORONTO).date().isoformat(), consensus_fetch_status="fresh")
         code = re.search(r"-(\d+)/valuation/$", url)[1]
         history = json.loads(fetch(HOST + "/async/graph/af/emy?" + urllib.parse.urlencode({"codeZB": code, "type": "PER"})))
         price_dates(history, snapshot, now)
         closing_price(snapshot, instrument, now)
+        observed = datetime.now(timezone.utc)
+        snapshot.update(observed_at=observed.isoformat(), date=observed.astimezone(TORONTO).date().isoformat())
         snapshot["ratios"] = ratios(snapshot, instrument.get("financial", False))
         snapshot["definition"] = "annual_consensus_calendar_day_blend"
         # A dated observation is only a daily close if both collection and the
@@ -372,9 +410,15 @@ def collect_one(instrument, output, now):
             "title": instrument["title"], "financial": instrument.get("financial", False),
             "source_url": url, "fetch_status": "fresh", "checked_at": now.isoformat(), "observations": observations}
         write(path, item)
-        return {**instrument, "fetch_status": "fresh", "source_url": url, "latest": snapshot}
+        return {**instrument, "fetch_status": "fresh", "quote_collected":snapshot.get("price_fetch_status")=="fresh", "source_url": url, "latest": snapshot}
     except Exception as error:
         if previous.get("observations"):
+            try:
+                item = closing_from_retained(instrument, previous, now, str(error))
+                write(path, item)
+                return {**instrument,"fetch_status":"cached","quote_collected":True,"source_url":item.get("source_url"),"error":str(error),"latest":item["observations"][-1]}
+            except Exception:
+                pass
             previous.update(fetch_status="cached", checked_at=now.isoformat(), error=str(error))
             write(path, previous)
             return {**instrument, "fetch_status": "cached", "source_url": previous.get("source_url"),
@@ -409,6 +453,7 @@ def main(argv=None):
     parser.add_argument("--output-dir", type=Path, default=ROOT / "data/valuations")
     parser.add_argument("--only", help="Identifiants publics à collecter, séparés par des virgules")
     parser.add_argument("--check", action="store_true")
+    parser.add_argument("--quotes-only", action="store_true", help="Actualiser les clôtures avec le consensus daté conservé, sans requête MarketScreener")
     args = parser.parse_args(argv)
     universe = read(ROOT / "data/valuation-universe.json")
     if args.check:
@@ -420,7 +465,7 @@ def main(argv=None):
     instruments = [row for row in universe["instruments"] if not selected or row["id"] in selected]
     results = []
     with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
-        jobs = {pool.submit(collect_one, row, args.output_dir, now): row for row in instruments}
+        jobs = {pool.submit(collect_one, row, args.output_dir, now, args.quotes_only): row for row in instruments}
         for job in concurrent.futures.as_completed(jobs):
             row = job.result()
             results.append(row)
@@ -430,10 +475,12 @@ def main(argv=None):
         results.extend(row for row in old if row["id"] not in selected)
     results.sort(key=lambda r: r["id"])
     coverage = {key: sum(row["fetch_status"] == key for row in results) for key in ("fresh", "cached", "unavailable")}
-    write(args.output_dir / "index.json", {"schema_version": 1, "kind": "savy_valuations", "generated_at": now.isoformat(),
+    collected_ids = {row["id"] for row in instruments}
+    coverage["quotes_fresh"] = sum(row.get("quote_collected") is True and row["id"] in collected_ids for row in results)
+    write(args.output_dir / "index.json", {"schema_version": 1, "kind": "savy_valuations", "generated_at": datetime.now(timezone.utc).isoformat(),
         "coverage": coverage, "instruments": results})
     print("Coverage:", coverage)
-    return 0 if coverage["fresh"] else 1
+    return 0 if coverage["fresh"] or coverage["quotes_fresh"] else 1
 
 
 if __name__ == "__main__":

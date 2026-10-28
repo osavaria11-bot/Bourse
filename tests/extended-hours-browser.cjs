@@ -35,6 +35,9 @@ async function main(){await new Promise(r=>server.listen(0,'127.0.0.1',r));let b
     for(const id of ['1','2','3']){if(id!=='1')await page.locator('[data-portfolio-id="'+id+'"]').click();
       await page.waitForFunction(id=>document.querySelector('#portfolio').dataset.portfolio===id,id);
       const positions=profiles[id],total=positions.reduce((s,p)=>s+p.quantity*base(p.ticker)*(p.currency==='USD'?1.4:1),0),usd=positions.filter(p=>p.currency==='USD').reduce((s,p)=>s+p.quantity*base(p.ticker)*1.4,0);
+      // The profile label is available before the asynchronous closing-price
+      // file. Wait for the calculated output rather than racing initialization.
+      await page.waitForFunction(({id,expected})=>document.querySelector('#portfolio').dataset.portfolio===id&&document.querySelector('#portfolioExtendedHours [data-extended-phase="pre"] strong')?.textContent===expected,{id,expected:'≈ +'+U.formatNumber(usd/total,2)+' %'});
       const text=await page.locator('#portfolioExtendedHours').innerText();assert.match(text,/Prémarché/);assert.match(text,/Après clôture/);
       const preText=await page.locator('#portfolioExtendedHours [data-extended-phase="pre"] strong').innerText();
       assert.equal(preText,'≈ +'+U.formatNumber(usd/total,2)+' %');

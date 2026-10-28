@@ -2,7 +2,9 @@ name: Daily stock valuations
 
 on:
   schedule:
-    - cron: "17 18,21 * * 1-5"
+    - cron: "47 18 * * 1-5"
+      timezone: "America/Toronto"
+    - cron: "17 21 * * 1-5"
       timezone: "America/Toronto"
   workflow_dispatch:
   push:
@@ -39,10 +41,13 @@ jobs:
         run: |
           python -m unittest discover -s tests -p test_valuations.py -v
           node --test tests/valuation-utils.test.cjs
-      - name: Collect public company forecasts without private holdings
+      - name: Collect native closing prices using the retained dated consensus
         id: collect
         continue-on-error: true
-        run: python -u scripts/collect_valuations.py
+        # MarketScreener rejects GitHub-hosted requests. The daily SAVY research
+        # automation refreshes consensus through its authorized public access;
+        # this independent runner never attempts to work around that rejection.
+        run: python -u scripts/collect_valuations.py --quotes-only
       - name: Validate dated observations and explicit coverage
         run: python scripts/collect_valuations.py --check
       - name: Publish only the new valuation observations
@@ -55,8 +60,8 @@ jobs:
           git pull --rebase origin main
           python scripts/collect_valuations.py --check
           git push origin HEAD:main
-      - name: Require at least one fresh source observation
+      - name: Require a newly collected closing price or consensus
         if: steps.collect.outcome != 'success'
         run: |
-          echo "::error::All sources unavailable; retained observations keep their original dates."
+          echo "::error::No closing prices or consensus collected; retained inputs keep their original dates."
           exit 1
