@@ -187,5 +187,30 @@ class ValuationTests(unittest.TestCase):
         self.assertTrue(all(i['type']=='stock' for i in config['instruments']))
         self.assertTrue(all(set(e['tickers']) <= ids for e in config['research_editions']))
 
+    def test_consensus_refresh_reuses_only_a_verified_close_of_the_same_listing_day_and_currency(self):
+        snap=self.snapshot();close=copy.deepcopy(snap)
+        close.update(price=165,price_date='2026-10-28',price_date_status='verified',price_symbol='TEST',price_source_url='https://finance.yahoo.com/quote/TEST/history/')
+        C.reuse_verified_close(snap,{'observations':[close]},STOCK)
+        self.assertEqual(snap['price'],165)
+        self.assertAlmostEqual(snap['market_cap_millions'],1650)
+        self.assertAlmostEqual(snap['enterprise_value_millions'],1850)
+        old=self.snapshot();close['price_date']='2026-10-27'
+        C.reuse_verified_close(old,{'observations':[close]},STOCK)
+        self.assertEqual(old['price'],150)
+
+    def test_consensus_only_mode_does_not_request_yahoo_or_a_quote_graph(self):
+        with tempfile.TemporaryDirectory() as folder:
+            output=Path(folder)
+            C.write(output/'TEST.json',{'source_url':URL,'observations':[]})
+            urls=[]
+            def allowed(url):
+                urls.append(url)
+                self.assertEqual(url,URL)
+                return source()
+            with patch.object(C,'fetch',side_effect=allowed):
+                result=C.collect_one(STOCK,output,datetime.now(timezone.utc),consensus_only=True)
+            self.assertEqual(result['fetch_status'],'fresh')
+            self.assertEqual(urls,[URL])
+
 
 if __name__ == '__main__': unittest.main()

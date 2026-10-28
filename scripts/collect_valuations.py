@@ -447,7 +447,29 @@ def closing_from_retained(instrument, previous, now, reason):
         "observations":preserve(previous, snapshot), "error":reason}
 
 
-def collect_one(instrument, output, now, quotes_only=False):
+def reuse_verified_close(snapshot, previous, instrument):
+    """Refresh consensus without requesting another provider or discarding an
+    already verified close of this same day, listing and reporting currency."""
+    close = (previous.get("observations") or [None])[-1]
+    expected = instrument.get("valuation_symbol", instrument["symbol"])
+    if not close or close.get("price_date") != snapshot["date"] or close.get("currency") != snapshot["currency"] or close.get("price_symbol") != expected or close.get("price_date_status") != "verified":
+        return snapshot
+    ratio = close["price"] / snapshot["price"]
+    if not .65 <= ratio <= 1.35:
+        return snapshot
+    cap = snapshot["market_cap_millions"]
+    adjustment = snapshot["enterprise_value_millions"] - cap if snapshot["enterprise_value_millions"] is not None else None
+    snapshot.update(source_table_price=snapshot["price"], source_table_market_cap_millions=cap,
+        price=close["price"], market_cap_millions=cap*ratio,
+        enterprise_value_millions=cap*ratio+adjustment if adjustment is not None else None,
+        price_fetch_status="cached")
+    for key in ("price_date", "price_date_status", "price_symbol", "price_source_url", "previous_session_date", "price_native", "price_native_currency", "fx_rate", "fx_convention", "fx_timestamp", "fx_source_url", "price_close_timestamp"):
+        if key in close:
+            snapshot[key] = close[key]
+    return snapshot
+
+
+def collect_one(instrument, output, now, quotes_only=False, consensus_only=False):
     path = output / (instrument["id"] + ".json")
     previous = read(path, {})
     if quotes_only:
@@ -464,10 +486,14 @@ def collect_one(instrument, output, now, quotes_only=False):
         consensus_time = datetime.now(timezone.utc)
         snapshot = table_snapshot(financial_source, instrument, url, consensus_time)
         snapshot.update(consensus_observed_at=consensus_time.isoformat(), consensus_date=consensus_time.astimezone(TORONTO).date().isoformat(), consensus_fetch_status="fresh")
-        code = re.search(r"-(\d+)/valuation/$", url)[1]
-        history = json.loads(fetch(HOST + "/async/graph/af/emy?" + urllib.parse.urlencode({"codeZB": code, "type": "PER"})))
-        price_dates(history, snapshot, now)
-        closing_price(snapshot, instrument, now)
+        if consensus_only:
+            snapshot.update(price_date=None, price_date_status="unconfirmed")
+            reuse_verified_close(snapshot, previous, instrument)
+        else:
+            code = re.search(r"-(\d+)/valuation/$", url)[1]
+            history = json.loads(fetch(HOST + "/async/graph/af/emy?" + urllib.parse.urlencode({"codeZB": code, "type": "PER"})))
+            price_dates(history, snapshot, now)
+            closing_price(snapshot, instrument, now)
         observed = datetime.now(timezone.utc)
         snapshot.update(observed_at=observed.isoformat(), date=observed.astimezone(TORONTO).date().isoformat())
         snapshot["ratios"] = ratios(snapshot, instrument.get("financial", False))
@@ -485,6 +511,8 @@ def collect_one(instrument, output, now, quotes_only=False):
     except Exception as error:
         if previous.get("observations"):
             try:
+                if consensus_only:
+                    raise SourceError("Conserver le consensus sans requête Yahoo dans ce mode")
                 item = closing_from_retained(instrument, previous, now, str(error))
                 write(path, item)
                 return {**instrument,"fetch_status":"cached","quote_collected":True,"source_url":item.get("source_url"),"error":str(error),"latest":item["observations"][-1]}
@@ -531,6 +559,7 @@ def main(argv=None):
     parser.add_argument("--only", help="Identifiants publics à collecter, séparés par des virgules")
     parser.add_argument("--check", action="store_true")
     parser.add_argument("--quotes-only", action="store_true", help="Actualiser les clôtures avec le consensus daté conservé, sans requête MarketScreener")
+    parser.add_argument("--consensus-only", action="store_true", help="Actualiser uniquement MarketScreener; réutiliser la clôture vérifiée du jour sans requête Yahoo")
     args = parser.parse_args(argv)
     universe = read(ROOT / "data/valuation-universe.json")
     if args.check:
@@ -542,7 +571,7 @@ def main(argv=None):
     instruments = [row for row in universe["instruments"] if not selected or row["id"] in selected]
     results = []
     with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
-        jobs = {pool.submit(collect_one, row, args.output_dir, now, args.quotes_only): row for row in instruments}
+        jobs = {pool.submit(collect_one, row, args.output_dir, now, args.quotes_only, args.consensus_only): row for row in instruments}
         for job in concurrent.futures.as_completed(jobs):
             row = job.result()
             results.append(row)
