@@ -533,6 +533,9 @@
   }
   function render() {
     renderPortfolioChoice();
+    const extended = window.ExtendedHoursUtils, extendedHost = $("#portfolioExtendedHours");
+    if (extended && extendedHost) extended.render(extendedHost, Object.fromEntries(['pre','post'].map(key =>
+      [key, extended.portfolio(positions, prices, window.SavyLiveQuotes?.dataset(), key)])));
     $("#portfolioEmpty").hidden = positions.length > 0;
     $("#portfolioContent").hidden = positions.length === 0;
     $("#portfolioExport").disabled = !positions.length;

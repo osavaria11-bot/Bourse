@@ -10,7 +10,7 @@
   <title>SAVY — Tableau macroéconomique</title>
   <link rel="preload" href="css/fonts/source-sans-3-latin-variable.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="css/dashboard.css?v=20261024-final" />
-  <link rel="stylesheet" href="css/portal.css?v=20261024-petrol" />
+  <link rel="stylesheet" href="css/portal.css?v=20261028-extended-hours" />
   <link rel="stylesheet" href="css/savy-visual.css?v=20261028-home-spacing" />
   <link rel="stylesheet" href="css/market-breadth.css?v=20261024-technical-risk" />
   <script src="js/macro-utils.js?v=20261028-decision-odds" defer></script>
@@ -26,20 +26,21 @@
   <script src="js/weekly-reports.js?v=20261020-research" defer></script>
   <script src="js/yield-curve-utils.js?v=20261019-rate-audit" defer></script>
   <script src="js/yield-curves.js?v=20261019-rate-audit" defer></script>
+  <script src="js/portfolio-utils.js?v=20261017-portal" defer></script>
+  <script src="js/extended-hours-utils.js?v=20261028-extended-hours" defer></script>
   <script src="js/intraday-utils.js?v=20261022-index-sources" defer></script>
   <script src="js/index-quote-utils.js?v=20261022-index-sources" defer></script>
-  <script src="js/live-quotes.js?v=20261027-independent-feed" defer></script>
+  <script src="js/live-quotes.js?v=20261028-extended-hours" defer></script>
   <script src="js/live-fx.js?v=20261012-availability" defer></script>
-  <script src="js/portfolio-utils.js?v=20261017-portal" defer></script>
   <script src="js/portfolio-heatmap-utils.js?v=20261015-heatmap" defer></script>
   <script src="js/portfolio-intraday-utils.js?v=20261014-refresh-status" defer></script>
   <script src="js/portfolio-exposure-utils.js?v=20261012-portfolio-3" defer></script>
   <script src="js/portfolio-analytics-utils.js?v=20261021-risk-ratios" defer></script>
   <script src="js/portfolio-profile-utils.js?v=20261012-portfolio-3" defer></script>
-  <script src="js/portfolio.js?v=20261024-petrol" defer></script>
+  <script src="js/portfolio.js?v=20261028-extended-hours" defer></script>
   <script src="js/briefing-audio-utils.js?v=20261019-task1" defer></script>
   <script src="js/briefing-audio.js?v=20261019-task1" defer></script>
-  <script src="js/dashboard.js?v=20261028-decision-expiry" defer></script>
+  <script src="js/dashboard.js?v=20261028-extended-hours" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#indicators">Aller aux indicateurs</a>
@@ -99,7 +100,7 @@
       <p id="portfolioMessage" class="meta" role="status"></p>
       <p id="portfolioEmpty" class="portfolio-empty">Ouvre ton lien personnel pour retrouver automatiquement ton portefeuille, ou importe une sauvegarde et ajoute les titres ci-dessous.</p>
       <div id="portfolioContent" hidden>
-        <div class="portfolio-overview"><div><p id="portfolioValueLabel" class="eyebrow">Valeur des titres · CAD</p><p id="portfolioValue" class="portfolio-value">—</p><p id="portfolioChange" class="portfolio-change">—</p><p id="portfolioCurrencies" class="meta"></p><p id="portfolioFX" class="meta"></p><p id="portfolioCost" class="meta"></p><p id="portfolioUnrealized" class="portfolio-unrealized"></p></div><div class="portfolio-period-controls"><div id="portfolioRanges" class="segmented" role="group" aria-label="Période du portefeuille"></div><p id="portfolioPeriod" class="meta"></p></div></div>
+        <div class="portfolio-overview"><div><p id="portfolioValueLabel" class="eyebrow">Valeur des titres · CAD</p><p id="portfolioValue" class="portfolio-value">—</p><p id="portfolioChange" class="portfolio-change">—</p><div id="portfolioExtendedHours" class="extended-hours" aria-label="Variations hors séance du portefeuille"></div><p id="portfolioCurrencies" class="meta"></p><p id="portfolioFX" class="meta"></p><p id="portfolioCost" class="meta"></p><p id="portfolioUnrealized" class="portfolio-unrealized"></p></div><div class="portfolio-period-controls"><div id="portfolioRanges" class="segmented" role="group" aria-label="Période du portefeuille"></div><p id="portfolioPeriod" class="meta"></p></div></div>
         <p id="portfolioMissing" class="meta warning"></p>
         <div id="portfolioBenchmark" class="portfolio-benchmark" aria-label="Rendement du portefeuille et de FEQT"></div>
         <p id="portfolioBenchmarkNote" class="meta"></p>

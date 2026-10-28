@@ -9,9 +9,11 @@ on:
     paths:
       - ".github/workflows/intraday-quotes.yml"
       - "scripts/collect_intraday_quotes.py"
+      - "scripts/extended_hours.py"
       - "scripts/publish_intraday_quotes.cjs"
       - "scripts/queue_intraday_refresh.cjs"
       - "js/intraday-utils.js"
+      - "js/extended-hours-utils.js"
       - "data/securities.json"
   workflow_run:
     workflows: ["Deploy static content to Pages"]
@@ -54,7 +56,8 @@ jobs:
       - name: Check the quote collector and feed calculations
         run: |
           python -m unittest discover -s tests -p 'test_intraday_quotes.py' -v
-          node --test tests/intraday-utils.test.cjs tests/live-quote-utils.test.cjs tests/live-feed-utils.test.cjs tests/refresh-chain.test.cjs
+          python -m unittest discover -s tests -p 'test_extended_hours.py' -v
+          node --test tests/extended-hours-utils.test.cjs tests/intraday-utils.test.cjs tests/live-quote-utils.test.cjs tests/live-feed-utils.test.cjs tests/refresh-chain.test.cjs
       - name: Restore the independent last successful observations
         continue-on-error: true
         run: |

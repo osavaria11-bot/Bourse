@@ -20,11 +20,12 @@
         }
         continue;
       }
+      const extra = old && window.ExtendedHoursUtils ? window.ExtendedHoursUtils.merge(old, q) : {};
       if (!old || (old.quote_symbol === q.quote_symbol && old.currency === q.currency &&
           (Date.parse(q.timestamp) > Date.parse(old.timestamp) ||
            (Date.parse(q.timestamp) === Date.parse(old.timestamp) && Date.parse(q.fetched_at) >= Date.parse(old.fetched_at))))) {
-        byId.set(q.id, q); rejectedListings.delete(q.id);
-      }
+        byId.set(q.id, {...q, ...extra}); rejectedListings.delete(q.id);
+      } else if (old && Object.keys(extra).length) byId.set(q.id, {...old, ...extra});
     }
     if (data) data = {...data, quotes: [...byId.values()]};
   }

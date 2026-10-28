@@ -594,6 +594,9 @@
         selected.start && selected.end ? "Du " + selected.start + " au " + selected.end + (selected.incomplete ? " · historique incomplet" : " · hors dividendes") : "Base de comparaison indisponible";
       change.title = dates;
       card.append(change, el("p", "meta market-period", dates));
+      const extended = window.ExtendedHoursUtils;
+      if (extended) {const block = el("div", "extended-hours"); extended.render(block,
+        Object.fromEntries(['pre','post'].map(key => [key, extended.index(window.SavyLiveQuotes?.dataset(), id, key)]))); card.append(block);}
       const host = el("div", "chart-host");
       if (intraday && !session.available) host.append(el("p", "chart-placeholder", "La courbe apparaîtra dès la réception de points intraday. Les autres périodes restent consultables."));
       else if (point) drawChart(host, point, state.marketRange, {history: selected.history, showPercent: true, incomplete: selected.incomplete, intraday, baseline: session?.baseline});

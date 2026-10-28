@@ -13,10 +13,18 @@ from zoneinfo import ZoneInfo
 
 try:
     from scripts import collect_market_indices as markets
+    from scripts.extended_hours import extract as extract_extended
 except ModuleNotFoundError:
     import collect_market_indices as markets
+    from extended_hours import extract as extract_extended
 
 ROOT = Path(__file__).resolve().parents[1]
+EXTENDED_REPRESENTATIVES = [
+    {"id": "EXTSPX", "title": "Repère S&P 500 · SPY", "quote_symbol": "SPY", "currency": "USD"},
+    {"id": "EXTIXIC", "title": "Repère Nasdaq 100 · QQQ", "quote_symbol": "QQQ", "currency": "USD"},
+    {"id": "EXTTSX", "title": "Repère MSCI Canada · EWC", "quote_symbol": "EWC", "currency": "USD"},
+    {"id": "EXTSTOXX", "title": "Repère MSCI Europe · IEUR", "quote_symbol": "IEUR", "currency": "USD"},
+]
 MACRO_QUOTES = [
     {"id": "VIXCLS", "title": "VIX", "quote_symbol": "^VIX", "currency": "USD"},
     {"id": "NASDAQXAU", "title": "PHLX Gold/Silver Index", "quote_symbol": "^XAU", "currency": "USD"},
@@ -29,7 +37,7 @@ MACRO_QUOTES = [
 
 def definitions():
     catalog = json.loads((ROOT / "data/securities.json").read_text())
-    by_id = {p["id"]: dict(p) for p in [*markets.definitions(), *catalog["series"], *MACRO_QUOTES]}
+    by_id = {p["id"]: dict(p) for p in [*markets.definitions(), *catalog["series"], *MACRO_QUOTES, *EXTENDED_REPRESENTATIVES]}
     return list(by_id.values())
 
 def finite(value):
@@ -103,6 +111,7 @@ def parse_quote(payload, definition, now):
         "session_end": datetime.fromtimestamp(end, timezone.utc).isoformat().replace("+00:00", "Z"),
         "provider_delay_minutes": delay, "fetch_status": "fresh", "fetched_at": now.isoformat().replace("+00:00", "Z"),
         "history_interval_minutes": 5, "intraday_history": [[tick, value] for tick, value in sorted(points.items())],
+        "extended_hours_supported": meta.get("hasPrePostMarketData") is True,
         **({"intraday_sessions": {day: [[tick, value] for tick, value in sorted(rows.items())] for day, rows in fx_sessions.items()}} if definition["id"] == "USDCAD" else {}),
         "source_label": "Yahoo Finance", "source_url": "https://finance.yahoo.com/quote/" + quote(meta["symbol"], safe="") + "/"}
 
@@ -158,7 +167,7 @@ def fetch_quote(definition, now):
             local_now = now.astimezone(ZoneInfo("America/New_York"))
             spx_expected_open = definition["id"] == "SPX" and local_now.weekday() < 5 and (9, 30) <= (local_now.hour, local_now.minute) < (16, 0)
             if age <= 25 * 60 or (parsed["market_state"] == "closed" and not spx_expected_open):
-                return parsed
+                return with_extended(parsed, definition, now)
         except (OSError, ValueError, markets.macro.SourceError) as error:
             last_error = error
     if definition["id"] == "SPX":
@@ -167,8 +176,23 @@ def fetch_quote(definition, now):
         except (OSError, ValueError, markets.macro.SourceError) as error:
             last_error = error
     if candidates:
-        return max(candidates, key=lambda p: p["timestamp"])
+        return with_extended(max(candidates, key=lambda p: p["timestamp"]), definition, now)
     raise markets.macro.SourceError(str(last_error))
+
+def with_extended(parsed, definition, now):
+    if not parsed.get("extended_hours_supported"):
+        return parsed
+    for host in ("query1.finance.yahoo.com", "query2.finance.yahoo.com"):
+        try:
+            request = Request(f"https://{host}/v8/finance/chart/{quote(definition['quote_symbol'], safe='')}?range=5d&interval=5m&includePrePost=true",
+                              headers={"User-Agent": "Mozilla/5.0 SAVY/4.0", "Accept": "application/json"})
+            with urlopen(request, timeout=8) as response:
+                hours, closes = extract_extended(json.load(response), definition, now)
+            return {**parsed, "extended_hours": hours, "regular_closes": closes, "extended_fetch_status": "fresh"}
+        except (OSError, ValueError, KeyError, TypeError, IndexError):
+            pass
+    # Extended-hours failure must not stop a valid regular-session quote.
+    return {**parsed, "extended_fetch_status": "unavailable"}
 
 def collect(config, previous, now, fetcher=fetch_quote):
     old = {p["id"]: p for p in (previous or {}).get("quotes", [])}
@@ -178,7 +202,13 @@ def collect(config, previous, now, fetcher=fetch_quote):
         for task in concurrent.futures.as_completed(tasks):
             definition = tasks[task]
             try:
-                by_id[definition["id"]] = task.result()
+                result = task.result()
+                cached = old.get(definition["id"])
+                if result.get("extended_fetch_status") == "unavailable" and cached and cached.get("quote_symbol") == result["quote_symbol"] and cached.get("currency") == result["currency"]:
+                    result["extended_hours"] = {key: {**value, "fetch_status": "cached"} if value else None
+                                                for key, value in cached.get("extended_hours", {}).items()}
+                    result["regular_closes"] = cached.get("regular_closes", [])
+                by_id[definition["id"]] = result
             except (OSError, ValueError, markets.macro.SourceError) as error:
                 errors.append({"id": definition["id"], "message": str(error)[:180]})
                 cached = old.get(definition["id"])
