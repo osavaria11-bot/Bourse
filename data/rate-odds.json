@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "rate_odds",
-  "generated_at": "2026-10-27T22:33:53.006668+00:00",
+  "generated_at": "2026-10-28T01:42:38.781079+00:00",
   "decisions": [
     {
       "id": "fed",
@@ -14,7 +14,8 @@
       "source": "BlueGamma",
       "source_url": "https://www.bluegamma.io/central-banks/central-bank-interest-rate-forecasts/federal-reserve-interest-rate-forecast",
       "methodology": "SOFR OIS",
-      "status": "fresh"
+      "status": "cached",
+      "error": "fed: date ou probabilités incohérentes"
     },
     {
       "id": "canada",
@@ -27,7 +28,8 @@
       "source": "BlueGamma",
       "source_url": "https://www.bluegamma.io/central-banks/central-bank-interest-rate-forecasts/the-bank-of-canada-interest-rate-forecast",
       "methodology": "CORRA OIS",
-      "status": "fresh"
+      "status": "cached",
+      "error": "canada: date ou probabilités incohérentes"
     }
   ]
 }
