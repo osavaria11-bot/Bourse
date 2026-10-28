@@ -1,0 +1,725 @@
+{
+  "schema_version": 1,
+  "kind": "savy_valuation_universe",
+  "aliases": {
+    "SNDK": "SNDKUS",
+    "MSFTCDR": "MSFT"
+  },
+  "instruments": [
+    {
+      "id": "AAPL",
+      "title": "Apple",
+      "type": "stock",
+      "symbol": "AAPL",
+      "financial": false
+    },
+    {
+      "id": "ADBE",
+      "title": "Adobe",
+      "type": "stock",
+      "symbol": "ADBE",
+      "financial": false
+    },
+    {
+      "id": "AMD",
+      "title": "Advanced Micro Devices",
+      "type": "stock",
+      "symbol": "AMD",
+      "financial": false
+    },
+    {
+      "id": "AMZN",
+      "title": "Amazon",
+      "type": "stock",
+      "symbol": "AMZN",
+      "financial": false
+    },
+    {
+      "id": "APH",
+      "title": "Amphenol",
+      "type": "stock",
+      "symbol": "APH",
+      "financial": false
+    },
+    {
+      "id": "APO",
+      "title": "Apollo Global Management",
+      "type": "stock",
+      "symbol": "APO",
+      "financial": true
+    },
+    {
+      "id": "ASML",
+      "title": "ASML Holding ADR",
+      "type": "stock",
+      "symbol": "ASML",
+      "financial": false
+    },
+    {
+      "id": "ATD",
+      "title": "Alimentation Couche-Tard",
+      "type": "stock",
+      "symbol": "ATD.TO",
+      "financial": false
+    },
+    {
+      "id": "AVGO",
+      "title": "Broadcom",
+      "type": "stock",
+      "symbol": "AVGO",
+      "financial": false
+    },
+    {
+      "id": "BAC",
+      "title": "Bank of America",
+      "type": "stock",
+      "symbol": "BAC",
+      "financial": true
+    },
+    {
+      "id": "BAM",
+      "title": "Brookfield Asset Management",
+      "type": "stock",
+      "symbol": "BAM.TO",
+      "financial": true,
+      "valuation_symbol": "BAM"
+    },
+    {
+      "id": "BCE",
+      "title": "BCE",
+      "type": "stock",
+      "symbol": "BCE.TO",
+      "financial": false
+    },
+    {
+      "id": "BMO",
+      "title": "Bank of Montreal",
+      "type": "stock",
+      "symbol": "BMO.TO",
+      "financial": true
+    },
+    {
+      "id": "BN",
+      "title": "Brookfield",
+      "type": "stock",
+      "symbol": "BN.TO",
+      "financial": true
+    },
+    {
+      "id": "BNS",
+      "title": "Bank of Nova Scotia",
+      "type": "stock",
+      "symbol": "BNS.TO",
+      "financial": true
+    },
+    {
+      "id": "CCO",
+      "title": "Cameco",
+      "type": "stock",
+      "symbol": "CCO.TO",
+      "financial": false
+    },
+    {
+      "id": "CLS",
+      "title": "Celestica",
+      "type": "stock",
+      "symbol": "CLS",
+      "financial": false,
+      "source_currency": "CAD",
+      "listing_note": "Cotation principale du même émetteur chez MarketScreener; les cours et les prévisions du calcul restent dans les devises de cette source.",
+      "valuation_symbol": "CLS.TO"
+    },
+    {
+      "id": "CM",
+      "title": "Canadian Imperial Bank of Commerce",
+      "type": "stock",
+      "symbol": "CM.TO",
+      "financial": true
+    },
+    {
+      "id": "CNQ",
+      "title": "Canadian Natural Resources",
+      "type": "stock",
+      "symbol": "CNQ.TO",
+      "financial": false
+    },
+    {
+      "id": "CNR",
+      "title": "Canadian National Railway",
+      "type": "stock",
+      "symbol": "CNR.TO",
+      "financial": false
+    },
+    {
+      "id": "COST",
+      "title": "Costco Wholesale",
+      "type": "stock",
+      "symbol": "COST",
+      "financial": false
+    },
+    {
+      "id": "CP",
+      "title": "Canadian Pacific Kansas City",
+      "type": "stock",
+      "symbol": "CP.TO",
+      "financial": false
+    },
+    {
+      "id": "CRM",
+      "title": "Salesforce",
+      "type": "stock",
+      "symbol": "CRM",
+      "financial": false
+    },
+    {
+      "id": "CSU",
+      "title": "Constellation Software",
+      "type": "stock",
+      "symbol": "CSU.TO",
+      "financial": false
+    },
+    {
+      "id": "CVE",
+      "title": "Cenovus Energy",
+      "type": "stock",
+      "symbol": "CVE.TO",
+      "financial": false
+    },
+    {
+      "id": "CVX",
+      "title": "Chevron",
+      "type": "stock",
+      "symbol": "CVX",
+      "financial": false
+    },
+    {
+      "id": "DIS",
+      "title": "Walt Disney",
+      "type": "stock",
+      "symbol": "DIS",
+      "financial": false
+    },
+    {
+      "id": "DOL",
+      "title": "Dollarama",
+      "type": "stock",
+      "symbol": "DOL.TO",
+      "financial": false
+    },
+    {
+      "id": "DSG",
+      "title": "Descartes Systems",
+      "type": "stock",
+      "symbol": "DSG.TO",
+      "financial": false
+    },
+    {
+      "id": "DXCM",
+      "title": "DexCom",
+      "type": "stock",
+      "symbol": "DXCM",
+      "financial": false
+    },
+    {
+      "id": "EMA",
+      "title": "Emera",
+      "type": "stock",
+      "symbol": "EMA.TO",
+      "financial": false
+    },
+    {
+      "id": "ENB",
+      "title": "Enbridge",
+      "type": "stock",
+      "symbol": "ENB.TO",
+      "financial": false
+    },
+    {
+      "id": "EQB",
+      "title": "EQB",
+      "type": "stock",
+      "symbol": "EQB.TO",
+      "financial": true
+    },
+    {
+      "id": "EXE",
+      "title": "Extendicare",
+      "type": "stock",
+      "symbol": "EXE.TO",
+      "financial": false
+    },
+    {
+      "id": "EXTR",
+      "title": "Extreme Networks",
+      "type": "stock",
+      "symbol": "EXTR",
+      "financial": false
+    },
+    {
+      "id": "FIX",
+      "title": "Comfort Systems USA",
+      "type": "stock",
+      "symbol": "FIX",
+      "financial": false
+    },
+    {
+      "id": "FSLR",
+      "title": "First Solar",
+      "type": "stock",
+      "symbol": "FSLR",
+      "financial": false
+    },
+    {
+      "id": "FTS",
+      "title": "Fortis",
+      "type": "stock",
+      "symbol": "FTS.TO",
+      "financial": false
+    },
+    {
+      "id": "GLBE",
+      "title": "Global-e Online",
+      "type": "stock",
+      "symbol": "GLBE",
+      "financial": false
+    },
+    {
+      "id": "GOOGL",
+      "title": "Alphabet",
+      "type": "stock",
+      "symbol": "GOOGL",
+      "financial": false
+    },
+    {
+      "id": "GRGD",
+      "title": "Groupe Dynamite",
+      "type": "stock",
+      "symbol": "GRGD.TO",
+      "financial": false
+    },
+    {
+      "id": "GS",
+      "title": "Goldman Sachs",
+      "type": "stock",
+      "symbol": "GS",
+      "financial": true
+    },
+    {
+      "id": "GSY",
+      "title": "goeasy",
+      "type": "stock",
+      "symbol": "GSY.TO",
+      "financial": true
+    },
+    {
+      "id": "HBM",
+      "title": "Hudbay Minerals",
+      "type": "stock",
+      "symbol": "HBM.TO",
+      "financial": false
+    },
+    {
+      "id": "HD",
+      "title": "Home Depot",
+      "type": "stock",
+      "symbol": "HD",
+      "financial": false
+    },
+    {
+      "id": "JNJ",
+      "title": "Johnson & Johnson",
+      "type": "stock",
+      "symbol": "JNJ",
+      "financial": false
+    },
+    {
+      "id": "JPM",
+      "title": "JPMorgan Chase",
+      "type": "stock",
+      "symbol": "JPM",
+      "financial": true
+    },
+    {
+      "id": "L",
+      "title": "Loblaw Companies",
+      "type": "stock",
+      "symbol": "L.TO",
+      "financial": false
+    },
+    {
+      "id": "LLY",
+      "title": "Eli Lilly",
+      "type": "stock",
+      "symbol": "LLY",
+      "financial": false
+    },
+    {
+      "id": "LULU",
+      "title": "Lululemon Athletica",
+      "type": "stock",
+      "symbol": "LULU",
+      "financial": false
+    },
+    {
+      "id": "MA",
+      "title": "Mastercard",
+      "type": "stock",
+      "symbol": "MA",
+      "financial": false
+    },
+    {
+      "id": "MAXQ",
+      "title": "Maritime Launch Services",
+      "type": "stock",
+      "symbol": "MAXQ.NE",
+      "financial": false
+    },
+    {
+      "id": "MDA",
+      "title": "MDA",
+      "type": "stock",
+      "symbol": "MDA.TO",
+      "financial": false
+    },
+    {
+      "id": "META",
+      "title": "Meta Platforms",
+      "type": "stock",
+      "symbol": "META",
+      "financial": false
+    },
+    {
+      "id": "MFC",
+      "title": "Manulife Financial",
+      "type": "stock",
+      "symbol": "MFC.TO",
+      "financial": true
+    },
+    {
+      "id": "MOD",
+      "title": "Modine Manufacturing",
+      "type": "stock",
+      "symbol": "MOD",
+      "financial": false
+    },
+    {
+      "id": "MRK",
+      "title": "Merck & Co",
+      "type": "stock",
+      "symbol": "MRK",
+      "financial": false
+    },
+    {
+      "id": "MSFT",
+      "title": "Microsoft",
+      "type": "stock",
+      "symbol": "MSFT",
+      "financial": false
+    },
+    {
+      "id": "MU",
+      "title": "Micron",
+      "type": "stock",
+      "symbol": "MU",
+      "financial": false
+    },
+    {
+      "id": "NA",
+      "title": "National Bank of Canada",
+      "type": "stock",
+      "symbol": "NA.TO",
+      "financial": true
+    },
+    {
+      "id": "NBIX",
+      "title": "Neurocrine",
+      "type": "stock",
+      "symbol": "NBIX",
+      "financial": false
+    },
+    {
+      "id": "NFLX",
+      "title": "Netflix",
+      "type": "stock",
+      "symbol": "NFLX",
+      "financial": false
+    },
+    {
+      "id": "NU",
+      "title": "Nu Holdings",
+      "type": "stock",
+      "symbol": "NU",
+      "financial": true
+    },
+    {
+      "id": "NVDA",
+      "title": "NVIDIA",
+      "type": "stock",
+      "symbol": "NVDA",
+      "financial": false
+    },
+    {
+      "id": "NVO",
+      "title": "Novo Nordisk ADR",
+      "type": "stock",
+      "symbol": "NVO",
+      "financial": false,
+      "valuation_symbol": "NOVO-B.CO",
+      "listing_note": "Ratios de l’émetteur sur l’action ordinaire à Copenhague (DKK). Le cours de l’ADR américain n’est pas utilisé avec le BPA ordinaire en DKK."
+    },
+    {
+      "id": "NVT",
+      "title": "nVent Electric",
+      "type": "stock",
+      "symbol": "NVT",
+      "financial": false
+    },
+    {
+      "id": "NXE",
+      "title": "NexGen Energy",
+      "type": "stock",
+      "symbol": "NXE.TO",
+      "financial": false
+    },
+    {
+      "id": "PFE",
+      "title": "Pfizer",
+      "type": "stock",
+      "symbol": "PFE",
+      "financial": false
+    },
+    {
+      "id": "POW",
+      "title": "Power Corporation of Canada",
+      "type": "stock",
+      "symbol": "POW.TO",
+      "financial": true
+    },
+    {
+      "id": "PRL",
+      "title": "Propel Holdings",
+      "type": "stock",
+      "symbol": "PRL.TO",
+      "financial": true
+    },
+    {
+      "id": "QCOM",
+      "title": "Qualcomm",
+      "type": "stock",
+      "symbol": "QCOM",
+      "financial": false
+    },
+    {
+      "id": "RY",
+      "title": "Royal Bank of Canada",
+      "type": "stock",
+      "symbol": "RY.TO",
+      "financial": true
+    },
+    {
+      "id": "SHOP",
+      "title": "Shopify",
+      "type": "stock",
+      "symbol": "SHOP.TO",
+      "financial": false,
+      "source_currency": "USD",
+      "listing_note": "Cotation principale du même émetteur chez MarketScreener; les cours et les prévisions du calcul restent dans les devises de cette source.",
+      "valuation_symbol": "SHOP"
+    },
+    {
+      "id": "SLF",
+      "title": "Sun Life Financial",
+      "type": "stock",
+      "symbol": "SLF.TO",
+      "financial": true
+    },
+    {
+      "id": "SN",
+      "title": "SharkNinja",
+      "type": "stock",
+      "symbol": "SN",
+      "financial": false
+    },
+    {
+      "id": "SNDKUS",
+      "title": "Sandisk (action américaine)",
+      "type": "stock",
+      "symbol": "SNDK",
+      "financial": false
+    },
+    {
+      "id": "STX",
+      "title": "Seagate Technology",
+      "type": "stock",
+      "symbol": "STX",
+      "financial": false
+    },
+    {
+      "id": "SU",
+      "title": "Suncor Energy",
+      "type": "stock",
+      "symbol": "SU.TO",
+      "financial": false
+    },
+    {
+      "id": "T",
+      "title": "TELUS",
+      "type": "stock",
+      "symbol": "T.TO",
+      "financial": false
+    },
+    {
+      "id": "TD",
+      "title": "Toronto-Dominion Bank",
+      "type": "stock",
+      "symbol": "TD.TO",
+      "financial": true
+    },
+    {
+      "id": "TOU",
+      "title": "Tourmaline Oil",
+      "type": "stock",
+      "symbol": "TOU.TO",
+      "financial": false
+    },
+    {
+      "id": "TRP",
+      "title": "TC Energy",
+      "type": "stock",
+      "symbol": "TRP.TO",
+      "financial": false
+    },
+    {
+      "id": "TSM",
+      "title": "Taiwan Semiconductor ADR",
+      "type": "stock",
+      "symbol": "TSM",
+      "financial": false,
+      "valuation_symbol": "2330.TW",
+      "listing_note": "Ratios de l’émetteur sur l’action ordinaire à Taïwan (TWD). L’ADR américain peut se négocier avec une prime ou une décote; son cours n’est pas divisé par un BPA ordinaire en TWD."
+    },
+    {
+      "id": "UNH",
+      "title": "UnitedHealth Group",
+      "type": "stock",
+      "symbol": "UNH",
+      "financial": false
+    },
+    {
+      "id": "V",
+      "title": "Visa",
+      "type": "stock",
+      "symbol": "V",
+      "financial": false
+    },
+    {
+      "id": "VIK",
+      "title": "Viking Holdings",
+      "type": "stock",
+      "symbol": "VIK",
+      "financial": false
+    },
+    {
+      "id": "VNP",
+      "title": "5N Plus",
+      "type": "stock",
+      "symbol": "VNP.TO",
+      "financial": false
+    },
+    {
+      "id": "WCN",
+      "title": "Waste Connections",
+      "type": "stock",
+      "symbol": "WCN.TO",
+      "financial": false,
+      "source_currency": "USD",
+      "listing_note": "Cotation principale du même émetteur chez MarketScreener; les cours et les prévisions du calcul restent dans les devises de cette source.",
+      "valuation_symbol": "WCN"
+    },
+    {
+      "id": "WFC",
+      "title": "Wells Fargo",
+      "type": "stock",
+      "symbol": "WFC",
+      "financial": true
+    },
+    {
+      "id": "WMG",
+      "title": "Warner Music Group",
+      "type": "stock",
+      "symbol": "WMG",
+      "financial": false
+    },
+    {
+      "id": "WMT",
+      "title": "Walmart",
+      "type": "stock",
+      "symbol": "WMT",
+      "financial": false
+    },
+    {
+      "id": "WSP",
+      "title": "WSP Global",
+      "type": "stock",
+      "symbol": "WSP.TO",
+      "financial": false
+    },
+    {
+      "id": "XOM",
+      "title": "Exxon Mobil",
+      "type": "stock",
+      "symbol": "XOM",
+      "financial": false
+    }
+  ],
+  "research_editions": [
+    {
+      "date": "2026-10-07",
+      "tickers": [
+        "APH",
+        "ASML",
+        "AVGO",
+        "EXTR",
+        "FIX",
+        "LLY",
+        "MU",
+        "NVDA",
+        "SN",
+        "SNDKUS",
+        "TSM"
+      ],
+      "source": "reports/stocks/2026-10-14.pdf",
+      "note": "Univers précédent décrit dans la comparaison du 14 octobre."
+    },
+    {
+      "date": "2026-10-14",
+      "tickers": [
+        "APH",
+        "LLY",
+        "MA",
+        "WMG"
+      ],
+      "source": "reports/stocks/2026-10-14.pdf"
+    },
+    {
+      "date": "2026-10-21",
+      "tickers": [
+        "APH",
+        "ASML",
+        "DXCM",
+        "EXTR",
+        "GLBE",
+        "LLY",
+        "MA",
+        "MU",
+        "NVDA",
+        "NVT",
+        "SNDKUS",
+        "STX",
+        "TSM",
+        "VIK"
+      ],
+      "source": "reports/stocks/2026-10-21.pdf"
+    }
+  ]
+}

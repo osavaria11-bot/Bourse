@@ -79,6 +79,28 @@
     try {const response = await fetch(file + "?v=" + Date.now(), {cache: "no-store", signal: controller.signal}); if (!response.ok) throw new Error("Cotations indisponibles"); return await response.json();}
     finally {clearTimeout(timeout);}
   }
+  // The research view only receives ticker membership. Quantities, costs and
+  // the personal decryption key stay inside this existing private component.
+  window.SavyPortfolioStocks = {async list() {
+    if (!catalog) return {};
+    const result = {};
+    for (const id of portfolioIds) {
+      try {
+        let input = id === activePortfolio && holdingsAvailable ? {positions} : rawStored(HOLDINGS_KEY + (id === "1" ? "" : ":" + id), null);
+        if (personalKey && (id !== activePortfolio || !input)) {
+          const retained = input, retainedState = rawStored(PROFILE_STATE_KEY + (id === "1" ? "" : ":" + id), null);
+          try {
+            const profile = await fetchJSON(id === "1" ? "data/personal-portfolio.json" : "data/personal-portfolio-" + id + ".json");
+            if ((profile.portfolio_id || "1") !== id) throw new Error("Profil incompatible");
+            input = await A.unlock(profile, personalKey);
+            if (input.portfolio_id && input.portfolio_id !== id) throw new Error("Profil incompatible");
+          } catch(error) {if(retainedState?.key !== personalKey || !retained)throw error;input=retained;}
+        }
+        if (input) result[portfolioNames[id]] = P.normalizePositions(input, catalog).filter(p => p.quantity > 0).map(p => p.ticker);
+      } catch { /* An unavailable private profile is reported as unavailable. */ }
+    }
+    return result;
+  }};
   function applyPositions(input) {
     if (input?.portfolio_id && input.portfolio_id !== activePortfolio) throw new Error("Choisis le portefeuille " + (portfolioNames[input.portfolio_id] || input.portfolio_id) + " avant d’importer ce fichier");
     const next = P.normalizePositions(input, catalog);
@@ -533,6 +555,8 @@
   }
   function render() {
     renderPortfolioChoice();
+    document.dispatchEvent(new CustomEvent("savy:holdings", {detail: {portfolio: activePortfolio,
+      tickers: positions.filter(p => p.quantity > 0).map(p => p.ticker)}}));
     const extended = window.ExtendedHoursUtils, extendedHost = $("#portfolioExtendedHours");
     if (extended && extendedHost) extended.render(extendedHost, Object.fromEntries(['pre','post'].map(key =>
       [key, extended.portfolio(positions, prices, window.SavyLiveQuotes?.dataset(), key)])));
