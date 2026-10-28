@@ -117,6 +117,26 @@ class ValuationTests(unittest.TestCase):
         self.assertEqual(snap['enterprise_value_millions'],1590)
         self.assertEqual(snap['ev_method'],'current_market_cap_plus_reported_net_debt')
 
+    def test_canadian_close_is_converted_using_fx_at_or_before_its_close(self):
+        stamp=int(datetime(2026,10,28,13,30,tzinfo=timezone.utc).timestamp())
+        end=stamp+23400
+        native={'chart':{'result':[{'meta':{'symbol':'TEST','currency':'CAD','exchangeTimezoneName':'America/Toronto',
+            'currentTradingPeriod':{'regular':{'start':stamp,'end':end}}},'timestamp':[stamp-86400,stamp],
+            'indicators':{'quote':[{'close':[140,154]}]}}]}}
+        fx={'chart':{'error':None,'result':[{'meta':{'symbol':'CAD=X','currency':'CAD'},'timestamp':[end-300,end],
+            'indicators':{'quote':[{'close':[1.4,1.8]}]}}]}}
+        with patch.object(C,'fetch',return_value=json.dumps(fx)):
+            converted,meta=C.align_price_currency(native,self.snapshot(),STOCK,NOW)
+        self.assertAlmostEqual(converted['chart']['result'][0]['indicators']['quote'][0]['close'][0],110)
+        self.assertEqual(meta['fx_rate'],1.4)
+        self.assertEqual(meta['fx_timestamp'],'2026-10-28T20:00:00+00:00')
+        self.assertEqual(meta['previous_session_date'],'2026-10-27')
+        self.assertEqual(native['chart']['result'][0]['meta']['currency'],'CAD')
+        fx['chart']['result'][0]['timestamp']=[end]
+        fx['chart']['result'][0]['indicators']['quote'][0]['close']=[1.8]
+        with patch.object(C,'fetch',return_value=json.dumps(fx)), self.assertRaises(C.SourceError):
+            C.align_price_currency(native,self.snapshot(),STOCK,NOW)
+
     def test_prior_daily_consensus_is_not_recomputed_using_current_estimates(self):
         snap = self.snapshot()
         old = copy.deepcopy(snap); old['date']='2026-10-27'; old['observed_at']='2026-10-27T22:00:00+00:00'

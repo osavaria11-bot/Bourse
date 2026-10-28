@@ -5,7 +5,7 @@
   "description": "Static FRED macroeconomic dashboard",
   "scripts": {
     "test": "node --test tests/*-utils.test.cjs tests/refresh-chain.test.cjs",
-    "test:browser": "node tests/portal-browser.cjs && node tests/fnb-browser.cjs && node tests/frontier-browser.cjs && node tests/browser-smoke.cjs && node tests/portfolio-browser.cjs && node tests/intraday-browser.cjs && node tests/independent-quotes-browser.cjs && node tests/extended-hours-browser.cjs && node tests/yield-curves-browser.cjs && node tests/fear-greed-browser.cjs && node tests/weekly-reports-browser.cjs && node tests/valuation-browser.cjs && node tests/polymarket-browser.cjs"
+    "test:browser": "node tests/valuation-browser.cjs && node tests/portal-browser.cjs && node tests/fnb-browser.cjs && node tests/frontier-browser.cjs && node tests/browser-smoke.cjs && node tests/portfolio-browser.cjs && node tests/intraday-browser.cjs && node tests/independent-quotes-browser.cjs && node tests/extended-hours-browser.cjs && node tests/yield-curves-browser.cjs && node tests/fear-greed-browser.cjs && node tests/weekly-reports-browser.cjs && node tests/polymarket-browser.cjs"
   },
   "devDependencies": {
     "playwright": "1.62.1"

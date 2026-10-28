@@ -5,6 +5,12 @@ const root=path.resolve(__dirname,'..'),load=p=>JSON.parse(fs.readFileSync(path.
 const prices=load('data/security-prices.json'),catalog=load('data/securities.json'),day=prices.series.find(p=>p.id==='AAPL').history.at(-1)[0];
 const next=new Date(Date.parse(day+'T12:00:00Z')+86400000).toISOString().slice(0,10),now=Date.parse(next+'T13:20:00Z');
 const close=day+'T20:00:00Z',pre=next+'T13:15:00Z',post=day+'T23:55:00Z';
+// The session clock is synthetic. A repository price file can have been
+// downloaded later on the same day than this fixture's 09:20 premarket clock.
+// Align only fixture collection metadata; keep all real closing inputs intact.
+const fixturePrices=structuredClone(prices),fixtureCollected=new Date(now-60000).toISOString();
+fixturePrices.generated_at=fixtureCollected;fixturePrices.last_successful_update=fixtureCollected;
+for(const row of fixturePrices.series)if(row.last_successful_fetch)row.last_successful_fetch=fixtureCollected;
 const profiles={1:[['AAPL',2],['SHOP',1]],2:[['MSFT',1],['VBAL',10]],3:[['NVDA',3],['VGRO',4]]};
 for(const key of Object.keys(profiles))profiles[key]=profiles[key].map(([ticker,quantity])=>({ticker,quantity,currency:catalog.series.find(p=>p.id===ticker).currency}));
 const base=id=>prices.series.find(p=>p.id===id)?.history.filter(r=>r[0]===day).at(-1)?.[1]||100;
@@ -19,6 +25,7 @@ for(const [id,symbol] of [['EXTSPX','SPY'],['EXTIXIC','QQQ'],['EXTTSX','EWC'],['
 quotes.push({...quote('USDCAD','CAD=X','CAD',1.4,false),timestamp:pre,session_date:next,intraday_sessions:{[day]:[[close,1.4],[post,1.4]],[next]:[[pre,1.4]]}});
 const snapshot={schema_version:1,kind:'intraday_quotes',generated_at:new Date(now).toISOString(),quotes};let offline=false;
 const server=http.createServer((req,res)=>{const name=new URL(req.url,'http://localhost').pathname;
+  if(name==='/data/security-prices.json'){res.writeHead(200,{'Content-Type':'application/json'});res.end(JSON.stringify(fixturePrices));return;}
   if(name==='/data/intraday-quotes.json'){res.writeHead(offline?503:200,{'Content-Type':'application/json'});res.end(offline?'{}':JSON.stringify(snapshot));return;}
   const file=path.resolve(root,'.'+(name==='/'?'/index.html':name));if(!file.startsWith(root+path.sep)||!fs.existsSync(file)||!fs.statSync(file).isFile()){res.writeHead(404);res.end();return;}
   res.setHeader('Content-Type',({'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json'})[path.extname(file)]||'application/octet-stream');fs.createReadStream(file).pipe(res);});

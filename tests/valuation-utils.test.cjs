@@ -73,3 +73,7 @@ test('old consensus dates are visible inputs and cannot generate a current tradi
   const observations=businessDays(35).map((d,i)=>({...snapshot(d,100+i),consensus_date:'2025-12-01'}));
   const model=V.model({observations},observations.at(-1),1,'5Y');assert.equal(model.pe.latestRsi,null);assert.equal(model.pe.stats.available,false);
 });
+test('native currency conversion must match its dated FX and cannot use a later candle',()=>{
+  const s={...snapshot(),price_native:140,price_native_currency:'CAD',fx_rate:1.4,fx_timestamp:'2026-01-02T21:00:00Z',price_close_timestamp:'2026-01-02T21:00:00Z'};
+  assert.equal(V.snapshot(s).price,100);assert.throws(()=>V.snapshot({...s,fx_timestamp:'2026-01-02T21:05:00Z'}));assert.throws(()=>V.snapshot({...s,price:105}));
+});

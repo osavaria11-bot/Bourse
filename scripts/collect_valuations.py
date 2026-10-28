@@ -332,7 +332,13 @@ def closing_price(snapshot, instrument, now):
     for host in ("query1.finance.yahoo.com", "query2.finance.yahoo.com"):
         try:
             payload = json.loads(fetch("https://" + host + "/v8/finance/chart/" + urllib.parse.quote(symbol) + "?" + query))
+            payload, conversion = align_price_currency(payload, snapshot, instrument, now)
             result = reprice(payload, snapshot, instrument, now)
+            if conversion:
+                result.update(conversion)
+            else:
+                for key in ("price_native", "price_native_currency", "fx_rate", "fx_convention", "fx_timestamp", "fx_source_url", "price_close_timestamp"):
+                    result.pop(key, None)
             result["price_fetch_status"] = "fresh"
             result.pop("price_refresh_error", None)
             return result
@@ -341,6 +347,71 @@ def closing_price(snapshot, instrument, now):
     snapshot["price_refresh_error"] = errors[-1]
     snapshot["price_fetch_status"] = "cached" if snapshot.get("price_date") else "unavailable"
     return snapshot
+
+
+def align_price_currency(payload, snapshot, instrument, now):
+    """Canadian-listed shares may have USD reporting EPS. Convert the native
+    close at a completed FX candle ending at/before the same regular close.
+    No OTC proxy and no later FX rate are substituted.
+    """
+    result = payload.get("chart", {}).get("result")
+    if not result or len(result) != 1:
+        return payload, None
+    chart = result[0]
+    meta = chart.get("meta", {})
+    if meta.get("currency") == snapshot["currency"]:
+        return payload, None
+    if meta.get("currency") != "CAD" or snapshot["currency"] != "USD":
+        raise SourceError("Conversion de devise non prise en charge")
+    expected = instrument.get("valuation_symbol", instrument["symbol"])
+    if meta.get("symbol", "").upper() != expected.upper():
+        raise SourceError("Cotation native incompatible")
+    period = meta.get("currentTradingPeriod", {}).get("regular", {})
+    if not period.get("start") or not period.get("end"):
+        raise SourceError("Heure de clôture native manquante pour le change")
+    tz = ZoneInfo(meta["exchangeTimezoneName"])
+    session = datetime.fromtimestamp(period["start"], timezone.utc).astimezone(tz).date()
+    end = int(period["end"])
+    if now.timestamp() < end + 120:
+        raise SourceError("Séance native non terminée pour la conversion")
+    timestamps = chart.get("timestamp", [])
+    closes = chart.get("indicators", {}).get("quote", [{}])[0].get("close", [])
+    native = [(stamp, close) for stamp, close in zip(timestamps, closes)
+        if datetime.fromtimestamp(stamp, timezone.utc).astimezone(tz).date() == session
+        and isinstance(close, (int, float)) and not isinstance(close, bool) and math.isfinite(close) and close > 0 and stamp <= now.timestamp()]
+    if not native:
+        raise SourceError("Clôture native de la séance attendue absente")
+    # FX is sampled in five-minute candles. Its observation is the candle END,
+    # rather than its opening timestamp; later bars are strictly ineligible.
+    fx_query = urllib.parse.urlencode({"range":"5d", "interval":"5m", "includePrePost":"true"})
+    fx_payload = json.loads(fetch("https://query1.finance.yahoo.com/v8/finance/chart/CAD%3DX?" + fx_query))
+    fx_result = fx_payload.get("chart", {}).get("result")
+    if fx_payload.get("chart", {}).get("error") or not fx_result or len(fx_result) != 1:
+        raise SourceError("Change de clôture indisponible")
+    fx = fx_result[0]
+    if fx.get("meta", {}).get("symbol") != "CAD=X" or fx.get("meta", {}).get("currency") != "CAD":
+        raise SourceError("Convention USD/CAD non vérifiée")
+    fx_closes = fx.get("indicators", {}).get("quote", [{}])[0].get("close", [])
+    eligible = [(stamp + 300, value) for stamp, value in zip(fx.get("timestamp", []), fx_closes)
+        if stamp % 300 == 0 and end - 600 <= stamp + 300 <= end and stamp + 300 <= now.timestamp()
+        and isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value) and .5 < value < 3]
+    if not eligible:
+        raise SourceError("Taux de change manquant à la clôture; aucun taux ultérieur utilisé")
+    fx_stamp, rate = max(eligible)
+    native_stamp, native_price = native[-1]
+    converted = deepcopy(payload)
+    current = converted["chart"]["result"][0]
+    current["meta"]["currency"] = "USD"
+    current["timestamp"] = [native_stamp]
+    current["indicators"]["quote"][0]["close"] = [native_price / rate]
+    preceding = sorted({datetime.fromtimestamp(stamp, timezone.utc).astimezone(tz).date().isoformat()
+        for stamp, value in zip(timestamps, closes) if stamp < native_stamp and isinstance(value, (int, float)) and value > 0
+        and datetime.fromtimestamp(stamp, timezone.utc).astimezone(tz).date() < session})
+    return converted, {"price_native":native_price, "price_native_currency":"CAD", "fx_rate":rate,
+        "price_close_timestamp":datetime.fromtimestamp(end, timezone.utc).isoformat(),
+        "fx_convention":"CAD per USD", "fx_timestamp":datetime.fromtimestamp(fx_stamp, timezone.utc).isoformat(),
+        "fx_source_url":"https://finance.yahoo.com/quote/CAD%3DX/",
+        "previous_session_date":preceding[-1] if preceding else None}
 
 
 def preserve(previous, snapshot):
@@ -444,6 +515,12 @@ def validate(output, universe):
                 raise SourceError("Relevé antidaté ou dates désordonnées")
             if snap["ratios"] != ratios(snap, row.get("financial", False)):
                 raise SourceError("Ratio incompatible avec son consensus archivé")
+            if snap.get("fx_rate") is not None:
+                fx_time = datetime.fromisoformat(snap["fx_timestamp"])
+                close_time = datetime.fromisoformat(snap["price_close_timestamp"])
+                expected_price = snap["price_native"] / snap["fx_rate"]
+                if snap["currency"] != "USD" or snap["price_native_currency"] != "CAD" or not 0 <= (close_time-fx_time).total_seconds() <= 600 or abs(snap["price"]-expected_price)>max(1,expected_price)*1e-8:
+                    raise SourceError("Change ou cours converti incompatible avec la clôture")
             last = day
     return index
 

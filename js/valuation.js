@@ -106,6 +106,7 @@
       if(member?.listing_note)detail.append(document.createTextNode(" — "+member.listing_note));
       detail.append(document.createTextNode(" — cours "+number(latest.price,2)+" "+latest.currency+" du "+dateLabel(latest.price_date)+
         "; pont EV de bilan au "+dateLabel(latest.ev_bridge_date)+" (EV indicative). "));
+      if(latest.price_native_currency&&latest.fx_rate)detail.append(document.createTextNode("Cours natif "+number(latest.price_native,2)+" "+latest.price_native_currency+", converti à "+number(latest.fx_rate,4)+" CAD/USD avec un taux observé au plus tard à cette clôture. "));
       const link=node("a","","Consensus MarketScreener ↗"); link.href=latest.source_url;link.target="_blank";link.rel="noopener noreferrer";detail.append(link);
       if((id==="MSFT"&&config.aliases.MSFTCDR)||(id==="SNDKUS"&&config.aliases.SNDK))detail.append(document.createTextNode(" Action américaine sous-jacente aux CDR; aucune conversion du prix du CDR."));
     }

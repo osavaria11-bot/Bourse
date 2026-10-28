@@ -43,6 +43,12 @@
       if (!day(p.period_end) || seen.has(p.period_end) || (p.eps !== null && !finite(p.eps)) || (p.ebitda_millions !== null && !finite(p.ebitda_millions))) throw new Error("Prévision annuelle invalide");
       seen.add(p.period_end);
     }
+    if(s.fx_rate!==undefined){
+      const fxTime=Date.parse(s.fx_timestamp),closeTime=Date.parse(s.price_close_timestamp);
+      if(!finite(s.fx_rate)||s.fx_rate<=0||!finite(s.price_native)||s.price_native<=0||s.currency!=="USD"||s.price_native_currency!=="CAD"||
+        !Number.isFinite(fxTime)||!Number.isFinite(closeTime)||fxTime>closeTime||closeTime-fxTime>600000||closeTime>Date.parse(s.observed_at)||
+        Math.abs(s.price-s.price_native/s.fx_rate)>Math.max(1,s.price)*1e-8)throw new Error("Conversion de clôture invalide");
+    }
     return s;
   }
   function index(payload, config, now = Date.now()) {
