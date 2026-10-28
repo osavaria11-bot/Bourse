@@ -44,6 +44,13 @@ test('each of the three portfolios uses its own quantities and coverage; a missi
   }
   f.payload.quotes[0].extended_hours={};assert.equal(E.portfolio(f.positions,f.prices,f.payload,'pre',now).available,false);
 });
+test('a verified completed-session quote takes precedence over a same-day partial daily snapshot',()=>{
+  const f=fixture();f.prices.series[1].history=[['2026-10-27',150]];
+  Object.assign(f.payload.quotes[1],{session_date:'2026-10-27',session_end:'2026-10-27T20:00:00Z',
+    fetched_at:'2026-10-27T20:05:00Z',price:200});
+  const r=E.portfolio(f.positions,f.prices,f.payload,'pre',now);
+  assert.ok(Math.abs(r.percent-(365/340-1)*100)<1e-10);
+});
 test('no future FX, different session, wrong listing or missing baseline can create a complete portfolio percentage',()=>{
   for(const change of [f=>f.payload.quotes[2].intraday_sessions={},f=>f.payload.quotes[0].currency='CAD',
     f=>f.prices.series[1].history=[],f=>f.positions[0].currency='CAD']){

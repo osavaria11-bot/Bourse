@@ -72,9 +72,10 @@
       const same=q&&q.quote_symbol===point.quote_symbol&&q.currency===point.currency;
       const daily=P.observationAt(point.history||[],latest.baseline_session_date);
       const close=same?(q.regular_closes||[]).find(p=>p.session_date===latest.baseline_session_date):null;
-      let price=h?.baseline_price||close?.price||(daily?.[0]===latest.baseline_session_date?daily[1]:null);
-      if(!positive(price)&&same&&q.session_date===latest.baseline_session_date&&Date.parse(q.session_end)<=now)price=q.price;
+      let price=h?.baseline_price||close?.price;
+      if(!positive(price)&&same&&q.session_date===latest.baseline_session_date&&Date.parse(q.session_end)<=now&&Date.parse(q.fetched_at)>=Date.parse(q.session_end))price=q.price;
       if(!positive(price)&&same&&key==='pre'&&q.session_date===latest.session_date&&q.session_start===latest.end)price=q.previous_close;
+      if(!positive(price)&&daily?.[0]===latest.baseline_session_date)price=daily[1];
       if(!positive(price)){missing.push(pos.ticker);continue;}
       const baseValue=pos.quantity*price*(pos.currency==='USD'?baseFx:1);
       baseline+=baseValue;current+=pos.quantity*(h?h.price:price)*(pos.currency==='USD'?currentFx:1);
