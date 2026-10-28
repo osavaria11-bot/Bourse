@@ -29122,8 +29122,8 @@
   "missing_sessions": [],
   "weights_signature": "6073ee32df0efff2c37b0a4638ee8487c09d9f13d5b7d806d994ada010606b0d",
   "shape_estimators": "bias_corrected_fisher",
-  "status": "current",
-  "error": null,
+  "status": "stale",
+  "error": "Latest completed session missing from daily VaR sample",
   "results": {
     "prospective-2026-10-perspectives": {
       "weights": {
