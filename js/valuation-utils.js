@@ -148,5 +148,36 @@
     }
     return {end, start: cutoff, ...output};
   }
-  return {finite, day, universe, memberIds, snapshot, index, history, denominator, values, rsi, quantile, statistics, model};
+  function providerHistory(payload, id, now = Date.now()) {
+    if (payload?.schema_version !== 1 || payload.kind !== "savy_provider_valuation_history" || payload.id !== id ||
+        !url(payload.source_url) || !Number.isFinite(Date.parse(payload.checked_at)) || Date.parse(payload.checked_at) > now + 300000 || !payload.metrics) throw new Error("Historique fournisseur indisponible");
+    for (const [key, metric] of Object.entries(payload.metrics)) {
+      if (!["pe", "ev_ebitda"].includes(key) || metric.definition !== "provider_estimate_unspecified_horizon" ||
+          metric.horizon_months !== null || metric.point_in_time_verified !== false || !Array.isArray(metric.points) ||
+          !url(metric.source_url) || !Number.isFinite(Date.parse(metric.fetched_at)) || Date.parse(metric.fetched_at) > now + 300000 ||
+          !day(metric.as_of) || !/^[A-Z]{3}$/.test(metric.quote_currency)) throw new Error("Définition historique non vérifiée");
+      let previous = "";
+      for (const [d, value] of metric.points) {
+        if (!day(d) || d <= previous || d > metric.as_of || Date.parse(d) > now || (value !== null && (!finite(value) || value <= 0))) throw new Error("Séance historique invalide");
+        previous = d;
+      }
+      if (previous !== metric.as_of) throw new Error("Dernière séance historique non rapprochée");
+    }
+    return payload;
+  }
+  function providerModel(payload, range = "MAX") {
+    const output = {};
+    for (const key of ["pe", "ev_ebitda"]) {
+      const source = payload?.metrics?.[key], all = source?.points || [], end = source?.as_of;
+      const start = new Date((end || "1970-01-01") + "T00:00:00Z");
+      if (range !== "MAX") start.setUTCFullYear(start.getUTCFullYear() - ({"1Y":1,"3Y":3,"5Y":5}[range] || 5));
+      const cutoff = range === "MAX" ? "0000-01-01" : start.toISOString().slice(0,10);
+      const previous = new Map(all.slice(1).map((p,i)=>[p[0],all[i][0]])), strength = rsi(all,14,previous);
+      const shown = all.filter(p=>p[0]>=cutoff), latest = all.at(-1)?.[1] ?? null;
+      output[key] = {points:shown, rsi:strength.filter(p=>p[0]>=cutoff), latest, latestRsi:strength.at(-1)?.[1]??null,
+        stats:statistics(shown,latest), source, end, period_end:null};
+    }
+    return output;
+  }
+  return {finite, day, universe, memberIds, snapshot, index, history, denominator, values, rsi, quantile, statistics, model, providerHistory, providerModel};
 });

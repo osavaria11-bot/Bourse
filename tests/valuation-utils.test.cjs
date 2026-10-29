@@ -77,3 +77,13 @@ test('native currency conversion must match its dated FX and cannot use a later 
   const s={...snapshot(),price_native:140,price_native_currency:'CAD',fx_rate:1.4,fx_timestamp:'2026-01-02T21:00:00Z',price_close_timestamp:'2026-01-02T21:00:00Z'};
   assert.equal(V.snapshot(s).price,100);assert.throws(()=>V.snapshot({...s,fx_timestamp:'2026-01-02T21:05:00Z'}));assert.throws(()=>V.snapshot({...s,price:105}));
 });
+test('provider estimate history stays separate from constant-horizon archive and uses ratio RSI',()=>{
+  const dates=businessDays(40),metric={definition:'provider_estimate_unspecified_horizon',horizon_months:null,point_in_time_verified:false,
+    source_url:'https://example.com/chart/',fetched_at:dates.at(-1)+'T22:00:00Z',quote_currency:'USD',as_of:dates.at(-1),points:dates.map((d,i)=>[d,20+i])};
+  const data={schema_version:1,kind:'savy_provider_valuation_history',id:'TEST',source_url:'https://example.com/',checked_at:metric.fetched_at,metrics:{pe:metric}};
+  V.providerHistory(data,'TEST');const m=V.providerModel(data,'MAX');assert.equal(m.pe.points.length,40);assert.equal(m.pe.latestRsi,100);assert.equal(m.pe.stats.available,true);assert.equal(m.ev_ebitda.latest,null);
+  assert.throws(()=>V.providerHistory({...data,id:'WRONG'},'TEST'));
+  assert.throws(()=>V.providerHistory({...data,metrics:{pe:{...metric,horizon_months:12}}},'TEST'));
+  assert.throws(()=>V.providerHistory({...data,metrics:{pe:{...metric,points:[...metric.points,[dates.at(-1),12]]}}},'TEST'));
+  assert.throws(()=>V.providerHistory({...data,metrics:{pe:{...metric,points:[...metric.points,['2026-12-31',12]]}}},'TEST'));
+});

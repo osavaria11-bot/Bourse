@@ -8,7 +8,7 @@
   const section = node("section", "valuation-research"); section.id = "valuationResearch";
   const heading = node("div", "valuation-heading"), intro = node("div");
   intro.append(node("p", "eyebrow", "Recherche · Actions individuelles"), node("h2", "", "Valorisation & RSI des multiples"),
-    node("p", "meta", "Compare le P/E et l’EV/EBITDA prévisionnels à leur propre histoire. Le RSI mesure le mouvement du multiple sélectionné."));
+    node("p", "meta", "Les courbes montrent les multiples estimés publiés par MarketScreener et le RSI de chaque multiple. Le suivi SAVY à 12 et 24 mois reste disponible dans le choix des données."));
   const refresh = node("button", "button quiet", "Actualiser"); refresh.type = "button"; refresh.id = "valuationRefresh"; heading.append(intro, refresh); section.append(heading);
   const status = node("p", "meta"); status.id = "valuationStatus"; status.setAttribute("role", "status"); section.append(status);
   const controls = node("div", "valuation-controls");
@@ -18,7 +18,7 @@
   }
   const scope = select("valuationScope", "Univers", [["mine","Mes actions + screener"],["OS","Portefeuille OS"],["JMC","Portefeuille JMC"],["MCL","Portefeuille MCL"],["research","Screener · toutes les éditions"],["all","Toutes les actions disponibles"]]);
   const stock = select("valuationStock", "Action", []);
-  const basis = select("valuationBasis", "Prévisions", [["blended","12 mois glissants · pondération annuelle"],["fiscal","Exercices fiscaux · FY1 / FY2"]]);
+  const basis = select("valuationBasis", "Données des graphiques", [["provider","Historique estimé · MarketScreener"],["blended","Suivi SAVY · 12 / 24 mois"],["fiscal","Suivi SAVY · FY1 / FY2"]]);
   const horizonHost = node("div", "valuation-field"); horizonHost.append(node("span", "", "Horizon prévisionnel"));
   const horizons = node("div", "segmented"); horizons.setAttribute("role","group"); horizons.setAttribute("aria-label","Horizon prévisionnel");
   for (const [value, label] of [[1,"1 an"],[2,"2 ans"]]) {const button = node("button","",label); button.type="button"; button.dataset.horizon=String(value); button.setAttribute("aria-pressed",String(value===1)); horizons.append(button);}
@@ -43,7 +43,8 @@
     "1 an : consensus des 12 prochains mois. 2 ans : consensus des mois 13 à 24, et non bénéfice cumulé sur deux ans. Les prévisions annuelles sont pondérées selon les jours jusqu’à la fin de l’exercice. C’est une approximation par années fiscales; elle peut différer d’un consensus par trimestre ou de Bloomberg BEst.",
     "P/E = cours de référence / BPA prévisionnel. EV/EBITDA = EV au cours de référence / EBITDA prévisionnel. L’EV est indicative : capitalisation du relevé + dernière dette nette annuelle publiée, ou pont EV–capitalisation de la dernière année publiée si la dette nette manque. Les intérêts minoritaires, les actions privilégiées et les changements de bilan récents peuvent manquer. La date de ce pont est indiquée; cette approximation ne constitue pas un EV Bloomberg actualisé au dernier trimestre. L’EV future de MarketScreener, qui incorpore une dette ou une trésorerie projetée, n’est pas utilisée comme EV actuelle.",
     "Le RSI de Wilder, sur 14 variations quotidiennes du ratio, apparaît sous chaque multiple sur une échelle de 0 à 100; repères 30, 50 et 70. Il demande 15 clôtures vérifiées. Un RSI faible reflète une contraction récente du multiple; il ne suffit pas à établir qu’une action est bon marché. Les révisions de consensus peuvent faire bouger le multiple sans mouvement du cours.",
-    "L’historique utilise les consensus effectivement archivés à chaque date. Il commence au premier relevé vérifié; choisir 5 ans ou Maximum n’invente pas les années manquantes. La table annuelle et le graphique estimé générique de MarketScreener ne sont pas réétiquetés comme une série Bloomberg 1BF/2BF. Un historique antérieur nécessite une source de consensus datés pour ces mêmes horizons. Les bénéfices négatifs, le consensus manquant et l’EV/EBITDA non pertinent pour les sociétés financières restent N/D.",
+    "Historique estimé MarketScreener : les deux séries « Estimate » sont reprises telles que publiées par le fournisseur, sur les seules dates où son graphique possède un cours. Les fins de semaine et points futurs sont exclus. Le fournisseur ne certifie pas ici un horizon constant de 12 ou 24 mois ni les dates des consensus utilisés dans le passé. Ces séries peuvent être révisées et leur EV suit la méthode du fournisseur. Elles ne sont pas présentées comme du Bloomberg 1BF/2BF. Le RSI et les statistiques portent uniquement sur ces séries; aucun multiple SAVY n’y est raccordé.",
+    "Suivi SAVY 12/24 mois : l’historique utilise les consensus effectivement archivés à chaque date. Il commence au premier relevé vérifié; choisir 5 ans ou Maximum n’invente pas les années manquantes. Les bénéfices négatifs, le consensus manquant et l’EV/EBITDA non pertinent pour les sociétés financières restent N/D.",
     "La médiane, les bornes du 10e au 90e percentile et le percentile du niveau actuel portent sur les clôtures disponibles dans la période choisie. Ils exigent au moins 30 observations. Ils mesurent une position relative dans l’échantillon, sans signal automatique d’achat ou de vente. Le RSI est initialisé avant la fenêtre affichée quand l’historique le permet.",
     "Seules les actions individuelles sont incluses. Les CDR Microsoft et Sandisk sont reliés explicitement à l’action américaine sous-jacente; ses multiples ne sont pas calculés avec le cours du CDR. La composition privée des trois comptes est lue uniquement sur cet appareil. Les quantités et les prix moyens ne sont transmis à aucune source de valorisation.",
     "Collecte du consensus prévue chaque jour vers 18 h 17, heure de Toronto. Les clôtures sont aussi reprises à 18 h 47 et 21 h 17 en semaine. L’onglet ouvert vérifie les données toutes les cinq minutes. Quand le consensus ne peut être actualisé, le dernier consensus connu garde sa date et peut être revalorisé avec une nouvelle clôture. Il n’est jamais présenté comme une nouvelle estimation. Un consensus de plus de sept jours est exclu du RSI et des repères historiques."
@@ -53,7 +54,7 @@
     const a=node("a","",label+" ↗"); a.href=href; a.target="_blank"; a.rel="noopener noreferrer"; links.append(a,document.createTextNode(" · "));
   }
   method.append(links); section.append(method); panel.append(section);
-  let config=null, index=null, members=[], histories=new Map(), loading=false, selected="", horizon=1, range="5Y", cached=false, holdings={}, current=null;
+  let config=null, index=null, members=[], histories=new Map(), providerHistories=new Map(), loading=false, selected="", horizon=1, range="MAX", cached=false, holdings={}, current=null;
   function save(key,value) {try{localStorage.setItem(key,JSON.stringify(value));}catch{}}
   function stored(key){try{return JSON.parse(localStorage.getItem(key));}catch{return null;}}
   async function get(path) {const r=await fetch(path+"?v="+Date.now(),{cache:"no-store",signal:AbortSignal.timeout(20000)}); if(!r.ok)throw new Error("Source indisponible"); return r.json();}
@@ -80,12 +81,13 @@
       if(!config) config=V.universe(await get("data/valuation-universe.json"));
       try {index=V.index(await get("data/valuations/index.json"),config); cached=false;save("savy:valuations:index:v1",index);}
       catch {index=V.index(stored("savy:valuations:index:v1"),config);cached=true;}
-      histories.clear(); await syncMemberships(); await render();
+      histories.clear(); providerHistories.clear(); await syncMemberships(); await render();
     } catch(error){status.textContent="Les consensus ne sont pas encore disponibles. "+error.message+". Les données manquantes restent N/D."; if(config){await syncMemberships();await render();}}
     finally{loading=false;refresh.disabled=false;}
   }
   async function render() {
     const id=selected, row=index?.instruments.find(r=>r.id===id), member=members.find(r=>r.id===id);
+    const provider=basis.value==="provider"; horizonHost.hidden=provider; controls.classList.toggle("provider-mode",provider);
     for(const b of horizons.children){b.setAttribute("aria-pressed",String(+b.dataset.horizon===horizon));b.textContent=basis.value==="fiscal"?"FY"+b.dataset.horizon:b.dataset.horizon+" an"+(b.dataset.horizon==="2"?"s":"");}
     for(const b of ranges.children)b.setAttribute("aria-pressed",String(b.dataset.range===range));
     let data=histories.get(id)||{id,financial:member?.financial,observations:[]};
@@ -93,16 +95,25 @@
       try {data=V.history(await get("data/valuations/"+encodeURIComponent(id)+".json"),id);histories.set(id,data);save("savy:valuation:"+id+":v1",data);}
       catch {try{data=V.history(stored("savy:valuation:"+id+":v1"),id);}catch{}}
     }
-    if(id!==selected)return;
+    let source=providerHistories.get(id)||null;
+    if(provider&&id&&!providerHistories.has(id)){
+      try {source=V.providerHistory(await get("data/valuation-history/"+encodeURIComponent(id)+".json"),id);providerHistories.set(id,source);save("savy:valuation:provider:"+id+":v1",source);}
+      catch {try{source=V.providerHistory(stored("savy:valuation:provider:"+id+":v1"),id);}catch{}}
+    }
+    if(id!==selected||provider!==(basis.value==="provider"))return;
     const latest=row?.latest||data.observations.at(-1)||null;
-    const model=V.model({...data,financial:member?.financial},latest,horizon,range,basis.value); current={id,model,latest};
+    const model=provider?V.providerModel(source,range):V.model({...data,financial:member?.financial},latest,horizon,range,basis.value); current={id,model,latest};
     const age=latest?Date.now()-Date.parse(latest.observed_at):Infinity;
     const stale=cached||row?.fetch_status==="cached"||age>36*3600000;
-    status.textContent=(latest?"Valorisation du "+dateLabel(latest.date)+" · consensus du "+dateLabel(latest.consensus_date||latest.date)+(stale?" conservé":"")+" · ":"")+
+    status.textContent=provider?(source?"Historique MarketScreener · relevé le "+dateLabel(new Intl.DateTimeFormat("en-CA",{timeZone:"America/Toronto"}).format(new Date(source.checked_at)))+" · Actualisation quotidienne":"Historique MarketScreener non disponible pour cette action"):(latest?"Valorisation du "+dateLabel(latest.date)+" · consensus du "+dateLabel(latest.consensus_date||latest.date)+(stale?" conservé":"")+" · ":"")+
       (index?index.instruments.filter(i=>i.latest).length+"/"+config.instruments.length+" actions avec un relevé · ":"")+"Actualisation quotidienne après clôture";
-    const mode=basis.value==="fiscal"?"Exercice fiscal FY"+horizon:"Prévisions "+(horizon===1?"des mois 1 à 12":"des mois 13 à 24");
+    const mode=provider?"Historique estimé du fournisseur":basis.value==="fiscal"?"Exercice fiscal FY"+horizon:"Prévisions "+(horizon===1?"des mois 1 à 12":"des mois 13 à 24");
     detail.replaceChildren(node("strong","",mode+" · "+(member?.title||"Choisis une action")));
-    if(latest){
+    if(provider){
+      detail.append(document.createTextNode(" · Horizon du fournisseur non certifié à 12/24 mois. "));
+      if(source){const link=node("a","","Voir la source ↗");link.href=source.source_url;link.target="_blank";link.rel="noopener noreferrer";detail.append(link);}
+      if(member?.listing_note)detail.append(document.createTextNode(" "+member.listing_note));
+    }else if(latest){
       if(member?.listing_note)detail.append(document.createTextNode(" — "+member.listing_note));
       detail.append(document.createTextNode(" — cours "+number(latest.price,2)+" "+latest.currency+" du "+dateLabel(latest.price_date)+
         "; pont EV de bilan au "+dateLabel(latest.ev_bridge_date)+" (EV indicative). "));
@@ -111,14 +122,14 @@
       if((id==="MSFT"&&config.aliases.MSFTCDR)||(id==="SNDKUS"&&config.aliases.SNDK))detail.append(document.createTextNode(" Action américaine sous-jacente aux CDR; aucune conversion du prix du CDR."));
     }
     const observed=data.observations.filter(s=>s.complete_session&&s.price_date===s.date);
-    coverageNote.hidden=observed.length>=30;
-    coverageNote.textContent="Historique antérieur 1 an / 2 ans non disponible dans les sources actuelles. "+
+    coverageNote.hidden=provider?false:observed.length>=30;
+    coverageNote.textContent=provider?(source?"Courbes estimées du fournisseur, distinctes du suivi SAVY 1 an / 2 ans. Maximum affiche toute la série disponible.":"L’historique du fournisseur n’est pas disponible pour cette action. Le suivi SAVY reste accessible dans « Données des graphiques »."):"Historique antérieur 1 an / 2 ans non disponible dans les sources actuelles. "+
       (data.observations.length?"Relevés archivés depuis le "+dateLabel(data.observations[0].date)+". ":"")+
       "Le RSI apparaîtra après 15 clôtures vérifiées; la médiane et les percentiles après 30. Une source de consensus historiques datés est nécessaire pour afficher cinq ans dès maintenant.";
     for(const key of ["pe","ev_ebitda"]){
-      const card=cards[key], m=model[key], label=key==="pe"?"P/E forward":"EV/EBITDA forward";
-      card.title.textContent=label+(basis.value==="fiscal"?" · FY"+horizon:" · "+horizon+" an"+(horizon===2?"s":""))+(m.period_end?" · fin "+dateLabel(m.period_end):"");
-      card.reading.textContent=V.finite(m.latest)?number(m.latest)+"×"+ (key==="ev_ebitda"?" ≈":""):"N/D";
+      const card=cards[key], m=model[key], label=(key==="pe"?"P/E":"EV/EBITDA")+(provider?" estimé":" forward");
+      card.title.textContent=label+(provider?" · MarketScreener":basis.value==="fiscal"?" · FY"+horizon:" · "+horizon+" an"+(horizon===2?"s":""))+(m.period_end?" · fin "+dateLabel(m.period_end):"");
+      card.reading.textContent=V.finite(m.latest)?number(m.latest)+"×"+ (key==="ev_ebitda"&&!provider?" ≈":""):"N/D";
       card.stats.replaceChildren();
       for(const [label,value] of [["RSI du multiple · 14 séances",V.finite(m.latestRsi)?number(m.latestRsi):"N/D"],
         ["Médiane historique",m.stats.available?number(m.stats.median)+"×":"N/D"],
@@ -126,13 +137,13 @@
         ["Écart à la médiane",m.stats.available?(m.stats.premium>0?"+":"")+number(m.stats.premium)+" %":"N/D"]]){
         const stat=node("div");stat.append(node("span","meta",label),node("strong","",value));card.stats.append(stat);
       }
-      let reason=!latest?"Consensus non disponible pour cette action.":key==="ev_ebitda"&&member?.financial?"EV/EBITDA non pertinent pour cette société financière.":
+      let reason=key==="ev_ebitda"&&member?.financial?"EV/EBITDA non pertinent pour cette société financière.":provider?(!m.source?"Historique estimé non disponible chez le fournisseur.":""):!latest?"Consensus non disponible pour cette action.":
         !V.finite(m.latest)?"Prévisions de cet horizon absentes ou dénominateur non positif; aucune substitution par du TTM.":"";
       const valid=m.points.filter(p=>V.finite(p[1]));
-      card.note.textContent=(reason?reason+" ":"")+(valid.length?valid.length+" clôture"+(valid.length>1?"s":"")+" vérifiée"+(valid.length>1?"s":"")+" · "+dateLabel(valid[0][0])+" → "+dateLabel(valid.at(-1)[0])+". ":"")+
-        (valid.length<15?"Historique forward daté en constitution. RSI disponible après 15 clôtures; repères historiques après 30. Les cinq années antérieures nécessitent des consensus historiques pour le même horizon.":
+      card.note.textContent=(reason?reason+" ":"")+(valid.length?valid.length+(provider?" séances du fournisseur":" clôture"+(valid.length>1?"s":"")+" vérifiée"+(valid.length>1?"s":""))+" · "+dateLabel(valid[0][0])+" → "+dateLabel(valid.at(-1)[0])+". ":"")+
+        (provider?(m.source?"RSI de Wilder du multiple · estimations publiées, susceptibles de révision. Aucun consensus actuel appliqué par SAVY aux anciens cours.":""):valid.length<15?"Historique forward daté en constitution. RSI disponible après 15 clôtures; repères historiques après 30. Les cinq années antérieures nécessitent des consensus historiques pour le même horizon.":
         "RSI calculé sur le multiple sélectionné. Le percentile et le RSI répondent à deux questions différentes.");
-      draw(card.host,m,label,latest?.date);
+      draw(card.host,m,label,provider?m.end:latest?.date);
     }
   }
   function draw(host,m,label,latestDay){

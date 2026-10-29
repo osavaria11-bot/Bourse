@@ -1,5 +1,20 @@
 # Valorisation des actions individuelles
 
+## Courbes visibles dès l’ouverture — correctif du 28 octobre 2026
+
+Le choix par défaut « Historique estimé · MarketScreener » affiche les séries publiques `P/E (Estimate)` et `EV / EBITDA (Estimate)` du fournisseur, avec leur RSI de Wilder et leurs statistiques. `scripts/collect_valuation_history.py` les conserve séparément dans `data/valuation-history/`, sans modifier `data/valuations/` ni recalculer de consensus passés. L’API publique de graphique emploie `type=PER` et `type=EV_EBITDA`. Les dates retenues sont uniquement celles possédant un cours dans le même graphique; les fins de semaine ajoutées par la série estimée et les dates futures sont exclues. Les valeurs nulles ou non positives restent des interruptions. Le dernier niveau reste N/D si la dernière séance ne possède pas de multiple positif.
+
+**La définition de ces séries ne certifie ni un horizon constant de 12/24 mois ni un consensus historique point-in-time.** Leur EV suit la méthode du fournisseur; elle n’est pas assimilée à l’EV actuelle reconstruite dans SAVY. Les données peuvent être révisées par la source. Elles ne sont jamais raccordées aux multiples SAVY ni présentées comme du Bloomberg 1BF/2BF. Le contrôle 1 an / 2 ans apparaît seulement dans les modes de suivi SAVY. La période « Maximum » affiche exactement toute la série obtenue, et non cinq années promises. Pour NVIDIA, 943 séances du 26 janvier 2023 au 28 octobre 2026 ont été obtenues lors du correctif.
+
+Les modes « Suivi SAVY · 12 / 24 mois » et « Suivi SAVY · FY1 / FY2 » conservent la méthode et l’archive datée décrites ci-dessous. Leur historique demeure court. La collecte quotidienne de consensus effectue aussi la commande suivante depuis l’environnement autorisé, jamais depuis le runner GitHub ayant reçu un refus MarketScreener :
+
+```sh
+python scripts/collect_valuation_history.py
+python -m unittest discover -s tests -p 'test_valuation*.py'
+```
+
+Un refus d’accès arrête les demandes pour le titre, sans client alternatif ni contournement. La dernière série valide garde ses dates et son statut. Seul le catalogue public est lu; aucun profil privé n’est requis.
+
 La vue Recherche → Valorisation présente deux panneaux superposés : P/E forward et EV/EBITDA forward. Chacun contient le multiple et un sous-panneau RSI de ce même multiple. Les FNB sont exclus de `data/valuation-universe.json`.
 
 ## Méthode et limites de source
