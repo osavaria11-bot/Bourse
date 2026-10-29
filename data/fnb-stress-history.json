@@ -2,9 +2,10 @@
   "schema_version": 1,
   "as_of": "2026-10-27",
   "generated_at": "2026-10-28T13:24:09-04:00",
-  "status": "partial",
+  "status": "stale",
   "errors": {
-    "FCMO": "Séances suspectes exclues des périodes qui les traversent : 2020-06-10"
+    "FCMO": "Séances suspectes exclues des périodes qui les traversent : 2020-06-10",
+    "FX": "Unexpected stress source identity: CAD=X"
   },
   "scenarios": {
     "gfc2008": {
@@ -397,6 +398,14 @@
           "currency": "CAD",
           "total_return": true,
           "source_url": "https://finance.yahoo.com/quote/ZUQ.TO/history/"
+        },
+        "ZLU": {
+          "return": -0.25126618855341964,
+          "start": "2020-02-19",
+          "end": "2020-03-23",
+          "currency": "CAD",
+          "total_return": true,
+          "source_url": "https://finance.yahoo.com/quote/ZLU.TO/history/"
         }
       },
       "factor_shocks": {
@@ -745,6 +754,14 @@
           "currency": "CAD",
           "total_return": true,
           "source_url": "https://finance.yahoo.com/quote/ZUQ.TO/history/"
+        },
+        "ZLU": {
+          "return": 0.07943153037206918,
+          "start": "2021-12-31",
+          "end": "2022-12-30",
+          "currency": "CAD",
+          "total_return": true,
+          "source_url": "https://finance.yahoo.com/quote/ZLU.TO/history/"
         }
       },
       "factor_shocks": {
@@ -3079,5 +3096,15 @@
   },
   "indices": {},
   "reconstructions": {},
-  "method": "Actual adjusted ETF endpoint returns in CAD. USD proxies converted as (1+rUSD)*(1+rUSD/CAD)-1. Portfolio scenarios use current starting weights and buy-and-hold. No historical portfolio holdings inferred. No invented index data. XBB total return = rate proxy; XCB-XGB = imperfect credit proxy, with duration mismatch. FX = USD/CAD. All sensitivities are conditional estimates, not contractual hedge ratios."
+  "method": "Actual adjusted ETF endpoint returns in CAD. USD proxies converted as (1+rUSD)*(1+rUSD/CAD)-1. Portfolio scenarios use current starting weights and buy-and-hold. No historical portfolio holdings inferred. No invented index data. XBB total return = rate proxy; XCB-XGB = imperfect credit proxy, with duration mismatch. FX = USD/CAD. All sensitivities are conditional estimates, not contractual hedge ratios.",
+  "retained_snapshot": {
+    "source_generated_at": "2026-10-28T13:24:09-04:00",
+    "source_as_of": "2026-10-27",
+    "attempted_as_of": "2026-10-28",
+    "checked_at": "2026-10-28T21:56:01-04:00",
+    "failed_sources": [
+      "FX"
+    ],
+    "reason": "Source unavailable; prior verified snapshot retained without mixing FX or price revisions."
+  }
 }
