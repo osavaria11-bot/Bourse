@@ -670,6 +670,15 @@
       "type": "stock",
       "symbol": "XOM",
       "financial": false
+    },
+    {
+      "id": "SKHY",
+      "title": "SK Hynix ADR",
+      "type": "stock",
+      "symbol": "SKHY",
+      "financial": false,
+      "valuation_symbol": "000660.KS",
+      "listing_note": "Valorisation de l’émetteur sur l’action ordinaire coréenne 000660.KS en KRW. Un ADR Nasdaq SKHY représente 1/10 d’action ordinaire (émetteur et dépositaire Citi, programme actif le 14 juillet 2026). Ne pas combiner cours ADR USD et BPA ordinaire KRW. Source : https://www.skhynix.com/ir/UI-FR-IR03/"
     }
   ],
   "research_editions": [
@@ -720,6 +729,26 @@
         "VIK"
       ],
       "source": "reports/stocks/2026-10-21.pdf"
+    },
+    {
+      "date": "2026-10-28",
+      "tickers": [
+        "APH",
+        "ASML",
+        "DXCM",
+        "GLBE",
+        "LLY",
+        "MA",
+        "MU",
+        "NVDA",
+        "SKHY",
+        "SNDKUS",
+        "STX",
+        "TSM",
+        "VIK"
+      ],
+      "source": "reports/stocks/2026-10-28.pdf",
+      "note": "13 admissibles analysés intégralement; cotations USD/ADR distinguées des cotations canoniques de valorisation."
     }
   ]
 }

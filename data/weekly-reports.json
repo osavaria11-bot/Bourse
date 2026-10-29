@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "savy_weekly_reports",
-  "generated_at": "2026-10-26T11:39:44Z",
+  "generated_at": "2026-10-29T02:17:09Z",
   "reports": {
     "real_estate": {
       "title": "Débriefing immobilier",
@@ -34,19 +34,19 @@
     },
     "stocks": {
       "title": "Top 5 du screener Finviz",
-      "edition_date": "2026-10-21",
-      "reference_date": "2026-10-21",
+      "edition_date": "2026-10-28",
+      "reference_date": "2026-10-28",
       "document_scope": "full",
-      "summary": "NVIDIA arrive en tête, devant Micron, TSMC, Amphenol et Sandisk. Les 14 admissibles sont analysés aux clôtures du 21 octobre 2026 en USD. Le suivi simulé A/B/SPY couvre les clôtures du 15 au 21 octobre, hors dividendes; les nouveaux rangs ne seront appliqués qu’après la clôture admissible du 22 octobre. Le capital et les historiques depuis le 30 septembre sont conservés.",
+      "summary": "NVIDIA reste première devant Micron, TSMC, Amphenol et Sandisk. Les 13 admissibles sont analysés sur 24 mois aux clôtures du 28 octobre en USD. Les fiches privilégient le modèle d’affaires, la direction et les développements matériels. A/B/SPY : 9 757,11 / 10 078,62 / 10 126,93 USD; période du 21 au 28 octobre, cours hors dividendes. L’instruction du 22 est exécutée; les poids du nouveau rapport attendent la clôture vérifiée du 29 octobre.",
       "highlights": [
-        "A « Top 5 pondéré » — clôture du 21 octobre : 9 028,93 USD; période 15–21 octobre +0,49 %; depuis le 30 septembre -9,71 %. Écart à SPY : +0.33 point sur la période, -11.08 points depuis le lancement.",
-        "B « Autres équipondérés » — clôture du 21 octobre : 9 702,36 USD; période 15–21 octobre +0,00 %; depuis le 30 septembre -2,98 %. Écart à SPY : -0.17 point sur la période, -4.35 points depuis le lancement.",
-        "SPY conservé — clôture du 21 octobre : 10 137,16 USD; période 15–21 octobre +0,17 %; depuis le 30 septembre +1,37 %.",
-        "Univers vérifié le 21 octobre à 22 h 04 EDT : 14 admissibles sur une page, 12 filtres exacts. Top 5 : NVDA, MU, TSM, APH, SNDK; 100 % technologie et forte sensibilité au cycle IA.",
-        "Dernière exécution : 15 octobre; 59 transactions conservées. Les nouveaux poids A 30–25–20–15–10 % et B 1/9 restent en attente de la clôture vérifiée du 22 octobre. Aucun prix futur ni nouvel apport.",
-        "Les scénarios sont conditionnels. Révisions BPA 1/3 mois, momentum 6 mois et 12-1 : N/D. Révision fournisseur MA du 15 octobre documentée sans réécrire le registre. Rapport complet : 14 fiches et suivi A/B/SPY."
+        "A « Top 5 pondéré » — clôture du 28 octobre : 9 757,11 USD; période 21–28 octobre +8,06 %; depuis le 30 septembre -2,43 %. Écart à SPY : +8.17 points sur la période, -3.70 depuis le lancement.",
+        "B « Autres équipondérés » — clôture du 28 octobre : 10 078,62 USD; période 21–28 octobre +3,88 %; depuis le 30 septembre +0,79 %. Écart à SPY : +3.98 points sur la période, -0.48 depuis le lancement.",
+        "SPY conservé — clôture du 28 octobre : 10 126,93 USD; période 21–28 octobre -0,10 %; depuis le 30 septembre +1,27 %.",
+        "13 admissibles, 12 filtres exacts, une page vérifiée le 28 octobre à 21 h 56 EDT. SKHY entre; EXTR et NVT sortent. Tous les candidats ont deux pages de recherche qualitative et quantitative.",
+        "Amphenol : commandes supérieures aux ventes et croissance organique forte. Seagate passe à BUY sélectif après sa génération de cash et son désendettement. Les résultats mémoire concurrents ne sont pas des résultats nouveaux de MU ou SNDK.",
+        "17 transactions du 22 octobre exécutées aux clôtures historiques vérifiées; 76 transactions au total. Les nouvelles cibles du 29 octobre restent en attente. Aucun prix futur, apport ou rendement historique réécrit."
       ],
-      "method_note": "Screener exact à 12 filtres, appliqué à cette nouvelle édition après la demande du 17 octobre : Short Float <5 %, SMA50 retirée, dix autres filtres conservés. Décisions aux clôtures du 21 octobre, 16 h EDT, en USD. Scénarios centraux à 24 mois conditionnels, dividendes bruts modélisés inclus sauf SNDK hors dividendes; aucune probabilité inventée. Suivi simulé A/B/SPY : cours hors dividendes, sans frais, impôts ou change, période 15–21 octobre; cumul depuis le 30 septembre 2026. Écarts à SPY aux mêmes dates, en points. Exécution passée du 15 octobre distincte des instructions en attente pour le 22; aucune remise à zéro. Les lacunes de consensus historique, momentum et comparables sont indiquées N/D dans le PDF.",
+      "method_note": "Screener inchangé à 12 filtres, short float <5 %, SMA50 absente; croissance EPS cinq ans = prochaines années. Cours réguliers du 28 octobre, 16 h EDT, USD. Cibles analystes à 12 mois distinctes des scénarios maison 24 mois sans probabilités; dividendes bruts modélisés inclus au Top 5 sauf SNDK. Simulation A/B/SPY : période 21–28 octobre; capital initial 10 000 USD chacun depuis le 30 septembre, hors dividendes, frais, impôts et change. Anciennes parts marquées au 22 avant 17 transactions; historique conservé. A 30/25/20/15/10, B huit titres à 1/8 en attente du 29. Les lacunes, conversions ADR et ratios exclus sont expliqués dans le PDF.",
       "stocks": [
         {
           "rank": 1,
@@ -54,9 +54,45 @@
           "company": "NVIDIA",
           "rating": 4.4,
           "decision": "BUY",
-          "summary": "Clôture du 21 octobre 2026, 16 h EDT : 221,97 USD. Potentiel et avantage logiciel supérieurs, mais dépendance aux budgets IA et à leur financement. Potentiel supérieur à la comparaison de marché, sous réserve du risque et de la concentration.",
-          "central_label": "Scénario central 24 mois : +91 % USD · +38 %/an · dividendes modélisés inclus",
-          "risk": "Le scénario défavorable combine ralentissement du financement client et baisse de marge. Le favorable demande une monétisation soutenue de l'IA et une prime élevée."
+          "price": 215.38,
+          "currency": "USD",
+          "price_date": "2026-10-28",
+          "price_at": "2026-10-28T16:00:00-04:00",
+          "summary": "NVIDIA vend une plateforme de calcul accéléré : GPU, processeurs, interconnexions, systèmes et logiciels. Montée de Vera Rubin et conversion des déploiements Oracle en revenus. Le central requiert l’exécution du plan; financement des clients, asic et compression de marge par la mémoire.",
+          "central_label": "Scénario central 24 mois : +96 % USD · +40 %/an",
+          "risk": "Financement des clients, ASIC et compression de marge par la mémoire.",
+          "target_price": 420.81949999999995,
+          "dividends_24m": 2,
+          "dividend_basis": "modeled_gross",
+          "central_return_24m": 0.9631326028414893,
+          "central_annualized_return": 0.4011183400560743,
+          "scenarios_24m": {
+            "downside": {
+              "eps": 12,
+              "exit_pe": 14,
+              "target_price": 168,
+              "return": -0.2106973720865447
+            },
+            "central": {
+              "eps": 18.296499999999998,
+              "exit_pe": 23,
+              "target_price": 420.81949999999995,
+              "return": 0.9631326028414893
+            },
+            "upside": {
+              "eps": 23,
+              "exit_pe": 28,
+              "target_price": 644,
+              "return": 1.9993499860711301
+            }
+          },
+          "catalyst": "Montée de Vera Rubin et conversion des déploiements Oracle en revenus.",
+          "earnings": "17 novembre 2026 confirmé, après séance; call annoncé dans la transcription officielle.",
+          "sources": {
+            "R": "https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Announces-Financial-Results-for-Second-Quarter-Fiscal-2027/default.aspx",
+            "M": "https://investor.nvidia.com/files/content_files/TRANSCRIPT_-NVIDIA-Corp-NVDA-US-Q2-2027-Earnings-Call-26-August-2026-5_00-PM-ET.pdf",
+            "N": "https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-and-Oracle-Expand-NVIDIA-Vera-Rubin-to-Multi-Gigawatt-Scale-and-Bring-NVIDIA-Vera-CPU-to-Oracle-Cloud-Infrastructure/default.aspx"
+          }
         },
         {
           "rank": 2,
@@ -64,9 +100,45 @@
           "company": "Micron Technology",
           "rating": 4.1,
           "decision": "BUY",
-          "summary": "Clôture du 21 octobre 2026, 16 h EDT : 913,67 USD. Décote forte et contrats documentés; risque cyclique et de révision bien supérieur à NVIDIA. Potentiel supérieur à la comparaison de marché, sous réserve du risque et de la concentration.",
-          "central_label": "Scénario central 24 mois : +79 % USD · +34 %/an · dividendes modélisés inclus",
-          "risk": "Le défavorable à 100 $ de BPA n'est pas un plancher : il illustre un cycle défavorable avec compression des prix et des marges. Le favorable exige une demande persistante et peu d'offre nouvelle."
+          "price": 983.23,
+          "currency": "USD",
+          "price_date": "2026-10-28",
+          "price_at": "2026-10-28T16:00:00-04:00",
+          "summary": "Micron fabrique de la DRAM, de la mémoire HBM et du stockage NAND. Livraisons HBM/serveur et résultats T1 FY2027. Le central requiert l’exécution du plan; retournement des prix mémoire et investissements irréversibles.",
+          "central_label": "Scénario central 24 mois : +68 % USD · +30 %/an",
+          "risk": "Retournement des prix mémoire et investissements irréversibles.",
+          "target_price": 1655.12,
+          "dividends_24m": 1.2,
+          "dividend_basis": "modeled_gross",
+          "central_return_24m": 0.6845702429746854,
+          "central_annualized_return": 0.2979099517973831,
+          "scenarios_24m": {
+            "downside": {
+              "eps": 100,
+              "exit_pe": 5,
+              "target_price": 500,
+              "return": -0.4902515179561242
+            },
+            "central": {
+              "eps": 206.89,
+              "exit_pe": 8,
+              "target_price": 1655.12,
+              "return": 0.6845702429746854
+            },
+            "upside": {
+              "eps": 250,
+              "exit_pe": 10,
+              "target_price": 2500,
+              "return": 1.5438605412772186
+            }
+          },
+          "catalyst": "Livraisons HBM/serveur et résultats T1 FY2027.",
+          "earnings": "16 décembre 2026 estimé, après séance; confirmation primaire non obtenue.",
+          "sources": {
+            "R": "https://investors.micron.com/news/press-release/2026/Micron-Technology-Inc--Reports-Record-Fiscal-Fourth-Quarter-and-Full-Year-2026-Results/default.aspx",
+            "M": "https://investors.micron.com/static-files/23023765-dfef-4e7e-845b-cd744fc20d93",
+            "N": "https://news.skhynix.com/en/q3-2026-business-results/"
+          }
         },
         {
           "rank": 3,
@@ -74,19 +146,89 @@
           "company": "TSMC",
           "rating": 4.0,
           "decision": "BUY",
-          "summary": "Clôture du 21 octobre 2026, 16 h EDT : 431,89 USD. Résultats frais et leadership industriel; potentiel moins spectaculaire mais meilleure visibilité que la mémoire. Potentiel supérieur à la comparaison de marché, sous réserve du risque et de la concentration.",
-          "central_label": "Scénario central 24 mois : +45 % USD · +20 %/an · dividendes modélisés inclus",
-          "risk": "Le central requiert l'utilisation des capacités 2 nm et une hausse des profits malgré les coûts étrangers. Le favorable demande aussi une hausse du multiple; le défavorable retient moins de bénéfices et une décote géopolitique."
+          "price": 439.51,
+          "currency": "USD",
+          "price_date": "2026-10-28",
+          "price_at": "2026-10-28T16:00:00-04:00",
+          "summary": "TSMC fabrique les puces conçues par d’autres entreprises. Ventes mensuelles le 10 novembre; montée du 2 nm. Le central requiert l’exécution du plan; taïwan et rentabilité des nouvelles usines.",
+          "central_label": "Scénario central 24 mois : +43 % USD · +19 %/an",
+          "risk": "Taïwan et rentabilité des nouvelles usines.",
+          "target_price": 619.1962264150943,
+          "dividends_24m": 8,
+          "dividend_basis": "modeled_gross",
+          "central_return_24m": 0.4270351673797965,
+          "central_annualized_return": 0.19458577229925034,
+          "scenarios_24m": {
+            "downside": {
+              "eps": 18,
+              "exit_pe": 16,
+              "target_price": 288,
+              "return": -0.3265227184819458
+            },
+            "central": {
+              "eps": 28.145283018867925,
+              "exit_pe": 22,
+              "target_price": 619.1962264150943,
+              "return": 0.4270351673797965
+            },
+            "upside": {
+              "eps": 38,
+              "exit_pe": 26,
+              "target_price": 988,
+              "return": 1.2661600418648042
+            }
+          },
+          "catalyst": "Ventes mensuelles le 10 novembre; montée du 2 nm.",
+          "earnings": "Janvier 2027 estimé; jour et heure exacts non annoncés dans le calendrier consulté.",
+          "sources": {
+            "R": "https://investor.tsmc.com/english/quarterly-results/2026/q3",
+            "M": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-10/eba4fac72873bf546b669bd2b5d973df5c93215d/TSMC%203Q26%20Transcript.pdf",
+            "N": "https://www.fidelity.com/news/article/company-news/202610180748RTRSNEWSCOMBINED_L1N46402F_1"
+          }
         },
         {
           "rank": 4,
           "ticker": "APH",
           "company": "Amphenol",
-          "rating": 3.8,
+          "rating": 3.9,
           "decision": "BUY",
-          "summary": "Clôture du 21 octobre 2026, 16 h EDT : 79,20 USD. Moins de potentiel que la mémoire, mais qualité du cash et diversité opérationnelle supérieures. Potentiel supérieur à la comparaison de marché, sous réserve du risque et de la concentration.",
-          "central_label": "Scénario central 24 mois : +43 % USD · +19 %/an · dividendes modélisés inclus",
-          "risk": "Le favorable requiert maintien des commandes et intégration sans dilution excessive. Le défavorable suppose ralentissement de l'IT datacom et dévalorisation."
+          "price": 80.96,
+          "currency": "USD",
+          "price_date": "2026-10-28",
+          "price_at": "2026-10-28T16:00:00-04:00",
+          "summary": "Amphenol vend des connecteurs, câbles, capteurs et systèmes d’interconnexion. Conversion du carnet et intégration des acquisitions annoncées. Le central requiert l’exécution du plan; concentration croissante ia et intégration des acquisitions.",
+          "central_label": "Scénario central 24 mois : +40 % USD · +18 %/an",
+          "risk": "Concentration croissante IA et intégration des acquisitions.",
+          "target_price": 111.888,
+          "dividends_24m": 1.2,
+          "dividend_basis": "modeled_gross",
+          "central_return_24m": 0.39683794466403177,
+          "central_annualized_return": 0.18187898901030963,
+          "scenarios_24m": {
+            "downside": {
+              "eps": 2.8,
+              "exit_pe": 20,
+              "target_price": 56.0,
+              "return": -0.2934782608695651
+            },
+            "central": {
+              "eps": 3.996,
+              "exit_pe": 28,
+              "target_price": 111.888,
+              "return": 0.39683794466403177
+            },
+            "upside": {
+              "eps": 4.8,
+              "exit_pe": 33,
+              "target_price": 158.4,
+              "return": 0.9713438735177866
+            }
+          },
+          "catalyst": "Conversion du carnet et intégration des acquisitions annoncées.",
+          "earnings": "Janvier 2027 estimé; date et heure exactes N/D.",
+          "sources": {
+            "R": "https://investors.amphenol.com/news-and-events/news-details/2026/Amphenol-Reports-Record-Third-Quarter-2026-Results-and-Announces-Dividend-Increase-and-New-Stock-Repurchase-Program/default.aspx"
+          }
         },
         {
           "rank": 5,
@@ -94,18 +236,687 @@
           "company": "Sandisk",
           "rating": 3.7,
           "decision": "BUY",
-          "summary": "Clôture du 21 octobre 2026, 16 h EDT : 1 378,22 USD. Potentiel élevé, mais cycle NAND, dilution et durée de visibilité inférieure aux quatre premiers. Potentiel supérieur à la comparaison de marché, sous réserve du risque et de la concentration.",
-          "central_label": "Scénario central 24 mois : +74 % USD · +32 %/an · hors dividendes",
-          "risk": "Le défavorable envisage 100 $ de BPA et 6× si les prix et le mix se retournent. Le favorable suppose une poursuite des SSD d'entreprise et une prime accrue."
+          "price": 1404.77,
+          "currency": "USD",
+          "price_date": "2026-10-28",
+          "price_at": "2026-10-28T16:00:00-04:00",
+          "summary": "Sandisk vend de la mémoire NAND et des SSD aux centres de données, fabricants d’appareils et consommateurs. Résultats FY2027 T1 et commentaires sur les NBM. Le central requiert l’exécution du plan; cycle nand, dilution et risque de révision après les résultats imminents.",
+          "central_label": "Scénario central 24 mois : +71 % USD · +31 %/an",
+          "risk": "Cycle NAND, dilution et risque de révision après les résultats imminents.",
+          "target_price": 2396.7000000000003,
+          "dividends_24m": 0,
+          "dividend_basis": "excluded",
+          "central_return_24m": 0.7061155918762505,
+          "central_annualized_return": 0.30618359807350615,
+          "scenarios_24m": {
+            "downside": {
+              "eps": 100,
+              "exit_pe": 6,
+              "target_price": 600,
+              "return": -0.5728838172796971
+            },
+            "central": {
+              "eps": 266.3,
+              "exit_pe": 9,
+              "target_price": 2396.7000000000003,
+              "return": 0.7061155918762505
+            },
+            "upside": {
+              "eps": 330,
+              "exit_pe": 12,
+              "target_price": 3960,
+              "return": 1.8189668059539996
+            }
+          },
+          "catalyst": "Résultats FY2027 T1 et commentaires sur les NBM.",
+          "earnings": "29 octobre 2026 confirmé, après séance, call à 16 h 30 EDT.",
+          "sources": {
+            "R": "https://investor.sandisk.com/news-releases/news-release-details/sandisk-reports-fiscal-fourth-quarter-2026-financial-results",
+            "M": "https://investor.sandisk.com/news-releases/news-release-details/sandisk-details-growth-strategy-and-long-term-financial-model",
+            "N": "https://news.skhynix.com/en/q3-2026-business-results/",
+            "D": "https://investor.sandisk.com/news-events/events"
+          }
         }
       ],
+      "all_candidates": [
+        {
+          "rank": 1,
+          "ticker": "NVDA",
+          "company": "NVIDIA",
+          "rating": 4.4,
+          "decision": "BUY",
+          "price": 215.38,
+          "currency": "USD",
+          "price_date": "2026-10-28",
+          "price_at": "2026-10-28T16:00:00-04:00",
+          "summary": "NVIDIA vend une plateforme de calcul accéléré : GPU, processeurs, interconnexions, systèmes et logiciels. Montée de Vera Rubin et conversion des déploiements Oracle en revenus. Le central requiert l’exécution du plan; financement des clients, asic et compression de marge par la mémoire.",
+          "central_label": "Scénario central 24 mois : +96 % USD · +40 %/an",
+          "risk": "Financement des clients, ASIC et compression de marge par la mémoire.",
+          "target_price": 420.81949999999995,
+          "dividends_24m": 2,
+          "dividend_basis": "modeled_gross",
+          "central_return_24m": 0.9631326028414893,
+          "central_annualized_return": 0.4011183400560743,
+          "scenarios_24m": {
+            "downside": {
+              "eps": 12,
+              "exit_pe": 14,
+              "target_price": 168,
+              "return": -0.2106973720865447
+            },
+            "central": {
+              "eps": 18.296499999999998,
+              "exit_pe": 23,
+              "target_price": 420.81949999999995,
+              "return": 0.9631326028414893
+            },
+            "upside": {
+              "eps": 23,
+              "exit_pe": 28,
+              "target_price": 644,
+              "return": 1.9993499860711301
+            }
+          },
+          "catalyst": "Montée de Vera Rubin et conversion des déploiements Oracle en revenus.",
+          "earnings": "17 novembre 2026 confirmé, après séance; call annoncé dans la transcription officielle.",
+          "sources": {
+            "R": "https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Announces-Financial-Results-for-Second-Quarter-Fiscal-2027/default.aspx",
+            "M": "https://investor.nvidia.com/files/content_files/TRANSCRIPT_-NVIDIA-Corp-NVDA-US-Q2-2027-Earnings-Call-26-August-2026-5_00-PM-ET.pdf",
+            "N": "https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-and-Oracle-Expand-NVIDIA-Vera-Rubin-to-Multi-Gigawatt-Scale-and-Bring-NVIDIA-Vera-CPU-to-Oracle-Cloud-Infrastructure/default.aspx"
+          }
+        },
+        {
+          "rank": 2,
+          "ticker": "MU",
+          "company": "Micron Technology",
+          "rating": 4.1,
+          "decision": "BUY",
+          "price": 983.23,
+          "currency": "USD",
+          "price_date": "2026-10-28",
+          "price_at": "2026-10-28T16:00:00-04:00",
+          "summary": "Micron fabrique de la DRAM, de la mémoire HBM et du stockage NAND. Livraisons HBM/serveur et résultats T1 FY2027. Le central requiert l’exécution du plan; retournement des prix mémoire et investissements irréversibles.",
+          "central_label": "Scénario central 24 mois : +68 % USD · +30 %/an",
+          "risk": "Retournement des prix mémoire et investissements irréversibles.",
+          "target_price": 1655.12,
+          "dividends_24m": 1.2,
+          "dividend_basis": "modeled_gross",
+          "central_return_24m": 0.6845702429746854,
+          "central_annualized_return": 0.2979099517973831,
+          "scenarios_24m": {
+            "downside": {
+              "eps": 100,
+              "exit_pe": 5,
+              "target_price": 500,
+              "return": -0.4902515179561242
+            },
+            "central": {
+              "eps": 206.89,
+              "exit_pe": 8,
+              "target_price": 1655.12,
+              "return": 0.6845702429746854
+            },
+            "upside": {
+              "eps": 250,
+              "exit_pe": 10,
+              "target_price": 2500,
+              "return": 1.5438605412772186
+            }
+          },
+          "catalyst": "Livraisons HBM/serveur et résultats T1 FY2027.",
+          "earnings": "16 décembre 2026 estimé, après séance; confirmation primaire non obtenue.",
+          "sources": {
+            "R": "https://investors.micron.com/news/press-release/2026/Micron-Technology-Inc--Reports-Record-Fiscal-Fourth-Quarter-and-Full-Year-2026-Results/default.aspx",
+            "M": "https://investors.micron.com/static-files/23023765-dfef-4e7e-845b-cd744fc20d93",
+            "N": "https://news.skhynix.com/en/q3-2026-business-results/"
+          }
+        },
+        {
+          "rank": 3,
+          "ticker": "TSM",
+          "company": "TSMC",
+          "rating": 4.0,
+          "decision": "BUY",
+          "price": 439.51,
+          "currency": "USD",
+          "price_date": "2026-10-28",
+          "price_at": "2026-10-28T16:00:00-04:00",
+          "summary": "TSMC fabrique les puces conçues par d’autres entreprises. Ventes mensuelles le 10 novembre; montée du 2 nm. Le central requiert l’exécution du plan; taïwan et rentabilité des nouvelles usines.",
+          "central_label": "Scénario central 24 mois : +43 % USD · +19 %/an",
+          "risk": "Taïwan et rentabilité des nouvelles usines.",
+          "target_price": 619.1962264150943,
+          "dividends_24m": 8,
+          "dividend_basis": "modeled_gross",
+          "central_return_24m": 0.4270351673797965,
+          "central_annualized_return": 0.19458577229925034,
+          "scenarios_24m": {
+            "downside": {
+              "eps": 18,
+              "exit_pe": 16,
+              "target_price": 288,
+              "return": -0.3265227184819458
+            },
+            "central": {
+              "eps": 28.145283018867925,
+              "exit_pe": 22,
+              "target_price": 619.1962264150943,
+              "return": 0.4270351673797965
+            },
+            "upside": {
+              "eps": 38,
+              "exit_pe": 26,
+              "target_price": 988,
+              "return": 1.2661600418648042
+            }
+          },
+          "catalyst": "Ventes mensuelles le 10 novembre; montée du 2 nm.",
+          "earnings": "Janvier 2027 estimé; jour et heure exacts non annoncés dans le calendrier consulté.",
+          "sources": {
+            "R": "https://investor.tsmc.com/english/quarterly-results/2026/q3",
+            "M": "https://investor.tsmc.com/english/encrypt/files/encrypt_file/reports/2026-10/eba4fac72873bf546b669bd2b5d973df5c93215d/TSMC%203Q26%20Transcript.pdf",
+            "N": "https://www.fidelity.com/news/article/company-news/202610180748RTRSNEWSCOMBINED_L1N46402F_1"
+          }
+        },
+        {
+          "rank": 4,
+          "ticker": "APH",
+          "company": "Amphenol",
+          "rating": 3.9,
+          "decision": "BUY",
+          "price": 80.96,
+          "currency": "USD",
+          "price_date": "2026-10-28",
+          "price_at": "2026-10-28T16:00:00-04:00",
+          "summary": "Amphenol vend des connecteurs, câbles, capteurs et systèmes d’interconnexion. Conversion du carnet et intégration des acquisitions annoncées. Le central requiert l’exécution du plan; concentration croissante ia et intégration des acquisitions.",
+          "central_label": "Scénario central 24 mois : +40 % USD · +18 %/an",
+          "risk": "Concentration croissante IA et intégration des acquisitions.",
+          "target_price": 111.888,
+          "dividends_24m": 1.2,
+          "dividend_basis": "modeled_gross",
+          "central_return_24m": 0.39683794466403177,
+          "central_annualized_return": 0.18187898901030963,
+          "scenarios_24m": {
+            "downside": {
+              "eps": 2.8,
+              "exit_pe": 20,
+              "target_price": 56.0,
+              "return": -0.2934782608695651
+            },
+            "central": {
+              "eps": 3.996,
+              "exit_pe": 28,
+              "target_price": 111.888,
+              "return": 0.39683794466403177
+            },
+            "upside": {
+              "eps": 4.8,
+              "exit_pe": 33,
+              "target_price": 158.4,
+              "return": 0.9713438735177866
+            }
+          },
+          "catalyst": "Conversion du carnet et intégration des acquisitions annoncées.",
+          "earnings": "Janvier 2027 estimé; date et heure exactes N/D.",
+          "sources": {
+            "R": "https://investors.amphenol.com/news-and-events/news-details/2026/Amphenol-Reports-Record-Third-Quarter-2026-Results-and-Announces-Dividend-Increase-and-New-Stock-Repurchase-Program/default.aspx"
+          }
+        },
+        {
+          "rank": 5,
+          "ticker": "SNDK",
+          "company": "Sandisk",
+          "rating": 3.7,
+          "decision": "BUY",
+          "price": 1404.77,
+          "currency": "USD",
+          "price_date": "2026-10-28",
+          "price_at": "2026-10-28T16:00:00-04:00",
+          "summary": "Sandisk vend de la mémoire NAND et des SSD aux centres de données, fabricants d’appareils et consommateurs. Résultats FY2027 T1 et commentaires sur les NBM. Le central requiert l’exécution du plan; cycle nand, dilution et risque de révision après les résultats imminents.",
+          "central_label": "Scénario central 24 mois : +71 % USD · +31 %/an",
+          "risk": "Cycle NAND, dilution et risque de révision après les résultats imminents.",
+          "target_price": 2396.7000000000003,
+          "dividends_24m": 0,
+          "dividend_basis": "excluded",
+          "central_return_24m": 0.7061155918762505,
+          "central_annualized_return": 0.30618359807350615,
+          "scenarios_24m": {
+            "downside": {
+              "eps": 100,
+              "exit_pe": 6,
+              "target_price": 600,
+              "return": -0.5728838172796971
+            },
+            "central": {
+              "eps": 266.3,
+              "exit_pe": 9,
+              "target_price": 2396.7000000000003,
+              "return": 0.7061155918762505
+            },
+            "upside": {
+              "eps": 330,
+              "exit_pe": 12,
+              "target_price": 3960,
+              "return": 1.8189668059539996
+            }
+          },
+          "catalyst": "Résultats FY2027 T1 et commentaires sur les NBM.",
+          "earnings": "29 octobre 2026 confirmé, après séance, call à 16 h 30 EDT.",
+          "sources": {
+            "R": "https://investor.sandisk.com/news-releases/news-release-details/sandisk-reports-fiscal-fourth-quarter-2026-financial-results",
+            "M": "https://investor.sandisk.com/news-releases/news-release-details/sandisk-details-growth-strategy-and-long-term-financial-model",
+            "N": "https://news.skhynix.com/en/q3-2026-business-results/",
+            "D": "https://investor.sandisk.com/news-events/events"
+          }
+        },
+        {
+          "rank": 6,
+          "ticker": "STX",
+          "company": "Seagate Technology",
+          "rating": 3.7,
+          "decision": "BUY",
+          "price": 697.97,
+          "currency": "USD",
+          "price_date": "2026-10-28",
+          "price_at": "2026-10-28T16:00:00-04:00",
+          "summary": "Seagate vend des disques durs et solutions de stockage de masse. Montée HAMR et résultats T2 FY2027. Le central requiert l’exécution du plan; cycle cloud, rentabilité exceptionnellement élevée et exécution hamr.",
+          "central_label": "Scénario central 24 mois : +63 % USD · +28 %/an",
+          "risk": "Cycle cloud, rentabilité exceptionnellement élevée et exécution HAMR.",
+          "target_price": 1134.8999999999999,
+          "dividends_24m": 6.08,
+          "dividend_basis": "modeled_gross",
+          "central_return_24m": 0.6347120936429929,
+          "central_annualized_return": 0.2785586000035325,
+          "scenarios_24m": {
+            "downside": {
+              "eps": 25,
+              "exit_pe": 14,
+              "target_price": 350,
+              "return": -0.48983480665358115
+            },
+            "central": {
+              "eps": 63.05,
+              "exit_pe": 18,
+              "target_price": 1134.8999999999999,
+              "return": 0.6347120936429929
+            },
+            "upside": {
+              "eps": 75,
+              "exit_pe": 22,
+              "target_price": 1650,
+              "return": 1.3727094287720099
+            }
+          },
+          "catalyst": "Montée HAMR et résultats T2 FY2027.",
+          "earnings": "Janvier 2027 estimé, après séance indicatif; confirmation primaire N/D.",
+          "sources": {
+            "R": "https://investors.seagate.com/news/news-details/2026/Seagate-Technology-Reports-Fiscal-First-Quarter-2027-Financial-Results/default.aspx"
+          }
+        },
+        {
+          "rank": 7,
+          "ticker": "ASML",
+          "company": "ASML Holding",
+          "rating": 3.6,
+          "decision": "HOLD",
+          "price": 1662.85,
+          "currency": "USD",
+          "price_date": "2026-10-28",
+          "price_at": "2026-10-28T16:00:00-04:00",
+          "summary": "ASML vend les systèmes de lithographie nécessaires pour imprimer les circuits sur les wafers et les services permettant d’exploiter et d’améliorer le parc installé. Exécution du plan de livraisons T4 et précisions sur la capacité 2028. Le central requiert l’exécution du plan; contraintes de production et restrictions export.",
+          "central_label": "Scénario central 24 mois : +31 % USD · +14 %/an",
+          "risk": "Contraintes de production et restrictions export.",
+          "target_price": 2153.3050000000003,
+          "dividends_24m": 20,
+          "dividend_basis": "modeled_gross",
+          "central_return_24m": 0.30697597498271056,
+          "central_annualized_return": 0.1432304994981155,
+          "scenarios_24m": {
+            "downside": {
+              "eps": 55,
+              "exit_pe": 22,
+              "target_price": 1210,
+              "return": -0.2603061009712241
+            },
+            "central": {
+              "eps": 76.90375,
+              "exit_pe": 28,
+              "target_price": 2153.3050000000003,
+              "return": 0.30697597498271056
+            },
+            "upside": {
+              "eps": 93.5,
+              "exit_pe": 34,
+              "target_price": 3179.0,
+              "return": 0.9238055146284994
+            }
+          },
+          "catalyst": "Exécution du plan de livraisons T4 et précisions sur la capacité 2028.",
+          "earnings": "Janvier 2027 estimé; jour et heure N/D.",
+          "sources": {
+            "R": "https://investor.asml.com/news-releases/news-release-details/asml-reports-eu11.7-billion-total-net-sales-and-eu5.0-billion-net-income-q3-2026",
+            "N": "https://www.reuters.com/world/asia-pacific/vietnams-first-chip-plant-unlikely-meet-2027-target-sources-say-no-deal-yet-with-2026-10-26/"
+          }
+        },
+        {
+          "rank": 8,
+          "ticker": "SKHY",
+          "company": "SK Hynix ADR",
+          "rating": 3.6,
+          "decision": "HOLD",
+          "price": 164.7,
+          "currency": "USD",
+          "price_date": "2026-10-28",
+          "price_at": "2026-10-28T16:00:00-04:00",
+          "summary": "SK Hynix produit de la DRAM, de la HBM et de la NAND, avec une exposition aux SSD entreprise. Mix HBM4 et conversion des contrats en résultats. Le central requiert l’exécution du plan; cycle mémoire, capex, change krw et qualité des données adr.",
+          "central_label": "Scénario central 24 mois : +51 % USD · +23 %/an",
+          "risk": "Cycle mémoire, capex, change KRW et qualité des données ADR.",
+          "target_price": 248.70755378594214,
+          "dividends_24m": 0,
+          "dividend_basis": "excluded",
+          "central_return_24m": 0.5100640788460362,
+          "central_annualized_return": 0.2288466457805205,
+          "scenarios_24m": {
+            "downside": {
+              "eps": 15,
+              "exit_pe": 5,
+              "target_price": 75,
+              "return": -0.5446265938069217
+            },
+            "central": {
+              "eps": 41.45125896432369,
+              "exit_pe": 6,
+              "target_price": 248.70755378594214,
+              "return": 0.5100640788460362
+            },
+            "upside": {
+              "eps": 55,
+              "exit_pe": 8,
+              "target_price": 440,
+              "return": 1.671523982999393
+            }
+          },
+          "catalyst": "Mix HBM4 et conversion des contrats en résultats.",
+          "earnings": "Janvier 2027 estimé; date et heure exactes N/D.",
+          "sources": {
+            "R": "https://news.skhynix.com/en/q3-2026-business-results/",
+            "N": "https://www.reuters.com/world/asia-pacific/sk-hynix-q3-profit-jumps-more-than-7-fold-beats-forecasts-2026-10-27/",
+            "D": "https://www.skhynix.com/ir/UI-FR-IR03/"
+          }
+        },
+        {
+          "rank": 9,
+          "ticker": "GLBE",
+          "company": "Global-e Online",
+          "rating": 3.5,
+          "decision": "HOLD",
+          "price": 42.11,
+          "currency": "USD",
+          "price_date": "2026-10-28",
+          "price_at": "2026-10-28T16:00:00-04:00",
+          "summary": "Global-e aide les marques à vendre à l’étranger : paiement localisé, taxes, droits, logistique et gestion de la transaction. Prochaine publication et intégration de Passport. Le central requiert l’exécution du plan; shopify, tarifs douaniers et dilution.",
+          "central_label": "Scénario central 24 mois : +48 % USD · +22 %/an",
+          "risk": "Shopify, tarifs douaniers et dilution.",
+          "target_price": 62.18749999999999,
+          "dividends_24m": 0,
+          "dividend_basis": "excluded",
+          "central_return_24m": 0.4767869864640226,
+          "central_annualized_return": 0.21523124814334116,
+          "scenarios_24m": {
+            "downside": {
+              "eps": 1.4,
+              "exit_pe": 18,
+              "target_price": 25.2,
+              "return": -0.4015673236760865
+            },
+            "central": {
+              "eps": 2.4875,
+              "exit_pe": 25,
+              "target_price": 62.18749999999999,
+              "return": 0.4767869864640226
+            },
+            "upside": {
+              "eps": 3.2,
+              "exit_pe": 29,
+              "target_price": 92.80000000000001,
+              "return": 1.2037520778912376
+            }
+          },
+          "catalyst": "Prochaine publication et intégration de Passport.",
+          "earnings": "18 novembre 2026 estimé, avant séance; annonce primaire non retrouvée.",
+          "sources": {
+            "R": "https://investors.global-e.com/news-releases/news-release-details/global-e-achieves-significant-gmv-revenue-and-profit-expansion/",
+            "N": "https://investors.global-e.com/news-events/press-releases?page=0"
+          }
+        },
+        {
+          "rank": 10,
+          "ticker": "MA",
+          "company": "Mastercard",
+          "rating": 3.4,
+          "decision": "HOLD",
+          "price": 610.31,
+          "currency": "USD",
+          "price_date": "2026-10-28",
+          "price_at": "2026-10-28T16:00:00-04:00",
+          "summary": "Mastercard fournit un réseau de paiements et des services de sécurité, de données et de gestion des transactions. Résultats du 29 octobre et adoption des nouveaux services. Le central requiert l’exécution du plan; réglementation, consommation et nouveaux rails de paiement.",
+          "central_label": "Scénario central 24 mois : +27 % USD · +13 %/an",
+          "risk": "Réglementation, consommation et nouveaux rails de paiement.",
+          "target_price": 769.3845,
+          "dividends_24m": 7.5,
+          "dividend_basis": "modeled_gross",
+          "central_return_24m": 0.27293424653045184,
+          "central_annualized_return": 0.12824387724040043,
+          "scenarios_24m": {
+            "downside": {
+              "eps": 21,
+              "exit_pe": 23,
+              "target_price": 483,
+              "return": -0.19631007193065808
+            },
+            "central": {
+              "eps": 26.5305,
+              "exit_pe": 29,
+              "target_price": 769.3845,
+              "return": 0.27293424653045184
+            },
+            "upside": {
+              "eps": 31,
+              "exit_pe": 33,
+              "target_price": 1023,
+              "return": 0.6884861791548558
+            }
+          },
+          "catalyst": "Résultats du 29 octobre et adoption des nouveaux services.",
+          "earnings": "29 octobre 2026 confirmé, avant séance, call à 9 h EDT.",
+          "sources": {
+            "R": "https://www.marketscreener.com/news/mastercard-q2-2026-mastercard-inc-earnings-presentation-ce7f50dada81f021",
+            "N": "https://investor.mastercard.com/investor-news/investor-news-details/2026/Mastercard-and-BVNK-Launch-Global-Money-Platform-to-Power-a-Multi-Money-World/default.aspx",
+            "D": "https://investor.mastercard.com/investor-news/investor-news-details/2026/Mastercard-Incorporated-to-Host-Conference-Call-on-Third-Quarter-2026-Financial-Results/default.aspx"
+          }
+        },
+        {
+          "rank": 11,
+          "ticker": "DXCM",
+          "company": "Dexcom",
+          "rating": 3.3,
+          "decision": "HOLD",
+          "price": 78.62,
+          "currency": "USD",
+          "price_date": "2026-10-28",
+          "price_at": "2026-10-28T16:00:00-04:00",
+          "summary": "Dexcom vend des systèmes de mesure continue du glucose. Résultats du 29 octobre et élargissement de la prise en charge. Le central requiert l’exécution du plan; concurrence abbott, prix nets et remboursement.",
+          "central_label": "Scénario central 24 mois : +28 % USD · +13 %/an",
+          "risk": "Concurrence Abbott, prix nets et remboursement.",
+          "target_price": 100.46399999999998,
+          "dividends_24m": 0,
+          "dividend_basis": "excluded",
+          "central_return_24m": 0.27784278809463214,
+          "central_annualized_return": 0.1304170858999929,
+          "scenarios_24m": {
+            "downside": {
+              "eps": 2.4,
+              "exit_pe": 22,
+              "target_price": 52.8,
+              "return": -0.32841516153650474
+            },
+            "central": {
+              "eps": 3.5879999999999996,
+              "exit_pe": 28,
+              "target_price": 100.46399999999998,
+              "return": 0.27784278809463214
+            },
+            "upside": {
+              "eps": 4.5,
+              "exit_pe": 32,
+              "target_price": 144.0,
+              "return": 0.8315950139913506
+            }
+          },
+          "catalyst": "Résultats du 29 octobre et élargissement de la prise en charge.",
+          "earnings": "29 octobre 2026 confirmé, après séance, call à 16 h 30 EDT.",
+          "sources": {
+            "R": "https://investors.dexcom.com/news/news-details/2026/Dexcom-Reports-Second-Quarter-2026-Financial-Results/default.aspx",
+            "N": "https://investors.dexcom.com/news/news-details/2026/Landmark-Dexcom-CONNECT-Study-Published-in-The-New-England-Journal-of-Medicine-Redefining-the-Standard-of-Care-for-People-with-Type-2-Diabetes-Not-on-Insulin/default.aspx",
+            "D": "https://investors.dexcom.com/news/news-details/2026/Dexcom-Schedules-Third-Quarter-2026-Earnings-Release-and-Conference-Call-for-October-29-2026-at-430-p-m--Eastern-Time/default.aspx"
+          }
+        },
+        {
+          "rank": 12,
+          "ticker": "LLY",
+          "company": "Eli Lilly",
+          "rating": 3.2,
+          "decision": "HOLD",
+          "price": 1288.3,
+          "currency": "USD",
+          "price_date": "2026-10-28",
+          "price_at": "2026-10-28T16:00:00-04:00",
+          "summary": "Lilly développe, fabrique et commercialise des médicaments. Résultats du 29 octobre et jalons réglementaires du pipeline. Le central requiert l’exécution du plan; prix nets, concurrence et valorisation du pipeline.",
+          "central_label": "Scénario central 24 mois : +20 % USD · +9 %/an",
+          "risk": "Prix nets, concurrence et valorisation du pipeline.",
+          "target_price": 1529.9279999999999,
+          "dividends_24m": 14,
+          "dividend_basis": "modeled_gross",
+          "central_return_24m": 0.19842272762555302,
+          "central_annualized_return": 0.09472495524015212,
+          "scenarios_24m": {
+            "downside": {
+              "eps": 35,
+              "exit_pe": 23,
+              "target_price": 805,
+              "return": -0.36427850655903127
+            },
+            "central": {
+              "eps": 56.663999999999994,
+              "exit_pe": 27,
+              "target_price": 1529.9279999999999,
+              "return": 0.19842272762555302
+            },
+            "upside": {
+              "eps": 70,
+              "exit_pe": 33,
+              "target_price": 2310,
+              "return": 0.8039276566017233
+            }
+          },
+          "catalyst": "Résultats du 29 octobre et jalons réglementaires du pipeline.",
+          "earnings": "29 octobre 2026 confirmé, call à 10 h EDT; publication avant séance selon calendrier secondaire.",
+          "sources": {
+            "R": "https://investor.lilly.com/news-releases/news-release-details/lilly-reports-second-quarter-2026-financial-results-raises-full",
+            "N": "https://investor.lilly.com/news-releases/news-release-details/lillys-retatrutide-delivered-greater-a1c-reduction-and-more",
+            "D": "https://investor.lilly.com/events/event-details/q3-2026-earnings-call"
+          }
+        },
+        {
+          "rank": 13,
+          "ticker": "VIK",
+          "company": "Viking Holdings",
+          "rating": 3.1,
+          "decision": "HOLD",
+          "price": 86.5,
+          "currency": "USD",
+          "price_date": "2026-10-28",
+          "price_at": "2026-10-28T16:00:00-04:00",
+          "summary": "Viking vend des croisières fluviales et océaniques et des expériences à destination. Mise à jour des réservations 2027 lors du prochain trimestre. Le central requiert l’exécution du plan; consommation discrétionnaire, flotte, coûts et itinéraires.",
+          "central_label": "Scénario central 24 mois : +22 % USD · +10 %/an",
+          "risk": "Consommation discrétionnaire, flotte, coûts et itinéraires.",
+          "target_price": 105.29400000000001,
+          "dividends_24m": 0,
+          "dividend_basis": "excluded",
+          "central_return_24m": 0.2172716763005782,
+          "central_annualized_return": 0.10330035634027523,
+          "scenarios_24m": {
+            "downside": {
+              "eps": 3,
+              "exit_pe": 18,
+              "target_price": 54,
+              "return": -0.37572254335260113
+            },
+            "central": {
+              "eps": 5.014,
+              "exit_pe": 21,
+              "target_price": 105.29400000000001,
+              "return": 0.2172716763005782
+            },
+            "upside": {
+              "eps": 6.5,
+              "exit_pe": 25,
+              "target_price": 162.5,
+              "return": 0.8786127167630058
+            }
+          },
+          "catalyst": "Mise à jour des réservations 2027 lors du prochain trimestre.",
+          "earnings": "18 novembre 2026 estimé, avant séance; annonce primaire N/D.",
+          "sources": {
+            "R": "https://ir.viking.com/sec-filings/all-sec-filings/content/0001745201-26-000020/vik-ex99_1.htm",
+            "N": "https://ir.viking.com/news-events/press-releases"
+          }
+        }
+      ],
+      "universe_snapshot": {
+        "source_url": "https://finviz.com/screener/stocks?v=111&f=an_recom_strongbuy%2Cfa_epsyoy_o15%2Cfa_epsyoy1_o15%2Cfa_estltgrowth_o10%2Cfa_fpe_u30%2Cfa_pfcf_u80%2Cfa_roe_o15%2Cfa_roi_o10%2Cfa_salesyoyttm_o10%2Csh_avgvol_o400%2Csh_short_u5%2Cta_sma200_pa&ft=4&preset=s154498620",
+        "observed_at": "2026-10-28T21:56:00-04:00",
+        "quote_asof": "2026-10-28T16:00:00-04:00",
+        "total_count": 13,
+        "page_count": 1,
+        "complete": true,
+        "filters": [
+          "an_recom_strongbuy",
+          "fa_epsyoy_o15",
+          "fa_epsyoy1_o15",
+          "fa_estltgrowth_o10",
+          "fa_fpe_u30",
+          "fa_pfcf_u80",
+          "fa_roe_o15",
+          "fa_roi_o10",
+          "fa_salesyoyttm_o10",
+          "sh_avgvol_o400",
+          "sh_short_u5",
+          "ta_sma200_pa"
+        ],
+        "tickers": [
+          "APH",
+          "ASML",
+          "DXCM",
+          "GLBE",
+          "LLY",
+          "MA",
+          "MU",
+          "NVDA",
+          "SKHY",
+          "SNDK",
+          "STX",
+          "TSM",
+          "VIK"
+        ],
+        "observation": "Finviz exact URL, browser Markets Closed Wed OCT 28 9:56 PM ET. All 12 selected; all 13 result rows visible on one page. EPS five-year filter is expected NEXT five-year growth, not historical."
+      },
       "document": {
-        "path": "reports/stocks/2026-10-21.pdf",
-        "label": "Ouvrir le rapport actions et suivi complet - 21 octobre 2026",
+        "path": "reports/stocks/2026-10-28.pdf",
+        "label": "Ouvrir le rapport actions et suivi complet - 28 octobre 2026",
         "mime_type": "application/pdf",
-        "pages": 35,
-        "size_bytes": 170158,
-        "sha256": "70b3bededc62bd712bc7f0c3dcde643af32086613e145ac5442905d27348dcb6"
+        "pages": 32,
+        "size_bytes": 214195,
+        "sha256": "ee92bf4ad7f401efff24683dabdae4c05c4164ffe302c32caa7f6e764f19421e"
       }
     }
   }

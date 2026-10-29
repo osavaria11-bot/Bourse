@@ -3,6 +3,26 @@
   "documents": [
     {
       "kind": "stocks",
+      "date": "2026-10-28",
+      "path": "reports/stocks/2026-10-28.pdf"
+    },
+    {
+      "kind": "real_estate",
+      "date": "2026-10-26",
+      "path": "reports/real-estate/2026-10-26.pdf"
+    },
+    {
+      "kind": "stocks",
+      "date": "2026-10-21",
+      "path": "reports/stocks/2026-10-21.pdf"
+    },
+    {
+      "kind": "real_estate",
+      "date": "2026-10-19",
+      "path": "reports/real-estate/2026-10-19.pdf"
+    },
+    {
+      "kind": "stocks",
       "date": "2026-10-14",
       "path": "reports/stocks/2026-10-14.pdf"
     },
