@@ -8,7 +8,7 @@
   const section = node("section", "valuation-research"); section.id = "valuationResearch";
   const heading = node("div", "valuation-heading"), intro = node("div");
   intro.append(node("p", "eyebrow", "Recherche · Actions individuelles"), node("h2", "", "Valorisation & RSI des multiples"),
-    node("p", "meta", "Les courbes montrent les multiples estimés publiés par MarketScreener et le RSI de chaque multiple. Le suivi SAVY à 12 et 24 mois reste disponible dans le choix des données."));
+    node("p", "meta", "Les courbes historiques et leurs RSI sont affichés avec les valorisations actuelles à 1 et 2 ans. Les valeurs à horizon fixe restent distinctes de l’historique estimé MarketScreener."));
   const refresh = node("button", "button quiet", "Actualiser"); refresh.type = "button"; refresh.id = "valuationRefresh"; heading.append(intro, refresh); section.append(heading);
   const status = node("p", "meta"); status.id = "valuationStatus"; status.setAttribute("role", "status"); section.append(status);
   const controls = node("div", "valuation-controls");
@@ -18,7 +18,7 @@
   }
   const scope = select("valuationScope", "Univers", [["mine","Mes actions + screener"],["OS","Portefeuille OS"],["JMC","Portefeuille JMC"],["MCL","Portefeuille MCL"],["research","Screener · toutes les éditions"],["all","Toutes les actions disponibles"]]);
   const stock = select("valuationStock", "Action", []);
-  const basis = select("valuationBasis", "Données des graphiques", [["provider","Historique estimé · MarketScreener"],["blended","Suivi SAVY · 12 / 24 mois"],["fiscal","Suivi SAVY · FY1 / FY2"]]);
+  const basis = select("valuationBasis", "Données des graphiques", [["provider","Courbes disponibles · MarketScreener"],["blended","Archive SAVY · 12 / 24 mois"],["fiscal","Archive SAVY · FY1 / FY2"]]);
   const horizonHost = node("div", "valuation-field"); horizonHost.append(node("span", "", "Horizon prévisionnel"));
   const horizons = node("div", "segmented"); horizons.setAttribute("role","group"); horizons.setAttribute("aria-label","Horizon prévisionnel");
   for (const [value, label] of [[1,"1 an"],[2,"2 ans"]]) {const button = node("button","",label); button.type="button"; button.dataset.horizon=String(value); button.setAttribute("aria-pressed",String(value===1)); horizons.append(button);}
@@ -34,9 +34,9 @@
   for (const [id, title] of [["pe","P/E forward"],["ev_ebitda","EV/EBITDA forward"]]) {
     const card = node("article","valuation-card"); card.dataset.metric=id;
     const head=node("div","valuation-card-heading"), titleNode=node("h3","",title), reading=node("strong","valuation-reading","—");
-    head.append(titleNode,reading); const stats=node("div","valuation-stats"), host=node("div","valuation-chart"), note=node("p","meta");
+    head.append(titleNode,reading); const forward=node("div","valuation-forward"), stats=node("div","valuation-stats"), host=node("div","valuation-chart"), note=node("p","meta");
     host.id=id==="pe"?"valuationPeChart":"valuationEvChart"; note.id=id==="pe"?"valuationPeNote":"valuationEvNote";
-    card.append(head,stats,host,note); charts.append(card); cards[id]={card,title:titleNode,reading,stats,host,note};
+    card.append(head,forward,stats,host,note); charts.append(card); cards[id]={card,title:titleNode,reading,forward,stats,host,note};
   }
   const method=node("details","portal-method valuation-method"); method.append(node("summary","","Méthode, sources et couverture historique"));
   for (const text of [
@@ -45,6 +45,7 @@
     "Le RSI de Wilder, sur 14 variations quotidiennes du ratio, apparaît sous chaque multiple sur une échelle de 0 à 100; repères 30, 50 et 70. Il demande 15 clôtures vérifiées. Un RSI faible reflète une contraction récente du multiple; il ne suffit pas à établir qu’une action est bon marché. Les révisions de consensus peuvent faire bouger le multiple sans mouvement du cours.",
     "Historique estimé MarketScreener : les deux séries « Estimate » sont reprises telles que publiées par le fournisseur, sur les seules dates où son graphique possède un cours. Les fins de semaine et points futurs sont exclus. Le fournisseur ne certifie pas ici un horizon constant de 12 ou 24 mois ni les dates des consensus utilisés dans le passé. Ces séries peuvent être révisées et leur EV suit la méthode du fournisseur. Elles ne sont pas présentées comme du Bloomberg 1BF/2BF. Le RSI et les statistiques portent uniquement sur ces séries; aucun multiple SAVY n’y est raccordé.",
     "Suivi SAVY 12/24 mois : l’historique utilise les consensus effectivement archivés à chaque date. Il commence au premier relevé vérifié; choisir 5 ans ou Maximum n’invente pas les années manquantes. Les bénéfices négatifs, le consensus manquant et l’EV/EBITDA non pertinent pour les sociétés financières restent N/D.",
+    "Les encadrés « Valorisations actuelles · SAVY » présentent simultanément les mois 1 à 12 et 13 à 24, à partir du dernier relevé disponible. Leurs dates de cours et de consensus sont conservées. Ils ne sont pas ajoutés aux courbes MarketScreener et ne servent pas à leurs RSI ou statistiques. Une archive avec un seul relevé affiche sa valeur sans dessiner une courbe.",
     "La médiane, les bornes du 10e au 90e percentile et le percentile du niveau actuel portent sur les clôtures disponibles dans la période choisie. Ils exigent au moins 30 observations. Ils mesurent une position relative dans l’échantillon, sans signal automatique d’achat ou de vente. Le RSI est initialisé avant la fenêtre affichée quand l’historique le permet.",
     "Seules les actions individuelles sont incluses. Les CDR Microsoft et Sandisk sont reliés explicitement à l’action américaine sous-jacente; ses multiples ne sont pas calculés avec le cours du CDR. La composition privée des trois comptes est lue uniquement sur cet appareil. Les quantités et les prix moyens ne sont transmis à aucune source de valorisation.",
     "Collecte du consensus prévue chaque jour vers 18 h 17, heure de Toronto. Les clôtures sont aussi reprises à 18 h 47 et 21 h 17 en semaine. L’onglet ouvert vérifie les données toutes les cinq minutes. Quand le consensus ne peut être actualisé, le dernier consensus connu garde sa date et peut être revalorisé avec une nouvelle clôture. Il n’est jamais présenté comme une nouvelle estimation. Un consensus de plus de sept jours est exclu du RSI et des repères historiques."
@@ -102,6 +103,7 @@
     }
     if(id!==selected||provider!==(basis.value==="provider"))return;
     const latest=row?.latest||data.observations.at(-1)||null;
+    const forwardValues=[1,2].map(h=>latest?V.values(latest,h,member?.financial===true,"blended"):{});
     const model=provider?V.providerModel(source,range):V.model({...data,financial:member?.financial},latest,horizon,range,basis.value); current={id,model,latest};
     const age=latest?Date.now()-Date.parse(latest.observed_at):Infinity;
     const stale=cached||row?.fetch_status==="cached"||age>36*3600000;
@@ -126,10 +128,28 @@
     coverageNote.textContent=provider?(source?"Courbes estimées du fournisseur, distinctes du suivi SAVY 1 an / 2 ans. Maximum affiche toute la série disponible.":"L’historique du fournisseur n’est pas disponible pour cette action. Le suivi SAVY reste accessible dans « Données des graphiques »."):"Historique antérieur 1 an / 2 ans non disponible dans les sources actuelles. "+
       (data.observations.length?"Relevés archivés depuis le "+dateLabel(data.observations[0].date)+". ":"")+
       "Le RSI apparaîtra après 15 clôtures vérifiées; la médiane et les percentiles après 30. Une source de consensus historiques datés est nécessaire pour afficher cinq ans dès maintenant.";
+    if(!provider&&observed.length<2){
+      const show=node("button","button quiet valuation-show-history","Voir les courbes MarketScreener");show.type="button";
+      show.addEventListener("click",()=>{basis.value="provider";render();});coverageNote.append(show);
+    }
     for(const key of ["pe","ev_ebitda"]){
       const card=cards[key], m=model[key], label=(key==="pe"?"P/E":"EV/EBITDA")+(provider?" estimé":" forward");
       card.title.textContent=label+(provider?" · MarketScreener":basis.value==="fiscal"?" · FY"+horizon:" · "+horizon+" an"+(horizon===2?"s":""))+(m.period_end?" · fin "+dateLabel(m.period_end):"");
       card.reading.textContent=V.finite(m.latest)?number(m.latest)+"×"+ (key==="ev_ebitda"&&!provider?" ≈":""):"N/D";
+      card.forward.replaceChildren(node("p","valuation-forward-heading","Valorisations actuelles · SAVY"));
+      const windows=node("div","valuation-forward-windows");
+      for(const [i,value] of forwardValues.entries()){
+        const item=node("div");item.dataset.forwardHorizon=String(i+1);
+        item.append(node("span","",i===0?"1 an · 12 prochains mois":"2 ans · mois 13 à 24"),
+          node("strong","",V.finite(value[key])?number(value[key])+"×"+(key==="ev_ebitda"?" ≈":""):"N/D"));windows.append(item);
+      }
+      card.forward.append(windows);
+      const dates=latest?"Cours "+number(latest.price,2)+" "+latest.currency+" du "+dateLabel(latest.price_date)+" · consensus du "+dateLabel(latest.consensus_date||latest.date)+(stale?" conservé":"")+".":"Aucun consensus vérifié disponible.";
+      card.forward.append(node("p","meta valuation-forward-dates",dates));
+      if(latest?.price_native_currency&&latest.fx_rate)card.forward.append(node("p","meta","Cours natif "+number(latest.price_native,2)+" "+latest.price_native_currency+" · conversion "+number(latest.fx_rate,4)+" CAD/USD."));
+      if(member?.listing_note)card.forward.append(node("p","meta",member.listing_note));
+      if(key==="ev_ebitda")card.forward.append(node("p","meta",member?.financial?"EV/EBITDA non pertinent pour cette société financière.":latest?"≈ EV indicative · pont de bilan du "+dateLabel(latest.ev_bridge_date)+".":""));
+      if(latest&&forwardValues.some(v=>!V.finite(v[key]))&&!(key==="ev_ebitda"&&member?.financial))card.forward.append(node("p","meta","N/D : prévisions insuffisantes ou dénominateur non positif pour cet horizon."));
       card.stats.replaceChildren();
       for(const [label,value] of [["RSI du multiple · 14 séances",V.finite(m.latestRsi)?number(m.latestRsi):"N/D"],
         ["Médiane historique",m.stats.available?number(m.stats.median)+"×":"N/D"],
@@ -152,6 +172,7 @@
     // A single current snapshot is a point with a true date, never a flat five-year line.
     if(!all.length&&V.finite(m.latest)&&latestDay)all.push([latestDay,m.latest]);
     if(!all.length){host.append(node("p","valuation-empty","Aucun point de valorisation vérifié à tracer pour cet horizon."));return;}
+    if(all.length===1){host.append(node("p","valuation-empty valuation-single","Un seul relevé au "+dateLabel(all[0][0])+". La courbe de cet horizon se construira avec les prochains relevés; le RSI exige 15 clôtures."));return;}
     const ns="http://www.w3.org/2000/svg",width=Math.max(300,Math.round(host.clientWidth||1000)),height=390,left=60,right=25,top=20,middle=230,rsiTop=280,bottom=350;
     const svg=document.createElementNS(ns,"svg");svg.setAttribute("viewBox","0 0 "+width+" "+height);svg.setAttribute("role","img");svg.setAttribute("aria-label",label+" et RSI de ce multiple");svg.setAttribute("tabindex","0");
     const title=document.createElementNS(ns,"title");title.textContent=label+" en haut; RSI de Wilder sur 14 séances en bas. Flèches pour parcourir les observations.";svg.append(title);

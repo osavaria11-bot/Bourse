@@ -37,6 +37,11 @@ async function check(browser,engine){
   await page.waitForFunction(()=>document.querySelectorAll('#valuationResearch .valuation-rsi-line').length===2);
   assert.match(await page.locator('#valuationHistoryCoverage').innerText(),/distinctes du suivi SAVY/);
   assert.equal(await page.locator('[aria-label="Horizon prévisionnel"]').isVisible(),false);
+  const fmt=(n,d=1)=>new Intl.NumberFormat('fr-CA',{minimumFractionDigits:d,maximumFractionDigits:d}).format(n);
+  for(const horizon of [1,2]){
+    const expected=V.values(histories.NVDA.observations.at(-1),horizon);
+    for(const key of ['pe','ev_ebitda'])assert.equal(await page.locator('[data-metric="'+key+'"] [data-forward-horizon="'+horizon+'"] strong').innerText(),fmt(expected[key])+'×'+(key==='ev_ebitda'?' ≈':''));
+  }
   await page.locator('#valuationBasis').selectOption('blended');
   assert.equal(await page.locator('#page-recherche .portal-tabs a').allTextContents().then(a=>a.join('|')),'Recherche & suivi|Valorisation|Archives');
   assert.match(await page.locator('#valuationMembership').innerText(),/3\/3 portefeuilles/);
@@ -53,7 +58,6 @@ async function check(browser,engine){
   await page.waitForFunction(()=>document.querySelector('#valuationSourceNote').textContent.includes('NVIDIA'));
   for(const id of ['NVDA','WMG','FIX','SN','SNDKUS'])assert.equal(await page.locator('#valuationStock option[value="'+id+'"]').count(),1);
   for(const id of ['FEQT','VFV','VGRO','VBAL'])assert.equal(await page.locator('#valuationStock option[value="'+id+'"]').count(),0);
-  const fmt=(n,d=1)=>new Intl.NumberFormat('fr-CA',{minimumFractionDigits:d,maximumFractionDigits:d}).format(n);
   for(const horizon of[1,2]){
     await page.locator('[data-horizon="'+horizon+'"]').click();
     const expected=V.model(histories.NVDA,index.instruments.find(i=>i.id==='NVDA').latest,horizon,'5Y');
@@ -77,6 +81,23 @@ async function check(browser,engine){
     assert.ok(geometry.width<=width+1,engine+' overflow at '+width);assert.equal(geometry.bad,false);assert.ok(geometry.cards.every(c=>c.x>=0&&c.right<=width+1));
    }
   }
+  // Reproduce the user's one-day archive, with a retained older consensus.
+  const fullHistory=histories.NVDA.observations;
+  histories.NVDA.observations=[fullHistory.at(-1)];
+  const latest=index.instruments.find(i=>i.id==='NVDA').latest;
+  latest.consensus_date=dates.at(-2);latest.consensus_observed_at=dates.at(-2)+'T22:00:00Z';
+  await page.locator('#valuationRefresh').click();
+  await page.waitForFunction(()=>document.querySelector('#valuationPeChart .valuation-single'));
+  assert.equal(await page.locator('#valuationPeChart svg').count(),0);
+  const dateText=await page.locator('[data-metric="pe"] .valuation-forward-dates').innerText();
+  const dateLabel=d=>new Intl.DateTimeFormat('fr-CA',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'}).format(new Date(d+'T12:00:00Z'));
+  assert.ok(dateText.includes(dateLabel(latest.price_date)));assert.ok(dateText.includes(dateLabel(latest.consensus_date)));
+  await page.locator('.valuation-show-history').click();
+  await page.waitForFunction(()=>document.querySelectorAll('#valuationResearch .valuation-rsi-line').length===2);
+  assert.equal(await page.locator('#valuationBasis').inputValue(),'provider');
+  assert.equal(await page.locator('[data-metric="pe"] .valuation-reading').innerText(),fmt(providerHistories.NVDA.metrics.pe.points.at(-1)[1])+'×');
+  histories.NVDA.observations=fullHistory;
+  delete latest.consensus_date;delete latest.consensus_observed_at;
   const before=await page.locator('[data-metric="pe"] .valuation-reading').innerText();
   await page.route('**/data/valuations/**',r=>r.abort());await page.locator('#valuationRefresh').click();
   await page.waitForFunction(()=>!document.querySelector('#valuationRefresh').disabled);

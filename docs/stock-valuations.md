@@ -1,5 +1,9 @@
 # Valorisation des actions individuelles
 
+## Vue combinée — 29 octobre 2026
+
+Chaque panneau présente les courbes MarketScreener disponibles et un encadré séparé des multiples actuels SAVY à 12 mois et mois 13–24. Les dates du cours, du consensus et du pont EV sont conservées, ainsi que les indications de conversion et de cotation. Les deux valeurs courantes n'entrent jamais dans les RSI ou statistiques de la série du fournisseur. Les prévisions insuffisantes restent N/D. Les archives SAVY demeurent accessibles; un seul relevé est présenté sans graphique vide, avec un bouton vers les courbes du fournisseur. Cette présentation ne complète pas les archives historiques 12/24 mois manquantes et ne modifie aucun fichier de données.
+
 ## Courbes visibles dès l’ouverture — correctif du 28 octobre 2026
 
 Le choix par défaut « Historique estimé · MarketScreener » affiche les séries publiques `P/E (Estimate)` et `EV / EBITDA (Estimate)` du fournisseur, avec leur RSI de Wilder et leurs statistiques. `scripts/collect_valuation_history.py` les conserve séparément dans `data/valuation-history/`, sans modifier `data/valuations/` ni recalculer de consensus passés. L’API publique de graphique emploie `type=PER` et `type=EV_EBITDA`. Les dates retenues sont uniquement celles possédant un cours dans le même graphique; les fins de semaine ajoutées par la série estimée et les dates futures sont exclues. Les valeurs nulles ou non positives restent des interruptions. Le dernier niveau reste N/D si la dernière séance ne possède pas de multiple positif.
