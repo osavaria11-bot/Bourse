@@ -83,7 +83,11 @@ async function check(browser,engine){
  assert.equal(await page.locator('#decisionHorizon').inputValue(),'2');
  assert.equal(await page.locator('#forecastReturnBasis').inputValue(),'history');
  assert.equal(await page.locator('#decisionBody tr').count(),6);
- assert.equal(await page.locator('#decisionForecastStatus').isVisible(),false);
+ // The real stress data can legitimately be stale after a collection failure.
+ // Preserve the warning and verify it against the source instead of requiring it hidden.
+ const stressStatus=JSON.parse(fs.readFileSync(path.join(root,'data/fnb-stress-history.json'),'utf8')).status;
+ assert.equal(await page.locator('#decisionForecastStatus').isVisible(),stressStatus==='stale');
+ if(stressStatus==='stale')assert.equal(await page.locator('#decisionForecastStatus').innerText(),'Données de marché en retard.');
  assert.match(await page.locator('#forecastBasisNote').innerText(),/2008-01/);
  assert.match(await page.locator('#decisionHead').innerText(),/Passé/);
  assert.match(await page.locator('#decisionHead').innerText(),/Projection/);
