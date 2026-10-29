@@ -30,6 +30,7 @@ async function check(browser, engine) {
   assert.equal(await page.locator("#page-accueil").isVisible(), true);
   await page.waitForFunction(() => document.querySelectorAll("#homeNews .portal-headline").length > 0);
   await page.waitForFunction(() => document.querySelector("#fearGreedValue").textContent !== "—");
+  await page.evaluate(() => document.fonts.ready);
   const home = await page.locator("#kpis").boundingBox();
   assert.ok(home.y + home.height <= 900, "The desktop first screen includes news, sentiment, analyses and macro readings: " + (home.y + home.height));
   assert.equal(await page.locator(".portal-nav a").count(), 8);

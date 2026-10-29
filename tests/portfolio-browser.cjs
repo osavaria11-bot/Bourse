@@ -96,6 +96,10 @@ const syntheticEarningsData = {schema_version: 1, kind: "portfolio_earnings", ge
   {company_symbol: row.id === "MSFTCDR" ? "MSFT" : row.quote_symbol, listing_note: row.id === "MSFTCDR" ? "Résultats de Microsoft en USD." : null, source_url: "https://example.com/earnings", fetch_status: ["VFV", "XIU", "FBAL", "SPYM", "CASH", ...secondSyntheticPositions.map(item => item.ticker)].includes(row.id) ? "not_applicable" : "fresh", fetched_at: new Date().toISOString(), events:
     ["MSFT", "MSFTCDR"].includes(row.id) ? [syntheticEarnings("aaaaaaaaaaaaaaaa", 0)] : row.id === "DIS" ? [syntheticEarnings("1111111111111111", 1)] : row.id === "SHOP" ? [syntheticEarnings("bbbbbbbbbbbbbbbb", 1)] : row.id === "CLS" ? [syntheticEarnings("cccccccccccccccc", 2)] :
     row.id === "V" ? [syntheticEarnings("dddddddddddddddd", 4, true), nextWeekEvent] : row.id === "NVDA" ? [syntheticEarnings("eeeeeeeeeeeeeeee", 1)] : []}]))};
+syntheticEarningsData.instruments.SHOP.events[0].eps = {
+  ...syntheticEarningsData.instruments.SHOP.events[0].eps, currency:"CAD", estimate_currency:"USD"};
+syntheticEarningsData.instruments.CLS.events[0].eps = {
+  ...syntheticEarningsData.instruments.CLS.events[0].eps, actual_basis:"gaap", estimate_basis:"adjusted"};
 let profileOffline = false;
 const personalKey = crypto.randomBytes(32).toString("base64url");
 function sealFixture(positions, revision, portfolioId = "1") {
@@ -204,6 +208,10 @@ async function main() {
     assert.match(await page.locator('#portfolioEarningsItems [data-earnings-id="aaaaaaaaaaaaaaaa"] [data-metric="eps"]').innerText(), /Au-dessus.*20,00/);
     assert.match(await page.locator('#portfolioEarningsItems [data-earnings-id="aaaaaaaaaaaaaaaa"] [data-metric="revenue"]').innerText(), /Sous les attentes/);
     assert.equal(await page.locator('#portfolioEarningsItems [data-earnings-id="aaaaaaaaaaaaaaaa"] .portfolio-earnings-messages li').count(), 4);
+    assert.match(await page.locator('#portfolioEarningsItems [data-earnings-id="bbbbbbbbbbbbbbbb"] [data-metric="eps"]').innerText(), /Devises non comparables/);
+    assert.match(await page.locator('#portfolioEarningsItems [data-earnings-id="bbbbbbbbbbbbbbbb"] tbody tr').first().innerText(), /CA.*US/);
+    assert.match(await page.locator('#portfolioEarningsItems [data-earnings-id="cccccccccccccccc"] [data-metric="eps"]').innerText(), /Bases comptables non comparables/);
+    assert.match(await page.locator('#portfolioEarningsItems [data-earnings-id="cccccccccccccccc"] tbody tr').first().innerText(), /GAAP.*ajusté/);
     assert.doesNotMatch(await page.locator('#portfolioEarnings').innerText(), /BPA = bénéfice|thème cité en anglais/);
     await page.locator("#portfolioEarningsTicker").selectOption("SHOP");
     assert.equal(await page.locator("#portfolioEarningsItems article").count(), 1);

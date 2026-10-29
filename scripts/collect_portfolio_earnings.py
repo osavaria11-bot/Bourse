@@ -324,10 +324,12 @@ def collect_company(definition: dict, now: datetime, start: date, end: date, fet
 
 def valid_actuals(reviewed: dict) -> bool:
     actuals = reviewed.get("verified_actuals")
-    if not isinstance(actuals, dict) or set(actuals) - {"currency", "eps", "revenue", "verified_at", "reason"}:
+    if not isinstance(actuals, dict) or set(actuals) - {"currency", "provider_currency", "eps", "eps_basis", "revenue", "source_url", "verified_at", "reason"}:
         return False
     if ("report_url" not in reviewed or not safe_url(reviewed.get("source_url"))
             or not re.fullmatch(r"[A-Z]{3}", str(actuals.get("currency", "")))
+            or ("provider_currency" in actuals and actuals["provider_currency"] not in ("USD", "CAD"))
+            or ("source_url" in actuals and not safe_url(actuals["source_url"]))
             or not isinstance(actuals.get("reason"), str) or not actuals["reason"].strip()
             or not {"eps", "revenue"} & set(actuals)):
         return False
@@ -337,6 +339,11 @@ def valid_actuals(reviewed: dict) -> bool:
             return False
     except (KeyError, TypeError, AttributeError, ValueError):
         return False
+    if "eps_basis" in actuals:
+        basis = actuals["eps_basis"]
+        if ("eps" not in actuals or not isinstance(basis, dict) or set(basis) != {"actual", "estimate"}
+                or any(v not in ("gaap", "adjusted") for v in basis.values())):
+            return False
     return all(isinstance(actuals[metric], (int, float)) and not isinstance(actuals[metric], bool)
                and math.isfinite(actuals[metric]) and (metric != "revenue" or actuals[metric] > 0)
                for metric in ("eps", "revenue") if metric in actuals)
@@ -355,20 +362,35 @@ def apply_verified_actuals(feed: dict, highlights: dict) -> dict:
                 or reviewed["report_url"] != event.get("report_url")):
             continue
         actuals = reviewed["verified_actuals"]
+        source_url = actuals.get("source_url", reviewed["source_url"])
+        provider_currency = actuals.get("provider_currency", actuals["currency"])
         for metric in ("eps", "revenue"):
             value = event.get(metric)
+            basis = actuals.get("eps_basis", {}) if metric == "eps" else {}
+            basis_fields = {"actual_basis": basis["actual"], "estimate_basis": basis["estimate"]} if basis else {}
             if (metric not in actuals or not isinstance(value, dict)
-                    or value.get("currency") != actuals["currency"] or value.get("actual") == actuals[metric]):
+                    or value.get("currency") not in (provider_currency, actuals["currency"])
+                    or (value.get("actual") == actuals[metric] and value.get("currency") == actuals["currency"]
+                        and all(value.get(k) == v for k, v in basis_fields.items()))):
                 continue
+            # A source may label a Canadian issuer's CAD actual as USD while
+            # retaining a USD consensus. Keep the estimate in its own currency;
+            # never convert it or manufacture a comparable surprise.
+            estimate_currency = value.get("estimate_currency", value.get("currency"))
             value["verified_correction"] = {
                 "provider_actual": value.get("actual"), "provider_source_url": value.get("source_url"),
-                "source_url": reviewed["source_url"], "verified_at": actuals["verified_at"],
+                "provider_currency": value.get("currency"),
+                "source_url": source_url, "verified_at": actuals["verified_at"],
                 "reason": actuals["reason"],
             }
             value["actual"] = actuals[metric]
-            value["source_url"] = reviewed["source_url"]
-            if all(source["url"] != reviewed["source_url"] for source in event["sources"]):
-                event["sources"].append({"label": "Correction vérifiée du résultat publié", "url": reviewed["source_url"]})
+            value["currency"] = actuals["currency"]
+            value.update(basis_fields)
+            if estimate_currency != value["currency"]:
+                value["estimate_currency"] = estimate_currency
+            value["source_url"] = source_url
+            if all(source["url"] != source_url for source in event["sources"]):
+                event["sources"].append({"label": "Correction vérifiée du résultat publié", "url": source_url})
     return feed
 
 

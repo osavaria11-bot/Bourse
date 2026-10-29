@@ -324,7 +324,7 @@
       const scale = Math.abs(value) >= 1e9 ? 1e9 : Math.abs(value) >= 1e6 ? 1e6 : 1;
       return U.formatNumber(value / scale, 2) + (scale === 1e9 ? " G" : scale === 1e6 ? " M" : " ") + (currency === "USD" ? "$ US" : currency === "CAD" ? "$ CA" : " · devise N/D");
     }
-    return currency ? money(value, currency) : U.formatNumber(value, 2) + " · devise N/D";
+    return U.formatNumber(value, 2) + (currency === "USD" ? " $ US" : currency === "CAD" ? " $ CA" : " · devise N/D");
   }
   function earningsWeekLabel(week) {return U.observationLabel(week.start) + " – " + U.observationLabel(week.end);}
   function earningsDateLabel(event) {
@@ -388,7 +388,7 @@
       const head = el("thead"), headRow = el("tr"); for (const label of ["", "Publié", "Attendu"]) {const cell = el("th", "", label); cell.scope = "col"; headRow.append(cell);} head.append(headRow);
       const body = el("tbody");
       for (const [key, label] of [["eps", "BPA"], ["revenue", "Revenus"]]) {
-        const metric = report[key], row = el("tr"), name = el("th", "", label); name.scope = "row"; row.append(name, el("td", "", earningsAmount(metric.actual, metric.currency, key === "revenue")), el("td", "", earningsAmount(metric.estimate, metric.currency, key === "revenue")));
+        const metric = report[key], row = el("tr"), name = el("th", "", label), basisLabel = basis => basis ? " · " + (basis === "gaap" ? "GAAP" : "ajusté") : ""; name.scope = "row"; row.append(name, el("td", "", earningsAmount(metric.actual, metric.currency, key === "revenue") + basisLabel(metric.actual_basis)), el("td", "", earningsAmount(metric.estimate, metric.estimate_currency || metric.currency, key === "revenue") + basisLabel(metric.estimate_basis)));
         body.append(row);
         const outcome = F.earningsOutcome(metric), status = el("tr"), cell = el("td", "earnings-outcome earnings-" + outcome.status, report.date_status !== "reported" ? earningsPendingLabel(report) : outcome.status === "pending" ? "Montant publié N/D" : outcome.label + (U.validNumber(outcome.percent) ? " · " + delta(outcome.percent, true) : "")); cell.colSpan = 3; cell.dataset.metric = key; status.append(cell); body.append(status);
       }

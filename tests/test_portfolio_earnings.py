@@ -169,6 +169,37 @@ class EarningsTests(unittest.TestCase):
         self.assertEqual(feed["events"][0]["messages"][0]["source_url"], primary)
         self.assertTrue(any(source["url"] == primary for source in feed["events"][0]["sources"]))
 
+    def test_verified_currency_and_basis_preserve_the_original_consensus(self):
+        event = earnings.parse_marketbeat(sample(), "MSFT", URL, NOW)[1]
+        original = copy.deepcopy(event)
+        correction = {"source_url": "https://example.com/issuer/2026-q4-results", "report_url": event["report_url"],
+                      "verified_actuals": {"currency": "CAD", "provider_currency": "USD", "eps": 1.28,
+                          "eps_basis": {"actual": "adjusted", "estimate": "adjusted"},
+                          "verified_at": NOW.isoformat(), "reason": "Issuer reports CAD; provider consensus remains USD."}}
+        highlights = {"reports": {"MSFT:2026-07-29": correction}}
+        feed = {"company_symbol": "MSFT", "events": [event]}
+        earnings.apply_verified_actuals(feed, highlights)
+        self.assertEqual((event["eps"]["actual"], event["eps"]["currency"]), (1.28, "CAD"))
+        self.assertEqual(event["eps"]["estimate"], original["eps"]["estimate"])
+        self.assertEqual(event["eps"]["estimate_currency"], "USD")
+        self.assertEqual(event["eps"]["verified_correction"]["provider_currency"], "USD")
+        self.assertEqual(event["revenue"], original["revenue"])
+        once = copy.deepcopy(feed)
+        self.assertEqual(earnings.apply_verified_actuals(feed, highlights), once)
+        # A correction can qualify a previously ambiguous basis without changing
+        # the already correct GAAP actual, its source date or its estimate.
+        correction["verified_actuals"] = {"currency": "USD", "eps": original["eps"]["actual"],
+            "eps_basis": {"actual": "gaap", "estimate": "adjusted"},
+            "verified_at": NOW.isoformat(), "reason": "GAAP actual and adjusted consensus."}
+        event = copy.deepcopy(original)
+        earnings.apply_verified_actuals({"company_symbol": "MSFT", "events": [event]}, highlights)
+        self.assertEqual(event["eps"]["actual"], original["eps"]["actual"])
+        self.assertEqual(event["eps"]["actual_basis"], "gaap")
+        for field, value in [("provider_currency", "XYZ"), ("source_url", "javascript:alert(1)"), ("eps_basis", {"actual":"gaap"}),
+                             ("eps_basis", {"actual":"gaap", "estimate":"unknown"})]:
+            invalid = copy.deepcopy(correction); invalid["verified_actuals"][field] = value
+            self.assertFalse(earnings.valid_actuals(invalid))
+
     def test_verified_provider_actuals_are_traced_and_notes_only_preserves_figures(self):
         event = earnings.parse_marketbeat(sample(), "MSFT", URL, NOW)[1]
         original = copy.deepcopy(event)

@@ -291,22 +291,28 @@
           },
           "messages": [
             {
-              "text": "Record third-quarter performance",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-28-amphenol-co-stock/",
-              "kind": "call_topic"
+              "text": "La croissance organique atteint 37 %, contre 65 % au total : les acquisitions contribuent fortement, mais la demande propre au groupe reste soutenue, surtout dans les connexions pour centres de données. Les commandes de 12,2 G$ US dépassent les ventes de 19 %; elles ne sont pas toutes des revenus immédiats.",
+              "language": "fr",
+              "source_url": "https://investors.amphenol.com/news-and-events/news-details/2026/Amphenol-Reports-Record-Third-Quarter-2026-Results-and-Announces-Dividend-Increase-and-New-Stock-Repurchase-Program/default.aspx",
+              "kind": "reviewed_summary"
             },
             {
-              "text": "AI-driven IT datacom demand remains exceptionally strong",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-28-amphenol-co-stock/",
-              "kind": "call_topic"
+              "text": "La contribution attendue de CommScope en 2026 monte à 5,1 G$ US de ventes et 0,18 $ US de BPA ajusté, contre 4,6 G$ et 0,15 $ auparavant. Cette révision améliore la rentabilité attendue de l’acquisition; l’intégration et la capacité d’approvisionnement restent à surveiller.",
+              "language": "fr",
+              "source_url": "https://investors.amphenol.com/news-and-events/news-details/2026/Amphenol-Reports-Record-Third-Quarter-2026-Results-and-Announces-Dividend-Increase-and-New-Stock-Repurchase-Program/default.aspx",
+              "kind": "reviewed_summary"
             },
             {
-              "text": "Communications networks remain a weak spot",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-28-amphenol-co-stock/",
-              "kind": "call_topic"
+              "text": "Pour le T4, la direction prévoit 10,3–10,5 G$ US de ventes et 0,81–0,83 $ US de BPA ajusté. Pour 2026 : 36,9–37,1 G$ et 2,82–2,84 $. Ces prévisions supposent des conditions de marché et devises constantes et excluent les acquisitions non encore closes.",
+              "language": "fr",
+              "source_url": "https://investors.amphenol.com/news-and-events/news-details/2026/Amphenol-Reports-Record-Third-Quarter-2026-Results-and-Announces-Dividend-Increase-and-New-Stock-Repurchase-Program/default.aspx",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Le trimestre produit 2,1 G$ US de trésorerie opérationnelle et 1,6 G$ de flux disponible. Le dividende trimestriel augmente de 20 %, à 0,15 $ après fractionnement; le nouveau programme de rachats de 4 G$ s’étale sur trois ans à partir de janvier 2027. Ce plafond ne constitue pas un décaissement immédiat.",
+              "language": "fr",
+              "source_url": "https://investors.amphenol.com/news-and-events/news-details/2026/Amphenol-Reports-Record-Third-Quarter-2026-Results-and-Announces-Dividend-Increase-and-New-Stock-Repurchase-Program/default.aspx",
+              "kind": "reviewed_summary"
             }
           ],
           "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-28-amphenol-co-stock/",
@@ -318,6 +324,10 @@
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=APH&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://investors.amphenol.com/news-and-events/news-details/2026/Amphenol-Reports-Record-Third-Quarter-2026-Results-and-Announces-Dividend-Increase-and-New-Stock-Repurchase-Program/default.aspx"
             }
           ]
         }
@@ -1462,27 +1472,59 @@
           "eps": {
             "actual": 1.28,
             "estimate": 0.95,
-            "currency": "USD",
-            "source_url": "https://www.marketbeat.com/stocks/NYSE/CP/earnings/"
+            "currency": "CAD",
+            "source_url": "https://investor.cpkcr.com/news/press-release-details/2026/CPKC-reports-solid-third-quarter-results-on-track-to-deliver-a-strong-2026/default.aspx",
+            "verified_correction": {
+              "provider_actual": 1.28,
+              "provider_source_url": "https://www.marketbeat.com/stocks/NYSE/CP/earnings/",
+              "provider_currency": "USD",
+              "source_url": "https://investor.cpkcr.com/news/press-release-details/2026/CPKC-reports-solid-third-quarter-results-on-track-to-deliver-a-strong-2026/default.aspx",
+              "verified_at": "2026-10-29T09:20:08.173956+00:00",
+              "reason": "Le communiqué officiel du 28 octobre 2026 et les diapositives indiquent un BPA ajusté de base de 1,28 CAD et des revenus de 4 219 millions CAD. Le fournisseur étiquetait le BPA en USD et omettait les revenus; ses consensus USD sont conservés séparément, sans conversion ni surprise entre devises."
+            },
+            "actual_basis": "adjusted",
+            "estimate_basis": "adjusted",
+            "estimate_currency": "USD"
           },
           "revenue": {
-            "actual": null,
+            "actual": 4219000000,
             "estimate": 2960000000.0,
-            "currency": "USD",
-            "source_url": "https://www.marketbeat.com/stocks/NYSE/CP/earnings/"
+            "currency": "CAD",
+            "source_url": "https://investor.cpkcr.com/news/press-release-details/2026/CPKC-reports-solid-third-quarter-results-on-track-to-deliver-a-strong-2026/default.aspx",
+            "verified_correction": {
+              "provider_actual": null,
+              "provider_source_url": "https://www.marketbeat.com/stocks/NYSE/CP/earnings/",
+              "provider_currency": "USD",
+              "source_url": "https://investor.cpkcr.com/news/press-release-details/2026/CPKC-reports-solid-third-quarter-results-on-track-to-deliver-a-strong-2026/default.aspx",
+              "verified_at": "2026-10-29T09:20:08.173956+00:00",
+              "reason": "Le communiqué officiel du 28 octobre 2026 et les diapositives indiquent un BPA ajusté de base de 1,28 CAD et des revenus de 4 219 millions CAD. Le fournisseur étiquetait le BPA en USD et omettait les revenus; ses consensus USD sont conservés séparément, sans conversion ni surprise entre devises."
+            },
+            "estimate_currency": "USD"
           },
           "messages": [
             {
-              "text": "6% volume growth",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-28-canadian-pacific-railway-limited-stock/",
-              "kind": "call_topic"
+              "text": "Les volumes en tonnes-milles payantes augmentent de 6 %, contre 15 % pour les revenus à 4,219 G$ CA. Keith Creel souligne les grains, l’intermodal et les marchandises. La croissance des ventes intègre aussi les effets du carburant et du change; elle ne mesure pas seule le gain de trafic.",
+              "language": "fr",
+              "source_url": "https://investor.cpkcr.com/news/press-release-details/2026/CPKC-reports-solid-third-quarter-results-on-track-to-deliver-a-strong-2026/default.aspx",
+              "kind": "reviewed_summary"
             },
             {
-              "text": "sub-60% operating ratio in the fourth quarter",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-28-canadian-pacific-railway-limited-stock/",
-              "kind": "call_topic"
+              "text": "Le ratio d’exploitation ajusté de base atteint 61,9 %, soit 120 points de base de plus qu’un an auparavant. Le carburant le détériore à lui seul de 190 points : l’efficacité sous-jacente compense une partie du choc, sans éliminer le risque de coûts élevés et de sensibilité des clients aux surcharges.",
+              "language": "fr",
+              "source_url": "https://investor.cpkcr.com/news/press-release-details/2026/CPKC-reports-solid-third-quarter-results-on-track-to-deliver-a-strong-2026/default.aspx",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Pour 2026, la direction maintient une croissance modérée à deux chiffres du BPA dilué ajusté de base, face aux 4,61 $ CA de 2025. Les volumes sont visés dans le milieu de la fourchette à un chiffre. Le budget d’immobilisations reste d’environ 2,65 G$ CA; l’exécution du T4 reste nécessaire pour réaliser ces objectifs.",
+              "language": "fr",
+              "source_url": "https://investor.cpkcr.com/news/press-release-details/2026/CPKC-reports-solid-third-quarter-results-on-track-to-deliver-a-strong-2026/default.aspx",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Sur les neuf premiers mois, la trésorerie opérationnelle atteint 4,252 G$ CA et les ajouts aux immobilisations 2,035 G$. La présentation indique un flux disponible ajusté en hausse de 59 % et environ 63 % du programme de rachat de 5 % déjà exécuté. Période annuelle cumulée, pas chiffres du seul T3.",
+              "language": "fr",
+              "source_url": "https://investor.cpkcr.com/news/press-release-details/2026/CPKC-reports-solid-third-quarter-results-on-track-to-deliver-a-strong-2026/default.aspx",
+              "kind": "reviewed_summary"
             }
           ],
           "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-28-canadian-pacific-railway-limited-stock/",
@@ -1494,6 +1536,10 @@
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=CP&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://investor.cpkcr.com/news/press-release-details/2026/CPKC-reports-solid-third-quarter-results-on-track-to-deliver-a-strong-2026/default.aspx"
             }
           ]
         }
@@ -2503,15 +2549,58 @@
             "actual": 2.12,
             "estimate": 3.02,
             "currency": "USD",
-            "source_url": "https://www.marketbeat.com/stocks/NASDAQ/GOOGL/earnings/"
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000080/googexhibit991q32026.htm",
+            "verified_correction": {
+              "provider_actual": 2.12,
+              "provider_source_url": "https://www.marketbeat.com/stocks/NASDAQ/GOOGL/earnings/",
+              "provider_currency": "USD",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000080/googexhibit991q32026.htm",
+              "verified_at": "2026-10-29T09:20:08.173956+00:00",
+              "reason": "Le communiqué officiel donne 127 577 millions USD et un BPA GAAP de 2,12 USD. Le consensus 3,02 USD est ajusté selon Reuters (https://wncy.com/2026/10/28/alphabets-heavy-cloud-spending-drives-bigger-than-expected-cash-burn/); le BPA ajusté cité est 2,67 USD. Le chiffre GAAP officiel et le consensus du fournisseur sont conservés, avec bases différentes visibles et sans surprise calculée."
+            },
+            "actual_basis": "gaap",
+            "estimate_basis": "adjusted"
           },
           "revenue": {
-            "actual": null,
+            "actual": 127577000000,
             "estimate": 127960000000.0,
             "currency": "USD",
-            "source_url": "https://www.marketbeat.com/stocks/NASDAQ/GOOGL/earnings/"
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000080/googexhibit991q32026.htm",
+            "verified_correction": {
+              "provider_actual": null,
+              "provider_source_url": "https://www.marketbeat.com/stocks/NASDAQ/GOOGL/earnings/",
+              "provider_currency": "USD",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000080/googexhibit991q32026.htm",
+              "verified_at": "2026-10-29T09:20:08.173956+00:00",
+              "reason": "Le communiqué officiel donne 127 577 millions USD et un BPA GAAP de 2,12 USD. Le consensus 3,02 USD est ajusté selon Reuters (https://wncy.com/2026/10/28/alphabets-heavy-cloud-spending-drives-bigger-than-expected-cash-burn/); le BPA ajusté cité est 2,67 USD. Le chiffre GAAP officiel et le consensus du fournisseur sont conservés, avec bases différentes visibles et sans surprise calculée."
+            }
           },
-          "messages": [],
+          "messages": [
+            {
+              "text": "Google Cloud croît de 103 %, à 30,7 G$ US, avec une marge opérationnelle de 36,2 % contre 23,7 % un an avant. Ashkenazi prévient toutefois que le recours croissant à des capacités externes pèsera sur la marge à court terme; le niveau du T3 ne doit pas être extrapolé.",
+              "language": "fr",
+              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-28-alphabet-inc-stock/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Search augmente de 12 %, alors que les requêtes connaissent leur plus forte croissance annuelle en cinq ans. Schindler cite le change, les comparables et la monétisation plus faible d’AI Mode dans le ralentissement. La CFO prévoit encore un effet défavorable des comparables et du change au T4.",
+              "language": "fr",
+              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-28-alphabet-inc-stock/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Le flux disponible est négatif de 9,1 G$ US après 51,4 G$ d’investissements. Le paiement d’une amende européenne de 5,2 G$ et les stocks pour les systèmes TPU réduisent aussi la trésorerie. La perte non réalisée sur SpaceX pèse sur le bénéfice comptable; ce n’est pas la même sortie de fonds.",
+              "language": "fr",
+              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-28-alphabet-inc-stock/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Le budget 2026 de 195–205 G$ US d’investissements est maintenu; la direction prévoit une hausse importante en 2027 sans la chiffrer. Le T3 comprend aussi 28,7 G$ de nouvelles obligations et 12,4 G$ d’émissions d’actions ordinaires : financement disponible, mais intérêts et dilution à surveiller.",
+              "language": "fr",
+              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-28-alphabet-inc-stock/",
+              "kind": "reviewed_summary"
+            }
+          ],
           "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-28-alphabet-inc-stock-1/",
           "sources": [
             {
@@ -2521,6 +2610,14 @@
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=GOOGL&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.marketbeat.com/earnings/reports/2026-10-28-alphabet-inc-stock/"
+            },
+            {
+              "label": "Correction vérifiée du résultat publié",
+              "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000080/googexhibit991q32026.htm"
             }
           ]
         }
@@ -3529,10 +3626,28 @@
           },
           "messages": [
             {
-              "text": "Microsoft exceeded expectations",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-28-microsoft-co-stock/",
-              "kind": "call_topic"
+              "text": "Azure progresse de 48 %. Amy Hood attribue le dépassement notamment à Foundry, à une meilleure efficacité des capacités et à la monétisation de processeurs sous-utilisés. La demande dépasse encore l’offre; ces gains d’efficacité peuvent varier d’un trimestre à l’autre.",
+              "language": "fr",
+              "source_url": "https://stockanalysis.com/stocks/msft/transcripts/718712-q1-2027/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Au T2 de l’exercice 2027, Hood prévoit 96–97,1 G$ US de revenus et 49–50 % de croissance d’Azure à devises constantes. Les marges opérationnelles du groupe devraient légèrement baisser sur un an : la croissance n’élimine pas les coûts du mix Cloud et des nouvelles capacités.",
+              "language": "fr",
+              "source_url": "https://stockanalysis.com/stocks/msft/transcripts/718712-q1-2027/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Le flux disponible atteint 18,6 G$ US, avec 45,2 G$ de dépenses en capital, locations-financement comprises. Des livraisons externes sont reportées : plus de 50 G$ sont attendus au T2 et environ 170 G$ sur l’année civile 2026. Le soulagement de trésorerie du T1 ne signifie pas un abandon des investissements.",
+              "language": "fr",
+              "source_url": "https://stockanalysis.com/stocks/msft/transcripts/718712-q1-2027/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Les obligations de performance commerciales restantes atteignent 677 G$ US, en hausse de 73 %. Leur durée moyenne pondérée est de 2,3 ans et environ 30 % devraient devenir des revenus dans les douze mois. Ce carnet donne de la visibilité, mais ne représente ni des encaissements immédiats ni des ventes toutes acquises au prochain exercice.",
+              "language": "fr",
+              "source_url": "https://stockanalysis.com/stocks/msft/transcripts/718712-q1-2027/",
+              "kind": "reviewed_summary"
             }
           ],
           "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-28-microsoft-co-stock/",
@@ -3544,6 +3659,10 @@
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=MSFT&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://stockanalysis.com/stocks/msft/transcripts/718712-q1-2027/"
             }
           ]
         }
@@ -3577,10 +3696,28 @@
           },
           "messages": [
             {
-              "text": "Microsoft exceeded expectations",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-28-microsoft-co-stock/",
-              "kind": "call_topic"
+              "text": "Azure progresse de 48 %. Amy Hood attribue le dépassement notamment à Foundry, à une meilleure efficacité des capacités et à la monétisation de processeurs sous-utilisés. La demande dépasse encore l’offre; ces gains d’efficacité peuvent varier d’un trimestre à l’autre.",
+              "language": "fr",
+              "source_url": "https://stockanalysis.com/stocks/msft/transcripts/718712-q1-2027/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Au T2 de l’exercice 2027, Hood prévoit 96–97,1 G$ US de revenus et 49–50 % de croissance d’Azure à devises constantes. Les marges opérationnelles du groupe devraient légèrement baisser sur un an : la croissance n’élimine pas les coûts du mix Cloud et des nouvelles capacités.",
+              "language": "fr",
+              "source_url": "https://stockanalysis.com/stocks/msft/transcripts/718712-q1-2027/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Le flux disponible atteint 18,6 G$ US, avec 45,2 G$ de dépenses en capital, locations-financement comprises. Des livraisons externes sont reportées : plus de 50 G$ sont attendus au T2 et environ 170 G$ sur l’année civile 2026. Le soulagement de trésorerie du T1 ne signifie pas un abandon des investissements.",
+              "language": "fr",
+              "source_url": "https://stockanalysis.com/stocks/msft/transcripts/718712-q1-2027/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Les obligations de performance commerciales restantes atteignent 677 G$ US, en hausse de 73 %. Leur durée moyenne pondérée est de 2,3 ans et environ 30 % devraient devenir des revenus dans les douze mois. Ce carnet donne de la visibilité, mais ne représente ni des encaissements immédiats ni des ventes toutes acquises au prochain exercice.",
+              "language": "fr",
+              "source_url": "https://stockanalysis.com/stocks/msft/transcripts/718712-q1-2027/",
+              "kind": "reviewed_summary"
             }
           ],
           "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-28-microsoft-co-stock/",
@@ -3592,6 +3729,10 @@
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=MSFT&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://stockanalysis.com/stocks/msft/transcripts/718712-q1-2027/"
             }
           ]
         }
@@ -6069,5 +6210,6 @@
       "source_warnings": []
     }
   },
-  "errors": {}
+  "errors": {},
+  "analysis_reviewed_at": "2026-10-29T09:20:08.173956+00:00"
 }

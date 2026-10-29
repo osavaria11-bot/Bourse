@@ -180,6 +180,20 @@ test("earnings surprises compare like-for-like numbers, including losses and zer
   assert.equal(F.earningsOutcome(metric(1, null)).status, "unknown");
   assert.equal(F.earningsOutcome(metric(null, 2)).status, "pending");
 });
+test("earnings retain estimates but do not compare different currencies or accounting bases", () => {
+  const cad = {...metric(1.28, .95), currency:"CAD", estimate_currency:"USD"};
+  assert.deepEqual(F.earningsOutcome(cad), {status:"unknown", label:"Devises non comparables", difference:null, percent:null});
+  const gaap = {...metric(2.12, 3.02), actual_basis:"gaap", estimate_basis:"adjusted"};
+  assert.equal(F.earningsOutcome(gaap).label, "Bases comptables non comparables");
+  assert.equal(F.earningsOutcome({...gaap, actual_basis:"adjusted"}).status, "miss");
+  const d = earningsFixture(); d.instruments.BIG.events[0].eps = cad;
+  const now = Date.parse("2026-10-11T22:00:00Z");
+  assert.equal(F.normalizeEarnings(d, earningsCatalog, now).instruments.BIG.events[0].eps.estimate, .95);
+  for (const bad of [{estimate_currency:"XYZ"}, {actual_basis:"unknown"}, {estimate_basis:""}]) {
+    d.instruments.BIG.events[0].eps = {...cad, ...bad};
+    assert.throws(() => F.normalizeEarnings(d, earningsCatalog, now));
+  }
+});
 test("earnings analysis displays only three or four reviewed French points, never generic fallback headings", () => {
   const reported = event("aaaaaaaaaaaaaaaa", "2026-10-06");
   assert.deepEqual(F.earningsMessages(reported), []);

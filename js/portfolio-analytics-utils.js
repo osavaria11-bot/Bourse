@@ -127,6 +127,10 @@
   function earningsOutcome(metric) {
     if (!U.validNumber(metric?.actual)) return {status: "pending", label: "À venir", difference: null, percent: null};
     if (!U.validNumber(metric.estimate)) return {status: "unknown", label: "Consensus N/D", difference: null, percent: null};
+    if (metric.estimate_currency && metric.estimate_currency !== metric.currency)
+      return {status: "unknown", label: "Devises non comparables", difference: null, percent: null};
+    if (metric.actual_basis && metric.estimate_basis && metric.actual_basis !== metric.estimate_basis)
+      return {status: "unknown", label: "Bases comptables non comparables", difference: null, percent: null};
     const difference = metric.actual - metric.estimate, status = Math.abs(difference) < 1e-9 ? "inline" : difference > 0 ? "beat" : "miss";
     return {status, label: status === "beat" ? "Au-dessus des attentes" : status === "miss" ? "Sous les attentes" : "Conforme aux attentes",
       difference, percent: metric.estimate !== 0 ? difference / Math.abs(metric.estimate) * 100 : null};
@@ -157,6 +161,8 @@
         for (const key of ["eps", "revenue"]) {
           const metric = event[key];
           if (!metric || ![null, "USD", "CAD"].includes(metric.currency) || !safeHTTPS(metric.source_url) ||
+              (metric.estimate_currency !== undefined && !["USD", "CAD"].includes(metric.estimate_currency)) ||
+              [metric.actual_basis, metric.estimate_basis].some(basis => basis !== undefined && !["gaap", "adjusted"].includes(basis)) ||
               [metric.actual, metric.estimate].some(value => value !== null && (!U.validNumber(value) || (key === "revenue" && value < 0)))) throw new Error("Comparaison de résultats invalide");
         }
         if (event.sources.some(source => typeof source.label !== "string" || !source.label.trim() || source.label.length > 100 || !safeHTTPS(source.url)) ||
