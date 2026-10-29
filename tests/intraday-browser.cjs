@@ -251,6 +251,9 @@ async function main() {
         assert.match(await direct.locator('#portfolioRows tr[data-ticker="XIG"] .portfolio-quote').getAttribute("title"), /Cours daté du.*source consultée le/);
       }
       assert.equal(await direct.locator('#portfolioRelativeTitle').innerText(), 'Écart avec ' + {'1':'FEQT','2':'VBAL','3':'VGRO'}[id]);
+      // Open the actual overview pane and wait for its asynchronous profile render
+      // before measuring the SVG; a hidden element has no bounding box.
+      await direct.waitForSelector('#portfolioRelativeChart svg');
       const relative = direct.locator('#portfolioRelativeChart svg');
       assert.equal((await relative.boundingBox()).height, 128);
       await relative.focus(); await relative.press('End');
