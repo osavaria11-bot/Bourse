@@ -5,7 +5,7 @@ on:
     branches: ["main", "codex/**"]
   workflow_dispatch:
   workflow_run:
-    workflows: ["Daily briefing", "Fresh macro releases", "Monthly FNB optimization", "Daily FNB performance", "Expanded FNB frontier sources", "Market breadth", "Daily stock valuations"]
+    workflows: ["Daily briefing", "Fresh macro releases", "Monthly FNB optimization", "Daily FNB performance", "Expanded FNB frontier sources", "Market breadth"]
     types: [completed]
     branches: ["main"]
 
@@ -22,7 +22,7 @@ jobs:
   validate:
     # A failed daily close still publishes its diagnostic status, so a stale
     # comparison must be visibly flagged on the site after normal validation.
-    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' || github.event.workflow_run.name == 'Daily FNB performance' || github.event.workflow_run.name == 'Daily stock valuations'
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' || github.event.workflow_run.name == 'Daily FNB performance'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     outputs:
@@ -84,9 +84,6 @@ jobs:
         run: |
           node --check js/portal-utils.js
           node --check js/portal.js
-          node --check js/valuation.js
-          node --check js/valuation-utils.js
-          python scripts/collect_valuations.py --check
           node scripts/build_report_archive.cjs
           node --check js/dashboard.js
           node --check js/yield-curve-utils.js

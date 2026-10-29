@@ -1,5 +1,7 @@
 # Valorisation des actions individuelles
 
+**Retiré le 29 octobre 2026 à la demande de l’utilisatrice.** L’onglet, ses ressources navigateur et le workflow de collecte ont été supprimés; la planification quotidienne a été désactivée. Les fichiers de données et les outils de validation restent archivés. Le texte ci-dessous documente l’ancienne fonctionnalité et ne décrit plus un service actif.
+
 ## Vue combinée — 29 octobre 2026
 
 Chaque panneau présente les courbes MarketScreener disponibles et un encadré séparé des multiples actuels SAVY à 12 mois et mois 13–24. Les dates du cours, du consensus et du pont EV sont conservées, ainsi que les indications de conversion et de cotation. Les deux valeurs courantes n'entrent jamais dans les RSI ou statistiques de la série du fournisseur. Les prévisions insuffisantes restent N/D. Les archives SAVY demeurent accessibles; un seul relevé est présenté sans graphique vide, avec un bouton vers les courbes du fournisseur. Cette présentation ne complète pas les archives historiques 12/24 mois manquantes et ne modifie aucun fichier de données.

@@ -31,7 +31,7 @@
     const n=a.length,L=Array.from({length:n},()=>Array(n).fill(0)),tol=Math.max(1e-14,...a.map((r,i)=>r[i]*1e-8));
     for(let i=0;i<n;i++)for(let j=0;j<=i;j++){
       let v=a[i][j];for(let k=0;k<j;k++)v-=L[i][k]*L[j][k];
-      if(i===j){if(v< -tol)return null;L[i][j]=Math.sqrt(Math.max(0,v));}
+      if(i===j){if(v< -tol)return null;L[i][j]=Math.sqrt(v>tol?v:0);}
       else if(L[j][j]>1e-10)L[i][j]=v/L[j][j];else if(Math.abs(v)>tol)return null;
     }
     return L;

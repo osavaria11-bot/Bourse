@@ -8,6 +8,7 @@ test("Old bookmarks and private fragments open the correct section; invalid tabs
   assert.deepEqual(R.route("#view=dashboard&tab=overview"), {page: "dashboard", tab: "overview"});
   assert.deepEqual(R.route("#dashboard"), {page: "dashboard", tab: "overview"});
   assert.deepEqual(R.route("#view=recherche&tab=strategies"), {page:"recherche",tab:"latest"});
+  assert.deepEqual(R.route("#view=recherche&tab=valuation"), {page:"recherche",tab:"latest"});
   assert.deepEqual(R.route("#view=toString&tab=__proto__"), {page: "accueil", tab: "overview"});
 });
 test("Navigation and profile refresh keep private access in the fragment and preserve the route", () => {
