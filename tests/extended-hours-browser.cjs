@@ -32,6 +32,9 @@ const server=http.createServer((req,res)=>{const name=new URL(req.url,'http://lo
 async function main(){await new Promise(r=>server.listen(0,'127.0.0.1',r));let browser;
   try{browser=await chromium.launch({headless:true});const page=await browser.newPage({viewport:{width:1440,height:900}}),errors=[];
     page.on('pageerror',e=>errors.push(e.message));await page.route('https://**',r=>r.abort());
+    // Both published feeds must use this test's synthetic session. The live
+    // branch is verified separately by independent-quotes-browser.cjs.
+    await page.route('**/intraday-quotes.json?*',r=>r.fulfill({status:offline?503:200,contentType:'application/json',headers:{'Access-Control-Allow-Origin':'*'},body:offline?'{}':JSON.stringify(snapshot)}));
     await page.addInitScript(({profiles,now})=>{Date.now=()=>now;for(const [id,positions]of Object.entries(profiles))localStorage.setItem('savy:private-holdings:v1'+(id==='1'?'':':'+id),JSON.stringify({schema_version:1,positions}));},{profiles,now});
     await page.goto('http://127.0.0.1:'+server.address().port);
     await page.waitForFunction(()=>window.SavyLiveQuotes?.dataset()?.quotes.some(q=>q.id==='EXTSPX'));
