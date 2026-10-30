@@ -99,6 +99,11 @@
   move("#portfolioEarnings", pane("portefeuilles", "earnings"));
   const transactions = pane("portefeuilles", "transactions");
   transactions.append(el("h3", "", "Historique des transactions"), el("p", "portal-empty", "Aucun journal de transactions n’est disponible dans les données actuelles. Les positions et leurs prix moyens restent accessibles dans l’onglet Positions. La performance historique est reconstituée avec les quantités actuelles, hors achats, ventes, dividendes, frais et espèces."));
+  const portfolioAnalysis = pane("portefeuilles", "analysis");
+  portfolioAnalysis.append(
+    el("h3", "", "Analyse du portefeuille"),
+    el("p", "portal-empty", "Cet espace est prêt pour les prochaines analyses de tes portefeuilles OS, JMC et MCL. Aucun indicateur n’est calculé dans cet onglet pour le moment.")
+  );
   // Keep the edit form available when a portfolio is empty; only the data-dependent panels are gated.
   for (const tab of ["overview", "allocations", "performance", "earnings"]) shared.append(pane("portefeuilles", tab));
   const manage = link("Gérer mes positions ↗", "portefeuilles", "positions", "button quiet"); $("#portfolioEmpty").after(manage); manage.id = "portfolioManage";

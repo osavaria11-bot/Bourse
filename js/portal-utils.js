@@ -6,7 +6,7 @@
   const PAGES = {
     accueil: {label: "Accueil", tabs: {overview: "Vue d’ensemble", news: "Actualités & audio"}},
     marches: {label: "Marchés", tabs: {indices: "Indices", economy: "Économie", rates: "Taux & décisions", breadth: "Participation SMA", resources: "Ressources"}},
-    portefeuilles: {label: "Portefeuilles", tabs: {overview: "Vue d’ensemble", positions: "Positions", allocations: "Allocations", performance: "Performance & risque", earnings: "Résultats", transactions: "Transactions"}},
+    portefeuilles: {label: "Portefeuilles", tabs: {overview: "Vue d’ensemble", positions: "Positions", allocations: "Allocations", performance: "Performance & risque", earnings: "Résultats", transactions: "Transactions", analysis: "Analyse"}},
     recherche: {label: "Recherche", tabs: {latest: "Recherche & suivi", archives: "Archives"}},
     immobilier: {label: "Immobilier", tabs: {latest: "Dernier briefing", archives: "Archives"}},
     polymarket: {label: "Polymarket", tabs: {overview: "Marchés suivis"}},

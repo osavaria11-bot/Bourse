@@ -277,6 +277,14 @@ async function check(browser, engine) {
   await go("portefeuilles", "allocations"); await page.locator("#portfolioHeatmapTiles button").first().waitFor({state:"visible"});
   await go("portefeuilles", "performance"); assert.equal(await page.locator("#portfolioRisk").isVisible(), true);
   await go("portefeuilles", "transactions"); assert.match(await page.locator("#panel-portefeuilles-transactions").innerText(), /Aucun journal/);
+  const portfolioTabs = page.locator("#page-portefeuilles .portal-tabs [data-tab]");
+  assert.deepEqual((await portfolioTabs.evaluateAll(tabs => tabs.map(tab => tab.dataset.tab))).slice(-2), ["transactions", "analysis"]);
+  await go("portefeuilles", "analysis");
+  assert.equal(await page.locator("#panel-portefeuilles-analysis").isVisible(), true);
+  assert.match(await page.locator("#panel-portefeuilles-analysis").innerText(), /Analyse du portefeuille/);
+  assert.equal(await page.locator("#panel-portefeuilles-transactions").isVisible(), false);
+  assert.equal(await page.locator("#page-portefeuilles .portal-tabs [data-tab='analysis']").getAttribute("aria-current"), "page");
+  assert.equal(new URLSearchParams(new URL(page.url()).hash.slice(1)).get("tab"), "analysis");
   await go("dashboard");
   for (const tab of Object.keys(R.PAGES.portefeuilles.tabs)) assert.equal(await page.locator("#panel-portefeuilles-" + tab).isVisible(), true);
   assert.equal(await page.locator("#portfolioChart svg").isVisible(), true);

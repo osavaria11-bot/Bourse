@@ -11,6 +11,18 @@ test("Old bookmarks and private fragments open the correct section; invalid tabs
   assert.deepEqual(R.route("#view=recherche&tab=valuation"), {page:"recherche",tab:"latest"});
   assert.deepEqual(R.route("#view=toString&tab=__proto__"), {page: "accueil", tab: "overview"});
 });
+test("Portfolio Analyse follows Transactions and keeps a dedicated bookmark without exposing access keys", () => {
+  const tabs = Object.keys(R.PAGES.portefeuilles.tabs);
+  assert.equal(tabs.at(-2), "transactions");
+  assert.equal(tabs.at(-1), "analysis");
+  assert.equal(R.PAGES.portefeuilles.tabs.analysis, "Analyse");
+  assert.deepEqual(R.route("#view=portefeuilles&tab=analysis"), {page: "portefeuilles", tab: "analysis"});
+  const url = R.address("https://example.test/Bourse/#portfolio-key=synthetic&portfolio=3", "portefeuilles", "analysis");
+  assert.deepEqual(R.route(new URL(url).hash), {page: "portefeuilles", tab: "analysis"});
+  assert.equal(new URLSearchParams(new URL(url).hash.slice(1)).get("portfolio-key"), "synthetic");
+  assert.equal(new URLSearchParams(new URL(url).hash.slice(1)).get("portfolio"), "3");
+  assert.equal(R.preserveRoute(url, url), url);
+});
 test("Navigation and profile refresh keep private access in the fragment and preserve the route", () => {
   const initial = "https://example.test/Bourse/?v=1#portfolio-key=synthetic-test-key&portfolio=2";
   const next = new URL(R.address(initial, "recherche", "archives"));
