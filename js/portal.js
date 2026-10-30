@@ -100,10 +100,57 @@
   const transactions = pane("portefeuilles", "transactions");
   transactions.append(el("h3", "", "Historique des transactions"), el("p", "portal-empty", "Aucun journal de transactions n’est disponible dans les données actuelles. Les positions et leurs prix moyens restent accessibles dans l’onglet Positions. La performance historique est reconstituée avec les quantités actuelles, hors achats, ventes, dividendes, frais et espèces."));
   const portfolioAnalysis = pane("portefeuilles", "analysis");
-  portfolioAnalysis.append(
-    el("h3", "", "Analyse du portefeuille"),
-    el("p", "portal-empty", "Cet espace est prêt pour les prochaines analyses de tes portefeuilles OS, JMC et MCL. Aucun indicateur n’est calculé dans cet onglet pour le moment.")
-  );
+  portfolioAnalysis.classList.add("portfolio-briefing");
+  const analysisHeading = el("div", "section-heading"), analysisTitle = el("div");
+  analysisTitle.append(el("p", "eyebrow", "GESTION DE PORTEFEUILLE · REVUE BUY-SIDE"), el("h3", "", "Analyse du portefeuille"));
+  analysisHeading.append(analysisTitle, el("span", "meta portfolio-briefing-cadence", "Chaque mardi · 2 h (Québec)"));
+  const analysisIntro = el("p", "portfolio-briefing-intro",
+    "La revue des trois portefeuilles : évolution des positions, allocations, performance, risque, résultats et pistes de gestion. Comparaison avec la semaine précédente et leurs indices de référence.");
+  const analysisLatest = el("article", "weekly-report card portfolio-briefing-latest");
+  analysisLatest.append(el("p", "eyebrow", "DERNIÈRE ÉDITION · REVUE PRIVÉE"));
+  const analysisLatestTitle = el("h4", "portfolio-briefing-latest-title", "Première édition à venir");
+  analysisLatestTitle.id = "portfolioBriefingLatestTitle";
+  const analysisStatus = el("p", "meta"); analysisStatus.id = "portfolioBriefingStatus"; analysisStatus.setAttribute("role", "status");
+  const analysisContent = el("div", "portfolio-briefing-content"); analysisContent.id = "portfolioBriefingContent";
+  analysisLatest.append(analysisLatestTitle, analysisStatus, analysisContent);
+  const focusHeading = el("div", "portfolio-briefing-subheading");
+  focusHeading.append(el("h4", "", "Les trois portefeuilles"), el("p", "meta", "Repères et accès aux données actuelles"));
+  const analysisCards = el("div", "portfolio-briefing-grid");
+  analysisCards.id = "portfolioBriefingCards";
+  for (const [name, benchmark, description] of [
+    ["OS", "FEQT", "Positions et convictions, comparaison à FEQT"],
+    ["JMC", "VBAL", "Allocation et risque, comparaison à VBAL"],
+    ["MCL", "VGRO", "Croissance et risque, comparaison à VGRO"]
+  ]) {
+    const card = el("article", "portfolio-briefing-card");
+    const top = el("div", "portfolio-briefing-card-top");
+    top.append(el("h5", "", name), el("span", "meta", "Référence " + benchmark));
+    card.append(top, el("p", "", description), el("p", "meta", "Données chiffrées dans les onglets du portefeuille sélectionné."));
+    const links = el("div", "portfolio-briefing-shortcuts");
+    links.append(link("Positions ↗", "portefeuilles", "positions"), link("Allocations ↗", "portefeuilles", "allocations"),
+      link("Performance & risque ↗", "portefeuilles", "performance"), link("Résultats ↗", "portefeuilles", "earnings"));
+    card.append(links); analysisCards.append(card);
+  }
+  const archiveTitle = el("h4", "portfolio-briefing-archive-title", "Éditions précédentes");
+  const archive = el("div", "portal-archives portfolio-briefing-archives"); archive.id = "portfolioBriefingArchives";
+  const editor = el("details", "portfolio-briefing-editor");
+  editor.append(el("summary", "", "Ajouter une édition privée sur cet appareil"));
+  const form = el("form", "portfolio-briefing-form");
+  const dateLabel = el("label", "", "Date de la revue"), dateField = el("input");
+  dateField.id = "portfolioBriefingDate"; dateField.type = "date"; dateField.required = true;
+  dateLabel.append(dateField);
+  const textLabel = el("label", "", "Texte du briefing (copié depuis ChatGPT)"), briefingText = el("textarea");
+  briefingText.id = "portfolioBriefingText"; briefingText.rows = 8; briefingText.required = true;
+  briefingText.maxLength = 30000; briefingText.placeholder = "Colle ici la revue hebdomadaire OS / JMC / MCL…";
+  textLabel.append(briefingText);
+  const saveBriefing = el("button", "button", "Conserver la revue dans SAVY");
+  saveBriefing.type = "submit"; saveBriefing.id = "portfolioBriefingSave";
+  const formStatus = el("p", "meta"); formStatus.id = "portfolioBriefingFormStatus"; formStatus.setAttribute("role", "status");
+  form.append(dateLabel, textLabel, saveBriefing, formStatus);
+  editor.append(el("p", "meta", "Le texte est enregistré uniquement dans le navigateur de cet appareil : aucun rapport ni détail privé n’est envoyé sur GitHub."), form);
+  portfolioAnalysis.append(analysisHeading, analysisIntro, analysisLatest, focusHeading, analysisCards,
+    archiveTitle, archive, editor,
+    el("p", "meta portfolio-briefing-disclaimer", "La tâche du mardi publie son rapport dans ChatGPT. Le transfert automatique vers SAVY n’est pas encore relié; l’ajout d’un rapport ici reste manuel et privé."));
   // Keep the edit form available when a portfolio is empty; only the data-dependent panels are gated.
   for (const tab of ["overview", "allocations", "performance", "earnings"]) shared.append(pane("portefeuilles", tab));
   const manage = link("Gérer mes positions ↗", "portefeuilles", "positions", "button quiet"); $("#portfolioEmpty").after(manage); manage.id = "portfolioManage";

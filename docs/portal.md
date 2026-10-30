@@ -56,3 +56,12 @@ The embedded FNB report uses the parent page for vertical scrolling. Its frame h
 `data/fnb-catalog.json` supplies the verified issuer fund name, a two-word French description and its source link for every FNB and comparator. `scripts/label_fnb_funds.cjs` enriches the individual cards, complete card grid, comparator rows and source table. The overview rebuild calls the helper so later report refreshes retain those labels. Financial results and holdings are unchanged.
 
 The new Polymarket `trending` group selects two additional open events across all topics by 24-hour volume, excluding IDs already used by Finance and Politics. Older eight-market snapshots remain usable, with the extra cards marked unavailable until a valid collection arrives. Existing refresh workflows collect the expanded snapshot without an additional schedule.
+
+
+## Revue privée des trois portefeuilles — onglet Analyse
+
+L'onglet `Portefeuilles → Analyse` reprend la hiérarchie visuelle du briefing immobilier : dernière édition, synthèse, trois cartes OS/FEQT, JMC/VBAL, MCL/VGRO, puis archives des éditions. Les raccourcis vers Positions, Allocations, Performance & risque et Résultats ouvrent les données déjà disponibles, sans calcul supplémentaire ni exposition du portefeuille sélectionné.
+
+La tâche ChatGPT dédiée demeure indépendante, programmée le **mardi à 2 h, fuseau America/Toronto**. Elle livre un briefing dans ChatGPT; **aucun mécanisme sécurisé de synchronisation automatique depuis ChatGPT vers cette page statique n'est actuellement connecté**.
+
+L'utilisateur peut copier le texte de sa revue dans le formulaire de l'onglet, choisir sa date et le conserver dans `localStorage`, clé `savy:portfolio-private-briefings:v1`. Les archives et la dernière édition sont construites depuis cet appareil seulement (12 éditions récentes, texte limité à 30 000 caractères); il n'y a ni API d'envoi ni synchronisation de navigateur à navigateur. Les données sont affichées uniquement avec `textContent`, sans interprétation HTML. Les scripts du site ne doivent jamais publier les rapports privés ou les clés AES-GCM dans le dépôt public, ni prétendre déchiffrer les fichiers `data/personal-portfolio*.json` en l'absence d'une clé autorisée.
