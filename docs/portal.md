@@ -7,8 +7,8 @@ The existing static site and GitHub Pages workflows are retained. `portal.js` mo
 | Section | Views |
 | --- | --- |
 | Accueil | Market summary, three sourced headlines, CNN sentiment and history, latest reports, macro readings; full news and audio in a secondary view |
-| Marchés | Six market charts, all economic series, policy odds and sovereign curves, original resources |
-| Portefeuilles | All three existing portfolios; overview, positions, allocation heatmap and exposures, contributions/risk/movers, earnings, transaction availability |
+| Marchés | Six market charts, all economic series, policy odds and sovereign curves, original resources, and the September 13, 2026 climate and carbon capture PDF |
+| Portefeuilles | All three existing portfolios; overview, positions, allocation heatmap and exposures, contributions/risk/movers, earnings, transaction availability, and the Analyse tab (a dedicated placeholder with no fabricated calculations) |
 | Recherche | Finviz research and portfolio tracking together: one Wednesday 22:00 America/Toronto delivery, current selection and simulation rules; published PDF archives |
 | Immobilier | Current briefing, opportunities and published PDF archives |
 | Polymarket | Three Finance, five popular political markets and two popular events across all topics; ten distinct markets, five columns on desktop and a compact responsive grid |
