@@ -141,3 +141,42 @@ body.savy-portal {font-family:var(--font-sans);font-size:14px;line-height:1.5}
 
 /* Dated extended-hours percentages; no additional charts. */
 .extended-hours{display:grid;gap:4px;margin:8px 0;font-size:11px;max-width:100%;min-width:0}.extended-row{display:flex;align-items:baseline;justify-content:space-between;gap:10px;min-width:0;max-width:100%}.extended-label{min-width:0;color:var(--muted);line-height:1.35}.extended-row>strong{flex-shrink:0;font-size:inherit;white-space:nowrap;font-variant-numeric:tabular-nums}.extended-date{font-size:9px;opacity:.8;white-space:nowrap}.market-card .extended-hours{margin-bottom:10px}#portfolioExtendedHours{max-width:390px}#portfolioExtendedHours .extended-row{justify-content:flex-start}#portfolioExtendedHours .extended-label{min-width:180px}@media(max-width:600px){#portfolioExtendedHours .extended-label{min-width:0;flex:1}#portfolioExtendedHours .extended-row{justify-content:space-between}.extended-date{display:block;white-space:normal}}
+
+
+/* Private three-portfolio analysis brief, visually aligned with the immobilier report. */
+.portfolio-briefing{min-width:0}
+.portfolio-briefing>.section-heading{margin:3px 0 8px;align-items:end;flex-wrap:wrap}
+.portfolio-briefing>.section-heading h3{font-size:clamp(21px,2vw,27px);font-weight:600;letter-spacing:-.025em}
+.portfolio-briefing-cadence{white-space:nowrap;font-size:12px}
+.portfolio-briefing-intro{max-width:950px;color:var(--muted);font-size:13px;line-height:1.7;margin:0 0 18px}
+.portfolio-briefing-latest{padding:24px;min-width:0}
+.portfolio-briefing-latest-title{font-size:clamp(19px,2vw,24px);font-weight:600;letter-spacing:-.02em;margin:5px 0 9px}
+.portfolio-briefing-content{font-size:13px;line-height:1.8;white-space:pre-wrap;overflow-wrap:anywhere;margin:14px 0 0;max-width:1000px}
+.portfolio-briefing-content:empty{display:none}
+.portfolio-briefing-subheading{display:flex;justify-content:space-between;gap:10px;align-items:baseline;margin:28px 0 12px;flex-wrap:wrap}
+.portfolio-briefing-subheading h4,.portfolio-briefing-archive-title{font-size:18px;font-weight:600}
+.portfolio-briefing-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.portfolio-briefing-card{min-width:0;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);padding:18px;display:flex;flex-direction:column;gap:10px}
+.portfolio-briefing-card-top{display:flex;align-items:baseline;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.portfolio-briefing-card h5{font-size:21px;line-height:1.2;font-weight:650;color:var(--text)}
+.portfolio-briefing-card p{font-size:12px;line-height:1.6}
+.portfolio-briefing-shortcuts{display:flex;align-items:center;flex-wrap:wrap;gap:6px 14px;margin-top:auto}
+.portfolio-briefing-shortcuts a{font-size:11px;color:var(--accent);font-weight:600}
+.portfolio-briefing-archive-title{margin:28px 0 8px}
+.portfolio-briefing-archives{margin-top:8px}
+.portfolio-briefing-archive-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.portfolio-briefing-archive-row button{background:none;border:0;padding:16px 4px;color:var(--text);font:inherit;text-align:left;cursor:pointer;min-width:0}
+.portfolio-briefing-archive-row button:hover{text-decoration:underline;color:var(--accent)}
+.portfolio-briefing-archive-row .meta{font-size:11px;white-space:nowrap}
+.portfolio-briefing-editor{border-top:1px solid var(--border);margin-top:20px;padding-top:14px;max-width:920px}
+.portfolio-briefing-editor summary{cursor:pointer;font-size:13px;font-weight:600;color:var(--accent)}
+.portfolio-briefing-editor>p{margin:10px 0}
+.portfolio-briefing-form{display:grid;gap:12px;margin-top:12px;align-items:start}
+.portfolio-briefing-form label{font-size:12px;font-weight:600;display:grid;gap:5px}
+.portfolio-briefing-form input,.portfolio-briefing-form textarea{max-width:100%;width:100%;padding:10px 12px;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:5px;font:inherit;font-size:13px}
+.portfolio-briefing-form input{max-width:230px}
+.portfolio-briefing-form textarea{min-height:145px;resize:vertical;line-height:1.5}
+.portfolio-briefing-form .button{justify-self:start}
+.portfolio-briefing-disclaimer{margin-top:16px;line-height:1.6;font-size:11px}
+@media(max-width:900px){.portfolio-briefing-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.portfolio-briefing-grid{grid-template-columns:1fr}.portfolio-briefing-latest{padding:16px}.portfolio-briefing-card{padding:14px}.portfolio-briefing-cadence{white-space:normal}.portfolio-briefing-archive-row .meta{white-space:normal}}
