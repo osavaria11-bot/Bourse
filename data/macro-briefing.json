@@ -1,12 +1,12 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-10-30T18:11:41.736931+00:00",
+  "generated_at": "2026-10-30T18:54:19.642684+00:00",
   "last_successful_update": "2026-10-30T09:13:48.452216+00:00",
   "update_status": "partial_data",
   "coverage": {
     "total": 42,
-    "fresh": 41,
-    "cached": 1,
+    "fresh": 38,
+    "cached": 4,
     "unavailable": 0
   },
   "data_provider": "FRED / Banque du Canada / Statistique Canada / Numerco / Fed de New York / U.S. Treasury",
@@ -113,7 +113,7 @@
       "previous_value": 3.033981,
       "previous_date": "2026-08-01",
       "unit": "%",
-      "fetch_status": "fresh"
+      "fetch_status": "cached"
     },
     {
       "id": "V108785715",
@@ -123,7 +123,7 @@
       "previous_value": 1.9,
       "previous_date": "2026-08-01",
       "unit": "%",
-      "fetch_status": "fresh"
+      "fetch_status": "cached"
     },
     {
       "id": "V108785714",
@@ -133,7 +133,7 @@
       "previous_value": 2.0,
       "previous_date": "2026-08-01",
       "unit": "%",
-      "fetch_status": "fresh"
+      "fetch_status": "cached"
     },
     {
       "id": "UNRATE",
@@ -153,7 +153,7 @@
       "previous_value": 6.4,
       "previous_date": "2026-08-01",
       "unit": "%",
-      "fetch_status": "fresh"
+      "fetch_status": "cached"
     },
     {
       "id": "ICSA",
