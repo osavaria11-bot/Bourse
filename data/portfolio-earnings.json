@@ -250,22 +250,28 @@
           },
           "messages": [
             {
-              "text": "Amazon delivered record profitability",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-29-amazoncom-inc-stock/",
-              "kind": "call_topic"
+              "text": "AWS — Revenus +39,3 % à 46,0 G$ US et marge opérationnelle de 38,7 %. Jassy vise encore plus de 40 % de croissance en 2027 et 2028, sans garantie de réalisation. Les puces maison et l’intégration des applications, données et outils d’IA soutiennent son avantage; l’investissement nécessaire reste le principal test économique.",
+              "language": "fr",
+              "source_url": "https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-Third-Quarter-Results/",
+              "kind": "reviewed_summary"
             },
             {
-              "text": "AWS growth accelerated sharply",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-29-amazoncom-inc-stock/",
-              "kind": "call_topic"
+              "text": "Cash — Sur douze mois, les opérations génèrent 168,3 G$ US, mais les immobilisations nettes absorbent 210,7 G$ : le flux disponible ressort à −42,4 G$. La direction maintient environ 220 G$ de dépenses décaissées en 2026 et prévoit davantage en 2027. La hausse du bénéfice opérationnel ne signifie donc pas un financement déjà autonome de l’expansion.",
+              "language": "fr",
+              "source_url": "https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-Third-Quarter-Results/",
+              "kind": "reviewed_summary"
             },
             {
-              "text": "$220 billion of 2026 cash CapEx",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-29-amazoncom-inc-stock/",
-              "kind": "call_topic"
+              "text": "Publicité et commerce — La publicité ralentit à +12 %, en partie à cause du déplacement de Prime Day au T2; Jassy attend une croissance proche de 20 % au T4. Le coût de service baisse malgré le carburant, grâce au placement des stocks et aux distances de livraison réduites. Le rebond publicitaire annoncé reste à confirmer.",
+              "language": "fr",
+              "source_url": "https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-Third-Quarter-Results/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Perspectives — Le T4 vise 240–247 G$ US de revenus et 28,5–33,5 G$ de bénéfice opérationnel. Amazon continuera de passer la majorité des coûts de Leo en charges au T4, leur capitalisation étant reportée au T1 suivant. Ce calendrier pèse sur le bénéfice à court terme et doit être séparé de la demande cloud.",
+              "language": "fr",
+              "source_url": "https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-Third-Quarter-Results/",
+              "kind": "reviewed_summary"
             }
           ],
           "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-29-amazoncom-inc-stock/",
@@ -277,6 +283,10 @@
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=AMZN&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-Third-Quarter-Results/"
             }
           ]
         }
@@ -2106,16 +2116,28 @@
           },
           "messages": [
             {
-              "text": "Q3 revenue rose 11% to $1.34 billion",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-29-dexcom-inc-stock/",
-              "kind": "call_topic"
+              "text": "Perspectives — Dexcom relève le milieu de sa cible 2026 à 5,20–5,25 G$ US de revenus et porte ses marges opérationnelle ajustée et BAIIA ajusté à environ 24 % et 32 %. Le relèvement transmet la surperformance du T3, partiellement absorbée par quelque 5 M$ de change défavorable; il implique environ 10 % de croissance au T4 au milieu de la cible.",
+              "language": "fr",
+              "source_url": "https://investors.dexcom.com/news/news-details/2026/Dexcom-Reports-Third-Quarter-2026-Financial-Results/default.aspx",
+              "kind": "reviewed_summary"
             },
             {
-              "text": "New England Journal of Medicine",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-29-dexcom-inc-stock/",
-              "kind": "call_topic"
+              "text": "Rentabilité — La marge brute ajustée atteint 65,1 %, contre 61,3 % un an plus tôt, grâce notamment aux gains de fabrication et de transport. La marge opérationnelle ajustée progresse à 25,3 % malgré les coûts de lancement de l’usine irlandaise, désormais en production commerciale. L’expansion des capacités ne s’est donc pas faite au prix d’un recul de marge.",
+              "language": "fr",
+              "source_url": "https://investors.dexcom.com/news/news-details/2026/Dexcom-Reports-Third-Quarter-2026-Financial-Results/default.aspx",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Accès au marché — Les États-Unis croissent de 14 %, contre 5 % à l’international. Leach attend une décision Medicare sur les diabétiques de type 2 sans insuline cette année, avec application visée vers mi-2027; ce remboursement n’est pas acquis. Un changement de couverture d’un gestionnaire de prestations reste un risque d’accès pour certains patients.",
+              "language": "fr",
+              "source_url": "https://investors.dexcom.com/news/news-details/2026/Dexcom-Reports-Third-Quarter-2026-Financial-Results/default.aspx",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Capital — Plus de 900 M$ US de flux de trésorerie disponible ont été générés sur neuf mois; le rachat de 1 G$ prévu pour 2026 est exécuté et un nouveau milliard est autorisé. L’acquisition signée d’un distributeur européen doit soutenir la vente directe après clôture en 2027; elle n’apporte aucun revenu supplémentaire au T4 2026.",
+              "language": "fr",
+              "source_url": "https://investors.dexcom.com/news/news-details/2026/Dexcom-Reports-Third-Quarter-2026-Financial-Results/default.aspx",
+              "kind": "reviewed_summary"
             }
           ],
           "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-29-dexcom-inc-stock/",
@@ -2127,6 +2149,10 @@
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=DXCM&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://investors.dexcom.com/news/news-details/2026/Dexcom-Reports-Third-Quarter-2026-Financial-Results/default.aspx"
             }
           ]
         }
@@ -2487,22 +2513,28 @@
           },
           "messages": [
             {
-              "text": "Strong third-quarter financial performance",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-29-first-solar-inc-stock/",
-              "kind": "call_topic"
+              "text": "Perspectives — Les revenus 2026 sont ramenés à 4,6–4,9 G$ US, contre 4,9–5,2 G$, et le BAIIA ajusté à 2,55–2,75 G$, contre 2,6–2,8 G$. La baisse des volumes attendus en Inde, des modules internationaux Series 6 et de la finition américaine explique ce recul; le volume prévu de produits entièrement fabriqués aux États-Unis demeure inchangé.",
+              "language": "fr",
+              "source_url": "https://www.nasdaq.com/press-release/first-solar-inc-announces-third-quarter-2026-financial-results-updates-guidance-and",
+              "kind": "reviewed_summary"
             },
             {
-              "text": "44 GW backlog",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-29-first-solar-inc-stock/",
-              "kind": "call_topic"
+              "text": "Qualité de marge — La marge brute approche 58 %, en hausse d’environ 20 points, surtout grâce au mix de modules américains admissibles au crédit 45X, à de moindres coûts logistiques et à la non-répétition d’une charge passée. La cible annuelle comprend 2,07–2,19 G$ US de crédits 45X : cette rentabilité dépend donc fortement du cadre public.",
+              "language": "fr",
+              "source_url": "https://www.nasdaq.com/press-release/first-solar-inc-announces-third-quarter-2026-financial-results-updates-guidance-and",
+              "kind": "reviewed_summary"
             },
             {
-              "text": "$500 million share repurchase program",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-29-first-solar-inc-stock/",
-              "kind": "call_topic"
+              "text": "Carnet et risques — Les contrats représentent 44 GW et environ 13,5 G$ US, avec livraisons jusqu’en 2030. Les prises de commandes ralentissent avec les permis, le financement et l’incertitude tarifaire; la direction privilégie des projets identifiés aux grandes ententes-cadres. Cette discipline améliore la visibilité des livraisons, mais limite le rythme des signatures.",
+              "language": "fr",
+              "source_url": "https://www.nasdaq.com/press-release/first-solar-inc-announces-third-quarter-2026-financial-results-updates-guidance-and",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Bilan — La trésorerie nette de 1,5 G$ US est inférieure aux 2,4 G$ de fin 2025, après besoins de fonds de roulement et investissements. Le budget d’immobilisations 2026 baisse à 0,6–0,8 G$, contre 0,8–1,0 G$. Le nouveau rachat autorisé de 500 M$ n’a pas d’échéance et n’est pas une dépense déjà effectuée.",
+              "language": "fr",
+              "source_url": "https://www.nasdaq.com/press-release/first-solar-inc-announces-third-quarter-2026-financial-results-updates-guidance-and",
+              "kind": "reviewed_summary"
             }
           ],
           "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-29-first-solar-inc-stock/",
@@ -2514,6 +2546,10 @@
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=FSLR&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.nasdaq.com/press-release/first-solar-inc-announces-third-quarter-2026-financial-results-updates-guidance-and"
             }
           ]
         }
@@ -3631,10 +3667,28 @@
           },
           "messages": [
             {
-              "text": "Revenus : +4,7 % par rapport au même trimestre un an plus tôt.",
+              "text": "Qualité des ventes — Le T3 bénéficie d’environ 550 M$ US d’achats avancés. Les avantages liés à Keytruda et Winrevair devraient entièrement s’inverser au T4; celui des vaccins, surtout Gardasil, principalement en 2027. La croissance publiée ne doit donc pas être extrapolée comme un rythme de demande récurrent.",
               "language": "fr",
-              "source_url": "https://www.marketbeat.com/stocks/NYSE/MRK/earnings/",
-              "kind": "calculated"
+              "source_url": "https://www.merck.com/wp-content/uploads/sites/124/2026/10/3Q26-Merck-Prepared-Remarks.pdf",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Perspectives — La cible de revenus 2026 passe de 66,3–67,3 à 66,8–67,3 G$ US, et le BPA ajusté de 2,66–2,76 à 2,77–2,82 $, malgré une charge de licence de 0,12 $. Le taux d’impôt attendu baisse de 35–36 % à 32–33 %. Le relèvement du BPA ne vient donc pas seulement de meilleures ventes ou marges opérationnelles.",
+              "language": "fr",
+              "source_url": "https://www.merck.com/wp-content/uploads/sites/124/2026/10/3Q26-Merck-Prepared-Remarks.pdf",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "2027 — Merck annonce une croissance des revenus modeste : certaines indications de Keytruda approchent leur sommet, Bridion subit les génériques et la vaccination est moins soutenue. Les dépenses opérationnelles sous-jacentes devraient croître d’un pourcentage à un chiffre moyen à élevé. Les nouveaux lancements doivent compenser ces pressions, pas simplement s’ajouter à une base stable.",
+              "language": "fr",
+              "source_url": "https://www.merck.com/wp-content/uploads/sites/124/2026/10/3Q26-Merck-Prepared-Remarks.pdf",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Relève du portefeuille — Winrevair atteint 694 M$ US, +93 %, et Keytruda Qlex 830 M$. Les nouvelles données de phase 3 sur sac-TMT et le vaccin thérapeutique intismeran avec Moderna élargissent les relais possibles. Les résultats cliniques soutiennent la thèse de diversification, mais ne valent pas encore approbation réglementaire ni revenus futurs garantis.",
+              "language": "fr",
+              "source_url": "https://www.merck.com/wp-content/uploads/sites/124/2026/10/3Q26-Merck-Prepared-Remarks.pdf",
+              "kind": "reviewed_summary"
             }
           ],
           "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-29-merck-co-inc-stock/",
@@ -3646,6 +3700,10 @@
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=MRK&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.merck.com/wp-content/uploads/sites/124/2026/10/3Q26-Merck-Prepared-Remarks.pdf"
             }
           ]
         }
@@ -4990,22 +5048,28 @@
           },
           "messages": [
             {
-              "text": "Strong first-quarter results exceeded guidance",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-29-4285541-stock/",
-              "kind": "call_topic"
+              "text": "Moteurs — Au T1 fiscal 2027 terminé le 2 octobre, les centres de données atteignent 4,802 G$ US de revenus, +61 % sur le trimestre précédent. Environ 60 % de l’augmentation séquentielle des revenus totaux vient des volumes et 40 % des prix. Le progrès ne repose donc pas uniquement sur une hausse du prix de la mémoire.",
+              "language": "fr",
+              "source_url": "https://investor.sandisk.com/news-releases/news-release-details/sandisk-reports-fiscal-first-quarter-2027-financial-results",
+              "kind": "reviewed_summary"
             },
             {
-              "text": "AI-driven data-center demand remains a major growth engine.",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-29-4285541-stock/",
-              "kind": "call_topic"
+              "text": "Perspectives — Le T2 fiscal vise 12,2–12,6 G$ US de revenus, une marge brute ajustée de 84,5–85,5 % et un BPA ajusté de 55–57 $ avant fractionnement. La direction maintient son rythme de croissance des bits plutôt que de précipiter les transitions technologiques; l’offre ne peut pas être augmentée instantanément face à la demande d’IA.",
+              "language": "fr",
+              "source_url": "https://investor.sandisk.com/news-releases/news-release-details/sandisk-reports-fiscal-first-quarter-2027-financial-results",
+              "kind": "reviewed_summary"
             },
             {
-              "text": "Consumer weakness and seasonal risk remain.",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-29-4285541-stock/",
-              "kind": "call_topic"
+              "text": "Visibilité et risque — Les accords commerciaux de long terme couvrent environ la moitié des bits de l’exercice 2027 et les deux tiers de 2028 selon la conférence. Ils améliorent la planification, sans supprimer le risque de cycle, de prix ou d’exécution chez les clients. Le déplacement du mix vers les centres de données reste soumis aux contraintes de production.",
+              "language": "fr",
+              "source_url": "https://investor.sandisk.com/news-releases/news-release-details/sandisk-reports-fiscal-first-quarter-2027-financial-results",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Cash et capital — Sandisk dégage 5,7 G$ US de flux disponible ajusté au trimestre et rachète 5 G$ d’actions. Le bilan clôture sans dette, avec 5,1 G$ de liquidités. Le fractionnement 8 pour 1 est prévu pour une cotation ajustée le 20 novembre : il ne crée pas de valeur économique et ne doit pas être appliqué aux BPA actuels avant son entrée en vigueur.",
+              "language": "fr",
+              "source_url": "https://investor.sandisk.com/news-releases/news-release-details/sandisk-reports-fiscal-first-quarter-2027-financial-results",
+              "kind": "reviewed_summary"
             }
           ],
           "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-29-4285541-stock/",
@@ -5017,6 +5081,10 @@
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=SNDK&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://investor.sandisk.com/news-releases/news-release-details/sandisk-reports-fiscal-first-quarter-2027-financial-results"
             }
           ]
         }
@@ -5104,22 +5172,28 @@
           },
           "messages": [
             {
-              "text": "Strong first-quarter results exceeded guidance",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-29-4285541-stock/",
-              "kind": "call_topic"
+              "text": "Moteurs — Au T1 fiscal 2027 terminé le 2 octobre, les centres de données atteignent 4,802 G$ US de revenus, +61 % sur le trimestre précédent. Environ 60 % de l’augmentation séquentielle des revenus totaux vient des volumes et 40 % des prix. Le progrès ne repose donc pas uniquement sur une hausse du prix de la mémoire.",
+              "language": "fr",
+              "source_url": "https://investor.sandisk.com/news-releases/news-release-details/sandisk-reports-fiscal-first-quarter-2027-financial-results",
+              "kind": "reviewed_summary"
             },
             {
-              "text": "AI-driven data-center demand remains a major growth engine.",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-29-4285541-stock/",
-              "kind": "call_topic"
+              "text": "Perspectives — Le T2 fiscal vise 12,2–12,6 G$ US de revenus, une marge brute ajustée de 84,5–85,5 % et un BPA ajusté de 55–57 $ avant fractionnement. La direction maintient son rythme de croissance des bits plutôt que de précipiter les transitions technologiques; l’offre ne peut pas être augmentée instantanément face à la demande d’IA.",
+              "language": "fr",
+              "source_url": "https://investor.sandisk.com/news-releases/news-release-details/sandisk-reports-fiscal-first-quarter-2027-financial-results",
+              "kind": "reviewed_summary"
             },
             {
-              "text": "Consumer weakness and seasonal risk remain.",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-29-4285541-stock/",
-              "kind": "call_topic"
+              "text": "Visibilité et risque — Les accords commerciaux de long terme couvrent environ la moitié des bits de l’exercice 2027 et les deux tiers de 2028 selon la conférence. Ils améliorent la planification, sans supprimer le risque de cycle, de prix ou d’exécution chez les clients. Le déplacement du mix vers les centres de données reste soumis aux contraintes de production.",
+              "language": "fr",
+              "source_url": "https://investor.sandisk.com/news-releases/news-release-details/sandisk-reports-fiscal-first-quarter-2027-financial-results",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Cash et capital — Sandisk dégage 5,7 G$ US de flux disponible ajusté au trimestre et rachète 5 G$ d’actions. Le bilan clôture sans dette, avec 5,1 G$ de liquidités. Le fractionnement 8 pour 1 est prévu pour une cotation ajustée le 20 novembre : il ne crée pas de valeur économique et ne doit pas être appliqué aux BPA actuels avant son entrée en vigueur.",
+              "language": "fr",
+              "source_url": "https://investor.sandisk.com/news-releases/news-release-details/sandisk-reports-fiscal-first-quarter-2027-financial-results",
+              "kind": "reviewed_summary"
             }
           ],
           "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-29-4285541-stock/",
@@ -5131,6 +5205,10 @@
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=SNDK&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://investor.sandisk.com/news-releases/news-release-details/sandisk-reports-fiscal-first-quarter-2027-financial-results"
             }
           ]
         }
@@ -6286,5 +6364,6 @@
       "source_warnings": []
     }
   },
-  "errors": {}
+  "errors": {},
+  "analysis_reviewed_at": "2026-10-30T09:10:49.898476+00:00"
 }
