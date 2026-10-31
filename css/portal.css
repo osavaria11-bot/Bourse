@@ -144,6 +144,7 @@ body.savy-portal {font-family:var(--font-sans);font-size:14px;line-height:1.5}
 
 
 /* Private three-portfolio analysis brief, visually aligned with the immobilier report. */
+#portfolio.portfolio-analysis-view>:not(#panel-portefeuilles-analysis){display:none!important}
 .portfolio-briefing{min-width:0}
 .portfolio-briefing>.section-heading{margin:3px 0 8px;align-items:end;flex-wrap:wrap}
 .portfolio-briefing>.section-heading h3{font-size:clamp(21px,2vw,27px);font-weight:600;letter-spacing:-.025em}
@@ -180,3 +181,4 @@ body.savy-portal {font-family:var(--font-sans);font-size:14px;line-height:1.5}
 .portfolio-briefing-disclaimer{margin-top:16px;line-height:1.6;font-size:11px}
 @media(max-width:900px){.portfolio-briefing-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:600px){.portfolio-briefing-grid{grid-template-columns:1fr}.portfolio-briefing-latest{padding:16px}.portfolio-briefing-card{padding:14px}.portfolio-briefing-cadence{white-space:normal}.portfolio-briefing-archive-row .meta{white-space:normal}}
+

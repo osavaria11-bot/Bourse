@@ -1,1130 +1,1380 @@
 %PDF-1.4
-%âãÏÓ
+%“Œ‹ ReportLab Generated PDF document (opensource)
 1 0 obj
-<< /Type /Font /Subtype /Type1 /BaseFont /Courier /Encoding /WinAnsiEncoding >>
+<<
+/F1 2 0 R /F2+0 111 0 R /F3+0 115 0 R
+>>
 endobj
 2 0 obj
-<< /Length 3343 >>
-stream
-BT
-/F1 8.05 Tf
-1 0 0 1 37 752 Tm
-12.5 TL
-(Comprendre le climat et le captage du carbone) Tj
-T*
-(Résumé enrichi de notre conversation) Tj
-T*
-(13 septembre 2026) Tj
-T*
-(Le problème climatique vient surtout de l’accumulation des gaz à effet de serre, qui modifie la manière ) Tj
-T*
-(dont la Terre évacue l’énergie reçue du Soleil. Le CO2 extérieur actuel ne nous empoisonne pas ) Tj
-T*
-(directement, mais il contribue à transformer les températures, les pluies, les océans et les conditions de ) Tj
-T*
-(vie. Il existe des moyens de limiter ces changements et de retirer du carbone de l’air. Leur efficacité ) Tj
-T*
-(dépend de leur déploiement, de leur coût et de la durée du stockage.) Tj
-T*
-(Ce résumé reprend nos questions, précise les réponses qui demandaient une nuance et ajoute des ) Tj
-T*
-(explications sur les technologies, les entreprises et leur intérêt économique. Les mesures observées, les ) Tj
-T*
-(projections et les exemples de calcul sont distingués pour éviter de transformer un ordre de grandeur en ) Tj
-T*
-(prédiction.) Tj
-T*
-(1 Pourquoi la Terre se réchauffe) Tj
-T*
-(La Terre reçoit de l’énergie du Soleil et en renvoie vers l’espace, notamment sous forme de rayonnement ) Tj
-T*
-(infrarouge. Lorsque les entrées et les sorties s’équilibrent, sa température moyenne peut rester ) Tj
-T*
-(relativement stable.) Tj
-T*
-(Les gaz à effet de serre absorbent certaines longueurs d’onde de l’infrarouge et réémettent de l’énergie ) Tj
-T*
-(dans différentes directions. En augmenter la concentration réduit initialement la capacité du système à ) Tj
-T*
-(perdre de la chaleur vers l’espace. Un surplus d’énergie s’accumule alors et la température monte. Le CO2 ) Tj
-T*
-(ne crée donc pas une nouvelle source d’énergie : il modifie les échanges d’énergie.) Tj
-T*
-(L’effet de serre naturel est indispensable à notre climat. Le problème vient de son renforcement rapide ) Tj
-T*
-(par nos activités, surtout la combustion du charbon, du pétrole et du gaz, ainsi que la déforestation et ) Tj
-T*
-(certains procédés industriels. NASA — Les causes du changement climatique) Tj
-T*
-(Pourquoi une Terre plus chaude émet davantage d’énergie. Un objet plus chaud rayonne davantage. ) Tj
-T*
-(Dans un modèle simple, le rayonnement émis par unité de surface suit la loi de Stefan–Boltzmann : F = ) Tj
-T*
-(esT4. T est la température absolue en kelvins, s une constante physique et e l’émissivité de la surface. ) Tj
-T*
-(Cette formule n’est pas, à elle seule, un modèle de l’atmosphère entière.) Tj
-T*
-(Prenons un exemple fictif : la Terre absorbe 240 unités d’énergie et n’en évacue momentanément que ) Tj
-T*
-(239. Elle accumule la différence. En se réchauffant, elle peut progressivement en évacuer davantage. Avec) Tj
-T*
-(un forçage maintenu constant, elle tend vers un nouvel équilibre plus chaud. Si les concentrations de gaz ) Tj
-T*
-(continuent d’augmenter, la température d’équilibre se déplace encore. Royal Society — Les bases de la ) Tj
-T*
-(science du climat) Tj
-T*
-(2 Ce que signifie une concentration de 428 ppm) Tj
-T*
-(« ppm » signifie parties par million. Environ 428 ppm de CO2 correspond à 428 molécules de CO2 par ) Tj
-T*
-(million de molécules d’air sec, soit 0,0428 %. La valeur mondiale récente affichée par la NOAA était de ) Tj
-T*
-(427,92 ppm pour le 12 septembre 2026. Un relevé à Mauna Loa, une moyenne mondiale mensuelle et ) Tj
-T*
-ET
-endstream
+<<
+/BaseFont /Helvetica /Encoding /WinAnsiEncoding /Name /F1 /Subtype /Type1 /Type /Font
+>>
 endobj
 3 0 obj
-<< /Type /Page /Parent 26 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 2 0 R >>
+<<
+/A <<
+/S /URI /Type /Action /URI (https://essd.copernicus.org/articles/18/3889/2026/)
+>> /Border [ 0 0 0 ] /Rect [ 516.3886 593.758 526.2475 602.11 ] /Subtype /Link /Type /Annot
+>>
 endobj
 4 0 obj
-<< /Length 3312 >>
-stream
-BT
-/F1 8.05 Tf
-1 0 0 1 37 752 Tm
-12.5 TL
-(une tendance mondiale lissée ne donnent pas exactement la même valeur. NOAA — Tendance mondiale ) Tj
-T*
-(récente) Tj
-T*
-(Vers le début de l’industrialisation, la concentration se situait autour de 280 ppm. Le passage de 280 à 428) Tj
-T*
-(ppm représente une hausse d’environ 53 %, même si la proportion de CO2 dans l’ensemble de l’air ) Tj
-T*
-(demeure petite. Calcul : 148 divisé par 280, puis multiplié par 100.) Tj
-T*
-(Une petite proportion peut avoir un effet important. Les gaz n’ont pas tous les mêmes propriétés. ) Tj
-T*
-(L’azote et l’oxygène constituent l’essentiel de l’air, mais n’absorbent pas l’infrarouge terrestre de la même) Tj
-T*
-(manière que le CO2. Son importance dépend de ses propriétés physiques, pas seulement de sa part dans ) Tj
-T*
-(l’atmosphère. NOAA — Comprendre les mesures de CO2) Tj
-T*
-(Ajout utile — Le carbone est transféré entre réservoirs. Brûler un combustible fossile fait passer du ) Tj
-T*
-(carbone stocké depuis très longtemps sous terre vers le cycle actif de l’atmosphère et des océans. Une ) Tj
-T*
-(tonne de carbone pur brûlée produit environ 3,67 tonnes de CO2 : les atomes d’oxygène ajoutent de la ) Tj
-T*
-(masse. Ce facteur ne s’applique pas directement à une tonne de pétrole, qui contient aussi d’autres ) Tj
-T*
-(éléments.) Tj
-T*
-(3 Pourquoi le CO2 reste sur Terre et circule entre les pays) Tj
-T*
-(L’espace n’aspire pas notre atmosphère. La gravité retient les gaz autour de la planète. Le CO2 ne quitte ) Tj
-T*
-(donc pas l’air en s’échappant massivement vers l’espace : il en sort principalement lorsqu’il est absorbé ) Tj
-T*
-(par les plantes, les océans ou certains processus chimiques.) Tj
-T*
-(La vitesse de libération près de la surface terrestre est d’environ 11,2 km/s. La vitesse thermique typique ) Tj
-T*
-(d’une molécule de CO2 près de la surface est beaucoup plus faible. C’est une illustration, pas un calcul ) Tj
-T*
-(complet de l’échappement atmosphérique : celui-ci se produit surtout dans la haute atmosphère et ) Tj
-T*
-(dépend aussi de processus non thermiques.) Tj
-T*
-(Les vents et les mouvements de l’atmosphère répartissent le CO2 bien au-delà du pays qui l’a émis. Le ) Tj
-T*
-(mélange se fait à différentes vitesses, de l’échelle régionale à l’échelle interhémisphérique. Dire que tout ) Tj
-T*
-(est uniformément mélangé « en quelques mois » était trop simple. Les concentrations de fond restent ) Tj
-T*
-(néanmoins proches à l’échelle planétaire, avec des variations locales et saisonnières.) Tj
-T*
-(Comparaison entre le Canada et ) Tj
-T*
-(l’Inde Ce qu’il faut comprendre) Tj
-T*
-(Concentration de CO2 dans l’air ) Tj
-T*
-(de fond) Tj
-T*
-(Elle est du même ordre de grandeur dans les deux pays; il n’existe pas une ) Tj
-T*
-(concentration unique valable partout dans chaque pays.) Tj
-T*
-(Émissions totales L’Inde émet davantage au total.) Tj
-T*
-(Émissions par habitant Elles sont beaucoup plus élevées au Canada.) Tj
-T*
-(Pollution respiratoire locale Elle dépend notamment des particules fines, du NO2 et de l’ozone, qui ne ) Tj
-T*
-(suivent pas la même répartition que le CO2.) Tj
-T*
-(Il faut comparer les émissions avec la même année et le même périmètre : CO2 seul ou ensemble des gaz ) Tj
-T*
-(à effet de serre, production nationale ou consommation incluant les importations. Les chiffres d’émissions) Tj
-T*
-ET
-endstream
+<<
+/Annots [ 3 0 R ] /Contents 134 0 R /MediaBox [ 0 0 612 792 ] /Parent 133 0 R /Resources <<
+/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>> /Rotate 0 
+  /Trans <<
+
+>> /Type /Page
+>>
 endobj
 5 0 obj
-<< /Type /Page /Parent 26 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 4 0 R >>
+<<
+/A <<
+/S /URI /Type /Action /URI (https://science.nasa.gov/climate-change/causes/)
+>> /Border [ 0 0 0 ] /Rect [ 373.5303 525.95 385.5706 536.15 ] /Subtype /Link /Type /Annot
+>>
 endobj
 6 0 obj
-<< /Length 3014 >>
-stream
-BT
-/F1 8.05 Tf
-1 0 0 1 37 752 Tm
-12.5 TL
-(ne décrivent pas directement la qualité de l’air respiré dans une ville. Global Carbon Project — Données ) Tj
-T*
-(sur les émissions) Tj
-T*
-(4 Le CO2 peut être toxique mais le risque climatique arrive bien avant) Tj
-T*
-(Le danger dépend de la concentration et de la durée d’exposition. Il faut surtout éviter de confondre le ) Tj
-T*
-(dioxyde de carbone, CO2, avec le monoxyde de carbone, CO, qui est toxique à des concentrations ) Tj
-T*
-(beaucoup plus faibles.) Tj
-T*
-(Concentration Pourcentage Repère et interprétation) Tj
-T*
-(Environ 428 ppm 0,0428 % Ordre de grandeur extérieur actuel, très loin des concentrations de ) Tj
-T*
-(toxicité aiguë.) Tj
-T*
-(1 000 ppm 0,1 % Recommandation de Santé Canada pour une moyenne de 24 heures à ) Tj
-T*
-(l’intérieur. Ce n’est pas un seuil d’empoisonnement soudain.) Tj
-T*
-(5 000 ppm 0,5 % Limite moyenne professionnelle recommandée par le NIOSH, dans un ) Tj
-T*
-(cadre d’exposition au travail.) Tj
-T*
-(30 000 ppm 3 % Limite professionnelle de courte durée recommandée par le NIOSH.) Tj
-T*
-(40 000 ppm 4 % Concentration classée immédiatement dangereuse pour la vie ou la ) Tj
-T*
-(santé par le NIOSH.) Tj
-T*
-(Ces repères ne sont pas interchangeables : une recommandation résidentielle sur 24 heures n’a pas la ) Tj
-T*
-(même fonction qu’une limite professionnelle. À l’intérieur, le CO2 est aussi un indicateur de ventilation et ) Tj
-T*
-(de la présence d’autres contaminants liés aux occupants. Santé Canada — CO2 dans l’air intérieur, NIOSH ) Tj
-T*
-(— Limites d’exposition) Tj
-T*
-(Quand atteindrait-on 1 000 ppm au rythme évoqué? Avec l’hypothèse constante de 2,6 ppm ) Tj
-T*
-(supplémentaires par année : \(1 000 - 428\) ÷ 2,6 = 220 ans, soit vers 2246 à partir de 2026. C’est une ) Tj
-T*
-(extrapolation arithmétique. Elle ne prévoit ni nos émissions futures ni la réponse des océans et des ) Tj
-T*
-(écosystèmes. Le risque climatique devient sérieux bien avant ce niveau.) Tj
-T*
-(5 À quelle vitesse le climat change) Tj
-T*
-(L’étude Indicators of Global Climate Change 2025, publiée en juin 2026, estime le rythme du ) Tj
-T*
-(réchauffement d’origine humaine à environ 0,27 °C par décennie sur 2016–2025, soit 0,027 °C par année) Tj
-T*
-(en moyenne. Sa plage d’incertitude évaluée est de 0,2 à 0,4 °C par décennie. Forster et ses collègues — ) Tj
-T*
-(Mise à jour scientifique de 2026) Tj
-T*
-(À rythme constant, cela correspond arithmétiquement à environ 0,54 °C en 20 ans et 1 °C en 37 ans. Il ne ) Tj
-T*
-(faut pas lire ce rythme comme une augmentation identique chaque année : El Niño, La Niña, les éruptions ) Tj
-T*
-(volcaniques et les fluctuations océaniques peuvent temporairement masquer ou amplifier la tendance.) Tj
-T*
-(Une année chaude n’est pas une moyenne climatique. Un dépassement de 1,5 °C pendant une seule ) Tj
-T*
-(année ne signifie pas exactement la même chose qu’un dépassement durable du seuil de l’Accord de ) Tj
-T*
-(Paris. Une année plus fraîche ensuite ne remet pas non plus le réchauffement accumulé à zéro.) Tj
-T*
-ET
-endstream
+<<
+/A <<
+/S /URI /Type /Action /URI (https://royalsociety.org/news-resources/projects/climate-change-evidence-causes/basics-of-climate-change/)
+>> /Border [ 0 0 0 ] /Rect [ 455.9676 453.02 469.4904 463.1 ] /Subtype /Link /Type /Annot
+>>
 endobj
 7 0 obj
-<< /Type /Page /Parent 26 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 6 0 R >>
+<<
+/A <<
+/S /URI /Type /Action /URI (https://gml.noaa.gov/ccgg/trends/gl_trend.html)
+>> /Border [ 0 0 0 ] /Rect [ 430.1165 314.15 442.1567 324.35 ] /Subtype /Link /Type /Annot
+>>
 endobj
 8 0 obj
-<< /Length 3627 >>
-stream
-BT
-/F1 8.05 Tf
-1 0 0 1 37 752 Tm
-12.5 TL
-(Une hausse de 2 °C de moyenne mondiale concerne un système entier, pas seulement l’écart entre deux ) Tj
-T*
-(après-midi au Québec. Elle déplace les conditions dans lesquelles surviennent les chaleurs extrêmes, les ) Tj
-T*
-(pluies, la fonte et les sécheresses. Environ 90 % de l’excès de chaleur du réchauffement planétaire a été ) Tj
-T*
-(absorbé par les océans. La température de l’air ne montre donc qu’une partie du changement ) Tj
-T*
-(énergétique. NASA — Réchauffement des océans) Tj
-T*
-(6 Pourquoi le Canada se réchauffe davantage) Tj
-T*
-(Le CO2 agit à l’échelle mondiale, mais la réponse du climat varie selon les régions. Le Canada cumule une ) Tj
-T*
-(grande superficie continentale et une situation nordique.) Tj
-T*
-(L’océan absorbe beaucoup de chaleur et la répartit en profondeur, tandis que les terres se réchauffent ) Tj
-T*
-(davantage en surface. Dans le Nord, la disparition de neige et de glace révèle des surfaces plus foncées ) Tj
-T*
-(qui absorbent plus de Soleil : c’est la rétroaction de l’albédo. L’océan arctique emmagasine aussi de la ) Tj
-T*
-(chaleur l’été et en libère vers l’atmosphère lorsque la saison froide revient.) Tj
-T*
-(Nuance supplémentaire. L’amplification arctique ne s’explique pas uniquement par la couleur de la glace. ) Tj
-T*
-(La structure verticale de l’atmosphère, les nuages, la vapeur d’eau et les transports de chaleur ) Tj
-T*
-(contribuent aussi à la différence entre les régions.) Tj
-T*
-(Le rapport canadien de 2026 projette un réchauffement national proche du double du rythme mondial à ) Tj
-T*
-(court terme, avec environ 0,9 °C de hausse entre 2021 et 2040, selon une plage de 0,2 à 1,6 °C. Le chiffre ) Tj
-T*
-(de 0,04 à 0,05 °C par année cité précédemment est une moyenne tirée d’une projection, pas une mesure ) Tj
-T*
-(annuelle garantie. Environnement et Changement climatique Canada — Projections de 2026) Tj
-T*
-(L’Inde peut subir une hausse moyenne moins forte que le Nord canadien tout en étant davantage exposée) Tj
-T*
-(à certaines chaleurs dangereuses. Le climat de départ, l’humidité, le travail extérieur, le logement et ) Tj
-T*
-(l’accès à la climatisation influencent les conséquences humaines.) Tj
-T*
-(7 Pourquoi les pluies changent) Tj
-T*
-(À température plus élevée, la quantité de vapeur d’eau possible avant saturation augmente : l’ordre de ) Tj
-T*
-(grandeur est environ 7 % par degré Celsius dans les conditions habituelles de la basse atmosphère. Cela ) Tj
-T*
-(peut alimenter des précipitations extrêmes plus fortes quand les conditions météorologiques permettent ) Tj
-T*
-(de faire tomber cette eau.) Tj
-T*
-(Ce chiffre ne veut pas dire qu’il pleuvra 7 % de plus chaque année partout. Le total annuel, l’intensité ) Tj
-T*
-(d’une averse et le nombre de jours de pluie sont trois mesures différentes. La circulation atmosphérique, ) Tj
-T*
-(les trajectoires des tempêtes, les reliefs et l’humidité disponible comptent également.) Tj
-T*
-(La chaleur accroît aussi la demande évaporative de l’atmosphère. Lorsque l’eau du sol ne suffit plus, ) Tj
-T*
-(certaines sécheresses peuvent s’aggraver. Une région peut ainsi recevoir davantage de précipitations ) Tj
-T*
-(annuelles tout en connaissant des périodes estivales plus sèches.) Tj
-T*
-(Au Canada, les changements incluent généralement davantage de précipitations intenses, une ) Tj
-T*
-(modification du partage entre pluie et neige et une fonte plus précoce. Les effets diffèrent selon la saison ) Tj
-T*
-(et la région : davantage de précipitations n’élimine pas automatiquement le risque de manque d’eau. ) Tj
-T*
-(GIEC — Événements météorologiques et climatiques extrêmes) Tj
-T*
-ET
-endstream
+<<
+/A <<
+/S /URI /Type /Action /URI (https://gml.noaa.gov/ccgg/about/co2_measurements.html)
+>> /Border [ 0 0 0 ] /Rect [ 445.4944 314.15 457.5347 324.35 ] /Subtype /Link /Type /Annot
+>>
 endobj
 9 0 obj
-<< /Type /Page /Parent 26 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 8 0 R >>
+<<
+/Annots [ 5 0 R 6 0 R 7 0 R 8 0 R ] /Contents 135 0 R /MediaBox [ 0 0 612 792 ] /Parent 133 0 R /Resources <<
+/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>> /Rotate 0 
+  /Trans <<
+
+>> /Type /Page
+>>
 endobj
 10 0 obj
-<< /Length 3681 >>
-stream
-BT
-/F1 8.05 Tf
-1 0 0 1 37 752 Tm
-12.5 TL
-(Ajout utile pour un bâtiment. Le cumul annuel de pluie ne suffit pas pour dimensionner le drainage. Une ) Tj
-T*
-(courte averse très intense peut dépasser la capacité des égouts, des drains ou du terrain, même si l’année) Tj
-T*
-(entière n’a pas été exceptionnellement pluvieuse.) Tj
-T*
-(8 Ce que les projections disent des conditions de vie et de la population) Tj
-T*
-(Le changement climatique cause déjà des dommages et des décès. L’OMS reprend une estimation ) Tj
-T*
-(d’environ 250 000 décès supplémentaires par année entre 2030 et 2050, pour un ensemble limité de ) Tj
-T*
-(causes, dont la dénutrition, le paludisme, la diarrhée et la chaleur. Ce chiffre n’est pas un bilan complet de) Tj
-T*
-(toutes les conséquences sanitaires. OMS — Changement climatique et santé) Tj
-T*
-(Le PNUE estime dans son Emissions Gap Report 2025 que les politiques alors en place conduisent à un ) Tj
-T*
-(réchauffement d’environ 2,8 °C au cours de ce siècle, par rapport au niveau préindustriel. C’est une ) Tj
-T*
-(projection conditionnelle, susceptible de changer avec les politiques, la technologie et les émissions. Ce ) Tj
-T*
-(n’est ni une hausse supplémentaire de 2,8 °C à partir d’aujourd’hui, ni une date d’extinction. PNUE — ) Tj
-T*
-(Emissions Gap Report 2025) Tj
-T*
-(Il n’existe pas d’année scientifiquement établie où le climat ferait disparaître l’humanité. Les grands ) Tj
-T*
-(risques documentés concernent notamment les pertes de vies, les dégâts économiques, l’insécurité ) Tj
-T*
-(alimentaire, les déplacements de population et la fragilisation de certaines régions. L’absence de date ) Tj
-T*
-(d’extinction ne rend pas ces conséquences bénignes.) Tj
-T*
-(Les projections démographiques centrales de l’ONU de 2024 situent le sommet de la population mondiale) Tj
-T*
-(autour de 10,3 milliards de personnes au milieu des années 2080. La baisse ensuite projetée découle ) Tj
-T*
-(surtout de l’évolution de la fécondité et du vieillissement. Ce n’est pas une prévision selon laquelle le ) Tj
-T*
-(climat ferait mourir plus de personnes qu’il n’en naît à cette date. ONU — World Population Prospects ) Tj
-T*
-(2024) Tj
-T*
-(Ajout utile — Il n’existe pas un unique seuil de catastrophe. Les risques augmentent avec le ) Tj
-T*
-(réchauffement, et certains changements peuvent être durables ou difficiles à inverser. Même lorsqu’un ) Tj
-T*
-(objectif est dépassé, éviter les dixièmes de degré suivants conserve une valeur réelle.) Tj
-T*
-(9 Le pétrole une période froide et les satellites) Tj
-T*
-(Le pétrole. Notre calcul précédent donnait environ 50 à 60 années en divisant les réserves prouvées de ) Tj
-T*
-(pétrole brut par une production annuelle comparable. Il s’agit d’un ratio réserves sur production. Les ) Tj
-T*
-(réserves « prouvées » sont une catégorie technique et économique : elles ne représentent pas tout le ) Tj
-T*
-(pétrole physiquement présent sous terre.) Tj
-T*
-(Les découvertes, les technologies, les coûts, les prix et la demande modifient ce ratio. La formule ne ) Tj
-T*
-(permet donc pas d’annoncer que le pétrole sera épuisé vers 2080, ni que son prix augmentera ) Tj
-T*
-(continuellement jusque-là. Elle ne dit pas non plus combien de carbone nous pouvons émettre sans ) Tj
-T*
-(aggraver le climat. Le charbon et le gaz ajoutent d’autres ressources fossiles. OPEP — Statistiques ) Tj
-T*
-(pétrolières de 2026) Tj
-T*
-(Une période froide. Des hivers très froids restent possibles. Une grande éruption peut refroidir ) Tj
-T*
-(temporairement la planète; des changements de circulation océanique peuvent affecter certaines régions.) Tj
-T*
-(Une glaciation mondiale relève toutefois de mécanismes et d’échelles de temps très différents. Les ) Tj
-T*
-ET
-endstream
+<<
+/A <<
+/S /URI /Type /Action /URI (https://globalcarbonatlas.org/emissions/carbon-emissions/)
+>> /Border [ 0 0 0 ] /Rect [ 283.6867 383.958 293.5456 392.31 ] /Subtype /Link /Type /Annot
+>>
 endobj
 11 0 obj
-<< /Type /Page /Parent 26 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 10 0 R >>
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.canada.ca/en/health-canada/services/publications/healthy-living/residential-indoor-air-quality-guidelines-carbon-dioxide.html)
+>> /Border [ 0 0 0 ] /Rect [ 538.2176 270.294 548.5298 279.03 ] /Subtype /Link /Type /Annot
+>>
 endobj
 12 0 obj
-<< /Length 3472 >>
-stream
-BT
-/F1 8.05 Tf
-1 0 0 1 37 752 Tm
-12.5 TL
-(émissions humaines de CO2 peuvent repousser la prochaine entrée en glaciation de plusieurs dizaines de ) Tj
-T*
-(milliers d’années ou davantage selon les scénarios. Ganopolski et ses collègues — Étude sur les glaciations) Tj
-T*
-(Les satellites. Leur présence ne forme pas une couverture autour de la Terre. Dans notre exemple fictif, ) Tj
-T*
-(100 000 satellites ayant chacun une surface projetée de 100 m2 représenteraient 10 km2, contre environ ) Tj
-T*
-(127 millions de km2 pour le disque terrestre vu du Soleil. Même parfaitement alignés, cela ne représente ) Tj
-T*
-(qu’environ 0,000008 % de cette surface.) Tj
-T*
-(Les lancements et les rentrées atmosphériques constituent une question différente : suie, composés ) Tj
-T*
-(réactifs et particules métalliques peuvent affecter la haute atmosphère. Des observations de la NOAA ont ) Tj
-T*
-(identifié des métaux associés aux engins spatiaux dans des particules stratosphériques. Les effets ) Tj
-T*
-(climatiques futurs restent à préciser. NOAA — Particules métalliques et activités spatiales) Tj
-T*
-(10 Si nous arrêtions les émissions demain) Tj
-T*
-(La distinction la plus utile est celle entre ralentir les émissions, atteindre zéro émission nette et retirer ) Tj
-T*
-(davantage de CO2 que nous en émettons.) Tj
-T*
-(Situation Effet à attendre) Tj
-T*
-(Émissions de CO2 réduites mais ) Tj
-T*
-(toujours élevées et positives) Tj
-T*
-(L’accumulation et le réchauffement se poursuivent généralement, à un ) Tj
-T*
-(rythme différent.) Tj
-T*
-(Zéro émission nette de CO2 Le réchauffement attribuable au CO2 tend à se stabiliser.) Tj
-T*
-(Émissions nettes de CO2 ) Tj
-T*
-(durablement négatives) Tj
-T*
-(Elles peuvent faire diminuer progressivement le réchauffement causé par le ) Tj
-T*
-(CO2.) Tj
-T*
-(Arrêt simultané de tous les gaz et) Tj
-T*
-(polluants humains) Tj
-T*
-(Le résultat des premières années dépend aussi du méthane et des particules ) Tj
-T*
-(qui avaient un effet refroidissant.) Tj
-T*
-(Après l’arrêt des émissions de CO2, les océans et les terres continuent d’en absorber une partie, ce qui ) Tj
-T*
-(réduit son effet réchauffant. En parallèle, la réponse thermique lente du climat et l’évolution de ) Tj
-T*
-(l’absorption de chaleur par les océans agissent sur la température. Ces effets se compensent ) Tj
-T*
-(approximativement dans les estimations centrales.) Tj
-T*
-(Il était donc trop catégorique de donner « 10 à 30 ans » comme délai garanti ou « plusieurs décennies ) Tj
-T*
-(avant tout refroidissement ». Le résultat robuste est une stabilisation approximative, avec une ) Tj
-T*
-(incertitude sur le petit réchauffement ou refroidissement résiduel. Il faut également maîtriser les autres ) Tj
-T*
-(gaz à effet de serre. MacDougall et ses collègues — Réponse du climat après zéro émission de CO2) Tj
-T*
-(Les températures ne reviennent pas rapidement à leur état antérieur. La fonte et la hausse du niveau ) Tj
-T*
-(marin peuvent continuer bien après la stabilisation de la température de surface. Les différents éléments ) Tj
-T*
-(du système climatique ne réagissent pas au même rythme. MIT — Délais après l’arrêt des émissions) Tj
-T*
-(Pourquoi le méthane mérite une attention particulière. Il disparaît beaucoup plus rapidement de ) Tj
-T*
-(l’atmosphère que la fraction persistante du CO2. En diminuer fortement les émissions peut donc réduire ) Tj
-T*
-(son effet réchauffant à une échelle de quelques décennies. Le CO2 reste central pour le réchauffement à ) Tj
-T*
-(long terme.) Tj
-T*
-ET
-endstream
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.cdc.gov/niosh/npg/npgd0103.html)
+>> /Border [ 0 0 0 ] /Rect [ 281.4581 231.494 291.7703 240.23 ] /Subtype /Link /Type /Annot
+>>
 endobj
 13 0 obj
-<< /Type /Page /Parent 26 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 12 0 R >>
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.cdc.gov/niosh/npg/npgd0103.html)
+>> /Border [ 0 0 0 ] /Rect [ 474.8731 205.094 485.1852 213.83 ] /Subtype /Link /Type /Annot
+>>
 endobj
 14 0 obj
-<< /Length 3365 >>
-stream
-BT
-/F1 8.05 Tf
-1 0 0 1 37 752 Tm
-12.5 TL
-(11 Peut on revenir au climat de 1800) Tj
-T*
-(Revenir à environ 280 ppm demande un effort très différent de celui consistant à cesser d’en ajouter. ) Tj
-T*
-(Entre 428 et 280 ppm, l’écart est de 148 ppm. À raison d’environ 7,8 milliards de tonnes de CO2 par ppm, ) Tj
-T*
-(le surplus dans l’atmosphère représente un ordre de grandeur de 1 150 milliards de tonnes de CO2.) Tj
-T*
-(Ce chiffre ne représente pas toutes les émissions historiques : une partie de celles-ci a déjà été absorbée ) Tj
-T*
-(par les océans et les écosystèmes. Il ne représente pas non plus exactement le volume qu’une industrie ) Tj
-T*
-(devrait extraire. En faisant baisser le CO2 atmosphérique, les échanges avec ces réservoirs se réajustent et) Tj
-T*
-(compensent une partie de la baisse.) Tj
-T*
-(Avec une élimination nette et durable hypothétique de 10 milliards de tonnes par année, la simple ) Tj
-T*
-(division donne environ 115 ans. Ce n’est pas une prévision ni un minimum universel : le résultat réel ) Tj
-T*
-(dépend des absorptions naturelles restantes, des rééquilibrages, des émissions résiduelles et de ) Tj
-T*
-(l’évolution de la capacité de retrait.) Tj
-T*
-(Les arbres peuvent aider. Ils stockent du carbone pendant leur croissance, et les écosystèmes peuvent en ) Tj
-T*
-(conserver dans les sols et le bois. Mais le stockage est limité par l’espace, l’eau et les nutriments, et peut ) Tj
-T*
-(être perdu par la coupe, les feux ou la dégradation. Protéger les forêts existantes et restaurer les ) Tj
-T*
-(écosystèmes est souvent aussi important que planter.) Tj
-T*
-(Il faut retenir des horizons longs, allant de siècles à millénaires selon ce que l’on cherche à restaurer et ) Tj
-T*
-(l’ampleur du retrait. Revenir à une concentration donnée ne ramène pas automatiquement les glaciers, le ) Tj
-T*
-(niveau marin ou tous les écosystèmes à leur état ancien. Il n’existe pas de calendrier unique crédible pour ) Tj
-T*
-(« retrouver le climat de 1800 ». MIT — Le cycle du carbone et les délais climatiques) Tj
-T*
-(12 Comment retirer du CO2 et le stocker sous terre) Tj
-T*
-(On retire le CO2 de l’air pour stocker son carbone ailleurs sur Terre. Les méthodes n’offrent pas toutes la ) Tj
-T*
-(même permanence ni les mêmes possibilités d’expansion. Département américain de l’Énergie — ) Tj
-T*
-(Méthodes d’élimination du CO2) Tj
-T*
-(Méthode Principe Point à surveiller) Tj
-T*
-(Forêts et sols Stocker davantage de carbone dans la ) Tj
-T*
-(biomasse et la matière organique.) Tj
-T*
-(Saturation, incendies, usages des terres et ) Tj
-T*
-(perte possible du stockage.) Tj
-T*
-(Biochar) Tj
-T*
-(Transformer une biomasse en une forme ) Tj
-T*
-(de carbone plus résistante à la ) Tj
-T*
-(décomposition.) Tj
-T*
-(Origine de la biomasse, procédé et durée ) Tj
-T*
-(réelle du stockage.) Tj
-T*
-(Minéralisation Faire réagir le CO2 avec des minéraux pour ) Tj
-T*
-(former des composés stables.) Tj
-T*
-(Réactivité des roches, eau, énergie et ) Tj
-T*
-(vérification du bilan.) Tj
-T*
-(Direct Air Capture ) Tj
-T*
-(avec stockage) Tj
-T*
-(Séparer le CO2 de l’air, puis le stocker ) Tj
-T*
-(durablement.) Tj
-T*
-(Besoins énergétiques, coût et tonnes ) Tj
-T*
-(nettes retirées.) Tj
-T*
-(Biomasse avec ) Tj
-T*
-(captage et stockage) Tj
-T*
-(Stocker le carbone préalablement absorbé ) Tj
-T*
-(par des plantes.) Tj
-T*
-(Bilan complet des terres, de ) Tj
-T*
-(l’approvisionnement et du procédé.) Tj
-T*
-ET
-endstream
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.cdc.gov/niosh/npg/npgd0103.html)
+>> /Border [ 0 0 0 ] /Rect [ 319.5732 166.294 329.8854 175.03 ] /Subtype /Link /Type /Annot
+>>
 endobj
 15 0 obj
-<< /Type /Page /Parent 26 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 14 0 R >>
+<<
+/Annots [ 10 0 R 11 0 R 12 0 R 13 0 R 14 0 R ] /Contents 136 0 R /MediaBox [ 0 0 612 792 ] /Parent 133 0 R /Resources <<
+/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>> /Rotate 0 
+  /Trans <<
+
+>> /Type /Page
+>>
 endobj
 16 0 obj
-<< /Length 3638 >>
-stream
-BT
-/F1 8.05 Tf
-1 0 0 1 37 752 Tm
-12.5 TL
-(Les océans absorbent déjà naturellement du CO2. Les interventions visant à augmenter cette absorption ) Tj
-T*
-(demandent une évaluation spécifique de leurs effets écologiques et de leur mesure; l’océan ne constitue ) Tj
-T*
-(pas une poubelle illimitée sans conséquences. NASA — Les effets du CO2 sur les océans) Tj
-T*
-(L’enfouissement géologique. Dans de nombreux projets, le CO2 est comprimé puis injecté profondément ) Tj
-T*
-(dans une formation rocheuse poreuse, souvent à plus de 800 mètres. Il peut occuper les pores d’une ) Tj
-T*
-(roche contenant de l’eau salée. Une couche peu perméable au-dessus limite sa remontée; il peut aussi se ) Tj
-T*
-(retrouver piégé dans les pores, se dissoudre ou se minéraliser progressivement.) Tj
-T*
-(Cela demande de choisir le site, contrôler la pression, examiner les anciens puits et surveiller le ) Tj
-T*
-(comportement du CO2. Une couche de terre ordinaire ne suffit pas. Les risques et la surveillance ) Tj
-T*
-(dépendent de la géologie et du projet. EPA — Stockage géologique du CO2) Tj
-T*
-(Carbfix suit une approche différente adaptée aux roches réactives : le CO2 dissous dans l’eau est injecté, ) Tj
-T*
-(notamment dans du basalte, pour accélérer sa transformation en minéraux. Les délais rapides annoncés ) Tj
-T*
-(pour cette technologie ne s’appliquent pas automatiquement à tous les réservoirs géologiques. Carbfix — ) Tj
-T*
-(Minéralisation du CO2) Tj
-T*
-(13 Éviter une émission et retirer du carbone sont deux services différents) Tj
-T*
-(CCS signifie Carbon Capture and Storage. Le sigle décrit le captage et le stockage. Dans une usine utilisant) Tj
-T*
-(du carbone fossile, capter les émissions avant leur rejet évite surtout d’ajouter une partie du CO2 à ) Tj
-T*
-(l’atmosphère.) Tj
-T*
-(DAC signifie Direct Air Capture. La machine sépare le CO2 de l’air ambiant. Pour obtenir une élimination ) Tj
-T*
-(durable, il faut ensuite le stocker, et soustraire les émissions nécessaires à la construction, à l’énergie, au ) Tj
-T*
-(transport et au stockage. On parle notamment de DACCS lorsque le captage direct est associé au ) Tj
-T*
-(stockage.) Tj
-T*
-(CDR signifie Carbon Dioxide Removal. C’est la catégorie plus large de l’élimination du CO2 ) Tj
-T*
-(atmosphérique. Elle comprend plusieurs approches, dont le DAC avec stockage, certains stockages ) Tj
-T*
-(biologiques et la biomasse avec captage et stockage. Le captage dans une cheminée peut donc contribuer ) Tj
-T*
-(à une élimination si le carbone est biogénique et que le bilan complet le permet. Département américain ) Tj
-T*
-(de l’Énergie — Définition du CDR) Tj
-T*
-(Exemple de bilan. Si une installation stocke 1 000 tonnes de CO2 prélevées dans l’air, mais que l’ensemble) Tj
-T*
-(des opérations émet 200 tonnes de CO2 équivalent, le bénéfice net simplifié est d’environ 800 tonnes. Les ) Tj
-T*
-(1 000 tonnes captées ne constituent pas à elles seules le résultat climatique final.) Tj
-T*
-(Le devenir du CO2 est déterminant. Transformer le CO2 capté dans l’air en carburant puis brûler ce ) Tj
-T*
-(carburant le remet dans l’atmosphère. Cela peut remplacer du carbone fossile dans certaines conditions, ) Tj
-T*
-(mais ce n’est pas un stockage permanent. AIE — Utilisation et stockage du CO2 capté) Tj
-T*
-(14 Les solutions techniques que je privilégierais) Tj
-T*
-(Produire une électricité peu carbonée et électrifier les usages. Hydroélectricité, nucléaire, solaire et ) Tj
-T*
-(éolien peuvent contribuer selon les ressources et les contraintes du réseau. Il faut aussi des lignes ) Tj
-T*
-(électriques, des moyens de flexibilité et, selon le système, du stockage. Les véhicules électriques, les ) Tj
-T*
-ET
-endstream
+<<
+/A <<
+/S /URI /Type /Action /URI (https://essd.copernicus.org/articles/18/3889/2026/)
+>> /Border [ 0 0 0 ] /Rect [ 150.8351 609.858 160.694 618.21 ] /Subtype /Link /Type /Annot
+>>
 endobj
 17 0 obj
-<< /Type /Page /Parent 26 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 16 0 R >>
+<<
+/A <<
+/S /URI /Type /Action /URI (https://science.nasa.gov/earth/explore/earth-indicators/ocean-warming/)
+>> /Border [ 0 0 0 ] /Rect [ 334.1259 609.858 343.9847 618.21 ] /Subtype /Link /Type /Annot
+>>
 endobj
 18 0 obj
-<< /Length 3294 >>
-stream
-BT
-/F1 8.05 Tf
-1 0 0 1 37 752 Tm
-12.5 TL
-(thermopompes et l’électrification industrielle permettent ensuite de fournir des services avec moins de ) Tj
-T*
-(combustion fossile.) Tj
-T*
-(Réduire les émissions difficiles à remplacer. Le ciment est un bon exemple : fabriquer le clinker libère du ) Tj
-T*
-(CO2 par la transformation chimique du calcaire, en plus de l’énergie utilisée. Une électricité propre ne ) Tj
-T*
-(règle donc pas à elle seule toutes les émissions du procédé. Le captage peut jouer un rôle dans ces ) Tj
-T*
-(activités. GIEC — Systèmes énergétiques) Tj
-T*
-(Détecter et réparer les fuites de méthane. L’AIE estime en 2026 qu’environ 70 % des émissions de ) Tj
-T*
-(méthane des combustibles fossiles pourraient être évitées avec les technologies existantes. Cela inclut la ) Tj
-T*
-(réparation des fuites, la récupération de gaz et le remplacement d’équipements qui en rejettent. AIE — ) Tj
-T*
-(Global Methane Tracker 2026) Tj
-T*
-(Développer les retraits durables de CO2. Ils peuvent compenser des émissions résiduelles puis contribuer ) Tj
-T*
-(à réduire le stock accumulé. Leur développement doit être jugé sur la quantité nette retirée, le coût et la ) Tj
-T*
-(permanence, tout en accélérant les solutions qui évitent d’émettre.) Tj
-T*
-(Adapter les infrastructures. Le réchauffement déjà acquis rend utiles les investissements dans le ) Tj
-T*
-(drainage, les protections contre la chaleur, les réseaux électriques, la gestion de l’eau et la prévention des ) Tj
-T*
-(incendies. Pour un bâtiment, cette adaptation se traduit par des choix techniques et budgétaires concrets.) Tj
-T*
-(Réfléchir davantage de Soleil. La modification du rayonnement solaire, par exemple avec des particules ) Tj
-T*
-(stratosphériques, pourrait agir rapidement sur les températures selon les modèles. Elle ne retire pas le ) Tj
-T*
-(CO2, ne règle pas son effet chimique sur les océans et peut modifier les précipitations. Un arrêt brutal ) Tj
-T*
-(après un déploiement important constitue aussi un risque. La recherche ne doit pas être confondue avec ) Tj
-T*
-(une décision de déploiement. PNUE et OMM — Évaluation des interventions climatiques) Tj
-T*
-(15 Les entreprises et leur degré réel de développement) Tj
-T*
-(Il n’existe pas un seul classement de « l’entreprise la plus avancée ». Exploiter des machines de DAC, ) Tj
-T*
-(fabriquer des filtres et stocker du CO2 sont des métiers différents. Une entreprise peut être expérimentée ) Tj
-T*
-(dans l’un sans l’être dans les autres.) Tj
-T*
-(Entreprise ou projet Activité principale Accès en Bourse) Tj
-T*
-(Climeworks DAC en Islande et offre de portefeuilles d’élimination ) Tj
-T*
-(du carbone. Entreprise privée.) Tj
-T*
-(Deep Sky) Tj
-T*
-(Développement et exploitation d’infrastructures de ) Tj
-T*
-(retrait; plusieurs technologies testées à Alpha, en ) Tj
-T*
-(Alberta.) Tj
-T*
-(Entreprise privée.) Tj
-T*
-(1PointFive et Carbon ) Tj
-T*
-(Engineering) Tj
-T*
-(Technologie et développement du DAC, dont ) Tj
-T*
-(STRATOS au Texas.) Tj
-T*
-(Exposition indirecte via ) Tj
-T*
-(Occidental Petroleum, NYSE ) Tj
-T*
-(OXY.) Tj
-T*
-(Carbfix Minéralisation et stockage du CO2 dans des roches ) Tj
-T*
-(réactives.) Tj
-T*
-(Pas d’action Carbfix directement ) Tj
-T*
-(cotée.) Tj
-T*
-(Svante Filtres et équipements de captage, notamment pour ) Tj
-T*
-(l’industrie. Entreprise privée.) Tj
-T*
-ET
-endstream
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.canada.ca/en/environment-climate-change/services/science-technology/changing-climate-report-2026/cccr-chapter-3-en.html)
+>> /Border [ 0 0 0 ] /Rect [ 519.4684 609.858 533.7555 618.21 ] /Subtype /Link /Type /Annot
+>>
 endobj
 19 0 obj
-<< /Type /Page /Parent 26 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 18 0 R >>
+<<
+/A <<
+/S /URI /Type /Action /URI (https://essd.copernicus.org/articles/18/3889/2026/)
+>> /Border [ 0 0 0 ] /Rect [ 446.2869 524.75 458.3271 534.95 ] /Subtype /Link /Type /Annot
+>>
 endobj
 20 0 obj
-<< /Length 3413 >>
-stream
-BT
-/F1 8.05 Tf
-1 0 0 1 37 752 Tm
-12.5 TL
-(Entreprise ou projet Activité principale Accès en Bourse) Tj
-T*
-(Northern Lights Transport et stockage géologique en Norvège. Indirectement via Equinor, Shell ) Tj
-T*
-(et TotalEnergies.) Tj
-T*
-(Quest Captage industriel et stockage géologique en Alberta. Projet exploité par Shell, pas une) Tj
-T*
-(action autonome.) Tj
-T*
-(Les sites des entreprises permettent de distinguer leur rôle : Climeworks, Deep Sky, 1PointFive, Carbfix, ) Tj
-T*
-(Svante et Northern Lights.) Tj
-T*
-(Climeworks. Elle figure parmi les pionniers du DAC avec stockage effectivement exploité. Le 10 septembre) Tj
-T*
-(2026, elle a annoncé que les améliorations apportées à certains collecteurs de Mammoth avaient plus que) Tj
-T*
-(doublé leur performance de captage et réduit leurs coûts d’exploitation de plus de 50 %. Ce sont des ) Tj
-T*
-(résultats annoncés par l’entreprise sur les équipements améliorés. Ils ne prouvent pas que tout le site ) Tj
-T*
-(atteint sa capacité nominale annuelle ni que le coût complet par tonne a été divisé par deux. Climeworks ) Tj
-T*
-(— Annonce sur Mammoth) Tj
-T*
-(Deep Sky. Son site Alpha a commencé ses activités en août 2025. Son modèle consiste notamment à ) Tj
-T*
-(regrouper les infrastructures et à comparer différentes technologies. Elle a annoncé en juin 2026 des ) Tj
-T*
-(premières livraisons de crédits certifiés de captage direct. Une première livraison confirme une étape ) Tj
-T*
-(commerciale; elle ne suffit pas à démontrer la rentabilité ou une capacité de plusieurs millions de tonnes. ) Tj
-T*
-(Deep Sky — Projet et modèle industriel) Tj
-T*
-(1PointFive et STRATOS. La capacité de conception affichée est de 500 000 tonnes de CO2 par année une ) Tj
-T*
-(fois pleinement opérationnel. La page du projet le présente comme en construction. Ce nombre doit être) Tj
-T*
-(traité comme une capacité prévue et non comme un volume annuel déjà retiré et vérifié. 1PointFive — ) Tj
-T*
-(STRATOS) Tj
-T*
-(Northern Lights. Les premières injections ont eu lieu en août 2025. La phase initiale offre une capacité de ) Tj
-T*
-(stockage de 1,5 million de tonnes par année. Il s’agit principalement d’un service de transport et de ) Tj
-T*
-(stockage pour du CO2 capté ailleurs, et non d’une installation qui aspire elle-même l’air ambiant. Equinor ) Tj
-T*
-(— Northern Lights) Tj
-T*
-(16 Ce que cela signifie pour un investisseur) Tj
-T*
-(Occidental donne une exposition boursière au développement du DAC à travers 1PointFive. Cependant, ) Tj
-T*
-(OXY demeure avant tout une entreprise pétrolière. Sa valeur dépend largement du pétrole, de ses coûts,) Tj
-T*
-(de ses investissements, de sa dette et de ses flux de trésorerie. Le captage constitue une activité à ) Tj
-T*
-(analyser dans l’ensemble du groupe; sa présence ne suffit pas à établir que l’action est intéressante au ) Tj
-T*
-(prix du jour. Occidental — Activités du groupe) Tj
-T*
-(La recommandation précédente de « choisir OXY » demandait donc cette nuance : c’est un véhicule ) Tj
-T*
-(accessible pour étudier le thème, pas une recommandation d’achat étayée par une valorisation complète.) Tj
-T*
-(Un IPO de Climeworks bientôt? Aucun calendrier public d’introduction en Bourse n’est confirmé au 13 ) Tj
-T*
-(septembre 2026 dans les communications examinées. Son financement de 162 M$ US en 2025 était une ) Tj
-T*
-(levée de fonds privés. Une nomination de directeur financier ne constitue pas une annonce d’IPO. La date ) Tj
-T*
-ET
-endstream
+<<
+/A <<
+/S /URI /Type /Action /URI (https://science.nasa.gov/earth/explore/earth-indicators/ocean-warming/)
+>> /Border [ 0 0 0 ] /Rect [ 489.4148 430.35 501.4551 440.55 ] /Subtype /Link /Type /Annot
+>>
 endobj
 21 0 obj
-<< /Type /Page /Parent 26 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 20 0 R >>
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.canada.ca/en/environment-climate-change/services/science-technology/changing-climate-report-2026/cccr-chapter-3-en.html)
+>> /Border [ 0 0 0 ] /Rect [ 451.2145 237.02 470.582 247.1 ] /Subtype /Link /Type /Annot
+>>
 endobj
 22 0 obj
-<< /Length 2962 >>
-stream
-BT
-/F1 8.05 Tf
-1 0 0 1 37 752 Tm
-12.5 TL
-(de 2028 évoquée précédemment était une hypothèse, pas une information permettant de prévoir son ) Tj
-T*
-(entrée en Bourse. Climeworks — Financement de 2025, Climeworks — Informations investisseurs) Tj
-T*
-(Les données que je regarderais avant d’investir.) Tj
-T*
-(Élément à examiner Pourquoi cela change la valeur de l’entreprise) Tj
-T*
-(Tonnes nettes livrées et certifiées Elles mesurent un service réel, au-delà de la capacité annoncée.) Tj
-T*
-(Coût complet par tonne Il doit inclure l’énergie, les filtres, la maintenance, le stockage, le ) Tj
-T*
-(financement et les dépenses de construction.) Tj
-T*
-(Contrats clients Le prix, la durée, les clauses de livraison et la concentration des acheteurs ) Tj
-T*
-(déterminent la qualité des revenus.) Tj
-T*
-(Disponibilité des installations Les arrêts et le vieillissement des matériaux réduisent le volume vendu et ) Tj
-T*
-(augmentent le coût unitaire.) Tj
-T*
-(Besoins de financement Une croissance importante peut exiger de nouvelles levées de fonds et diluer ) Tj
-T*
-(les actionnaires.) Tj
-T*
-(Dépendance aux aides publiques La rentabilité peut changer si les règles ou les soutiens évoluent.) Tj
-T*
-(Permis et accès au stockage Posséder une machine ne garantit pas la capacité de transporter et d’injecter) Tj
-T*
-(le CO2.) Tj
-T*
-(Valorisation et part réellement ) Tj
-T*
-(détenue) Tj
-T*
-(Un secteur prometteur peut déjà être cher; acheter un groupe diversifié offre) Tj
-T*
-(une exposition partielle.) Tj
-T*
-(Ajout utile — Une annonce commerciale n’est pas forcément du chiffre d’affaires déjà gagné. Un contrat) Tj
-T*
-(portant sur des livraisons futures, un paiement initial et une tonne déjà livrée sont trois choses ) Tj
-T*
-(différentes. Il faut examiner le calendrier des livraisons et les obligations restantes.) Tj
-T*
-(17 Les ordres de grandeur qui expliquent le défi industriel) Tj
-T*
-(L’humanité émet chaque année de l’ordre de 40 milliards de tonnes de CO2; le périmètre exact varie ) Tj
-T*
-(selon l’inclusion des changements d’usage des terres. Le tableau IGCC estime les seules émissions fossiles ) Tj
-T*
-(et industrielles de 2025 à environ 38,9 milliards de tonnes. IGCC — Émissions et concentrations) Tj
-T*
-(Prenons 40 milliards de tonnes comme hypothèse arrondie. Pour retirer ce volume avec des usines de 500) Tj
-T*
-(000 tonnes par année, il faudrait 80 000 installations fonctionnant à pleine capacité, avant les ) Tj
-T*
-(ajustements de bilan net. C’est une comparaison d’échelle, pas un programme de construction proposé.) Tj
-T*
-(Hypothèse illustrative de coût) Tj
-T*
-(complet) Tj
-T*
-(Retirer 1 milliard de tonnes par) Tj
-T*
-(année) Tj
-T*
-(Retirer 10 milliards de tonnes par) Tj
-T*
-(année) Tj
-T*
-(100 $ US par tonne 100 milliards $ US par année 1 000 milliards $ US par année) Tj
-T*
-(300 $ US par tonne 300 milliards $ US par année 3 000 milliards $ US par année) Tj
-T*
-(500 $ US par tonne 500 milliards $ US par année 5 000 milliards $ US par année) Tj
-T*
-ET
-endstream
+<<
+/Annots [ 16 0 R 17 0 R 18 0 R 19 0 R 20 0 R 21 0 R ] /Contents 137 0 R /MediaBox [ 0 0 612 792 ] /Parent 133 0 R /Resources <<
+/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>> /Rotate 0 
+  /Trans <<
+
+>> /Type /Page
+>>
 endobj
 23 0 obj
-<< /Type /Page /Parent 26 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 22 0 R >>
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.ipcc.ch/report/ar6/wg1/chapter/chapter-11/)
+>> /Border [ 0 0 0 ] /Rect [ 464.4158 554.75 481.864 564.95 ] /Subtype /Link /Type /Annot
+>>
 endobj
 24 0 obj
-<< /Length 2830 >>
-stream
-BT
-/F1 8.05 Tf
-1 0 0 1 37 752 Tm
-12.5 TL
-(Ces montants résultent simplement du coût multiplié par le volume. Ils ne sont pas des devis, des prix ) Tj
-T*
-(observés ou des prévisions de revenus. Un coût de captage annoncé peut exclure le transport, le stockage) Tj
-T*
-(ou une partie du financement.) Tj
-T*
-(La difficulté du DAC vient notamment de la dilution : l’air contient environ 0,043 % de CO2. Il faut traiter ) Tj
-T*
-(beaucoup d’air puis régénérer le matériau qui a capté le gaz. Les fumées de certaines usines sont bien ) Tj
-T*
-(plus concentrées. Cela explique pourquoi éviter certaines émissions à la source peut être moins coûteux ) Tj
-T*
-(que les récupérer ensuite dans l’atmosphère. AIE — Énergie et économie du captage direct) Tj
-T*
-(18 Quelques liens supplémentaires avec tes intérêts) Tj
-T*
-(L’océan nous protège partiellement mais subit aussi les effets. L’absorption du CO2 modifie la chimie de ) Tj
-T*
-(l’eau et diminue son pH. L’acidification ne signifie pas que tout l’océan devient acide au sens d’un pH ) Tj
-T*
-(inférieur à 7. Elle peut néanmoins rendre plus difficile la formation de coquilles et de structures calcaires, ) Tj
-T*
-(en plus des dommages causés par les vagues de chaleur marines. NASA — L’océan et le climat) Tj
-T*
-(Le CO2 aide certaines plantes, mais cela ne règle pas le problème. Une hausse peut favoriser la ) Tj
-T*
-(photosynthèse dans certaines conditions. La croissance reste limitée par l’eau, les nutriments et la ) Tj
-T*
-(température. L’effet fertilisant ne garantit donc pas une hausse générale des rendements dans un monde ) Tj
-T*
-(plus chaud et plus exposé aux extrêmes. MIT — Croissance des plantes et CO2) Tj
-T*
-(Pour l’immobilier au Québec. Les enjeux à intégrer dans l’analyse d’un immeuble comprennent ) Tj
-T*
-(l’exposition aux inondations, le drainage, la surchauffe estivale, la fiabilité électrique, les primes et ) Tj
-T*
-(franchises d’assurance ainsi que les dépenses d’adaptation. Les conséquences financières sont propres au ) Tj
-T*
-(site et au contrat d’assurance; la moyenne canadienne de réchauffement ne suffit pas pour les chiffrer.) Tj
-T*
-(Pour l’investissement dans la transition. La chaîne de valeur dépasse les entreprises de DAC : production ) Tj
-T*
-(et transport d’électricité, thermopompes, efficacité des bâtiments, équipements industriels, traitement ) Tj
-T*
-(de l’eau, transport et stockage du CO2. Chaque activité doit être évaluée sur ses contrats, ses coûts et sa ) Tj
-T*
-(valorisation.) Tj
-T*
-(La question pratique reste mesurable. Combien de tonnes d’émissions évite-t-on ou retire-t-on ) Tj
-T*
-(réellement, à quel coût, dans quel délai et pour combien de temps? C’est cette combinaison qui permet ) Tj
-T*
-(de juger une solution climatique, puis de comprendre si l’entreprise qui la fournit peut créer une valeur ) Tj
-T*
-(économique durable.) Tj
-T*
-ET
-endstream
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.canada.ca/en/environment-climate-change/services/science-technology/changing-climate-report-2026/cccr-chapter-3-en.html)
+>> /Border [ 0 0 0 ] /Rect [ 78.47925 493.15 95.92749 503.35 ] /Subtype /Link /Type /Annot
+>>
 endobj
 25 0 obj
-<< /Type /Page /Parent 26 0 R /MediaBox [0 0 612 792] /Resources << /Font << /F1 1 0 R >> >> /Contents 24 0 R >>
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.ipcc.ch/report/ar6/wg1/chapter/chapter-11/)
+>> /Border [ 0 0 0 ] /Rect [ 99.26514 493.15 116.7134 503.35 ] /Subtype /Link /Type /Annot
+>>
 endobj
 26 0 obj
-<< /Type /Pages /Kids [3 0 R 5 0 R 7 0 R 9 0 R 11 0 R 13 0 R 15 0 R 17 0 R 19 0 R 21 0 R 23 0 R 25 0 R] /Count 12 >>
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.who.int/news-room/fact-sheets/detail/climate-change-and-health)
+>> /Border [ 0 0 0 ] /Rect [ 501.8271 328.55 519.2754 338.75 ] /Subtype /Link /Type /Annot
+>>
 endobj
 27 0 obj
-<< /Type /Catalog /Pages 26 0 R >>
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.unep.org/resources/emissions-gap-report-2025)
+>> /Border [ 0 0 0 ] /Rect [ 351.7356 266.95 369.1838 277.15 ] /Subtype /Link /Type /Annot
+>>
+endobj
+28 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://population.un.org/wpp/)
+>> /Border [ 0 0 0 ] /Rect [ 177.4653 179.35 194.9136 189.55 ] /Subtype /Link /Type /Annot
+>>
+endobj
+29 0 obj
+<<
+/Annots [ 23 0 R 24 0 R 25 0 R 26 0 R 27 0 R 28 0 R ] /Contents 138 0 R /MediaBox [ 0 0 612 792 ] /Parent 133 0 R /Resources <<
+/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>> /Rotate 0 
+  /Trans <<
+
+>> /Type /Page
+>>
+endobj
+30 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://bg.copernicus.org/articles/17/2987/2020/)
+>> /Border [ 0 0 0 ] /Rect [ 387.6243 396.85 405.0725 407.05 ] /Subtype /Link /Type /Annot
+>>
+endobj
+31 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://climate.mit.edu/ask-mit/how-long-will-it-take-temperatures-stop-rising-or-return-normal-if-we-stop-emitting)
+>> /Border [ 0 0 0 ] /Rect [ 90.66602 302.45 108.1143 312.65 ] /Subtype /Link /Type /Annot
+>>
+endobj
+32 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://climate.mit.edu/ask-mit/how-long-will-it-take-temperatures-stop-rising-or-return-normal-if-we-stop-emitting)
+>> /Border [ 0 0 0 ] /Rect [ 453.9978 167.65 471.446 177.85 ] /Subtype /Link /Type /Annot
+>>
+endobj
+33 0 obj
+<<
+/Annots [ 30 0 R 31 0 R 32 0 R ] /Contents 139 0 R /MediaBox [ 0 0 612 792 ] /Parent 133 0 R /Resources <<
+/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>> /Rotate 0 
+  /Trans <<
+
+>> /Type /Page
+>>
+endobj
+34 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.energy.gov/hgeo/carbon-dioxide-removal-0)
+>> /Border [ 0 0 0 ] /Rect [ 153.5942 463.65 171.0425 473.85 ] /Subtype /Link /Type /Annot
+>>
+endobj
+35 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.iea.org/reports/direct-air-capture-2022/executive-summary)
+>> /Border [ 0 0 0 ] /Rect [ 110.6663 69.55 128.1145 79.75 ] /Subtype /Link /Type /Annot
+>>
+endobj
+36 0 obj
+<<
+/Annots [ 34 0 R 35 0 R ] /Contents 140 0 R /MediaBox [ 0 0 612 792 ] /Parent 133 0 R /Resources <<
+/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>> /Rotate 0 
+  /Trans <<
+
+>> /Type /Page
+>>
+endobj
+37 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.ipcc.ch/report/ar6/wg3/chapter/chapter-6/)
+>> /Border [ 0 0 0 ] /Rect [ 485.9336 587.55 503.3818 597.75 ] /Subtype /Link /Type /Annot
+>>
+endobj
+38 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.ipcc.ch/report/ar6/wg3/chapter/chapter-6/)
+>> /Border [ 0 0 0 ] /Rect [ 128.385 499.95 145.8333 510.15 ] /Subtype /Link /Type /Annot
+>>
+endobj
+39 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.iea.org/reports/global-methane-tracker-2026/key-findings)
+>> /Border [ 0 0 0 ] /Rect [ 236.5586 412.35 254.0068 422.55 ] /Subtype /Link /Type /Annot
+>>
+endobj
+40 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.epa.gov/uic/class-vi-wells-used-geologic-sequestration-carbon-dioxide)
+>> /Border [ 0 0 0 ] /Rect [ 233.1287 324.75 250.5769 334.95 ] /Subtype /Link /Type /Annot
+>>
+endobj
+41 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.carbfix.com/)
+>> /Border [ 0 0 0 ] /Rect [ 105.042 263.15 122.4902 273.35 ] /Subtype /Link /Type /Annot
+>>
+endobj
+42 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://ozone.unep.org/system/files/documents/Fahey_SAP_ClimateInterventionSideEvent_26Oct2023.pdf)
+>> /Border [ 0 0 0 ] /Rect [ 345.6704 128.35 363.1187 138.55 ] /Subtype /Link /Type /Annot
+>>
+endobj
+43 0 obj
+<<
+/Annots [ 37 0 R 38 0 R 39 0 R 40 0 R 41 0 R 42 0 R ] /Contents 141 0 R /MediaBox [ 0 0 612 792 ] /Parent 133 0 R /Resources <<
+/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>> /Rotate 0 
+  /Trans <<
+
+>> /Type /Page
+>>
+endobj
+44 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://essd.copernicus.org/articles/18/3889/2026/)
+>> /Border [ 0 0 0 ] /Rect [ 493.2446 524.75 505.2849 534.95 ] /Subtype /Link /Type /Annot
+>>
+endobj
+45 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://climate.mit.edu/ask-mit/how-long-will-it-take-temperatures-stop-rising-or-return-normal-if-we-stop-emitting)
+>> /Border [ 0 0 0 ] /Rect [ 480.6118 208.95 498.0601 219.15 ] /Subtype /Link /Type /Annot
+>>
+endobj
+46 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.iea.org/reports/direct-air-capture-2022/executive-summary)
+>> /Border [ 0 0 0 ] /Rect [ 184.5977 121.22 203.9652 131.3 ] /Subtype /Link /Type /Annot
+>>
+endobj
+47 0 obj
+<<
+/Annots [ 44 0 R 45 0 R 46 0 R ] /Contents 142 0 R /MediaBox [ 0 0 612 792 ] /Parent 133 0 R /Resources <<
+/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>> /Rotate 0 
+  /Trans <<
+
+>> /Type /Page
+>>
+endobj
+48 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://climeworks.com/)
+>> /Border [ 0 0 0 ] /Rect [ 116.0782 625.194 131.0221 633.93 ] /Subtype /Link /Type /Annot
+>>
+endobj
+49 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.deepskyclimate.com/)
+>> /Border [ 0 0 0 ] /Rect [ 105.0098 598.794 119.9537 607.53 ] /Subtype /Link /Type /Annot
+>>
+endobj
+50 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.1pointfive.com/projects/stratos)
+>> /Border [ 0 0 0 ] /Rect [ 118.642 547.594 133.5859 556.33 ] /Subtype /Link /Type /Annot
+>>
+endobj
+51 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.carbfix.com/)
+>> /Border [ 0 0 0 ] /Rect [ 93.66143 521.194 108.6053 529.93 ] /Subtype /Link /Type /Annot
+>>
+endobj
+52 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.svanteinc.com/)
+>> /Border [ 0 0 0 ] /Rect [ 92.51948 482.394 107.4634 491.13 ] /Subtype /Link /Type /Annot
+>>
+endobj
+53 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.equinor.com/energy/northern-lights)
+>> /Border [ 0 0 0 ] /Rect [ 138.0595 443.594 153.0034 452.33 ] /Subtype /Link /Type /Annot
+>>
+endobj
+54 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://climeworks.com/news/climeworks-announces-key-performance-improvements-at-mammoth)
+>> /Border [ 0 0 0 ] /Rect [ 290.1814 292.85 307.6296 303.05 ] /Subtype /Link /Type /Annot
+>>
+endobj
+55 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.deepskyclimate.com/)
+>> /Border [ 0 0 0 ] /Rect [ 420.6572 231.25 438.1055 241.45 ] /Subtype /Link /Type /Annot
+>>
+endobj
+56 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.1pointfive.com/projects/stratos)
+>> /Border [ 0 0 0 ] /Rect [ 534.814 198.45 552.2622 208.65 ] /Subtype /Link /Type /Annot
+>>
+endobj
+57 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.equinor.com/energy/northern-lights)
+>> /Border [ 0 0 0 ] /Rect [ 355.8423 151.25 373.2905 161.45 ] /Subtype /Link /Type /Annot
+>>
+endobj
+58 0 obj
+<<
+/Annots [ 48 0 R 49 0 R 50 0 R 51 0 R 52 0 R 53 0 R 54 0 R 55 0 R 56 0 R 57 0 R ] /Contents 143 0 R /MediaBox [ 0 0 612 792 ] /Parent 133 0 R /Resources <<
+/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>> /Rotate 0 
+  /Trans <<
+
+>> /Type /Page
+>>
+endobj
+59 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.oxy.com/)
+>> /Border [ 0 0 0 ] /Rect [ 535.4292 601.95 552.8774 612.15 ] /Subtype /Link /Type /Annot
+>>
+endobj
+60 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://climeworks.com/press-release/climeworks-raises-usd-162m-to-scale-up-technology)
+>> /Border [ 0 0 0 ] /Rect [ 482.0217 116.65 499.47 126.85 ] /Subtype /Link /Type /Annot
+>>
+endobj
+61 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://climeworks.com/investors)
+>> /Border [ 0 0 0 ] /Rect [ 502.8076 116.65 520.2559 126.85 ] /Subtype /Link /Type /Annot
+>>
+endobj
+62 0 obj
+<<
+/Annots [ 59 0 R 60 0 R 61 0 R ] /Contents 144 0 R /MediaBox [ 0 0 612 792 ] /Parent 133 0 R /Resources <<
+/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>> /Rotate 0 
+  /Trans <<
+
+>> /Type /Page
+>>
+endobj
+63 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://publications.opec.org/asb/)
+>> /Border [ 0 0 0 ] /Rect [ 493.2805 587.55 510.7288 597.75 ] /Subtype /Link /Type /Annot
+>>
+endobj
+64 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://publications.pik-potsdam.de/pubman/faces/ViewItemFullPage.jsp?itemId=item_20742_5)
+>> /Border [ 0 0 0 ] /Rect [ 279.3533 485.55 296.8015 495.75 ] /Subtype /Link /Type /Annot
+>>
+endobj
+65 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://research.noaa.gov/2023/10/16/noaa-scientists-link-exotic-metal-particles-in-the-upper-atmosphere-to-rockets-satellites/)
+>> /Border [ 0 0 0 ] /Rect [ 213.2463 383.55 230.6946 393.75 ] /Subtype /Link /Type /Annot
+>>
+endobj
+66 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://science.nasa.gov/earth/explore/the-ocean-and-climate-change/)
+>> /Border [ 0 0 0 ] /Rect [ 548.1594 324.75 565.6077 334.95 ] /Subtype /Link /Type /Annot
+>>
+endobj
+67 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://climate.mit.edu/ask-mit/dont-plants-do-better-environments-very-high-co2)
+>> /Border [ 0 0 0 ] /Rect [ 238.8503 295.95 256.2986 306.15 ] /Subtype /Link /Type /Annot
+>>
+endobj
+68 0 obj
+<<
+/Annots [ 63 0 R 64 0 R 65 0 R 66 0 R 67 0 R ] /Contents 145 0 R /MediaBox [ 0 0 612 792 ] /Parent 133 0 R /Resources <<
+/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>> /Rotate 0 
+  /Trans <<
+
+>> /Type /Page
+>>
+endobj
+69 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://science.nasa.gov/climate-change/causes/)
+>> /Border [ 0 0 0 ] /Rect [ 102.2218 652.78 260.2499 663.7 ] /Subtype /Link /Type /Annot
+>>
+endobj
+70 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://royalsociety.org/news-resources/projects/climate-change-evidence-causes/basics-of-climate-change/)
+>> /Border [ 0 0 0 ] /Rect [ 143.3584 624.38 362.3183 635.3 ] /Subtype /Link /Type /Annot
+>>
+endobj
+71 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://gml.noaa.gov/ccgg/trends/gl_trend.html)
+>> /Border [ 0 0 0 ] /Rect [ 103.4038 595.98 265.4131 606.9 ] /Subtype /Link /Type /Annot
+>>
+endobj
+72 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://gml.noaa.gov/ccgg/about/co2_measurements.html)
+>> /Border [ 0 0 0 ] /Rect [ 103.4038 567.58 252.2208 578.5 ] /Subtype /Link /Type /Annot
+>>
+endobj
+73 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://globalcarbonatlas.org/emissions/carbon-emissions/)
+>> /Border [ 0 0 0 ] /Rect [ 185.9125 539.18 415.1854 550.1 ] /Subtype /Link /Type /Annot
+>>
+endobj
+74 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.canada.ca/en/health-canada/services/publications/healthy-living/residential-indoor-air-quality-guidelines-carbon-dioxide.html)
+>> /Border [ 0 0 0 ] /Rect [ 144.9225 510.78 387.9209 521.7 ] /Subtype /Link /Type /Annot
+>>
+endobj
+75 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.cdc.gov/niosh/npg/npgd0103.html)
+>> /Border [ 0 0 0 ] /Rect [ 106.874 482.38 328.3622 493.3 ] /Subtype /Link /Type /Annot
+>>
+endobj
+76 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://essd.copernicus.org/articles/18/3889/2026/)
+>> /Border [ 0 0 0 ] /Rect [ 186.3613 453.98 376.5948 464.9 ] /Subtype /Link /Type /Annot
+>>
+endobj
+77 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://science.nasa.gov/earth/explore/earth-indicators/ocean-warming/)
+>> /Border [ 0 0 0 ] /Rect [ 102.2218 425.58 355.6622 436.5 ] /Subtype /Link /Type /Annot
+>>
+endobj
+78 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.canada.ca/en/environment-climate-change/services/science-technology/changing-climate-report-2026/cccr-chapter-3-en.html)
+>> /Border [ 0 0 0 ] /Rect [ 137.0311 397.18 348.9038 408.1 ] /Subtype /Link /Type /Annot
+>>
+endobj
+79 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.ipcc.ch/report/ar6/wg1/chapter/chapter-11/)
+>> /Border [ 0 0 0 ] /Rect [ 97.71626 368.78 328.7887 379.7 ] /Subtype /Link /Type /Annot
+>>
+endobj
+80 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.who.int/news-room/fact-sheets/detail/climate-change-and-health)
+>> /Border [ 0 0 0 ] /Rect [ 97.31191 340.38 246.7865 351.3 ] /Subtype /Link /Type /Annot
+>>
+endobj
+81 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.unep.org/resources/emissions-gap-report-2025)
+>> /Border [ 0 0 0 ] /Rect [ 138.6707 311.98 264.7155 322.9 ] /Subtype /Link /Type /Annot
+>>
+endobj
+82 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://population.un.org/wpp/)
+>> /Border [ 0 0 0 ] /Rect [ 133.5208 283.58 258.2771 294.5 ] /Subtype /Link /Type /Annot
+>>
+endobj
+83 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://bg.copernicus.org/articles/17/2987/2020/)
+>> /Border [ 0 0 0 ] /Rect [ 208.7469 255.18 427.2091 266.1 ] /Subtype /Link /Type /Annot
+>>
+endobj
+84 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://climate.mit.edu/ask-mit/how-long-will-it-take-temperatures-stop-rising-or-return-normal-if-we-stop-emitting)
+>> /Border [ 0 0 0 ] /Rect [ 134.845 226.78 288.6696 237.7 ] /Subtype /Link /Type /Annot
+>>
+endobj
+85 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.energy.gov/hgeo/carbon-dioxide-removal-0)
+>> /Border [ 0 0 0 ] /Rect [ 260.2988 198.38 470.4519 209.3 ] /Subtype /Link /Type /Annot
+>>
+endobj
+86 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.epa.gov/uic/class-vi-wells-used-geologic-sequestration-carbon-dioxide)
+>> /Border [ 0 0 0 ] /Rect [ 93.89497 169.98 317.0627 180.9 ] /Subtype /Link /Type /Annot
+>>
+endobj
+87 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.carbfix.com/)
+>> /Border [ 0 0 0 ] /Rect [ 110.7353 141.58 265.1509 152.5 ] /Subtype /Link /Type /Annot
+>>
+endobj
+88 0 obj
+<<
+/Annots [ 69 0 R 70 0 R 71 0 R 72 0 R 73 0 R 74 0 R 75 0 R 76 0 R 77 0 R 78 0 R 
+  79 0 R 80 0 R 81 0 R 82 0 R 83 0 R 84 0 R 85 0 R 86 0 R 87 0 R ] /Contents 146 0 R /MediaBox [ 0 0 612 792 ] /Parent 133 0 R /Resources <<
+/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>> /Rotate 0 
+  /Trans <<
+
+>> /Type /Page
+>>
+endobj
+89 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.ipcc.ch/report/ar6/wg3/chapter/chapter-6/)
+>> /Border [ 0 0 0 ] /Rect [ 97.71626 637.48 332.0813 648.4 ] /Subtype /Link /Type /Annot
+>>
+endobj
+90 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.iea.org/reports/global-methane-tracker-2026/key-findings)
+>> /Border [ 0 0 0 ] /Rect [ 127.4246 609.08 350.7478 620 ] /Subtype /Link /Type /Annot
+>>
+endobj
+91 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://ozone.unep.org/system/files/documents/Fahey_SAP_ClimateInterventionSideEvent_26Oct2023.pdf)
+>> /Border [ 0 0 0 ] /Rect [ 144.5626 580.68 400.038 591.6 ] /Subtype /Link /Type /Annot
+>>
+endobj
+92 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://climeworks.com/)
+>> /Border [ 0 0 0 ] /Rect [ 133.1521 552.28 367.6859 563.2 ] /Subtype /Link /Type /Annot
+>>
+endobj
+93 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.deepskyclimate.com/)
+>> /Border [ 0 0 0 ] /Rect [ 122.0836 523.88 330.846 534.8 ] /Subtype /Link /Type /Annot
+>>
+endobj
+94 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.1pointfive.com/projects/stratos)
+>> /Border [ 0 0 0 ] /Rect [ 128.6065 495.48 327.509 506.4 ] /Subtype /Link /Type /Annot
+>>
+endobj
+95 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.svanteinc.com/)
+>> /Border [ 0 0 0 ] /Rect [ 109.5934 467.08 266.1063 478 ] /Subtype /Link /Type /Annot
+>>
+endobj
+96 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.equinor.com/energy/northern-lights)
+>> /Border [ 0 0 0 ] /Rect [ 113.5124 438.68 291.3667 449.6 ] /Subtype /Link /Type /Annot
+>>
+endobj
+97 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://climeworks.com/news/climeworks-announces-key-performance-improvements-at-mammoth)
+>> /Border [ 0 0 0 ] /Rect [ 244.2449 410.28 416.7495 421.2 ] /Subtype /Link /Type /Annot
+>>
+endobj
+98 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.oxy.com/)
+>> /Border [ 0 0 0 ] /Rect [ 128.3843 381.88 333.0721 392.8 ] /Subtype /Link /Type /Annot
+>>
+endobj
+99 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://climeworks.com/press-release/climeworks-raises-usd-162m-to-scale-up-technology)
+>> /Border [ 0 0 0 ] /Rect [ 169.9653 353.48 321.5549 364.4 ] /Subtype /Link /Type /Annot
+>>
+endobj
+100 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://climeworks.com/investors)
+>> /Border [ 0 0 0 ] /Rect [ 133.1521 325.08 319.5021 336 ] /Subtype /Link /Type /Annot
+>>
+endobj
+101 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://www.iea.org/reports/direct-air-capture-2022/executive-summary)
+>> /Border [ 0 0 0 ] /Rect [ 127.4246 296.68 366.8328 307.6 ] /Subtype /Link /Type /Annot
+>>
+endobj
+102 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://science.nasa.gov/earth/explore/the-ocean-and-climate-change/)
+>> /Border [ 0 0 0 ] /Rect [ 102.2218 268.28 240.0326 279.2 ] /Subtype /Link /Type /Annot
+>>
+endobj
+103 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://climate.mit.edu/ask-mit/dont-plants-do-better-environments-very-high-co2)
+>> /Border [ 0 0 0 ] /Rect [ 134.845 239.88 270.6874 250.8 ] /Subtype /Link /Type /Annot
+>>
+endobj
+104 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://publications.opec.org/asb/)
+>> /Border [ 0 0 0 ] /Rect [ 101.2576 211.48 330.1795 222.4 ] /Subtype /Link /Type /Annot
+>>
+endobj
+105 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://publications.pik-potsdam.de/pubman/faces/ViewItemFullPage.jsp?itemId=item_20742_5)
+>> /Border [ 0 0 0 ] /Rect [ 168.9789 183.08 369.3033 194 ] /Subtype /Link /Type /Annot
+>>
+endobj
+106 0 obj
+<<
+/A <<
+/S /URI /Type /Action /URI (https://research.noaa.gov/2023/10/16/noaa-scientists-link-exotic-metal-particles-in-the-upper-atmosphere-to-rockets-satellites/)
+>> /Border [ 0 0 0 ] /Rect [ 140.217 154.68 389.8982 165.6 ] /Subtype /Link /Type /Annot
+>>
+endobj
+107 0 obj
+<<
+/Annots [ 89 0 R 90 0 R 91 0 R 92 0 R 93 0 R 94 0 R 95 0 R 96 0 R 97 0 R 98 0 R 
+  99 0 R 100 0 R 101 0 R 102 0 R 103 0 R 104 0 R 105 0 R 106 0 R ] /Contents 147 0 R /MediaBox [ 0 0 612 792 ] /Parent 133 0 R /Resources <<
+/Font 1 0 R /ProcSet [ /PDF /Text /ImageB /ImageC /ImageI ]
+>> /Rotate 0 
+  /Trans <<
+
+>> /Type /Page
+>>
+endobj
+108 0 obj
+<<
+/Filter [ /FlateDecode ] /Length 736
+>>
+stream
+xœ}Õ[kAÆñ{?Å^¶”¢;ïÉ€!=Ğ”ŞSK\e5ùöİgi–R*$ówÉşvB2ÃÅıò¾9\«á×ö´}È×jhvm¾œ^Úm®óÓ¡Ô©Ú¶×Û»ò}{ÜœÃnñÃëåš÷Íş4˜Lªá·îÃËµ}­ŞÍÊëÃ2ÿÚüxyØ4—óÓóîı`ø¥İåöĞ<ıgÊÃËùüœ¹¹V£ÁtZíò¾»Ù§Íùóæ˜«á¿×½ÍúşzÎU*ïk¢·§]¾œ7ÛÜnš§<˜ŒFÓjëé 7»¿>«Ó˜k÷ÛŸ›ö6wÔ½¦]×¥wèÄ£¥ë”´´–ëó2ßJ¯Ê|g—ëù£º\—'ôç”Ÿ3cz–¹¡¥‚^–µ¡èçÏĞëÒK\¯é_­Ğô¯çhúç¸o-|Øê›÷­ííÙkïuôzÜë»^Ïz=ïõ¢×Ë^¯z½~ëD*M7tM‚?ÑŸ°'‰ş„gOô'ì[¢¿º¦?áı	{èOø½$úö3ÑŸ°o‰şnèšşnèšş„}NôwÃ`"ôüB¿À/ôüB¿À/ôüB¿À/ôüB¿À/ôüB¿À/ôüB¿À/ôüB¿À/ôüB¿À¯ô+üJ¿Â¯ô+üJ¿Â¯ô+üJ¿Â¯ô+üJ¿Â¯ô—¿¥_áWú~¥_áWú~¥_áWú~¥_á7ú~£ßà7ú~£ßà7ú~£ßà7ú~£ßà7ú~£ßà7ú~£ßà7ú~£ßà7ú~£ßàwú~§ßáwú~§ßáwú~§ßáwú~§ßáwú~§ßáwú~§ßáwú~§ßáwú~§ßáúş ?àúş ?àúËÿ´ ?àúş ?àúş ?àúş ?àúş ?àúş ÿvBÜNœ8öşDÛ—¶íÎ¨r6–ƒGÎ¡ÉÏóéŒUøú,¥–endstream
+endobj
+109 0 obj
+<<
+/Filter [ /FlateDecode ] /Length 19572 /Length1 37336
+>>
+stream
+xœì½	|Eö \ÕÕİÓİs'™$“³“B $!!@8d9!„Â}%$H21ˆ€ÀºŞ"º¢²ˆÈ"‹ˆ€¨ñ†WP]ä¨«]?V1&Í÷ªz&¢ëºîñı~_šî©î®zõî÷êuÏ€0BÈŒ–"‚
+ÇKJ™2qÍpåØ'”Õ”Ö™g[²Âıa,›×¨^÷L?	!.öâŠºÙ5S¹¹_!Äo„ş;fW/¨ı”Ÿ† ÷3*İ¥å½æäE(ïF¸? .X4´Àù.8ïQYÓxc•+µÎO ü–jOYéÃ{ò8B£ÀıË5¥7Ö‰GÄ¾åï‡sµ¶´Æ]ıĞ§pşBÃÒê<WN£)İe£÷ëêİu‹J7çÉC˜_ÅDà“*¬…"ôOò.ªàü€£DˆÈsÿ	ª½ògÔ~EéQÏ#ÕTX‘UT¤^¹"hx¡Ÿ+AøÊ•+HÿÃ³O±ÂZKÙUøÈÃŒ"2 	ÉHAFècFdE6dG~È kÿ9P 
+BÁÈ‰BP(
+Cá(EQ(Å (õDq¨ŠG½Q”€ú¢D”„’Q?”‚RQ”† hJGƒÑ4C×¡áÈ…2Ğ4e¢,”rP.ÊC£Ğh”Æ 4¢ëQ‡ŠÑx4MD“ĞdàèT4MG3ĞLT‚JÑ,T†Ê‘U Ù¨U¡9h.ªF5¨yPºÕ£Æ”
+œŠ+ĞAôWhC›Q+‰p¨®ÒÏ¸µÀıYĞs+.†Ï~âàşş€àp*Ìv´bù-ø :€.Àèex¹+L¡½§(¬o„ñWB:—&ñ5ü0~7¿Œß=šø
+~ÚÇtî-~=¿“_ˆ&QÌp>İ)h…cĞ:nÎÄNœÉCÏ3ü‡ãuxˆğ†ğ:‰NâBè¹Íçü
+ş'áIx7Œú}ƒ#á,KÃñ'€ñô™$(hZıàì :x_@_£ ¢ÂI®p½ˆÎ¢wá:Bs0ÇpÒW8	ÛWhğ´ÅœpR0DñÜeÔ‚oá¶r—qæ`óÃ‘ÀÍä_Â¿Âß	w;˜#©$’Œ€ã4ÚC8‰×gÅ
+¼ úÑm!ÌÓÂ½Èí£.˜›Æ-äÖ¡ñN| 0FèV¼“/1ÌâCÑ:q?	]¤¼AoqÇ€…Œw£»Å~è^D_‘|\Âo£C±Âó`
+Q†Q¢ZGnJˆ2-#áy}ƒ^’VóqäÀãûø† c\:™…Ö³m%ŞV¢ıT£éù´AxÂa” Úvq±yå»\×OR_Õ7áªSÕfPw¡Â]æêş+W
+'ñ¡Âä]BØ.+íâccÎşØÍ³}FNR÷ã^Y™^°Y%™pqÜ$hÒ3¸×³2Ù=:ë.!şå•ìRË*Õ»lwÅ¾ËæÜ—jº¶š¯¶€0 ÈƒˆÇ="î¹KÂ’šO´ôC¶-'Z’ıíQöØ({TÚHhÛmµÁrùëz1Æ€§9~õ¬a®_O°gd3 F~/nºÆõ&zæ>…Î
+§ùğCĞHWTbdzol5Y#úñÈŸ,Ôô˜ôcé½ëç?4õµµÚœÈ J´Ø.~pÑvÄî—îÛ“±Ã‚c¢ãzÒ-&Z4¤]‡SS‚é–š2Àÿ'ï
+§çì)™»Â"¬Í˜´cVÕÒÚ•Š Yš1áñÙú=YÔïÍİgVƒ~¹T˜5X¿<lÌ¸KYCxš£µ=ì2Ï‰Ãò‹½=„ëF3_°›”“|AO"]6ñãàOĞÇ¦y’ßd2)4˜İ¦ó¼­%G‹ Š`Zÿq)AØ (%=ÓúàPnyY^n¹;gÄMÉIıúõM^”¹ü¹ç…iå¹¹³ÊrrË7§&%ß˜9rAßäÔç–/^—Ó¤+çE¬ yLaò˜’ğ^ç_b×'°ëãÁ›Ñ±ŒLâÒÁ(ôDp KFËEÂc;m´œ8
+¸^íˆ²“ÿ¸øÜÉrá¤vNÛˆKôùÀ)ö3@4Aíå×Äa¼ÍÃ§ñáú$v}>ÚÏp¨½r|¾¡åŠ65°m’^O	}/8%îh¯1›Ö¤¤:Mqf>Òœ4$ÅÖ
+{¢¹¹™áv©Åvb÷’`<½…$ïµ¥¢TOÇ 
+iı`zàH¦€ÛAC°Ã×LM8` C4ˆ1j`8vWÔØøéÄÉS¦İ>dæÀAé)M‹æ-»näˆŒÆ1ãgäL™6}šö½öÕÍÜ4çpWéƒ9¹&Sğ—¡jLŞ	ÑÅÆÜ+. °G[˜Å²óu÷Q} ¼8Î—€>„ .%DaÍ'#CBŠ¶–£ı\V«ŸSÜä‡6™Şsîñ[Šlç/µ€€Ö'ïVÃ0PÒEM„˜@‡E©Èn8 sGæ-^<oŞ¢EÜºÏGhÏjg´¿hÏl¹_G¬dá›6=A÷Ğ[vj-Ú«xÀë—é1k·$
+gÀ7XAÉà³“Sí©GLZT~îË/ı.ßyçÇÚ!L;Ä‰í­mŞ¼íZ²½Ñ+ÛŠ+çÄ
+æ2ÙõBõW ¾pï²ş7!d‡şWfÀüÆ½’
+9‹-¯lp?]6\‘õ›£÷C'X¿Õ±¯èJàmŒ¦»üÀáÀ`Aàc­~F!Ø‚öcu7g1ÀÑ½#\V¿õÎ`‡€,Òl!NÛÍ'N´ØÁ§¤3åikF3“Ö`^³¥„×&Gã(ğá:<ïp(Ô<ñz\ß>§ëŸ7äº{‹'>:ú‘½9n’¹m-VÒ
+{¥\×7é@hè2Oî‚	”.ÈÇÄ8Æ—ºøGÑL„8s'ğßïi\3^Ñ¦»†£ÔÜ¢ŞÂ•Úr§¶˜ÉGÂávf§2ø+¹G¼-—xbÀœˆğ-)é@SÒyêWÀZ£8ô(H*S5-•ÂN¶¿¨ÍÀ›Ûjëux‘l'• “Æà•€ïå&â9‰dkkû€âs	@'c{ÛHåo| … »çn 1^8yb$íêçğïÂ‚şVãï"2A+ìæÈˆğ°Ğà @?»Íj1›YÒ#iˆ ÉA÷¡çSN…Ù¼ÇdL¢üS	‚í1şlO‹b;†‹dE	–J?,Åm_Óv•|X¢].9S¢ıçfkpQ	.Ô.gC¸;¬-ÁË´%'µ‹ïjËğº¿‹ıNâeíÛµ‹àÂĞFímĞ¿ Èm{ƒjpSÄØĞ`{P@cx>X”b8aµ¸*!huğªĞ•~	+!gï…Ã“`{õ°Ëú„ú”$©)¶Ím'‚†¶=ÑÖúÿ€Âfğ[mà±şZ›_Pº~‹E¸’ˆãì8È—z7`8NuÀ™ƒ^õÆb·Àg ¿)&	İŒæiø|AÔ—¯ııŞ\şªş©Ú±KßnÎ_ğÕÄ‰…ÚÛ¸¯Å!Ãy<Pì½÷ñ=¯ÉŸœ“¢CµŞI‚vVìõìÓû_²Xà³Ò†ŒÔÒ>Ã#FdMqåœáE°5#¬B!ÛOEe®´PcHˆÓiE›^ÛëáñaÓÚ`¿5a!ëû;ûõ	•‰äeÉÚOŠ”ûHÖØş`wÔQ_ü†ÒM9a;ŸrièyvÅvÑk{_Ğ,¯{T²õx©gjT—ó .ıÄÔœ‚1¹¹ùcr¼óÎï¾Ûû!ùı_¾_~àäÉtÏ-(ÈÍSÀU.¬oX¸°¡~á¶÷:}úĞÁSmo‹æS‡½ÿş¡C§¶-ªoX¼¸¡~‘®×Á§mú{¢d<À5Ù„ÍF«,)VI–ú&&ñ}’­£^8>Î
+›'a7ö•qxßM–¨á„¬·¬áå¸Ş¨7&÷èİÃÄcAêm¶›úİS·d{ù¢Ÿ/áF:Ó˜—Ïó1°Èç¦À=éÜ²|A=•ïx'ĞÖäèİR×ø[Y‰•—e«b1ÊqÆä@;ï”Ã•pcXr,JR’Œ±=‡+Ã.Ãhe´qtÒèä)x
+7Ş0E™bßkZâ´äI)3SÊQ7ÛPb¨RªŒå=—¦$ÈF%Îi‰ëmL7¦…%‡'G¤Eº¸QÆ¼¸¼^ñDnšqjÜlRmtLÇÓep¡£DÎ€£â ±Qn Ónp§Av–©	Skå@‰×¦ğ@«§Çj“fU}úí;íÙ›{÷ÒŞúÒÜÛ
+ÇŒï÷`ÆˆíóG6¦3ÚuÙ;k÷iççj‡k²3±ãôïÎÎI›3øÑæğpí³äÄ!¢'jo'ÍÏiØRŸ‡w1Ÿçp)ø^´œG¼®Òêèğ.¯‹ƒş»´¯	ë	3õºh‹áQ‹ó2Úy›<dsŠu»6æu{riıı(µ ?Âkï®ıİÊ58~éÒ%Ú×ßbĞ6üüß¿Ğ†|ø¡6Xe[´¯¹Ëv˜ËŒ¶ˆZÌÅ.BBŞ#¥ÅØ€_Z..*ĞÏÀ¶,…?¿fåïÖj__Ä/ø!~é‹¿kÃOŸÖF~«ÃçÒyôÖ²]½lf£"xpµŠI"Âïí&Ëz?É¤Y´L8då²Yôc	ø°1¿D¹Ñœÿ¨Æa36Äc„¸¾x `OµÇò¢¶Ê×öl×vçãvØÇğÏÿaçòıÚ6<iÿòX¾OÒ¶íc8A– œxğ%Ñ.2Çd¼UxäÇ)¢‰Îİ6ò¹¤KCá„ æGo'oqJû7Û¿áo¿ÔÒ~‰3µp&–hréøğTN—‰<¶ÑÄ©H3Ä£^æ±Ì‚é·'Ëñ-Ú›Úİ~a¬äÎqgôøûÚÎcÄ×;Òİ(×Ø~wFûPçé[àè\ÙŸFÛ¸ÎxÔÒ®a‚Å´se×ÂtÌbûrC˜$53q^:š‹ÿÎò—ö¿}(œü®†ú™Yû$yılŒË_Şa%;ë­k‚Q )HôfÉb?–‚»Ä6š“ØmÔ`°7¤G²³jÑ¢9s-œ±îˆö¾vJ;‚]8÷Ä.®_¸ }ª]øôS¬-×jğJÜ€ñJ­†Ò÷	È‡œÔËå ;yn§°Ü€vÊR°BP°€À–fâ”KlÉeØšÑõ.ÖÅSq-.ş¾+ä¥\,æ~Ÿ¦}Ãx·ÖˆgXÎv·+…ózÖNÓ6!Yî³wø­çÑ“œª:p(ËÕFï2O‚UÉ•#ƒ&C4õåmŞùá¬›+d±ÃÕ“êØ;ˆd	‚ƒ‚‚‚£QtPtpJJF	ÙAÙÁÖéh:¦˜wfxRSUY®€»ÿû¹¨¼ìåMSŞ¹é7ÚMØ„ão~‡BJŠÏ¸9³jé˜|œÛ§oËÛ7½ı£ñNX_]{¡|WäØá/¯V2ïÕÕ‘O…íğß³^\èï@6g`O[ ‰ˆTåˆx[ÛùfºÑ=?ñyš!hŸ–Gã>İ“&z¬ëƒÓôF7¬ÉÖvh>¹¡úäìµ>öèºÍ÷ß{×ÍÓÏ¨ÿ¨bgÔ]$6îùUù$6Ç8§¬¢êòÔéfôÇ!ªúÜ‘[c1o«O„–Öí*23Š"Ä‹ˆÑ°SÀd¹ŒM
+ämo
+ ¦Û’ÂÄr&¡¾Lš÷Fs™&jà1b¨šØ¹¯µ)x«ï8yR{ }¿¦}ÙÙV¤ıUû
+Ûğ(àã#`Ì†¹¢yCøªÛjûª€†İfîI´Ü¼&‚D#¨D"[$<m½¶ñ1e›v 6é ÌA Ô”m§È¡öy	“ÁÑàdíÚûK¾[xÓéÒ{6mºgÜÁjXà^øÄdÖ¾¼ôµv±_
+NÊÎ¾³iŞ}úRş,üb„‹`«=Ğ@W¤?Ú(î3­6¯²íˆ^¶&Ö$‡8I¬ˆ3(²G,µÛó¶‹Í=*Ö‹ïP¡vÉ\°t}ÁPÕ9%»à†¿
+·Ï›¹­pÇÛˆuS/`§ö²vYûP{7á¬Ù/pgoñşqÇ´–¾};Ø¯ŸvéÔWÚ|'®Âõø1•ê&ØßEà©ˆ²\A‚“#ï$„‹€Òp‚‘Áöƒƒ÷ë–í6X‚ºŒ"ô$i$›Óı£8
+GİÉ»Ûhwrqíı„“§¾çùàñü˜/‹AI(ÇÕ+Ø·‰;"Ğ®¾`åk’ƒ²‰ô±öqô”CBãHˆµgTd0ğq”E~¾ñRËyšù¤wçX,MzDé¶ª›[¾ûû: ;¹×ª«çÖ×k‹î¸‡€˜­8äî;Ö<.ñ/À¾wúºlÚ”Y³¦L+ãÖÏ«­mjªõ4-‰ß¾äĞË/^²=¾÷¡ûşrîÜ_î;„ÇO.)™<yf	•ı Í²ÖeopîPĞj¼Šßº¸Ã¶>pMlX¬!Ä?E‡˜™ì›ÛÚÎë„4ûz ®‡i•’!Ÿ¼£{bî@è±iÛŠv±g®›rAû§cî]Ú]Úª#x‰»”¢¢"
+ôy§¤`ãûÃÑÚ<mv¯69’»xË-¿ùíosË-Ìéú»€/ak¼0—…Û†öğÛDs<ò‡%X,u¨Ş˜G·¸J{î|‰¶XÛê]¢ek)ºşŒuùKkiÀİ£-AıŒEPXƒB”Ò#¯äeˆ¾®7ó.Í†	§ùW@7#]6¦)ù£¸`"Ş@Ó }¡IˆÌ9pN·%Í­šÀ‘cÚ^m_+~³¿©ãx
+Ç	§Éi/­fô·O|Œ—Ì#ÉW_d…7P`¶8
+©U#§?ÿà‹â#
+	üñ^ƒ3P øø§aŠƒA^"ÇZµ~-Z¿Vğb—å`s‘`á(
+åºâÂCVtO„í~ë*Ó&ÿåw«¢ ã'’¹@k$â"p4[ÇŸ ÑÀ@4Ôm|ÁæaQlYØ-f¥P;°bH `5÷’öàˆ9®ô´’	×¬XğêôKÌpeöÖeŠ/÷+Z2kpÿi‰ÙcGÀƒ{÷zå¹YMN¿ntßçiU€C·këa#ØïTíl²’şÉùcR­ÁN9”ì·¦&ËûäıÖ§öØïxzäŠ‚Ôşù!b°©wêíÒ+Ï¯WïøşÃ
+hº q4Á¦}ÙÏWqa—š/ÚÀg§Ø½ËVÁ]Ìûj t‘–ª¯vãzö 4³ì:(§F$ò1Ñ=âô¼{@à]'ƒ9ÅáUS&Ï™;eR^qëäï¾÷Ää[#ŞZtïà!3µs[OLyà÷sİå˜¬¼¹mòÜÅÚ©5Ïhû—.½í›oÆc÷~„k£ĞŞãBŞ»â¦Ë—kSrÆ~÷ê«­…9·´öíáò'ónúí°!³´×ş¸Jû¾|Öì…›Kgß²x1Î;©ñâEw<±iÖ…›µ¿i'(_Y|°ZšË…ÂEÁ.Š‚.)èmsá<Á°Ká„'J¸¬ğ<‰Ux´Sâ—‹œ"Kf ²H ÛIğôfoİ„jŒî·¥/¼«AƒîÁ»\¡éÑÒ`%I™ T(KĞ¼DZ"7*w)”ç`{¶3ŠÍO
+“#M±RoY5åñÙB”+O"“ù	ÂD±’TñÂl±ÄÔˆâ›ø&a¡Ô(ßÉß&Ü&İ)¯åW«¤uò>éùô~‰{Ãğ‚tL>…ŞÁïp§'¥÷å$–x‘(Ì6Âg·o©-æâñ\¼¶¸}^{Û´¯„“­}¸X®ˆÚ5¡Ï„;w¬hTTèŠõCÏX‹Ï„,—Ÿ	a1áa²ÊÁ¡¼F˜6C “DÿM¡6ì¾"‹nN°¥'»dm‹NŠ.ŒæñtìM«ìş¾†uÅÃ2DÏ­ü¦Î˜1õäÿ5656ı—»èííöeÜ<U•…c®×šÛf••–j8g–¿wB8yğÍšµÌ§T@Ü˜¾À‰†¸BL63d;‰m§¼¬	ñïkBbŸ¬&}I¾Öl{IÇ:yoRèÌPOeëg=9ĞWÎÔ¨Óæ|¼X»[ËÇ{qÓâçÌ=Şğ§––?5Ÿ[4pŞ„İ¸o4P{#/S»üé'ÚåÌ<æ£€¯b:ãkJt9Ğy9>(q
+úÚQ Lô•x÷’w:iMÚî5V,
+ÒW¦"pŒvWËw—¿hÿ;^‹ñ˜ùUU7j»`›Ãïn»á³3ùÇ”6ºµË=®}ën,¥üaÏ #JvğGÄÃÜ´\:¢`A‰"bb¢¤õ~]~ÉûlæBsÀµèv·¶×s³Û×r[¾?IÜ‡Úg°o§+8}7`õqÙ;æ0›@Ñ'`éo,4Ö»ï ®-ñn¿İ+ÛVæçG»b!>ñ†<Ö!à°ˆPg?S*Jòï+ö‰€¹ Å§q²™-ç`óŠš•ügF{cÁ±yeÍw—5M¤…Öû´×Ï~ÿf¶/Xüí¢¿ûêÃ¡³ã?ç&y²³™Ğ«ğ#Tè9ÙÚ•/¿Ğ4«GÓ½ŒÂ7Œß×¹ü¹#Òa-WDà„£v³Ä`è¥¡À—ƒÖ’¬‚U´¬R¡¹x¿Á¬\Å}¼ŒDk¬í¯Rµ¿Â¥ƒ/ &!ïœÜ0¶&Nx=ÏÑy`ı<z—µxô.[ñTXæ!ä4Y_Pã}6Á%
+„ÍpB¥à\Y®U08F”áò7rÈpDx-7	’ˆE†û`6·xWVL‘)p³ô‡§±‚©2ä-íXÁĞÂTaEÒ‚cnûwñ¶6^™d=/CÅ‹¥Ã¨k[Aø†8íš(Š6ÓP2ÄOF¦’IÂtƒ‡Ì¦¾S¬4”˜–Ku¦[ùÛÄí† 8.…"àFKÅÜda’4S*á*„©»\ìé.a¹ô„ä?±GÁ¢
+ëïƒŸkïGœZDûNÆõ3\Tû°¶‹\~ûŞ¾3ÛPËHuÇœåõy_âG1³ù¾ †3Pß`Br¥’ÉÀÀœD?'+2 (r¬bà’€FA–‡EìÇ+ı@›îzu4wÔ-}Iò­/¬l}Q!sVÉ*GrC¤);”>Üp.—Ëåò•‰ÜdÃd¥’ó<Ê*î>é>ùqn—a—ÂcÖùØIl–Ş8–Æid,v‘i‚4Y.´TâÙÄ-Í‘K,·JwÉJÁ}ü)÷èÊ?†±ğ3pSğ_µ´m—´mÚJádÛYÙÚ‡Ïl;Mb¿?ØÕ^d´Èn@ß€ ‰H,%şyI±ëÇúé~„&tªÓ»¬…yF«Öfû+"2:ÅA8'àÉb¡q6®KŒğ>ÑâäB×q©†< ŞeÏM1TpU#=fÏt(Ú;¹H\£µŸe#Æ¨Íû>
+{ç­'¥¸üÅ~h§i½ßš`¹¯u éëèsU=ÉeDÎ ›3É9Ü)Ğçº³¡UGâ«-Á‘Tìzá…]O½ğÂS¸¯Ñ*aÁ±V›×ò§´¶–Ïµ6ÌŞ‚y¤•k«´ÕZ9^çà¹x½/Ö°® ÔÏhÚi0îDËe³K¶¾¼QC
+Ğ/Ú°"ÓnäÀ”tˆy°Õ¨Ès[‚Ãq?XPœÓèÓ“u7İT&ğÙçíí­üamfMyyµÎí$ã‡…¢Y®sàNdÛiXÖXÂ,
+6û;û*ıûò}Â|ÁåªºwcNL(Üi²…Ç¡¤ğ	¦qæ
+S‰y¾i>xA³Á4Ù8Ù<9`Rğc•ùF“rb:˜@ßŒŸ^~®ˆĞVhx-¬Yõîë¸¯v¿vn×‡÷cCñ\MYÌ½¿M{`š¶Kä¹_]ÑyëÙˆÅì0t»+%4„s†‡Æ:´Swš–)şÁÄæoßd“F®;+ 2(İk”Ïì	T—…¿ş,!˜>~vE†‡:CBBCCÂ8f9²'8&F¸îÀ’kGåä¢ìëò ÿ(‹;³ ªjÁfm	—ã°ÿŠûÆ.v½¥UìxÃ2|ÊìŠIÚ2í›vˆÌ/¿óÀá¾~K–i“pC]ó]+!¶ö¹Å¡Ç\½Q,lWŒ‘¼¿È;^ŞiçwÆ®·¯é¡#C(Ôi	08£{Ù>hi>ÑBº¥{+jO]°]èH“]Åuñ8=<="=2]1*r”:I™>-bFäuJÔœ0O¸'ÂY©zÔÚ¨Fc£©Ñ¼(r‘º(jµñAÓCë"×«ë¢¶·š¶š·‡oØ¹]İÕk:M‹|O4"}•»qv¶X%a½t‘Âóo,ü¬ò®ßNnÚòİŸµÓÚÛ÷jÿ·b6.ºù¶©w¬úèM¬bËBÌ[µæƒò‡J9zğÛ¿HÃYùcŠ²ó#¢’ÿ¼ûÌW±ŒO°¶æ°µEªË"êN~ä5ƒXöŞ¥@8´°p(°Ëj¸—èCİİ.¹3ˆ+B‰f×–h6šß|_ÀïÖãÈàE€mØAv£Ë`áˆeŒ–ûIJ:~Ş$åuùÉû\şuşüõüI_ÖÙ£¼qfÁw-€hû¬¯Õ^ ÷µì™!KÚ–i/j¯ãx˜N[/‰èW¡5c.sı@œˆDb©è*ly¾w‚…´wYøÚ1»gãTnÇƒû!A8˜óAB¤¤J9(ç’\>K%NÄ“È
+Éî8JÁ·à{ğİø–öwµ4•»ù‚Ö>zœ†´’ÆK\ã%†C¼ iˆ—Ê £ØË wã pÊ Y!„ãÂ	g‚î@‡)V¤B¤aT2a§¿ef4 3•Ÿ\Le8uô.#=˜:›£¾ğšríèz-ÊÅ´6Á¦Ä**lƒ!Ô†©J2l.¶Íàf¥Ê~î)el!§@€—eÁ(š¹`Ä;‡ ‡CLq\/Ç÷`ÉhJ²€ü …O’ÅdC²”"÷ú‡[òH6Ÿ+dÉ£Œtı7…›BÆóã…"±ÈP$M‘Ç§›<Èƒ=\-©ä+n©R«Ô«LÓ|2_ºQg¼Ñt‡áVéNÓÓÜ²ß/<%6öI†	Ãğœn€ÃµÚF-Öß—´LÕ‹ü0ºCœô|¿.³8P!å’_¹²øpªHá º(7"£.Éˆ~(2{)Ü`A	}¯6£XX…#^1<ÏcÖ2±A0ùÌÍJ%eï´¹æš;r!¯¬º,Í»‰¬ST“$b%¢ŒäHb““HOY•‡’Ty&)”W¥òsd—l—9²PY	åø )Téƒ`İÌ÷c¥> ×4>M¬šİhè1?Ãı‘ÿ£t@	¶éLÓÿ‘6NÔ<Ú£ÚV­Zü;ÈL²ñ\k»ˆ5ãZ¹ÓZ$>Kyv¥|ÍV¹zu·KÂIH¢ú,1»9?XDƒ²O‹Í”-VÆƒ×ùı<KõJæ\\!WV«À¢@‰Å½IL’•±ŠG¡ÊE¼É±= ÿR»b¼µı–·pmÛïæštÙÓç7°œ2BíUÙs±xOrD€œÂ­¨€K‰­"¸`Ç¸ûû
+®H%	‘bI¼4€¤KÃÙ$Wkœ@f=F«^0·G¥á¨ş“¶3dPëç$ªRÊ¿¶Ô>ü+yMÇ‰>kèÛš.ß,nášÑ£°F%vd£¯ãMaÏ4½LúŒtW£}‚í+Å€³­Ï^õìaúì‘àÎgNÅœ¥ıë9ëaqåw5ú¼w³çĞú[@0ç˜ûQ	Ùaf GYQ‚M‹éYØ¹Ëí+±Sûfÿú¬PBç}“l.0ìRÑrÁ¸ä£úÔ aÇÀ?LNr¶¿iÚì¯95íoCô6×—â´pi´~kÙKÙÏ%5ëïCaGTMoµÓ‡C¿üEn¥Xı
+Æ/£—xkIß«ŠHW5ğ!şÊèÏÃæd8h2¦7¯q}oB¸é=¼ ‡4k+Ä
+í|£O³w'ù…“bÑÃ®Ş²ˆœ‘Fôç 7Å–ãvõhäab^·¯1¡˜ l–ÍÆa‘Ä0¤'} 6Å®'´ú# /~s1İ›‡ä'ÅS‡E£‰š®Nª…„ãfõæ¨º¸{Ô{¢Vúƒú‡¨Cê¡(GJDräÈWä¸ˆÂÈ²ˆ’È[#–F®Œ¸/rsÄÆÈİ»"mÓ»¼*8Ç‚ ¼eÔQ©İr›ën˜z½û.ZÎİ»lç)lÅÑoßvoÃËã>mÄIØŒ/çÊsMüííË¶VLcóKûÃÆMLÄö°ğ/Ov@^0tÆyè W¨¸ÉtÜŠ69ÖX_}4ø¸“Œğs›dsˆ%œ°Å&{Fw1yïØˆ’ZÒêòÌƒ°'`% ÊqT»	jX° ¡aáÂ…£ö6½‰í›7›öÒÖáŠO¶mÜ¸íñçNÎš®=­µÃöôôY›Å ]Ÿ©¼Ò@^N4Ğ‚â¼å¨ù„²ÉÎo
+1…F˜QÀîõ¶KmÄf†.¡µ¶Î<Õ\ºTŞø´¼•cW?öØêâ]Å˜¨½¥m‡õcÒ¤'øaÚ)ÉO>üğ“)ı´Ó‘‘x vÀ60R×¡iôÙ hÓù´	·Ø7	Ç¥5–×ñ£$€GfÎ2Â8„ò‹êu5ç/o±ïä[ÿ1©RlRSIWn¥¯ ŒÚİô¦öVŞlÜ³™ò¯~Ár›ô]Ëæ²i8Øò¦·½F9HwŸ~
+Oß’¥ïj#Ç{X>*6˜ğ»Áü^7­	up’ÃŒ29³uHÃ°¹ËC:Ê½‹´R><œ¢éˆÒru2NE‚®‚Òö¬yı=7|±x	äšÇµ'ñh%<L»o~Iåol\jÅÍ7ÌÔZ’ûá4„ığ`í…•‹›j;b6Y|ôG×»Âl6I›D¼=j÷(œ¿dÁlÎ²ô×|™¯‘†›¡-mC››õBğùú*…½xç––JÜtúf°õ|8ÆJ@å/çÅ)ÚŸ´u»w}Gø|`fÁÔ¶‘”`p?O2ÙjÙ‚…_ ’í…F»z†Y	r<áÜàf!¿nŞ³Éï}tœô4!³ÅåPGˆCâ}¾âr^—´ö÷‹ì]÷½c{—ôöV|ÙCBö$JNè{Mº<%[AìÇ´KØt¬i÷(Pƒ'´ƒUÍe3öNİµ¥Å³èÆ†ºE‹Ïš†G¶~3¦•mm³k_kçÔ(4 mİ"nY½nÃ–U«· w@\ôş¡4W°™GX9íwÜñºíQæÌ(Çn6[m´| [ôĞÀ›z·ä½%Î¥N]EÓìı{ÆéöÃ8É^ü´5f›#7±n)5áë÷Õ¾ğ·½}‚¯]Y÷‡µí§Ä€öm³¦_Ôı(ôY^<¬j>D{øG9J¶nÏ-]r¡\"×ÉKe¾s-³WĞY´u|É÷Å ~ƒŒ»rPËf0ÈŠ†¹œ´z¸A° dá}Ó£6AÍØlB6¯ÇLæ±è»wt{‰½Î¾Ô®Ï z_ÄğÎ÷Ş±§®«È÷Î¹÷ìŸO»]Dtb§`^İã
+`õÃ=èQ_ÑŒlİˆçi±ÄIœc;Å!†<’g˜B¦‹“3Y	q	™ÇÏî ·ò·w6UÂjñ!Ã3$$K™\0JšÀM—fC¶äæsuÜ<a‘t;w‡p·ô;îAá!ÉÑ½”øãõxcû‡\V ÖÖ‰mOá‡À±nÆok}u¼òˆx=ÊQ´;ŞÖ%B°TğŠ€±_ø®E·Ùíö‚‰EU®øP‡ŸÌ*‚­§Õã1äõˆ=a`¸~&É,æ˜ır#CÍá¶z%l7œÚnÛPšx_£:ô<}{4…½DKŸ‹º¬‘qÉq…quqKãî‹{2Î0ë/l3õó¿(»î+íŞwCÀ›È|¶îù×µ5gTx8m«hvœVxbvãn²µ²æâ¹ö	\®9,dşÜmÚßçrÌ}üáöS|É–™%u:}Ìf€¾«mfÏµmæü?¶Ç?°™‡î÷Ùà¡›Œ×Ç´î××å¯«àuZ÷ó~éàªºß¾şÃ9tŞõıŠ®%?îùù‹ÏoZ´¨	Ô$Ë÷œÓùåŒ´Wµ–ÎïàA:.;´	ÂÀ…Æ»!®ğÎx÷ºeşÙ±ÎÅ¢^—ÁvşüÕ!/¶ƒŞÜÀ¿ªœåK—ô`}¹ÂŞæö½¢²¥Kr@Ò|E<ê¯'0mÔqóæ.Á 2çĞ¿X×„³ÌÅ9L—hìÃ­KúÒ•kş]¢2õÕQÜ½õ€Ë‚¬ûæ5d¾/ú¶÷éÊ9à–¿û¦CŸHğÎùK İËOD°¼.ï1(¢I6?jşÔ8$öró†ôÍ±fïÃô«U)ˆ´$MOºkåWÖÅ~½{‘¤@ÇS¿ooãKö×º‰@çyÓ,˜7}àr™MœÅ8 "2B’,ğÊ€ÈÈˆX½şÆrª€£Áìü†Ø×;kpãB‹,†Âè1½ØKÍ-ç»WáşN³,¿k½ÃLß\6ÒjãY–Ùh4Í²Uˆ	1…˜C,ÁÖ)QNT‰¦Ds¼š.‘‡(CŒƒMƒÍ£åQÊ(ã(S.«ÉÈ”Æ¦æX‹h1X$‹lQÌÆæáñ3ãeZèR¤ã¯~½N/ÒÑ7ø †wfV”.ık—µVÏ‹çm¬š“W3üË#—ÚÊŞ‡œï«ääÔ´>‰F9fã{öÆÄ`[ÿşƒÓ““ÌRÄæßïŞAù
+òÜ"<9K+Ä"HV²É÷H›"eN#°ùYŠº<ºbÅƒÑ»üXîba¹KsgîÒÜB¿“Áe¹‚‡£áşô+¨Äj³Ú¹BRè(áJˆN(†C ë šÒØ¹T|ƒ¶âºiûµc'Ú½[xD{á
+Òb^AOÀ§1Â×1dßÇáKØ3ëPHh°étÀñ 56¼ÇOä¿ÕlÏßfÑíCwËçS:=[èRšGûƒşĞêwÎŞüµçF\ÉYì9àÛh°¸ş5/¼÷r;ê¦j_$Ş>?4¦çµ\ü÷73ï†¤Ñ‚ğÑÛW×I·zà™nõÀ?¯¸ˆ~‹×Æ*´Ê0«à–r÷q¹]ŞílÇaûˆm_ÁæDA¢€5øã0Â÷D=pÏ@ıq:Iç“¥l”!zó%Òâíør»p‡¸­ÆkÉZ~•°NÜFöágHÎúb$„á ˆgk9Ú|¾¤­•ˆßoÔ}B.ÄĞp ß„sU}±¿^_ìOë‹ıi}±ÿÖÏ\³¾HV¿Fiñc‡¢*i\š¬ä°"âL¥ZY¢0
+°)ÀDá-å¸,¾T‚¹ X÷ø	6Ñ`üä %ĞØ÷àúñbo©ÜÃkJ²¤¡4ÜŸ"JƒLÃ-9œ^NÌ‘rM“É~‚4U.6N6Í´Tp%ü,¡D,1”HåJ‰±‰«ã„:±ÎP'5*uF‚ø[éNù6ãİ¦–¤‡L÷Y¶r“­üãÂï¥Çå­Æí&‰¸OzÆô2n&¯ó¯‰'¹Sä]ş}á‚ôWùcãg¦©L\¡˜şÃQF•‹§<„ûÀ>M;¥-8tP[ ¢k#|;Ïµ}¿‘pmšWú=@¼À•ıcõÅ®5ÈÎZ£¯ØÈã3Šµ°`ÀÆîÅF?zè\ë4ŸøAÅñgˆğ}p#²DÊ*I’SÉPy$É—‹È4y©–ÈMò2²”,—WÈ¢ûÈ}äAq½¼AŞH”wº='Óí9BŞ”ß”“ãäŒ|Fşˆ|D¾”¿”¿E_‘oÅ+r
+(&o’ˆâÏ…ña’¿i¡ó}¤
+š"õW’Í™Üh~´”©xÌ·¡¥Ü
+şNq…´Ty­âÖñkÅuÒjå1q÷ÿœDõêMşMéˆò.:ÎáßÏHÇ•OĞGÜ—ü§â—ÒGÊwèq°^ôe/H¿¢Uã…>Åás›vkÛwÚ­Ü0.FÛ‹óÛÏ´?giP»sÂÚÎäfÅ\#­áÈ
+Vf2}{ıj7d…^`nÖX‹ÂÙ¤lŞ'hÍj1ÊõIàém>¡u‘—ş’BPºï	
+ûòÏI¦ÄDµ¥ÓeÑ²¨›kän§õ s[{»¸­^·Ìc™h˜A±CpˆC¡‡ØÃ@ml 0¤[Ò­Y("£ø,!KœÍ¹ÅÛ¸Û„ÛÄ;ÌwXäVÃRc­y­e·lç·<nı#>Höó»ä]ÊsÆgÌÏX^åŞ0¿ayÍúwKïpm¬¯–†c'ø¸¾f*´øœC½Y7u\ØE»Ä]ş~À³«><:ÒWŸå³ï2ºÓÂJ³¬HQsÙDë³<îVŸ=šò£õÙÌÉÜCWaXÀÍ3üÖ°Ò šK6Ü#°ŠlÆ$^J2ÒÂí(i¦ñ^éé)rH5–@…¥s¤Er2R|eÜ&òVûn® -+hƒ/im_wµrlUÛÍï†uR4ÃÕÏiuÅX9Äæ7
+jAr³ñ,jÆ9šıwšdEèèÏ ÕiW¬B¬íÄĞ£çShÎD3'?ı+@ô­$úô2]/”	DÑaØ÷} hâ-`°ç¯áô…J~÷©÷_­¾wØ°{«_}ÿTÖòñSj=“Ç/¯9»ëù#«›Î4®>öü“g'Ş»õá{¡÷®ßºb"å=æµpü‰N¿ë²UI9ŞvÂûÕTöı¨OÎ‰á—‘„ºÑ[âJ‰Œ4Y¥P£Ãiå• Ğf'Ğó‘µÙşhl˜3DrXqŒB"*yFpJÛĞ£zšÈìF±şz¨ş]ÁKæÀDÜAw %³“î>€Pö=ã§x<SÆß“İ•öš‰+¶®¿7ÔyïÃ[ïxöÉç­n<Ó´úÈó»è;¿x·pšÁB3Æe£¿Ràû…‚dĞ¿Ä~•àÈÏø%‚«kÀû{ôlÂã¤¨ëï	øš£í5üÅ+Â7ÀóADœ^Ñf7ÓŠ¶éZEk—™:œH‰“P§ƒ™Åh©8T;×,|£]fyCÛnş¢¶Òÿ|¸à€K ®n?ör³v‚ÅÓÀ—lf5øOsÿT~¯;8ºzt¹ÛİÍ´Ø0EÍÃ½ĞıamRd³ˆüed#r€íÄ‰£úWN¥:H](@``Ó!G±/É‚Y$a_6ÇM<pá’äŠş8e\ÔàŒ>}¯›“4sªÙ¼ÆfMìR4”úšÛ–@‹ˆ¸Œ¼@É1ğœØñğ‚&İH2°‰ì!{¬Šcâ1øö¯1ÚıÊ+»)=gÙó²6€}eğŸ~÷ü¿Ày!³÷Èéëäb¸¨ËŸŠ×ÊSGòTÄI¼\ó§SµWàşgèTT$›6u¬9?ö®ÄÓèÌÏ©ÑĞò˜>†ÎØÿÚ†êGfZ‡şEJìU¢ZßJ÷}~[ß¶ÓzL}%Ä!ıÆj4ˆy¶¨oë¿K±óşQçßBşªæ£ƒt÷¢S<B»…4I¨@“ˆ‚–‘e¨†ó‡aoDµâ¸¾¢×DË¾rAØ6Ò~b?¤À˜·¸×`Eµ¸Ò½0ïîG%[ÑB®½H¶¡]°o®ÅÓ9aLØ·‡¥O0ïG³`ÿöÍ°ß	û4Ø}‰÷|1ìsH*º û2
+Ã·ó[èwäÑíÑ	tAâ>Fãıp¾äZé~e¹˜
+×¡Ÿá¸×)MÂ‡ú§÷^D+…&€µ®Lém4Lìƒâ„7®´ÇĞ4JÅ>ï†ùßş)¡”Â´ƒò>§Q~X»³ön´ƒ;L÷+…"½-M@Ûéua‰>ö#_ÃøÎ·Q(å±0EÊQ®"¡íä·QX„¶`~Rúj¯Aü
+€°¸Üç·Ó9 µ(]‡ V,b?œ‚‡â\\Œ_à,\on 7–Vs¸¸?qséOVó*¿Q¸KØ,ÚÄl±N¼WÜ*O™†}Rˆ4EÚ.óò`y›Â)=•"åFerØb|ÙTnj6ÛÌÅæÛÌ»-&K¶ee‹•³FX·XÛlÙ¶ßÚ>³—Ø/ùEûÍğÛç_@ï€{Şhu88&9ª[¾4'hopHğŒà;‚›=™Î½ÎË!×…ÜòAhphsXDXEØÇá/Glœy@SSÔÔw¢¸¨Ä¨IQD½u9:iıBR€ú ‘	¬Ã†\4<
+_pQğIEëjŸm¬Á)Ş6†õÀ9o›ş
+ÄwŞ6A×yÛ4rã¼m™¸›½mY¹'¼m	Ù¹3Ş¶‘ş’“·mö{¸×íŞ¶õ²ÂÛ†Ø;äoÛø!_#ú¼[¦¿Âf§mŒñŞ6‡$ü¥·MŠ5o›G*×ÏÛP0Wîm‹(‚»ÛÛ–P4÷¬·mDƒ¹¿yÛæØÁd´·mA•Cb½m
+ÒìmÛ‘4äS4’ı²×TªØo~5"õBe(>SP2l©Ğš=T4ú4¢Øë‘•¢” WóP-ôO„Vª†MEE°Ø™>İ0fË¡§ò3fĞ1k1Ì4æšcj¡7Å£Æüs3fBkŒ›€š Gô-eĞÜlD)£H(µp¬ƒ>³ nôSa¼f/e÷„FzêÔWÍ®lT{•Å«)ÉÉ©ê¬êˆªÆ†ÆzwiM‚šW[–¨fTW«E´WƒZänp×Ïs—'*?:€-.W3ÇS;[QZù#3İsJ'4©e•¥µ³İji½[­ªUëšfUW•©åšÒªZÀ¬;‰ãpY<®´NF 1Õ@á©.ÿ±!jg·.ƒÕ_<d“EpĞÃø›IEá†»¾¡ÊS«¦$¦ìÙ·ïÕp)Ø¾×Â¤‚× Ñ«>\*<µÀÏFbJÒ"Œ ì³»›Ã¬	j M€jû	<´¨‚$\7ŒA•uƒ“’Êè¼¦ÄOS}™»ÂS?ÛXë†ÛÙ]0ğ)”O©h:ôUR7St7ĞèAó¡/Uë_GY)¤¸³ úT²‘Up¯ÑÕÈƒr­ ¦D¡Î»Š“WÓÑiŒMİŒñÇ¨Q`»íºJ”B«+×~èĞ€_¾)?ËÕüúîÚòî¤¹
+î(¬ÕÈ®P-¬a¼×< „¥¬Á«aĞ:«ŠáTÉî¹½tÍf³Ôz¥à•».-}6]Çt}O`xy˜ôkÙø:¯ë3x j£WÇª¼ZPÊ`èœV¼0WëSëGõP‡îƒĞÈ~p’öÑuÙÍì_×½è.ZÍ$GÇ–³Ï†WŒ)õÒ§0+(­aPÙ* Uíµ¤^8vÎ@}Å¿ôW×~:c'Oè•:f5å0CíÃ¦œQĞÈtmÜmdwõ9”Ÿ˜!ÁkÍe€Yƒ¢ód>ÓJæ•½œ©a×ºRä£¡¾›VêØ61&t‘m×0yê²Vºxğ#t$tĞ™Ä<ˆÊ ëö Ã®òrµ»ôšjçtlë:4º‘áÕ©uÍgü¨ùY3ø¬¡‚yõZ/…î.3–³##}RNÌeŞÇ'¿
+‰tÏæ“P›»œa\åÅt0³Îb/vôGU=Ì3tÊ «/êäÀ=ıÙÕF¯54tëë³•Nuõ]Ç©ŒæR†¹Â|sw]Ó¹¡Ç’ÒŸ§‡EAÕ+ûöÙé?~,Y$¢‘µÔKQb7NıÔXÊ“ŞØ¢ÏNy^Áp,÷jR5ÓÓú+:¦”§å]dŞUë|´”EÄ*æ3ªÙ™ÒAQ9Ã”Ê«¶7fw‹«úL>ZÊ´G×]ßWó§áÒäÃRñRĞ©a¥LF?ƒîó\Íká–à•w5Wõ#Ş\éN=ó³¥Ì¯tÂõ]ièĞHŸ½\=Ü^?çfTøfšÏ¨*gã£¯£;è¾z„÷|Ñ6º‹–é6“U|™ÅìİÓ×&¯øôdÜ­ºÇÜ°$môÆÚ»6=z•2êîÑUî:Î¾+Ê5-¥’yx•}6xqt3Mú1=ñùºkùîr	j™Ü»òëZ\Uºp®«©­6xówÕK‰ÏÚ|–D3‡êÜ£Ş;¢;Ä:¦Ñsá8Û+1=R­R:¼ê¿ÓSı8U³¼6Òè‡œÊEYl±¨ Îè<cá¬M„<²ˆİËƒk*äqEpgœÑŸîÎdrÉ`wèıhf¡M!Eã,F)ìÉp…ÂVÙ9=ı ›…&±9² Ú8Àl,´)ì1p5>³¼ıèˆ‘pe<œÓv¢Y¨>ıñbf;tÅEÇ´®wÎÚ«<6£³1pVğs½wé•ç1xÿ–ÑvOsE:å…LaŒòÙ½:>¡ß8ÆÏF³m£!îë´d1tIèd?Š>™õ ?—^Ì¸@g*ööL`r¤ôd²ñtÖÑ¬—ÙX¯”i»J¢——:”ÿ:fÇèÏ‡Meô³d§²É ø>¸>İÉa(Ş
+ãÆxF_ãÃX6ÃÖr‘ò3¿CãŠºHe$ã•Å<“Í”Á82îš”ø u•Îµ´Cé˜!‡Ñ—Å8•Ïz>fAÿ¼+º>æ1ZGzy­ÃÔõ^×‰ü.ÜÉh¤’½fÍòêTã]w*¨œ&2ü;©Ğ%á=ìÂ³Néx¥ëÃ§˜Í\|®Ld¶˜Åze0Yë°‘lf¿c¼˜ïĞ°N0Ş«Ÿc;0ëÎ_Ÿùúıß¡ÃòÍİ]‚™LŸò½ëà†ŞCù	¸ºïÊ‚¸VÆÖ9~»{äîš5vf£]óÎ„.¾¶k& {áÖ·æª~WõÕ’³:×:]s·k­°}«c=—÷e½Ù‡î»õ5Q×¬·œåçzØĞ‘•xXèéÈLæ³»1½Î[;ñt[çÑ™KYìOè˜Ë‹:aéye)Ëèl×àæG(å+Ã:ïõYæ³v£73¡ô5yûÒë7]µöÕ~(õš2ğÑr­Ì¡+ÿë™¼ë¼k©*ÆašO&záÖ#ßº¬“'”zİ­æ*©wj…6]]U <˜İórÆké5<:§Âü•¯Æõß¯:ıÚîÿ¥zÒ­tuæõï«)×¬©ÿázò³êAİ3ù².8uÖ:|=^õZå¿VWRPWRşÿºR—ºRg…áÿ›u%¥[„ıïÕ•”k¬ÖşêJÊ5ëJıgêJÊOÔş3u%ı³u¥Î§N¿f]©ÓŞº×•~,úşxuI_Ÿë™ÄÿZuIAİ«K×®nügªKÊOpWíÂÁÿí*“Âtì‡ÙÌ¾Ê¤üW™”«ªLkİÿd•Iù‡U&õ?VeRş‰*“úo«2)Œ ê(†­Îí¸ÿŸ«)×”ù«v¤ü v¤ş×jGÊÖ:k@ÿşÚ‘òOÔ~
+î¿·väó¬?Q~XñQ~AÅ§k•æ×¬ø(ÿRÅç‡k¶_VñQºT|~ªîğkTh ß…:+
+›‡%"”Í^Ğ¢ïµÑ7ã:^¦S{5¸İê,wµg~|¢ú3Ş‚KTsªÔU6¨U5uúFw¹ZQï©Q3êİó¼/ùæ`oİ5éoİuFQ:gŸà®/UuÔ:^İSúşäŸòÃ—ü~öûêU3W5(¥jc}i¹»¦´~®ê©¸Š¢ºëkªØ;tUj¥»ŞsÍ®/­Ò€v †Çêg»ÔFZZ»@­s×7À Ï¬FàX° T-¤èÙXéöñ©¬ÌSSİi‡ÆJ€\v×6 ÷¢K¢ãX¹ZÚĞà)«*…ù”rOYS»¶±´‘âSQUBêE!²ê8OEã|`t<Ã¤Ş]Wï)o*s30åU@XÕ¬¦F7ÅAé6 Ä\VİTN1™_ÕXéijdjª¼ÑêuVØ¦èOÉIPkÜ”j…)HCeB—9èœIzµÁr€ŞU€ª—ü«¦¦ÈØ:ÊèFEg›h~%(ÖP1T4Õ×Â„n6°Ü£6xÔ†¦YsÜeô
+¥¯ÂSÊF	*óÔ–WQ:+J1€+å™çfèZÄèP‚ZO#ˆ¡A¿J¥R×©ú=µ¡²´ºZ™åörĞ +)íF§§ô¢^­ñÔ»¯I¶Ú¸ Î]Q
+%êHu¿[Sº ¬†—WUTQE+­nÕƒ --/g”ë¬£ZZx5U—Ö+t¢rwCÕìZ†ÆlİVaÕĞÒ2 Ò@Gøği¸z&
+R	ÃJ«¯À;Æ‡G'4@¯¶zZÕEÍJN½›şÓ¬/m4PFR¹øÌÃ:ç®gƒæ{êËÔè;Œ¦sûn(ÑÔl£Ë@2ù^{™åK¢P›@”'ó<Uˆ¹ol‹QKëêÀ¼JgU»év€LJ§P*KÕÊÒ€è®íÆªuÚ]®6Õ–{îDUaÈéş”T<ÕÔª™Ø¨JÕjê=ÀV|ëJËæ–ÎÂÀk=
+UÕN©ºMPtWWP¤r³Ôì±Åê¸±ÙÅ3Š²Ô¼qjaÑØ	y™Y™jtÆ88NP'æç_¬B¢Œ‚âÉêØl5£`²::¯ 3AÍšTX”5nœ2¶HÍS˜Ÿ—×ò
+FæÏÌ+ÈQGÀ¸‚±Åj~Ş˜¼b Z<–õ‚ÊËGÉ*™§#òòóŠ''(ÙyÅ +R3ÔÂŒ¢â¼‘ãó3ŠÔÂñE…cÇeŒL [W]³dÉ" ĞÈ±…“‹òrr‹`P1\LPŠ‹22³ÆdNPØX ¹He]K€¡fM ƒÇåfäç«#òŠÇeeŒ¡})wr
+ÆÉR²Ç/ÈÌ(Î[ ÈR2Fägé¸)#ó3òÆ$¨™c2r(9¾Ih7œNv(t@NVAVQF~‚:®0kdm óŠ²F³À{àD>CwäØ‚qY×‡ĞÏ7E‚217‹MdÀ¿‘3F~Ká-*î@ebŞ¸¬5£(o•HvÑX@—Êsl6Ó€ñÀO*¼/¾TFôÚµzÑÑ^3³2òà8Š\PºõíÊº±Ì]×HuÛkÜºkdnT÷	Lku' *œS†«_cMK`Y,êèŞ­3`Ópœ »^æ>@»!é®·|<`u%zÅCÉüªfék<zÌSJ«a2E­ˆõ_YZÃ:ĞìfPŠ/ÖÕWÁùõUàLÔÒ&¸Z_u“7×{Ã£@í¤€ÎÒétüëİu¥ªæ¹«$BßzË&Uµú/éŒ}eƒ}©B£:›/÷4*úÙ‰ª¢°Œë_N~î÷#~<HÑó õ—äAJg¤şÂ<HùaäuòeRƒ/f\#AíLX”%WR}¹’ò¿‘+)ºşm¹’¢ì¿”+)¿b®¤tæJê/Ì•”nyÁ/È•”Ë•ÔŸŸ+)]r¥®æÛ-]‚xNâ×J—oº¤şKé’Ò]¶nüµS&¥Ö£şË)“ò«¦LŠ7eRyÊ¤\2©¿$eR®™2©ÿLÊ¤gL3j,E;#÷eGJ'åÿJv¤ø²#õ_É”®Ù‘ú‹²#åšÙ‘ú¯dGTY»JGâ£ühâ£ş‰òÓ‰ú3…%>İs‡œĞ4úú»XÒ $ÂGâ¿òÁ$V·›{«•³§z‰ìùj\ëş´ğ§¿a˜4¿jnUR8«ë*ë’¼ó}ñ“}™ı]yMA×øËø-·÷D"8ÙáØGÜµÂY
+„c´÷Z4ëGÛ«ì~$z0#ÁáìnrÂ1EÀ1„]q²c0;±c ;:p ² T;£m‚ıYÛ­Ø‚Ã}+;£m‚ÍØ„îkfvÍŒ ›°M†kôãR¸fÄ
+ê	×èG\£W–ÙH‰ÈÄt„¸ûÁD!Ã‹Œ.yÖ‹0Š8v³#r]YL®\G4´}Ÿ ´iäûÒª‘ï.çß-&—sÈ·­äü]#—4òÿ<K¾ÖÈß4ò•F¾Œ 5òE‹"|¡‘…´¸øÏ?S„ÏSÈg
+ùk+ùôş@áS|ÒJ>n%àä‚FÎkäœFşO#g5ò‘FÎhä/­äÃ‚…ËÉÁäôÆát9yÿT¬ğ~+9KŞ{+Vx¯•¼ûN€ğn yç¤Mx'€œ´‘o…*yÛHş=şÜJŞøoÅ’ã˜„ã1äÍ?oö$:æ'ü)€ó#GáöÑpòF yıµg…×5òÚ«Ó…×%¯-å_u]y%Vxu:yÕÅ¿K^ÖÈKå¤ù>›Ğ¬‘ÃÈy^#G,i%Ïı!Txn09|(D8œB´‡BÈÁg­ÂA;yö€IxÖJ˜È30Ù3Ù¯‘§dŸù£FöjdFv‘§œdW yà<ÙJvÂÇÎVòèÿ‡P²>v,&Ohd{Oò¸F¶iä1lÕÈï²E#n¶jd³…lvñ›€Q›ZÉF²1‚l€­ä ş‘0ò°FÖ?ô¬°^#­›.<ô,yh)¿nE¬°n:Yçâ×jdhÇ<˜HVÃÀÕ®+d]¥’Ld%\Z9šü>~§‘û÷’ûldE,¹W#Ë5rFîÖÈ]¹S#wÜ+Ü¡‘ÛcÉm¹U#¿M!·¬&¿ÑÈ2,u’%
+¹Y#‹5²H#[ÉM­dFæÏÛ*Ì×È¼­¤©1Thj%¡¤¡•Ô/&7h¤Î“ xHm+©i%Õ­d®Fæh¤J#•e&¡2…ÌÖHE
+q—+‚[#å
+)wñe³¡ÌDf)¤´Ä!”®&%Ø.”8ÈL…ÌĞÈtLƒói™:%T˜ª‘)p6%”LÖÈ¤V2Q#àÜue‚FÆk¤8‚Œ E×;…¢Vr=Ü¸ŞI
+Ç:…ÂV2¶À.Œu’;AòGù2z”]@FåY„Qv’g!¹­$';@Èqì ’ÕJ2GZ„L+i!#2b…­$`ş¿İ”MRÂP„Áïjà%Ä0ø(òã*Äµ×È5¬bãÒ…—à,9W¯|—°¬²w3]3=Ó‹~KHW¤†ÕÒ••ÇÒåõEËkÍsÆÂğòhx¸Ÿ7å>a>eŞd¾S3GË,d¶VÓIE¦!ÓTM*Ü7rgÛıã·nFÃ…Œr†µD†×W†Ë_.bÎ;$1ı5`ĞéùtZº9gg©ê„œ:Ä1íV$í„–H+¢µµ™ñ­N4Íè]šDV4zçØĞğ©[µzNÍöj	aFàsdğmíª[/ÀÛ)·Š»VÚ2:§2¡l_+×)¯•£qRuh80ìJâHÉ ’*•CÆÚ36½´}
+šâ¶˜}~ÿ…¿>àÑ.ü sM!Éendstream
+endobj
+110 0 obj
+<<
+/Ascent 759.7656 /CapHeight 759.7656 /Descent -240.2344 /Flags 262148 /FontBBox [ -1069.336 -415.0391 1975.098 1175.293 ] /FontFile2 109 0 R 
+  /FontName /AAAAAA+DejaVuSans-Bold /ItalicAngle 0 /MissingWidth 600.0977 /StemV 165 /Type /FontDescriptor
+>>
+endobj
+111 0 obj
+<<
+/BaseFont /AAAAAA+DejaVuSans-Bold /FirstChar 0 /FontDescriptor 110 0 R /LastChar 127 /Name /F2+0 /Subtype /TrueType 
+  /ToUnicode 108 0 R /Type /Font /Widths [ 600.0977 683.1055 683.1055 837.8906 500 678.2227 674.8047 379.8828 437.9883 678.2227 
+  592.7734 556.6406 778.8086 437.9883 678.2227 850.0977 342.7734 711.9141 437.9883 773.9258 
+  379.8828 600.0977 600.0977 600.0977 600.0977 600.0977 600.0977 600.0977 600.0977 600.0977 
+  600.0977 600.0977 348.1445 456.0547 520.9961 837.8906 695.8008 1001.953 872.0703 306.1523 
+  457.0312 457.0312 522.9492 837.8906 379.8828 415.0391 379.8828 365.2344 695.8008 695.8008 
+  695.8008 695.8008 695.8008 695.8008 695.8008 695.8008 695.8008 695.8008 399.9023 399.9023 
+  837.8906 837.8906 837.8906 580.0781 1000 773.9258 762.207 733.8867 830.0781 683.1055 
+  683.1055 820.8008 836.9141 372.0703 372.0703 774.9023 637.207 995.1172 836.9141 850.0977 
+  732.9102 850.0977 770.0195 720.2148 682.1289 812.0117 773.9258 1103.027 770.9961 724.1211 
+  725.0977 457.0312 365.2344 457.0312 837.8906 500 500 674.8047 715.8203 592.7734 
+  715.8203 678.2227 435.0586 715.8203 711.9141 342.7734 342.7734 665.0391 342.7734 1041.992 
+  711.9141 687.0117 715.8203 715.8203 493.1641 595.2148 478.0273 711.9141 651.8555 923.8281 
+  645.0195 651.8555 582.0312 711.9141 365.2344 711.9141 837.8906 600.0977 ]
+>>
+endobj
+112 0 obj
+<<
+/Filter [ /FlateDecode ] /Length 733
+>>
+stream
+xœmÕKoÚ@à=¿ÂËV]€ç¾ˆ„xJYô¡¦êŞ!¥*Xäß×gjP[K0ÇöñÇéËÇv©†_ºãæ)_ªİ¾İvù|¼v›\=ç—};¨Sµİo.·³ò½94§Á°Ÿüôz¾äÃc»;&“jøµ¿y¾t¯Õ»Y9>,óÏæûõ©iÏïÃÏİ6wûöåÿwŸ®§Ó¯|Èí¥¦Ój›wı#>6§OÍ!WÃ¦¼|{=å*•óšÊÍq›Ï§f“»¦}ÉƒÉh4­&±r»ıë^Æœó¼Ûühº[í¨?¦}®K^= §’%KÉó@Ö>§Ñ8!ëÇÈÎ\Ö‰RS—¹ãr}=G~`MYg†,sC—¼äëKÍ’õ3äÖLZµæu¬YÓ¿Àskúç%Ó¿®‘é_­•şšşYY‡şyÉÁ\jÆoûS?ÜåÙ]ßåÅ]^ŞåÕ]^¿åD*™şs¢?ÁèOØŸD?ô™ş„=Lô÷CŸéOØÃDÂ¾%úŞK¢?aoı	¿=Ñß}¦¿úLÂ&úûa0ú~¡_àú~¡_àú~¡_àú~¡_àú~¡_àú~¡_àú~¡_àú~¡_àWú~¥_áWú~¥_áWú~¥_áWú~¥_áWúËÿVéWø•~…_éWø•~…_éWø•~…_éWø~ƒßè7ø~ƒßè7ø~ƒßè7ø~ƒßè7ø~ƒßè7ø~ƒßè7ø~ƒßè7ø~ƒßè7ø~‡ßéwø~‡ßéwø~‡ßéwø~‡ßéwø~‡ßéwø~‡ßéwø~‡ßéwø~‡ßéwøƒş€?èøƒş€?èøƒş€?èøƒş€?èøƒş€?èøƒş€?èøƒş€?èøƒş€?è¿uˆ['@¯@ŸûÓƒ6×®ëÛSi†¥ñ åìÛü§_'ÌÂç7’™¡endstream
+endobj
+113 0 obj
+<<
+/Filter [ /FlateDecode ] /Length 20522 /Length1 38552
+>>
+stream
+xœì½	\•Uú8~Îy×ûŞıÂe_.»(‚JzEA1B@±4E0á‹k.)š–™¢i¦Tjj™9š­RVf³¨Í8Ú4MVÎ™Ó×i1xı=ç¼÷²¨5ÍL³ü?Ÿ?øò÷}Ïûœgóœs¯#„Œh1âPnÎä„¤¢sÂóp–V—Ôš¦¿ „ÃáS:·Áª‚S"Yp­VÔÎª¾{ğÜÙñp5gAÅòKk>‡ë¯ºõ‘Êò’²˜¢¬„r‚çC+á†q»Ô×oÂudeuÃüÌ—ÇÔÂ5ÜÃs\¥%1ı‡‰PŞE¸FÕ%ókùñn„&Ã5rÔ”T—‡º&=‰P¾ŒĞ-r­«¾áÚ94¡uú¼¶®¼v¤ôWh®KDH¨D˜7á‡ ída3@ÑÎÜoP±z‘ãdşSTsí×¨ëšYË#‡!·"½9‘ãÚ5Ñ[õÆ[¤jüQ1Â×>¸†´Œ0;ˆÖZÌîà##ŠHB2Ò!é¡™YÙòFväƒ|Ñõ?~È @„‚Q
+E†ÂQŠDQ(Å ~(õGPˆâQJDƒPJFƒÑ4CÃQ
+F¢Tt…FşcP‹Æ¡t”Æ£	(MD·¢,4	e£”‹nCyh2ÊG¨MASQğòvtšf ;Q1*A3Q)*Cå¨ÍB•¨
+ÍFw¡9¨Õ ªEw£:TP#šË˜2µ¡ğû*Ú‹¶â]pU·ï†;­ä ZıÚĞ1|¯"áŞ.t‚Íè·—Gx"ĞrúŸº‚óÑA€‘‚½qŠ$òˆÏæòy|ÿ)ãëù“|1_“¹'„Ba)Üë Ó·€omøÀê÷'.™;ÊãMèî$·}£ğ ÿZ‹v E€‹7v¡&²ˆäÁãÂI´~]ğü$Ş†OvGğ2t=ÂñdÚ†Ï ]'Ğ—h—Oš@‹’Ià`„÷· züĞ•€{€=Œ5“ıæ
+gØïeÔ#ç£b›è-EÀ(”c»ğ1Ü!®G­èww7w/ç#øİü´Vã WŒÖì-ô±/ Úéï"
+Ìã‹ñ^ô'¾Xš	°_§Á˜IPTÂ1O´ M#ñrn`JŸ£“ÒD>ŞÒ½@5B.nÈ×Ï÷¡h ·­HŒ^q˜ğ%¼¹•ÿh^‹ _¢“Ü8ĞÇ
+şğTmDèç’(ğÁ(ÎaÙO¢2Ëö;o›êx³(l`Üu—‹äØr÷8Ú®]ËÊ
+Eû… ı\”¼ŸŠøğ»~80îÖÜ©ı]éãÜPÓ‹ÇÁ½ÉS¡I¯à6ÜOÇÑA÷Qğ/³x¿£´Òq¿åşˆ÷[ÊG€‹#¨BİÈW;Àb%à4ğß"ñ[,M„G	í§;!ËéÓ‰^Ö0kT˜5¬‚Gõ\`çÇêFÉôõubìµkèîkñMb…-lY$4­Fî¿>pµtÜ¿…İŸÏoÃàÎ‘	x—cÚ~N–!û#Şâ+Ñ+ÙqîÔ).Ce0f ’¹|›D}EW»wıxSİã-‚ûÙı"„¬"šš‡Ş)Nˆæ¦¢¾é §âßgÀ;ù9õÜ6´Däèø¢å|Çéw ƒ+‰8ÙÎExaşÔ%yÂ™GÔWñhÄàïøSüj(‘|Pïˆ¥ƒ(^j#÷)¿ßÎğZÚBÇ\~í#îMşğS·8Ã+ô+-‡å¶äÀ=~É1+ú­Œ8·&y°¿>Æ[æCåÄôdK'püt{{;CçJp…qtLôÁÃ†&'ùøÚ¡.‰vo_Ÿ‘Øîi&':Ì.JbD8í;¯®MM­»»=kïÌ’ÜÛÆÏKÏ7¶áÑ«&dçlš^P0~Z~Aî¥%Kî'wøqN 'ÛÏï©`£1>Ş™10î‘äáS§nóŠz:ÈdºıöŸÎy˜êåÿ{|1xô4È©w˜›×m¼-0=P¿r ÉOü9Òaß5¡ÖftØt4”ÒÒÁØËPL‡fğ±[4„­–aCIı#y…O·¬¦0g)}·zÕªË]¹jÕİÜ»5õ/½õéÅ7¾°æá¶­ï«Ÿm}ì±­ØÛ]štmÎñ.¦ÇzëôF&âŸy"oåƒNÀu<’–ó§S;S)_O·w¶[.Y.QaGXáÀaö0òÁ—ğÓuU WUŞõ¥jû³÷z}³JhÕ7¼=$<$(OÎb‹p»>e$íMé†{aK !¤ÿÖA)[Ãù­†­^©!h 9Õr:µ=Ém[ç;Ow¼bµ¥¤xDl7aÊ&cQ2
+''ùúĞ_àš×÷>ÎU=_Ró°"‰æGgL}f&½Z¯èUáY7y¦{F\Ïg§Ï%Ş’•O›æ­øwr<·' =·{Ù¡¥›/‹_$'çt`jm´…æ Ì¤0›¸‡?
+>€ c\#wD=D{‡Ó*³·£c†uºi¶Û¹i~`Ì :©ÊtkLt(¶{ƒÂP'(·¦&7·Æ•ãœ; >şğŠæƒm‚Ë•›S]“S»dPüÀº´û~~°yÅ8ñeâ0À§‚ás/z„Ş¿ö{âLÆ?Ñd|-˜ÉKzÄd|ÿ² Ù¿8oÚƒ mè>Š€¼ÇˆV83¹‹¼À“‹˜ô„4	R8Q¹¨7èueQ2Ê%É˜¦#zşS	í2é‘8äÉe¨1Y:;SOw$Y©vP–¤v$–€¿—,üg’Evüg×_…c»Ûñ/íÄG©§ğ@u@„vâ#^V¯¨W^ÆOäá'º›ˆéó«@Ë„Z¢Ó_T ß‹’,€Y–„‹¢@8Â_ä€¾‹àë c”fÑb±€d—"a‡j–ÔÎÓ©¶›Ğrs<×E`L@‚Gi§Wñu Pq
+ğ´øuF:ãelÀ†—{šÌÏ [ÉAĞ7?4Ñ‰î…dÊ÷^QäÓx‚Lï›Ñûä+ıûfÛ:d’öÇù[Î·Ÿnï°2$ÛA	-— cQá3ß$I Ü§1dè0jÙm‰>vo,Â°»»ö†ÆS+/œ0iyÊº}êÏ†s¦ºšĞáxĞŒ´Û""İ7gµz!‘ò²F`:Ä%òå!N³„–ñKğs­)–Î[÷ëó§5|exãÙ ”p¡óD|éú\=7=Šy2+Áá!'Nœğ~Â®ªÂ™®»ÕGq¹&Ó×¹½äOl	¥9Í¾GKd^‘@x™aË¿u¿Wşí0¡uïpË(;Í‰:§.WW¬«Õµê^ÖIÓ±5²‚+ví%‘{a¨3d =ØXÛ@Ñ}…—`¬PTì¨GÍ¬ü¤Ù×Ël·††ø·¼lV‹	´Kö$NŠŸè°t¾ãKiL=
+.›şmOêHJJtZõXOÀ€ŒŞ|€5Àæ*ãé8ŒÓã0¯dÂ/v	cï«¾Ÿ£ÆUâÈªÖYx¸úx¥>ZÙ:K=7ëñJõu\œ¯¾„«*¸åê®Y-ÁÛÕ’-êÍêL¼›qö¼Ò]´Ô¬Zô†YI?˜}¼è,'Š^‰ÁÑıˆ^¯ã ’›HbcÒ¼¬–p%0–÷uıÃâ»ÂG\!X#î÷YeAıï` û(!Rl€ÄnÑqXŠ–‚˜He¡£ò¨nİo ¹Xòo¿u¿™	G@NªW|S;}S¯\è ºĞÑ~úBGj ¨ÔWø¦tk,5!ÓgVß”îs\<‚}­ñ|é°!Év¸°ÃM+s±g5ÁÙÇ×:
+G“ƒe¸ê×³+~åzÿ­ß½S6}ßäÉÏŞñÑ{½WÖ°ğî›–,¢n…xĞ9ã7#ŸÙøäQÓ_.ò¡ÏöçÕ‚ˆƒ[÷3so1ÎZX|FÍ±ÖL›ZIuS ±DŠeñÀf{10ZåiŠŠ6ÇDÆ¤¡‡!Ç?à÷p¤ø°áhÛš~‘ëÇ„Fé8£İ¤3šÃŒLFó ı`yÔ`n§œƒ?Şô‰ş12ş¢\m§©Õ¥//yÜê…¤+©ØHÜvNàSßğÓ{zßJÆ^½	¿šRZ:¥ ´´`Û‘k=òBç¦ÂÒ™S¦”–qƒZ;§µ†n;úÂöí‡uî[ÚÒ²tYKÓù^8wî…£çHIËÒû6l¸oÉÆ¦oşO4{áÅß;zä¼fÃK®}$¨À'JÄ'ØdXaµYõ+½ÍfÕ­@:»]Â¢¼ÂÇÇN0‡W‡£:ì%a!VÅK³ãü¼­^Š$QgõòR&Ò?;<ñ¦wÓlz'"%„ëg7‰ıbÄ¿-1"×ù­1y)ñz“ÅÛì1¦.Şf²šÁêl–A¶Ÿ†¬õ¹ T!©9¿qáËO€¿–7¨úÒİ¬4Åìsê{O¾A‹=a‚]…0'a<İy@ÒáºØ „C‰¯¾?ê£m#Ğ`Û8ıT„§)¶iÓB‹g…,B¢-x3Ù$·è×Û[|ZÂ7ÕéuÙjˆ1ôó#:½¿Áßäd÷	MŠA18VaëïÕß»Ÿ=!i¤n°-ÅktÒD]–÷­öÿœ¤B<MWd(°yİzgÒlC•µ8©/0,´®Gëñ&Ò"l•¶ÊÛå-ºGõ[%µ&íOJ™¦cfj MÃtx–,	GÄĞ\QÛdÊ2ÿx¸Eq{ÁéÖ;weª‹pçÈ4ñˆ¡r:öí\[yaÙ_ÕwW¬HLú}ÛäS¶«Z6’‹¸íñ©¿6ÚIÖv}]t¢î>Uı‰úÑú¢)Øë7‹?,}oê¯GFJäšš<â%Ä
+ìb±b˜SÁ÷¡%<üM‚D‡{Öä4:…\¡X¨Z‘…Z\`1x¿úY$Ú £æ4‹ M&£„8›ˆ¼“å<
+0Íã™Y›ú¹I…©ÒDP$vo›oD42Ø6Œ,Z±tÙòÖ-6‰¶OÔQŸ~ªüø/ø?|€Û;`¼0‹
+•'a¤·ñ^2‚ñR¯ôÀõJö±Ù½‰1Ô6d0Ù [6¶._¶L´u¨©üAñ—ñëŸ~Š_ctÜB&rÇÀ­(Ûg1êoĞI<„Pn³`5lV°iM6(œN´r˜#ÈÛÌëuŞFÑiÿ…¤ópø2÷L¹PR{Ü€ëDlÄR°Mˆˆ‡	Ì£¸cêf<k„º¿Nİ?ÏR7À¹u8—ÿàµc3O¨ÍxÁ‰™Ç^+=¨Í'ngÁ™xğ£N+Òá­';d;Šh§ H¿Ri¼`¡Dl…`IÃø0+·ì:µ»ë(ğ]§öÒÆ^2`n»fÃÇ
+^Úßi€9ó2mÎì'Ò™ê;‡±Ióe:gVŸQ_ÁNx¯@š`‚åÚJxÓüóï¸§ù0p	ìú˜,ÛAñ>öÁĞ÷çh¡àAÙ(¦6-	¨*­7^K#˜^„9^ ÇÀ!.l%s	íL¨ ‘}}8øg"ïíúò›jÍ—6C>¿Ösœ^b«µÖÙÖøé‚Ì!\=ĞÎg©~_ ¡¦!Äj±%'AÂBb’Õ‚À6á/YM§¢ÁÏ·X§~õí·êWX'äª'Õwà8	C'ãÁ8¹U­WW¨Íj=~ /Àñ”îa>2èUwÚÓ¸V´
+K$Ôª“CÅ H°ŞrÚm˜ZCG»Æ”¤+´,$iÍœ™'Ó‡…Y…!QÉT¤*zSş6Ø¹c/_?¡mÂÕ3{™~l„ñ&ÍAh›3Æ? ó²‚ºXa’fyÜºÁØê½G­Y &(A¾N¦Fo£÷qÇRÀ…c&®¯°àÉğéÅrá3¼?ÈÂ|2v&ğ…B¡´_(Ìlö—xÄûó| Ô€æŠõAKÑ
+ÿ¥K—íF»­à£Xn†±Ì£;»æiV""¼Š¼Ú™ŒL.™ôÔŠ;OÍ_xzêEì~»¿zeïŞ½óğºÕ›2çmLûÎ ¤‹¯İ±³6Xı£+È¼èï‡jñÈî¥¬Ğ…®pxµÚ­ºõbP«c}Ä:qıÉXŸ /ÄyûE;,Aœw¨NŒ¥lğÉ÷p@Ç8 , 7âËT®ã¤bŞ´$|¢®,¤$´ÄQÆƒƒ§9MS.-k€‡h>r£×=©şR½8ãøìü7«_:~xç¾C-Û|dòKuõo}‚rQ¡í½ÿETÔ±AI×Ş×²k^mı¢ÈèƒÇ¯Üó4Õí2óĞ+Şo‰39#â8câôR+Ì*–è°AAA¢Ì˜ïÕç{’#%ìtj;pÒÄ’z¨î<ò-ï[T¨ıõ¨?š á*4İ$< EãÜPœs9ÆB\ñBn96‚0u¡'Ó2ó5œ¨¬QÏœy«k†Õùw²3y·ÚŠ‹1m•îÁh†3‚¬+,Á­’w«e•‘´¢%Æ5Òß ¬pA05C,¸·d,½"ˆ…ÚÉÒ~‰š1µcÚ®É‡:!+å:²CFß[0Tïsş]­qSã®âHõ´úùŒc•Ó^¹ë§o¿ıÓÛÏÎìU6›ÕKş«ú7‡ãÄ ÄC[·ŠŒf~e-à¿‘ù•H4ÕésèÔê#¶ùì´´V…¯Ze×ù‡xqa¡Qàh@‘.0Ws¡óB
+9½O ø$9ÉäO'D ü@™s^É'f9á<¤D8¨[
+Kò!;Vnß¾¬Ëz4ëÍSæ‘îúêå?ª]ê%œ‹³åFyâñ^xü‰#dA[d´ú…úù”éêçùDı3sT3ñÎmµg7èT%ÈED¥N?Á
+ó~ÎÊƒß@&œÀapğ¢·vWnpÁTHS_„É'’@NÖaÃ‹œ¶©‹\€"LfqûÑ~Qáà¶›{¥ë§°Ú•,œ)¼ºD ©xÿÕÀãÕŒÇ0ëŒòÇˆ­![mëBÖÄ<™ègˆìd2ëÀ“ƒ;7‡Â¼
+²şöÆ\Í²+ZuëÍÓl+’MæE‰™mDx$ä_^ dõC;w>ôĞ®êÎ¥ëĞµß ®[òğ“êW_}¥~µcÂºeK×¯_ºly}Ksó–GW4o)tXüü/ùüâğ7Ö½xñìÚ7pIÃÒ¥pxr{¾™Õ(¨ŞDH¡şxòoUvò­h•Oh«eÏš()((Ì+…‡™Ú õ‰ú7Öø´û¿ğJà+A¯¿Ò*íµµıÉÆŞc:nór'–(YÓ•ğhì!¸ğaÖÖ[A[F˜óõ[lù#Ì#¬êsêÇY[ñ(·F…‚®@¾b+¼›ÿò	öaÁm»z{ÙäÑ'JÓePœc|«99Mâ2~„wVÖğ“-‹$ÑèqEòÔC\>uŠ†z>BÕê4÷`ïëP”Ó²	i¿í‚©‹€ıˆÂ€°4ä­Ò°«;9Eó ÕuÖ““œE3„s€ƒˆ&9û“­Ïá­óôD° 
+h«(¤	<ÁHàv‹OI˜ H>´º#IK+Ü3–ëm:bÇC°pîÛ¯yùª*î²ºN]ÿjş•V.ÎqO¸ù`„tHÜÊ	<Š lè®3ŸDÏÒ*4=¸'v_ŞëÎí<¸ç8ˆ[¤aœ°pG[!·
+"!8M åøİø)I$‘ _¢êƒü¥µ!´¨†Ù˜¼È]>¤&ìRáj&ƒõ`pûA/9ĞËrç€ÈÈ+Á^<ò^áµÒÒâ»$`Ô	¼‚A|ÈExEÑÈb ~Ø‹EKº°Á,Ïê®ÿ%\úR½rÉrnÑô÷ĞİBe¡C«eyE€ÁÆ}ã?5H3Ì”$˜,áæ'^yø´i)ÉËæä<_2ãÕYmL˜65!FEUÅë¶”/-,2cPQMÆØ£)Ã_Ûµª°0aˆ¿=u°–ÿ©[¥»…'À‡d¡g’ŸÓíñ·r{²Ìƒ“ÍÏ$îf&rÏ°±“’‡ ~6ÑÏĞ/`@H¿LÛ€şı2ãn™ÄŠÔp¥©o0»KÑVàÖg§ß°¼~)	Â–ˆ´‚«E°2—'“zMºö
+ˆvü:5o¨3g‡f'dÎæÁÉ÷ò7˜Zl´{8$Y+ÉÄDGRŞhÓ"Î}Eê¬b´)ÒPpb<­—[`úvõÁ{=ğĞÂkIXê£³ùÍoŸµuäÚ‡wvVªgö/úcñcÏÕWWaïÇ–|S9í^õì#‡Õ¶Å‹W¬üÉœ÷âi|×¢[sÔ×Ô‹Äí“;\³s‡:aRæ7o¾yõÖ¬e]Ÿ»ëhî²ÕcœêÏ^İ®şyveõ”Û\%³–İ{/Î|ñxoSó¾Ö™Ÿ,R¿Q)Rş³µ–£(è5çd…	˜ÍE±Uád%³($¨"½©³rŠL@#µĞF UCV4Ô	
+dÊíZÍğÂé[ïÂB÷IşÌ4½?à0Ğ‚Aš›‰Y2Ëf4ÍEµhÒIX&"§ã}°?)ÄSI®a®$óñ\rWÇÏ“æËÍx%Ylx„læ6ò¾Z’Cg\Aª—H”ºèc’òë•]w®<#˜ºü¹}Wà&u	‹_tm´h—aé€øáZ]‹m	nQ~jÕËÄË?T@¦ Á?(^‡‚l|uBÔ„h¾É’nVÁJI<`*`.§©Jw#*¬w Ãëñ¸'{ìIõ(°aİºªğŸ^]|OËNõò·]É[]ï7¯^³œT¨£\uw×îzå¹UOx;N<òæï@Aë¯}$Ä€ğGCÆÇMû”+~íãÁü­k$#Jô¶PİáH«®%4†@æ(î¼dè0º†åIR„˜ŠO—^CêelÁhé§³?»Oı©º¯À“W|&Ì<sçõ¸ú[õ¬z|Æ§&LÀÛ1HoÏlø(ìwó1ŞiG-:à E&	şÆ$¤ãmlv¨1bÍb/Æ0wì‹
+cçXŒ×_/ª~¨PÓ`œx£Z©æª%BÂ·ó°ÇqØw—ºI]¬şDİÈ|2[ã†ñõtt±…'-h‰ÜÂÿT°N‚ü”7P–œ¦‹¹ny%5Âè,÷toqû»Èñ®òuç(šZfìíúho7ü€¯C±N›>ÿS¸¢×È¢ ÍúŞ #Şâ¦uÕ’Ü®ıoS¨övCnYÒÜ)¥8HÄ-\`‹l{ÜºÏŞbZ'¯	!(È:˜Oöó×[ ¹îè¼ĞÙŞ-Sõ4siQ¬f ®Æ-EŞ··|ùcê!bkT?iUŸPñj<ãa,¹j;W«—ÔÏ°¶İµû^·««irŞŒ«qŞ<!ã7w«ïª¿R­¾å¡]Éxçô–[ÈOy´Dpa¸{XÛÉ2ˆÔĞH<Ë8S`k²¶8ñÖÛä÷o¿İôwm%eWP.»aãõ¬ÿsô,¡àXqËÂVYØL›Õ°Ó˜(h…­µÂvA¤Ğ*À»
+™(¾¶Q­`pô(Íé¥'Hjö£%ASÜ(öyÅHT()l£Ó˜k,6®5n72ØÑ='|ëí“M½¢Z¯~qeïÆ×ºy2›Õ>wö“­±HVB¾Õã9ÓdH>8ô¬N„äB”)zMKØt.•Öšz<Î¦0d:Ã‡½	æ‰Nö!ı„~ò02T,'ÂX¹€Ì"sÉ<aY)¬•7GåO‰|¤ 9I Ï,ùqı„bi(?T*‘c8'Ÿ.8E§ä4ÌäŠa1Kš'ÔVs«…ÅµÒZÃî1ñ1é÷3éuîué7Ü{ÒEîOüEáÏâWÜ×Â7bÜô»Ñô»98ŒúX&Õm˜ï
+äÔ/»’©lW‘y]:?"¿è„ºíf6Ûçå40£ÁAÜÄÓš•¶^’èÔ%J¹Òbn1ÏkJ†ø6ùMçÀò3{5b(À0 —ƒ9«$KÄŠ‰LOÑ):RŠ.M‘'Ãe=D#E‚"ñ£à»‘ÚõÖ”ït>İ«Úİ<Ò™ÑZå|!GC(vâ-y)Ñ$ZrHÑŠC,QªÈ=d‘´@YL–JK•‡ˆõœä"p#÷ÓÆ©\¡\¤+—gëæÊÀ>ÀµàG9o6—ÆÑzlåˆïÅMxàëjÓ	µ©]8Ó)s__ „v"]ı°[Ï’™ßYà‘¬´Îf…<#ˆRK$ˆ*¹}P§VJM¸nešiU(uIÎÄ¡d¸4Œ—ªH…´˜H"Ö‰v fàLq
+*–ã*q¸ß/¶à-âv½…a.ÚÊ-dc»z¹k6`ûm(ÿáÕü‡ß†‚ÿ§¾ìl¯^‹µh5<s2ço·ø1ôzÕğ¨‹JfÕ»Í]±¿\ÌyµsçÏc¬^;GàùêJõõuZc²Ô6õcõµOÀ8OØ¡Ş®n£³¼æÇ0CöÄ"ş‹¼Ğ§Ä!lE&<F£­4yk^KSVÅsêÍöPûhûögí‹Kİñ›‡È= €×«lÙò€:¿ù-Åğ[õm!¡ë7¯xx×GçŞÿc×nÊõk7/‚Q³¿ÕBÌØ`4˜°ÑhH3‡sü€9Æc ²]ÿ@Æ¢Ùjw;cTJ¯Š.xÓJ^/ÖyiK=$}8+WŞ‹°hüÃ#)?u#¯şB}ÿs˜³ìÄ%”‰Œ©êƒ¸¼ôBAè9çÈó8E´Ò	&<i"ìooÑy·—èyAä¬#ù˜ÅßŸ·öV‚|0ct;å´U‹ı©”İ¶ÛuÄikGÎ–
+.ôÂ° ÉŸÄÛ‘{Î—BQ8ŠDs1b´-Gë!CñP’3H¥ĞÈ7
+ó¼VŠ+¥GÄG¤Ğé¬ÔçëEWW°ErMÃºÅÊ=0fÑ¨“g_¸zşù·ñ›u.ëZ¥>ÜÒò09êóĞOÔJÜ´qf×*áÌ{¿}àÉéºÔ¼lÙrj“´^ıÈ7ıÄ™j4“„„†È:")$44$MÑ‡„òvŒì{oğk±ò-hC$gıB}h „ÂıM%ïğ~–ótGÃ:cÑâÑ÷Âçİ.ª÷:]Xƒähú¡ĞØ„ØœXNËåX¡ ô&EÍì©ğêß¹sçóóv-üãoÔ÷ÕOg¾xQGİO6oYôÇ·±ïßª~'ìx}ØĞÅsKËCıœ=tö‰	¿LÏXù“š{Bı¾òô¢iŒ½
+vE÷-Hh¢Ó$jÎÜ	éS-§/t^`v””ˆoİ¯Ğú’ÌêK2’=õ%/¤Ep!¡’EçÔÕê¶ëtÓ9÷Ê‡ÈŞuéD×%H®¡Õ%Œ€O‰…ñ¬Èéô‘‰U„ÓZb“ƒ”áQÇØzÂ:[ÓL’;Ë„‰l¨×Z¯í^+Ú™f)Nì;öÚ¾ê`«€óm¼|êÔenuçêyõ=ÜGR<s#ıÜÃÓ8ÏY	§Ezî±¶Ò]6ŸEt„È=ópÂßgreªã3×ŸÏ¦q÷rË8ID‘yê½I  ôGÑ8šÄò±B”è‡£dœLRùTa˜8¥ãt’Ég
+ãÅ"T(V*¾JXˆæÂ´h¿@hË Mb,Ø L†t0"»Ş8…Ïâßıºë8øn_şO8a4!i­x‘3Sˆ§|€¢ã½B0İM!Òö.¸C®z[2¤)âˆ‡ô²A¯èdmßˆ^BFËi÷®‘¤¤›Ûîs÷±Øû…HD(W)6¥Ÿ	Qw%V•,2IHSœJ™Mîf)ÅÊ"ÒDîš„ÅÊFÒ"KHG àEnzÇº'éW2pvŞ.û,&&8D‡ä#t‘J”Şar˜RÉnŸ,$ÊCu)úÑ†DSÊÀ	Ë™„4¸i²SvêÆ)“N“Ó4•@Œ7äš*È,®„Ÿ)‹ÅR±\¦+SÊôó@‹È|nß ,HóäZy¾¡ÉĞdZAš¹•ü*a¹î~ıZÓ&~»éYÓí4ÂRQ)EèpÄ¸wÀM§|DÿœTW©à»_SAb6ş= ?°\½¬­vçåNÑÈ‹H1€ê‡9ÎÁÅ¨I!ÓÁ2YJåxëş´Ü©No–¦ê¬ ]–«‚ Á¬$KG÷?§7<’¬ã%$èx…±~ŠÜhR$ñ’³¸7UUïP‹~Gìî­GÉ_“E]Ë¹`ê3:Ág|Êbñg?wv¬íÄEùPE’Óh2#‰w
+àM$ó&¶ï7!¤PuIˆ7BI"H.ƒ8‰SpÊ·‘Û„ÛärrYO,>8€U¢q,7çœ
+ÌY¹ù\­²]¡"ã:øş,Ş†=ÛuùP±…Tt~³ÀãZ{ğ9”å`9Yş)Ó¢{šk@åpD…VÙh}IaË¢¶4wÁÚ=İí[…w:AÏ%?)ÒK-%› ëN/#½ [ô	ú!\Š<Z?›(çè¸"¹‚«’]úyÜ|¹I¿]ïã.ÎÓ:VÏ·tærÇ¿½…Ûß9K8³å[×Ş-üºîõş©¢7øí‘N3¿G<@ö ç`êÊErweÍ‹zo*`µó$¶®|…Di=7l?Ş}ù²
+ğÖ~Ó©í«î³>îpÀüwÖ‚!yÁ{Ùb0]×SXÇÙ^Šk¢ÓÂíÁŠ+Ë‹î­qfmİõÀv_±­qASa˜!.uêçŸ‹Ş_ÿ~­È¯¥õZn·pùp?§®-‘8:ş†Õ; cn¥æ’Ğ·Ô	ê„·¼ë^­6’T;Ô`Ş[}h4ÿí¿Ï[h-²Fìç½¿ı­úÌÚµš¾ìå/“UbôäÔáƒèy‡yËy÷wÒÄÊ<+;òğ«•)Ø…6«GÄ
+õ~<Èdû]ùEà£ĞQgŒ¨ŞWgB{|ÅÃ&«cEè‘ ÃmÖ5¾äËùu²>”“½Ó£)ïœÿ«éd“WèN Z÷µÒÄËY“œ’šèHKãv†8Cg˜3<787$74×‘–S³<¸9¤9´ÙÑ¶<ü¡˜Ö˜Ë1!W=/y^()-v‡Õ†Ô†Ö:jÃ‡,]ìXæ×{­ì<Õ]HëSZ&/}ğÌ×æÃmm£®|æD×·˜<µ©øP~ùKÓşï2I®X4³şìÁØ¬®%{+J^}âÅWlM«ãã÷ÆÄtÒ|õğjèòÕáNî°Á¬;ìg_cnÜäl¶ñ~QÈ`9iÒV[¸@W¢Ş¸”x¨8dqHkxzÖ_ UÌó ±\c¨p?õğÃOÑ£ëÁÏ-z]»öÎ¢çF>LN|úé	8H^Y‰zTı~–”íl0İWG?“€üÑhg ZWò¦Æ•Êa+Ø·îlF4Á;=ÀÒyÁS¸³Ğ’üß.ÑiI %pqàC­î•ô%»xáî÷iöc¹Ï¿ñÆó¹eOÚ9½²˜X,x‚òÌ€<ùÑ€{## ¶áÈó‚i€¡EãWÀadò>,ÈkLmx¤ÛH&ã­6}z03±¤¤n~µ÷á-ó0q63ñé]/çhkñÜ='®¡k'îy®ë8pn÷nàwˆÌø¦cwY	‡eøW¢ÚİtãÕüòF¨Ö	ù¿n…¼R°ïÁÂa~Áï°­Í°&(ĞNd»Œn%6szC±İ½‰ğJ‡¶x{E[‡‹\ÜüËàËÁÂh4&£í£…8)ANĞÅ).äÂ.â²»uÓï¦,cItOyT@bl—ø¦Î†“?Ÿ}|fé/ïR¯¨Çqlç±ÔFv®ÜrØDfL{éøàÁûúÇááXÁ^x¬ú~û¦ƒû¶Q¿ ÿxí…ŠœA‚ä="nF›LâQ…xIHÒ	²Ñ¬Ïò¦~N¡NY¯9ek³-Çí©íí6mÛq]gKbŸT8ä´çÚ[ítJ Hc-©’LÍ‹|½¿tNPuxÿş}/ŠŞ›s+K×v&p¿Z›ıÂÓ”×j!?x­Gı ³ğ7ël+¼|›¹ÃÑm1Gu‡Í/Gû#Ù0^´Ùé±lıVS‡öšB¨gØÊhEÿÅı[û_gE¾Ò37¹»UÅ¦-¡pOìlÙ°sç†–mªzµä™ÛnÛ–÷³ƒ)îy·³óİ{¤´‘[Ş<şÍãçÏÿEı£ú§àçãú¿øòí¥3!E¢«İ#f–î¥üÕ>S@ù;,_‡8›MÖ6Ã&C®‘M}c›ö3ÃO¥KĞtÿWâb;«CGX5”­t7óE|YÛ=÷´<søpÚó¯¾AvtİA¶mßöÒ®fÑ»k[yÙçÚ}„À¸tMq ÌŒ^âŸCG‰€eet¯­^è¤K÷ŞmÕºØRë«mğÃÛ*zÿ	à];§2xzdFãœAz"!ÓK©Yx5<g‘-‚˜cÄ²eXô)¶5t&Èê´æZ‹­µVm oO=SğÉŸeªÊb£®yï•­%›Å~Bn…±ˆ4±ß]×<Š6y
+›2Êè[Ø¼ğ…M[å¹“'ŠìCbH¬0@.$AËõd°”¬”×“Â&ùIb£ÕL¢ç©ÃÓZæ Éi¨äŠ«¸åA? ®•¶p›¤½ÜSÂ!éué=é+î2÷™ UJZ¤¤™*ÈôÈaõ—®}ä®Ë]Ç‹ŞUø£®+]Ïˆ®÷ŞÙ…ÿm"”šîınN£Eğì¥¼,ˆšÀ@X¢÷7n^IÁ`7áhš3Z´éüÌH–ì†æ`×xÔß"!«Y–Å\«lÎòƒ°ÁJ!Úªkjê…+¬ I•Ğé•™YùPd+ü¾ùAäµHh¥¶ÜÚ[7{”Ô®)ilú+KŸ}ép]ãÚ]‡ëæ=°ëğáÑû,|š[uÏÜ¿ı‘ªìã[©Ê’mO<úò“]Í|ñ¾Y3ïAİò.¼ĞĞ¾6sôæ6sÁc3‹í¿°“ë­Æşw¬†¦F£ù÷Fæs|Áçx‰‡mè°¡ÖmæÛ8›=ıº=ÎˆÑş‹Ğ"±Ij’›tMJ“~‘¡ÉØdj27Yš¬‹l­ş—ı­}wãôÙX¿áúa¶gÖ_Æ6õÒå¿ªŸc+÷Á§oÑO²ÿÓVõMµCıœy
+ølo<œÅÆ#àw 46rzbc›i~‘;qq<‹½²	Ë…ğèÔiññ!<ÕÍw*Ñ'Å¨?|¸'“ Ã=ùÅî®}¢²·W.ÿâ	ZìîöÛ?O®Óf^ø¢ÿÑ`–éŒ‡œ§Wôöà÷Æuøİ°Àíät;'xb6©ï‰ä#ÚÚº3®}½ÂxÙŞo¾ôè7ğ³B.ï-êÁô\³©MwTRD˜úeØha¾âöéwh >˜ëµİ‹j•–ãô¨”/7143nëSÀ©#Ë½âƒ¸ƒ6ë‰—º€BU”
+Ï9Öq/}ê®ËMv—å&÷”å ÷ZÅ{¯°¯ò£¹WT[O]./P6I²wxz?Š×é>u9ˆo£É˜­o]ÎS–C1Ô±U)Aú C<$qú8ÃHİHe¤~¤Aï@Iú)ıôı½¼ìı}ú…ôuÄ†EÆ¬PVèWVm”BDEÔsÎÈ™83gáü¹ .âƒu1	±£cïŒmŠ]ûPlkìåX?˜ıİ}}~èáú İ§À­ÎŞ=mÕª™F·ïüê·ÓÍ©x£déšò§O?ò‡w+ò£÷õë—ŸïÌ3õß¼jë¡ˆˆ—†)ºíÖÜ(sdËÒmÏ¸÷¥ûBØ¾2E“ ›¹=ÈŠÊÍŠ¸–`±™¨¯`IJ’{Ú«m`„û¬cifâ­}T6zÍP¬x^¤.¿µşÅÏ<ÑÜ,lS_[ÛÕº*{Ëö_“âµx”¦ëì3¿ÌOyÃ,6¨ÇS­QğQï6ø)o}6x¬;UöM¯.$u»+—ıê®¼¬½*î)ŞGİÕOÛÚÆ>×øê›øøÙÕU²}ûK;È¢o[Ÿ©(½Ìív×[ '-†yä·Î˜ëkôS…V„DZËx™–		x$Ñ]ÃJ¯ùµw>İÃÛ=¿ş;…Bì|p™MhkYLÖ‘D¦é8«‰p|4¢ÅXŞ!ACğnŸ(ÓÚU&—ÉgD§\ˆ
+qWÄçÊ¨WqUü,¡R,–Q^Ä-â……âr´¯âVAd]!nDñ&²…{„DØ$î÷Ë¯ÈÈ×äQZ¸ågSï¸ÊwæsÏ|ÛÊt¤X0xdÀqf
+Z=±@Ñq´Xğƒê‰/ß¤H¹xë~+İ¯cëŞ¹£×I9‹µgİ[{<üı‡ËØyM >ÄGW†(™$SÈPœÊíäv¡@ÉUjHP¡, i,š„f²™<"lP’£Â»ä8÷!X :Näõ‚"ëup2Ø‰?çÃr Î[o7ĞÕ‹Ã…ñQB¸.EÉ1ºH%LaHá†òCåZw$¸ŞÉ§ikµò8İ8eœÖ©I.›'æI¹òd]¾R /Ee¸œÌæÊùÙÂlq¶T£+ÑÏ2¸L¨/ ÷róù{A¾MâB©Iš//Ğ5é)sõ÷šéê±iÚ„7õÜVşQ®šl–	ÛM»Ğ.¼ƒìàæŸöˆ{¤§å†gM?#Ïq/ò/mº—Míä÷ÿ¶°€éD ¦ÿp„G¶}òñÙO>nSÏıëgA;6r³éñm+·±s6èÈH°£ #z<Ö™!ĞåLŞÊñ=	<&˜³»z*V‚éI¯€Êè¬ 0iŠÄc^#î˜„Á£ æî­]V­ç±º‚\»Õ÷ºøëUâF+|Dáy%€·+ÑÊ-ü ¥€Ÿ"MU*”¹x!?WjPà—*›ùíü&éaå!eŞÃ?Ëï”TZ• …ã°} gìº },-DéúëÆ8…&–h½9Ñ˜Éeéº‰z§±ˆZ+)â¦…b‘T(êŠô¹F—q>n2>Š7HOãÒ~ã/Œ¯èv'ÁªW`–|™zŞ{V=¢9‹ŸWëÎâXËw}Ğõ*nS'‰ÄG½¯e¾rêËÌxµs¬$™)›2›¬fd6ZFDO&#®Á
+f›fÔë,H/4s/šôGégEX«læÍz‹G 2c»¾ÛõÚ}Æu÷ÚŒµÏÂßuÖH?ÕKy~YD‚,ê8£âk´#ŒCŒ™J’mœ¦›¦ÌVš‹ë6`iz“Şì‹íÄÂ[_Å[ïm0˜cP$D^ïbå~º(%Riˆ1ö7õ7;¬ÃÀ[!‰|¢0\ªjnL1¥˜­c;‰“sòN·¦éÒ•ñÆLS¦ÙiÍG·áÛH—Ëç‚|
+@>StSÀ
+E¦"s®µWJ¥ÊTe.¶.’ç›æ›W¡ûuËõË«Œ«L«Ì›u-úÃÓóıÃÓ¦§Íû­¿°~`½f-Y
+&¬MÓFc¶@Ögo¸gıœ¬üä0u¤æp+ß\¸eÂŠ|>»s7G‹ËS!Ï:²Ô¡Çœ²¶Ì%MŞƒr{™ÃˆÇZyZ¯môXƒû³^ÌJÚ“Ú¿³TF}b4O2%A/›õ~\ <@vè‡r)r¢ò+ñk¬<…+’ïÔãbRÁóÅÂL¹I¿Xÿ¬>°O±únnvW9Øy/9ØUÎïî<·~7´`¤à}a>‰æ9û›íz1J`±ëG‡ô{th~Egßãõ\”A§‘>ş(X¼ˆ7røUÌBUDVĞÖ>œëNE´®)î½¡ítRy-¥{lJ"> ¡tº@3“[°çC!Ğ:Ò]Ua{ø‚i®ÌûúfÏœo¹eí]{¾5îÂÛk\Ó
+xé¡ï¾©am}Ëå÷×¯úÀ×=èøàÖ¯˜JiãÕ`¼Ofß·‚Ñsì“|Ú÷­ĞÓm!ûöŠÁ_#YûV§^¼hv
+ô1˜å@½İßÌùï	D{"^	4ï±>ä`7cHÁì6„ÚÇ‚©òQİé¯‰›U’x3IÀ7SnÊí£<¼q3dX<îæeH‡ Şk
+¦¹\Ó
+ÖdŒşæ©9õàœ§¾ıRáÚ¯·>èÿàc_?8eíú÷/·Ô¯mØôùûØj|J8ÇBÁ(Âi¡ßÖ¼ø­^[!Èb9Í¾+¤ót‡å•ğÍîïŞĞ³oÔèù~ÙD¿_ƒt gıöaÔ¤ÉrÒSY“~…®ç/qyº=é®ÛŸş!u{ö¹¶ÕÇÕ#›Å
+u%“_ÀS/_¼&'X%;D\"WyÌq¼¥İò
+[~p›û#=ˆ©ï &¼éµvß³ªî‰ĞMCI)$³ñ,¢CQ(N@	X¤…÷d.BvøÂfáKõkæ3^ZG­"æ4ğ¥VâI£(YÎ»÷¨'¥ô¥XbIôc#nŠ½"b¤|hÃßV<¸š’ı·¿1½PÉ«ĞòB¡N“NTŒÿ'BÛÃé¼-çO³*&œîl­
+»qÒCò‡?7~Ê€ğ‰	#SU•Xt»Á°ÌjNŒ™rÌ~#dp±¢…ÕÛ¦;ŞåÑI—!¡Œ—-ô{\¨Ó5O¤%##àúı½SFö¡t_­£S¦İ=İèš“ÿMa8­ÔÕÅb-®%µB­(O§_eC7Î“'N¨Nœ-o¿ı6ÕèÃj¦«œ0qàè®j’†ğ«ıéÁÙp$¿!x,.@x;ÚŸEÏbhšÁfpL3¼"¸®ãí›?¡še¦‡„`n¢8¢Rg$²I&=m’YÏÛùKü1»ş³ 36!É^è3àÜ öí0î½î/ÑœŠö¯×¾{@8ˆ¿nşÆh…õ6Ï§óXZyOÖff)>aÆèHr/©¸=ÚÕçJ˜6ÌÛ+3¯y}P˜§áùÎ„À\‘~û]œSÏ·¡—	O+{x7á.$:­<?˜Ç[D§˜+‚øDY«ïy½ÚÖv-Æ ö½zdFÛ“ééïßiNı
+Õ\ó®ş*Åsşê½Î,S‘~- ¤¢îoÏƒ÷¤j5!“úÕ{Wo3¹¿¡¯ç§‰?‰*øt·`Bo‘Õè7Í ×ü§h\lh_×“Ñrhß-DgésÏYX€,<BÇàÙ’rí÷ô=şc´W),€8Èp¸}èuxg›à‹öJ[àı[Ğ’Œ^-ØÇ€q…	ı·‘PÅ…@ú7Ãñ!áØ
+GÎZ8vÃ±%Ğ÷2Û(ÏÁFëSÍGá^ô–°Õ‹±pZù-è-1®y ûz\Û(Œ†ûpÿSèÓ	ç,TÏŸÒÎÂZ¸çšù®]Î_ ¦ô'4NX„n{p¾ƒÒBq†óq6>ºÖtí¥<wP>ÂùnÊ7ò+”@ÛßĞ«À»süZ[:ĞûÀCÚÿíÇM„ëÈÅE aL&G_«Q!œGÒ6ŸŒ¦
+¾‘˜§gm|\ø~á8ÿ®p>DÇù‡£x4å¢i¨ÍGÑ.t à2ü0ÌºBH"I%óÉ}d#ÙÅ¸®~¿äã`>>Nø­d†J5Òé¢l“ãåqòTù'0?ÿZ7_×¡LTöê}ôwèß0$róïmÆŸ˜F™š½ÍÅæVó/ÍW-Ù–{,­–ßZçX´lÅ¶]¶O¼²¼ŞóÎó¾ßû{ªO€ÏŸw}ã}gøŞç»Ï÷—¾Ÿø™üvø]öOõ_éÿEÀ¨€'~(<ø» Ô ùAoÏ~"$/ä¡_‡–9æ†	¿/ü‹%bqÄkY¹1ò‹¨Œ¨]Qï0khâòÑ T‰ì(›iÖÃÛ‰œé÷"àQİ6óNr·1Ì?r·	$µß¸ÛÂ›Z›‡öw[@Rìn‹H!ËÜmYA_´¶sÈİ6Úë7Íİ6¡Á#gºÛK|Öİ¶"~äë0"æuğZ"¶1òÁ'Üm‚dü¹»ÍÁ}Õİæ‘	w·äG2Ümy“jw[FáäAw[FvwÛ5‚q·M¨rÄ×î¶ùŒÜän[‘<ò4–}æT‡ªØ7e6 ê‡JQ,œ“P"ü&Ck&ôp 4èÓÀ¾7³•£Tâàn&ªşñĞƒæÀ¯åuÃªgWåp.‡wæÂß2è©ü€Q‡vš#Í…±è7<Ö@oŠG	¼ó8Z³á½BÔ=J¡o	ƒVÎŞ(a9 Jü­…>3nôsÀû.½„=ƒ)ïXWí‚ºªY•~¥±¤ÄÄdÇÌ´ª†ú†ºò’ê8GfMi¼cÌœ9<Ú«Ş‘W^_^7·¼,^¹áÕ¡ôÕü’¹Õ³]5³i%•ßñâ¸òÙ%…ÒÊ’šYåõ’ºrGU£¶qæœªRG™«º¤ª0ëKâdF ¸÷Ë“Kjà"ˆq¡» árİõÃ^ù!}
+·ëG.ÆÁ$ày2­–×ÕW¹jIñÉÃú‚ºĞÍÆª`Ğ4™6¸5Î3n…«XÔ GLî µ2ö­¯³™Î4õ £p+eßë‚•y<À-‡wPeCCíˆ„„2 :·1¾ŞÕXWZ^áª›U_S3zaàÑŞhôÕ»r¦»å A.4úRMıqôBO@ŸJöf<«et50]§\«coPë Pç^ÇÉëéè±¯Æ>öõ]ÔĞı–7£]ÓhõæÚ–® ÿÂ¯òƒ¼Çï³n.ïš«à‰ÂZìÕÂjÆë»à$ğ÷p¡”å2xÕZ5U1œ*Ù³r7]³Ø(5n©Ç¹å®IKMÓ1Mßã^.&ıö~­Ûbµ\ µÁ­cUn-(a04N+n˜‹ëõ©”õ£z¨A÷@h`ß¼Lûhº\Î^Ó½ğ^ZÎ$Gß-cçz†W)¼Sâ¦OaVP
+ZÍ 4°'şT@kÛ’úuãØ3õZÿĞ_Mûéˆ=<¡wj™Õ”Á¥ìm6eŒ‚¦k3ái{ª¡|Ïqnk.Ì'ó˜T2¯ÔàæL5»×›"u}´RÃ¶‘ñ0®—th»šÉS“µÒËƒÔÃÛqßAG\7	Ìƒ8dÍ4ØUn®ö•ş÷Síáœ†mm·F70¼z´®‡¢yŒÕ?h5T0¯^ã¦°¼×ˆeì/#)'fCROëã‘Õã9nÏæ‘P)»Œa\åÆt³Î|7vôÛÅ]Ì3ôÈ ·/êáÀ€~ÿxƒÛêûôõØJÇzû€Şï9Í%s…ùæ¾º¦qC‹%%ß#O‹‚·ì«Ù¹ÇüY4°HD#k‰›¢ø>œú¾w)O¸c‹6:åyÃ±Ì­Is˜ÖußÑ0¥<-ë%óŞZç‰ %,"V1Ÿ1‡])İ•1L©¼jzqcVŸ¸ªäñ¡%L{4İõŒq=êÿ.M,7=VÂdôÃ1è;Îõü¸nqnyÏaïU}‡7Wº¥SÇül	ó+=p=wê»5Òc/×Gr·Ÿ+gTxFšÇ¨*cï‡ß$†wÓ}ı
+<óDÛğ^Z¦ÙLÖuñe&³wW/\İvàÑ“¹ğ´ê&+‡vƒ;ÆĞŞµğ«E¯æQË»ßè-wgÏå¦–RÉ<¼ƒëİ8–3Mú.=ñøº›ùî2	j˜Ü{óëf\Uzq®·ÿY[­g^Ó«{¬ÍcI4s˜Ó{Ô¹ßè±–iô]ğw–[bZ<¤Z¥t{Õ§§únªfºm¤Á+º95¥³qrP6\Ñqrà*M<2=Ë„{ÈãòàI!\ÑÿÃb“Ëö„>gÖ8Úb*`°4yğ—Â.‚;¶ƒ]Ó«[¡6À¢ï¦£©lŒt€60Ë6…=	îfÁ9İİ¾1îÀ5mG4ÕÆ£ÿ“F>³úÅEÃ4î÷ŒÚ«L6¢³Ip•ğ'¸ŸÒÿµ#“Á£øÇ±üˆ¶³İxjœËcĞ)(d
+s,`”Å®èİ8çB¿ÉŒŸcÍ¶ÙŒ†x®Ñ’Î0Ğ$¡a4–ıï E¬ıCòèHùîqL”qì}:ê­¬—†Y[Ê´İ%ŞÍKÊÿÂî‘'3ú³à×ÁèÏgÿ3	•Í€ïëÑñÅ[aÜ(`ôa|Èa#¤±~”‹”ŸYİ—×K*c¿¨Ü(æãØHcG&ß”´ŞÒ¹™v(İ#Œgô¥3Ne±Ş“éĞ?³û¦™ŒÖ±n^k05½×t"«wÇ2©doƒQÓİ:5†ñ®/TNSş=Thãş;¶Ïz¤Ÿí–®Ÿ|6rşM¸2…Ùb:ë5†Ézr·d0ûäÆ¼ [Ãz|@[?sº1ëË_yúıß¡ÁòŒİW‚ã˜>e¹1œÜÍ­‡ò=p5ß•q­”ÍsºıvßÈİ;kìÉF{çq½|mïL@óÂãYßêëúõÜÕfKZÌê™ëôÎİn6ÃöÌµ\Ş“õödšïÖæD½³Ş2–Ÿk9`}wVâby «;3™ÇöÄôZwíÄÕgGG.a±?®{,O,ê¥å•%,[ £Õß„›ß¡”f†µ,Şk£ÌcíwfBékt÷¥÷^7öÔn”ã¦2ğĞr³Ì¡7ÿë˜¼kİs©*ÆašOÆ»áÖ!Ï¼¬‡'”Zİ­ú:©÷h…6]_U <˜Õó2Æki5<:¦Âü•§Æõß¯:ıØ5ëÿ¥zÒ§t}æõï«)7­9şÃõ åÕƒúfò¥½pê©uxzş°
+êÍ*,Ê­®ä¸¡®¤üÿu¥^u¥
+Ãÿ7ëJJŸûß«+)7™­ı/Ô•”›Ö•z(úÏÔ•”ï©ügêJ
+úGëJ=«N?f]©ÇŞúÖ•¾+ú~wuI›Ÿk™ÄÿZuIA}«K7¯nügªKÊ÷p×Ñ‹ƒÿÛU&…éØÙÌ¾Ê¤üW™”ëªL=sİÿd•Iù»U&Ç¬Ê¤üU&Ç¿­Ê¤0Ô‰[Ûcàù®v¤ÜTæÿ­Ú‘rCíÈñ_«)ßY;ê©ıûkGÊ?P;ú>¸ÿŞÚ‘Ç³~wD¹±â£üŸŞUš³â£üKŸçlÿ\ÅGéUñù¾ºÃQ¡i¸¾õT6½ŠG(ƒmĞ¢[Õèf·îıq~õåå™ås\óbã?`c[¼cüœµ•õªêZW]Cy™£¢ÎUíSW>×½	Ì3ÛH×¨m¤ë=Œ¢ôŒ^X^WâĞPëŞ§üŞåÆ}{?xËŸãº‘«ê•GC]IYyuIİ]WÅõP%·¼®ºªmš«ªwT–×•ÃX³êJj€ô8 È‚×€cu³Êã.GIÍGmy]=¼àšÙ «”8Jiz6T–{øTZêª®…î´CC%@.—×Ô÷ÂKÂcX™£¤¾ŞUZUã)e®ÒÆêòš†’ŠOEÕR?
+‘½à˜ìªh˜ìe˜Ô•×Ö¹ÊKË˜²* ¬jfcC9ÅAéóBˆ¹tNcÅd^UC¥«±©®rDG¨ÓX	`ë¡?%'ÎQ]N©V˜‚ÔWÆõ#™àªsÔ—ƒ w ê&ÿº¡)r ¶–2ºAÑXÇšW	ŠuÃTu50`9{±Ìå¨wÅ9êgÎ./m w(}®9 l” RWMY¥£~„¢ä¸’™®¹åŒM‹İJPãj 1Ôkw©Tj{4@{æ¨¯,™3G™Yîæ VRÒ‡NWèE£ÚUW~S²jË+J` x©¾O«K€µÀëeUUTÑJæ4€êA€–”•1Ê5ÖQ-©¼ç”Ô)t ²òúªY5Yš­ÂKTCKJH=}ÃƒOıõ#Q
+ÀV2çæ ÜïxğèèÕÌYà¨ê¥æ
+%§®¼¦¤ZëKõ”‘T.ó(+¯c/ÍsÕ•Õ;Â»í0œíy „S³g,Éd¹íef9X…Ú2 <™ëªêF¬|~XŒ£¤¶Ì«dæœrú@£ Ó†Ò#”Ê’GeI=@,¯éÃªu=Ú]æh¬)s#ÜƒªÂÓ(ü>©Ö»æP«fb£B*qÌ¡ŞlÅÓ±¶¤ô®’Y@ØaK¡ªú)UŸ¡ÀaŠås*(RÒ9ÙùÉ9ùSÆä¥;2';rór
+3Ç¥s„™×áq)™ùr
+òĞ#oLv~‘#'Ã1&»Èqkfö¸8GúÔÜ¼ôÉ“•œ<Gæ¤Ü¬Ìt¸—™=6«`\föxG¼—“ïÈÊœ”™@ósØ«nP™é“)°Iéyc'Àå˜´Ì¬Ìü¢8%#3?`ry1Ü1yù™c²Æä9ròrs&§Œq 6;3;#FIŸ”D  ±9¹Ey™ã'äÇÁKùp3NÉÏ3.}Ò˜¼[ã ,HÎs°.ñ€%Àp¤Ò—'O“•åHËÌŸœŸ—>fíK¹3>;gRº’‘S=nL~fN¶#-H“–•®á¤ŒÍ“9)Î1nÌ¤1ã)9Ah7œv(ô…ñéÙéyc²â“sÓÇfÒğ13/}l>ë	¼Nd1tÇædON¿­ n@?ÏqÊ”	él `üË0cäg¹N~N^~7*S2'§Ç9ÆäeN¦ÉÈËt©<s2˜ ?©ğ²İøRÑ{7jô¢o»	—>& N¦hÀ¥O_Ğ®ôù¥åµT·İÆ­¹FæF5ßÇ´Vs ÂãkÀpµ{¬	a	,‹EÍ»õlã4×ËÜh7D"Íõ–Í-XO]‰«NqQg2¯ªY:„Àj—óõ%s`0x‹Zë¾²d¼VßfƒR<Á°¶®
+^™WWÕ ÎÄQÒwëªºÃp;L1
+=ĞQzœƒ†]y}-D©ª¹åsÄCß:Ë&U5®ºj7éŒ}¥#<©Bƒc^æjP\u³âŠÂ2®9uú¡yøqò EËƒÿL¤ôäA2RnÌƒÜN¾”Aª÷ÄŒ›$¨=	‹ò¯äJO®¤üoäJŠ&‡[®¤hû/åJÊ˜+)=¹’ãŸÌ•”>yÁ?‘+)ß•+9~x®¤ôÊ•z›oŸt	â98‰+]RÜé’ã_J—”>è²yã2)5.Ç¿œ2)?jÊ¤¸S&Ç?Ÿ2)×§Lÿ¯z3¢ˆâp’/­0{dvÙ"u8Í.¬rÈå&¨@" †ÛŠå1*K£¢ ¸Aî#A`PˆàÅá-Ip½ª¼¸
+oåğV¼±êÅ&ŠH¢$XvÕÔÔ{ıëš÷ºzº¾ê®®2‡E¦ğÑ “1$oØ€‚AûÃÎëW/:2fŞ:2ĞQ¸!tdü•Âõ¢#ã°tní_¬‡ü(‚ñ·à>
+ğ1>á>FøÊÿ4ãèãuĞ`Dô+ÒšÁhİ¹İXıDëÎÎìº[½Hİıj©öz[xä
+Ãèø’±%Ñ½YMˆ”.ş±cÖ«–“ß kw¦ŒJ9L«I+‹×ş*¸!~±ø9ÆO?úùAø^øÎâ[?ß8|m±oVÚ'|åğ¥Ã.Ÿ»|&|ÚOòùXø(ÆŞ=Ej¯Ã-ÜSÄî]QµÛeW”…„÷c¼â]‡w„·ƒ¼•àÍ$;…Z¾#Áöm}ÕöÛú²uKsµUØÒœ7„×…×„W…W6oÊQ›…M9¼ã%aãÔ€ÚØ‚³xAx^xNxVxFxZxJxRxBH
+Ø0ÍR„šê¤ªª«ŠUu’ê²ôªõ–ª*×RO_oñ˜ğ¨Ã#ÂÃÂCÂƒÂ6÷ûY·ÖRëlÖ®	ªµk‚¬ÖA¯v¹O¸W¸G¸;È]Âª•~µ*ÆJ?wÚ¬Ğ’wË—yÕra™—¥•Ùj©MåSUf³ÄävƒÛ„ÅO-‹ô EøÕÂ¶,ğs«ËüŠ¤š/T”«Š$eéåó,U^Ly<}Å\aÎìˆš#Ì0K§9+™3<jfˆ¦kÇt›iz¦¦YLp‹0er@M&¸Y(nâµ“	5IH$¸ÑfâL5Ñâáza‚Ÿñ^®3¸VçrËÕ.W¹”
+W
+W—·b¬0&¯ÆQ"ŒNp™6..lábá"áÂî\àr¾—bá<a”0r„¡FºŒ0•­†Ç&Õ_šÏLŠRMUÔŒsC.h¢çx$`ªÂ “³…BİS(ô7UAú·ô©ş&ı|ôÎr8Óá¡OZ®êã’Ÿ$¯¸pºĞ»WPõÑ«g†ê¤gŸê¯Í ‡îÂiB·®!ÕÍ¥kSuÑ¥³Gu1éìáÔNñëäQ1¡“‡Qêè#ê!’ÛXELrsrŒí-ÕÁ¦}» joÑ.HÛ6–j›G‹Ö–GµÎÀòp’p¢pB­t­‚„mwÉÑ)äØ´ôÑBÏ`¡¹Ëqùdk#[hfÓTÏTS!KÊÊ&S	M„ …€Î5™ ÃÆ/ø¼YÊ'xµÚ›…G0L´¬‘plˆclÒugº^™h/Bš¶ÓrI5IRkRí©sS;üZÊÀ[Ëß <“yendstream
+endobj
+114 0 obj
+<<
+/Ascent 759.7656 /CapHeight 759.7656 /Descent -240.2344 /Flags 4 /FontBBox [ -1020.508 -462.8906 1793.457 1232.422 ] /FontFile2 113 0 R 
+  /FontName /AAAAAA+DejaVuSans /ItalicAngle 0 /MissingWidth 600.0977 /StemV 87 /Type /FontDescriptor
+>>
+endobj
+115 0 obj
+<<
+/BaseFont /AAAAAA+DejaVuSans /FirstChar 0 /FontDescriptor 114 0 R /LastChar 127 /Name /F3+0 /Subtype /TrueType 
+  /ToUnicode 112 0 R /Type /Font /Widths [ 600.0977 615.2344 631.8359 317.8711 400.8789 615.2344 612.793 317.8711 633.7891 549.8047 
+  540.5273 633.7891 837.8906 615.2344 837.8906 615.2344 684.082 500 633.7891 277.832 
+  612.793 611.8164 611.8164 400.8789 600.0977 600.0977 600.0977 600.0977 600.0977 600.0977 
+  600.0977 600.0977 317.8711 400.8789 459.9609 837.8906 636.2305 950.1953 779.7852 274.9023 
+  390.1367 390.1367 500 837.8906 317.8711 360.8398 317.8711 336.9141 636.2305 636.2305 
+  636.2305 636.2305 636.2305 636.2305 636.2305 636.2305 636.2305 636.2305 336.9141 336.9141 
+  837.8906 837.8906 837.8906 530.7617 1000 684.082 686.0352 698.2422 770.0195 631.8359 
+  575.1953 774.9023 751.9531 294.9219 294.9219 655.7617 557.1289 862.793 748.0469 787.1094 
+  603.0273 787.1094 694.8242 634.7656 610.8398 731.9336 684.082 988.7695 685.0586 610.8398 
+  685.0586 390.1367 336.9141 390.1367 837.8906 500 500 612.793 634.7656 549.8047 
+  634.7656 615.2344 352.0508 634.7656 633.7891 277.832 277.832 579.1016 277.832 974.1211 
+  633.7891 611.8164 634.7656 634.7656 411.1328 520.9961 392.0898 633.7891 591.7969 817.8711 
+  591.7969 591.7969 524.9023 636.2305 336.9141 636.2305 837.8906 600.0977 ]
+>>
+endobj
+116 0 obj
+<<
+/Outlines 118 0 R /PageMode /UseNone /Pages 133 0 R /Type /Catalog
+>>
+endobj
+117 0 obj
+<<
+/Author (SAVY) /CreationDate (D:20261031184028+05'00') /Creator (anonymous) /Keywords (SAVY, climat, CO2, captage, carbone, DAC, CCS, CDR) /ModDate (D:20261031184028+05'00') /Producer (ReportLab PDF Library - \(opensource\)) 
+  /Subject (\376\377\000R\000a\000p\000p\000o\000r\000t\000 \000s\000t\000r\000u\000c\000t\000u\000r\000\351\000 \000:\000 \000c\000l\000i\000m\000a\000t\000,\000 \000C\000O \202\000,\000 \000c\000a\000p\000t\000a\000g\000e\000,\000 \000t\000e\000c\000h\000n\000o\000l\000o\000g\000i\000e\000s\000 \000e\000t\000 \000i\000n\000v\000e\000s\000t\000i\000s\000s\000e\000m\000e\000n\000t\000.\000 \000\311\000d\000i\000t\000i\000o\000n\000 \000d\000e\000 \000r\000\351\000f\000\351\000r\000e\000n\000c\000e\000 \000d\000u\000 \0001\0003\000 \000s\000e\000p\000t\000e\000m\000b\000r\000e\000 \0002\0000\0002\0006\000,\000 \000p\000r\000\351\000s\000e\000n\000t\000a\000t\000i\000o\000n\000 \000d\000u\000 \0003\0001\000 \000o\000c\000t\000o\000b\000r\000e\000 \0002\0000\0002\0006\000.) /Title (SAVY - Climat et captage du carbone) /Trapped /False
+>>
+endobj
+118 0 obj
+<<
+/Count 14 /First 119 0 R /Last 132 0 R /Type /Outlines
+>>
+endobj
+119 0 obj
+<<
+/Dest [ 4 0 R /Fit ] /Next 120 0 R /Parent 118 0 R /Title (Climat et captage du carbone)
+>>
+endobj
+120 0 obj
+<<
+/Dest [ 9 0 R /Fit ] /Next 121 0 R /Parent 118 0 R /Prev 119 0 R /Title (Pourquoi la Terre se r\351chauffe)
+>>
+endobj
+121 0 obj
+<<
+/Dest [ 15 0 R /Fit ] /Next 122 0 R /Parent 118 0 R /Prev 120 0 R /Title (\376\377\000C\000O \202\000,\000 \000a\000t\000m\000o\000s\000p\000h\000\350\000r\000e\000 \000e\000t\000 \000s\000a\000n\000t\000\351)
+>>
+endobj
+122 0 obj
+<<
+/Dest [ 22 0 R /Fit ] /Next 123 0 R /Parent 118 0 R /Prev 121 0 R /Title (Le rythme du r\351chauffement)
+>>
+endobj
+123 0 obj
+<<
+/Dest [ 29 0 R /Fit ] /Next 124 0 R /Parent 118 0 R /Prev 122 0 R /Title (Pluies, sant\351 et conditions de vie)
+>>
+endobj
+124 0 obj
+<<
+/Dest [ 33 0 R /Fit ] /Next 125 0 R /Parent 118 0 R /Prev 123 0 R /Title (Stabiliser puis r\351duire le r\351chauffement)
+>>
+endobj
+125 0 obj
+<<
+/Dest [ 36 0 R /Fit ] /Next 126 0 R /Parent 118 0 R /Prev 124 0 R /Title (Captage, retrait et stockage)
+>>
+endobj
+126 0 obj
+<<
+/Dest [ 43 0 R /Fit ] /Next 127 0 R /Parent 118 0 R /Prev 125 0 R /Title (Quelles solutions privil\351gier?)
+>>
+endobj
+127 0 obj
+<<
+/Dest [ 47 0 R /Fit ] /Next 128 0 R /Parent 118 0 R /Prev 126 0 R /Title (Le d\351fi industriel en chiffres)
+>>
+endobj
+128 0 obj
+<<
+/Dest [ 58 0 R /Fit ] /Next 129 0 R /Parent 118 0 R /Prev 127 0 R /Title (Entreprises : qui fait quoi?)
+>>
+endobj
+129 0 obj
+<<
+/Dest [ 62 0 R /Fit ] /Next 130 0 R /Parent 118 0 R /Prev 128 0 R /Title (Comment analyser un investissement)
+>>
+endobj
+130 0 obj
+<<
+/Dest [ 68 0 R /Fit ] /Next 131 0 R /Parent 118 0 R /Prev 129 0 R /Title (Questions compl\351mentaires et Qu\351bec)
+>>
+endobj
+131 0 obj
+<<
+/Dest [ 88 0 R /Fit ] /Next 132 0 R /Parent 118 0 R /Prev 130 0 R /Title (Sources \267 science et technologies)
+>>
+endobj
+132 0 obj
+<<
+/Dest [ 107 0 R /Fit ] /Parent 118 0 R /Prev 131 0 R /Title (Sources \267 solutions et entreprises)
+>>
+endobj
+133 0 obj
+<<
+/Count 14 /Kids [ 4 0 R 9 0 R 15 0 R 22 0 R 29 0 R 33 0 R 36 0 R 43 0 R 47 0 R 58 0 R 
+  62 0 R 68 0 R 88 0 R 107 0 R ] /Type /Pages
+>>
+endobj
+134 0 obj
+<<
+/Filter [ /ASCII85Decode /FlateDecode ] /Length 2515
+>>
+stream
+Gau0E=`YRl&UroHka,6t2Dps#E1Ua3OlW5g*ii8NOus.cZ/dT[XFV6]nZU9j%EokEmOfC)@Z`a1!RQfi^A]#XaN%(!J#en!`u2SfHU'kfZNUN;(Xq`@c=TS<T8$L=O;CAPPXYAc[t+,<;2:E>Skt;%)/2NtmuFVFi&6Tob*&9,/bTXgpSj76I4scChcufOj#;9S=(eEQcE?Y0ZOd*,rSX$+fuM:^B7Hc24jC\Sq,%tSBgH')UjeVn(U"P*'G`$%&gd'OA-A%*(U29'b<ceeHN"KXYUc99>g,t"T@$H,nTa`eVdDAOrdM5"L+n@10]o4W&5aDM=UIMAH&e6GMYIm2dJD5#QcZM7r9N6hQ",R#S)Q'jZR%@Y;C?L_mC+@\CO)Tn3)&[YS%:0V;?Kq\E[Yi@bssn]S%_gJj_#1T[Mh9OqG>!9f4GNpC\Jr[;m7Ho]@<jM,=\,b9NA-r;TDaF\C=,LUC<R))2Gfl%-u*1n5)$<H`+G@X/2tY1>Z?VPJBguVKh1@S+5LN`VMr?G1F6;X_=k.ZW7J5UKN*CJV&]:=q7RG_9##.9NgnA/nCi1etoIuC/NOacE8Q&W3:r)R_SSR8^:IP:K)p8N$.\KKHKtFc-p@K_DHl?PL-5:nmk\HQ_!Jg-+!Pm,]3d2&5\a&fh4Xah$?#,N%gkT(*OQ:=t\R#B7n"@9&&&5iKE]=PPKF7E/2&#5='Z*^E?YJPe[d*epTK\72=D8%5M>J=(;X$+QQ!tmEU@bp5e_3orRb5'%(%rbPP4so:[.`;1sTI>qVJW*nEf3Yu2k#6OdNk=+@FJU*KgTVV*Jg`BOhg:7_1PYgbnV3*2WSeQk0f(.ppRDJ[M->?cp.2O@"8lY9g/kQg?VUi8XUBm4Os1e(<e36A-)E8MB.chuZr*;X=GhB.#'Dh_P=]:5/10s9@TiOiOKWS^>=b@<ok1@Db?IqrS1P(!:B/J*[r%T!3P(4!d^bJrNi:9?a*_Wo<Z_W;GMQMD<A*fnA;$Kdor8!18H.ptn@=]/=9\uHVW_li8134mfJZ#O$M@X(,U(<H]ao(5h9"[e/JP.mJXS=e.r,acGRSQoEI\si"UQB3iq7?f"RZ8$^OdR'G.kDC`^/rZojM+\o0(R2qs7jWld[etb/\DZ2Y7FW^pgDLE3AHa%p)l/rnS:J_/XL5.!%`6#G['_X*$Plpr*<`DD[F?do!rFo+0iSOqpd9SHVi?tkaU/=:!WaAPTH^,]8rae3S%8X8cmT6le(0JHkmGSFXX<-`C?6&QY191Bd6X[PH%W-2<$Q'WB1B&p<=cN9h_99-P+agq87q(drs5DGpL9hm]P#[^'Ie!Gn?he;#EaW@S)b3V445gCEZ9gq`hV=]\C5UHA.2H)W[7.d0Soh4+_sr.839+;(FI79pE3o(R&?HlffR+#P&jT^g<bg7IGHnikP4)tIHWKbN_)Uk=H=]BC(_U:)EB/4<*OR*ccF9N?AF5g6XmoCc*tFM7q%_C1gf22;%Gh&`iFB^M\Y\p;/eMl%HP?F$j9KR0jJMVX-5p$'G=;3(>p!7bq^UdHn/FcLDj=4hTo:`;Q9(PRLLpDO(/:gBT(0!"*T]Pg<e?R2G;k-4=7DUAf*jXWH;?f6;m",7Z]u)pgPo@"O'YT]F@=R"47&c#(01rh5_-RSW=!>Tc2S5^jC23;]3"#rT?0:"8[Z$RNQaUf8MoK6k!mK^jTEG9jR%p@64mGf5:-f<XZ?7Vt;R-n:h`8+:PPIUP<7ZXh%a#&k\0!-bT'rYj$cOs*@ODV/$?q'4LEb3uDYI/?<+!XBR#TAN,tk,f2KuT&!<o,Fc&OF]Wbl3h%g!Vt0@mDRi#Wiiis_6`lCQP7u]3%<jL!cmh4?g+_UPiUe*hFk?:\&(;.03>f4FV]p]D\#"fsO:9t!3gr,U`n`qt\)TU:ju.F$TH"M0Hh=S:7>X\i]<_79E?1a'CcN@&iW@4(F7QnPpK$(lY$23rFB)\7]s/$;,aiBc.1E.]m%8Em\_e:(s$Gk[O0Q>>la\Fk-jdD3P(P%N%Mj)f"+ec3Ks1!jLuU!l&LW#.4tO'#?@>S83M>#J9uQ/NXpLI[9J^5WnVh+eTUaBf\/M^-G0<W5RO?7Ab=7&L4M!u69m!ZB!kqeE-c)BL,XpL<PDl,e0u<7hV;r=<=S64.PIY"4?cI/](@E*\c$XRq?+dZkL?o+0Q.98CNK1WNHaN8D<PqXHYr=[NrR]YJVTX>I7UJ56?<n:/9C:6/>o[hIl`5HB^9nSP>GO\$c9V%ReWEF*(^,2[,^Wgf01XTUfnGYYi>[a(D#.eCN,Jrqj-B;NQ7Er>i3ARDge0)972sYR]FYAnZ#b:86sa$j?^+uJEQftoj*SB8<*pBHO[H-uSAR)>,LSKs]YrfabOF-B.==8-5eo6aej[A\$HSuI$LGK^Lo-(9.0t*f4?e0*nO,_W`3,tCmZV/2P<O[Z9]\Q^Hf"c5TPACMoOaE*'^Nr7Vs\]@4a4J%\>rjrB>`XH6BaD&U:_mtM[nt,G1b3irrAHV6V%~>endstream
+endobj
+135 0 obj
+<<
+/Filter [ /ASCII85Decode /FlateDecode ] /Length 2539
+>>
+stream
+Gatm<gN)%<&q/A5oLl3KKSD4kO`Y=[A;*dCOqU9][uuXC@0d?W34Kh.0N#Q5:\TA^.8dH%G,Z`R^gR"^qXbXTo'rL9Dd!^cSC@(2MGuk4'rf94BRW[^q3gCn_)R=o$UPSg6[[lX7Et\1`1,dY9F9Pn;e'M6bo(\%rPh]$j*3o^!rE2ZqD=IsI;ctAT>.r3n*fn=DJ,;#c>N/Fo,llc^3Y2^^\[Wjlt`&>T_UNU57CM]9Z[[?M*ISn(C^l@)[g+.%c_5815*c+VqC4_)[BjEo(i[tYUa!cgrqF#R*kYHEI%HPQ_4"HIQZAG+c)4%h"-[m&RhKb3'ebJaTN+b*UtTN_HkM%D_,<YqnCdjngf/!/1&c@\+F@V%h(lg1P*I^`+%i*lC*c>Pu4\uDAj5/)JYAi3.8!Be]OD(@N<6rkJi]@%mR^7QZAp-c;i)&J2c)7/q8HBLl,r8XYRe3frAb+[DY:S2!2rIVHMrFC!#otrLrL[6b4Ms<p?6PgS2"HHX>B9+$8MR$mJS:&5UJ\kj9Nn"eP%3A/dfXg!aME$UaUa43K7HnfXMn?JKn#JiH(4"86.A@+,A#"%LCo5p(%5p#,Z=[Z$2kk:9PDmBOS]4*jie-HeE'VSqJ7;rR_q1tF6:[aqDq;-C<<-qoIk=.Q0feJ)8GD)g^<^8oE)aGR'(27fcu[INIlC+R6!gfPD,),Z8E>IicdC0gN-dDml_ZN],t7pPW9'X^n9[iJp,W]L;-K@/Cp/UY"/C%.8N2VU2%Co\BJl#OgZZ;($Y?5(;G/;?h>X2Lc)7jr0O&&I@\%%9YKDP[hhJRB;\>\]^.B-l-k<OqNkLKlJm!EHZEGc,.<LR]kd)ug\ND0_2UbWi&*0!Scl>"R_Xf^QY88_^<rX[d;&=K'B,X.f>1eN#,%X)kV0qD`iF/n7,O2Uf30.k6]si#un3q;;9MAFD),MZF.kStBqCg7^290>5C9>luq=o@7u#RW_,d9:uf2Y.HRG2Z:hRX:E6UG"YsH(gD0/RG$;YQ8.kL0IF:6@T+(3U[&=kY&tri<Q1]=P)!%KD3c,1hC^^0"n,o1QRjp,cr/\!WFUnd=>l,/R`si;<.R:(I$)%JGU-KW4qB(8R#:8bKasgLL\fmW1e1sW$?aiQ%Aj_LLGt4gJj5Gj&oNKn`5dmXi6sKmEYI)lSK,Vi5kfI)k[:jX<]oodgi/b]2LBjn4ejr;ppbWm[?%?nET/"8NjNU>oaNE$iDK1&&iGI3;VS70]qO&%.0Yi0>q%aoqsNOg*k$dJ/<p:WP+`p)e3Qlh03u/H")3+0Ih)#dOi[Xq!Um8HpLt%dVSL9S]Jk!k';<(h'.hjaK:A=?ojVFZ@K2AXM`4XdBADDFm-lbiA*HN)bK?j>TN0XcQ>R]HYfZ!jJEh+=b'BAu5D!B)r<^4\*ZM/h5FdH"Q[mP_@LLSRhT5$WJKBISkkFM#j/Ft#L5gXUrYmouSs^9!K*L:F+ceN3C*AD,*`?WZAjF3g@nQLue.-\M7K:25(#h0@j%nG`5&-Zqcs-kD#UohP3=oiGU&KP1Him+^nc$@Bd).H)D&ct?GHl;/ZpVo0RWrqre"r\49Qbj:3BmM3p#6P)W"pJZ%HD"R/\$'3d-htJ9%,.ajV`-6[f(U7LXo!@a;>c4)S1L-6KTmr:@U"J[q5R@U5_ZQD;)'+lE49[<98q2?8icC,fAf@4+=KcO@N1CbQn-edg--VlVim-$D8f7:gFkb@:QWd.@QY@(DS<!V&da]jWLULp_?r'F.&BWhC>KoL<4;\&]Wu]0^XpK2Y>NKT)^Gj-<^%Z'BjKMc5T^V-.bin"dB%;TW?B&R$8Plk";js@;%]YiZRksGGU&4e0BNd0+[T0D4iioc"T8Zf`5#;QWGpaC,#'n.BmNWp.6bC!aDuJF01uU6VaB8'OgEFX3VjRTd.dV..DHL4fn6fg5Si7MBIeiA$\'3o24o4n`^KJf2o;VJ9$jIjsT+&9`.[1?5U_faB!q-'ND^<m<]&qWC>EBY+*3,]Oe3*d!F`Mp_8L]i=>"!-a!6(i;U?lR<9aglpWJ&#]_$fKQccfEg&LlO1#^5=Z9$)Wcd%D2'o;e\og_oGQ9]_F33-cWn'aV3El?/[rqgb,](cM:CEr0[-DBbrUloEVJ%\N7,$i^>(U$h`a4O+.<oA<43Id;[ne.25YVK'qF+01WG^Xq@DPjEjiA^1#tG#d?COlrW-E^^eFtu-I`\V5cZ.H#1#WcB2WAM?fPQ6C2H:dTi3OR:?)?pG?[p?j+Esdj__t`@-@L:4/V_X.daT9?7dK'hPo^0$Q3Pp2b$3H$mY'3'=_pjmG\a5FRZh\s\-O*>!h+-bHqL/eUL`^r)2=4C:RN-g6j4[Y%\ZPopH(MT2;lTFKiU_aNgHh(gjucfl5%&rq@5P<EW"^,BD5-;:oaC`p*S"a5jZE$X#J^h<\G'8b$uN7QJt:b=LUKalUPR?h,cRGQ\qd'iDtu0rKI=W]HG9RCMJgE^^oLR*R`1tB25YDTMSLNp1sB]fJ=F9OV^cie&P/foGmPVH^i=[%tl(]@K~>endstream
+endobj
+136 0 obj
+<<
+/Filter [ /ASCII85Decode /FlateDecode ] /Length 2630
+>>
+stream
+Gau`UgN)&i&Ui84oLl3K%1Qfda6(LE<S#l%Cg!W6Q!3>O!f,9A5_'mU>'[kHVe9rlAJ(`i9N!?3_Z=A\qja7l$jF3:&a"#G-Mh.G0E3@iGVicj#b6G-f5s#;F54ipK9.)!(Ok`25<]D%X0WEhj!:E+CLY_TQJ\6A(X[(>6kkC_c.CV"qhn+Hg":E[hY@$IX+1&2?IJ6&`Tt]Or6kN98(SK*Il4uepYk\h2#ij'h\l7(-c.8Xa%mp=:<3_G"h',1TbI920T,KG13!F)9qBom68,LF+99%%`N,L(X.M$/`t'$Drp]X+[`D6WgGX9WnA1V.F[5_Q&9.gq_Bct8>t&#h*Ifn,EFNFdQ1'$';VpAF7oGR@SYWr\mg'7i0qPZ!$a#\45J"_&;:_hLH?5,X!p%FWlE"e%E]C$dlpG?b`_jfE&'#V4(W'W66A>Npr2AmMQ)dr#.O8_.Iqg:kKj&,K_Jht57\AD9:op+YKqnd&3)c8G`l"["<-eLCBpgp.RC"(JK*B9rkrW*e.Qk`mJ]Od>;mlI#>:EV0!Xhf-)bJD5(!Mrg><J*\"-<mndjFrs:[&ZB/g.Ir#ql\eYf@ZZ*^kI.D9Qr/i4;[nI6>iZ1Ks&0TgM>n7R<(F^n,s5eFKed:=bmcQW3Yqf,NWSKklIHXa+da1/nAQl;fiDgPfq_Pm2I18JM@6H5k2:]=QF77Y=F4/HuA`:"D,lU!!16<asR1?Tck=0'g*N.DJr"p&\8;,M7Q]Bm`16%5jZO.^=NKW+jWh6L1Y=!V?VnnQ^m<8,lo1KKrNOD9Z&@P-*YrU&c[T:!G^MGUD$Y3(=M%!pnI#3AdV%a7n8!,M.n9K%C^i+SS'8Z0`%2PMR/QSs(5=2VsFkfEQL0:o^s9!UN8V04oT>mg^C(=o2YO$Y/%f2%Ia:MD[cLC.%]`-c"/&17(\V$@Z9]-(MQUk62jU9k*HMs,G;5$%g,f_r=%\Q(\HX<-cJWRi%pcW[sEhL3`1b#HTPYEWP:c+tKug`ihb_WtJ5!WjKJJIB=g/'!;h,BkT'7[A6DJ[.+`Q5*iVqcAfT0M#bJm`3BEN[&MspL4-*JD.Lg,'(<hhde(8MQ:p7YCg]EJ.H3Q9`dnE5fb&K2a#EWqHGTEVbE5O<KPlZlC;O^>r9kDt_MPi]&W!o3OI0b72@AD1:Z".9X.MXgZc7sj)V<VP^!J$SG>)%!GqbpKEOtKnW3YHpKBLsiQ^Ebcdq,=i%;.Pid<#?)n@f]MOT`rg$GAp+BK6W'g*DZkZ4c5C!.*uLmF+-=dBlPi??\`p5i1FN:"Aa43+1dgA=J3`%T@T&&\B(qL,0fhS2m@hI^`'##R@7k+UFSMm^#"*5a):@S4nLWJqFZ*Xe@hE[<^;?OHE]c+U\%\s7!l:Lo*u\W=tdiWLG%B+Y4i+Akg6)a@<!n5'!_/W4Lsp%l)T@Op4u=2(_gB;`)1m\O1Pn^A>N0M88Vg-2S1-aYDfm)n:\CeNUGcq`,XG`p^,._W:)[W2f*k1$l#:Lbcl"hOce7=5$cBfM^HqL1PhdXY[f?XtrFO2Zu6)Dhe5'gJ,7kk1qi@h<gs6PBfBQqe5U9o8k[3b^s9[?T&F#8_4X.pWl'g*2LR[\Yp4(DcEEF/t0*io4;KI>h:=3@<uG3QK!j@1>;JN/Ptu:LYFW<X6fS`hH;Hk1iU^7\M-G6?aMhW3j;bU[*Hc+4!6?2eTu'?0id@)S!el'-FM]0]!3Q36Y?#j*XQ*R.%Ag/"qf;4%LBh&s-cQjIOL_il].j"H9MU<DJWrbPH@&i0&a-R+J)M"KO[/(Sbpk94F^r1(K&nap8p0bPPg.'i])F!p(qU#^$G]nUk"*iWUCAJ'ZVoI'q"`TP&>B\N]nc/F.&82'6Al=;qk'FR5PE!"mO-l2-'id6CZ6r&;hhKlHWWMq56T)qXO*tG<5EQnnI9IK]HWQj!AmSBIboC4g7!e)?Ehj`tu&TEAodpZkrl+p=2R.<bRKoe.ccZkf/)b5J5pca"VZ\H1"?G-EEL+gp[/Vcfq^$Z(09<\ZhLB2P4a#Xh8B$&[^HMq^g.h'K$.`ZFL3[nu.K]DIk*OQ0]pg9=-o.-%ri\3XN7RO^+JOTK<MlOuYEHc^qC+5j,OYWs1FSoi[TZG8B=%l>]bQWk75hQI<,KV.!I"m+[-4hCB&um`j;:pTM?&i-:.;PBA+aHR-M,PB`2H;:LFtCIdhl)GOenC;)E;[A=KZpO>KdaniI(=Sbc?naQ'2mFg8DV,5a4]>93DRc+Tq-+.Q)n-_"^,C*+_2o)Bh:-m+DRorn`D4CI,dX6.@Be*rQo%EQ<NMS56]9R!`[uaihGOt5^Hh'X*"C8(uA3N_Yk8^/04RTD2-QM'&S)oRB+YoCm[c5]2+eSY,md-BHeV/G.TT8#%k1cH>6+[$Y_AI?DTZXOXRVgkTCK]4dXj!=;K#Hk-SPsNG08pR5.r+[glefEQfR+F_^%&0qrIllUI#'f3Rn[`V6ddHba3P,4c8'fLQ#^KNQJu*[Hct8u2O'&NEP"/+b=p_,?X>B]pnMtBDLmc`7:oqTpp_tH,;+h-=;+p!;HmTb9Dt]2c5-`&VcmsV#B@bAfJK4<L228X*kj"/:mH7nCtZ'>1^qau-Y^/!Zqi?+nCD>8q[_gd@.+~>endstream
+endobj
+137 0 obj
+<<
+/Filter [ /ASCII85Decode /FlateDecode ] /Length 2664
+>>
+stream
+Gau0DD0+IA&cV3*Z!TPe?5/+o?^5On`Qe4uFW<p99W.7_Lk905'WDY>0%XIfh$(b68!896?Ta??OMibpT7-D6"Sha:q#>.<nFH_<r(V^'YZQM`]atr<E4*4Fr)b:S"J-#iO9G=pmfZUZMZUXedKj=[-@ne,qPO^k7C3_`0dKU'M_34)?hlD9M1%%RM'noJs7&m0"8>mg?`rhe(Dad`g\8\E0,N4^5@=@((11J>'AF%nLuK:s_(>;D'YLYk?t`5'?5,e9D_aSAW@,dNbY'3#S_m\I!LsneQZnA2pK-kP1LAr<r8Dg4o'=86%5Plsi0Y=iJI"RcOr+95V("SJ45rWc"oY/o0B$J(qgL6'ne$@@QJu'&=umPlOeK!<,C,h8@OjAUWo*,tXbKgX'h1('*`TIPl`Df)ZOS5]]'EUG<n,M%:\N`__So_I'E\!H_RBAJ(Bn.[/#.-%ViWF]X3.B;a\>KD#?;Itc>sH+VPiL_:ksgo.b)Vf/DaP(IG]rdpLeL^@aMek6l5JS:?18_g,M@,,O**]^2hTnGp^!cXouMcg^"T\J5#I=5E`'lO=RIfl,qqL5EuQ5.`;)(V4kT<)&l;,;3#<j+Xu\8E&qQ927-J-mn`@N"Y0q!L7pIChEn?&Pq"Q6Y)k<#LM!S\Tr0#]&\jVq6B!"X/d?tsJ:?2&B^?nBLK=G?ro`oG;u@L4]j,r)Glc-:prh,Es-+A8du^=8M>if<+^.u^^hV)9;tWFW93YFiLADC$JgCJ0`YD>&*tJ&3FLZrO_2745Ku5KN>oNUIeNYA<pQ#&QZ9_1QWq)(nC/Ymr^jADAdR2S;S#SsM=8:m<``r5Y!ra_LI_"rGRLQ/hh/luGMn+=eJZJdPVku&0'49nkM9#R<cl\7+??2)KI>`ND-5K/>N,j6<],>u9KX&]-^!PSW07<\hDPK%3FSg;F%QbSX*h!.K+;6Gl:4gD(cd.uR""d6P4=i<KK)Nns%;(;7c$XB<VW\Q!&LoSbY"_;.nW#mgO9DCsVgUZNUC`P8ao.VqIlbp_C,?$\1qB:uVi%UG<=>K6DdFY@1KBbVf(^0?kN*=R3mZ&OeJdQ\Wn:u-RQWS7`h?PtL?r?d/Em%W$JO&8nXC'#ruhdam\^.%^q?;(Q.["3VB^@f$a!i_b])I@R&F&e/\$(rEu/Xkp&/A-C9KG=i\"<%/lfh1@^#@B/ZTEB.8QJGr\PV%cP%@E0\<6QB]cLXfrLu6I-gHVUi6]^n8Ua2Fc5u>+[hnA&4667oXT.#?jm\jM;r0`M!ORA(s'k:euG[HXpq)g_I3WuQd)NU%b/JS<+YSf^nWg7%WN=9HT(+:jNc!tqT4?MWQ@94cGB&Q2Pu\B'*^/l8Umck[4?;e2"+P@Ha[GNmu>:V*aIfGMhNBe3JAF&?E5OL>^ESgFu4tc*K"@m]ZKGnkNt=ajNsDGKGJaBfi(JmHFk[XAL^biC:h[6g?8md#.D\6]+mol".>^FZD!N>m"Jk69\KMP26U*8g4fcfQptp)i6?IF;&m+5:c]:s/t]"[q@NsK9.N`5QMH>_XDU]A))If#>UtX`Z`L6/FGiK8=:[k2DG,Ub+?rm0:tliJ7sol^4)j/.S?rn2gDOhh'rW[![S>&rH#PPP<OONds)pN'9MSsI<iY+fYcI!#oCRi`qdEYf,Khe@W-/[HIt8YeL[sSC;]=p1F-8]oX<-a;@AW\=&d(0Yl;]h0p4l.gG9!W\3[Wtk"]pD-lkji/Q%M"`&(j%r.apZ8)+ij;%N06FRD)!m<-i+l?(#7k"%PV-o:[:3UH7H]hK/e?b3b@<+Ap-b=Tk42G.LkHbV4t+p^g_O4&k@-d[Ep2P)07f9E7:]fRY\;EV/T/^@j_.HK\iAIleNDKg\nj>[E+B)tjrK2`\k&E?HQtMN_N;Jr8o[,6qU=32h'd%V_O@SEa%@CFnSVL\:K(%f&"UdQ"+n8`gAYho"&GWE=Ol`M@P2l)[L<#T/ao"H,A24aN13..7I/e_AO?*m!Y>4,PX/o]:%BYbQkl!Gg5ES=6hONEr6^8BUV0F?,fqLldWRN_5g9a4_Ce5,]s3T1l3ul(NeqEU8e`Qn1FEi2](gll]/GHS9R[Fa*lEf;n`,qSOo/05iN$?!lEJ:;IugP9lbe*9g"&gQ-R]G`o.S)%a6\9tR_][A+FYV`^1n;RC?)<nG#KH0%h7SSY5TISCC!V'#QIY3[X$od*>aWC8P$h#si(`"%G/ZpQn<3a+&(d!59"-YTQd=ZTMo3lgM.GcIGHlrZU(hesg_L?kF1&Wa@Qh1=0I+\8lo4KG6eL>m56%cmG6kOGq;^,'H3SSg7*YWT2HPCDM!rb,PE;g:3qKf$j7VXV-W%tUAi-*8$Qc4F49_;%M6T$b%]DT$F0V-=^iR%7n`Uk);O&OP%]Tu;E"Ck3R>Zu$*_;1WgkP@U?9iI4Lb`2f"UQ_n5F4B>#>*LL<\@`5MGB],3+9aBsp`$od_VC?+J7G>"e!^hIT[c.FOj!8bLb7r]AN]"U'Kc;qVEegEM(\;[bXq3I*U:i^))HqRX&Q'`.>h4e#ej/+:SOBeXI?,97bfN;t&>J$Idc!R;(OYlE]T[\q<nLn+EKHQu_]3^S79-*nL:89,N5Mgl*(048diIV(1n,`W[h&fZ$10g,FUX3u@H[mZCj+NS#]C9@K<O7ns.'g;If~>endstream
+endobj
+138 0 obj
+<<
+/Filter [ /ASCII85Decode /FlateDecode ] /Length 2746
+>>
+stream
+Gau0DgN)&i&Ui84bY+t+N>BOl6A!l<=]W1-agP6I;O'lF0ER!YW,ONsUK.;B:\Oi3W0LK-8h$*D&d5(MVb`q>'I!HHr\q$6pokP&s!EGY`-NY=&gUq7+jSY/6+D`:8Lf<?QLQ`Ms7dp0[lpb]j>'BI!m`DdVo@eR,Ffs5K9M!kVO:Of3&g\,-rt_7(h@aX]5K(spnr?iY0Kdl5.e[=Z2XRV@44@4XNuC,55VZghhh":Cd3qj\lae3?7j$*-A#cK?u@MfK/?>eS]M]qZTs]$<NqG7kip&H%,b*)H?-P[q/drI?K:(rLTb(I-GLYI@u(cY#M4RHOGGlYEk+FZdO`:sqi6=R%cUd@=g6tk^&9XQ=nr5Np+.drMo!iJ.GlqGm*%j;B9]]ebL.8FO+gSVO.<(6pEFP@_Xs_)XXLQd2u90lb8>,D='h,>p_$!,ZqKZT/lP@G4M&n*4KqfDmnVIp^)-F<eTISO?7=FC=`UX_je[E>)p@Z,ZH6+G"eO^\Q)L/OlFPPU>;eG8,rc`4,,[\4QI@g\+]_'`mtQPBCZE"pXtcZ(qe\j&btVu"jn"quWd9S2%QTcVOs'E-m@0(@-e6^jJW/"[=c^Y]<<NQ<m?lZ?-d5cdh+%Y/V9eX5j'-Y9HDaEIm*g-QXOTZ1<FacfEkTrBFT&g=iXOj71,;h0?,soeC?5T`@*MD+_<%6!Va=P:]8ko@l*_>$f#'<:^$0L$miSk1f\r\%P@t\ikUe/ZSEeN@B8:,k$o4KFP^mfT953$&SR<hc\0,fu&H0u9RS54]=6Zg=1gQ0gA^af!e"`F5oK4Lql'ep2)Vd^++Pa]1DI>*K4lSk5%Y?<-Q@SqgesM'pkcNOhAn*[gB*IB/-#9L9KrSpk\$3#PWJMn^8=>M+mJ=iqJ[j'_UfZYso<E3lK2gFQ6X\%`(Xp3p]%7sQ!t)lt2=f+6,Mo+1m*7XNF5E=3c!>,h(B]BN;fSScD!4efFgLR*M;33`/%JV@E)#hd*Mre'CXh[MV)n<<C@ItHV9p6*M7gKDPpo0*)r!8.!>^s&g>6lY+<5Vo50r13%>[481cb7;n1Q6jF/\:oQB"YFc\kGj_EV(C9%#:>%fJ@E)+D*T2>Tf0>Ne\16MWZg\"T\3f7CG$l*pq%l;;Gg:?VJf1$BPD@C;pumb3H^BOQg_$A?dT";j8$C]&3_XAqW5>@4+Z5&1OiWZ7MP1,%K^Pu!o0<OF:jQ]5AYUQ\,7d#Ifd/Sf43Ss$&6Zp/A?l6[Sa3*hr[\]6@PWg\Nc_^B%hDB\XTLugm:YK&unZ1)9Y_qfs[X6BR&KV9BR-Wig<"KE\KV=]?<?Y#(>P\jQZ,L\%T5Op2*h*O<I:ILM#iD-uNW?PS>Zf(4]dE1M3`VCsIhq'O@r:B*T+3lOb;6/pGm+H(BUm1o6A=psi8O<6tB%(DuGuR1b%Fdg:J1WfnC;lhKS[ch%`5t^>2B1*Y&,Tt^EC)n<jTN*pS%\o[,h&(AE(:2Y<NC0#'cQ`WIFt:K5]ZL^X]s14;)hB[7ph<k8BF:XCKh&mC.b@<mb(R'n?\1rJptd`gN.>qe#M[$pj;a?2Qo:b`Sst=:+3+S6)F@rO$CKi]F$e3+(&Ac'0]bVa$(\=VEtc>kT*`E[Q)6Mph(b-"sq`)!S]tI",.]82kJV;6oA=9Im[kVR!AkeLD[#]U?TX#.8&Po)#D$g'Hb57SFGc&i@W6PWVfGkA&LTd6'rh+aQ'H`/rW/,dO7f,6ZNRG%h7K460PFaS3h;a<+:lU9#J/PL+,MTe?87B8e#TD3_\SV;gMkOfA6:[U*kX7Z;9R=k"+Rl1UI2hM0l6lb+N6ImblG2;lZ96H`?rdd[Q4crIK2LU]TA8Q^$[bdsQ8!D524GUm?M\aOfEJ=jAM@?ljWd<%G+.juq6M8e9Jc)7fZcIHL(_="0`:%HNon\V_Xe:&24s3Tn(p`mQ-/<gl<G7Ze*h0&)<2H^rIiam!76#,qY<J5j4h_<R/0M<Q./)>keR6oaX7bAlR.)Hqo^'RniQBaY43&ienMZHS7(BPY6B:?UDcPP/W]`4kRhF!SSm5gK738!KT0:=p[Y=Cr'iq$HA<W(4H"m)7<$qmW@f6-$sg+rTngMW?4!RPg6Geh?,UA/AS3^4Cfo&#2.F7l8!&Wn\*<Sl4)VhR@l:;?FgE&\EBT%Wh!!e?fG4XRfa?A88Z>_<O;+&_AV0/5)qiJ#rT>@#b6'G">T4`[.'6rQ@'b/O[l9;,b_tO_q*jpVX#emXhVJ@eBXd\Xk+e4rU&-)]9^;U,$9degq<6`RG%#d:gR:33%-0#;Mlcc+6c,JB(O[!s.$)R=8Dp)TPJqYD>Am$+Lq(6To<g'VV:g8)tR`V,$t\0U1m3BkZeeZSd<J6CWusi4Sn'@"*S*k>Q+:-B#:k,pW/t[2:gi6M:3JpeMCZ?cm?9-;PcH=hp^uT\m8F:KH\l*(]#h&GN.Qp(f3Ke&m9]"du=ob*BZO.1HpnD7%I3eHpo)G3U6Q5#!kpkEG@Df1;M,HjeZ=.['`',M-3q<pQVaQ/='2)eqKm._g)SR^MAopso2+*F9cqmpc"BpjjIa)a9]=FGkWQ0XV*EqGn1FE,%R+2nT`cI[r=u?MP3<dVp[>%AJ5?Y6kgal@5mLK8^?CW+6qn5rL4G@)5a,ZsO"lRkFI<M:i]ZC^+/l]@WTH?h+r`qhgmahf\"uF>=UI@jN8G=AWP5\E&b<QoNk89@;h<4gR+[7aiUhibZ#KhK17("*_)L`R/Tl`IX]~>endstream
+endobj
+139 0 obj
+<<
+/Filter [ /ASCII85Decode /FlateDecode ] /Length 2741
+>>
+stream
+Gau0EgNMAl&U`bCoHWBE&FPI!SnNk`j?ps#]ui?,S;/82Fu]nI)?>_tY>99ODTg4\[$`.9$XthH4k8(_4]"C-rWMe1?4q[qU"=c'-jXOnUEK8>g0E(Fk/?l?E"sb]Ki&D`,(/CZJF*92_T5`C:l6tXZC5soS7%XjQoIiTQ"76N0lQhWT@Pd&mq"WOl-F!lrs-67X,HR.(K^C*c'r'f5PXbboCi-<Ma,SN,Ak/WoqO33dPZ<t3qZPlH1;TaEj7=gOsl1M,pOt/Gl]S0p/[k<H@GZ*$Xd!r5C9k"qu23Hnc>(Yhu32VjcZ62Q?rmIi.HA_3WKc26*Nr^7$;-Vnh:WI+toBDSTua=[ThWb(9>*gT7`EWFZQVr.-(U@`UbjYln_<T[%4cdKk[rkVDg)0!1ReOK+&LKrKc?>I^de&Y.CA?XWk^P@X:oj&<n!Vp]l@C5`dZH#jk5!=OL:SdLt`T1i7$nWdR=9la3Y"#kA@Q@;Dlb8,17.#?1D7=6KUW[]V[VCi.rYSSE94*SX/U7:3ruko=4t2OoFarJ:h<OP3pZM8.'%AaAmY3=\XoCg%$3)<gGlTp05^2b6eBG9?Y']W7<a*hQL$hgNA.?+[a?7JekC&'1;=OG8QrE1,iOaC`NcS[k949S#.lb]LP`OM+/8&,cW8pjK2JJ>\sBUY>Fkp@]XB;doG2WLhCbqSa!C7mk.j_oNci3XCodS.:qslS(luKa-\BAj3C'3epHN:U+Lk13hemVnqLnJXX0mCTGKP:7JgPS[m;<fC4Y1@.;)7-ae4J^.X-d;L.,cI3G#Q<`;rk[RHRjkC>'32O#N*pkl+$V7n/NCNi]lg7$hm*l+,'f2kH-eVhBCc_9nGb.oLR+V65^p#E5`Qc3;-1:b(teEO8Yn8pgo%s';K,K]kNR$4>7`n$bVWAq@R7KKcb'AlQ:Hjmpf)-MFn/HrnT[_5\m`I[$@9()H=.@bdri%A=.#0Z;V<T!@1C6XtW!,nY0NWAM(C2E&+0_hb!:":>@oZ=0s*qG^f`'Mg+$bNug`P)!1$bK>9(IbO-D?B>"VFU/X?N]qS6G#W2NRalH+(-9m8QIk3r7QUoN%b6L%7ia\puRL81e5<O'7UAU4-TEO2q?q)Fc1+Q;g,Cu/_Ga6*]D[nnFQ0)A%h^[N>)87@?dTJQFed5k7]N/Fp\=-f2$\F1b_PAOlE"N8@dlFP=`>=jDqmdL?S'Kj`oZ)DYeD:r<&V-8ih[<G7i5DHF([sFM7eQ+(m0jS@sOTJ*LeoND;5c3ljg,p6F;K.("SqBJ@\o.8/p^N8bgT?Eh]tagof[gFhKFZLqmOL[EcP#ujY/r^6T&Rl?r[GWlM*Si'uhTYK.%>SMsqgoT&0Uej*hR@)VOs&S=\XMSI-H8r'8OGp0MdM8bI[^OfO>Pj:T!$Cm7M4_>U:VE05QCC.fdN'kA"YB?1U>jS#i'<Jm,7`h,Bb2A$pdX#dI-S89XOpc)@.gTSZ:Q*Y>8Ott-at2QIB(!U&_8Hh;Ddf4-8a8U^m9$*8a\Wq8*:9`LYON\+g4PgBe+=PcV1d+'dKX2:@9pV4?o<Yl]KE^pt:<sAk6DnSVRbsqQD%;pJE!N;t'D_D\&14FcSb+eBnS.1K"O?K^QWSoVt^laiE7TWs`UB76Z]$(^dk875$6DXfqU;Glo8-P_3*d<"GY_"U^is6l3j8G2LPa"M*'n9PBMQOK[t)8ik7E>S&g$B%uXG5[H)[3i`&%%fW]7Z1Oj+;D./X9(e)a7\)ErH,n5_iAu7WMFX=h9,.QO?-N@_@H\0@-7-I+",p,\;mH!fjC=;RK=]bmS`('B%bsdWJ33jPVgWSfmSrWD'$Vgm33Z40eb*_4n]YZ/>s1eO<C=Zsp(/($M>8>RXMiBc4?ot4qUXP2($X,G#]UE).6"cb!#d4oBc;,:CFjuE1S:,5*#MHDogbQsAk1Io:gWl*2(/XVT?U]Cj%&ku%%_I+3*sBBOG[gbKJ,\Q<DJArql214[^hNb9BK'#[l#e>19q@U`fFB::>,mf5Y8">[iME^=apt+@W2j'\t40KrVJ9OL$6%Pf6&s,a[a1sR>Pc5@Asm`W48.;iO1S.+a9kik?t!BLD(Vb-Wt,;M8aqPfXu0#IocBP,:NtZ/o#ZTb+2rld5kJ(60aN2qdSuQ\q_hZWZSN(S"@"?>?r_cMH5m\;d8j)YjtgubBuPs]p977%4Ypkjri-?C_FggTGQ`k5plgAaT6$PFMDY14qS#2k,`fL:^\hmLBI_=Y.59A:sp4Qp(,*N*e_GE(LSOA'\XkfE]\<?EcjV@oCo3FU6$5J4!sC-3lc-nA.b:iW=!am!ggQlC7IM%pH0WfbHRS<fl!?#mO^f_gK-]dI$=0fYq;i^s)/'Fc0)W[\;gYFBV"VrJ#6?eNN\^)Isc5^=3l95KNh%1^"a"Fb6tn5iihkImd+][pADhigP[S2Mu+_$]m4[Bn07UGgR'41Af&4,`>\7>*Q6WUO;.u2_\>j:giC9brU,\>>Lf,.X:IYs;(;[h"%ajI>IMn@AI$\7Zj%g<oVh3&Q?9To=1Z#tFu.a(]43'<KaleDd_oOY!^Cb.Co+@Y<>jWlGs$6pPq3SpCb\@7(ThL/\@F+"oE<t,Qhn1]$_u["a%*FdBTJ\*db(htrNX874(ZRfLX14E>fZs;C&`ecYDd,c>If>h4-*uo/]@Qk$6gm*"3CoK0P)p^H8jBe;lagc$K,=01CJRGM^EH1iMa26I-Hl%K5umtFRhYUO32J~>endstream
+endobj
+140 0 obj
+<<
+/Filter [ /ASCII85Decode /FlateDecode ] /Length 2707
+>>
+stream
+Gau`UgN)&i&Ui84bbMI@?juI*5KOVQlRgeU,s%;j2@i/g.#iieN=3)gqja7oNOAgb(/lZI6jUS%pN3%l5%hs)N?>>'-5g<3<p\@@cFCbm)ob%aA#jCR>b,#@i.R]J/B?jiki*9UEE58njVSk)4ps%kA>Nh+T?]+uD^Y5[(A\VIAXM*FZcurBZ#)odnbM#&?iSDXZ.nC"fB"T5g$72HD4A;T>eU%,H2/hrqSH8tC&>'Nr?,^<)[CO'1!Al'(`RODbBJAQ0^6GbA8s@C>G7gO0!=*J!+of#bF@&D02$K])4.gN5(4?<r-C8-KB"+=\7Yt^+C(!!0L-cY.)NlM7r7<km]bor$MC]aI6/9Kq1PA'90jQ)Q6nu5B?2%93-q-UDcS<q[<RcL84d(o<ARdaW\0HaiT@6?d"SsKK;4#.(G'3T2WlFBgntF>,=T$UV(>b!.osc4V\35[WQIW2^,EKUB0/_4WA[A`a%H3;C=6;8/=3b%kHJmFQ?O`fKMq5bE63<?p(tS;McD;$0EW)gfBDn"h&n'H<qRT-A"@3CFpK&6+'O5@_khR<Rb$k=*K@>sU.f\%0!kl5liAkNh"<Bq0=pmh0..5qDSTVTBB#5n`_)QM1^LT-+eUKpY`S3eK-Z1$AbYulP>]qp(0s-aWPsj1%&A7QWCau>M`e&rDu6DRdDulH;Z\Q=p`=U16eI8:*l,=hU:#5ah`P6sm^,,4BXYj'DhrF>jG\7qK?T8O^2rfAXtIl-%;Ko>3;o(K:Tn<O'jW-*`IZi(D"/+Ro3Sc'.9Vl/m[PYc1/g2M:&q`$.[?aD+Q.?SVeSd*l2ndD&#+iI_TPA3]o`a,::IGH;:_V'a>B0Mb\NMPXi>Kd5NQ.(D-5=4YGk8S\dg%d8^_#jpQFp.S6eS$]H4n9Y+c\d5DZ2;b68e0rZ4JXPq$?CZV+;Aa?"jG_:c`BmT)$&U3hG6VR-X5]F`b"+e#T)hGY--(B?i)+_/HU@\(e4etD&F%`:^_QfWi$I.n0Plu1&kTmKbIp_YKo]5k5DUt'&e$/oT,Ydh8-Y,GU)iXZ3chTDqPM=^cN_UF0ZR9).2!nf`F:.B6(*t,ZW(l%ZI]"Q86n)<5RdmqoP)(+XMW4%bA!e:k&_SM)A^28]=#f[$6d*r9<DFjD]r19Q,H505dp`"[s9Q?0K?U,Xb^IOe<e,A0/VsNiqMMP)<?t:+N(%hZ7^E';QL)HpCBj=F]b^Hsi0@sVd2f4!+e+_qFMd,cEm<o,kGlkj#gOhS%0EGTV"E!GJK8MYgSEgfh",k?"/(mP%%+/GnZD>S-;QUo-5gf5Z2(crX^sFB1iuCus2-[-@JS)t02:TP5d:WmVY#QrZ#m<*(_itR\ps^(+f5_#iLO^&V3=2WQW?1ON'nP3KqBB?KmUWKC$apeg@@O^#N-[itA-AH&YY6='R)NP2fsG'n^-u#7l;buU[/RnZJ'QGJcaC@n*N9`XCS\kP$]N(5['a[cenqDW6u>BHDIUB8`3RS(S3N#SoX\IsL-%N;;P-V"A+)Lj]LTiLO)R:LKl^#NA9Qi0#J#'*GCGb\^[Dgp?2Cg_?Y8B=+D'8[le*pJEK,\RQ@RKg7)jCJJ]>qHGof/%48.t;WP7l15V(cA?('N@<X0hj"/k%505O4(e9OlN%$;0%i%e/0\dmuQ;CekaL:U<J%jF6b1j(QKl"*e26iuXQ$.)B%&"s'q7-=59bPC!Ve6=2<91hM!K?!Q73T;knJM57-)c\/E@N%%>p)LP+5'UL@<[H2&.F;P2C)UY:mi'=[RC&sI@h,>(LOhLLXEc2dXJ/Tk<+@SdVd$sWXoZ["pb&Em1%eJ-9;I$`>'%fFO/?g$R=0"06Rbo5C%r^inT/7&I"^@Flr%%E.FK(:W_'s)9^H:V&,Q>ME0%;![")c@am)\d:Zq(B1e->D;J0r9eSQcF7iDNEiC\/OoV:I4aD;V`g?O2/4I.g,4IuD^UW%G4P3l\5#(7k)%9oo-2'2D)Of:bI%OLXp,?9p/NQKaA\TO%t!#Dq74bfH-Q.^sL0LNs<O09CU9!#"23fbMN5EWer.CZHSNoY^m=%0[NTG@u7.s@kj6_+j%cYc[0]Q5KJ-ZX8Sb>M@W9PdQkGD]-4E[)R$%\S?g>+^hJr1\E6DEDb8A3i@bCP"OT8eY:Hl:f*mgN!)$;j<"l[nlX=pZ1DhPfKo#q"?nq\o!12-hb?LXk9NZq@'+6m>-!tGP#3K4d1]^Q608-qqbu]\)mLVlQs/HZ8_6T00cZObLQ66ENmaOah,qZ6(F6Ve7@'DD[D/Q2O10%'ZSW\)JIl21"fIhn5H;^c:RejO7P!>5#nH0YW`fhAG$e\5/]<\Im;o*.B\I\4oF$4*Q07]-bBRCU0H-erJ^l,aGF[_bc!FgibEnFO,mhc;^JM7[b][no@#g%B<+2OolX,bACt]t79b`c];AVsKT6n`?LljSQSp<0l&TX8\(rQfitcB.5dl(CfPeN>F"De"1R9a!*El[j5LI1n+:Zc/-Ac5";6`NLSl';L-#o1Grbr@Q_dX"1dR<7UURm+>5n9.>F-H=@!Pejq(XHiiFHQu%"N"O=)L!p"I^LVGAJ-j]'`O,&eh93aELh#D<+]m=.A4bFX/f<p06I.Tm]5Q%3Sr+$6K:^T%N_V3D`!*seG3a!7om_`<p8125]Cl!N=cCt\(RuM1RGElC#9f1@q=*`4Ni`DGhR8\?6LGddHp574&NIn~>endstream
+endobj
+141 0 obj
+<<
+/Filter [ /ASCII85Decode /FlateDecode ] /Length 2590
+>>
+stream
+Gau0D?$"c?'n+];fLIf1?i\+]SVN6"W3L!j`g5l7FOE?(JL.]6Y^gou7aA4+\T\&c;Itld<_$Y`pt38ekF?mcOU1Innc*/F`/e-miieK#@^4aI-j^NkI3WX<(I=G-H'4%-?:X=/NDEeJ_B(<<<ouh#19ATO<FZ!a"a5aBNK[&sBd'nop5T(lM@FJD"pJjkq>TY$rtI-)mEP=)Rp5e(gK4C^_ru#?gXkmXh#'`[5DniPCk!HqBsnViHBX&.+bF6J?th/eK63Y2-^/>5/:r\:DLsu_UXsEj_Z4ipf2ln"=$PSuT0D3!m>o$[I;/9$`A30-6%3c+aMpWLP:4R0,U+fI4FH?`.+Z62'QarJ*4E<ujpN^.nFs^r[`M!3?VL7t6cmGDb]1WO>Br0+\lMS9[N9bN)CISHO1If0dt:]p05$isf5TETnPu!4+$k9HGng(E7k(88hV;"3X$Hh0j:klWg,\_>"jiWo*sgK-j_s\i&8A\m[H`IIACi?TbI#r,l$>FUrEtlucA%EKEsQ->a`Xi'BbUfD!u^tX"mg<4b22D]pQS+oWBlcsmTMuEC*hAYY=gl=L@b'%f?aUL_`=(4,"1/;jbKh[.@\T+`up8g";QbBU.l%4m9rV7(o0gi?G?8@g%M]:d7Te",Uc%n-!:gNkf`11eCIe@$Laoe0?VjRj_d<qS>of2V*Ol_44k0QYm>QN^b5G*WD/FDeK?D[k`d%gnOA@mY)_/2lVp6@=04rO#=(RsXee@r_&'`7#;\]cqu1;+!)"o_^/juSVe[BtCfpA2KnJg"j"`I(kQEJX_hfV?][Pt=5@jojqE&8X[VM@m,Fj`iddkk=WN:V^2#s&58;H7_>qJ^,:Dl+T?AZKHd7N).j?QQRA_ZRUK%B?oKO;VQ[dn!`&SXMkG-e>7/G62dq!YQY8s9QfcbP>r&D(;:OgSuFP'+2b.Ha[l'\1gR#<eqDS'timH'rJX`:^bg!:WV*E78r(A\tk?;&/QY:c"3O9<&B(CYZY3NN[,CV]13k6+N5&l"PbH[5Pd^/En/YC\`\M?gp3]SIc)?_&c[*_MqD.nk5d!D:?iP'`J3]nR!Q<FEZ:RceQl5]c2Qb'BLG>`V,M7n&$8QBBpQ)k'(f*Q6Tke1&]7o@VR%NR?Ct1Yn4.Z8l+%G!_^@2Yd@?3e](f=ht^P)MC1SC,gCn^4F%OEF]s_Lded(giVridmj-('i&h+Sf7CGC.*k%l:H[cC;Us2:@B39&=Qejf=@U'.HilRuEgR!!B?'dD^6g4s'Ad^l+Zs6>og,\Wm;hF#3rDYkj<)$B,3dm]57Q>)[1i=-i4%trdH=JK&q+Fr5HprIGcN'$%-R<_,I>/5Y%s"d>BaD+XeJ#,;jX`<m5_YI6?DU`jHEu/mjI?BUut10ArO.<1WA!hVA`99M_=/2BK;4MmN?%C%a@gGFFgG4APF6d"rsR$\@si_<*53)6OBH`Fl\Oq9s=103XN$"b%FQGkUZngGqn:B)(:RLi]X-W_h/:0Kqa/[E\ep`8DC^%1#j.2B:uTf76.6]B1BLDr=]Cke>hK!1_\O6/Ut^%E]rFf!pX?>cnn@D"@r65%LI0$8)4Rm3CQ$s>>qMbS7CJc:bmJH@HXOurZ6DfKHZ1@'VXQsn\lln#fQ&_MfK12FsHh('2P<L0[h.UO0/,+bV<''-gO23.GFkHbRW*P9'G;$O65[Fc)bPSK'"0Y0E#=A/,"P^*WZ,X#90Mh0K[Og:DoWbUoB:)NV$V;?]8K:^X7cn7b/Kl;c4,_3pIsYrlp+PMR.tldr[VR4:+$H8/+Q_&eTp!(]9tCH\mutWI&F/"t#9rVH6G)YHSQ>Nk@5/.,7H@Ah:8F-,sdl\Em?V0EE71-C#87cmLMag"ful5Eq`79G\9O:#!jGX2a1Sa1-'K;h9@fgfVE"7?sd5o+W&';e#,+(Z8%U+ur_J-\4;cNX%e)-3la=lK!Slo,-QmT2cR1%1:crpg?AYGXHr$Y,c9>JG1n^0ZeW]Fa:K!P/)K-H8as6'5sK4#aknVC2oQ9m-_F>kR=c&o+;clONMM])p`).LPVmr#NhqGqoHU@IYqga%*B<Uh(U(VVMW%](im?CqQn?c[mg>>I)*@DlE#/*DF39?2B&%FZB5rKQ=M53r;k<io;>(81mOX@FX5(m"uB_rj'd$aBlp+CQrjF[Q7r[Ae,]"=%:%j#5Zl'S!iA.=Zqem&;$ccQ;NJ`(B,:*m@)gU:GBt0fI&u?idXfH%])LCJ`Sn.aJ8`6=[Q9sRknGa7P;'7"9S\%*0+D=4;96mT=8k'<$XjhC7&JjG:5A/'N\KLCi]s5Vki>BB<;!o9FNY`\o-=8)W?*.%P"NE0'Nt&u(?gn4$t%1UGIls](fdp@"*J-i.*LXb`5?#$RaPAW?t*c(?IhGdG!)77Om?'F@)9*sRU$Y='4>]'54%N(VTW0ID6u,D:r+6VGO;p8+]^E"@5*Rg]2Zc>A#TeBg&cU9IZL.08\4lr,07^k(PYG_68Tn2pe*3qJ*kR\OM9eO'"RaJF8@%un$Samr_c."!2Dn3O2Eq%?EV9%R=N#S0/<?tYi@g'3#5!4,RN&@B(KT_Km80%/67[err>Lu='P~>endstream
+endobj
+142 0 obj
+<<
+/Filter [ /ASCII85Decode /FlateDecode ] /Length 2786
+>>
+stream
+Gau0EgJT$5&Uigmo"g>of=9A]pKg(h#U;7s8j\0JNl;O2Sf2:QDqc'Zs1M3?okcB=^hOVdVCtr7=]m+.:Za(2nZ1`#=qLYBU,RR%U`<QT89pLkX"-5<*EdRDKUtu*j!m!0nVK=rc.u6RR:5/TJ2nc1RPs%F@21XNlie+"&ZlDAlhnl%=;J?IL_i8SFSb`]dMob]5C7U'NB^U[]<uMK\'rmha.)\hB_@'[hhum6;19(?ji2il7V$e.!_Zs^Du$R)bp$GLN%Dq7@k2Xhkh4K4"CP4j48lBE]f;q!2n6O"nbpd,OhVqhpY^;#&"Zq??jP@_.L]\j5DnrN>7m?0bFLR4=eTZdaL@puP`PUqOqbjN+DIaq[fgu_(e=;ap`efldi,[e2]62g\o52-dlHZUdedjeBlpsgM9pt!7ZA3e*dUr6CiZA2c'?UeJ2V=g950QeIGTib+WkcOYOc!t?1eZ'<Db]d>Q[5O`]d@I?g.1d2q7)dDFo'C,->a"ATt8a=+/i3r'C;6M*2^4MLE4scQESM&\3H#[=-)m5Kf=CY:V8m%>m*soBC)m6Rd%B9RG$0"cMsb06<(&^`Y7T2I1DdG6W&iOgVS@N9p/1b$h&PdI%[;*+FGn)1VSP^NJ)_1K[gT8^gZ#3n*^'nJN'EgLaH"d)&s,(]6>QZUi6Ek7bdrC-$^&iSJJ.,L:E#F#\e@(gu+E$iF:(G11'"fsbmX*n7kpb1T=;l)mU`:,h<7a4F,OlM;[`8e<$\9e_16(Jp=Nho/'WqPMPb^n`K\[Usod-Mt4&PiXpGUSQ'kZc.%>_>>4B.QlP)2X7ku6Lg];pZ9JR3;C?OObpeQ,cY*V*'rcfbar*rDp)]eTB*OG4LDShC^i/'+3d5(jFn<mUVM`l9K.mOXqqqEnpot:)Y!:sUQlo)-<`Q]*dCTtHPm`,CQW=N%OR)=EZ3Q@b8Pmcl+<bXLsLW8Qb@k?n_'W1"]o&bel-g5*BsL4@L\WDHk119=R4Uj)A?!_LZ\iWi+,h,Hk`Xn,@PGRRfX-a,fjBClF\Sqk7j)E.<'ra1,cgAau`l/7RMppgZ6X2"!9qFZfl-t4C,_Qitd\/0@%j6[p<#OMmU(A+3WM?\DX:#k+#/$aQM2H\JQA1]09b]Sg8(^Vsnr3DKHLi!>ih?B$Kop7CoKM#Li,qP=6QQY/p&(=5BZTW_Wm%)]UJR^/m"_cr)DX0+LYL*5(^F]>TZ*gZ+4[p,gG'g<G>m\!VoW;e4Nepm:2Oq[hnD2F>Jn&U%s-RJ3+^MW8<DFjdKU0H0UJ)p,msCqCt=&^[QK"Q>=u8\aEG^K7.$?sAih*X>MDVECkh#A1bGd&D)GHj#1(-Y_-dF:G9C\dgB\<(RR'lq.:<aTF1ARJ[F84Z\Y$cWQj(<9hc'1Q<\-3R#naCodg&5gOa-gdCL'k5I\6l0tclWk&8(W08!,q"Cj^MLmu(,S#0=HJ-MK,3O7.LkGk`^ah#/d8?I]c!6aa:2^BVJUHn7bB86VHVQ6>/^!d;=Ws/;Rg]GKMETjWO[:@XHIM%Z:;nG,FTR@REtkPDEJ3dgRu^'%Z`8t34Qj[_2^2e3JX]?5Cfu4+cEZAcA0GO[>81#8G!LSJ_f#21]2nE<,0,A7[Xmo95$6Fs](@[Cm2&F76,m$GJE_oH[\L"d&.oFQQ8:o7KlHSf](q#B>/JoJjuoZu3O]D8m,P]ekei7D3;ONs,'`V<^u$KoI@\Un.eiTo5FhN+@.Wk1P5WuMr,=u0Ds[YKIYFbVo'#>.`8siMPXgmH9Sk!\;W@&GWnak\P0@FualQVm8PV"djmqYVl\XoIFbWllkd_AG;sJj@$OYF*Y\a2RQ_S3O3CQqgU'JfDK_[;R=ngigVIBOB\R5%sL.%kS'?WUN$oP9Q12iTAa>.<R<Q83,AF7K`=#\f6W]mo'H!ke@0.%TK#4Q\-OTGWJ)Z?>P*bEJg3D!KaVsCjS5op(*1Xo1o*U0c+I\^2fI>5&0X/;)(=kcs@^G/)n2AsSF.a3ppHp>6d0m85EJOSYAb8H_#9(np:9[oma:&C[J_T&Jqf[+#:fNct.V%b1oa)\<ZB!5sX)XHMPc=G!%phaT[\TB.-*<EIec&'"a:.t[8U_brMg6#Cj8+i-+pG7!DG#G'IUkB.P,%_WYdg]9/_>2=G-^<mYR1@!Z#(J4TTa_e9p=W_&qanDWPVo[Y$oI^,r!"cpqOgbN=k'HL)POg2]hNXt)1ho'F..3A$Pi`Mc'Z#i3]!?pCJFnoeWfX`-sZ$J'tic<TYP!p>j55I6EK4o:c?Q!G*],nEP,<K)`qWsU".96`oH5qd"rP:Zn5S53"mCq:cX1D?(rCaL/MaMp>9+EX'fidX__Y:e6$^(5Tb?Xc/!?f'd$&#fH1J2\U&*/gnE)cqNg%<rQ'cg2qK-ihI"^]3P@R=U[q833rd7^`VJcEX51nSiV*$[c6&JD"/AG#FD&sh6157P2P!fum>*Fm`:dI4j21I)E6juXp@"m00C[gU;YHIh2C&h9%*Y*6EM",Iq02b?1g\XM$nmc=m]rWq,QoaERkBg]oVRt`)6UE;;j*_9B=aVPE'kDW536sgR:D@FUet2H4+a?1`ElX=9r^qIJ]FTsrIuaiQ'L-Q_^.Ei&qii^IbNE6<cm"=e`msEhLOHjA,AB;ELj!m57jG-Mh8gU"+`2_?GZFI7M7632';Q),/^1C^Bbhej?cDebJ'rD](0I9&fT)V9b#5-Z&s4.`^(ai.[O=EG8@Y+"-VO?LFIUDis:9BL#=kJ=VtfqeFu)KNT,2lkSUs1/\f5tU]1@2d8Y#~>endstream
+endobj
+143 0 obj
+<<
+/Filter [ /ASCII85Decode /FlateDecode ] /Length 2631
+>>
+stream
+GauHM=``=e&q8H9ka/F"Aec/8)tq18,1DBHZ=Q[&C0eqF5i@_B)8sn;JC4AnmHsuU;!)=0.2BhL!&K%OI7f$J5D"CJF+Bn&nEQPEiPBaG,&dT#?bg?&jLC<g#9c'u0DsJCDu<6n2*3;XA=S;aiL(N4$.BuVn.sDX*(1?n$&n%lYP0[d;SLe+'"[l5qXjO.n-Z<fB>9D.n,q]XrcDH9rcEPel*o&)@=/=?+.0e2M(hQ<n^GR='6&P`JKZa$F@&2#HBLIT9H6>d;^_:+kh3p8'#7`1m.B?5o]Hh!r=,)p5@&^TP5KV_Ped`(5IflEXWm[.Lc@^iKLpb+f,8SEGPke2`/.W59A`GK<'K9e)PnjA>"W"!^.'O7a`oA7(G_7QBe$Zl<%Vm1%::%XdnCWaB_ChboOAuR[2^0^FC`5XH>O$ueLa,9!&ASG(6.GSU<q%n7d1O4%D4he4+RH9S#QPcX?dd&'5F<60A-aM\hl+WrAiiQ-s>(S;7084DJEf#s*gL+diUm,9*,e`oN_0R5goed8V>Aa;,S/hke:,R_A#GHLEc@"HO/F2qKmW$Z-BKI$*FcL=/<Yk8(MPm@CRNZ*OcC8ETb#TlpT`X/\h,NN6;F0^u,4Pp4-NAV$+FZ6<Vr/*A;2Io#P$]f1G`aiB2cN`f3E`n"eWo"qf;JVpRTNNERfa-k*T5nPP;&;rtStkZY6<gutW8eXruUQ/"tFjml?_KB[614MnG@gC[a/TFZD1#cT0qjD,Kg>>K+n4?b:F>lLS#0/\s$rqu73i+Lf^+@^tp7B5,&W0q2`r#_O1hgH:+-/6B:Q9`'==U[)#=nHfn0V(a:kfUuGCfE^*B0q`;iX<o28rcX#6VD4UB4GcYAGj+d2WT&HW"e2P_6]U-Xcs4'rpmf?20Q4UfWI25T9rO9m0Z!0Vc?ceWl[t&)$S8j8Q/L76O;b!^<#f)Rds8;<l[\l\"t_L9]6;b5m4+)i\ik!=lS^9<[QQ/M;Bq91F,BLXWl%[4Zri[ihKPNH)HrB?I,qB7[K[K7cd=/;HBff]dRF.I?5>frD_.&Hi"IK-mFJD/G*BpkE8FK>H2d+Qr%(/4h`rt?X?+N^f]H+46dE9OD!YK]UYomk!m3cAT4(#C4^867F0qJcdsBmpb)U<Gpd_3n@=_fJn:tM?P45#h2;^14+)%WVVeG;^eeTrWbpFHpuq"l8QODIT2n"fQ$'#'MU#a31W]O!GWo_(Ao0FNd`C_#(^sUV)MW@:c/-O)`m9O%lXa*8q4^/"g'8(gpS6nKp:J%M+[ojUAV1/aS31!m"A#G9<DFH+8kKlri3:Z*hjd)23Lb'1j,O!<CTL`CQ#NF/\)q6pa`sH.KCJAND,7%-d,h6U>`/\?dP'dEY75**5$=Tq8GD(ZL[qS'T9$taj=io.QF],.lW[L+d.^,P@uV@9<6C)uSt0".I7.YQ#nrpL=mt\**^sn/)U>Dl6LT59-9JlG44k_N"D@.#TcJ[q?iWhsCR-ohm'F_dKP-:lV4MUYc`d,SgG\!"qY:CAh-Yec`LP\*].W%<a@XJ#n6f]gbt5L!I^hG\F,]f<YNb+_=CLr<ea;p\U>>!TpOpQum1Wg0T()Bg52bO;TB?Q)T9lU,\(u.OkL51=:W0T3LV#kM>n]*Q)9aT7Q#:-Wa:>OmRh2$)JZE%BGt!_(=`k6u7Q"sl[;/7n-/ljM/r0fpo5='/,O,W&"pb*cG0mm3jo.H5caC<+#/U&'")oDt9N0+<('Z_M++(.,SNt$O\its]OHh-7agc1[bUToel=uoU\K#cjD;p1:dF:FtE2&hkK$t63euULRQ##)OASi^6Fjm-`2MpuFp`6s8%pNc`HlTbAN,DA?HV??,rO_2"C'W$pOTBLEQ2FmN*)J+saQUVR)&5W^bSZ2-%b)Amln!&q'4l%-/b+dsO[('c<i:k,W)aDr.1;B"]G[9J,\?MUP-:=QV5cUqT?-0OfphKXD[$M$H!mmA]OZB',?T6j`hNG]YZ_JB&6.F&mtI"V0'NRU,)[?X6"f!n:"0l/ZW;he]$R-lF%mth$gQGYQ#7A5np4,&X`sN8G!q021r*92h\T^CDiIbYS1D1>NYQ;CLB.$2$Tg[\NX8!G(%^%PX$aU3VXH46ZC?s=USF<5$>OSg2ESn].sI7/K[(Nu4D%be@nCoZUBNmNW7A2IfBG>B/\=kKMb;gpmLZ>!QWX(HW^%B)1,0@+VaG=Ai!,l%;R's*OL/$J,Cn?'eU-eN4]DK:@#SK`0rIs8hmO,pVN:oIAK(r10!^HYX"\]pZo8"Smc8pM1"E;5)o_kXg>5FTCsPZMPZ[LoGl^jfjFb*q8AidV\[k)*:E!@#U7"Xn!!s0`:F2"[*Pshgn5TkAV]0g"G_HPFClTZf42$*%BchF"qa/@+QW<.<jH9f-SJ`KkE1&Ng+E*oT#DO^n+W!6D#NDPKllW]seGIY0Yi$@1ruV8ReLJYCn75Ii?/d^B7jjdBBFIW7qq?X2QqKM<aR=8*MHK(_dYA=FDO#3YdGO(X<fO,N%[1g7WuY38/N9ZYijp`$"]q.JrS&)d=4#RFZ/m9C7]o8g;t^2_'ut)$51_?G%E/%[LQ=@j;paSrn/?Z_RX+eU5`Plmcqg3',i3^m=<,"@N=:ibdJj6bc'k4~>endstream
+endobj
+144 0 obj
+<<
+/Filter [ /ASCII85Decode /FlateDecode ] /Length 2751
+>>
+stream
+Gatm=9lo&K'#"0DoO/9`=bS$o,r0gf*+pU&:@-V*C8Wt:5U]0SLE[Ut<1JHQY5sfLlq"QD/se-q,g_P&?a!m(5(81`S$.WSc03+c5pDuTJjeZg1cqJ]fobGF_).%k$UPG#6[[m_+L=0[Z#Z;QP[Mb#N2":08(^9&)b13/j-4.+ll5l?Vp'&FHRWn2m-=ApTCd^f:J^sL]u2SKrqPjWina.km>$b#J#CsWc$m"i_a).37UDH.r\PoS)AUm?(;sN!`mI7d#a))6=D6hk""X$)ln&?J=#r@UQlZ3U9!:HgGkpY&rO0dc8)%Y^,2e)60Bn#n,9`ojJ;DYg%sJcY.J1L%Ti5lEO6u!9InRohr9QsHZD<ho(\/S4d7-f;cPa[hPgsNFb*HQeM][p6e<QiQ[;&n$1l<@qe7'=_B;`e&TSF^tYeaQM#J,^/#H2\e9re`J<C;\=]>9#$_mXG4UPr6L>5PP+aq>eM?JDBXR8D`(L9A-7c;5phNP;)irns^2_';?W4Mo"/%)"5_'nPP"+L1d86/GSse5`8J?'U)H$(_+n:O%99.["QRXP9ajWQ(^C2-$>7qa)-B8B3]J]\)JYX%C)JZPk(8'1!VS"9BSf$_W\d%S6KL@4PHPS`dPT_n<:J3J.XU"5St!\t!Q2E`TcH3Q&@-79.sj-YVAalf/WYCe.f1\np9f[IWNRdTREd1W*pufp/rpk>Y!Y*#J52"eT*qfZ"A:R9'C*Djt`Uf+%V&M8*o^qgj0tpQJJ6Nk]g\-K,>U7[:Mnft"1g\Q"7R2Vhi9@11aJ93l`Q\BsS/Ce0tDPu^Z[blRu,XE.gJl`)`^=ipOCSmmajXVoU3Xr[KTAH+f+q]m1urtPG]Bk_[?!1DRd\Yq_<5F?'8miM:ph1IP92o^DEcT/c63SqrRf[#WhCfZA3cXB\@5sMh,!?uCn.LU+eKpS_*Pq^2@62QNj]!Gp[<tWK*i(*,`=N?'k:8_FhfPU#F\(CE+"O=Haf(tliYZ#^C$BbO)YpLB3g$sk^9ak#K[6"]@<</$gp@$YRV@<WM,?MHUB!5PI3(<CrE\@tdhmuFD/dQGt+sMs"l/Re3*&cUIj%n+ZT(:$dQh@a5kTb$.C.QJBA@n(FDTS1&7,TE[KAjp/HDd4WE$e%`1M_tlj]!]Va?%Z1Wj('B>G.(sA?K-cNoF>FAStl2?g@]_#efFn'KpHH)EE.E(TOlc^m='YTRsH[PRgA?h64WK1+t]SXTEs_e0lOL?*o?C^e1=BWDXqr:V\#^g!l:$-e,M'rYH4I"DX8tCH@g.e];^$/[Sg&JT(lb0o`j,M/Y#>@#O#GBWc@L^aG:Q#e44Fn,amE't&)m#"T*SEA_=j66o+X=D/PO>Zi?j/#HW$MQ0+(2S1i\<JGQ!;@&fa>:5?c2gL6WCK5Q&5to2kM1Xs!L:p7Y7;lt7@;o?`p([7q*'>E=%\nDfJ?Oc5Ro@mAU%/\@`eF++Ut&oY*S4<=X^(^bh3-Z8:BkDfin]m2Pos^pnB@b*!p5tH7,3DuqM:LU5^VpGIMhr*\B4Jnec\dL3`&UAW)2eD7Dhh9<B4ur<d4n;qTq)X24=k#o2eQuFj\m6@'mPligr.k=#,jB4YohT*chRk4P&kUFn_`Zhn$YLD.Rh\+Ld:N&KlkBndNASoH6[b8='a$c,"0QlBs7@PIP&(4(QSJBih>Qkg:O_pCUoN*<PiK??u;KT4B\97]u`t6`hn_]QHb?ATqKuH6Unbd'8%BFG_7%)MJ<EWfFH#rlMQrBr\<?!Ct1@R\"%dagbE1"^_,XnT_M`)iqlaeU5H1U&6SA?LOZRQbOX$Pi&r`pWAXo2_O=Za@j'd_8=^p/m^Rk%-(cmA`N_]46De1j`^5X)J:YJmcWt^Ht(3>s29qQ-^I-3#Bi)N>B]Aqm;SHeqao\jI/$8DPOo:Nf"=P[1"0c$(4fb<=j.!I9[Y1+.!k.h`8?Rr8^T8H/Fmma6RV'cB:$ZF$(\dp3IZ<tFo(Ou]tLDV4T0Buro8Gt%tO<4HHE:9,JbaOXfK("qhWlTQZD<T\!R9/nuh@2)hZ&[;S-!e$C@%^7kD9]AW4&0NNXq?m5]EmG+pq@NF"[Q[S;fe=`XnrMZnUjjF[k9#eV/%6TI*\^[o&P1@<NO<h%egm$?Cjn#F8p9%QuUVp'n<j;a/J<9(8W4Cf8FWB"GJs!J/k5*X]:HdCF+[pn'<c0b<d)85:dmfZAm]i*`<o2e:4On!KpC`>o?7W0s*R0bLQ=n/J*%T:Qq`5nCXoqD6biFbOVI'UAb1HA>6Fuq4'o[2Jr6(-unhrs)8>SZWr&GIjXFC3cuJ6K@._rLIbkdU^T771+bC@qa]O%keZ?(>_:cZ^A\_IaJY\F0Vi0n@>(?`Oo$>s>cumCjUgJQqaBY<V<p<L(Rq(cnJ+9:$B"Q9-s5mck&M(O2M8fb(8f.bFX_[UVPaRkG7?f0T,>6>2ub2':PIP$Xh\Dq$FIFG7H@kk_9TrQW3kB),HCint8Mno/mkCfgVJDRjnd7ZI@Ef9Yd>?(+7Cmg\r6OZ^!00<gPCHuNO:J,/F9;60R5:S)::)cfsu:7L-\H.(P)bAK)(I+Sq^b2(Ebb;8V6jao&U<:^;m$R8s?bK6/8l/Wi-+p<AO\"](gMqD:ckVTM_X%-K7;6Sa-mf7oXbQDO6[Y-#O?qJDVrag^+*c7RB3oi()q^!>S97\ejMYH3DYF^_R`[.F=i=<A?V"#abJuZJ5BBpOA6K8Wi:o(pVdAWoq@/m@jFS%dOl.DL~>endstream
+endobj
+145 0 obj
+<<
+/Filter [ /ASCII85Decode /FlateDecode ] /Length 2576
+>>
+stream
+Gatm<mrR6n&cM.4!ae"K??H[+P=e%gNdL;U'??,\1S%i:^a(0M7hQ.oWkSK*pNAi"EmE73NT3l(63OOip?gT<,8&ogir?&[Lc7usl5u.E@^00p-k0(Z]G0PPP9A*0,0`Le-W*bepr6Sbm/!NqbbE<LN]Dft9!!J$_(*jBE12\//&eg5](+ZE1$=8.TVR9;5:q?[Vg'M*cHk@<hr#`FmsY_`kl"t9EIE35=0_ZSQ9Xm<8K;=;>Qi/2%uX<gl"%TgAoSSs8XAeR9X&(G7'u2@-t;'*m.(2s?r_3TppaT,F=uG,ipu6VeVD$o^RQ;?&?!;K@mN9[OebiRj8^AS9DnS;OAI2gZ?Nkg$?k1m+%6FH>iY;#:AI!oGBt%q7iS<%D.<2pc?P]A6+L<kcAB]NRg-*/Xm153X`?c$id.8k4&m:YVFY++2s6YS!.0<B%t,.;m%]NtJ5u&<hh*/R',tN=7TI.Y.ac$W97_<0DK3@`le\("PDq8@`fE+4X/=:XGCW..k-(:g9I5ILi2A#;1jSY/^a?kuD50)[.?UqUQ_VCMBQ1*+k)=+WU/RdE>mIaU7QN9N4\QYL*\$<Xc(LW%BH4?<.mnj-(-`#5+ACN=4+es,;T'k.LZU<B[-Jb1@?;KVo''Al`Qn2'J6OgGl(5&SAWniL%i%r4aK?J4]OE?^/+7Gf;+'g.UrS1SGS3"&4?=e.'ung\2ULFA&^%;:b!LYl&Y]gU\adchbn%bS=,-_nK'nEF@iuT5!.+40P!+f.NR^YnWk.ZkQU)41BXfggBk^sa%L9H9^C=CYq]5?SY%c*`mm]395;3Nmr+fjK-WdZ,:#;=N!%aE+YQWs[+]<j]/S9*Ng5[$OFA5h^(hr]^%KQs-Lr2!<@1ndJqW5*qdCgNiUSr:J7YF/mlr-CX*q\V!94S';KpuWD1"cLuZ@<tXB9qu\q#VH,(6IBgG'ISXXq>:0(T3@7:4mQSQn`;P5+*sI6sfhAa`?,JB=_7j3'n+HG82f=XaG@SMOnP`H'D>'MNb_^%O-__R9K!J#m;ig[S.A2fa\tH/BX]D%9E#J#]>]'N?t^hNPMen,<JpC[F;i^gM1Dtf6C6AWflW6B[n]ZCJCp4R[Ii_r7rF3;g)bIF%=t'=_V1NZas=5UpsE02R]B$ae>Wdd4u-_b-bQ34Y3B>/;.QGqtgLaWt@PEm<?8d=uKrtd]/9M*aA?e)F08=;'UBFP,lQQH'ANXi3XE<Q!44>08@kTUH!chJ'+ok)U&1!hFc;5[1Z4l=Gs3e6e=o1NVi^FacGRXR`-qI1RF/<@Rgc9gV^<QWn7:`mdHi57#tjO,t7gmC%N18:=?!\5Ral3V5\.SNg>>H`6S,tG_Z:J.+f?Va(bb)BrhjdlUMYHhe6%V9=Vg@AAuOTZf9]3AeSNB8%CY5C(#&MR)5Af"N0#7'p+[f.&c=-QLr=_;ISF*+9DHEl.(c<4Y:a!cYsZJ^Jb!kQqMc6>EYEjC:$tU@4E50m^u#&/mGXO26nCQU2eIT46;X[eOIC.$p4LlN()lW\6:G:S@11s<+9R)W-;D%UWX:u3E'W]=O=bHef"P!%FUI.CWUO8,LL9t'Q)R!&/r$gBC02k,)$jDP#XeJ@I7gn.BdsTc]*L:B18B7pEsWo1dR<VI),s!,&,.)%tI>UAo#t:04`."%L+40j#(KM5_NoqcctQ+9B21_HeJ,^Op1I&)=+=:k^7Q-YuJe+WN"F@`pXooK5^4uWY>.kCf+oH2jJTJ4#-:<'W!:tIT"0FWdD+o<Ze]aVaM>RSl0b_cP"UBa1muJPRJ`n$f%lnd)kFnTXjIj?Z6G@l9HYqP"k$K3o$Q0dLb(X-s$/>s*c"8SjuSn)q%,pl:>PBp2555fi/m>E(.7WRtJ;soq/in7s&dh#5r0rG4J<DrgoQdTZ.RAEnIDtAS6e*f97o`#:7u<#$hjlh[`J.1s'3s`KDstSq-:1r/0b.gceA6lEQ<0&5U>5B,YHIXsXBm]r?Hj[(m,tB0,h/A64kp9$R';nbbO@ra%rcd1\7\p'2Sm%M$1*cX'r```QX+$7B-:RTk2!&7kt6d2IKU)$B%4)X_h$qr9]fJ'b?b'HK5Lp$*ZC1sGdUWF1c.GB$Rmjs.h9Gb.A)Gb3:dIHP15m,$RVPaRC[%`OKVj^6r!]TNd/^CL\Gmk5`q)So6N"u#^gAF]3Mji,n^H#`M."=+Sg+2l.qpZK#(0$hMr<a=MpAoGu@Sol(^7K9-7+1sps#QrC+s+]eTIKSQ@BMXcr*([G$(*fG.c>L%._IqX=TPO!]MA`6*\rH6m^pbgGmr[TtI0qO]1ls#dMUTsnCopbu0i[lqHu<c:*L>dXaN4"B?RMdis$SFt^:o-VqeFuVhc7]%i_G*HF9rQB<u?un1jJ"dY?'5T2<PGkr1/E\Oakr+4ch7GTUt0$chMm:%f;`f:(m(=-6@KD*W6oHM5Phti\^6P^-2iq@MG+Y4f*aN[p5$dH;qLLXI/*s5q@EE4%%Gk]tb=g?fi@+)^:cT7Z'H\/YWAED#+.0E`>!qOs$`Jh52i!Y=0)_4>oBE!78QZ=Y^NYW/RA+)DlmH!"PlaP<T$]F6U"~>endstream
+endobj
+146 0 obj
+<<
+/Filter [ /ASCII85Decode /FlateDecode ] /Length 1861
+>>
+stream
+Gaua@gN)"=&;KY!MS;ciWJO)WE^qglWUbT?cIQ%lAh4'5.qo]WjMO1[G0aR3W>Mq[YV%;RNMN0FVRukGM1^FF>e_Th^m?Kt3p"._R*L9[b_PEd%&P'-KPoiU^g)qIOb`E#)i&ae.IkV1%Nr]2,,eG-J*>fjq!,_F#Z2/N[(u"=IlPg*(NrnS(Oe=-IJXC9_0F<k+,o_S9[@VtLL9bP_ll"OpFuOUdgt0HkOKb^!qX!s'?.cbo`DR]\H*)N^u(OOct(?[)==`NeOKEP6Ss<pKmmqsm@=^Ej9@i/^Kb,_S,C[ep;-Ea&,qQB.hJ;uGn_HY+HH!8QO@fKA)>5iQpo_G@t.0)T$kf,E7H%([VUE3T,2[gDRd"Ll3=mTlYh`ng1rW$TOh=TWIe=Zf;aub/X$ms#+@AOQ84eb/6+d`&UESm=ikT!"YPM>Rm#]bC]Y-'$SLWE(K7aG;5g>.\1-kmY,VNM5!htnT'PiYTaHsaU#5@g9U#nT'P^KFZ>LN+Kpo*BnP)S;5KU5RXglPQ`HF<'`@N\Q]i[-&BqY^u'an`LN4XY%cFQEXlgbVcHk,8'9<0;p3LmocDpm*HNS?Z>K)?W"oDu.5-jHV`'tN$bZ4uCE/Q1V1+WBu)25gIh?0(A<g[d0@en\GX""T'<Ca&7k;T$`?QDqD'`pu^^0Til.k369$'G5P@#Zf+r7E#0aQ8L[sN#taEMd7ldQp7L523o:Qi-"MX#b7b<-5r2+6C+rO:qfg+,mZ.MQMkUse[Gs*;<4gC@W)e^!>S\Ji-\2UqQd'(B$F-WYl[4RWg5-`/:D#=Y0X\FOTc0=Ed<FsgDBOR/7DN$mqL2ibRb;*MbL*DQ<WE@XV.E[C69tA-Grre92&hu@Xor_A@630p.R<R;#A\omtTBs-"J\A,tVHoO@q;ALDS!I;,TYk2/ZEbOgs]+<nRnF4%jW%gX#Z.I!e9Sps1Xu>q$j:*a#.B_RH(@_q;Q]7%!AZlcH[@V:Lc)[#cAM6Xe(T;P%(;;]W`O6&O&O4LmF9#/s`N0E$=&CL([a#,eb-R"H_Ao:3Ya44eJig\1qo*MVgEU;?/JS?L+p<c+oC>0$_="dX/fNm1ZM/$(7(ddBnVltUAF;:e\VWJ:muH.r)LoK9WTi_IV,U4TB9HAQ4>XT9rPegd*7.G.tA@=RO\Y&0`HNYMcsIc"INRS&No7`rYY<\Dt>3DO9>q+,TXRS(ABX29^7Y\c\CG_`WaTRSZ4hDkE=Md!Ph$H"GtS7<#)0YF<M;F`@jcGp,HM?eiXPp_r%Pp@n`mR6;o[P\=T_"HgMn6l1E<("d19]NpL5jVo.)0TB!Lq2?_[c26GDFR\d"-^fWKgZu`]?E'.XYTVfZ9ldh19L97M&UVTlNtVJk5+A_0_6kMqbu)A$q@O;F5;.@f<6[j-#KPl[5NU&p6,"flahZ=c)!s+A@iCur_nm<=<ORX]#*Z([kh)be;ab@r\:n%F>[=Bl-[Ml]>]9`H<`SW[]\P]F#faSMs.uj:C(-aF5dC::3nL,XWn:,<81eta0++APi41/dTO2?-BET@dXpKg&I>VICQ((U]$VGS\0j$P7@JsnfQrZ#%fDKmeL]h+9KFtXs#)C6k?`4HO6.ZCZQJQm&lm\Nr-I)KD=SgR/lFYE%7Z,^n"VdVoZ`FB(CD\2\"VCF7OETmS:)0k;W"p\RW2;ie_[0o]9.6h_D-jYlZr2KG\gug/u9c<P_m%iP/h+"(_<jZ(-h>!0g.Y9ji6HI&W?>4`b-;SrLm/Y=U5??6N&'_amVCp,;It9GDWP'e$H7&K;Zt('l::g#:cho7U8f'E/r00+KQIcen=J3cA&B0[f"c5)L,O'o%8BH1`H2ngtt.53r]79EjQP~>endstream
+endobj
+147 0 obj
+<<
+/Filter [ /ASCII85Decode /FlateDecode ] /Length 2166
+>>
+stream
+Gau`UgN"2m&:O:SoYWjP=g*G>`fN,GYX;DE%cFJC._j&W!6#jjU:Jq5YMYWMCiJ(c/VZm.bZ1Ul8)<?M9,(S)8)7[<!dpEQVfN3pKBX@h5Q[=%L]6q!Zm)[oKKqYlqJ@=HnJqe>3)TIoFrWi%^M/>Z0`QBLZd@7@5m6R/L1uP:H@NArj!JZ+fM6fTl2LVlI"H@QpT6["J!b\sBsm0/4!"7/mXKcO:RHTQp3i!V;$Vp7M-B9`8FX!:9k.L#69bmM:&8NY-I`t$OLF>2p:_'a!6tqbma\[kd>+pWpi?:DFLc,Vf?'m#?@_h/B-^X]i<PUU,6T3LA,L@o+YE2?s6Oi$g<T*>rn+f,DBHmsb?f\(@Ija'D:sn0dE:mH)mEm3GW+hIYJ%.E>*gSp3S^u\Xgsa/+gfCC(Vj$ZG\0@ho:66qA$UjI?$h/&*>1R)!i>QJd*NuCZ(r6]dG@t/Hj5Fg$-QEp$4E&%-VNi".C<OVg6kiB-2'\GD0TCF*&(Sk8/'+r"7^68G3uZB?Q(X8glS*+H9Uk6J%(u+X;`VV-&J]BKR.'W=Eo"%3Za7lL39Gu*+"Ueoi_JN#5t,L>D)KeLg@%lDSV_\%]A-&F9W,JbDa>H0K=\qaYJDI6A4:YO1@\29\jm$W8_DtT*t1i>j_'^Mmc0h]sZV*oX*QRqg0Nm,U(9M(Reb[^l31I9hM'?kedkhl:!WR%S$+Xl<>TDaGV?C*2\H:GMF=6(mZW`)08Z3+XbIg`mlf*jG[cYfSO,QXn/bO,Wu31Qe-YTAY\5R?m'HN=#!jhoQ(m!<5D:_q<@H)0+DMQ)"snnii,XVA0`K1D\uCNY?%0XMJ%95op^t:T0Q20Pi$7tQQHY#PUB,#V-XGqa=oFH-SLSH\E1ha/NCrc^B=k)+i;Z*.K\<XT#m0`,gkjO4Big=22l36i%*t.9^Wr4B2G!JR0>@r<\6WH7tf:s8&_=MZ8sOjR[&/,"IDVLp),oTh`Y.>=i'hU)T9"&4UMMB.uhYr/h2<(VN^8S3uq%W0K5f^74<1'cQ!fbL$fQBUmZ@:Niq`f1@uJdUPQ^]@`WTqj*31%9"@T9Mr:d:eBtdom72[[GH461gP_X>1p0)\!e#/iBlbtUQeE-HDA7I7Me-=tahf/JB)&Wb1bWrkG8pa2mD2!ar(b_b(iO-u(.>M53@5_ADm:R(W&j53/AH%Y%7?GY\leqidIEuTj.b!G0M2s4_u+$8E"J4"<9p,f<j$4_gP%e$3Z!f$=a@q:f+3ph@IuWU.uiG4&YU&+@08f@/egZiEE\?%HF6cn)L4%7"0O#d0,E@U8$a>d7SCmTRVS+iOr92M6E!m>Zgn,IT?;VIkI`WGG<51_d>P]8V8i6fg.&8s)#RRhh-FH^LM9s:jaM[D]*2Qb3#4e@`OD6-=91G=FQMZRkp"M[_m!UbF4m++%u,/dTL$CXK=Wg]B0XJQ@P/90XUQM@-\<Ru&B/ZZ(:r3+)j\\W.u]O+c#>@ZREZYK*d]+O(0JorUG76M5IqmuPIA1e7P<H`,o$UBZZ6k,[*rnt=0R;p?1kB2(M9L9-=Ke[KH]_/q"dW4,tCkOCc5%mm0UeDq4<kn&OJ3&DriIiF.tI^lq:h,`Jpo,2DQ(BktK:u::N:3;NaKZKi3k"-TB4(AO8PRR4R_e=@g[-A#/l8Y*lfs/(6pN@k"kE44+L@NN3RJ3gZUZ\!A,N!VmVEUKo8#H!WNX#HeiZT!N"lZMgXa'4TVk@.CDkCh\qm)F&)VSs;*q/;_ek09];`@7LMT5KC@Wqd29'52!GOU39SLW-V#uS\!NOU.3b$$;3+GS)$"DnZ*oMeor!FJ@[o$L!J87:He]!aE(E$Ci&mi+Y0-5-*e*G>>$rYTZqRmTYpuTlFRG;5,t%Z,rgJ+Pcn6'ZA1#lWnqY3/!ZOg6kku1@ok/$SLc:Geor&!5O^LnCHjDhY?ODL9hG^Yb0i_TR%HZ^_mEkc928^0B5US3Y`uEAB(+uo.GX<%V.H(cm3ASdQs%F18UYe^=LU#;k&Uo7`E2"sRCY;*H"BBQHO5K_)V;HK,^*$=^,Ws)\3Ein'o4$@a7f319$DXc19oO=So;s/2Z2_2p2k_63-W2H9,CPUlFW(K\8K&.NiSF[WM2S3s,9)Ik[ZP__iG8%+guh3`<:G71_&@V''%!XiT*4a&4^1~>endstream
 endobj
 xref
-0 28
+0 148
 0000000000 65535 f 
-0000000015 00000 n 
-0000000110 00000 n 
-0000003504 00000 n 
-0000003631 00000 n 
-0000006994 00000 n 
-0000007121 00000 n 
-0000010186 00000 n 
-0000010313 00000 n 
-0000013991 00000 n 
-0000014118 00000 n 
+0000000061 00000 n 
+0000000120 00000 n 
+0000000227 00000 n 
+0000000426 00000 n 
+0000000641 00000 n 
+0000000836 00000 n 
+0000001088 00000 n 
+0000001282 00000 n 
+0000001483 00000 n 
+0000001716 00000 n 
+0000001923 00000 n 
+0000002210 00000 n 
+0000002403 00000 n 
+0000002596 00000 n 
+0000002789 00000 n 
+0000003034 00000 n 
+0000003233 00000 n 
+0000003453 00000 n 
+0000003734 00000 n 
+0000003933 00000 n 
+0000004152 00000 n 
+0000004430 00000 n 
+0000004682 00000 n 
+0000004884 00000 n 
+0000005164 00000 n 
+0000005367 00000 n 
+0000005590 00000 n 
+0000005795 00000 n 
+0000005974 00000 n 
+0000006226 00000 n 
+0000006423 00000 n 
+0000006687 00000 n 
+0000006950 00000 n 
+0000007181 00000 n 
+0000007382 00000 n 
+0000007598 00000 n 
+0000007822 00000 n 
+0000008024 00000 n 
+0000008225 00000 n 
+0000008442 00000 n 
+0000008672 00000 n 
+0000008844 00000 n 
+0000009091 00000 n 
+0000009343 00000 n 
+0000009542 00000 n 
+0000009806 00000 n 
+0000010023 00000 n 
+0000010254 00000 n 
+0000010427 00000 n 
+0000010608 00000 n 
+0000010800 00000 n 
+0000010974 00000 n 
+0000011150 00000 n 
+0000011346 00000 n 
+0000011583 00000 n 
+0000011763 00000 n 
+0000011954 00000 n 
+0000012149 00000 n 
+0000012429 00000 n 
+0000012598 00000 n 
+0000012831 00000 n 
+0000013012 00000 n 
+0000013243 00000 n 
+0000013426 00000 n 
+0000013664 00000 n 
+0000013940 00000 n 
+0000014157 00000 n 
+0000014386 00000 n 
+0000014631 00000 n 
+0000014826 00000 n 
+0000015079 00000 n 
+0000015273 00000 n 
+0000015474 00000 n 
+0000015679 00000 n 
+0000015964 00000 n 
+0000016154 00000 n 
+0000016352 00000 n 
+0000016570 00000 n 
+0000016849 00000 n 
+0000017051 00000 n 
+0000017273 00000 n 
+0000017477 00000 n 
+0000017655 00000 n 
 0000017851 00000 n 
-0000017980 00000 n 
-0000021504 00000 n 
-0000021633 00000 n 
-0000025050 00000 n 
-0000025179 00000 n 
-0000028869 00000 n 
-0000028998 00000 n 
-0000032344 00000 n 
-0000032473 00000 n 
-0000035938 00000 n 
-0000036067 00000 n 
-0000039081 00000 n 
-0000039210 00000 n 
-0000042092 00000 n 
-0000042221 00000 n 
-0000042354 00000 n 
+0000018113 00000 n 
+0000018313 00000 n 
+0000018542 00000 n 
+0000018714 00000 n 
+0000019060 00000 n 
+0000019261 00000 n 
+0000019475 00000 n 
+0000019720 00000 n 
+0000019891 00000 n 
+0000020069 00000 n 
+0000020259 00000 n 
+0000020431 00000 n 
+0000020625 00000 n 
+0000020861 00000 n 
+0000021029 00000 n 
+0000021263 00000 n 
+0000021442 00000 n 
+0000021660 00000 n 
+0000021877 00000 n 
+0000022105 00000 n 
+0000022288 00000 n 
+0000022524 00000 n 
+0000022799 00000 n 
+0000023146 00000 n 
+0000023959 00000 n 
+0000043625 00000 n 
+0000043897 00000 n 
+0000045249 00000 n 
+0000046059 00000 n 
+0000066675 00000 n 
+0000066936 00000 n 
+0000068269 00000 n 
+0000068359 00000 n 
+0000069451 00000 n 
+0000069529 00000 n 
+0000069641 00000 n 
+0000069772 00000 n 
+0000070005 00000 n 
+0000070133 00000 n 
+0000070269 00000 n 
+0000070414 00000 n 
+0000070541 00000 n 
+0000070673 00000 n 
+0000070805 00000 n 
+0000070932 00000 n 
+0000071065 00000 n 
+0000071205 00000 n 
+0000071340 00000 n 
+0000071463 00000 n 
+0000071619 00000 n 
+0000074227 00000 n 
+0000076859 00000 n 
+0000079582 00000 n 
+0000082339 00000 n 
+0000085178 00000 n 
+0000088012 00000 n 
+0000090812 00000 n 
+0000093495 00000 n 
+0000096374 00000 n 
+0000099098 00000 n 
+0000101942 00000 n 
+0000104611 00000 n 
+0000106565 00000 n 
 trailer
-<< /Size 28 /Root 27 0 R >>
+<<
+/ID 
+[<7675755d74c15f46eb2233adf0b3a0d8><7675755d74c15f46eb2233adf0b3a0d8>]
+% ReportLab generated PDF document -- digest (opensource)
+
+/Info 117 0 R
+/Root 116 0 R
+/Size 148
+>>
 startxref
-42405
+108824
 %%EOF

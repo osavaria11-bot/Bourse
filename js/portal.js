@@ -102,7 +102,7 @@
   const portfolioAnalysis = pane("portefeuilles", "analysis");
   portfolioAnalysis.classList.add("portfolio-briefing");
   const analysisHeading = el("div", "section-heading"), analysisTitle = el("div");
-  analysisTitle.append(el("p", "eyebrow", "GESTION DE PORTEFEUILLE · REVUE BUY-SIDE"), el("h3", "", "Analyse du portefeuille"));
+  analysisTitle.append(el("h3", "", "Analyse du portefeuille"));
   analysisHeading.append(analysisTitle, el("span", "meta portfolio-briefing-cadence", "Chaque mardi · 2 h (Québec)"));
   const analysisIntro = el("p", "portfolio-briefing-intro",
     "La revue des trois portefeuilles : évolution des positions, allocations, performance, risque, résultats et pistes de gestion. Comparaison avec la semaine précédente et leurs indices de référence.");
@@ -343,6 +343,7 @@
     for (const item of document.querySelectorAll(".portal-tabs a")) {if (item.dataset.tab === active.tab && item.closest(".portal-page").dataset.page === active.page) item.setAttribute("aria-current", "page"); else item.removeAttribute("aria-current");}
     document.title = "SAVY · " + R.PAGES[active.page].label;
     document.body.dataset.page = active.page;
+    portfolio.classList.toggle("portfolio-analysis-view", active.page === "portefeuilles" && active.tab === "analysis");
     if (active.page === "analyses") {const url=fundReportUrl();fundFullScreen.href=url;if(fundFrame.getAttribute("src")!==url)fundFrame.src=url;fitReport();}
     $("#portfolioManage").hidden = all || active.tab === "positions";
     syncIndicators(); syncMarkets();
@@ -371,4 +372,5 @@
   window.SavyPortal = {navigate, syncIndicators, syncMarkets, homeMarkets, homeBriefing, homeReports, preserveRoute: url => R.preserveRoute(url, location.href)};
   applyRoute(); archives();
 })();
+
 
