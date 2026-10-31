@@ -75,7 +75,11 @@ window.SavyFnbPerformance=(()=>{
    const health=U.freshness(data,status);
    $("performanceStatus").textContent='Départ commun le '+date(data.inception)+' · clôture intégrée du '+date(data.as_of)+'. '+(health.stale?'Mise à jour en retard : clôture du '+date(health.expected)+' attendue. Reprise automatique.':health.current?'Toutes les clôtures attendues sont intégrées.':'Vérification de l’actualisation en cours; dernière clôture validée affichée.')+(unavailable?' '+unavailable+' historique(s) incomplet(s), signalés dans le tableau.':'');
    $("performanceStatus").classList.toggle('warning',!health.current);$("performanceRetry").hidden=health.current;
-   const revisions=data.price_revisions||[];$("performanceRevisions").textContent=revisions.length?'Corrections de fournisseur vérifiées : '+revisions.map(r=>r.ticker+' au '+date(r.date)+' : '+money(r.accepted_close)+' → '+money(r.revised_close)).join('; ')+'. Les valeurs déjà enregistrées sont conservées pour l’audit. Le rendement du jour relie les deux dernières valeurs enregistrées.':'';$("performanceRevisions").hidden=!revisions.length;
+   const revisions=data.price_revisions||[],changes=data.price_source_changes||[],notes=[];
+   if(revisions.length)notes.push('Corrections de fournisseur vérifiées : '+revisions.map(r=>r.ticker+' au '+date(r.date)+' : '+money(r.accepted_close)+' → '+money(r.revised_close)).join('; ')+'.');
+   if(changes.length)notes.push('Changement de source pour '+changes.map(r=>r.ticker+' le '+date(r.recorded_on)).join('; ')+'. Les fournisseurs divergent sur une ancienne clôture; leur accord porte sur la nouvelle clôture. Le rendement de transition peut inclure cet écart de source.');
+   if(notes.length)notes.push('Les valeurs et parts déjà enregistrées sont conservées. Le rendement du jour relie les deux dernières valeurs enregistrées.');
+   $("performanceRevisions").textContent=notes.join(' ');$("performanceRevisions").hidden=!notes.length;
    render();$("performance").dataset.ready='true';
   }catch(e){$("performanceStatus").textContent=data?'Actualisation indisponible. Les rendements affichés restent ceux de la clôture du '+date(data.as_of)+'. Reprise automatique.':'La comparaison commune n’a pas pu être chargée. Réessayer pour afficher les dernières données validées.';$("performanceStatus").classList.add('warning');$("performanceRetry").hidden=false;}finally{loading=false;}
  }
@@ -97,3 +101,4 @@ window.SavyFnbPerformance=(()=>{
  addEventListener('online',()=>{if(visible())refresh();});
  return{show,refresh};
 })();
+

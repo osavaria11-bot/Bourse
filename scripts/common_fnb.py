@@ -112,6 +112,8 @@ def build(root, registry, days, cache, updated_at, sources=None, fetch=False):
         "source_ledger_sha256":days[-1]["sha256"],"source_registry_sha256":F.digest(registry),"supplemental_sha256":cache_out["sha256"],
         "price_revisions":[{"ticker":t, "recorded_on":d["date"], **p["previous_close_revision"]}
             for d in days for t,p in d["prices"].items() if p.get("previous_close_revision")],
+        "price_source_changes":[{"ticker":t, "recorded_on":d["date"], **p["previous_close_source_change"]}
+            for d in days for t,p in d["prices"].items() if p.get("previous_close_source_change")],
         "methodology":{
             "start":"10 000 $ CA pour tous à la clôture du 19 octobre 2026, avec les pondérations figées propres à chaque portefeuille; aucun rééquilibrage.",
             "simulation":"Les portefeuilles ajoutés après cette date sont simulés depuis le départ commun. Leur allocation était inconnue au début de la comparaison : biais rétrospectif. La courbe entière reste une simulation, distincte du compte réellement enregistré après publication.",
@@ -176,3 +178,4 @@ def main():
 
 
 if __name__ == "__main__": raise SystemExit(main())
+

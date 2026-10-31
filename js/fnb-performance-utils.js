@@ -54,8 +54,8 @@ const SavyPerformanceUtils=(()=>{
   return !calendars.get(y).has(day);
  }
  function expectedSession(now=new Date()){
-  const p=Object.fromEntries(new Intl.DateTimeFormat('en-CA',{timeZone:'America/Toronto',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',hourCycle:'h23'}).formatToParts(now).map(p=>[p.type,p.value]));
-  let day=p.year+'-'+p.month+'-'+p.day;if(Number(p.hour)<18)day=dayString(shift(day,-1));
+  const p=Object.fromEntries(new Intl.DateTimeFormat('en-CA',{timeZone:'America/Toronto',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(now).map(p=>[p.type,p.value]));
+  let day=p.year+'-'+p.month+'-'+p.day;if(Number(p.hour)*60+Number(p.minute)<16*60+15)day=dayString(shift(day,-1));
   while(!tradingDay(day))day=dayString(shift(day,-1));return day;
  }
  function freshness(data,status,now=new Date()){
@@ -66,3 +66,4 @@ const SavyPerformanceUtils=(()=>{
  return{validate,validateComparison,metrics,rebase,gap,ranking,monthBefore,tradingDay,expectedSession,freshness};
 })();
 if(typeof module==="object"&&module.exports)module.exports=SavyPerformanceUtils;
+

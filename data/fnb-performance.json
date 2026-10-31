@@ -3,9 +3,9 @@
   "currency": "CAD",
   "capital": 10000.0,
   "inception": "2026-10-19",
-  "as_of": "2026-10-28",
-  "updated_at": "2026-10-28T21:55:47-04:00",
-  "ledger_sha256": "bcdde3b0479c40bcb53224985054be2e9888b786855da3c9f69567c0f3257a52",
+  "as_of": "2026-10-30",
+  "updated_at": "2026-10-31T13:54:00-04:00",
+  "ledger_sha256": "52078355e05a00fee9cf41aa9787d3d9e8b6f94e5c0d5a3107f524b2fed3d5e7",
   "benchmarks": [
     "FEQT",
     "VEQT",
@@ -65,6 +65,14 @@
         {
           "date": "2026-10-28",
           "value": 10058.961721491063
+        },
+        {
+          "date": "2026-10-29",
+          "value": 10081.40111614395
+        },
+        {
+          "date": "2026-10-30",
+          "value": 9924.910007156566
         }
       ],
       "initial_positions": [
@@ -158,6 +166,14 @@
         {
           "date": "2026-10-28",
           "value": 10048.696989396927
+        },
+        {
+          "date": "2026-10-29",
+          "value": 10073.936122805948
+        },
+        {
+          "date": "2026-10-30",
+          "value": 9963.17959580398
         }
       ],
       "initial_positions": [
@@ -264,6 +280,14 @@
         {
           "date": "2026-10-28",
           "value": 9984.010956813225
+        },
+        {
+          "date": "2026-10-29",
+          "value": 10021.525085065266
+        },
+        {
+          "date": "2026-10-30",
+          "value": 9955.17470450679
         }
       ],
       "initial_positions": [
@@ -366,6 +390,14 @@
         {
           "date": "2026-10-28",
           "value": 10030.36234651502
+        },
+        {
+          "date": "2026-10-29",
+          "value": 10052.675225101222
+        },
+        {
+          "date": "2026-10-30",
+          "value": 9946.206096902362
         }
       ],
       "initial_positions": [
@@ -489,6 +521,14 @@
         {
           "date": "2026-10-28",
           "value": 10030.70823948639
+        },
+        {
+          "date": "2026-10-29",
+          "value": 10032.399855582318
+        },
+        {
+          "date": "2026-10-30",
+          "value": 9888.905195025178
         }
       ],
       "initial_positions": [
@@ -611,6 +651,14 @@
         {
           "date": "2026-10-28",
           "value": 10026.559506686752
+        },
+        {
+          "date": "2026-10-29",
+          "value": 10017.800682734018
+        },
+        {
+          "date": "2026-10-30",
+          "value": 9910.167955813818
         }
       ],
       "initial_positions": [
@@ -726,6 +774,14 @@
         {
           "date": "2026-10-28",
           "value": 10074.862325060412
+        },
+        {
+          "date": "2026-10-29",
+          "value": 10098.622017009353
+        },
+        {
+          "date": "2026-10-30",
+          "value": 9977.304586819691
         }
       ],
       "initial_positions": [
@@ -839,6 +895,14 @@
         {
           "date": "2026-10-28",
           "value": 10045.565279926295
+        },
+        {
+          "date": "2026-10-29",
+          "value": 10045.90975497117
+        },
+        {
+          "date": "2026-10-30",
+          "value": 9848.260343710932
         }
       ],
       "initial_positions": [
@@ -938,6 +1002,14 @@
         {
           "date": "2026-10-28",
           "value": 10054.334711764906
+        },
+        {
+          "date": "2026-10-29",
+          "value": 10048.992730421533
+        },
+        {
+          "date": "2026-10-30",
+          "value": 9826.230665892643
         }
       ],
       "initial_positions": [
@@ -1036,6 +1108,14 @@
         {
           "date": "2026-10-28",
           "value": 10030.179252219714
+        },
+        {
+          "date": "2026-10-29",
+          "value": 10035.426961566533
+        },
+        {
+          "date": "2026-10-30",
+          "value": 9923.644118526945
         }
       ],
       "initial_positions": [
@@ -1127,6 +1207,14 @@
         {
           "date": "2026-10-28",
           "value": 10048.01778735328
+        },
+        {
+          "date": "2026-10-29",
+          "value": 10064.246003840217
+        },
+        {
+          "date": "2026-10-30",
+          "value": 9929.886930900137
         }
       ],
       "initial_positions": [
@@ -1214,6 +1302,14 @@
         {
           "date": "2026-10-28",
           "value": 10005.216444270347
+        },
+        {
+          "date": "2026-10-29",
+          "value": 10031.29886461516
+        },
+        {
+          "date": "2026-10-30",
+          "value": 9895.670278822132
         }
       ],
       "initial_positions": [
@@ -1273,6 +1369,14 @@
         {
           "date": "2026-10-28",
           "value": 10012.927927436422
+        },
+        {
+          "date": "2026-10-29",
+          "value": 10003.232135975832
+        },
+        {
+          "date": "2026-10-30",
+          "value": 9819.004084154883
         }
       ],
       "initial_positions": [
@@ -1332,6 +1436,14 @@
         {
           "date": "2026-10-28",
           "value": 10025.310890586581
+        },
+        {
+          "date": "2026-10-29",
+          "value": 10021.092274719034
+        },
+        {
+          "date": "2026-10-30",
+          "value": 9877.66335831594
         }
       ],
       "initial_positions": [
@@ -1391,6 +1503,14 @@
         {
           "date": "2026-10-28",
           "value": 10035.59608012474
+        },
+        {
+          "date": "2026-10-29",
+          "value": 10035.59608012474
+        },
+        {
+          "date": "2026-10-30",
+          "value": 9938.977455557275
         }
       ],
       "initial_positions": [
@@ -1457,6 +1577,14 @@
         {
           "date": "2026-10-28",
           "value": 10023.719830349308
+        },
+        {
+          "date": "2026-10-29",
+          "value": 10043.437920835375
+        },
+        {
+          "date": "2026-10-30",
+          "value": 9981.55619093097
         }
       ],
       "initial_positions": [
@@ -1563,6 +1691,14 @@
         {
           "date": "2026-10-28",
           "value": 9935.609555828281
+        },
+        {
+          "date": "2026-10-29",
+          "value": 9946.647718542816
+        },
+        {
+          "date": "2026-10-30",
+          "value": 9815.760377991463
         }
       ],
       "initial_positions": [
@@ -1666,6 +1802,14 @@
         {
           "date": "2026-10-28",
           "value": 9934.28101144814
+        },
+        {
+          "date": "2026-10-29",
+          "value": 9938.14037991565
+        },
+        {
+          "date": "2026-10-30",
+          "value": 9792.031824680716
         }
       ],
       "initial_positions": [
@@ -1797,6 +1941,14 @@
         {
           "date": "2026-10-28",
           "value": 9933.395315194712
+        },
+        {
+          "date": "2026-10-29",
+          "value": 9932.468820830876
+        },
+        {
+          "date": "2026-10-30",
+          "value": 9776.21278914022
         }
       ],
       "initial_positions": [
@@ -1915,6 +2067,14 @@
         {
           "date": "2026-10-28",
           "value": 10146.938530460016
+        },
+        {
+          "date": "2026-10-29",
+          "value": 10128.630867740689
+        },
+        {
+          "date": "2026-10-30",
+          "value": 9923.258957280246
         }
       ],
       "initial_positions": [
@@ -2000,6 +2160,14 @@
         {
           "date": "2026-10-28",
           "value": 10133.323572737394
+        },
+        {
+          "date": "2026-10-29",
+          "value": 10104.080502894629
+        },
+        {
+          "date": "2026-10-30",
+          "value": 9909.95680766067
         }
       ],
       "initial_positions": [
@@ -2099,6 +2267,14 @@
         {
           "date": "2026-10-28",
           "value": 10151.51330602789
+        },
+        {
+          "date": "2026-10-29",
+          "value": 10121.030849674735
+        },
+        {
+          "date": "2026-10-30",
+          "value": 9918.156694539726
         }
       ],
       "initial_positions": [
@@ -2191,6 +2367,14 @@
         {
           "date": "2026-10-28",
           "value": 10153.667620908402
+        },
+        {
+          "date": "2026-10-29",
+          "value": 10116.17533208837
+        },
+        {
+          "date": "2026-10-30",
+          "value": 9919.20584998959
         }
       ],
       "initial_positions": [
@@ -2237,6 +2421,14 @@
         {
           "date": "2026-10-28",
           "value": 10149.885508351701
+        },
+        {
+          "date": "2026-10-29",
+          "value": 10140.540214801955
+        },
+        {
+          "date": "2026-10-30",
+          "value": 9908.341671456055
         }
       ],
       "initial_positions": [
@@ -2329,6 +2521,14 @@
         {
           "date": "2026-10-28",
           "value": 10008.144943494653
+        },
+        {
+          "date": "2026-10-29",
+          "value": 9996.558672078452
+        },
+        {
+          "date": "2026-10-30",
+          "value": 9810.687398450811
         }
       ],
       "initial_positions": [
@@ -2430,6 +2630,14 @@
         {
           "date": "2026-10-28",
           "value": 10016.983154299392
+        },
+        {
+          "date": "2026-10-29",
+          "value": 10027.982384157354
+        },
+        {
+          "date": "2026-10-30",
+          "value": 9859.121823857753
         }
       ],
       "initial_positions": [
@@ -2520,7 +2728,8 @@
     "history": "Registre quotidien figé, distinct des backtests. Les nouvelles optimisations ont leur propre date de lancement et ne remplacent aucun compte.",
     "source": "Clôtures quotidiennes Yahoo Finance, complétées par l’historique daté TMX Money si nécessaire; distributions et fractionnements Yahoo Finance, contrôle par clôtures ajustées.",
     "source_url": "https://help.yahoo.com/kb/SLN28256.html",
-    "schedule": "Chaque jour à 18 h 37 (Québec); reprises à 21 h 37, 6 h 17 et 7 h 47. Séances complètes uniquement.",
+    "schedule": "Premier passage à 16 h 15 (Québec); reprises à 16 h 45, 17 h 15, 18 h 37, 21 h 37, 6 h 17 et 7 h 47. Séances complètes uniquement, selon la disponibilité des clôtures et le délai du planificateur.",
+    "source_changes": "Si les fournisseurs divergent sur une ancienne clôture, un changement vers TMX exige leur accord sur la nouvelle clôture adjacente. L’écart historique reste non confirmé et est signalé séparément. Les valeurs et parts déjà enregistrées restent figées; le rendement de transition peut inclure un écart de source.",
     "revisions": "Une correction de cours historique exige l’accord de Yahoo et TMX sur le cours révisé. Les deux clôtures adjacentes viennent ensemble de TMX; si Yahoo publie aussi la suivante, elle doit concorder. Une séance Yahoo absente est signalée, jamais inventée. La correction est consignée dans la séance suivante. Les cours, parts et valeurs déjà archivés restent figés; le rendement quotidien relie les deux valeurs réellement enregistrées."
   }
 }

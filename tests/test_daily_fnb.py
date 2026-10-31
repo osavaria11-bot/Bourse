@@ -96,9 +96,12 @@ class PermanentTracking(unittest.TestCase):
         self.assertFalse(F.trading_day(date(2026, 8, 3)))
         self.assertTrue(F.trading_day(date(2026, 9, 30)))
 
-    def test_before_publication_buffer_uses_previous_session(self):
-        self.assertEqual(F.completed_session(datetime.fromisoformat("2026-10-20T17:59:00-04:00")), date(2026, 10, 19))
-        self.assertEqual(F.completed_session(datetime.fromisoformat("2026-10-20T18:00:00-04:00")), date(2026, 10, 20))
+    def test_first_close_attempt_is_1615_toronto_across_daylight_saving(self):
+        for day, offset, previous in [("2026-10-20", "-04:00", date(2026, 10, 19)), ("2026-11-02", "-05:00", date(2026, 10, 30))]:
+            self.assertEqual(F.completed_session(datetime.fromisoformat(day + "T16:14:59" + offset)), previous)
+            self.assertEqual(F.completed_session(datetime.fromisoformat(day + "T16:15:00" + offset)), date.fromisoformat(day))
+        self.assertEqual(F.completed_session(datetime.fromisoformat("2026-10-31T16:15:00-04:00")), date(2026, 10, 30))
+        self.assertEqual(F.completed_session(datetime.fromisoformat("2026-10-12T16:15:00-04:00")), date(2026, 10, 9))
 
     def test_erased_registry_cannot_reset_investments(self):
         self.run_day(); (self.root / "data/fnb-performance/registry.json").unlink()
@@ -224,5 +227,42 @@ class PermanentTracking(unittest.TestCase):
         parsed=F.parse_prices(payload,symbol,F.START,"2026-10-20",official)
         self.assertEqual(parsed["2026-10-20"]["close"],101.)
 
+    def test_source_change_requires_two_new_closes_without_claiming_a_historical_correction(self):
+        original = self.quotes(); original["FEQT"][F.START]["price_source"] = "Yahoo Finance"
+        self.run_day(quotes=original)
+        archive = self.root / "data/fnb-performance/days/2026-10-19.json"; frozen = archive.read_bytes()
+        stamp = lambda day: int(datetime.fromisoformat(day + "T13:30:00+00:00").timestamp())
+        payload = {"chart": {"result": [{"meta": {"symbol": "FEQT.NE", "currency": "CAD", "instrumentType": "ETF", "exchangeTimezoneName": "America/Toronto"},
+            "timestamp": [stamp(F.START), stamp("2026-10-20")], "indicators": {"quote": [{"close": [99., 101.]}], "adjclose": [{"adjclose": [99., 101.]}]}}]}}
+        class Client:
+            def json(self, url): return payload
+        official = {d: {"close": p, "adjusted_close": p, "source_url": "https://money.tmx.com/en/quote/FEQT%3ACC"} for d, p in [(F.START, 99.5), ("2026-10-20", 101.)]}
+        cfg = {"funds": {"FEQT": {"quote_symbol": "FEQT.NE"}}}
+        anchors = {"FEQT": {"date": F.START, "close": 100., "price_source": "Yahoo Finance"}}
+        with patch.object(F, "tmx_closes", return_value=official):
+            fresh = F.collect(cfg, {"FEQT"}, F.START, "2026-10-20", Client(), anchors=anchors)["FEQT"]
+        change = fresh[F.START]["verified_source_change"]
+        self.assertFalse(change["historical_close_confirmed"])
+        self.assertNotIn("verified_revision", fresh[F.START])
+        q = self.quotes("2026-10-20"); q["FEQT"] = fresh
+        bad = copy.deepcopy(q); bad["FEQT"][F.START]["verified_source_change"]["next_date"] = "2026-10-21"
+        with self.assertRaisesRegex(ValueError, "Previously accepted"): self.run_day("2026-10-20", bad)
+        self.run_day("2026-10-20", q)
+        _, days = F.load_state(self.root)
+        self.assertEqual(archive.read_bytes(), frozen)
+        self.assertEqual(days[0]["accounts"]["FEQT"]["units"], days[1]["accounts"]["FEQT"]["units"])
+        self.assertAlmostEqual(days[1]["accounts"]["FEQT"]["value"], 10100.)
+        self.assertNotIn("previous_close_revision", days[1]["prices"]["FEQT"])
+        self.assertEqual(days[1]["prices"]["FEQT"]["previous_close_source_change"], change)
+        # An unconfirmed NEW close or an unknown accepted source still blocks.
+        official["2026-10-20"].update(close=102., adjusted_close=102.)
+        with patch.object(F, "tmx_closes", return_value=official):
+            with self.assertRaisesRegex(ValueError, "Unconfirmed"): F.collect(cfg, {"FEQT"}, F.START, "2026-10-20", Client(), anchors=anchors)
+        official["2026-10-20"].update(close=101., adjusted_close=101.)
+        anchors["FEQT"].pop("price_source")
+        with patch.object(F, "tmx_closes", return_value=official):
+            with self.assertRaisesRegex(ValueError, "Unconfirmed"): F.collect(cfg, {"FEQT"}, F.START, "2026-10-20", Client(), anchors=anchors)
+
 
 if __name__ == "__main__": unittest.main()
+

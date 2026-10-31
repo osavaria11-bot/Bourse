@@ -2,7 +2,7 @@
 const{test}=require('node:test'),assert=require('node:assert/strict'),U=require('../js/fnb-performance-utils.js');
 const h=(date,value)=>({date,value});
 test('daily freshness follows Toronto completed sessions, holidays and daylight saving time',()=>{
- for(const [now,expected] of [['2026-10-22T07:00:00-04:00','2026-10-21'],['2026-10-22T17:59:00-04:00','2026-10-21'],['2026-10-22T18:00:00-04:00','2026-10-22'],['2026-10-12T20:00:00-04:00','2026-10-09'],['2026-12-28T20:00:00-05:00','2026-12-24'],['2027-03-29T07:00:00-04:00','2027-03-25'],['2026-11-02T07:00:00-05:00','2026-10-30']])assert.equal(U.expectedSession(new Date(now)),expected,now);
+ for(const [now,expected] of [['2026-10-22T07:00:00-04:00','2026-10-21'],['2026-10-22T16:14:59-04:00','2026-10-21'],['2026-10-22T16:15:00-04:00','2026-10-22'],['2026-10-22T17:59:00-04:00','2026-10-22'],['2026-10-12T20:00:00-04:00','2026-10-09'],['2026-12-28T20:00:00-05:00','2026-12-24'],['2027-03-29T07:00:00-04:00','2027-03-25'],['2026-11-02T16:14:59-05:00','2026-10-30'],['2026-11-02T16:15:00-05:00','2026-11-02'],['2026-10-31T16:15:00-04:00','2026-10-30']])assert.equal(U.expectedSession(new Date(now)),expected,now);
  for(const day of ['2026-05-18','2026-07-01','2026-08-03','2026-09-07'])assert.equal(U.tradingDay(day),false,day);
  assert.equal(U.tradingDay('2026-09-30'),true);
 });
@@ -28,3 +28,4 @@ test('all common comparisons share 19 October sessions, including explicitly sim
  const bad=structuredClone(d);bad.accounts.find(a=>a.id===robust[0].id).series_type='recorded_from_common_start';assert.throws(()=>U.validateComparison(bad),/non signalée/);
  const rank=U.ranking(d.accounts);assert.equal(rank.size,d.accounts.filter(a=>a.kind!=='benchmark').length);
 });
+

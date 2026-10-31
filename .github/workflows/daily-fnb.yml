@@ -2,6 +2,10 @@ name: Daily FNB performance
 
 on:
   schedule:
+    - cron: "15 16,17 * * 1-5"
+      timezone: "America/Toronto"
+    - cron: "45 16 * * 1-5"
+      timezone: "America/Toronto"
     - cron: "37 18,21 * * *"
       timezone: "America/Toronto"
     - cron: "47 7 * * *"
@@ -118,7 +122,7 @@ jobs:
           git commit -m "chore: record permanent daily FNB performance"
           git pull --rebase origin main
           git push origin HEAD:main
-      - name: Require yesterday's completed session for every portfolio and benchmark
+      - name: Require the latest completed session for every portfolio and benchmark
         run: python scripts/common_fnb.py --check-freshness
       - name: Performance summary
         if: always()
@@ -135,3 +139,4 @@ jobs:
                   c=json.loads(comparison.read_text())
                   f.write(f"Common-start comparison: {c['inception']} through {c['as_of']}; {len(c['accounts'])} accounts, later additions explicitly simulated.\n")
           PY
+
