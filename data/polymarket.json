@@ -2,11 +2,11 @@
   "schema_version": 1,
   "kind": "polymarket_events",
   "provider": "polymarket",
-  "generated_at": "2026-10-30T21:32:02.696916Z",
+  "generated_at": "2026-10-31T02:24:39.765497Z",
   "groups": {
     "finance": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-30T21:32:02.696916Z",
+      "fetched_at": "2026-10-31T02:24:39.765497Z",
       "ranking": "volume",
       "events": [
         {
@@ -14,13 +14,13 @@
           "slug": "how-many-fed-rate-cuts-in-2026",
           "title": "How many Fed rate cuts in 2026?",
           "url": "https://polymarket.com/event/how-many-fed-rate-cuts-in-2026",
-          "volume": 55164306.639711,
-          "volume_24h": 73523.217564,
+          "volume": 55166282.961132,
+          "volume_24h": 43381.977077999996,
           "ends_at": "2027-01-01T04:59:00Z",
           "outcomes": [
             {
               "label": "0 (0 bps)",
-              "probability": 0.966,
+              "probability": 0.969,
               "market_id": "616902",
               "ends_at": "2027-01-01T04:59:00Z"
             },
@@ -37,20 +37,20 @@
           "slug": "which-companies-will-be-acquired-before-2027",
           "title": "Which companies will be acquired before 2027?",
           "url": "https://polymarket.com/event/which-companies-will-be-acquired-before-2027",
-          "volume": 18418248.068115,
-          "volume_24h": 789.236222,
+          "volume": 18418937.52676,
+          "volume_24h": 1478.694867,
           "ends_at": "2027-01-01T04:59:00Z",
           "outcomes": [
             {
               "label": "Conductor",
-              "probability": 0.79,
+              "probability": 0.8,
               "market_id": "6318103",
               "ends_at": "2027-01-01T04:59:00Z"
             },
             {
-              "label": "PayPal",
-              "probability": 0.13,
-              "market_id": "1544502",
+              "label": "Viking Therapeutics",
+              "probability": 0.11,
+              "market_id": "694938",
               "ends_at": "2027-01-01T04:59:00Z"
             }
           ]
@@ -60,8 +60,8 @@
           "slug": "fed-decision-in-december-20260729232808632",
           "title": "Fed Decision in December?",
           "url": "https://polymarket.com/event/fed-decision-in-december-20260729232808632",
-          "volume": 9930621.741539,
-          "volume_24h": 1740249.559325,
+          "volume": 9954235.689584,
+          "volume_24h": 1023090.096897,
           "ends_at": "2026-12-10T04:59:00Z",
           "outcomes": [
             {
@@ -82,7 +82,7 @@
     },
     "popular": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-30T21:32:02.696916Z",
+      "fetched_at": "2026-10-31T02:24:39.765497Z",
       "ranking": "volume24hr",
       "events": [
         {
@@ -90,21 +90,44 @@
           "slug": "balance-of-power-2026-midterms",
           "title": "Balance of Power: 2026 Midterms",
           "url": "https://polymarket.com/event/balance-of-power-2026-midterms",
-          "volume": 47318210.974375,
-          "volume_24h": 3355238.512903,
+          "volume": 47487776.812059,
+          "volume_24h": 3437379.620418,
           "ends_at": "2026-11-04T04:59:00Z",
           "outcomes": [
             {
               "label": "Democrats Sweep",
-              "probability": 0.705,
+              "probability": 0.695,
               "market_id": "562828",
               "ends_at": "2026-11-04T04:59:00Z"
             },
             {
               "label": "R Senate, D House",
-              "probability": 0.235,
+              "probability": 0.245,
               "market_id": "562830",
               "ends_at": "2026-11-04T04:59:00Z"
+            }
+          ]
+        },
+        {
+          "id": "1262243",
+          "slug": "which-tossup-senate-states-will-republicans-win-ak-ia-ks-me-mi-oh-tx",
+          "title": "Which Senate Swing States will Republicans win?",
+          "url": "https://polymarket.com/event/which-tossup-senate-states-will-republicans-win-ak-ia-ks-me-mi-oh-tx",
+          "volume": 2567828.96368,
+          "volume_24h": 2330423.0249179997,
+          "ends_at": "2026-11-03T23:59:00Z",
+          "outcomes": [
+            {
+              "label": "None",
+              "probability": 0.245,
+              "market_id": "6274257",
+              "ends_at": "2026-11-03T23:59:00Z"
+            },
+            {
+              "label": "IA, KS",
+              "probability": 0.135,
+              "market_id": "6274077",
+              "ends_at": "2026-11-03T23:59:00Z"
             }
           ]
         },
@@ -113,8 +136,8 @@
           "slug": "which-party-will-win-the-house-in-2026",
           "title": "Which party will win the House in 2026?",
           "url": "https://polymarket.com/event/which-party-will-win-the-house-in-2026",
-          "volume": 32589692.705792002,
-          "volume_24h": 2084148.2726400003,
+          "volume": 33071182.902180996,
+          "volume_24h": 2059838.4005369998,
           "ends_at": "2026-11-04T04:59:00Z",
           "outcomes": [
             {
@@ -136,8 +159,8 @@
           "slug": "which-party-will-win-the-senate-in-2026",
           "title": "Which party will win the Senate in 2026?",
           "url": "https://polymarket.com/event/which-party-will-win-the-senate-in-2026",
-          "volume": 12955265.164672,
-          "volume_24h": 2044869.9838979999,
+          "volume": 13052022.973530998,
+          "volume_24h": 2016679.197117,
           "ends_at": "2026-11-04T04:59:00Z",
           "outcomes": [
             {
@@ -155,46 +178,23 @@
           ]
         },
         {
-          "id": "1038648",
-          "slug": "us-iran-ceasefire-continues-throughptptpt",
-          "title": "US-Iran ceasefire continues through...?",
-          "url": "https://polymarket.com/event/us-iran-ceasefire-continues-throughptptpt",
-          "volume": 31106855.306698,
-          "volume_24h": 1579874.7936159999,
-          "ends_at": "2027-01-01T04:59:00Z",
-          "outcomes": [
-            {
-              "label": "October 31",
-              "probability": 0.9375,
-              "market_id": "4641065",
-              "ends_at": "2026-10-31T23:59:00Z"
-            },
-            {
-              "label": "November 2",
-              "probability": 0.9135,
-              "market_id": "6369333",
-              "ends_at": "2026-11-03T04:59:00Z"
-            }
-          ]
-        },
-        {
           "id": "79987",
           "slug": "next-french-presidential-election",
           "title": "Next French Presidential Election",
           "url": "https://polymarket.com/event/next-french-presidential-election",
-          "volume": 160751211.90210402,
-          "volume_24h": 852986.808514,
+          "volume": 161311393.12877,
+          "volume_24h": 1303077.1295979999,
           "ends_at": "2027-04-19T03:59:00Z",
           "outcomes": [
             {
               "label": "Marine Le Pen",
-              "probability": 0.42,
+              "probability": 0.4115,
               "market_id": "679018",
               "ends_at": "2027-04-19T03:59:00Z"
             },
             {
               "label": "David Lisnard",
-              "probability": 0.169,
+              "probability": 0.2015,
               "market_id": "679022",
               "ends_at": "2027-04-19T03:59:00Z"
             }
@@ -204,52 +204,52 @@
     },
     "trending": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-10-30T21:32:02.696916Z",
+      "fetched_at": "2026-10-31T02:24:39.765497Z",
       "ranking": "volume24hr",
       "events": [
         {
-          "id": "1262499",
-          "slug": "lol-tl2-los-2026-10-30",
-          "title": "LoL: Team Liquid vs LOS (BO3) - Worlds Group Stage",
-          "url": "https://polymarket.com/event/lol-tl2-los-2026-10-30",
-          "volume": 4500596.5561110005,
-          "volume_24h": 4614873.506057,
-          "ends_at": "2026-10-31T02:05:00Z",
+          "id": "1112205",
+          "slug": "what-price-will-bitcoin-hit-in-october-2026",
+          "title": "What price will Bitcoin hit in October?",
+          "url": "https://polymarket.com/event/what-price-will-bitcoin-hit-in-october-2026",
+          "volume": 16749941.060646,
+          "volume_24h": 1084266.581982,
+          "ends_at": "2026-11-01T04:00:00Z",
           "outcomes": [
             {
-              "label": "Both Teams Slay a Dragon",
-              "probability": 0.9995,
-              "market_id": "6280267",
-              "ends_at": "2026-10-31T02:05:00Z"
+              "label": "↓ 75,000",
+              "probability": 0.0655,
+              "market_id": "5170740",
+              "ends_at": "2026-11-01T04:00:00Z"
             },
             {
-              "label": "Both Teams Slay a Dragon",
-              "probability": 0.995,
-              "market_id": "6280262",
-              "ends_at": "2026-10-31T02:05:00Z"
+              "label": "↑ 80,000",
+              "probability": 0.03,
+              "market_id": "6424264",
+              "ends_at": "2026-11-01T04:00:00Z"
             }
           ]
         },
         {
-          "id": "1243429",
-          "slug": "nba-nyk-phi-2026-10-30",
-          "title": "Knicks vs. 76ers",
-          "url": "https://polymarket.com/event/nba-nyk-phi-2026-10-30",
-          "volume": 1939159.1566009999,
-          "volume_24h": 1942199.676949,
-          "ends_at": "2026-10-30T23:30:00Z",
+          "id": "1038648",
+          "slug": "us-iran-ceasefire-continues-throughptptpt",
+          "title": "US-Iran ceasefire continues through...?",
+          "url": "https://polymarket.com/event/us-iran-ceasefire-continues-throughptptpt",
+          "volume": 31349482.102156,
+          "volume_24h": 872571.3679350001,
+          "ends_at": "2027-01-01T04:59:00Z",
           "outcomes": [
             {
-              "label": "Joel Embiid: Assists O/U 1.5",
-              "probability": 0.855,
-              "market_id": "6410045",
-              "ends_at": "2026-10-30T23:30:00Z"
+              "label": "October 31",
+              "probability": 0.9655,
+              "market_id": "4641065",
+              "ends_at": "2026-10-31T23:59:00Z"
             },
             {
-              "label": "Tyrese Maxey: Assists O/U 1.5",
-              "probability": 0.815,
-              "market_id": "6411477",
-              "ends_at": "2026-10-30T23:30:00Z"
+              "label": "November 2",
+              "probability": 0.9175,
+              "market_id": "6369333",
+              "ends_at": "2026-11-03T04:59:00Z"
             }
           ]
         }
