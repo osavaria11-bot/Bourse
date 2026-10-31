@@ -36,7 +36,7 @@
   function save(key, value) {try {localStorage.setItem(scopedKey(key), JSON.stringify(value)); return true;} catch {return false;}}
   const referenceLabels = [];
   const labelWalker = document.createTreeWalker($("#portfolio"), NodeFilter.SHOW_TEXT);
-  while (labelWalker.nextNode()) if (labelWalker.currentNode.nodeValue.includes("FEQT") && !labelWalker.currentNode.parentElement.closest("[data-portfolio-id]")) referenceLabels.push({node: labelWalker.currentNode, template: labelWalker.currentNode.nodeValue});
+  while (labelWalker.nextNode()) if (labelWalker.currentNode.nodeValue.includes("FEQT") && !labelWalker.currentNode.parentElement.closest("[data-portfolio-id], #panel-portefeuilles-analysis")) referenceLabels.push({node: labelWalker.currentNode, template: labelWalker.currentNode.nodeValue});
   function renderPortfolioChoice() {
     $("#portfolioTitle").textContent = "Portefeuille " + portfolioNames[activePortfolio];
     $("#portfolio").dataset.portfolio = activePortfolio;

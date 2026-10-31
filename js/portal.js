@@ -103,54 +103,112 @@
   portfolioAnalysis.classList.add("portfolio-briefing");
   const analysisHeading = el("div", "section-heading"), analysisTitle = el("div");
   analysisTitle.append(el("h3", "", "Analyse du portefeuille"));
-  analysisHeading.append(analysisTitle, el("span", "meta portfolio-briefing-cadence", "Chaque mardi · 2 h (Québec)"));
+  analysisTitle.append(el("p", "committee-category", "Portefeuilles personnels · Comité d’investissement"));
+  analysisHeading.append(analysisTitle, el("span", "meta portfolio-briefing-cadence", "Chaque jeudi · 3 h (Montréal)"));
   const analysisIntro = el("p", "portfolio-briefing-intro",
-    "La revue des trois portefeuilles : évolution des positions, allocations, performance, risque, résultats et pistes de gestion. Comparaison avec la semaine précédente et leurs indices de référence.");
-  const analysisLatest = el("article", "weekly-report card portfolio-briefing-latest");
-  analysisLatest.append(el("p", "eyebrow", "DERNIÈRE ÉDITION · REVUE PRIVÉE"));
+    "Les décisions de gestion pour OS, JMC et MCL, face à leurs benchmarks. Clôture du mercredi et dernier rapport Finviz à l’appui.");
+  const analysisLatest = el("div", "committee-edition");
+  const editionHead = el("div", "committee-edition-head"), editionIdentity = el("div");
+  editionIdentity.append(el("p", "eyebrow", "REVUE HEBDOMADAIRE · PRIVÉE"));
   const analysisLatestTitle = el("h4", "portfolio-briefing-latest-title", "Première édition à venir");
   analysisLatestTitle.id = "portfolioBriefingLatestTitle";
+  editionIdentity.append(analysisLatestTitle);
+  const editionActions = el("div", "committee-edition-actions");
+  const editionLabel = el("label", "sr-only", "Édition du comité"), editionSelect = el("select", "committee-edition-select");
+  editionLabel.htmlFor = "portfolioBriefingEdition"; editionSelect.id = "portfolioBriefingEdition";
+  const pdfLink = el("a", "button quiet", "Ouvrir le PDF ↗"); pdfLink.id = "portfolioBriefingPdf";
+  pdfLink.target = "_blank"; pdfLink.rel = "noopener noreferrer"; pdfLink.hidden = true;
+  const addReport = el("button", "button quiet", "Ajouter un rapport"); addReport.type = "button"; addReport.id = "portfolioBriefingAdd";
+  editionActions.append(editionLabel,editionSelect,pdfLink,addReport); editionHead.append(editionIdentity,editionActions);
   const analysisStatus = el("p", "meta"); analysisStatus.id = "portfolioBriefingStatus"; analysisStatus.setAttribute("role", "status");
-  const analysisContent = el("div", "portfolio-briefing-content"); analysisContent.id = "portfolioBriefingContent";
-  analysisLatest.append(analysisLatestTitle, analysisStatus, analysisContent);
+  const editionMeta = el("p", "committee-edition-meta"); editionMeta.id = "portfolioBriefingMeta";
+  analysisLatest.append(editionHead,editionMeta,analysisStatus);
+  const committeeNav = el("div", "committee-nav"); committeeNav.setAttribute("role","tablist"); committeeNav.setAttribute("aria-label","Sections du comité");
+  const analysisContent = el("div", "portfolio-briefing-content committee-workspace"); analysisContent.id = "portfolioBriefingContent";
+  const committeePanels = new Map();
+  for (const section of window.SavyPortfolioBriefingUtils.SECTIONS) {
+    const button = el("button", "committee-tab", section.label); button.type = "button";
+    button.id = "portfolioBriefingTab-" + section.id; button.dataset.committeeSection = section.id;
+    button.setAttribute("role","tab"); button.setAttribute("aria-controls","portfolioBriefingPanel-"+section.id);
+    button.setAttribute("aria-selected",String(section.id === "summary")); button.tabIndex = section.id === "summary" ? 0 : -1;
+    committeeNav.append(button);
+    const panel = el("section", "committee-panel"); panel.id = "portfolioBriefingPanel-"+section.id;
+    panel.setAttribute("role","tabpanel");panel.setAttribute("aria-labelledby",button.id);panel.hidden=section.id!=="summary";
+    committeePanels.set(section.id,panel);analysisContent.append(panel);
+  }
+  function committeeArticle(key,title,emptyText) {
+    const article = el("article", "committee-reading-card"); article.append(el("h4","",title));
+    const body = el("div", "committee-markdown"); body.dataset.committeeContent = key; body.dataset.emptyText = emptyText;
+    article.append(body); return article;
+  }
+  const summaryGrid = el("div", "committee-summary-grid");
+  summaryGrid.append(committeeArticle("summary","Les conclusions du comité","La synthèse et les cinq conclusions majeures apparaîtront dans la prochaine édition."),
+    committeeArticle("outlook","À surveiller","Catalyseurs, résultats et événements à surveiller dans le prochain rapport."));
+  committeePanels.get("summary").append(summaryGrid);
   const focusHeading = el("div", "portfolio-briefing-subheading");
-  focusHeading.append(el("h4", "", "Les trois portefeuilles"), el("p", "meta", "Repères et accès aux données actuelles"));
+  focusHeading.append(el("h4", "", "Les trois mandats"), el("p", "meta", "Une analyse distincte face à chaque benchmark"));
   const analysisCards = el("div", "portfolio-briefing-grid");
   analysisCards.id = "portfolioBriefingCards";
-  for (const [name, benchmark, description] of [
-    ["OS", "FEQT", "Positions et convictions, comparaison à FEQT"],
-    ["JMC", "VBAL", "Allocation et risque, comparaison à VBAL"],
-    ["MCL", "VGRO", "Croissance et risque, comparaison à VGRO"]
+  for (const [name, benchmark, profile, description, portfolioId] of [
+    ["OS", "FEQT", "Croissance", "Convictions, valorisation, risque actif et rotations Finviz.", "1"],
+    ["JMC", "VBAL", "Équilibré", "Allocation, obligations et protection lors des corrections.", "2"],
+    ["MCL", "VGRO", "Croissance équilibrée", "Croissance, diversification et efficacité des pondérations.", "3"]
   ]) {
-    const card = el("article", "portfolio-briefing-card");
+    const sectionId = name.toLowerCase(), card = el("article", "portfolio-briefing-card committee-portfolio-card");
     const top = el("div", "portfolio-briefing-card-top");
-    top.append(el("h5", "", name), el("span", "meta", "Référence " + benchmark));
-    card.append(top, el("p", "", description), el("p", "meta", "Données chiffrées dans les onglets du portefeuille sélectionné."));
-    const links = el("div", "portfolio-briefing-shortcuts");
-    links.append(link("Positions ↗", "portefeuilles", "positions"), link("Allocations ↗", "portefeuilles", "allocations"),
-      link("Performance & risque ↗", "portefeuilles", "performance"), link("Résultats ↗", "portefeuilles", "earnings"));
-    card.append(links); analysisCards.append(card);
+    top.append(el("h5", "", name), el("span", "committee-benchmark", benchmark));
+    const read = el("button","committee-read","Lire l’analyse "+name+" →");read.type="button";read.dataset.committeeSection=sectionId;
+    card.append(top,el("p","committee-profile",profile),el("p","",description),read);analysisCards.append(card);
+    const panel = committeePanels.get(sectionId);
+    panel.append(committeeArticle(sectionId,name+" · "+benchmark,
+      "Aucune analyse "+name+" dans l’édition affichée. La revue détaillera les positions, le risque actif, les valorisations et les décisions de gestion."));
+    const links = el("div", "portfolio-briefing-shortcuts committee-data-links");
+    links.append(el("span","meta","Consulter les données "+name+" :"));
+    for (const [tab,label] of [["positions","Positions ↗"],["allocations","Allocations ↗"],["performance","Performance & risque ↗"],["earnings","Résultats ↗"]]) {
+      const a = link(label,"portefeuilles",tab);a.dataset.committeePortfolio=portfolioId;links.append(a);
+    }
+    panel.append(links);
   }
-  const archiveTitle = el("h4", "portfolio-briefing-archive-title", "Éditions précédentes");
+  committeePanels.get("summary").append(focusHeading,analysisCards);
+  const optimization = committeePanels.get("optimization");
+  optimization.append(committeeArticle("comparison","Comparaison des trois portefeuilles","Les écarts à FEQT, VBAL et VGRO seront comparés selon le risque propre à chaque mandat."),
+    committeeArticle("optimization","Actuel · Optimisé · Recommandé","Les scénarios, leurs hypothèses et leurs effets sur le rendement et le risque apparaîtront ici."));
+  committeePanels.get("decisions").append(
+    committeeArticle("recommendations","Les décisions prioritaires","Renforcer, conserver, réduire ou remplacer : les recommandations et leurs pondérations cibles seront présentées ici."),
+    committeeArticle("follow_up","Suivi des recommandations","Le suivi distinguera les recommandations, les transactions confirmées et les résultats hypothétiques."));
+  const reports = committeePanels.get("reports"), reportsHeading = el("div","committee-reports-heading");
+  const archiveTitle = el("h4", "portfolio-briefing-archive-title", "Historique des rapports");
+  const exportReports = el("button","button quiet","Exporter l’historique");exportReports.type="button";exportReports.id="portfolioBriefingExport";
+  reportsHeading.append(archiveTitle,exportReports);
   const archive = el("div", "portal-archives portfolio-briefing-archives"); archive.id = "portfolioBriefingArchives";
   const editor = el("details", "portfolio-briefing-editor");
-  editor.append(el("summary", "", "Ajouter une édition privée sur cet appareil"));
+  editor.id="portfolioBriefingEditor";editor.append(el("summary", "", "Ajouter une édition privée sur cet appareil"));
   const form = el("form", "portfolio-briefing-form");
+  const importLabel = el("label","committee-import-label","Importer le rapport remis par le comité (.json, .md ou .txt)");
+  const importFile = el("input");importFile.type="file";importFile.accept=".json,.md,.txt,application/json,text/plain,text/markdown";importFile.id="portfolioBriefingImport";
+  importLabel.append(importFile);
+  const dateFields = el("div","committee-date-fields");
   const dateLabel = el("label", "", "Date de la revue"), dateField = el("input");
   dateField.id = "portfolioBriefingDate"; dateField.type = "date"; dateField.required = true;
   dateLabel.append(dateField);
-  const textLabel = el("label", "", "Texte du briefing (copié depuis ChatGPT)"), briefingText = el("textarea");
-  briefingText.id = "portfolioBriefingText"; briefingText.rows = 8; briefingText.required = true;
-  briefingText.maxLength = 30000; briefingText.placeholder = "Colle ici la revue hebdomadaire OS / JMC / MCL…";
+  const dataLabel = el("label","","Date des données (facultatif)"), dataField=el("input");
+  dataField.id="portfolioBriefingDataDate";dataField.type="date";dataLabel.append(dataField);dateFields.append(dateLabel,dataLabel);
+  const pdfLabel = el("label","","Lien personnel du PDF dans ChatGPT (facultatif)"), pdfField=el("input");
+  pdfField.id="portfolioBriefingPdfUrl";pdfField.type="url";pdfField.placeholder="https://chatgpt.com/library?file_id=…&account_id=personal";pdfLabel.append(pdfField);
+  const textLabel = el("label", "", "Texte du rapport"), briefingText = el("textarea");
+  briefingText.id = "portfolioBriefingText"; briefingText.rows = 9; briefingText.required = true;
+  briefingText.maxLength = window.SavyPortfolioBriefingUtils.MAX_LENGTH; briefingText.placeholder = "Résumé exécutif, OS, JMC, MCL, optimisation, recommandations…";
   textLabel.append(briefingText);
   const saveBriefing = el("button", "button", "Conserver la revue dans SAVY");
   saveBriefing.type = "submit"; saveBriefing.id = "portfolioBriefingSave";
   const formStatus = el("p", "meta"); formStatus.id = "portfolioBriefingFormStatus"; formStatus.setAttribute("role", "status");
-  form.append(dateLabel, textLabel, saveBriefing, formStatus);
-  editor.append(el("p", "meta", "Le texte est enregistré uniquement dans le navigateur de cet appareil : aucun rapport ni détail privé n’est envoyé sur GitHub."), form);
-  portfolioAnalysis.append(analysisHeading, analysisIntro, analysisLatest, focusHeading, analysisCards,
-    archiveTitle, archive, editor,
-    el("p", "meta portfolio-briefing-disclaimer", "La tâche du mardi publie son rapport dans ChatGPT. Le transfert automatique vers SAVY n’est pas encore relié; l’ajout d’un rapport ici reste manuel et privé."));
+  form.append(importLabel,dateFields,pdfLabel,textLabel,saveBriefing,formStatus);
+  editor.append(el("p", "meta", "Importe le fichier privé livré avec le PDF, ou colle le texte du rapport. Une édition de la même date sera mise à jour."), form);
+  const sourceDetails = el("details","committee-sources");sourceDetails.append(el("summary","","Méthodologie, sources et limites"));
+  const sourceBody = el("div","committee-markdown");sourceBody.dataset.committeeContent="methodology";sourceBody.dataset.emptyText="Les sources et hypothèses seront conservées avec chaque édition.";sourceDetails.append(sourceBody);
+  reports.append(reportsHeading,archive,editor,sourceDetails);
+  portfolioAnalysis.append(analysisHeading,analysisIntro,analysisLatest,committeeNav,analysisContent,
+    el("p", "meta portfolio-briefing-disclaimer", "Rapports conservés sur cet appareil. Les PDF personnels s’ouvrent dans votre compte ChatGPT. L’import reste manuel tant que la publication privée automatique n’est pas reliée."));
   // Keep the edit form available when a portfolio is empty; only the data-dependent panels are gated.
   for (const tab of ["overview", "allocations", "performance", "earnings"]) shared.append(pane("portefeuilles", tab));
   const manage = link("Gérer mes positions ↗", "portefeuilles", "positions", "button quiet"); $("#portfolioEmpty").after(manage); manage.id = "portfolioManage";

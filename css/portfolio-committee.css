@@ -1,0 +1,75 @@
+/* Personal investment committee: scoped to the existing Analyse panel. */
+.portfolio-briefing .committee-category{margin:5px 0 0;color:var(--muted);font-size:13px;font-weight:400;line-height:1.5}
+.portfolio-briefing>.section-heading{align-items:center;margin:0 0 7px}
+.portfolio-briefing>.portfolio-briefing-intro{font-size:14px;line-height:1.6;margin:0 0 18px;max-width:1000px}
+.committee-edition{padding:16px 18px;margin-bottom:15px;border:1px solid var(--border);border-radius:8px;background:var(--raised)}
+.committee-edition-head{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.committee-edition .eyebrow{font-size:10px;margin:0 0 4px;letter-spacing:.065em}
+.committee-edition .portfolio-briefing-latest-title{font-size:20px;line-height:1.35;margin:0;font-weight:600}
+.committee-edition-actions{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.committee-edition-actions .button,.committee-edition-select{font-family:inherit;font-size:12px;min-height:36px}
+.committee-edition-select{width:auto;max-width:210px;border:1px solid var(--border);border-radius:5px;background:var(--surface);color:var(--text);padding:7px 10px}
+.committee-edition-select:disabled{opacity:.65}
+.committee-edition-meta{font-size:12px;color:var(--muted);margin:11px 0 0;line-height:1.5}
+.committee-edition>#portfolioBriefingStatus{font-size:12px;margin:5px 0 0;line-height:1.5}
+.committee-nav{display:flex;gap:3px;flex-wrap:wrap;padding:0 0 10px;border-bottom:1px solid var(--border);margin-bottom:18px}
+.committee-tab{border:1px solid transparent;background:transparent;border-radius:5px;color:var(--muted);font:inherit;font-size:13px;font-weight:500;padding:9px 12px;line-height:1.35;cursor:pointer;white-space:nowrap}
+.committee-tab:hover{color:var(--text);background:var(--raised)}
+.committee-tab[aria-selected="true"]{background:var(--accent-soft,var(--raised));border-color:var(--accent);color:var(--accent);font-weight:600}
+.committee-tab:focus-visible,.committee-read:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.portfolio-briefing>.committee-workspace{font-size:14px;line-height:1.7;white-space:normal;max-width:none;margin:0}
+.committee-panel[hidden]{display:none!important}
+.committee-summary-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(260px,1fr);gap:16px;align-items:start}
+.committee-reading-card{min-width:0;padding:20px 22px;border:1px solid var(--border);border-radius:8px;background:var(--surface);margin:0 0 16px}
+.committee-reading-card>h4{font-size:17px;line-height:1.4;font-weight:600;letter-spacing:-.015em;margin:0 0 14px;color:var(--text)}
+.committee-summary-grid .committee-reading-card{margin:0;min-height:155px}
+.committee-markdown{font-size:14px;line-height:1.75;color:var(--text);overflow-wrap:anywhere;min-width:0}
+.committee-markdown>p{margin:0 0 12px;white-space:normal}
+.committee-markdown>:last-child{margin-bottom:0}
+.committee-markdown>h5{font-size:15px;line-height:1.5;font-weight:600;color:var(--accent);margin:21px 0 8px}
+.committee-markdown>h5:first-child{margin-top:0}
+.committee-markdown ul,.committee-markdown ol{margin:8px 0 15px;padding-left:23px}
+.committee-markdown li{margin-bottom:5px}
+.committee-markdown a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+.committee-markdown code{font-size:.92em;background:var(--raised);padding:1px 4px;border-radius:3px}
+.committee-markdown hr{border:0;border-top:1px solid var(--border);margin:18px 0}
+.committee-markdown .committee-empty,.committee-empty{color:var(--muted);font-size:13px;line-height:1.7;margin:0;max-width:72ch}
+.committee-table-wrap{max-width:100%;overflow:auto;border:1px solid var(--border);border-radius:5px;margin:12px 0 16px}
+.committee-table-wrap table{border-collapse:collapse;width:100%;font-size:12px;line-height:1.6}
+.committee-table-wrap th,.committee-table-wrap td{padding:9px 11px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top;min-width:85px}
+.committee-table-wrap th{font-weight:600;background:var(--raised);color:var(--text)}
+.committee-table-wrap tr:last-child td{border-bottom:0}
+.portfolio-briefing .portfolio-briefing-subheading{margin:23px 0 12px}
+.portfolio-briefing .portfolio-briefing-subheading h4{font-size:17px}
+.portfolio-briefing .portfolio-briefing-subheading>.meta{font-size:12px}
+.portfolio-briefing .portfolio-briefing-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.portfolio-briefing .committee-portfolio-card{gap:7px;padding:17px 18px}
+.committee-portfolio-card .portfolio-briefing-card-top{gap:10px}
+.committee-portfolio-card h5{font-size:21px;margin:0}
+.committee-portfolio-card p{font-size:13px;line-height:1.55;margin:0}
+.committee-portfolio-card>.committee-profile{color:var(--muted);font-size:12px}
+.committee-benchmark{color:var(--muted);background:var(--raised);padding:3px 8px;border-radius:4px;font-size:11px;line-height:1.5}
+.committee-read{align-self:flex-start;border:0;padding:4px 0 0;margin-top:auto;background:transparent;color:var(--accent);font:inherit;font-size:12px;font-weight:600;cursor:pointer}
+.committee-data-links{gap:8px 14px;padding:0 3px 14px;line-height:1.6}
+.committee-data-links .meta,.committee-data-links a{font-size:12px}
+.committee-reports-heading{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:10px}
+.committee-reports-heading>.portfolio-briefing-archive-title{font-size:17px;margin:0}
+.committee-reports-heading .button{font-size:12px}
+.portfolio-briefing-archives>.portfolio-briefing-archive-row{border-bottom:1px solid var(--border);gap:14px;min-width:0}
+.portfolio-briefing-archive-row button[aria-current="true"]{font-weight:600;color:var(--accent)}
+.portfolio-briefing .portfolio-briefing-editor{max-width:none;border:1px solid var(--border);border-radius:7px;padding:15px 18px;margin-top:22px;background:var(--surface)}
+.portfolio-briefing-editor>summary{font-size:13px;line-height:1.6}
+.portfolio-briefing-editor>p{font-size:12px;line-height:1.7;color:var(--muted)}
+.portfolio-briefing .portfolio-briefing-form{max-width:950px;gap:15px}
+.committee-date-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;max-width:500px}
+.portfolio-briefing-form .committee-date-fields input{max-width:none}
+.portfolio-briefing-form input[type="url"]{max-width:100%;font-size:12px}
+.portfolio-briefing-form input[type="file"]{max-width:100%;font-size:12px;background:var(--raised)}
+.portfolio-briefing-form textarea{font-size:13px;line-height:1.65}
+.committee-sources{margin-top:22px;border-top:1px solid var(--border);padding-top:14px}
+.committee-sources>summary{font-size:13px;font-weight:600;cursor:pointer;color:var(--muted)}
+.committee-sources>.committee-markdown{padding:15px 0}
+.portfolio-briefing>.portfolio-briefing-disclaimer{font-size:11px;line-height:1.6;max-width:1000px;margin:22px 0 0}
+@media(max-width:1000px){.committee-edition-head{align-items:flex-start}.committee-summary-grid{grid-template-columns:minmax(0,1fr) minmax(220px,.8fr)}.committee-tab{font-size:12px;padding:9px 10px}}
+@media(max-width:760px){.committee-summary-grid{grid-template-columns:1fr}.committee-summary-grid .committee-reading-card{min-height:0}.committee-edition-actions{width:100%}.portfolio-briefing .portfolio-briefing-grid{grid-template-columns:1fr}.committee-portfolio-card{display:grid;grid-template-columns:1fr auto}.committee-portfolio-card>.portfolio-briefing-card-top,.committee-portfolio-card>p{grid-column:1/-1}.committee-read{grid-column:1/-1}.committee-reading-card{padding:17px}.committee-nav{gap:3px}.committee-tab{flex:1 1 auto;text-align:center}.committee-reports-heading .button{white-space:normal}}
+@media(max-width:440px){.portfolio-briefing>.section-heading h3{font-size:23px}.portfolio-briefing-cadence{font-size:11px}.committee-edition{padding:14px}.committee-edition .portfolio-briefing-latest-title{font-size:18px}.committee-edition-actions{gap:6px}.committee-edition-select{max-width:100%;flex:1 1 160px}.committee-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}.committee-tab{white-space:normal;font-size:11px;padding:8px 5px}.committee-tab:last-child{grid-column:1/-1}.committee-date-fields{grid-template-columns:1fr}.portfolio-briefing .portfolio-briefing-editor{padding:13px}.committee-markdown{font-size:13px}.committee-table-wrap th,.committee-table-wrap td{padding:8px}}
