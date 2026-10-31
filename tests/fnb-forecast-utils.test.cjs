@@ -136,10 +136,12 @@ test('production forecasts actually compute 25 000 joint trajectories with the t
  }
 });
 test('historical and planning bases are explicit, measured on a common CAD period, with proxy fees restored before current ETF fees',()=>{
- const h=F.returnAssumptions(H,D.dates.at(-1),'history'),p=F.returnAssumptions(H,D.dates.at(-1),'planning');
- assert.equal(h.basis,'history');assert.equal(h.months,H.forward_history.dates.length);assert.equal(p.rates.us,.064);
+ const end=D.dates.at(-1),indices=H.forward_history.dates.flatMap((date,index)=>date<=end?[index]:[]);
+ const h=F.returnAssumptions(H,end,'history'),p=F.returnAssumptions(H,end,'planning');
+ // The proxy archive can contain a newer month than the completed portfolio history.
+ assert.equal(h.basis,'history');assert.equal(h.months,indices.length);assert.equal(h.end,end);assert.equal(p.rates.us,.064);
  for(const [key,name] of [['US','us'],['CA','canada'],['DEV','developed'],['EM','emerging'],['XBB','bond']]){
-  const a=H.forward_history.returns[key];close(h.net[key],Math.expm1(a.reduce((s,v)=>s+Math.log1p(v),0)*12/a.length));
+  const a=indices.map(index=>H.forward_history.returns[key][index]);close(h.net[key],Math.expm1(a.reduce((s,v)=>s+Math.log1p(v),0)*12/a.length));
   close(h.rates[name],(1+h.net[key])*Math.exp(h.feeAdjustment.proxies[key].fee)-1);
  }
  const old=F.prepare(D,H,M,{returnBasis:'planning'});assert.ok(prepared.rows.find(r=>r.id==='VFV').mean>old.rows.find(r=>r.id==='VFV').mean);
@@ -180,3 +182,4 @@ test('a hypothetical increase in current fees is not refunded as supposed histor
  const after=F.prepare(d,H,M,{recentCarry:1}),a=before.rows.find(r=>r.id==='7'),b=after.rows.find(r=>r.id==='7');
  close(a.activeAnnualLog,b.activeAnnualLog);close(a.mean-b.mean,.01);
 });
+
