@@ -196,7 +196,6 @@ def retain_on_source_failure(data, old, failed_sources):
         return data
     validate(old)
     if (old['as_of'] > data['as_of']
-            or old['model_factors']['dates'] != data['model_factors']['dates']
             or any(key not in failed_sources and message != old.get('errors', {}).get(key)
                    for key, message in data.get('errors', {}).items())):
         return data
