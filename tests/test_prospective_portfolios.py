@@ -1,3 +1,4 @@
+from datetime import date
 """One deduplicated allocation joins existing analysis and append-only tracking."""
 from copy import deepcopy
 import json
@@ -63,7 +64,10 @@ class ProspectiveRegistration(unittest.TestCase):
         current = deepcopy(self.data)
         prospective.apply(current, self.catalogs, self.data)
         self.assertEqual(current, self.data)
-        current["dates"].append("2026-10")
+        last=current["dates"][-1]
+        next_month=(date(int(last[:4])+(last[5:]=="12"),int(last[5:])%12+1,1)).strftime("%Y-%m")
+        current["dates"].append(next_month)
+        current["universe"]["dates"].append(next_month)
         for t, r in current["universe"]["returns"].items():
             r.append(.01)
         for b in ("VEQT", "VFV"):

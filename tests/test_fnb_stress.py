@@ -127,6 +127,16 @@ class StressSourceTests(unittest.TestCase):
         self.assertIn('FX', retained['errors'])
         self.assertNotIn('retained_snapshot', old)
 
+        # Completing another model month must not erase a verified long sample
+        # when the FX source fails at precisely that monthly transition.
+        new = copy.deepcopy(new)
+        new['model_factors']['dates'].append('2024-03')
+        for values in new['model_factors']['returns'].values(): values.append(None)
+        retained = S.retain_on_source_failure(new, old, ['FX'])
+        self.assertEqual(retained['forward_history'], old['forward_history'])
+        self.assertEqual(retained['model_factors'], old['model_factors'])
+        self.assertEqual(retained['generated_at'], old['generated_at'])
+
     def test_quarantine_is_not_bypassed_and_successful_revisions_are_accepted(self):
         analysis = {'universe': {'dates': [], 'geo': {}}}
         old = S.build(analysis, {'CA': {'2024-01-31': 100., '2024-02-29': 102.}}, '2024-03-01', {})

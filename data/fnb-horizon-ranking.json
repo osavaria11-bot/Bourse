@@ -1,12 +1,12 @@
 {
   "kind": "qualitative_investment_judgment",
-  "date": "2026-10-25",
-  "data_as_of": "2026-09-30",
+  "date": "2026-11-01",
+  "data_as_of": "2026-10-31",
   "benchmark": "VFV",
   "probabilities_calibrated": false,
-  "scope": "Top 5 après examen des 17 portefeuilles d’actions présents au 25 octobre 2026, SAVY Perspectives compris, pour chercher à battre le S&P 500 en CAD, distributions réinvesties et frais des fonds inclus, avant impôts et courtage. Poids cibles conservés, rééquilibrage annuel en janvier.",
-  "method": "Avis qualitatif distinct du score historique. Sur 2 ans : qualité des résultats récents et persistance possible des moteurs de rendement. Sur 5 ans : équilibre entre potentiel actif et solidité de la construction. Sur 10 ans : frais récurrents, moindre dépendance aux poids optimisés sur une courte fenêtre et capacité à traverser plusieurs régimes. Aucun déclassement pour dépassement d’une limite de construction. Perspectives est examiné aux trois horizons : son poids de 29 % en petites capitalisations américaines couvertes et ses 30 % en innovation et momentum constituent des paris spécifiques. Cette nouvelle allocation ne remplace pas les cinq préférences retenues à chaque horizon.",
-  "limitations": "Ordre de préférence pour rechercher la surperformance, pas probabilités calculées ou prévisions de rendement. Les 40 mois communs et les backtests longs sélectionnés rétrospectivement ne permettent pas de calibrer des chances fiables sur 2, 5 ou 10 ans. Les écarts entre les places sont incertains. Avis daté, à réexaminer; il n’est pas automatiquement renouvelé par la recherche mensuelle.",
+  "scope": "Avis réexaminé sur les 19 portefeuilles d’actions présents, y compris Hybride, Multifactoriel et la proposition de novembre. Recherche de surperformance face au S&P 500 en CAD (VFV), distributions réinvesties, frais des fonds inclus, avant impôts et courtage. Les modèles mixtes 60/40 et 80/20 gardent leurs mandats séparés.",
+  "method": "Avis qualitatif distinct du classement rétrospectif et du suivi depuis le 19 octobre. Sur 2 ans : résultats récents, frais et dépendance aux moteurs actuels. Sur 5 ans : équilibre entre potentiel actif et diversification. Sur 10 ans : frais persistants et dépendance moindre à une allocation calibrée sur une fenêtre courte. Les limites de construction ne provoquent aucun déclassement automatique. Le resserrement monétaire canadien et le maintien de taux américains élevés du 28 octobre renforcent, par inférence, la prudence sur les paris croissance et innovation; ils ne constituent pas une attribution vérifiée des rendements.",
+  "limitations": "Ordre de préférence, pas probabilités calculées de surperformance. Les 41 mois communs ne couvrent pas tous les régimes. Les 12 derniers mois ont participé à la sélection des Robuste; ils ne sont pas une validation indépendante. Le rejeu mensuel de 17 mois de la proposition utilise les expositions et le taux sans risque actuels, ainsi qu’une méthode nouvellement revue; son résultat favorable ne justifie pas seul une transition fiscale. Les écarts de rang restent incertains.",
   "horizons": [
     {
       "years": 2,
@@ -15,9 +15,9 @@
         "robust-2026-10-1",
         "1",
         "robust-2026-10-2",
-        "9"
+        "prospective-2026-10-multifactoriel"
       ],
-      "reason": "Conviction arrive en tête pour sa qualité historique récente sur plusieurs fenêtres. Compromis et Horizon suivent. Cette préférence dépend fortement de la persistance des moteurs récents; elle ne démontre pas une meilleure probabilité future."
+      "reason": "Conviction reste préféré sur cet horizon pour son Sharpe de 2,58 et son IR/VFV de 0,72 sur les 41 mois. Compromis suit, avec un retard relatif sur trois mois à surveiller. Multifactoriel remplace Résilience au cinquième rang : IR/VFV 1,34 contre 0,54, et meilleure dynamique relative récente, au prix d’une volatilité de 11,60 % et de paris de style marqués. Ce changement est un jugement, pas une probabilité de gain. Les taux élevés fragilisent la persistance des moteurs de croissance."
     },
     {
       "years": 5,
@@ -28,7 +28,7 @@
         "1",
         "recommended-2026-10-sp500-surperformance"
       ],
-      "reason": "Diversifié est mon compromis préféré : il conserve une partie du potentiel actif avec un noyau indiciel et des frais inférieurs à Compromis. Conviction reste très bien placé; le recul sur son allocation exacte est plus court."
+      "reason": "Diversifié reste mon compromis préféré à cinq ans : 0,41 % de frais, un noyau indiciel et moins de dépendance à l’allocation active que Compromis. Conviction et Compromis gardent un potentiel actif mais leur courte fenêtre et les trois mois relatifs récents appellent de la prudence. Surperformance conserve une place grâce à son historique plus long; le biais Nasdaq reste visible. La proposition de novembre est prometteuse, mais sa nouvelle méthode et son rejeu avec expositions actuelles ne suffisent pas à remplacer cette préférence."
     },
     {
       "years": 10,
@@ -39,13 +39,17 @@
         "1",
         "7"
       ],
-      "reason": "Noyau prend la première place dans mon jugement de long terme pour ses frais plus faibles et sa moindre dépendance à l’optimisation récente. Diversifié suit. Surperformance bénéficie d’un historique plus long, tout en gardant un biais Nasdaq important. Cela ne prouve pas qu’un de ces portefeuilles battra VFV."
+      "reason": "Noyau reste préféré à dix ans pour ses frais de 0,34 % et sa moindre dépendance aux poids calibrés, suivi de Diversifié. Hybride est moins cher (0,24 %), mais ses paris Nasdaq, banques et technologie ne donnent pas encore une amélioration convaincante du rendement ajusté au risque sur la fenêtre commune. Multifactoriel a un IR/VFV supérieur sur l’historique récent, mais cela n’établit pas sa persistance sur une décennie. Les autres places restent inchangées après réexamen; aucune probabilité future n’est déduite du classement."
     }
   ],
   "sources": [
     {
-      "label": "Vanguard · incertitude des projections",
-      "url": "https://corporate.vanguard.com/content/corporatesite/us/en/corp/vemo/vemo-return-forecasts.html"
+      "label": "Banque du Canada · décision et projections du 28 octobre 2026",
+      "url": "https://www.bankofcanada.ca/2026/10/fad-press-release-2026-10-28/"
+    },
+    {
+      "label": "Réserve fédérale · décision du 28 octobre 2026",
+      "url": "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261028a.htm"
     },
     {
       "label": "Fidelity · stratégie FINN",
@@ -60,6 +64,8 @@
     "robust-2026-10-2",
     "robust-2026-10-3",
     "prospective-2026-10-perspectives",
+    "prospective-2026-10-hybride",
+    "prospective-2026-10-multifactoriel",
     "proposal",
     "1",
     "2",
@@ -70,5 +76,210 @@
     "7",
     "8",
     "9"
-  ]
+  ],
+  "review_evidence": {
+    "months": 41,
+    "start": "2023-06",
+    "end": "2026-10",
+    "risk_free": 0.0255,
+    "risk_free_date": "2026-10-29",
+    "source_digest": "15b423050fa4b2d459ebc4c6219b0f18aa59b54cb8587d7c7808593ce7573b4b",
+    "previous_opinion_date": "2026-10-25",
+    "changes": [
+      "2 ans : Multifactoriel remplace Résilience au cinquième rang; premières préférences conservées après réexamen.",
+      "5 et 10 ans : ordre maintenu après examen des deux nouveaux portefeuilles et de la nouvelle proposition mensuelle."
+    ],
+    "metrics": {
+      "recommended-2026-10-sp500-surperformance": {
+        "sharpe": 1.7508870392530649,
+        "volatility": 0.10538571020208103,
+        "mer": 0.0029718,
+        "information": {
+          "VFV": 0.25453343802352835,
+          "FEQT": 0.07424563405114297,
+          "VEQT": 0.5806847985578434
+        }
+      },
+      "recommended-2026-10-sp500-sharpe-or": {
+        "sharpe": 1.8933627374180348,
+        "volatility": 0.0943842733601242,
+        "mer": 0.0035267000000000002,
+        "information": {
+          "VFV": 0.0800936862689323,
+          "FEQT": -0.028920639992193686,
+          "VEQT": 0.44223254803195766
+        }
+      },
+      "recommended-2026-10-sp500-noyau-veqt": {
+        "sharpe": 1.8053386611366076,
+        "volatility": 0.10223326720344596,
+        "mer": 0.0031606000000000004,
+        "information": {
+          "VFV": 0.274851538529413,
+          "FEQT": 0.08044246138845286,
+          "VEQT": 0.6579119036825019
+        }
+      },
+      "robust-2026-10-1": {
+        "sharpe": 2.3347100655748396,
+        "volatility": 0.09111507678908315,
+        "mer": 0.005224032179119148,
+        "information": {
+          "VFV": 0.5969877475961028,
+          "FEQT": 0.9799629168285867,
+          "VEQT": 1.564486505420522
+        }
+      },
+      "robust-2026-10-2": {
+        "sharpe": 2.208096088606996,
+        "volatility": 0.09006000216184833,
+        "mer": 0.004118522525383404,
+        "information": {
+          "VFV": 0.3920616501840692,
+          "FEQT": 0.608208732298198,
+          "VEQT": 1.4110145508137042
+        }
+      },
+      "robust-2026-10-3": {
+        "sharpe": 2.1123850131556066,
+        "volatility": 0.0897331106754548,
+        "mer": 0.003381516089559574,
+        "information": {
+          "VFV": 0.24126630273352812,
+          "FEQT": 0.31094521454574653,
+          "VEQT": 1.2190386509287374
+        }
+      },
+      "prospective-2026-10-perspectives": {
+        "sharpe": 1.251262008426465,
+        "volatility": 0.14613807283807603,
+        "mer": 0.0044328,
+        "information": {
+          "VFV": 0.11185447971462635,
+          "FEQT": 0.034115698377636436,
+          "VEQT": 0.3104003720064912
+        }
+      },
+      "prospective-2026-10-hybride": {
+        "sharpe": 1.7260667864475423,
+        "volatility": 0.10706619116104624,
+        "mer": 0.0024131,
+        "information": {
+          "VFV": 0.2487951889122339,
+          "FEQT": 0.09025918239409671,
+          "VEQT": 0.7066113139141943
+        }
+      },
+      "prospective-2026-10-multifactoriel": {
+        "sharpe": 1.9120832871204887,
+        "volatility": 0.11603777924272267,
+        "mer": 0.0045983,
+        "information": {
+          "VFV": 1.3356813451539153,
+          "FEQT": 0.7563282139893734,
+          "VEQT": 1.5220628148709545
+        }
+      },
+      "proposal": {
+        "sharpe": 2.286485249078937,
+        "volatility": 0.08696540885216775,
+        "mer": 0.004087,
+        "information": {
+          "VFV": 0.377256476630863,
+          "FEQT": 0.6619970557371595,
+          "VEQT": 1.254277805599374
+        }
+      },
+      "1": {
+        "sharpe": 2.045391541720493,
+        "volatility": 0.09956105295185597,
+        "mer": 0.0043100000000000005,
+        "information": {
+          "VFV": 0.5531861769557309,
+          "FEQT": 0.9267339032035404,
+          "VEQT": 1.600681367687261
+        }
+      },
+      "2": {
+        "sharpe": 2.1319137828774144,
+        "volatility": 0.08555680641757535,
+        "mer": 0.004895,
+        "information": {
+          "VFV": 0.11407922367808222,
+          "FEQT": 0.08313893912440988,
+          "VEQT": 0.6464212240806305
+        }
+      },
+      "3": {
+        "sharpe": 2.051747847868425,
+        "volatility": 0.06977933085466895,
+        "mer": 0.003785,
+        "information": {
+          "VFV": -0.3861535080053571,
+          "FEQT": -0.9134820547676661,
+          "VEQT": -0.4441737854788902
+        }
+      },
+      "4": {
+        "sharpe": 2.298505368973927,
+        "volatility": 0.0764445623061241,
+        "mer": 0.004625,
+        "information": {
+          "VFV": 0.0030559627790291547,
+          "FEQT": -0.15470192922698944,
+          "VEQT": 0.31048155278292516
+        }
+      },
+      "5": {
+        "sharpe": 2.1976254667165165,
+        "volatility": 0.08369309540768033,
+        "mer": 0.004635,
+        "information": {
+          "VFV": 0.14150670031785414,
+          "FEQT": 0.12604922610650326,
+          "VEQT": 0.8142279110698513
+        }
+      },
+      "6": {
+        "sharpe": 2.6639774893221655,
+        "volatility": 0.06578399752253203,
+        "mer": 0.0042604999999999995,
+        "information": {
+          "VFV": -0.0033323128060150226,
+          "FEQT": -0.12459564696630511,
+          "VEQT": 0.2698349757642661
+        }
+      },
+      "7": {
+        "sharpe": 2.582663528368149,
+        "volatility": 0.08646948942808828,
+        "mer": 0.0052898,
+        "information": {
+          "VFV": 0.7188091069430068,
+          "FEQT": 1.1816407260735036,
+          "VEQT": 1.699557437386528
+        }
+      },
+      "8": {
+        "sharpe": 1.7968157804445075,
+        "volatility": 0.10822841791664081,
+        "mer": 0.003735,
+        "information": {
+          "VFV": 0.33196900404052165,
+          "FEQT": 0.44013405583991005,
+          "VEQT": 1.3780795714962353
+        }
+      },
+      "9": {
+        "sharpe": 1.682508346030982,
+        "volatility": 0.12142884526254144,
+        "mer": 0.004395,
+        "information": {
+          "VFV": 0.5426839491686201,
+          "FEQT": 0.486367377230742,
+          "VEQT": 1.108191352163458
+        }
+      }
+    }
+  }
 }
