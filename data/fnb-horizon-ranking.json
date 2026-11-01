@@ -4,7 +4,7 @@
   "data_as_of": "2026-10-31",
   "benchmark": "VFV",
   "probabilities_calibrated": false,
-  "scope": "Avis réexaminé sur les 19 portefeuilles d’actions présents, y compris Hybride, Multifactoriel et la proposition de novembre. Recherche de surperformance face au S&P 500 en CAD (VFV), distributions réinvesties, frais des fonds inclus, avant impôts et courtage. Les modèles mixtes 60/40 et 80/20 gardent leurs mandats séparés.",
+  "scope": "Avis réexaminé sur les 19 portefeuilles d’actions du sélecteur courant, y compris Hybride, Multifactoriel et la proposition de novembre. Recherche de surperformance face au S&P 500 en CAD (VFV), distributions réinvesties, frais des fonds inclus, avant impôts et courtage. Les modèles mixtes 60/40 et 80/20 gardent leurs mandats séparés. La proposition archivée d’octobre est également réévaluée sur les mêmes 41 mois dans la revue, sans modifier son archive.",
   "method": "Avis qualitatif distinct du classement rétrospectif et du suivi depuis le 19 octobre. Sur 2 ans : résultats récents, frais et dépendance aux moteurs actuels. Sur 5 ans : équilibre entre potentiel actif et diversification. Sur 10 ans : frais persistants et dépendance moindre à une allocation calibrée sur une fenêtre courte. Les limites de construction ne provoquent aucun déclassement automatique. Le resserrement monétaire canadien et le maintien de taux américains élevés du 28 octobre renforcent, par inférence, la prudence sur les paris croissance et innovation; ils ne constituent pas une attribution vérifiée des rendements.",
   "limitations": "Ordre de préférence, pas probabilités calculées de surperformance. Les 41 mois communs ne couvrent pas tous les régimes. Les 12 derniers mois ont participé à la sélection des Robuste; ils ne sont pas une validation indépendante. Le rejeu mensuel de 17 mois de la proposition utilise les expositions et le taux sans risque actuels, ainsi qu’une méthode nouvellement revue; son résultat favorable ne justifie pas seul une transition fiscale. Les écarts de rang restent incertains.",
   "horizons": [
@@ -17,7 +17,7 @@
         "robust-2026-10-2",
         "prospective-2026-10-multifactoriel"
       ],
-      "reason": "Conviction reste préféré sur cet horizon pour son Sharpe de 2,58 et son IR/VFV de 0,72 sur les 41 mois. Compromis suit, avec un retard relatif sur trois mois à surveiller. Multifactoriel remplace Résilience au cinquième rang : IR/VFV 1,34 contre 0,54, et meilleure dynamique relative récente, au prix d’une volatilité de 11,60 % et de paris de style marqués. Ce changement est un jugement, pas une probabilité de gain. Les taux élevés fragilisent la persistance des moteurs de croissance."
+      "reason": "Conviction reste préféré sur cet horizon pour son Sharpe de 2,58 et son IR/VFV de 0,72 sur les 41 mois. Compromis suit, avec un retard relatif sur trois mois à surveiller. Multifactoriel remplace Audace 120 au cinquième rang : IR/VFV 1,34 contre 0,54, et meilleure dynamique relative récente, au prix d’une volatilité de 11,60 % et de paris de style marqués. Ce changement est un jugement, pas une probabilité de gain. Les taux élevés fragilisent la persistance des moteurs de croissance."
     },
     {
       "years": 5,
@@ -86,7 +86,7 @@
     "source_digest": "15b423050fa4b2d459ebc4c6219b0f18aa59b54cb8587d7c7808593ce7573b4b",
     "previous_opinion_date": "2026-10-25",
     "changes": [
-      "2 ans : Multifactoriel remplace Résilience au cinquième rang; premières préférences conservées après réexamen.",
+      "2 ans : Multifactoriel remplace Audace 120 au cinquième rang; premières préférences conservées après réexamen.",
       "5 et 10 ans : ordre maintenu après examen des deux nouveaux portefeuilles et de la nouvelle proposition mensuelle."
     ],
     "metrics": {
@@ -279,6 +279,22 @@
           "FEQT": 0.486367377230742,
           "VEQT": 1.108191352163458
         }
+      }
+    },
+    "archived_proposals": {
+      "2026-10": {
+        "source_archive": "data/fnb-history/2026-10.json",
+        "review_start": "2023-06",
+        "review_end": "2026-10",
+        "months": 41,
+        "weights_unchanged": true,
+        "sharpe": 2.332024232418087,
+        "volatility": 0.06141220674558796,
+        "information": {
+          "FEQT": -0.8070486752608959,
+          "VEQT": -0.40667988244156333
+        },
+        "judgment": "Sharpe légèrement supérieur à novembre, mais IR/FEQT négatif sur la même fenêtre; ne justifie pas une transition automatique. Archive et compte conservés."
       }
     }
   }
