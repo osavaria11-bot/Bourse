@@ -2,11 +2,11 @@
   "schema_version": 1,
   "kind": "polymarket_events",
   "provider": "polymarket",
-  "generated_at": "2026-11-01T10:33:10.298938Z",
+  "generated_at": "2026-11-01T10:48:59.902277Z",
   "groups": {
     "finance": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T10:33:10.298938Z",
+      "fetched_at": "2026-11-01T10:48:59.902277Z",
       "ranking": "volume",
       "events": [
         {
@@ -14,8 +14,8 @@
           "slug": "how-many-fed-rate-cuts-in-2026",
           "title": "How many Fed rate cuts in 2026?",
           "url": "https://polymarket.com/event/how-many-fed-rate-cuts-in-2026",
-          "volume": 55231778.204803996,
-          "volume_24h": 55758.052299,
+          "volume": 55236818.224827,
+          "volume_24h": 55795.842322000004,
           "ends_at": "2027-01-01T04:59:00Z",
           "outcomes": [
             {
@@ -38,7 +38,7 @@
           "title": "Which companies will be acquired before 2027?",
           "url": "https://polymarket.com/event/which-companies-will-be-acquired-before-2027",
           "volume": 18419253.97676,
-          "volume_24h": 251.07,
+          "volume_24h": 274.67,
           "ends_at": "2027-01-01T04:59:00Z",
           "outcomes": [
             {
@@ -49,7 +49,7 @@
             },
             {
               "label": "Viking Therapeutics",
-              "probability": 0.1,
+              "probability": 0.11,
               "market_id": "694938",
               "ends_at": "2027-01-01T04:59:00Z"
             }
@@ -61,7 +61,7 @@
           "title": "Fed Decision in December?",
           "url": "https://polymarket.com/event/fed-decision-in-december-20260729232808632",
           "volume": 10185232.795208,
-          "volume_24h": 146874.781351,
+          "volume_24h": 146643.057213,
           "ends_at": "2026-12-10T04:59:00Z",
           "outcomes": [
             {
@@ -82,7 +82,7 @@
     },
     "popular": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T10:33:10.298938Z",
+      "fetched_at": "2026-11-01T10:48:59.902277Z",
       "ranking": "volume24hr",
       "events": [
         {
@@ -90,8 +90,8 @@
           "slug": "which-tossup-senate-states-will-republicans-win-ak-ia-ks-me-mi-oh-tx",
           "title": "Which Senate Swing States will Republicans win?",
           "url": "https://polymarket.com/event/which-tossup-senate-states-will-republicans-win-ak-ia-ks-me-mi-oh-tx",
-          "volume": 20713760.778323,
-          "volume_24h": 7926900.507994999,
+          "volume": 20725941.551323,
+          "volume_24h": 7936600.452494999,
           "ends_at": "2026-11-03T23:59:00Z",
           "outcomes": [
             {
@@ -113,8 +113,8 @@
           "slug": "democratic-presidential-nominee-2028",
           "title": "Democratic Presidential Nominee 2028",
           "url": "https://polymarket.com/event/democratic-presidential-nominee-2028",
-          "volume": 1302209459.83572,
-          "volume_24h": 2702047.125674,
+          "volume": 1302358258.110302,
+          "volume_24h": 2889768.795256,
           "ends_at": "2028-11-08T04:59:00Z",
           "outcomes": [
             {
@@ -136,8 +136,8 @@
           "slug": "which-party-will-win-the-house-in-2026",
           "title": "Which party will win the House in 2026?",
           "url": "https://polymarket.com/event/which-party-will-win-the-house-in-2026",
-          "volume": 35169724.628989,
-          "volume_24h": 1644786.94139,
+          "volume": 35175692.427216,
+          "volume_24h": 1653561.537863,
           "ends_at": "2026-11-04T04:59:00Z",
           "outcomes": [
             {
@@ -159,8 +159,8 @@
           "slug": "balance-of-power-2026-midterms",
           "title": "Balance of Power: 2026 Midterms",
           "url": "https://polymarket.com/event/balance-of-power-2026-midterms",
-          "volume": 49411650.076995,
-          "volume_24h": 1458206.071801,
+          "volume": 49441001.031084,
+          "volume_24h": 1498250.785776,
           "ends_at": "2026-11-04T04:59:00Z",
           "outcomes": [
             {
@@ -182,8 +182,8 @@
           "slug": "presidential-election-winner-2028",
           "title": "Presidential Election Winner 2028",
           "url": "https://polymarket.com/event/presidential-election-winner-2028",
-          "volume": 723967993.740456,
-          "volume_24h": 1132974.944747,
+          "volume": 723968063.543843,
+          "volume_24h": 1132810.695902,
           "ends_at": "2028-11-08T04:59:00Z",
           "outcomes": [
             {
@@ -204,7 +204,7 @@
     },
     "trending": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T10:33:10.298938Z",
+      "fetched_at": "2026-11-01T10:48:59.902277Z",
       "ranking": "volume24hr",
       "events": [
         {
@@ -212,8 +212,8 @@
           "slug": "worlds-2026-winner",
           "title": "Worlds 2026: Winner",
           "url": "https://polymarket.com/event/worlds-2026-winner",
-          "volume": 8792502.380098,
-          "volume_24h": 1420677.626125,
+          "volume": 8805355.570369,
+          "volume_24h": 1441649.767873,
           "ends_at": "2026-11-29T04:59:00Z",
           "outcomes": [
             {
@@ -235,8 +235,8 @@
           "slug": "epl-2027-champion-20260701200428749",
           "title": "EPL: 2027 Champion",
           "url": "https://polymarket.com/event/epl-2027-champion-20260701200428749",
-          "volume": 25094076.121377,
-          "volume_24h": 954040.807852,
+          "volume": 25094220.105507,
+          "volume_24h": 954184.791982,
           "ends_at": "2027-06-15T03:59:00Z",
           "outcomes": [
             {
