@@ -174,7 +174,9 @@ def enrich(dataset, now, fetcher, previous=None):
         else:
             errors["policy"] = "Current decision and daily Canadian rate disagree; no current-rate label published"
             policy.pop("current_policy", None)
-    pending = [sid for sid in POINTS if sid in points and points[sid].get("date") != today.isoformat()]
+    # Treasury publishes business-day observations, never a Saturday/Sunday
+    # yield. Still fetch late releases above without promising a weekend print.
+    pending = [sid for sid in POINTS if today.weekday() < 5 and sid in points and points[sid].get("date") != today.isoformat()]
     data["interest_rate_check"] = {"checked_at": stamp, "day": today.isoformat(), "awaiting_publication": pending, "errors": errors}
     counts = {status: sum(p.get("fetch_status") == status for p in data["series"]) for status in ["fresh", "cached", "unavailable"]}
     data["coverage"] = {"total": len(data["series"]), **counts}

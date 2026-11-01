@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "reviewed_earnings_highlights",
-  "reviewed_at": "2026-10-30T09:10:49.898476+00:00",
+  "reviewed_at": "2026-11-01T10:20:48.414210+00:00",
   "reports": {
     "NFLX:2026-10-20": {
       "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-20-netflix-inc-stock/",
@@ -461,6 +461,36 @@
         "Visibilité et risque — Les accords commerciaux de long terme couvrent environ la moitié des bits de l’exercice 2027 et les deux tiers de 2028 selon la conférence. Ils améliorent la planification, sans supprimer le risque de cycle, de prix ou d’exécution chez les clients. Le déplacement du mix vers les centres de données reste soumis aux contraintes de production.",
         "Cash et capital — Sandisk dégage 5,7 G$ US de flux disponible ajusté au trimestre et rachète 5 G$ d’actions. Le bilan clôture sans dette, avec 5,1 G$ de liquidités. Le fractionnement 8 pour 1 est prévu pour une cotation ajustée le 20 novembre : il ne crée pas de valeur économique et ne doit pas être appliqué aux BPA actuels avant son entrée en vigueur."
       ]
+    },
+    "CNI:2026-10-30": {
+      "source_url": "https://www.cn.ca/en/news/2026/10/cn-delivers-strong-third-quarter-performance",
+      "messages": [
+        "Perspectives — Le BPA ajusté 2026 reste attendu en croissance dans le milieu à haut de la plage à un chiffre, maintenant plutôt vers le haut. Les tonnes-milles payantes restent visées en faible hausse à un chiffre. La direction ne relève pas officiellement la cible.",
+        "Exploitation — Les tonnes-milles payantes progressent de 4 % et les revenus de 15 %. Le ratio d’exploitation ajusté s’améliore de 40 points de base à 61,0 %, tandis que le ratio GAAP atteint 63,7 %. Le record trimestriel d’efficacité du carburant soutient la productivité.",
+        "Trésorerie — Le flux disponible atteint 2,918 G$ CA sur neuf mois, en hausse de 25 %. Les immobilisations 2026 restent d’environ 2,8 G$ CA, net des remboursements clients; les rachats du T3 totalisent 676 M$. Le cash finance le bilan et les distributions.",
+        "Risques — Les récoltes 2026-2027 sont désormais supposées supérieures à leur moyenne de cinq ans au Canada et aux États-Unis. Ce soutien potentiel aux volumes coexiste avec les risques commerciaux et géopolitiques. La direction conserve une hypothèse WTI de 80–110 $ US pour le reste de 2026."
+      ],
+      "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-30-canadian-national-railway-stock/"
+    },
+    "CVX:2026-10-30": {
+      "source_url": "https://chevroncorp.gcs-web.com/news-releases/news-release-details/chevron-reports-third-quarter-2026-results",
+      "messages": [
+        "Raffinage — Le bénéfice aval atteint 4,9 G$ US, contre 1,1 G$ un an plus tôt. Les unités américaines de distillation du brut tournent à près de 98 %, avec un débit record de 1,09 million de barils par jour. La disponibilité industrielle permet de profiter des marges élevées; leur maintien dépend toutefois du contexte de pénurie.",
+        "Cash — Le flux opérationnel de 16,0 G$ US finance 12,0 G$ de flux disponible et 6,0 G$ de dividendes et rachats au T3. Le flux disponible ajusté de 14,2 G$ inclut notamment un remboursement de prêt d’environ 1 G$ de TCO et des cessions : il ne faut pas l’extrapoler comme un flux opérationnel récurrent équivalent.",
+        "Venezuela — Les coentreprises prévoient 7 G$ US d’investissement sur cinq ans et visent environ 600 000 barils par jour de production brute en 2031. Wirth mise sur de nouvelles conditions fiscales et des infrastructures existantes. Ce volume est celui des coentreprises, pas la quote-part de Chevron; l’exécution et le cadre politique restent des risques.",
+        "T4 — Les rachats sont prévus à 2,5–3,0 G$ US. La clôture attendue de la transaction Hess Midstream entraînerait une charge après impôt de 3–4 G$, traitée comme élément exceptionnel, pour des tarifs du Bakken réduits d’environ 50 % à terme. La charge comptable annoncée doit être séparée des économies futures encore conditionnelles."
+      ],
+      "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-30-chevron-co-stock/"
+    },
+    "XOM:2026-10-30": {
+      "source_url": "https://investor.exxonmobil.com/company-information/press-releases/detail/1213/exxonmobil-announces-third-quarter-2026-results",
+      "messages": [
+        "Exécution — Woods souligne une production de distillats du golfe américain accrue d’environ 40 % depuis 2019 grâce aux investissements, dont Beaumont. Les économies structurelles cumulées atteignent 16,9 G$ US depuis 2019. Ces gains de capacité et de coûts renforcent l’activité, mais ne rendent pas permanentes les marges de raffinage actuelles.",
+        "Trésorerie — Le T3 génère 25,7 G$ US de flux opérationnel et 19,1 G$ de flux disponible, contre 9,4 G$ distribués aux actionnaires. Les investissements décaissés sont de 7,0 G$. La dette nette a reculé de près de 11 G$ depuis janvier : le cash soutient à la fois le bilan, les projets et les distributions.",
+        "Perspectives — La production annuelle du Permien reste visée autour de 1,8 million de barils équivalent pétrole par jour. Au T4, environ 350 000 barils équivalent pétrole par jour resteraient hors ligne au Moyen-Orient si les perturbations se poursuivent; davantage de maintenance est attendu dans les produits. La disponibilité reste un risque concret.",
+        "Capital — Le dividende trimestriel passe à 1,07 $ US par action et ExxonMobil annonce 20 G$ de rachats pour 2027, sous réserve de conditions de marché raisonnables. La forte couverture actuelle est favorable, mais le programme de rachats reste une intention conditionnelle; sa soutenabilité doit être jugée sur plusieurs régimes de prix."
+      ],
+      "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-30-exxon-mobil-co-stock/"
     }
   }
 }

@@ -51,6 +51,21 @@ class InterestRateTests(unittest.TestCase):
         self.assertEqual(after["series"], before["series"])
         self.assertEqual(set(after["interest_rate_check"]["errors"]), {"nominal", "real", "policy"})
 
+    def test_weekends_do_not_await_a_same_day_treasury_publication(self):
+        def friday_only(url): return fetch(url).split("10/19/2026")[0]
+        for day in [17, 18]:
+            now = datetime(2026, 10, day, 20, 0, tzinfo=timezone.utc)
+            before = fixture()
+            before["generated_at"] = now.isoformat()
+            for point in before["series"]:
+                point["last_successful_fetch"] = now.isoformat()
+            data = rates.enrich(before, now, friday_only)
+            self.assertEqual(data["interest_rate_check"]["awaiting_publication"], [])
+            for old, point in zip(before["series"], data["series"]):
+                self.assertEqual(point["date"], "2026-10-16")
+                self.assertEqual(point["value"], old["value"])
+                self.assertEqual(point["history"], old["history"])
+
     def test_lagging_fred_cannot_erase_newer_primary_even_during_outage(self):
         previous = rates.enrich(fixture(), NOW, fetch)
         def outage(url): raise OSError("Synthetic outage")
