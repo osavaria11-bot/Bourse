@@ -162,6 +162,31 @@
       "name": "BMO Low Volatility US Equity ETF",
       "description": "Américain défensif",
       "source_url": "https://www.bmoetfs.ca/etfs/zlu-bmo-low-volatility-us-equity-etf"
+    },
+    "XQQ": {
+      "name": "iShares NASDAQ 100 Index ETF (CAD-Hedged)",
+      "description": "Nasdaq couvert",
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239698/ishares-nasdaq-100-index-etf-cadhedged-fund"
+    },
+    "XUU": {
+      "name": "iShares Core S&P U.S. Total Market Index ETF",
+      "description": "Actions américaines",
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/272104/ishares-core-sp-us-total-market-index-etf"
+    },
+    "XMU": {
+      "name": "iShares MSCI Min Vol USA Index ETF",
+      "description": "Volatilité américaine",
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239694/ishares-msci-usa-minimum-volatility-index-etf"
+    },
+    "XMW": {
+      "name": "iShares MSCI Min Vol Global Index ETF",
+      "description": "Volatilité mondiale",
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239604/ishares-msci-all-country-world-minimum-volatility-index-etf"
+    },
+    "XMV": {
+      "name": "iShares MSCI Min Vol Canada Index ETF",
+      "description": "Volatilité canadienne",
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239616/ishares-msci-canada-minimum-volatility-index-etf"
     }
   }
 }

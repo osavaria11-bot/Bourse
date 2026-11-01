@@ -50,7 +50,7 @@ test('nonpositive excess returns cannot be sold as a positive maximum ratio',()=
 test('validation months never enter calibration moments and exploration never mutates stored portfolios',()=>{
  const before=JSON.stringify(D),p=U.prepare(D),modified=JSON.parse(before),cut=D.dates.length-12;
  for(const id of [...p.ids,'VEQT'])modified.universe.returns[id]=modified.universe.returns[id].map((r,t)=>t>=cut?r+.12:r);
- const changed=U.prepare(modified);assert.deepEqual(changed.fit,p.fit);assert.notDeepEqual(changed.validation,p.validation);assert.equal(p.fit.n,28);assert.equal(p.validation.n,12);assert.equal(U.prepare(D,{sample:'all'}).validation,null);
+ const changed=U.prepare(modified);assert.deepEqual(changed.fit,p.fit);assert.notDeepEqual(changed.validation,p.validation);assert.equal(p.fit.n,D.dates.length-12);assert.equal(p.validation.n,12);assert.equal(U.prepare(D,{sample:'all'}).validation,null);
  const w=U.project(p.ids.map(id=>D.results.proposal.weights[id]||0),p.cap),m=U.marginals(p,w),base=U.metrics(p.fit,w);
  m.forEach((v,i)=>{if(v.step){const q=U.metrics(p.fit,U.changeWeight(w,i,w[i]+.01,p.cap));near(v.sharpe,q.sharpe-base.sharpe);near(v.information,q.information-base.information);near(v.step,.01);}});
  near(m.reduce((s,v)=>s+v.riskShare,0),1);assert.equal(JSON.stringify(D),before);
@@ -74,11 +74,11 @@ test('every enlarged frontier point, compromise and slider edit respects economi
  const fs=require("node:fs"),extra=fs.existsSync(require("node:path").join(__dirname,"../data/fnb-frontier-universe.json"))?require("../data/fnb-frontier-universe.json"):null;
  const d=U.extend(D,extra),p=U.prepare(d,{cap:.35}),solution=U.solve(p),points=[...solution.absolute,...solution.active,...solution.cloud,solution.sharpe,solution.information,U.compromise(solution.pareto)].filter(Boolean);
  for(const point of points){
-  const e=U.exposures(p,point.weights);assert.ok(e.valid);assert.ok(e.maxGeoGap<=.10000001);assert.ok(e.maxSectorGap<=.10000001);assert.ok(e.maxSector<=.35000001);assert.ok(e.geo[3]>=.05-1e-8);
+  const e=U.exposures(p,point.weights);assert.ok(e.valid);assert.ok(e.maxGeoGap<=.10000001);assert.ok(e.maxSectorGap<=p.limits.sectorTolerance+1e-8);assert.ok(e.maxSector<=.35000001);assert.ok(e.geo[3]>=.05-1e-8);
   point.weights.forEach((w,i)=>assert.ok(w<=p.limits.caps[i]+1e-8));assert.ok(point.weights.every(w=>w>=-1e-9));
  }
  for(let i=0;i<p.ids.length;i++){const w=U.edit(p,solution.sharpe.weights,i,.1);assert.ok(U.feasible(w,p.limits));}
- const changed=JSON.parse(JSON.stringify(d));for(const id of [...p.ids,"VEQT"])for(let t=28;t<40;t++)changed.universe.returns[id][t]+=.05;
+ const changed=JSON.parse(JSON.stringify(d));for(const id of [...p.ids,"VEQT"])for(let t=d.dates.length-12;t<d.dates.length;t++)changed.universe.returns[id][t]+=.05;
  assert.deepEqual(U.prepare(changed,{cap:.35}).fit,p.fit);
  assert.ok(solution.maxSolverGap<1e-7);
 });
@@ -86,14 +86,14 @@ test('every enlarged frontier point, compromise and slider edit respects economi
 test("requested funds use their actual returns and asset mix, with gold excluded from equity diversification",()=>{
  const extra=require("../data/fnb-frontier-universe.json"),d=U.extend(D,extra),p=U.prepare(d,{cap:.35}),base=U.exposures(p,p.feasible);
  for(const id of ["FEQT","CGL.C","RUD","VEE"]){
-  const i=p.ids.indexOf(id);assert.ok(i>=0);assert.deepEqual(p.fit.series[i],D.universe.returns[id].slice(0,28));assert.deepEqual(p.validation.series[i],D.universe.returns[id].slice(28));
+  const i=p.ids.indexOf(id);assert.ok(i>=0);assert.deepEqual(p.fit.series[i],D.universe.returns[id].slice(0,D.dates.length-12));assert.deepEqual(p.validation.series[i],D.universe.returns[id].slice(D.dates.length-12));
   assert.equal(d.source_urls[id],D.source_urls[id]);assert.deepEqual(d.source_dates[id],D.source_dates[id]);
   const target=id==="CGL.C"?.04:.1,w=U.edit(p,p.feasible,i,target),e=U.exposures(p,w);assert.ok(w[i]>target*.9,id+" must accept a positive allocation");assert.ok(e.valid);near(Object.values(e.assets).reduce((a,b)=>a+b,0),1);
   if(id==="CGL.C")near(e.assets.gold,w[i]);
   if(id==="FEQT")near(e.assets.crypto,w[i]*D.universe.crypto.FEQT);
  }
- const withGold=p.feasible.map(v=>v*.96);withGold[p.ids.indexOf("CGL.C")]+=.04;const mixed=U.exposures(p,withGold);
- base.geo.forEach((v,i)=>near(mixed.geo[i],v));base.sector.forEach((v,i)=>near(mixed.sector[i],v));assert.ok(mixed.valid);near(mixed.equity,base.equity*.96);
+ const goldIndex=p.ids.indexOf("CGL.C"),scale=.95/(1-p.feasible[goldIndex]),withGold=p.feasible.map(v=>v*scale);withGold[goldIndex]=.05;const mixed=U.exposures(p,withGold);
+ base.geo.forEach((v,i)=>near(mixed.geo[i],v));base.sector.forEach((v,i)=>near(mixed.sector[i],v));assert.ok(mixed.valid);near(mixed.equity,base.equity*scale);
  const missing=JSON.parse(JSON.stringify(D));delete missing.universe.returns.FEQT;assert.throws(()=>U.extend(missing,extra));
 });
 

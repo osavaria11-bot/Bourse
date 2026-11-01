@@ -9,6 +9,7 @@ import math
 from pathlib import Path
 import statistics as st
 import subprocess
+import shutil
 import tempfile
 from zoneinfo import ZoneInfo
 
@@ -23,7 +24,7 @@ except ModuleNotFoundError:
     import prospective_portfolios
 
 ROOT = Path(__file__).resolve().parents[1]
-MODEL_VERSION = "1.3.0"
+MODEL_VERSION = "1.4.0"
 PROPOSAL = "proposal"
 GEO_NAMES = ["États-Unis", "Canada", "Développés hors Amérique du Nord", "Marchés émergents", "Pays non publiés",
              "Or physique", "Cryptomonnaies indirectes", "Obligations", "Liquidités et autres"]
@@ -72,7 +73,8 @@ def period_stats(returns, benchmark, rf):
     te = st.stdev(active) * math.sqrt(12)
     beta = ratio(sum((r - mu) * (b - bm) for r, b in zip(returns, benchmark)), sum((b - bm)**2 for b in benchmark))
     return {"cagr": math.prod(1 + r for r in returns)**(12 / n) - 1, "vol": vol,
-        "sharpe": ratio(mu * 12 - rf, vol), "beta": beta, "information": ratio(st.mean(active) * 12, te)}
+        "sharpe": ratio(mu * 12 - rf, vol), "beta": beta, "information": ratio(st.mean(active) * 12, te),
+        "active_return": st.mean(active) * 12, "tracking_error": te, "months": n}
 
 
 def stats(returns, benchmark, rf, dates):
@@ -118,7 +120,7 @@ def eligible_funds(config, sources):
 
 
 def optimize(returns, names, sources, config, benchmark, rf):
-    """Fixed regularized Sharpe objective, long-only, constrained regional/sector risks.
+    """Fixed regularized joint objective, long-only, constrained regional/sector risks.
 
     We do not choose a model by looking at the holdout results. No return forecast
     or expected future Sharpe is displayed as an observed performance.
@@ -134,6 +136,18 @@ def optimize(returns, names, sources, config, benchmark, rf):
     sample = np.cov(x, rowvar=False) * 12
     shrink = settings["covariance_shrinkage"]
     cov = (1 - shrink) * sample + shrink * np.diag(np.diag(sample)) + np.eye(n) * 1e-8
+    joint = settings.get("objective") == "joint_sharpe_information"
+    objective_weights = settings.get("objective_weights", {"sharpe": .5, "information": .5})
+    if joint:
+        primary = settings["information_benchmark"]
+        if primary not in returns or len(returns[primary]) != len(returns[names[0]]):
+            raise ValueError("Joint objective requires an aligned " + primary + " total-return series")
+        if set(objective_weights) != {"sharpe", "information"} or any(not math.isfinite(v) or v <= 0 for v in objective_weights.values()) or abs(sum(objective_weights.values()) - 1) > 1e-10:
+            raise ValueError("Invalid joint objective weights")
+        active = x - np.array(returns[primary][-len(x):])[:, None]
+        active_mu = active.mean(axis=0) * 12 * (1 - settings["mean_shrinkage"])
+        active_sample = np.atleast_2d(np.cov(active, rowvar=False)) * 12
+        active_cov = (1 - shrink) * active_sample + shrink * np.diag(np.diag(active_sample)) + np.eye(n) * 1e-8
     geo = np.array([sources["funds"][t]["geo"] for t in names]).T
     sec = np.array([sources["funds"][t]["sector"] for t in names]).T
     ref_g = np.array(sources["funds"]["VEQT"]["geo"])
@@ -141,8 +155,8 @@ def optimize(returns, names, sources, config, benchmark, rf):
     # Small rounding margin keeps the published 0.1-point weights inside the limits.
     gt = settings["geo_tolerance"] - .002
     ss = settings["sector_tolerance"] - .002
-    lower_g = np.maximum(ref_g - gt, [ .30, .15, .15, .05, 0.])
-    upper_g = np.minimum(ref_g + gt, [.60, .40, .40, .20, settings["unknown_geography_cap"] - .002])
+    lower_g = np.maximum(ref_g - gt, [.302, .152, .152, .052, 0.])
+    upper_g = np.minimum(ref_g + gt, [.598, .398, .398, .198, settings["unknown_geography_cap"] - .002])
     lower_s = np.maximum(ref_s - ss, 0)
     upper_s = np.minimum(ref_s + ss, settings["sector_cap"] - .002)
     eq = np.array([sources["funds"][t]["assets"]["equity"] for t in names])
@@ -162,7 +176,11 @@ def optimize(returns, names, sources, config, benchmark, rf):
     fees = np.array([sources["funds"][t]["mer"] for t in names])
     def objective(w):
         sharpe = (mu @ w - rf) / np.sqrt(w @ cov @ w)
-        return -sharpe + settings["concentration_penalty"] * (w @ w) + settings["fee_penalty"] * (fees @ w)
+        score = sharpe
+        if joint:
+            information = (active_mu @ w) / np.sqrt(w @ active_cov @ w)
+            score = objective_weights["sharpe"] * sharpe + objective_weights["information"] * information
+        return -score + settings["concentration_penalty"] * (w @ w) + settings["fee_penalty"] * (fees @ w)
     constraints = [{"type": "eq", "fun": lambda w: w.sum() - 1}, {"type": "ineq", "fun": lambda w: b - A @ w}]
     def solve(bounds, start=None):
         feasible = linprog(np.zeros(n), A_ub=A, b_ub=b, A_eq=np.ones((1,n)), b_eq=[1.], bounds=bounds, method="highs")
@@ -207,7 +225,10 @@ def walk_forward(returns, names, sources, config, benchmark, rf, dates):
     start = config["optimization"]["minimum_training_months"]
     out, audit, previous = [], [], {}
     for i in range(start, len(dates)):
-        train = {t: returns[t][:i] for t in names}
+        train_names = set(names)
+        if config["optimization"].get("objective") == "joint_sharpe_information":
+            train_names.add(config["optimization"]["information_benchmark"])
+        train = {t: returns[t][:i] for t in train_names}
         weights = optimize(train, names, sources, config, benchmark[:i], rf)
         gross = sum(w * returns[t][i] for t, w in weights.items())
         turnover = sum(abs(weights.get(t, 0) - previous.get(t, 0)) for t in set(weights) | set(previous))
@@ -216,9 +237,11 @@ def walk_forward(returns, names, sources, config, benchmark, rf, dates):
         previous = {t: w * (1 + returns[t][i]) / (1 + gross) for t, w in weights.items()}
         audit.append({"month": dates[i], "training_end": dates[i - 1], "weights": weights, "return": net, "traded_weight": turnover})
     if len(out) < 2: raise ValueError("Insufficient chronological validation history")
+    comparisons = {t: period_stats(out, returns[t][start:], rf) for t in ["FEQT", "VEQT"] if t in returns}
     return {"dates": dates[start:], "monthly": out, "metrics": period_stats(out, benchmark[start:], rf), "audit": audit,
+        "comparisons": comparisons,
         "benchmark": period_stats(benchmark[start:], benchmark[start:], rf),
-        "note": "Recherche rejouée chaque mois sur les seuls rendements antérieurs; frais simulés de 0,05 % par montant négocié. Univers et expositions actuels : ce rejeu n’est pas un historique de recommandations réellement publiées."}
+        "note": "Recherche rejouée chaque mois sur les seuls rendements antérieurs; frais simulés de 0,05 % par montant négocié. Objectif conjoint Sharpe et IR/FEQT; VEQT reste la référence secondaire. Univers, expositions et taux sans risque courants : ce rejeu n’est pas une validation indépendante ni un historique de recommandations réellement publiées."}
 
 
 def refresh_analysis(current, baseline, sources, config, generated_at):
@@ -330,6 +353,8 @@ def refresh_analysis(current, baseline, sources, config, generated_at):
         "history_policy": "Pondérations existantes et rendements mensuels acquis inchangés; ajouts des seuls mois complétés. Les ratios de chaque publication sont archivés séparément.",
         "performance_type": "Simulation rétrospective, distributions réinvesties. Le suivi après publication commence au premier mois complet suivant la publication.",
         "source_digest": hashlib.sha256(json.dumps(sources, sort_keys=True).encode()).hexdigest()}
+    d["optimization"]["objective_method"] = "Moyenne à parts égales du Sharpe et de l’IR face à FEQT, estimés sur les mêmes mois d’apprentissage; moyennes régularisées à 50 % (vers VEQT pour le rendement, vers zéro pour le rendement actif), covariances à 35 % vers la diagonale. Pénalités de frais/concentration et contraintes inchangées; aucun seuil de surperformance. Les ratios publiés sont recalculés sans cette régularisation sur leurs fenêtres indiquées."
+    d["optimization"]["source_warnings"] = {t: f["exposure_status"] for t, f in sources["funds"].items() if f.get("exposure_status")}
     if current.get("additional_benchmarks"):
         benchmark_fnb.apply(d, current["additional_benchmarks"], current)
     if current.get("robust_selections"):
@@ -480,6 +505,16 @@ def main(argv=None):
             stage = Path(stage)
             (stage / "data").mkdir(); (stage / "reports").mkdir()
             (stage / "reports/portefeuilles-fnb.html").write_text((root / "reports/portefeuilles-fnb.html").read_text())
+            for name in ("fnb-catalog.json", "fnb-horizon-ranking.json", "fnb-performance.json", "macro-data.json", "fnb-prospective-proposals.json", "fnb-daily-risk.json", "fnb-stress-history.json"):
+                source = root / "data" / name
+                if source.exists(): shutil.copy2(source, stage / "data" / name)
+            proposals = root / "data/fnb-prospective-proposals.json"
+            if proposals.exists():
+                relative = Path(read(proposals)["source"])
+                if relative.parts[:2] != ("data", "fnb-prospective-history") or ".." in relative.parts:
+                    raise ValueError("Invalid prospective source path")
+                (stage / relative).parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(root / relative, stage / relative)
             write(stage / "data/fnb-analysis.json", d)
             subprocess.run(["node", str(root / "scripts/build_monthly_fnb.cjs"), str(stage)], cwd=root, check=True)
             rendered = (stage / "reports/portefeuilles-fnb.html").read_text()

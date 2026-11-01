@@ -48,7 +48,7 @@ test('absolute and active Euler contributions retain negative hedges and reconci
  close(c.reduce((s,x)=>s+x.share,0),1);const same=R.activeContributions({X:.5,Y:.5},{X:.5,Y:.5},returns,4);assert.equal(same,null);
 });
 test('12/24/full stability and significance are descriptive and respect minimum samples',()=>{
- const c=F.stability(D,'2','VEQT');assert.equal(c[0].available,false);assert.equal(c[1].available,true);assert.equal(c[1].months,24);assert.equal(c[2].months,40);
+ const c=F.stability(D,'2','VEQT');assert.equal(c[0].available,false);assert.equal(c[1].available,true);assert.equal(c[1].months,24);assert.equal(c[2].months,D.dates.length);
  for(const f of c[2].factors)assert.equal(f.significant,f.low>0||f.high<0);
  assert.equal(F.compare(truncate(D,35),'2','VEQT').available,false);
 });

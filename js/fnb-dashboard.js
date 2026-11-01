@@ -173,7 +173,7 @@ const SavyFnb = (() => {
       $('riskCaptureBars').innerHTML=[['Port.',capture?.portfolio,'portfolio'],[reference,capture?.benchmark,'benchmark']].map(([label,value,kind])=>'<div title="'+escape(label+' : '+pct(value,1))+'"><span>'+escape(label)+'</span><i class="'+kind+'" style="width:'+Math.max(0,Math.abs(value||0)/capMax*65).toFixed(1)+'%"></i><b>'+pct(value,1)+'</b></div>').join('');
       const max=Math.max(.01,...c.top.map(t=>Math.abs(t.share)));
       $('riskContributions').innerHTML=c.top.map(t=>'<div class="risk-contribution" data-risk-contribution="'+escape(t.id)+'" title="'+escape(D.fund_labels[t.id]?.description||t.id)+'"><b>'+escape(t.id)+'</b><div class="risk-contribution-track"><i class="'+(t.share<0?'negative':'')+'" style="width:'+(Math.abs(t.share)/max*100).toFixed(2)+'%"></i></div><strong>'+pct(t.share,1)+'</strong></div>').join('')||'Contributions non estimables.';
-      $('riskContributionNote').textContent=c.other===null?'':'Autres : '+pct(c.other,1)+' · variance '+c.contributionFrequency;
+      $('riskContributionNote').textContent=c.other===null?'':'Autres : '+pct(c.other,1)+' · variance '+c.contributionFrequency+' · '+c.contributionStart+' → '+c.contributionEnd;
       $('riskSampleNote').textContent=c.var===null?c.reason:number(c.effectiveObservations,1)+' blocs effectifs · queue ≈ '+number(c.tailObservations,1)+(c.fragile?' · estimation fragile':'');
       const scenarios=window.SavyFnbStress?.compare(D,focus,reference,stressInput)||[];
       $('riskScenario').innerHTML=scenarios.map(v=>'<option value="'+v.id+'"'+(v.id===stressScenario?' selected':'')+'>'+escape(v.name)+'</option>').join('');

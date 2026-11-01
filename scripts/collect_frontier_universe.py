@@ -11,7 +11,7 @@ from scripts.fnb_sources import Client, fidelity, vanguard, ishares, bmo
 
 ROOT = Path(__file__).resolve().parents[1]
 
-def build(base, config, sources, retrieved):
+def build(base, config, sources, retrieved, previous=None):
     dates = base["dates"]
     output = {}
     for ticker, spec in config["funds"].items():
@@ -26,8 +26,11 @@ def build(base, config, sources, retrieved):
             raise ValueError(ticker + ": incomplete underlying exposures")
         if any(not math.isfinite(s["returns"][m]) for m in dates):
             raise ValueError(ticker + ": invalid returns")
+        acquired = dict(zip(base["dates"], base.get("universe", {}).get("returns", {}).get(ticker, [])))
+        if not acquired and previous:
+            acquired = dict(zip(previous["dates"], previous["funds"].get(ticker, {}).get("returns", [])))
         output[ticker] = {
-            "returns": [s["returns"][m] for m in dates],
+            "returns": [acquired[m] if m in acquired else s["returns"][m] for m in dates],
             "geo": s["geo"], "sector": s["sector"], "equity": a["equity"],
             "mer": s["mer"], "label": {k: spec[k] for k in ("name", "description", "source_url")},
             "max_weight": spec["max_weight"], "source_url": s["source_url"],
@@ -51,6 +54,18 @@ def main():
     today = datetime.now(ZoneInfo("America/Toronto")).date()
     cutoff = base["dates"][-1]
     client, sources, errors = Client(), {}, []
+    # The complete monthly pipeline now includes many extension funds. Reuse its
+    # validated, aligned snapshot instead of making the same issuer calls twice.
+    u = base.get("universe", {})
+    for t in config["funds"]:
+        dates = base.get("source_dates", {}).get(t, {})
+        if t in u.get("returns", {}) and len(u["returns"][t]) == len(base["dates"]) and all(
+            key in dates and 0 <= (today - date.fromisoformat(dates[key][:10])).days <= 155
+            for key in ("holdings", "geography", "sectors", "assets")):
+            sources[t] = {"returns": dict(zip(base["dates"], u["returns"][t])), "geo": u["geo"][t],
+                "sector": u["sector"][t], "assets": {k: u[k][t] for k in ("equity", "bond", "gold", "crypto", "cash")},
+                "mer": u["mer"][t], "dates": dates, "source_url": base["source_urls"][t], "return_method": base["data_methods"][t]}
+            print(t, "reused validated monthly snapshot", flush=True)
     collectors = {"ishares": ishares, "vanguard": vanguard, "bmo": bmo, "fidelity": fidelity}
     def one(t):
         spec = config["funds"][t]
@@ -60,7 +75,7 @@ def main():
                 raise ValueError(t + ": stale or future-dated " + key)
         return data
     with ThreadPoolExecutor(max_workers=4) as pool:
-        pending = {pool.submit(one, t): t for t in config["funds"]}
+        pending = {pool.submit(one, t): t for t in config["funds"] if t not in sources}
         for future in as_completed(pending):
             t = pending[future]
             try:
@@ -70,7 +85,7 @@ def main():
                 errors.append(t + ": " + str(exc))
                 print(t, "FAILED", str(exc), flush=True)
     if errors: raise ValueError("No partial extension published: " + " | ".join(errors))
-    out = build(base, config, sources, today.isoformat())
+    out = build(base, config, sources, today.isoformat(), old if dest.exists() else None)
     out["config_digest"] = config_digest
     tmp = dest.with_suffix(".tmp")
     tmp.write_text(json.dumps(out, ensure_ascii=False, allow_nan=False, separators=(",", ":")) + "\n")

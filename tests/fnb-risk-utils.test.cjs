@@ -22,6 +22,13 @@ test('relative VaR uses the stated benchmark and is undefined when its loss thre
  const d=structuredClone(D),aDaily=structuredClone(daily);aDaily.daily_series.returns.VEQT.fill(.01);assert.equal(R.compare(d,'7','VEQT',aDaily).relativeVar,null);
  const a=R.compare(D,'7','VEQT',daily),b=R.compare(D,'7','VFV',daily);close(a.var,b.var);close(a.cvar,b.cvar);assert.notEqual(a.relativeVar,b.relativeVar);
 });
+test('monthly variance contributions remain unchanged when daily prices move',()=>{
+ const changed=structuredClone(daily);
+ changed.daily_series.returns.FINN=changed.daily_series.returns.FINN.map((v,i)=>v*(i%2?2:.5));
+ const a=R.compare(structuredClone(D),'7','VEQT',daily),b=R.compare(structuredClone(D),'7','VEQT',changed);
+ assert.deepEqual(a.contributions,b.contributions);assert.equal(a.contributionFrequency,'mensuelle');
+ assert.equal(a.contributionEnd,D.dates.at(-1));assert.notEqual(a.var,b.var);
+});
 test('the compact card is idempotent and survives the shared report renderer',()=>{
  const html='<section id="exposures"><!-- fnb-factors:start --></section><script src="../js/fnb-dashboard.js?v=old"></script>';
  const a=view(html);assert.equal(view(a),a);assert.equal((a.match(/id="riskSnapshotTitle"/g)||[]).length,1);

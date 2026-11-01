@@ -65,13 +65,14 @@ le coefficient marché conditionnel du modèle multifactoriel, dont le facteur
 marché est VEQT. Downside capture, bêta et facteurs utilisent le backtest
 mensuel existant à rééquilibrage annuel en janvier.
 
-Les contributions d’Euler à la variance absolue et active utilisent les mélanges
-aux poids quotidiens constants lorsque ces données sont disponibles. Les poids
-actifs valent poids portefeuille moins poids benchmark. Chaque décomposition
-non dégénérée totalise 100 %, avec contributions négatives conservées. Ces
-contributions peuvent différer de la TE du backtest mensuel; les conventions
-sont nommées dans les détails. Les quatre contributions absolues dominantes
-restent visibles, les autres dans le volet.
+Les quatre contributions absolues visibles utilisent la covariance des mêmes
+rendements mensuels totaux que l’analyse, aux poids cibles constants. Leur fenêtre
+mensuelle est affichée : une nouvelle clôture quotidienne ne modifie pas cette
+décomposition. Elle diffère du backtest rééquilibré en janvier, dont les poids
+dérivent pendant l’année. Les contributions actives du volet détaillé utilisent
+les poids portefeuille moins benchmark et l’échantillon quotidien commun lorsqu’il
+est disponible, sinon le mensuel aligné. Chaque décomposition non dégénérée
+totalise 100 %, avec contributions négatives conservées et fréquence explicite.
 
 ### Stress adaptatif
 

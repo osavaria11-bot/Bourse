@@ -24,6 +24,16 @@ class FrontierSourcesTests(unittest.TestCase):
     def test_missing_month_and_non_equity_never_substituted(self):
         base,cfg,sources=self.fixture();del sources["TEST"]["returns"]["2026-08"]
         with self.assertRaises(ValueError):build(base,cfg,sources,"2026-10-20")
+
+    def test_acquired_months_use_the_validated_base_before_revised_issuer_history(self):
+        base,cfg,sources=self.fixture()
+        base["universe"]={"returns":{"TEST":[.012,.023]}}
+        out=build(base,cfg,sources,"2026-10-20")
+        self.assertEqual(out["funds"]["TEST"]["returns"],[.012,.023])
+        del base["universe"]
+        previous={"dates":["2026-08"],"funds":{"TEST":{"returns":[.011]}}}
+        out=build(base,cfg,sources,"2026-10-20",previous)
+        self.assertEqual(out["funds"]["TEST"]["returns"],[.011,.02])
         base,cfg,sources=self.fixture();sources["TEST"]["assets"]["crypto"]=.01
         with self.assertRaises(ValueError):build(base,cfg,sources,"2026-10-20")
 
