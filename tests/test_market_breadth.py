@@ -112,4 +112,12 @@ class BreadthTests(unittest.TestCase):
         series=list(zip(dates,range(1,41)));series[-10]=(dates[-10],None)
         rows=B.rsi_history(series,dates[0]);self.assertIsNone(rows[-1]['value'])
 
+    def test_green_source_flags_do_not_suppress_retry_of_a_missing_close(self):
+        market={'status':'current','latest_date':'2026-10-29','rsi_status':'current','rsi_history':[{'date':'2026-10-30','value':52.}]}
+        self.assertFalse(B.source_is_current(market,'2026-10-30'))
+        market['latest_date']='2026-10-30'
+        self.assertTrue(B.source_is_current(market,'2026-10-30'))
+        market['rsi_history'][-1]['value']=None
+        self.assertFalse(B.source_is_current(market,'2026-10-30'))
+
 if __name__=='__main__':unittest.main()
