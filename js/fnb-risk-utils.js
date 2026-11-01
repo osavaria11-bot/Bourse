@@ -112,7 +112,9 @@
     const joint=jointSeries(D,id,reference,snapshot),daily=dailyMeasure(D,id,snapshot),blocks=joint?compoundBlocks(joint.p,joint.session_indices):[],bb=joint?compoundBlocks(joint.b,joint.session_indices):[];
     const a=blocks.length>=24?losses(blocks):null,benchmark=a?losses(bb):null;
     const matched=JSON.stringify(D.universe?.dates)===JSON.stringify(D.dates);
-    const all=joint?contributions(p.weights,joint.returns,joint.dates.length):matched?contributions(p.weights,D.universe?.returns,n):null;
+    // Monthly target-weight covariance is distinct from the daily sample used
+    // for VaR. Refreshing daily prices must not change this decomposition.
+    const all=matched?contributions(p.weights,D.universe?.returns,n):null;
     const active=joint?activeContributions(p.weights,b.weights,joint.returns,joint.dates.length):matched?activeContributions(p.weights,b.weights,D.universe?.returns,n):null;
     const top=all?.slice(0,4)||[],other=all?1-top.reduce((s,v)=>s+v.share,0):null;
     const contiguous=joint&&joint.session_indices.at(-1)-joint.session_indices[0]===joint.dates.length-1;
@@ -127,7 +129,7 @@
       fragile:effective*.05<10,reason:a?null:'Au moins 24 blocs complets non chevauchants de 21 séances requis.',
       drawdown:{portfolio:maximumDrawdown(dp),benchmark:maximumDrawdown(db),frequency:contiguous?'quotidienne':'mensuelle',start:contiguous?joint.dates[0]:D.dates[0],end:contiguous?joint.dates.at(-1):D.dates.at(-1),method:contiguous?'Rendements des FNB observés, simulation à poids cibles quotidiens constants':'Simulation du backtest mensuel; creux intramensuels non mesurés'},
       capture:downsideCapture(p.monthly,b.monthly),downside:F.downside(p.monthly,b.monthly),beta:F.beta(p.monthly,b.monthly),
-      contributions:all,activeContributions:active,contributionFrequency:joint?'quotidienne':'mensuelle',top,other,start:joint?joint.dates[0]:D.dates[0],end:joint?joint.dates.at(-1):D.dates.at(-1),reference,daily};
+      contributions:all,activeContributions:active,contributionFrequency:'mensuelle',contributionStart:D.dates[0],contributionEnd:D.dates.at(-1),activeContributionFrequency:joint?'quotidienne':'mensuelle',top,other,start:joint?joint.dates[0]:D.dates[0],end:joint?joint.dates.at(-1):D.dates.at(-1),reference,daily};
     cache.results.set(key,result);return result;
   }
   return {losses,contributions,compare,dailyMeasure,maximumDrawdown,downsideCapture,compoundBlocks,effectiveObservations,bootstrapTail,backtest,jointSeries,activeContributions};

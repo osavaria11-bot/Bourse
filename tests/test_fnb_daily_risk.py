@@ -1,4 +1,5 @@
 from datetime import date, timedelta
+from copy import deepcopy
 import math
 import unittest
 from scripts import collect_fnb_daily_risk as R
@@ -43,5 +44,20 @@ class DailyRiskTests(unittest.TestCase):
         analysis,prices,dates=self.sample();prices['X'][dates[40]]['adjusted_close']*=6
         with self.assertRaisesRegex(ValueError,'Suspicious'):R.build(analysis,prices,dates[-1],'test')
         with self.assertRaisesRegex(ValueError,'Insufficient'):R.build(analysis,{},dates[-1],'test')
+
+    def test_new_weights_reuse_the_whole_sample_without_changing_its_provenance(self):
+        analysis,prices,dates=self.sample()
+        prices['Y']={d:{'adjusted_close':100*1.002**i,'source_url':'https://finance.yahoo.com/quote/Y/history/'} for i,d in enumerate(dates)}
+        analysis['results']['p']['weights']={'X':.5,'Y':.5}
+        retained=R.build(analysis,prices,dates[-1],'source date');original=deepcopy(retained)
+        analysis['results']['p']['weights']={'X':.2,'Y':.8}
+        out=R.reweight(analysis,retained,'new weights date')
+        self.assertEqual(retained,original)
+        for key in ['daily_series','as_of','generated_at','return_basis','source_urls']:
+            self.assertEqual(out[key],retained[key])
+        self.assertNotEqual(out['weights_signature'],retained['weights_signature'])
+        self.assertAlmostEqual(out['results']['p']['var95'],-.0018)
+        out['expected_observations']*=2
+        with self.assertRaisesRegex(ValueError,'coverage'):R.validate(out)
 
 if __name__=='__main__':unittest.main()

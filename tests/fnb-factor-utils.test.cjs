@@ -34,10 +34,28 @@ test('every current portfolio and benchmark uses the same common sample and reco
   assert.equal(JSON.stringify(D), before, 'Factor analysis never mutates source allocations or returns');
 });
 test('active attribution permits negative risk contributions without clipping or renormalizing', () => {
-  const c = F.compare(D, '7', 'VEQT');
+  const archive = JSON.parse(fs.readFileSync(path.join(__dirname, '../data/fnb-history/2026-10.json'), 'utf8'));
+  const initial = structuredClone(D), n = archive.dates.length;
+  initial.dates = initial.dates.slice(0, n); initial.universe.dates = initial.universe.dates.slice(0, n);
+  for (const key of Object.keys(initial.universe.returns)) initial.universe.returns[key] = initial.universe.returns[key].slice(0, n);
+  for (const row of Object.values(initial.results)) row.monthly = row.monthly.slice(0, n);
+  const c = F.compare(initial, '7', 'VEQT');
   assert.ok(c.factors.some(f => f.contribution < 0));
   close(c.factors.reduce((s, f) => s + f.contribution, 0) + c.residualContribution, 1);
   close(c.factors.find(f => f.id === 'market').portfolio, .857649958123403, 1e-10);
+});
+test('a completed next month recalculates factors without rewriting the prior sample', () => {
+  const before = JSON.stringify(D), d = structuredClone(D);
+  const [year, month] = d.dates.at(-1).split('-').map(Number);
+  const next = new Date(Date.UTC(year, month, 1)).toISOString().slice(0, 7);
+  d.dates.push(next); d.universe.dates.push(next);
+  Object.entries(d.universe.returns).forEach(([id, row], i) => row.push(.007 + (i % 7) * .003));
+  Object.values(d.results).forEach(row => row.monthly.push(Object.entries(row.weights).reduce((s, [id, w]) => s + w * d.universe.returns[id].at(-1), 0)));
+  const a = F.compare(D, '7', 'FEQT'), b = F.compare(d, '7', 'FEQT');
+  assert.equal(b.available, true); assert.equal(b.months, a.months + 1); assert.equal(b.end, next);
+  assert.notDeepEqual(b.factors.map(f => f.portfolio), a.factors.map(f => f.portfolio));
+  for (const id of D.order) assert.deepEqual(d.results[id].monthly.slice(0, -1), D.results[id].monthly);
+  assert.equal(JSON.stringify(D), before);
 });
 test('reversing portfolio and benchmark reverses sensitivities and intervals, preserves risk attribution', () => {
   const a = F.compare(D, '7', 'VEQT'), b = F.compare(D, 'VEQT', '7');

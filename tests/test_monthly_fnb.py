@@ -44,11 +44,51 @@ class ReturnGuards(unittest.TestCase):
         self.assertAlmostEqual(r["2024-10"], .0309)
         self.assertAlmostEqual(r["2024-11"], 105 / 103.09 - 1)
 
+    def test_negative_fidelity_exposure_retains_one_coherent_official_snapshot(self):
+        def row(day, values):
+            return {"asOfDate": day, "allocations": {k: {"value": str(v)} for k, v in values.items()}}
+        alloc = {
+            "assetAllocations": {"CM": row("2026-09-30", {"Foreign Equities": 101, "Other Investments": -1}),
+                "LM": row("2026-08-31", {"Foreign Equities": 99.9, "Other Investments": .1})},
+            "countryAllocations": {"CM": row("2026-09-30", {"United States": 101}), "LM": row("2026-08-31", {"Canada": 99.9})},
+            "sectorAllocations": {"CM": row("2026-09-30", {"Financials": 101}), "LM": row("2026-08-31", {"Industrials": 99.9})}}
+        original = copy.deepcopy(alloc)
+        selected, warning = sources.fidelity_allocation_snapshot(alloc)
+        self.assertEqual(alloc, original)
+        self.assertEqual(warning["used_date"], "2026-08-31")
+        self.assertEqual(warning["latest_date"], "2026-09-30")
+        self.assertTrue(all(selected[k]["CM"] == alloc[k]["LM"] for k in alloc))
+        alloc["sectorAllocations"]["LM"]["asOfDate"] = "2026-07-31"
+        with self.assertRaisesRegex(ValueError, "no coherent"):
+            sources.fidelity_allocation_snapshot(alloc)
+
     def test_partial_and_missing_months_cannot_be_fabricated(self):
         r = sources.monthly_from_levels([("2026-07-31", 100.), ("2026-08-31", 102.), ("2026-09-15", 103.)], "2026-09")
         self.assertEqual(set(r), {"2026-08"})
         r = sources.monthly_from_levels([("2026-06-30", 100.), ("2026-08-31", 102.)], "2026-08")
         self.assertEqual(r, {})
+
+    def test_rbc_current_public_service_preserves_total_return_and_checks_identity(self):
+        d = {"currency": "CAD", "ticker": "RUD", "exchange": "TSX", "equityRatio": 100,
+            "fixedIncomeRatio": 0, "mer": .0043,
+            "performance": {"growth10k": {"2026-08-31": {"val": 100}, "2026-09-30": {"val": 103}}},
+            "portfolio": {"geographic": [{"en": "United States", "val": 100}],
+                "sector": {"Information Technology": 100}, "holdings": {"allHoldings": {"Apple": 100}}},
+            "analysisDate": {k: "2026-09-30" for k in ["performance", "holdings", "geographic", "portfolio", "assetMix"]}}
+        calls = []
+        class Client:
+            def get(self, url): return "<app-root></app-root>"
+            def json(self, url, payload):
+                calls.append((url, payload))
+                return {"entity": {"jsonObjectView": {"contentlets": [{"jsonFDSFundData": d}]}}}
+        fund = {"mer": .0043, "source_url": "https://www.rbcgam.com/en/ca/products/etfs/RUD/detail", "provider": "rbc"}
+        r = sources.rbc(Client(), "RUD", fund, "2026-09")
+        self.assertAlmostEqual(r["returns"]["2026-09"], .03)
+        self.assertEqual(calls[0][0], r["holdings"]["data_url"])
+        self.assertIn("+FDSETFDetailsData.ticker:RUD", calls[0][1]["query"])
+        d["currency"] = "USD"
+        with self.assertRaisesRegex(ValueError, "RBC identity"):
+            sources.rbc(Client(), "RUD", fund, "2026-09")
 
     def test_completed_month_uses_the_actual_last_canadian_trading_day(self):
         self.assertEqual(sources.last_trading_day("2024-03"), date(2024,3,28))
@@ -117,7 +157,7 @@ class PublicationGuards(unittest.TestCase):
         self.assertEqual(current,original)
         self.assertEqual(new["results"]["proposal"]["weights"],weights)
         for t in extra:
-            self.assertEqual(new["universe"]["returns"][t][:40],extra[t]["returns"])
+            self.assertEqual(new["universe"]["returns"][t][:40],extra[t]["returns"][:40])
         self.assertNotIn("VEQT",new["optimization"]["eligible_funds"])
         self.assertNotIn("XEQT",new["optimization"]["eligible_funds"])
         self.assertNotEqual(new["results"]["proposal"]["monthly"][:40],current["results"]["proposal"]["monthly"])
@@ -151,12 +191,14 @@ class PublicationGuards(unittest.TestCase):
 
     def test_chronological_training_never_reads_the_next_return(self):
         dates = model.months_between("2024-01", "2026-04")
-        returns = {"A": [i / 1000 for i in range(len(dates))]}
-        config = {"optimization": {"minimum_training_months": 24, "trading_cost_one_way": .0005}}
+        returns = {"A": [i / 1000 for i in range(len(dates))], "FEQT": [i / 2000 for i in range(len(dates))]}
+        config = {"optimization": {"minimum_training_months": 24, "trading_cost_one_way": .0005,
+            "objective": "joint_sharpe_information", "information_benchmark": "FEQT"}}
         calls = []
         def fit(train, names, src, conf, benchmark, rf):
             calls.append(len(train["A"]))
             self.assertEqual(len(benchmark), len(train["A"]))
+            self.assertEqual(train["FEQT"], returns["FEQT"][:len(train["A"])])
             self.assertLess(train["A"][-1], returns["A"][len(train["A"])])
             return {"A": 1.}
         with patch.object(model, "optimize", side_effect=fit):
@@ -164,6 +206,7 @@ class PublicationGuards(unittest.TestCase):
         self.assertEqual(calls, [24,25,26,27])
         self.assertAlmostEqual(v["monthly"][0], (1 + .024) * .9995 - 1)
         self.assertTrue(all(r["training_end"] < r["month"] for r in v["audit"]))
+        self.assertIn("FEQT", v["comparisons"])
 
     def test_feqt_crypto_is_allowed_as_part_of_the_total_portfolio_budget(self):
         config = model.read(ROOT / "data/fnb-model.json")
@@ -195,6 +238,7 @@ class PublicationGuards(unittest.TestCase):
             data["funds"][t] = {"assets":{"equity":1-crypto,"crypto":crypto},"geo":geo,"sector":sector,"mer":.001}
             returns[t] = [(.025 if i<3 else .004)+.008*math.sin(m*.8+i*.1) for m in range(36)]
         benchmark = [.01+.008*math.sin(m*.8) for m in range(36)]
+        returns["FEQT"] = benchmark
         weights = model.optimize(returns,names,data,config,benchmark,.02)
         exposure = sum(w*data["funds"][t]["assets"]["crypto"] for t,w in weights.items())
         self.assertLessEqual(exposure,.03+1e-8)
@@ -210,6 +254,34 @@ class PublicationGuards(unittest.TestCase):
         changed["results"]["proposal"]["crypto"] = .032
         with self.assertRaisesRegex(ValueError,"cryptocurrency"):
             model.validate(changed,self.baseline)
+
+    @unittest.skipUnless(importlib.util.find_spec("scipy"), "Numerical research dependencies not installed")
+    def test_information_objective_changes_selection_before_reporting(self):
+        import numpy as np
+        config = model.read(ROOT / "data/fnb-model.json")
+        names = list("ABCDEF")
+        config["funds"] = {t: {"max_weight": .35} for t in names}
+        geo, sector = self.current["universe"]["ref_geo"], self.current["universe"]["ref_sector"]
+        data = {"funds": {"VEQT": {"geo": geo, "sector": sector}, **{
+            t: {"assets": {"equity": 1., "crypto": 0.}, "geo": geo, "sector": sector, "mer": .002} for t in names}}}
+        rng = np.random.default_rng(123)
+        common = rng.normal(0, .025, 36)
+        returns = {t: (mu + common * (1 + .1*i) + rng.normal(0, .008 + .003*i, 36)).tolist()
+            for i, (t, mu) in enumerate(zip(names, [.02, .018, .017, .016, .015, .014]))}
+        returns["FEQT"] = (.017 + common * .8 + rng.normal(0, .013, 36)).tolist()
+        benchmark = (.015 + common).tolist()
+        config["optimization"]["objective"] = "regularized_sharpe"
+        previous = model.optimize(returns, names, data, config, benchmark, .025)
+        config["optimization"]["objective"] = "joint_sharpe_information"
+        joint = model.optimize(returns, names, data, config, benchmark, .025)
+        self.assertNotEqual(previous, joint)
+        def ir(weights):
+            rr = [sum(w * returns[t][i] for t, w in weights.items()) for i in range(36)]
+            return model.period_stats(rr, returns["FEQT"], .025)["information"]
+        self.assertGreater(ir(joint), ir(previous))
+        returns["FEQT"].pop()
+        with self.assertRaisesRegex(ValueError, "aligned FEQT"):
+            model.optimize(returns, names, data, config, benchmark, .025)
 
 
 if __name__ == "__main__":

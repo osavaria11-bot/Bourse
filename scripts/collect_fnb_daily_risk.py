@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """One-session historical VaR at current target weights, separate from ledgers."""
 import argparse
+from copy import deepcopy
 from concurrent.futures import ThreadPoolExecutor
 from datetime import date, datetime, timedelta
 import hashlib
@@ -62,7 +63,7 @@ def build(analysis, prices, cutoff, generated_at, return_series=None):
         values=[sum(w*daily[t][i] for t,w in weights.items()) for i in range(len(accepted))]
         results[key]={'weights':weights,'var95':historical_var(values),**distribution_shape(values)}
     return {'schema_version':2,'confidence':CONFIDENCE,'horizon_sessions':1,'method':'historical_current_target_weights_v1',
-        'generated_at':generated_at,'as_of':cutoff,'sample_start':accepted[0],'sample_end':accepted[-1],
+        'generated_at':generated_at,'as_of':cutoff,'window_start':start.isoformat(),'sample_start':accepted[0],'sample_end':accepted[-1],
         'daily_series':{'currency':'CAD','total_return':True,'dates':accepted,'session_indices':[sessions.index(d) for d in accepted],'returns':daily},
         'observations':len(accepted),'expected_observations':expected,'missing_sessions':missing,
         'weights_signature':signature(analysis),'shape_estimators':'bias_corrected_fisher','status':'current','error':None,'results':results,
@@ -81,6 +82,8 @@ def validate(data):
             if metric not in row or row[metric] is not None and not math.isfinite(row[metric]):raise ValueError('Invalid daily distribution shape: '+key)
     if data.get('schema_version')==2:
         series=data['daily_series'];n=data['observations']
+        if data.get('expected_observations',0)<n or n<data['expected_observations']*.98 or series['dates'][-1]!=data['as_of']:
+            raise ValueError('Invalid daily coverage or latest observation')
         if series.get('currency')!='CAD' or series.get('total_return') is not True or len(series['dates'])!=n or len(set(series['dates']))!=n or sorted(series['dates'])!=series['dates']:raise ValueError('Invalid joint daily dates/currency')
         if len(series['session_indices'])!=n or any(b<=a for a,b in zip(series['session_indices'],series['session_indices'][1:])):raise ValueError('Invalid session indices')
         for ticker,values in series['returns'].items():
@@ -90,6 +93,20 @@ def validate(data):
             recomputed=[sum(w*series['returns'][t][i] for t,w in row['weights'].items()) for i in range(n)]
             if abs(historical_var(recomputed)-row['var95'])>1e-10:raise ValueError('Daily VaR inconsistent with retained returns')
     return data
+
+def reweight(analysis, retained, generated_at):
+    """Recompute target risk on an unchanged, validated common source sample."""
+    validate(retained)
+    if retained.get('schema_version')!=2 or retained.get('status')!='current' or retained.get('window_start',retained['sample_start'])!=analysis['dates'][0]+'-01':
+        raise ValueError('Retained daily sample does not cover the requested window')
+    out=deepcopy(retained);series=out['daily_series'];results={}
+    for key in analysis['order']:
+        weights=analysis['results'][key]['weights']
+        if any(t not in series['returns'] for t in weights):raise ValueError('New daily position history required')
+        values=[sum(w*series['returns'][t][i] for t,w in weights.items()) for i in range(out['observations'])]
+        results[key]={'weights':deepcopy(weights),'var95':historical_var(values),**distribution_shape(values)}
+    out.update(results=results,weights_signature=signature(analysis),weights_recomputed_at=generated_at)
+    return validate(out)
 
 def main(argv=None):
     parser=argparse.ArgumentParser(description=__doc__)
@@ -102,6 +119,9 @@ def main(argv=None):
     if old and old.get('schema_version')==2 and old.get('as_of')==cutoff and old.get('weights_signature')==signature(analysis) and old.get('shape_estimators')=='bias_corrected_fisher' and old.get('status')=='current':validate(old);print('Daily VaR already current:',cutoff);return 0
     try:
         config=json.loads((ROOT/'data/fnb-model.json').read_text());tickers={t for key in analysis['order'] for t in analysis['results'][key]['weights']}
+        if old and old.get('schema_version')==2 and old.get('status')=='current' and old.get('as_of')==cutoff and old.get('shape_estimators')=='bias_corrected_fisher' and old.get('window_start',old['sample_start'])==analysis['dates'][0]+'-01' and tickers<=old['daily_series']['returns'].keys():
+            data=reweight(analysis,old,datetime.now(ZoneInfo('America/Toronto')).isoformat(timespec='seconds'))
+            F.write(args.output,data);print('Daily risk recomputed from retained validated returns:',cutoff);return 0
         first=F.previous_trading_day(date.fromisoformat(analysis['dates'][0]+'-01')-timedelta(days=1)).isoformat()
         print('Collecting',len(tickers),'CAD ETF histories:',first,'through',cutoff,flush=True)
         client=Client(args.cache)

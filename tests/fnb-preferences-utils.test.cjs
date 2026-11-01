@@ -11,9 +11,9 @@ test('all equity candidates use aligned common windows and a financial score wit
   if(e.signals.length)assert.match(e.reason,/Points à surveiller/);
   if(i)assert.ok(ranking.entries[i-1].score>=e.score);
  }
- const proposal=ranking.entries.find(e=>e.id==='proposal');assert.equal(proposal.eligible,true);assert.ok(proposal.performance_flags.some(f=>f.includes('IR 12 mois')));
+ const proposal=ranking.entries.find(e=>e.id==='proposal');assert.equal(proposal.eligible,true);const weak=structuredClone(D);weak.results.proposal.monthly=weak.results.VEQT.monthly.map(r=>r-.01);assert.ok(rank(weak).entries.find(e=>e.id==='proposal').performance_flags.some(f=>f.includes('IR 12 mois')));
  assert.ok(ranking.entries.find(e=>e.id==='7').limit_flags.some(f=>f.includes('FINN')));
- assert.equal(ranking.entries[0].id,'7','Conviction is judged on financial results rather than fund caps');
+ assert.equal(ranking.entries.find(e=>e.id==='7').eligible,true,'Construction limits do not exclude an existing portfolio');
  assert.equal(JSON.stringify(D),before,'Ranking never edits an allocation, return or diagnostic');
 });
 test('an older portfolio with the same profile and lower fees can outrank every Robuste',()=>{

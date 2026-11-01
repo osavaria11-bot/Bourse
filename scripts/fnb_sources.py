@@ -170,6 +170,28 @@ def result(fund, returns, geo, sectors, assets, positions, dates, **extra):
             "complete": True, "positions": positions}, **extra}
 
 
+def fidelity_allocation_snapshot(alloc):
+    """Use one coherent, nonnegative issuer snapshot; never infer financing."""
+    keys = ("assetAllocations", "countryAllocations", "sectorAllocations")
+    latest = alloc["assetAllocations"]["CM"]
+    candidates = sorted(alloc["assetAllocations"],
+        key=lambda p: alloc["assetAllocations"][p]["asOfDate"], reverse=True)
+    for period in candidates:
+        rows = [alloc[k].get(period) for k in keys]
+        if any(r is None for r in rows) or len({r["asOfDate"] for r in rows}) != 1:
+            continue
+        values = [number(v["value"]) for v in rows[0]["allocations"].values()]
+        if any(v < 0 for v in values) or not 99.5 <= sum(values) <= 100.5:
+            continue
+        selected = {**alloc, **{k: {"CM": r} for k, r in zip(keys, rows)}}
+        warning = None if period == "CM" else {
+            "status": "previous_valid_snapshot", "latest_date": latest["asOfDate"],
+            "used_date": rows[0]["asOfDate"],
+            "reason": "Ventilation récente négative ou incohérente, non représentable sans interpréter son financement."}
+        return selected, warning
+    raise ValueError("Fidelity has no coherent nonnegative asset allocation snapshot")
+
+
 def fidelity(client, ticker, fund, cutoff):
     url = FID + "fund/EN/" + ticker
     d = client.json(url)
@@ -185,6 +207,9 @@ def fidelity(client, ticker, fund, cutoff):
             products[day.strftime("%Y-%m")] *= value
     returns = {m: v - 1 for m, v in products.items() if m <= cutoff and last_trading_day(m) <= end and m > first.strftime("%Y-%m")}
     alloc = d["allocations"]
+    warning = None
+    if ticker not in ["FEQT", "FBAL", "FGRO"]:
+        alloc, warning = fidelity_allocation_snapshot(alloc)
     sector = alloc["sectorAllocations"]["CM"]
     sec = [0.] * len(SECTORS)
     for name, value in sector["allocations"].items():
@@ -232,6 +257,10 @@ def fidelity(client, ticker, fund, cutoff):
         return_method="Fidelity : facteurs quotidiens de rendement total composés, arrondis par l’émetteur.")
     out["mer"] = number(d["series"]["L"]["merPct"]) / 100
     out["holdings"]["data_url"] = url
+    if warning:
+        out["exposure_status"] = warning
+        out["return_method"] += (" Expositions : dernier relevé cohérent conservé au " + warning["used_date"]
+            + "; ventilation du " + warning["latest_date"] + " non intégrée (valeur négative ou incohérente).")
     return out
 
 
@@ -430,8 +459,19 @@ def globalx(client, ticker, fund, cutoff):
 def rbc(client, ticker, fund, cutoff):
     body = client.get(fund["source_url"])
     match = re.search(r"const fundData\s*=\s*(.*?);\s*(?:\n|\r)", body)
-    if not match: raise ValueError("RBC public data missing")
-    d = json.loads(match[1])
+    data_url = fund["source_url"]
+    if match:
+        d = json.loads(match[1])
+    else:
+        # Public content service used by RBC's current ETF page (Angular).
+        data_url = "https://www.rbcgam.com/api/content/_search"
+        payload = {"query": "+contentType:FDSETFDetailsData +FDSETFDetailsData.ticker:" + ticker + " +live:true",
+            "render": False, "limit": 1, "offset": 0, "depth": 3, "languageId": 1}
+        response = client.json(data_url, payload)
+        rows = response.get("entity", {}).get("jsonObjectView", {}).get("contentlets", [])
+        if len(rows) != 1 or not isinstance(rows[0].get("jsonFDSFundData"), dict):
+            raise ValueError("RBC public fund data missing or ambiguous")
+        d = rows[0]["jsonFDSFundData"]
     if d["currency"] != "CAD" or d["ticker"] != ticker or d["exchange"] != "TSX": raise ValueError("RBC identity")
     points = [(day[:10], row["val"]) for day, row in d["performance"]["growth10k"].items()]
     returns = monthly_from_levels(points, cutoff)
@@ -447,6 +487,7 @@ def rbc(client, ticker, fund, cutoff):
         return_method="RBC : croissance officielle distributions réinvesties, ajustée des fractionnements.")
     # RBC publishes MER as a fraction, unlike Fidelity's percentage string.
     out["mer"] = number(d["mer"])
+    out["holdings"]["data_url"] = data_url
     return out
 
 

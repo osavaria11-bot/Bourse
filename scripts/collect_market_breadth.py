@@ -290,6 +290,13 @@ def validate(data):
                 if value is not None and (n<point['universe']*MIN_COVERAGE or abs(value-a/n*100)>.0001):raise ValueError('Invalid breadth percentage')
     return data
 
+def source_is_current(market, cutoff):
+    rsi = market.get('rsi_history') or []
+    return (market.get('status') == 'current' and market.get('latest_date') == cutoff
+        and market.get('rsi_status') == 'current' and bool(rsi)
+        and rsi[-1]['date'] == cutoff and rsi[-1].get('value') is not None)
+
+
 def main(argv=None):
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--output',type=Path,default=ROOT/'data/market-breadth.json');parser.add_argument('--cache',type=Path,default=ROOT/'.cache/market-breadth');parser.add_argument('--check',action='store_true');parser.add_argument('--workers',type=int,default=12);parser.add_argument('--due',action='store_true')
     args=parser.parse_args(argv)
@@ -298,7 +305,7 @@ def main(argv=None):
     while date.fromisoformat(cutoff).weekday()>=5:cutoff=(date.fromisoformat(cutoff)-timedelta(days=1)).isoformat()
     previous=json.loads(args.output.read_text()) if args.output.exists() else {};old={m['id']:m for m in previous.get('markets',[])}
     if args.due:
-        print('false' if previous.get('expected_cutoff')==cutoff and previous.get('method_version')=='current_survivor_cohort_v2' and all(old.get(m['id'],{}).get('status')=='current' and old[m['id']].get('rsi_status')=='current' for m in MARKETS) else 'true');return 0
+        print('false' if previous.get('expected_cutoff')==cutoff and previous.get('method_version')=='current_survivor_cohort_v2' and all(source_is_current(old.get(m['id'],{}),cutoff) for m in MARKETS) else 'true');return 0
     result={'schema_version':1,'generated_at':now.isoformat(timespec='seconds'),'expected_cutoff':cutoff,'windows':WINDOWS,'minimum_coverage':MIN_COVERAGE,
         'max_local_lag_days':MAX_LOCAL_LAG_DAYS,'history_years':HISTORY_YEARS,'history_start':years_before(cutoff,HISTORY_YEARS),'rsi_period':RSI_PERIOD,'method_version':'current_survivor_cohort_v2','history_revisions':previous.get('history_revisions',[]),
         'method':'Nombre de titres au-dessus de leur propre SMA en séances locales, sans pondération. Cohorte historique des composantes courantes dont la première cotation indiquée par Yahoo précède la date; dates inconnues conservées au dénominateur de couverture. Historique reconstitué avec biais de survivance, pas les membres historiques officiels des indices. Couverture minimale 90 % de cette cohorte; effectifs variables affichés. Dernière clôture locale depuis 3 jours calendaires maximum; aucun prix répété dans les SMA. Cours ajustés Yahoo Finance. Univers iShares / BlackRock.', 'markets':[]}
@@ -330,7 +337,7 @@ def main(argv=None):
     for definition in MARKETS:
         key=definition['id'];prior=old.get(key,{});item={**definition,'history':prior.get('history',[])};entry=universes[key]
         source=RSI_SOURCES[key];rsi=rsi_history(histories.get(source['symbol'],[]),result['history_start'])
-        item.update(rsi_symbol=source['symbol'],rsi_label=source['label'],rsi_source_url='https://finance.yahoo.com/quote/'+quote(source['symbol'],safe='')+'/history/',rsi_history=rsi or prior.get('rsi_history',[]),rsi_status='current' if rsi and rsi[-1]['value'] is not None and (date.fromisoformat(cutoff)-date.fromisoformat(rsi[-1]['date'])).days<=5 else 'stale')
+        item.update(rsi_symbol=source['symbol'],rsi_label=source['label'],rsi_source_url='https://finance.yahoo.com/quote/'+quote(source['symbol'],safe='')+'/history/',rsi_history=rsi or prior.get('rsi_history',[]),rsi_status='current' if rsi and rsi[-1]['value'] is not None and rsi[-1]['date']==cutoff else 'stale')
         try:
             if isinstance(entry,str):raise ValueError(entry)
             dated,holdings,url=entry;history=breadth_history(holdings,histories,cutoff,dated,first_trade_dates=first_trade_dates,history_start=result['history_start'])
@@ -343,7 +350,9 @@ def main(argv=None):
             frozen={p['date']:p for p in prior.get('history',[]) if p.get('kind')!='reconstructed'}
             for point in history:
                 if point['date'] not in frozen:frozen[point['date']]=point
-            item.update(history=[frozen[d] for d in sorted(frozen)],holdings_date=dated,holdings_url=url,universe_size=len(holdings),quote_series=len([h for h in holdings if h['symbol'] in histories]),latest_date=latest,status='current',error=None)
+            latest=max(p['date'] for p in frozen.values() if all(v is not None for v in p['values'].values()))
+            current=latest==cutoff
+            item.update(history=[frozen[d] for d in sorted(frozen)],holdings_date=dated,holdings_url=url,universe_size=len(holdings),quote_series=len([h for h in holdings if h['symbol'] in histories]),latest_date=latest,status='current' if current else 'stale',error=None if current else 'Dernier relevé validé au '+latest+'; observation du '+cutoff+' en attente.')
             # The latest point is a dated aggregate; earlier initial backfill
             # remains explicitly reconstructed and is never relabelled PIT.
             if item['history'] and item['history'][-1]['date']==latest:item['history'][-1]['kind']='dated_snapshot'
@@ -351,6 +360,6 @@ def main(argv=None):
         result['markets'].append(item);print(key,item['status'],item['latest_date'],len(item['history']),'points',flush=True)
     result['quote_failures_count']=len(failures);result['rate_limited']=stop.is_set()
     validate(result);atomic_json(args.output,result)
-    return 0 if all(m['status']=='current' and m.get('rsi_status')=='current' for m in result['markets']) else 1
+    return 0 if all(source_is_current(m,cutoff) for m in result['markets']) else 1
 
 if __name__=='__main__':raise SystemExit(main())

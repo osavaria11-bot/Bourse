@@ -166,6 +166,7 @@ async function check(browser, engine) {
   await breadthFirst.press('End');
   for(const period of ['1M','3M','6M','1Y','ALL']){await page.locator('[data-breadth-period="'+period+'"]').click();assert.equal(await page.locator('#breadthGrid .breadth-card svg').count(),4);}
   assert.equal(await page.locator('[data-breadth-rsi="14"]').count(),4);
+  assert.equal(await page.locator('.breadth-card').filter({hasText:'RSI affiché au'}).count(),4,'RSI provenance identifies the date of the displayed observation');
   assert.equal(await page.locator('[data-rsi-threshold="30"]').count(),4);
   assert.equal(await page.locator('[data-rsi-threshold="70"]').count(),4);
   await page.locator('#breadthSmaChoice').selectOption('200');assert.equal(await page.locator('[data-breadth-sma]').count(),4);

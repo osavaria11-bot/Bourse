@@ -161,7 +161,7 @@ test('historical anchors never consume future proxy prices, partial months, or d
 test('planning walk-forward still respects the April 2026 publication date; bases have no invented calibration claim',()=>{
  const p=F.prepare(D,H,M,{returnBasis:'planning'}),v=F.walkForward(p,D);
  for(const r of v.records.filter(r=>r.model==='hybrid'))assert.ok(r.date>'2026-04');
- assert.equal(v.rows[0].models[0].observations,5);assert.equal(v.longHorizonCalibrated,false);
+ assert.equal(v.rows[0].models[0].observations,D.dates.filter(d=>d>'2026-04').length);assert.equal(v.longHorizonCalibrated,false);
 });
 test('recent advantage is an explicit decaying scenario, with paired paths and uncertainty, never the default expected alpha',()=>{
  assert.equal(F.defaults().recentCarry,0);const p=F.prepare(D,H,M,{recentCarry:.5}),a=small(p,2),base=small(prepared,2),long=small(p,10);

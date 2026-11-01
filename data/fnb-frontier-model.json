@@ -3,7 +3,7 @@
   "funds": {
     "XQQ": {
       "name": "iShares NASDAQ 100 Index ETF (CAD-Hedged)",
-      "description": "Nasdaq 100 · couvert CAD",
+      "description": "Nasdaq couvert",
       "source_url": "https://www.blackrock.com/ca/investors/en/products/239698/ishares-nasdaq-100-index-etf-cadhedged-fund",
       "currency": "CAD",
       "exchange": "TSX",
@@ -16,7 +16,7 @@
     },
     "XSU": {
       "name": "iShares U.S. Small Cap Index ETF (CAD-Hedged)",
-      "description": "Petites capitalisations US · couvert CAD",
+      "description": "Petites américaines",
       "source_url": "https://www.blackrock.com/ca/investors/en/products/239711/ishares-us-small-cap-index-etf-cadhedged-fund",
       "currency": "CAD",
       "exchange": "TSX",
@@ -42,7 +42,7 @@
     },
     "XUU": {
       "name": "iShares Core S&P U.S. Total Market Index ETF",
-      "description": "Marché américain complet",
+      "description": "Actions américaines",
       "source_url": "https://www.blackrock.com/ca/investors/en/products/272104/ishares-core-sp-us-total-market-index-etf",
       "currency": "CAD",
       "exchange": "TSX",
@@ -55,7 +55,7 @@
     },
     "XMU": {
       "name": "iShares MSCI Min Vol USA Index ETF",
-      "description": "États-Unis · volatilité minimale",
+      "description": "Volatilité américaine",
       "source_url": "https://www.blackrock.com/ca/investors/en/products/239694/ishares-msci-usa-minimum-volatility-index-etf",
       "currency": "CAD",
       "exchange": "TSX",
@@ -68,7 +68,7 @@
     },
     "XMW": {
       "name": "iShares MSCI Min Vol Global Index ETF",
-      "description": "Monde · volatilité minimale",
+      "description": "Volatilité mondiale",
       "source_url": "https://www.blackrock.com/ca/investors/en/products/239604/ishares-msci-all-country-world-minimum-volatility-index-etf",
       "currency": "CAD",
       "exchange": "TSX",
@@ -81,7 +81,7 @@
     },
     "XMV": {
       "name": "iShares MSCI Min Vol Canada Index ETF",
-      "description": "Canada · volatilité minimale",
+      "description": "Volatilité canadienne",
       "source_url": "https://www.blackrock.com/ca/investors/en/products/239616/ishares-msci-canada-minimum-volatility-index-etf",
       "currency": "CAD",
       "exchange": "TSX",
@@ -94,7 +94,7 @@
     },
     "XIT": {
       "name": "iShares S&P/TSX Capped Information Technology Index ETF",
-      "description": "Technologie canadienne · maximum 5 %",
+      "description": "Technologie canadienne",
       "source_url": "https://www.blackrock.com/ca/investors/en/products/239841/ishares-sptsx-capped-information-technology-index-etf",
       "currency": "CAD",
       "exchange": "TSX",
@@ -107,7 +107,7 @@
     },
     "VFV": {
       "name": "Vanguard S&P 500 Index ETF",
-      "description": "S&P 500 · non couvert",
+      "description": "S&P 500",
       "source_url": "https://www.vanguard.ca/en/product/etf/equity/9563/vanguard-sp-500-index-etf",
       "currency": "CAD",
       "exchange": "TSX",
@@ -121,7 +121,7 @@
     },
     "VVL": {
       "name": "Vanguard Global Value Factor ETF",
-      "description": "Facteur valeur mondial",
+      "description": "Valeur mondiale",
       "source_url": "https://www.vanguard.ca/en/product/etf/equity/9795/vanguard-global-value-factor-etf",
       "currency": "CAD",
       "exchange": "TSX",
@@ -147,7 +147,7 @@
     },
     "ZLU": {
       "name": "BMO Low Volatility US Equity ETF",
-      "description": "États-Unis · faible volatilité",
+      "description": "Volatilité américaine",
       "source_url": "https://www.bmoetfs.ca/etfs/zlu-bmo-low-volatility-us-equity-etf",
       "currency": "CAD",
       "exchange": "TSX",

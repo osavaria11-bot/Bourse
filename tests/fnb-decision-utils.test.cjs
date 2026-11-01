@@ -12,7 +12,7 @@ test('daily decision metrics recover compounded returns, sample volatility and a
 });
 test('every candidate and benchmark uses identical dates, conventions and daily source weights',()=>{
   const before=JSON.stringify([D,A,H]),ids=U.choices(D,'VEQT'),a=U.analyse(D,ids,'VEQT',A,H);
-  assert.deepEqual(ids,['7',...D.robust_order.slice(0,2)]);assert.equal(a.basis,'daily');assert.equal(a.rows.length,4);
+  assert.deepEqual(ids,D.preference_ranking.entries.slice(0,3).map(e=>e.id));assert.equal(a.basis,'daily');assert.equal(a.rows.length,4);
   for(const row of a.rows){
     const x=A.daily_series.dates.map((_,i)=>Object.entries(D.results[row.id].weights).reduce((s,[t,w])=>s+w*A.daily_series.returns[t][i],0));
     assert.deepEqual(row.returns,x);close(row.annualReturn,x.reduce((s,v)=>s*(1+v),1)**(252/x.length)-1);

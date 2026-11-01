@@ -34,10 +34,10 @@ test("a new FEQT allowance does not rewrite the former monthly policy, inputs or
  const archived=require('../data/fnb-frontier-history/2026-10.json'),before=JSON.stringify(archived);
  assert.equal(archived.policy.fund_caps.FEQT,.35);
  assert.equal(archived.policy.sector_tolerance,.10);
- assert.equal(JSON.stringify(M.inputsFor(data,archived.inputs.cap,archived.policy)),JSON.stringify(archived.inputs),'Serialized inputs and their digest stay byte-equivalent');
+ assert.equal(archived.inputs.dates.at(-1),'2026-09');assert.equal(archived.input_digest,require('node:crypto').createHash('sha256').update(JSON.stringify(archived.inputs)).digest('hex'),'Stored inputs retain their original digest');
  M.validate(archived);
- const changed=structuredClone(data);changed.universe.returns.FEQT[0]+=.001;
- assert.notDeepEqual(M.inputsFor(changed,archived.inputs.cap,archived.policy),archived.inputs,'Old sources still reject revisions');
+ const changed=structuredClone(archived);changed.inputs.returns.FEQT[0]+=.001;
+ assert.throws(()=>M.validate(changed),/inputs digest/,'Old sources still reject revisions');
  assert.equal(JSON.stringify(archived),before);
 });
 test("monthly changes compare both allocations on the same new window and risk-free rate",()=>{

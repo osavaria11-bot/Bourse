@@ -1,5 +1,5 @@
 import copy
-from datetime import datetime
+from datetime import datetime, timedelta
 import json
 from pathlib import Path
 import shutil
@@ -40,10 +40,10 @@ class RobustPortfolios(unittest.TestCase):
                 start = self.d["dates"].index(window["start"]); end = start+window["months"]
                 result = monthly.period_stats(expected[start:end], self.d["results"]["VEQT"]["monthly"][start:end], self.d["assumptions"]["risk_free"])
                 self.assertEqual(result["information"], window["information"], name)
-            # Launch selection passes its declared recent-period review screen.
-            self.assertFalse(q["robust_review"]["review_required"])
-            self.assertGreater(q["robust_diagnostics"]["derniers_6"]["gap"], 0)
-            self.assertGreater(q["robust_diagnostics"]["derniers_12"]["information"], 0)
+            # Current warnings must follow current evidence, not the launch verdict.
+            self.assertEqual(q["robust_review"]["review_required"],bool(q["robust_review"]["signals"]))
+            self.assertEqual("Retard cumulé sur 6 mois face à VEQT" in q["robust_review"]["signals"],q["robust_diagnostics"]["derniers_6"]["gap"]<0)
+            self.assertEqual("IR 12 mois négatif ou indisponible" in q["robust_review"]["signals"],q["robust_diagnostics"]["derniers_12"]["information"] is None or q["robust_diagnostics"]["derniers_12"]["information"]<0)
             ordered.append(q["mer"])
         self.assertGreater(ordered[0], ordered[1]); self.assertGreater(ordered[1], ordered[2])
 
@@ -56,27 +56,29 @@ class RobustPortfolios(unittest.TestCase):
     def test_monthly_refresh_extends_robust_history_and_freezes_launch_weights(self):
         d = self.d; config = monthly.read(ROOT / "data/fnb-model.json"); u = d["universe"]
         extra = monthly.read(ROOT / "data/fnb-frontier-universe.json")["funds"]
-        sources = {"as_of": "2026-10-31", "risk_free": d["optimization"]["risk_free"], "funds": {}}
+        next_month=(monthly.month_end(d["dates"][-1])+timedelta(days=1)).strftime('%Y-%m')
+        publication=(monthly.month_end(next_month)+timedelta(days=1)).isoformat()
+        sources = {"as_of": monthly.month_end(next_month).isoformat(), "risk_free": d["optimization"]["risk_free"], "funds": {}}
         for t in config["funds"]:
             if t in u["returns"]:
-                f = {"returns": {**dict(zip(d["dates"],u["returns"][t])), "2026-10": .01},
+                f = {"returns": {**dict(zip(d["dates"],u["returns"][t])), next_month: .01},
                     "geo": u["geo"][t], "sector": u["sector"][t], "assets": {a:u[a][t] for a in ["equity","cash","bond","crypto","gold"]},
                     "mer": u["mer"][t], "dates": d["source_dates"][t], "source_url": d["source_urls"][t], "return_method": "fixture"}
             else:
                 x = extra[t]
-                f = {"returns": {**dict(zip(d["dates"],x["returns"])), "2026-10": .01}, "geo":x["geo"], "sector":x["sector"],
+                f = {"returns": {**dict(zip(d["dates"],x["returns"])), next_month: .01}, "geo":x["geo"], "sector":x["sector"],
                     "assets":{"equity":x["equity"],"cash":1-x["equity"],"bond":0.,"crypto":0.,"gold":0.},
                     "mer":x["mer"],"dates":x["source_dates"],"source_url":x["source_url"],"return_method":"fixture"}
             sources["funds"][t] = f
         before = copy.deepcopy(d)
         with patch.object(monthly,"optimize",return_value=d["results"]["proposal"]["weights"]), patch.object(monthly,"walk_forward",return_value=d["optimization"]["validation"]):
-            new = monthly.refresh_analysis(d,monthly.read(ROOT / config["baseline"]),sources,config,"2026-11-01T09:00:00-05:00")
+            new = monthly.refresh_analysis(d,monthly.read(ROOT / config["baseline"]),sources,config,publication+"T09:00:00-05:00")
         self.assertEqual(d,before); self.assertEqual(new["robust_order"],d["robust_order"])
         for k in d["robust_order"]:
             self.assertEqual(new["results"][k]["weights"],d["results"][k]["weights"])
             self.assertEqual(new["results"][k]["monthly"][:-1],d["results"][k]["monthly"])
             self.assertEqual(len(new["results"][k]["monthly"]),len(d["dates"])+1)
-            self.assertEqual(new["results"][k]["robust_review"]["as_of"],"2026-10-31")
+            self.assertEqual(new["results"][k]["robust_review"]["as_of"],sources["as_of"])
 
     def test_new_accounts_wait_for_first_eligible_close_and_never_replay_old_days(self):
         with tempfile.TemporaryDirectory() as folder:
