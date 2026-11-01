@@ -556,6 +556,28 @@
       "published_at": "2026-10-26T18:58:48-04:00",
       "method": "buy_hold_fractional_ex_date_close_v1",
       "definition_sha256": "8e189f5211384ac4a4a2319ccf04dc16cf324aef85e29c3348723430d2b7c09b"
+    },
+    {
+      "id": "proposal-2026-11",
+      "name": "SAVY Actions · 2026-11",
+      "color": "#9ce3cb",
+      "kind": "portfolio",
+      "launch_date": "2026-11-02",
+      "capital": 10000.0,
+      "currency": "CAD",
+      "weights": {
+        "FCMO": 0.12,
+        "FEQT": 0.153,
+        "FINN": 0.11,
+        "VDY": 0.28,
+        "VEE": 0.06,
+        "XMI": 0.2,
+        "ZUQ": 0.077
+      },
+      "definition_source": "data/fnb-history/2026-11.json",
+      "published_at": "2026-11-01T11:39:03-05:00",
+      "method": "buy_hold_fractional_ex_date_close_v1",
+      "definition_sha256": "04a820408d62f99ad48f856b2a3eca8796e22dc2381a1b01cee86fc4c70532fe"
     }
   ]
 }

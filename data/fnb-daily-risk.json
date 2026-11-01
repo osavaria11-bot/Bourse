@@ -29256,7 +29256,7 @@
   "observations": 858,
   "expected_observations": 858,
   "missing_sessions": [],
-  "weights_signature": "6073ee32df0efff2c37b0a4638ee8487c09d9f13d5b7d806d994ada010606b0d",
+  "weights_signature": "79768c8a5d93732dcface0cdd151feac50b326c49e0039163f9ed80c148a0376",
   "shape_estimators": "bias_corrected_fisher",
   "status": "current",
   "error": null,
@@ -29405,18 +29405,17 @@
     },
     "proposal": {
       "weights": {
-        "FCUL": 0.194,
-        "FCUQ": 0.066,
-        "VDY": 0.098,
-        "VEE": 0.085,
-        "XMI": 0.257,
-        "ZEO": 0.05,
-        "ZLB": 0.136,
-        "ZNQ": 0.114
+        "FCMO": 0.12,
+        "FEQT": 0.153,
+        "FINN": 0.11,
+        "VDY": 0.28,
+        "VEE": 0.06,
+        "XMI": 0.2,
+        "ZUQ": 0.077
       },
-      "var95": 0.007275778572897452,
-      "skewness": -0.5767305357823125,
-      "excess_kurtosis": 8.626926793426103
+      "var95": 0.0092783894557755,
+      "skewness": -0.6226413109539717,
+      "excess_kurtosis": 5.660035942415824
     },
     "1": {
       "weights": {
@@ -29695,5 +29694,6 @@
     "https://finance.yahoo.com/quote/ZUQ.TO/history/",
     "https://www.fidelity.ca/en/products/etfs/feqt/"
   ],
-  "method_note": "Simulation historique à poids cibles actuels constants : somme des poids × rendements réels de chaque séance. Échantillon commun à tous les portefeuilles et benchmarks. FEQT utilise les rendements totaux quotidiens de valeur liquidative de son émetteur sur toute la fenêtre, sans raccorder des prix de fournisseurs différents. Les autres fonds utilisent deux clôtures ajustées consécutives d’une même source. Les séances manquantes sont exclues; aucun rendement sur plusieurs séances ne devient une observation à un jour. Distinct du backtest mensuel rééquilibré en janvier et du suivi réel depuis lancement."
+  "method_note": "Simulation historique à poids cibles actuels constants : somme des poids × rendements réels de chaque séance. Échantillon commun à tous les portefeuilles et benchmarks. FEQT utilise les rendements totaux quotidiens de valeur liquidative de son émetteur sur toute la fenêtre, sans raccorder des prix de fournisseurs différents. Les autres fonds utilisent deux clôtures ajustées consécutives d’une même source. Les séances manquantes sont exclues; aucun rendement sur plusieurs séances ne devient une observation à un jour. Distinct du backtest mensuel rééquilibré en janvier et du suivi réel depuis lancement.",
+  "weights_recomputed_at": "2026-11-01T11:39:55-05:00"
 }

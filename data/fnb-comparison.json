@@ -5,7 +5,7 @@
   "capital": 10000.0,
   "inception": "2026-10-19",
   "as_of": "2026-10-30",
-  "updated_at": "2026-10-31T13:54:51-04:00",
+  "updated_at": "2026-11-01T11:39:52-05:00",
   "benchmarks": [
     "FEQT",
     "VEQT",
@@ -2979,10 +2979,129 @@
           "units": 22.161877354947276
         }
       ]
+    },
+    {
+      "id": "proposal-2026-11",
+      "name": "SAVY Actions · 2026-11",
+      "color": "#9ce3cb",
+      "kind": "portfolio",
+      "launch_date": "2026-10-19",
+      "capital": 10000.0,
+      "currency": "CAD",
+      "weights": {
+        "FCMO": 0.12,
+        "FEQT": 0.153,
+        "FINN": 0.11,
+        "VDY": 0.28,
+        "VEE": 0.06,
+        "XMI": 0.2,
+        "ZUQ": 0.077
+      },
+      "definition_source": "data/fnb-history/2026-11.json",
+      "published_at": "2026-11-01T11:39:03-05:00",
+      "method": "buy_hold_fractional_ex_date_close_v1",
+      "source_definition_sha256": "04a820408d62f99ad48f856b2a3eca8796e22dc2381a1b01cee86fc4c70532fe",
+      "actual_launch_date": "2026-11-02",
+      "series_type": "simulation",
+      "status": "complete",
+      "unavailable_reason": null,
+      "history": [
+        {
+          "date": "2026-10-19",
+          "value": 10000.0
+        },
+        {
+          "date": "2026-10-20",
+          "value": 10043.963599457134
+        },
+        {
+          "date": "2026-10-21",
+          "value": 10099.585375486513
+        },
+        {
+          "date": "2026-10-22",
+          "value": 10004.286797773631
+        },
+        {
+          "date": "2026-10-23",
+          "value": 9973.449559646815
+        },
+        {
+          "date": "2026-10-26",
+          "value": 10028.4679907393
+        },
+        {
+          "date": "2026-10-27",
+          "value": 10065.534175995523
+        },
+        {
+          "date": "2026-10-28",
+          "value": 10052.233065728142
+        },
+        {
+          "date": "2026-10-29",
+          "value": 10080.51517498802
+        },
+        {
+          "date": "2026-10-30",
+          "value": 9968.312140708964
+        }
+      ],
+      "initial_positions": [
+        {
+          "ticker": "FCMO",
+          "name": "Fidelity U.S. Momentum ETF",
+          "weight": 0.12,
+          "close": 23.190000534057617,
+          "units": 51.746441240380285
+        },
+        {
+          "ticker": "FEQT",
+          "name": "Fidelity All-in-One Equity ETF",
+          "weight": 0.153,
+          "close": 19.170000076293945,
+          "units": 79.81220625512843
+        },
+        {
+          "ticker": "FINN",
+          "name": "Fidelity Global Innovators ETF",
+          "weight": 0.11,
+          "close": 33.130001068115234,
+          "units": 33.20253439589095
+        },
+        {
+          "ticker": "VDY",
+          "name": "Vanguard FTSE Canadian High Dividend Yield Index ETF",
+          "weight": 0.28,
+          "close": 77.13999938964844,
+          "units": 36.297640940553826
+        },
+        {
+          "ticker": "VEE",
+          "name": "Vanguard FTSE Emerging Markets All Cap Index ETF",
+          "weight": 0.06,
+          "close": 49.20000076293945,
+          "units": 12.195121762110984
+        },
+        {
+          "ticker": "XMI",
+          "name": "iShares MSCI Min Vol EAFE Index ETF",
+          "weight": 0.2,
+          "close": 50.43000030517578,
+          "units": 39.65893293470264
+        },
+        {
+          "ticker": "ZUQ",
+          "name": "BMO MSCI USA High Quality Index ETF",
+          "weight": 0.077,
+          "close": 114.16000366210938,
+          "units": 6.744919194983954
+        }
+      ]
     }
   ],
   "source_ledger_sha256": "52078355e05a00fee9cf41aa9787d3d9e8b6f94e5c0d5a3107f524b2fed3d5e7",
-  "source_registry_sha256": "393798b03466afa012f637e13f404af6e19623e4cb1a236790176fd5fcd30298",
+  "source_registry_sha256": "f2d0d90cac97f07113a4ddc9897ec0eac2a0d188157f77aa36b2aee8e3c1d852",
   "supplemental_sha256": "312ae37261c0247009126e535e523b1f89054c34f555ce4dd3ad97ba025f21d1",
   "price_revisions": [
     {

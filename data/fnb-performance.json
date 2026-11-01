@@ -2719,6 +2719,80 @@
           "units": 22.38938053097345
         }
       ]
+    },
+    {
+      "id": "proposal-2026-11",
+      "name": "SAVY Actions · 2026-11",
+      "color": "#9ce3cb",
+      "kind": "portfolio",
+      "launch_date": "2026-11-02",
+      "capital": 10000.0,
+      "currency": "CAD",
+      "weights": {
+        "FCMO": 0.12,
+        "FEQT": 0.153,
+        "FINN": 0.11,
+        "VDY": 0.28,
+        "VEE": 0.06,
+        "XMI": 0.2,
+        "ZUQ": 0.077
+      },
+      "definition_source": "data/fnb-history/2026-11.json",
+      "published_at": "2026-11-01T11:39:03-05:00",
+      "method": "buy_hold_fractional_ex_date_close_v1",
+      "definition_sha256": "04a820408d62f99ad48f856b2a3eca8796e22dc2381a1b01cee86fc4c70532fe",
+      "history": [],
+      "initial_positions": [
+        {
+          "ticker": "FCMO",
+          "name": "Fidelity U.S. Momentum ETF",
+          "weight": 0.12,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "FEQT",
+          "name": "Fidelity All-in-One Equity ETF",
+          "weight": 0.153,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "FINN",
+          "name": "Fidelity Global Innovators ETF",
+          "weight": 0.11,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "VDY",
+          "name": "Vanguard FTSE Canadian High Dividend Yield Index ETF",
+          "weight": 0.28,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "VEE",
+          "name": "Vanguard FTSE Emerging Markets All Cap Index ETF",
+          "weight": 0.06,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "XMI",
+          "name": "iShares MSCI Min Vol EAFE Index ETF",
+          "weight": 0.2,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "ZUQ",
+          "name": "BMO MSCI USA High Quality Index ETF",
+          "weight": 0.077,
+          "close": null,
+          "units": null
+        }
+      ]
     }
   ],
   "methodology": {
