@@ -73,8 +73,14 @@ def period_stats(returns, benchmark, rf):
     te = st.stdev(active) * math.sqrt(12)
     beta = ratio(sum((r - mu) * (b - bm) for r, b in zip(returns, benchmark)), sum((b - bm)**2 for b in benchmark))
     return {"cagr": math.prod(1 + r for r in returns)**(12 / n) - 1, "vol": vol,
-        "sharpe": ratio(mu * 12 - rf, vol), "beta": beta, "information": ratio(st.mean(active) * 12, te),
-        "active_return": st.mean(active) * 12, "tracking_error": te, "months": n}
+        "sharpe": ratio(mu * 12 - rf, vol), "beta": beta, "information": ratio(st.mean(active) * 12, te)}
+
+
+def comparison_stats(returns, benchmark, rf):
+    """Additional audit fields without changing frozen portfolio metric schemas."""
+    active = [r-b for r,b in zip(returns,benchmark)]
+    return {**period_stats(returns,benchmark,rf), "active_return": st.mean(active)*12,
+        "tracking_error": st.stdev(active)*math.sqrt(12), "months": len(returns)}
 
 
 def stats(returns, benchmark, rf, dates):
@@ -237,8 +243,8 @@ def walk_forward(returns, names, sources, config, benchmark, rf, dates):
         previous = {t: w * (1 + returns[t][i]) / (1 + gross) for t, w in weights.items()}
         audit.append({"month": dates[i], "training_end": dates[i - 1], "weights": weights, "return": net, "traded_weight": turnover})
     if len(out) < 2: raise ValueError("Insufficient chronological validation history")
-    comparisons = {t: period_stats(out, returns[t][start:], rf) for t in ["FEQT", "VEQT"] if t in returns}
-    return {"dates": dates[start:], "monthly": out, "metrics": period_stats(out, benchmark[start:], rf), "audit": audit,
+    comparisons = {t: comparison_stats(out, returns[t][start:], rf) for t in ["FEQT", "VEQT"] if t in returns}
+    return {"dates": dates[start:], "monthly": out, "metrics": comparison_stats(out, benchmark[start:], rf), "audit": audit,
         "comparisons": comparisons,
         "benchmark": period_stats(benchmark[start:], benchmark[start:], rf),
         "note": "Recherche rejouée chaque mois sur les seuls rendements antérieurs; frais simulés de 0,05 % par montant négocié. Objectif conjoint Sharpe et IR/FEQT; VEQT reste la référence secondaire. Univers, expositions et taux sans risque courants : ce rejeu n’est pas une validation indépendante ni un historique de recommandations réellement publiées."}
