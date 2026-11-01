@@ -42,7 +42,7 @@ async function check(browser,engine){
  await page.waitForSelector('#decisionPanel[data-ready="true"]');
  assert.equal(await page.locator('#decisionBody tr').count(),4);
  const initialChoices=await page.locator('[data-decision-choice]').evaluateAll(nodes=>nodes.map(n=>n.value));
- assert.deepEqual(initialChoices,['7',...D.robust_order.slice(0,2)]);
+ assert.deepEqual(initialChoices,D.preference_ranking.entries.slice(0,3).map(e=>e.id));
  const decision=require('../js/fnb-decision-utils'),daily=require('../data/fnb-daily-risk.json');
  const expectedDecision=decision.analyse(D,initialChoices,'VEQT',daily,require('../data/fnb-stress-history.json'));
  for(const row of expectedDecision.rows){
