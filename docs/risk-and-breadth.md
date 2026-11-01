@@ -229,3 +229,5 @@ La revue mensuelle vérifie les sept mesures de risque, les poids et échantillo
 les sélecteurs des quatre marchés, les SMA et le RSI, les dates et dénominateurs,
 la couverture de chaque cohorte et les trous de la décennie. Elle contrôle aussi
 que les publications complètes et rapides conservent les cartes et leurs méthodes.
+
+Les relevés complets après le seed audité restent figés même si une ancienne collecte les avait mal étiquetés « reconstructed » derrière une dernière séance incomplète. Le fichier `data/market-breadth-accepted-baseline.json` conserve les valeurs et le commit de provenance de la correction de métadonnées du 1er novembre. Un cache portant la date demandée n’est réutilisé sans requête que si une clôture réelle non manquante atteint cette date; les reprises matinales peuvent donc compléter une source retardée, en conservant la même base ajustée.

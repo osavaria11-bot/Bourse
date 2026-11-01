@@ -182,7 +182,8 @@ def stock_prices(symbol, cutoff, cache, stop):
     old = json.loads(path.read_text()) if path.exists() else None
     requested_start=(date.fromisoformat(years_before(cutoff,HISTORY_YEARS))-timedelta(days=400)).isoformat()
     long_cache=bool(old and old.get('history_start_requested','9999')<=requested_start)
-    if old and long_cache and old.get('symbol') == symbol and old.get('cutoff') == cutoff: return old['history']
+    last_observed=max((d for d,v in (old or {}).get('history',[]) if v is not None),default='')
+    if old and long_cache and old.get('symbol') == symbol and old.get('cutoff') == cutoff and last_observed>=cutoff: return old['history']
     recent=bool(old and long_cache and old.get('symbol')==symbol and 0<=(date.fromisoformat(cutoff)-date.fromisoformat(old['cutoff'])).days<=20)
     params={'interval':'1d','events':'div,splits','includeAdjustedClose':'true'}
     if recent:params['range']='1mo'
@@ -297,6 +298,23 @@ def source_is_current(market, cutoff):
         and rsi[-1]['date'] == cutoff and rsi[-1].get('value') is not None)
 
 
+def merge_accepted_history(prior, calculated, seed_date=None, baseline=()):
+    # A complete daily aggregate after the audited seed is an accepted record,
+    # even if an older collector left its `reconstructed` label on it because
+    # the following session was incomplete. Never recalculate those records.
+    frozen = {p['date']:json.loads(json.dumps(p)) for p in prior
+        if p.get('kind')!='reconstructed' or seed_date and p['date']>seed_date
+        and all(v is not None for v in p['values'].values())}
+    for point in baseline:
+        frozen[point['date']]=json.loads(json.dumps(point))
+    for point in frozen.values():
+        if seed_date and point['date']>seed_date and all(v is not None for v in point['values'].values()):
+            point['kind']='dated_snapshot'
+    for point in calculated:
+        if point['date'] not in frozen:frozen[point['date']]=point
+    return [frozen[d] for d in sorted(frozen)]
+
+
 def main(argv=None):
     parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--output',type=Path,default=ROOT/'data/market-breadth.json');parser.add_argument('--cache',type=Path,default=ROOT/'.cache/market-breadth');parser.add_argument('--check',action='store_true');parser.add_argument('--workers',type=int,default=12);parser.add_argument('--due',action='store_true')
     args=parser.parse_args(argv)
@@ -304,6 +322,11 @@ def main(argv=None):
     now=datetime.now(ZoneInfo('America/Toronto'));cutoff=(now.date() if now.hour>=19 else now.date()-timedelta(days=1)).isoformat()
     while date.fromisoformat(cutoff).weekday()>=5:cutoff=(date.fromisoformat(cutoff)-timedelta(days=1)).isoformat()
     previous=json.loads(args.output.read_text()) if args.output.exists() else {};old={m['id']:m for m in previous.get('markets',[])}
+    baseline_file=ROOT/'data/market-breadth-accepted-baseline.json'
+    baseline=json.loads(baseline_file.read_text()) if baseline_file.exists() else {}
+    if baseline and (baseline.get('schema_version')!=1 or baseline.get('method_version')!='current_survivor_cohort_v2' or not re.fullmatch(r'[0-9a-f]{40}',baseline.get('source_commit',''))):
+        raise ValueError('Invalid accepted breadth baseline')
+    seed_date=baseline.get('seed_revised_at') or next((r['revised_at'][:10] for r in reversed(previous.get('history_revisions',[])) if r.get('to_method')=='current_survivor_cohort_v2'),None)
     if args.due:
         print('false' if previous.get('expected_cutoff')==cutoff and previous.get('method_version')=='current_survivor_cohort_v2' and all(source_is_current(old.get(m['id'],{}),cutoff) for m in MARKETS) else 'true');return 0
     result={'schema_version':1,'generated_at':now.isoformat(timespec='seconds'),'expected_cutoff':cutoff,'windows':WINDOWS,'minimum_coverage':MIN_COVERAGE,
@@ -335,7 +358,9 @@ def main(argv=None):
         saved=json.loads((args.cache/(hashlib.sha256(symbol.encode()).hexdigest()+'.json')).read_text())
         if saved.get('first_trade_date'):first_trade_dates[symbol]=saved['first_trade_date']
     for definition in MARKETS:
-        key=definition['id'];prior=old.get(key,{});item={**definition,'history':prior.get('history',[])};entry=universes[key]
+        key=definition['id'];prior=old.get(key,{});entry=universes[key]
+        preserved=[p for p in baseline.get('markets',{}).get(key,[]) if p['date']<=cutoff]
+        item={**prior,**definition,'history':merge_accepted_history(prior.get('history',[]),prior.get('history',[]),seed_date,preserved)}
         source=RSI_SOURCES[key];rsi=rsi_history(histories.get(source['symbol'],[]),result['history_start'])
         item.update(rsi_symbol=source['symbol'],rsi_label=source['label'],rsi_source_url='https://finance.yahoo.com/quote/'+quote(source['symbol'],safe='')+'/history/',rsi_history=rsi or prior.get('rsi_history',[]),rsi_status='current' if rsi and rsi[-1]['value'] is not None and rsi[-1]['date']==cutoff else 'stale')
         try:
@@ -347,15 +372,14 @@ def main(argv=None):
             if (date.fromisoformat(cutoff)-date.fromisoformat(latest)).days>5:raise ValueError('Latest complete observation is stale')
             # Dated observations stay frozen. Reconstructed seed history can
             # be extended using the explicitly versioned survivor cohort.
-            frozen={p['date']:p for p in prior.get('history',[]) if p.get('kind')!='reconstructed'}
-            for point in history:
-                if point['date'] not in frozen:frozen[point['date']]=point
+            merged=merge_accepted_history(item['history'],history,seed_date,preserved)
+            frozen={p['date']:p for p in merged}
             latest=max(p['date'] for p in frozen.values() if all(v is not None for v in p['values'].values()))
             current=latest==cutoff
             item.update(history=[frozen[d] for d in sorted(frozen)],holdings_date=dated,holdings_url=url,universe_size=len(holdings),quote_series=len([h for h in holdings if h['symbol'] in histories]),latest_date=latest,status='current' if current else 'stale',error=None if current else 'Dernier relevé validé au '+latest+'; observation du '+cutoff+' en attente.')
             # The latest point is a dated aggregate; earlier initial backfill
             # remains explicitly reconstructed and is never relabelled PIT.
-            if item['history'] and item['history'][-1]['date']==latest:item['history'][-1]['kind']='dated_snapshot'
+            frozen[latest]['kind']='dated_snapshot'
         except Exception as error:item.update(status='stale' if item['history'] else 'unavailable',error=str(error)[:220],latest_date=item['history'][-1]['date'] if item['history'] else None)
         result['markets'].append(item);print(key,item['status'],item['latest_date'],len(item['history']),'points',flush=True)
     result['quote_failures_count']=len(failures);result['rate_limited']=stop.is_set()

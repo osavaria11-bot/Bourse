@@ -120,4 +120,34 @@ class BreadthTests(unittest.TestCase):
         market['rsi_history'][-1]['value']=None
         self.assertFalse(B.source_is_current(market,'2026-10-30'))
 
+    def test_complete_daily_points_after_the_seed_survive_an_incomplete_latest_session(self):
+        def point(day,value):return {'date':day,'kind':'reconstructed','values':{'20':value,'50':value,'100':value,'200':value}}
+        prior=[point('2026-10-23',40.),point('2026-10-29',59.),point('2026-10-30',None)]
+        before=copy.deepcopy(prior)
+        calculated=[point('2026-10-23',45.),point('2026-10-29',61.),point('2026-10-30',None)]
+        merged=B.merge_accepted_history(prior,calculated,'2026-10-24')
+        self.assertEqual(prior,before)
+        self.assertEqual(merged[0]['values']['200'],45.)
+        self.assertEqual(merged[1]['values']['200'],59.)
+        self.assertEqual(merged[1]['kind'],'dated_snapshot')
+        repaired=B.merge_accepted_history(calculated,calculated,'2026-10-24',[before[1]])
+        self.assertEqual(repaired[1]['values'],before[1]['values'])
+
+    def test_same_requested_cutoff_retries_a_lagging_cache_and_keeps_one_adjustment_basis(self):
+        import hashlib,threading
+        from datetime import timedelta
+        old=[((datetime(2026,10,10,tzinfo=timezone.utc)+timedelta(days=i)).date().isoformat(),100.+i) for i in range(20)]
+        recent=old[10:]+[('2026-10-30',120.)]
+        payload={'chart':{'result':[{'meta':{'symbol':'TEST','currency':'CAD','exchangeTimezoneName':'UTC'},'timestamp':[datetime.fromisoformat(d+'T20:00:00+00:00').timestamp() for d,v in recent],'indicators':{'adjclose':[{'adjclose':[v/2 for d,v in recent]}]}}]}}
+        with tempfile.TemporaryDirectory() as folder:
+            cache=Path(folder);path=cache/(hashlib.sha256(b'TEST').hexdigest()+'.json')
+            path.write_text(json.dumps({'symbol':'TEST','cutoff':'2026-10-30','history_start_requested':'2010-01-01','history':old}))
+            with patch.object(B,'fetch',return_value=json.dumps(payload)) as fetch:
+                result=B.stock_prices('TEST','2026-10-30',cache,threading.Event())
+                self.assertEqual(fetch.call_count,1)
+            self.assertEqual(dict(result)['2026-10-10'],50.)
+            self.assertEqual(dict(result)['2026-10-30'],60.)
+            with patch.object(B,'fetch',side_effect=AssertionError('Completed cache must be reused')):
+                self.assertEqual(dict(B.stock_prices('TEST','2026-10-30',cache,threading.Event())),dict(result))
+
 if __name__=='__main__':unittest.main()
