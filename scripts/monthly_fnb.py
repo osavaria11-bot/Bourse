@@ -209,7 +209,7 @@ def optimize(returns, names, sources, config, benchmark, rf):
             active, best = proposed, candidate
     if len(active) > settings["max_funds"]: raise ValueError("Could not limit the proposal to eight ETFs")
     # Refit with minimum tradeable weights on the final set, then round to 0.1 pp.
-    best = solve([(settings["min_weight"], cap[j]) if j in active else (0., 0.) for j in range(n)])
+    best = solve([(settings["min_weight"], cap[j]) if j in active else (0., 0.) for j in range(n)], start=best)
     if best is None: raise ValueError("Final allocation is infeasible")
     units = np.floor(best * 1000 + 1e-8).astype(int)
     remaining = 1000 - units.sum()
