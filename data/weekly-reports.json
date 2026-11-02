@@ -1,35 +1,35 @@
 {
   "schema_version": 1,
   "kind": "savy_weekly_reports",
-  "generated_at": "2026-10-29T02:17:09Z",
+  "generated_at": "2026-11-02T07:19:58Z",
   "reports": {
     "real_estate": {
       "title": "Débriefing immobilier",
-      "edition_date": "2026-10-26",
+      "edition_date": "2026-11-02",
       "document_scope": "full",
-      "summary": "Les valeurs ont peu réagi au coût du capital : cap rate national de 6,56 % (-2 pb t/t) et spread au Canada 10 ans de 256 pb, plus bas de trois ans. Au 22 octobre, les rendements 5 ans et 10 ans sont à 3,50 % et 3,78 %, tandis que 19 économistes sur 34 anticipent une hausse de 25 pb le 28 octobre. Montréal diverge en industriel avec 8,9 % de disponibilité (+80 pb a/a), mais ses bureaux s’améliorent. Une seule occasion montérégienne est retenue : le 835, boul. d’Iberville, affiché à 1,549 M$, sous réserve de valider le revenu pétrolier et l’environnement.",
+      "summary": "Le changement confirmé est financier : le 28 octobre, la Banque du Canada a relevé son taux de 25 pb à 2,50 %, tandis que les rendements Canada 5 ans et 10 ans n’ont augmenté que de 8 pb et 6 pb depuis le 22 octobre, à 3,58 % et 3,84 % au 29 octobre. Aucun nouvel indice national de cap rates n’est paru; Allied fournit plutôt une preuve ciblée de baisse des valeurs de bureaux, avec des taux de valorisation relevés de 36 à 49 pb en moyenne sur neuf mois. Au Québec, aucun nouveau jeu complet de loyers ou de vacance n’est disponible; le changement exploitable est le plafond SCHL de 3,0 % pour les hausses 2027 de certaines unités MLI Select. Une seule piste montérégienne est retenue sous conditions : le 25, route 104, demandé 1,495 M$, actif le 2 novembre; le revenu brut publié est contradictoire et le RNE n’est pas divulgué.",
       "highlights": [
-        "Valorisation : CBRE mesure 6,56 % toutes propriétés au T3 (-2 pb t/t); le Canada 10 ans a augmenté de 62 pb sur le trimestre, comprimant le spread à 256 pb, plus bas de trois ans.",
-        "Financement : au 22 octobre, Canada 5 ans à 3,50 % (-3 pb depuis le 15) et 10 ans à 3,78 % (-5 pb). Taux directeur à 2,25 % avant la décision du 28 octobre; 19/34 économistes sondés par Reuters prévoient +25 pb.",
-        "Canada : disponibilité industrielle de 6,2 % (+20 pb a/a), avec 61 % des 3,9 M pi² livrés au T3 encore disponibles. Vacance des bureaux à 15,6 % (-100 pb a/a) et absorption trimestrielle de 1,5 M pi².",
-        "Québec : disponibilité industrielle montréalaise de 8,9 % (+80 pb a/a), soit 270 pb au-dessus du Canada; 69 % des quelque 3 M pi² en chantier sont disponibles. Les bureaux montréalais s’améliorent, mais les métriques de vacance et de disponibilité ne sont pas interchangeables.",
-        "Montérégie — ventes conclues : Place Roberval à Longueuil, 22,4 M$ pour 144 logements (155 556 $/logement), clôture le 5 octobre; détail à Chambly, 6,395 M$ et 249 $/pi², date de clôture non divulguée. RNE et cap rates non divulgués.",
-        "Acquisition : 835, boul. d’Iberville, prix demandé courant de 1,549 M$. Le courtier publie 147 000 $ de revenu annuel net; cap calculé de 9,49 % et DSCR illustratif de 2,00× à 70 % de dette, mais le revenu pétrolier, les baux et l’environnement doivent être validés."
+        "Financement confirmé : taux directeur à 2,50 % le 28 octobre (+25 pb). Au 29 octobre, Canada 5 ans à 3,58 % (+8 pb depuis le 22) et 10 ans à 3,84 % (+6 pb); la dette variable se renchérit immédiatement, mais le fixe doit être coté séparément.",
+        "Valorisation : aucun nouvel indice national de cap rates depuis le brief précédent. Allied a relevé ses taux de capitalisation, d’actualisation et terminaux de 36 à 49 pb en moyenne sur neuf mois et inscrit 931,95 M$ de pertes de juste valeur; preuve ciblée de bureaux, non indice de marché complet.",
+        "Canada : dans le GTA, 2,5 M pi² industriels ont été livrés au T3, dont 85 % non engagés; 63 % du pipeline de 12,3 M pi² est disponible. Primaris publie +12,7 % sur les renouvellements, mais son occupation en place de 87,7 % reste 410 pb sous l’an dernier.",
+        "Québec : pas de nouvelle série complète de loyers ou de vacance. La SCHL affiche 3,0 % pour les hausses 2027 des unités abordables québécoises auxquelles son indice MLI Select s’applique; les autres loyers ne sont pas visés par cette observation.",
+        "Montérégie — ventes conclues : Place Roberval à Longueuil, 22,406 M$ pour 144 logements (155 597 $/logement), clôture le 5 octobre; 2588-2642, ch. de Chambly, 13,5 M$ et 247 $/pi², date de clôture non divulguée; 899, montée de la Pomme-d’Or, 1,675 M$ et 348,52 $/pi², vente en juin publiée le 29 octobre. RNE et cap rates non divulgués.",
+        "Acquisition conditionnelle : 25, route 104, prix demandé de 1,495 M$, inscription active vérifiée le 2 novembre. Revenu brut publié contradictoire de 114 540,12 $ ou 116 112 $; aucun RNE publié. Le rendement brut de 7,66 % et le DSCR illustratif de 1,54× à 70 % LTV, 5,50 %, 30 ans ne sont que des calculs de présélection."
       ],
       "opportunities": [
         {
-          "address": "835, boul. d’Iberville",
+          "address": "25, route 104",
           "city": "Saint-Jean-sur-Richelieu",
-          "detail": "Inscription active vérifiée le 26 octobre. Prix demandé : 1,549 M$; terrain de 12 656 pi² et bâtiment d’environ 2 060 pi² à confirmer. Revenu annuel net de 147 000 $ publié par le courtier; cap calculé au prix courant : 9,49 %. Catalyseur : baisse de prix de 2,9 % et équipements pétroliers remplacés en 2024. Diligences prioritaires : transférabilité du revenu pétrolier et environnement."
+          "detail": "Inscription active vérifiée le 2 novembre, mise en marché approximative le 24 octobre. Prix demandé : 1,495 M$ + taxes; 1 commerce et 3 logements sur un terrain de 17 965 pi², superficie totale du bâtiment non divulguée. Le plus faible revenu brut publié, 114 540,12 $, donne 7,66 % brut; aucun RNE ni cap rate valide n’est publié. À 70 % LTV, 5,50 % et 30 ans, le DSCR de présélection est 1,54× avant charges manquantes. Catalyseur : bail net Sobeys/Shell annoncé jusqu’en 2033 et trois logements. Diligences : réconcilier revenus, baux et récupérations; Phase I/II, réservoirs et responsabilités environnementales."
         }
       ],
       "document": {
-        "path": "reports/real-estate/2026-10-26.pdf",
-        "label": "Ouvrir le rapport immobilier complet - 26 octobre 2026",
+        "path": "reports/real-estate/2026-11-02.pdf",
+        "label": "Ouvrir le rapport immobilier complet - 2 novembre 2026",
         "mime_type": "application/pdf",
-        "pages": 7,
-        "size_bytes": 77888,
-        "sha256": "f58eb5e49c12cb05c8017122f0dd44f68511a926ede79b0c3cae2588bdb4e15c"
+        "pages": 8,
+        "size_bytes": 78684,
+        "sha256": "efb2563e7314c56186d4c9bd4042c08a26b6fca614a92b64663fadc21bbb4784"
       }
     },
     "stocks": {
