@@ -5,6 +5,12 @@ window.SavyFnbPerformance=(()=>{
  let data=null,loading=false,loaded=0,reference="VEQT",focus="",index=0,rows=[],dates=[],selected=new Set();
  const storage="savy-fnb-common-v1",root=new URL("../",document.currentScript.src),label=a=>a.kind==="benchmark"&&a.id!=="VFV"?a.id:a.name,ink=a=>a.kind==="benchmark"?({VEQT:"var(--benchmark)",VFV:"var(--benchmark-soft)",FEQT:"var(--benchmark-3)",VBAL:"var(--benchmark-4)",VGRO:"var(--benchmark-5)",FBAL:"var(--benchmark-6)"}[a.id]||"var(--benchmark)"):a.id===focus?"var(--chart)":a.color==="#142333"?"var(--text)":a.color==="#9ce3cb"?"var(--chart)":a.color;
  const simulated=a=>a.series_type==='simulation';
+ function preferenceRanks(){
+  try{
+   const d=JSON.parse($("analysis")?.textContent||'null');
+   return new Map((d?.preference_ranking?.entries||[]).filter(e=>Number.isInteger(e.rank)&&e.rank>0).map(e=>[d.custom_order?.includes(e.id)?'savy-'+e.id:e.id==='proposal'?'proposal-'+d.optimization?.month:e.id,e.rank]));
+  }catch{return new Map();}
+ }
  function persist(){try{localStorage.setItem(storage,JSON.stringify({reference,focus,selected:[...selected],known:data.accounts.map(a=>a.id)}));}catch{}}
  function restore(){
   selected=new Set(data.accounts.map(a=>a.id));
@@ -45,11 +51,11 @@ window.SavyFnbPerformance=(()=>{
   $("performanceBenchmark").value=reference;$("performanceGap").textContent="Écart / "+reference;$("performanceFocus").value=focus;
   $("performanceChoices").innerHTML=rows.map(a=>`<label><input type="checkbox" data-performance-choice="${esc(a.id)}" ${selected.has(a.id)?'checked':''}><i class="dot" style="background:${ink(a)}"></i>${esc(label(a))}${simulated(a)?' · simulé':''}</label>`).join('');
   $("performanceCount").textContent='('+rows.filter(a=>selected.has(a.id)).length+')';
-  const ref=data.accounts.find(a=>a.id===reference),ranks=U.ranking(rows),own=rows.filter(a=>a.kind!=='benchmark'&&a.history.length),leader=[...own].sort((a,b)=>U.metrics(b.history).total-U.metrics(a.history).total)[0];
+  const ref=data.accounts.find(a=>a.id===reference),ranks=U.ranking(rows),preferences=preferenceRanks(),own=rows.filter(a=>a.kind!=='benchmark'&&a.history.length),leader=[...own].sort((a,b)=>U.metrics(b.history).total-U.metrics(a.history).total)[0];
   const ties=leader?own.filter(a=>Math.abs(U.metrics(a.history).total-U.metrics(leader.history).total)<1e-9).length:0,beaten=own.filter(a=>U.gap(a,ref)>1e-9).length;
   $("performanceKpis").innerHTML=[["Départ commun",date(data.inception)],["Premier au classement",ties>1?ties+' ex æquo':leader?label(leader):'En attente'],["SAVY devant "+reference,beaten+' / '+own.length],["Clôture validée",date(data.as_of)]].map(([k,v])=>`<div class="kpi"><span>${esc(k)}</span><strong>${esc(v)}</strong></div>`).join('');
   const order=[...rows].sort((a,b)=>a.kind==='benchmark'?(b.kind==='benchmark'?data.benchmarks.indexOf(a.id)-data.benchmarks.indexOf(b.id):1):b.kind==='benchmark'?-1:(ranks.get(a.id)||99)-(ranks.get(b.id)||99)||a.id.localeCompare(b.id,"fr",{numeric:true}));
-  $("performanceBody").innerHTML=order.map(a=>{const m=U.metrics(a.history),gap=U.gap(a,ref);return `<tr data-performance-row="${esc(a.id)}" class="${a.kind==='benchmark'?'benchmark':''}"><td>${ranks.get(a.id)||'—'}</td><th scope="row"><i class="dot" style="background:${ink(a)}"></i>${esc(label(a))}<small>${a.history.length?(simulated(a)?'Simulation depuis le '+esc(date(data.inception)):'Depuis le '+esc(date(data.inception))):esc(a.unavailable_reason)}</small></th><td>${money(m.value)}</td><td>${money(m.gain)}</td><td>${pct(m.total)}</td><td>${pct(m.day)}</td><td>${pct(m.week)}</td><td>${pct(m.month)}</td><td>${gap==null?'—':num(gap*100)+' pts'}</td></tr>`;}).join('');
+  $("performanceBody").innerHTML=order.map(a=>{const m=U.metrics(a.history),gap=U.gap(a,ref);return `<tr data-performance-row="${esc(a.id)}" class="${a.kind==='benchmark'?'benchmark':''}"><td>${ranks.get(a.id)||'—'}</td><td data-performance-preference="${esc(a.id)}">${preferences.get(a.id)||'—'}</td><th scope="row"><i class="dot" style="background:${ink(a)}"></i>${esc(label(a))}<small>${a.history.length?(simulated(a)?'Simulation depuis le '+esc(date(data.inception)):'Depuis le '+esc(date(data.inception))):esc(a.unavailable_reason)}</small></th><td>${money(m.value)}</td><td>${money(m.gain)}</td><td>${pct(m.total)}</td><td>${pct(m.day)}</td><td>${pct(m.week)}</td><td>${pct(m.month)}</td><td>${gap==null?'—':num(gap*100)+' pts'}</td></tr>`;}).join('');
   const followed=data.accounts.find(a=>a.id===focus);
   $("performanceChartNote").textContent=(followed?label(followed)+' / '+reference+' · ':'')+'10 000 $ CA chacun à la clôture du '+date(data.inception)+'. Les ajouts ultérieurs sont simulés depuis cette même date avec leurs pondérations figées.'+(dates.length===1?' Les variations commenceront à la prochaine clôture.':'');
   $("performanceSlider").max=String(Math.max(0,dates.length-1));$("performanceSlider").disabled=dates.length<2;chart();persist();
