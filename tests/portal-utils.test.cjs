@@ -1,5 +1,10 @@
 "use strict";
 const test = require("node:test"), assert = require("node:assert/strict"), R = require("../js/portal-utils.js"), P = require("../js/portfolio-utils.js"), U = require("../js/macro-utils.js");
+test("Forward valuation is the rightmost Research tab with a stable direct link", () => {
+  assert.deepEqual(Object.keys(R.PAGES.recherche.tabs), ["latest", "archives", "forward"]);
+  assert.equal(R.PAGES.recherche.tabs.forward, "Valorisation forward");
+  assert.deepEqual(R.route("#view=recherche&tab=forward"), {page: "recherche", tab: "forward"});
+});
 test("Old bookmarks and private fragments open the correct section; invalid tabs fall back safely", () => {
   assert.deepEqual(R.route("#indicators"), {page: "marches", tab: "economy"});
   assert.deepEqual(R.route("#yieldCurves"), {page: "marches", tab: "rates"});
