@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
   "kind": "portfolio_earnings",
-  "generated_at": "2026-11-01T17:22:49.155977+00:00",
+  "generated_at": "2026-11-02T21:01:17.301904+00:00",
   "timezone": "America/Toronto",
   "window": {
-    "start": "2026-08-03",
-    "end": "2026-12-06"
+    "start": "2026-08-10",
+    "end": "2026-12-13"
   },
   "coverage": {
     "total": 120,
@@ -18,7 +18,7 @@
   "instruments": {
     "AAPL": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "AAPL",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/AAPL/earnings/",
       "events": [
@@ -59,7 +59,7 @@
     },
     "ACWV": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "ACWV",
       "source_url": "https://finance.yahoo.com/quote/ACWV/",
       "events": [],
@@ -67,7 +67,7 @@
     },
     "ADBE": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "ADBE",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/ADBE/earnings/",
       "events": [
@@ -124,6 +124,37 @@
               "url": "https://www.marketbeat.com/earnings/reports/2026-9-10-adobe-inc-stock/"
             }
           ]
+        },
+        {
+          "id": "1f1a41db62f869fb",
+          "report_date": "2026-12-09",
+          "report_at": "2026-12-09T21:00:00+00:00",
+          "quarter": null,
+          "date_status": "estimated",
+          "eps": {
+            "actual": null,
+            "estimate": 6.33,
+            "currency": "USD",
+            "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=ADBE&size=100"
+          },
+          "revenue": {
+            "actual": null,
+            "estimate": null,
+            "currency": null,
+            "source_url": "https://www.marketbeat.com/stocks/NASDAQ/ADBE/earnings/"
+          },
+          "messages": [],
+          "report_url": null,
+          "sources": [
+            {
+              "label": "MarketBeat · résultats et consensus",
+              "url": "https://www.marketbeat.com/stocks/NASDAQ/ADBE/earnings/"
+            },
+            {
+              "label": "Yahoo Finance · calendrier et BPA",
+              "url": "https://finance.yahoo.com/calendar/earnings/?symbol=ADBE&size=100"
+            }
+          ]
         }
       ],
       "source_warnings": [],
@@ -131,64 +162,10 @@
     },
     "AMD": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "AMD",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/AMD/earnings/",
       "events": [
-        {
-          "id": "cddca08c21a4e5d3",
-          "report_date": "2026-08-04",
-          "report_at": "2026-08-04T20:00:00+00:00",
-          "quarter": "Q2 2026",
-          "date_status": "reported",
-          "eps": {
-            "actual": 1.66,
-            "estimate": 1.62,
-            "currency": "USD",
-            "source_url": "https://www.marketbeat.com/stocks/NASDAQ/AMD/earnings/"
-          },
-          "revenue": {
-            "actual": 11540000000.0,
-            "estimate": 11310000000.0,
-            "currency": "USD",
-            "source_url": "https://www.marketbeat.com/stocks/NASDAQ/AMD/earnings/"
-          },
-          "messages": [
-            {
-              "text": "Les revenus trimestriels augmentent de 50 %; les centres de données représentent 58 % des ventes.",
-              "language": "fr",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-8-4-advanced-micro-devices-inc-stock/",
-              "kind": "reviewed_summary"
-            },
-            {
-              "text": "AMD relève ses attentes de croissance pour les processeurs de serveurs et prévoit de doubler les revenus des centres de données en 2027.",
-              "language": "fr",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-8-4-advanced-micro-devices-inc-stock/",
-              "kind": "reviewed_summary"
-            },
-            {
-              "text": "La direction anticipe un marché des PC plus faible; les ventes de jeux reculent de 31 % et l’approvisionnement reste tendu.",
-              "language": "fr",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-8-4-advanced-micro-devices-inc-stock/",
-              "kind": "reviewed_summary"
-            }
-          ],
-          "report_url": "https://www.marketbeat.com/earnings/reports/2026-8-4-advanced-micro-devices-inc-stock/",
-          "sources": [
-            {
-              "label": "MarketBeat · résultats et consensus",
-              "url": "https://www.marketbeat.com/stocks/NASDAQ/AMD/earnings/"
-            },
-            {
-              "label": "Yahoo Finance · calendrier et BPA",
-              "url": "https://finance.yahoo.com/calendar/earnings/?symbol=AMD&size=100"
-            },
-            {
-              "label": "Source des messages clés",
-              "url": "https://www.marketbeat.com/earnings/reports/2026-8-4-advanced-micro-devices-inc-stock/"
-            }
-          ]
-        },
         {
           "id": "95d0add4d4226c84",
           "report_date": "2026-11-03",
@@ -226,7 +203,7 @@
     },
     "AMZN": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "AMZN",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/AMZN/earnings/",
       "events": [
@@ -296,7 +273,7 @@
     },
     "APH": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "APH",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/APH/earnings/",
       "events": [
@@ -366,48 +343,10 @@
     },
     "APO": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "APO",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/APO/earnings/",
       "events": [
-        {
-          "id": "3a5311a4161cd73b",
-          "report_date": "2026-08-04",
-          "report_at": "2026-08-04T10:00:00+00:00",
-          "quarter": "Q2 2026",
-          "date_status": "reported",
-          "eps": {
-            "actual": 2.11,
-            "estimate": 2.16,
-            "currency": "USD",
-            "source_url": "https://www.marketbeat.com/stocks/NYSE/APO/earnings/"
-          },
-          "revenue": {
-            "actual": 5570000000.0,
-            "estimate": 5650000000.0,
-            "currency": "USD",
-            "source_url": "https://www.marketbeat.com/stocks/NYSE/APO/earnings/"
-          },
-          "messages": [
-            {
-              "text": "Revenus : -100,0 % par rapport au même trimestre un an plus tôt.",
-              "language": "fr",
-              "source_url": "https://www.marketbeat.com/stocks/NYSE/APO/earnings/",
-              "kind": "calculated"
-            }
-          ],
-          "report_url": "https://www.marketbeat.com/earnings/reports/2026-8-4-apollo-global-management-inc-stock/",
-          "sources": [
-            {
-              "label": "MarketBeat · résultats et consensus",
-              "url": "https://www.marketbeat.com/stocks/NYSE/APO/earnings/"
-            },
-            {
-              "label": "Yahoo Finance · calendrier et BPA",
-              "url": "https://finance.yahoo.com/calendar/earnings/?symbol=APO&size=100"
-            }
-          ]
-        },
         {
           "id": "6a1f85108056abb1",
           "report_date": "2026-11-03",
@@ -445,7 +384,7 @@
     },
     "ATD": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "ATD.TO",
       "source_url": "https://www.marketbeat.com/stocks/TSE/ATD/earnings/",
       "events": [
@@ -536,14 +475,14 @@
     },
     "AVGO": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "AVGO",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/AVGO/earnings/",
       "events": [
         {
           "id": "ec177f5d73430d73",
           "report_date": "2026-09-02",
-          "report_at": "2026-09-02T20:00:00+00:00",
+          "report_at": null,
           "quarter": "Q3 2026",
           "date_status": "reported",
           "eps": {
@@ -593,6 +532,37 @@
               "url": "https://www.marketbeat.com/earnings/reports/2026-9-2-broadcom-inc-stock/"
             }
           ]
+        },
+        {
+          "id": "b1e88cb77889ce36",
+          "report_date": "2026-12-09",
+          "report_at": "2026-12-09T21:00:00+00:00",
+          "quarter": null,
+          "date_status": "estimated",
+          "eps": {
+            "actual": null,
+            "estimate": 3.84,
+            "currency": "USD",
+            "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=AVGO&size=100"
+          },
+          "revenue": {
+            "actual": null,
+            "estimate": null,
+            "currency": null,
+            "source_url": "https://www.marketbeat.com/stocks/NASDAQ/AVGO/earnings/"
+          },
+          "messages": [],
+          "report_url": null,
+          "sources": [
+            {
+              "label": "MarketBeat · résultats et consensus",
+              "url": "https://www.marketbeat.com/stocks/NASDAQ/AVGO/earnings/"
+            },
+            {
+              "label": "Yahoo Finance · calendrier et BPA",
+              "url": "https://finance.yahoo.com/calendar/earnings/?symbol=AVGO&size=100"
+            }
+          ]
         }
       ],
       "source_warnings": [],
@@ -600,7 +570,7 @@
     },
     "BAC": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "BAC",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/BAC/earnings/",
       "events": [
@@ -670,54 +640,10 @@
     },
     "BAM": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "BAM",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/BAM/earnings/",
       "events": [
-        {
-          "id": "d73ee3e7ac2852e5",
-          "report_date": "2026-08-05",
-          "report_at": "2026-08-05T12:00:00+00:00",
-          "quarter": "Q2 2026",
-          "date_status": "reported",
-          "eps": {
-            "actual": 0.44,
-            "estimate": 0.4321,
-            "currency": "USD",
-            "source_url": "https://www.marketbeat.com/stocks/NYSE/BAM/earnings/"
-          },
-          "revenue": {
-            "actual": 1490000000.0,
-            "estimate": 1470000000.0,
-            "currency": "USD",
-            "source_url": "https://www.marketbeat.com/stocks/NYSE/BAM/earnings/"
-          },
-          "messages": [
-            {
-              "text": "Record quarterly performance",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-8-5-brookfield-asset-management-inc-stock/",
-              "kind": "call_topic"
-            },
-            {
-              "text": "AI infrastructure is a major growth focus",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-8-5-brookfield-asset-management-inc-stock/",
-              "kind": "call_topic"
-            }
-          ],
-          "report_url": "https://www.marketbeat.com/earnings/reports/2026-8-5-brookfield-asset-management-inc-stock/",
-          "sources": [
-            {
-              "label": "MarketBeat · résultats et consensus",
-              "url": "https://www.marketbeat.com/stocks/NYSE/BAM/earnings/"
-            },
-            {
-              "label": "Yahoo Finance · calendrier et BPA",
-              "url": "https://finance.yahoo.com/calendar/earnings/?symbol=BAM&size=100"
-            }
-          ]
-        },
         {
           "id": "5ce514c81c96fdcc",
           "report_date": "2026-11-06",
@@ -755,54 +681,10 @@
     },
     "BCE": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "BCE",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/BCE/earnings/",
       "events": [
-        {
-          "id": "bc4384d77fcfc199",
-          "report_date": "2026-08-06",
-          "report_at": "2026-08-06T10:00:00+00:00",
-          "quarter": "Q2 2026",
-          "date_status": "reported",
-          "eps": {
-            "actual": 0.47,
-            "estimate": 0.46,
-            "currency": "USD",
-            "source_url": "https://www.marketbeat.com/stocks/NYSE/BCE/earnings/"
-          },
-          "revenue": {
-            "actual": 4350000000.0,
-            "estimate": 4350000000.0,
-            "currency": "USD",
-            "source_url": "https://www.marketbeat.com/stocks/NYSE/BCE/earnings/"
-          },
-          "messages": [
-            {
-              "text": "Q2 execution remained on plan",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-8-6-bce-inc-stock/",
-              "kind": "call_topic"
-            },
-            {
-              "text": "Bell Media delivered strong growth",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-8-6-bce-inc-stock/",
-              "kind": "call_topic"
-            }
-          ],
-          "report_url": "https://www.marketbeat.com/earnings/reports/2026-8-6-bce-inc-stock/",
-          "sources": [
-            {
-              "label": "MarketBeat · résultats et consensus",
-              "url": "https://www.marketbeat.com/stocks/NYSE/BCE/earnings/"
-            },
-            {
-              "label": "Yahoo Finance · calendrier et BPA",
-              "url": "https://finance.yahoo.com/calendar/earnings/?symbol=BCE&size=100"
-            }
-          ]
-        },
         {
           "id": "a60f1e7d3b33cca1",
           "report_date": "2026-11-05",
@@ -840,7 +722,7 @@
     },
     "BMO": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "BMO",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/BMO/earnings/",
       "events": [
@@ -925,7 +807,7 @@
     },
     "BN": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "BN",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/BN/earnings/",
       "events": [
@@ -1006,7 +888,7 @@
     },
     "BNS": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "BNS",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/BNS/earnings/",
       "events": [
@@ -1085,7 +967,7 @@
     },
     "CASH": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "CASH",
       "source_url": "https://finance.yahoo.com/quote/CASH.TO/",
       "events": [],
@@ -1093,7 +975,7 @@
     },
     "CCO": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "CCJ",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/CCJ/earnings/",
       "events": [
@@ -1130,7 +1012,7 @@
     },
     "CGL": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "CGL",
       "source_url": "https://finance.yahoo.com/quote/CGL.TO/",
       "events": [],
@@ -1138,7 +1020,7 @@
     },
     "CLS": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "CLS",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/CLS/earnings/",
       "events": [
@@ -1210,7 +1092,7 @@
     },
     "CM": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "CM",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/CM/earnings/",
       "events": [
@@ -1289,60 +1171,10 @@
     },
     "CNQ": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "CNQ",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/CNQ/earnings/",
       "events": [
-        {
-          "id": "3198d17e3aaa9926",
-          "report_date": "2026-08-06",
-          "report_at": "2026-08-06T20:00:00+00:00",
-          "quarter": "Q2 2026",
-          "date_status": "reported",
-          "eps": {
-            "actual": 1.58,
-            "estimate": 1.43,
-            "currency": "USD",
-            "source_url": "https://www.marketbeat.com/stocks/NYSE/CNQ/earnings/"
-          },
-          "revenue": {
-            "actual": 14740000000.0,
-            "estimate": 9400000000.0,
-            "currency": "USD",
-            "source_url": "https://www.marketbeat.com/stocks/NYSE/CNQ/earnings/"
-          },
-          "messages": [
-            {
-              "text": "Record operational performance",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-8-6-canadian-natural-resources-limited-stock/",
-              "kind": "call_topic"
-            },
-            {
-              "text": "Strong financial results and shareholder returns",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-8-6-canadian-natural-resources-limited-stock/",
-              "kind": "call_topic"
-            },
-            {
-              "text": "Growth projects remain on hold",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-8-6-canadian-natural-resources-limited-stock/",
-              "kind": "call_topic"
-            }
-          ],
-          "report_url": "https://www.marketbeat.com/earnings/reports/2026-8-6-canadian-natural-resources-limited-stock/",
-          "sources": [
-            {
-              "label": "MarketBeat · résultats et consensus",
-              "url": "https://www.marketbeat.com/stocks/NYSE/CNQ/earnings/"
-            },
-            {
-              "label": "Yahoo Finance · calendrier et BPA",
-              "url": "https://finance.yahoo.com/calendar/earnings/?symbol=CNQ&size=100"
-            }
-          ]
-        },
         {
           "id": "99eb30f9c72a6333",
           "report_date": "2026-11-05",
@@ -1380,7 +1212,7 @@
     },
     "CNR": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "CNI",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/CNI/earnings/",
       "events": [
@@ -1450,7 +1282,7 @@
     },
     "COST": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "COST",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/COST/earnings/",
       "events": [
@@ -1507,6 +1339,37 @@
               "url": "https://www.marketbeat.com/earnings/reports/2026-9-24-costco-wholesale-co-stock/"
             }
           ]
+        },
+        {
+          "id": "f31ae3ddbd5eeca2",
+          "report_date": "2026-12-10",
+          "report_at": "2026-12-10T21:00:00+00:00",
+          "quarter": null,
+          "date_status": "estimated",
+          "eps": {
+            "actual": null,
+            "estimate": 4.91,
+            "currency": "USD",
+            "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=COST&size=100"
+          },
+          "revenue": {
+            "actual": null,
+            "estimate": null,
+            "currency": null,
+            "source_url": "https://www.marketbeat.com/stocks/NASDAQ/COST/earnings/"
+          },
+          "messages": [],
+          "report_url": null,
+          "sources": [
+            {
+              "label": "MarketBeat · résultats et consensus",
+              "url": "https://www.marketbeat.com/stocks/NASDAQ/COST/earnings/"
+            },
+            {
+              "label": "Yahoo Finance · calendrier et BPA",
+              "url": "https://finance.yahoo.com/calendar/earnings/?symbol=COST&size=100"
+            }
+          ]
         }
       ],
       "source_warnings": [],
@@ -1514,7 +1377,7 @@
     },
     "CP": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "CP",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/CP/earnings/",
       "events": [
@@ -1604,7 +1467,7 @@
     },
     "CRM": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "CRM",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/CRM/earnings/",
       "events": [
@@ -1683,7 +1546,7 @@
     },
     "CSU": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "CSU.TO",
       "source_url": "https://www.marketbeat.com/stocks/TSE/CSU/earnings/",
       "events": [
@@ -1797,7 +1660,7 @@
     },
     "CVE": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "CVE",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/CVE/earnings/",
       "events": [
@@ -1838,7 +1701,7 @@
     },
     "CVX": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "CVX",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/CVX/earnings/",
       "events": [
@@ -1908,48 +1771,10 @@
     },
     "DIS": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "DIS",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/DIS/earnings/",
       "events": [
-        {
-          "id": "a299b02c10b69afa",
-          "report_date": "2026-08-05",
-          "report_at": "2026-08-05T10:00:00+00:00",
-          "quarter": "Q3 2026",
-          "date_status": "reported",
-          "eps": {
-            "actual": 2.06,
-            "estimate": 1.86,
-            "currency": "USD",
-            "source_url": "https://www.marketbeat.com/stocks/NYSE/DIS/earnings/"
-          },
-          "revenue": {
-            "actual": 25250000000.0,
-            "estimate": 25390000000.0,
-            "currency": "USD",
-            "source_url": "https://www.marketbeat.com/stocks/NYSE/DIS/earnings/"
-          },
-          "messages": [
-            {
-              "text": "Q3 results exceeded prior guidance",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-8-5-the-walt-disney-company-stock/",
-              "kind": "call_topic"
-            }
-          ],
-          "report_url": "https://www.marketbeat.com/earnings/reports/2026-8-5-the-walt-disney-company-stock/",
-          "sources": [
-            {
-              "label": "MarketBeat · résultats et consensus",
-              "url": "https://www.marketbeat.com/stocks/NYSE/DIS/earnings/"
-            },
-            {
-              "label": "Yahoo Finance · calendrier et BPA",
-              "url": "https://finance.yahoo.com/calendar/earnings/?symbol=DIS&size=100"
-            }
-          ]
-        },
         {
           "id": "38c51deb4f72584e",
           "report_date": "2026-11-17",
@@ -1987,7 +1812,7 @@
     },
     "DOL": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "DOL.TO",
       "source_url": "https://www.marketbeat.com/stocks/TSE/DOL/earnings/",
       "events": [
@@ -2044,6 +1869,33 @@
               "url": "https://www.marketbeat.com/earnings/reports/2026-9-16-dollarama-inc-dolto-stock/"
             }
           ]
+        },
+        {
+          "id": "d4b7ee3c1ef01261",
+          "report_date": "2026-12-10",
+          "report_at": "2026-12-10T13:00:00+00:00",
+          "quarter": null,
+          "date_status": "calendar",
+          "eps": {
+            "actual": null,
+            "estimate": 1.23,
+            "currency": null,
+            "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=DOL.TO&size=100"
+          },
+          "revenue": {
+            "actual": null,
+            "estimate": null,
+            "currency": null,
+            "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=DOL.TO&size=100"
+          },
+          "messages": [],
+          "report_url": null,
+          "sources": [
+            {
+              "label": "Yahoo Finance · calendrier et BPA",
+              "url": "https://finance.yahoo.com/calendar/earnings/?symbol=DOL.TO&size=100"
+            }
+          ]
         }
       ],
       "source_warnings": [],
@@ -2051,7 +1903,7 @@
     },
     "DSG": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "DSGX",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/DSGX/earnings/",
       "events": [
@@ -2146,7 +1998,7 @@
     },
     "DXCM": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "DXCM",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/DXCM/earnings/",
       "events": [
@@ -2216,77 +2068,10 @@
     },
     "EMA": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "EMA.TO",
       "source_url": "https://www.marketbeat.com/stocks/TSE/EMA/earnings/",
       "events": [
-        {
-          "id": "7abe03e681f977de",
-          "report_date": "2026-08-06",
-          "report_at": "2026-08-07T00:00:00+00:00",
-          "quarter": null,
-          "date_status": "reported",
-          "eps": {
-            "actual": 0.69,
-            "estimate": 0.71,
-            "currency": null,
-            "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=EMA.TO&size=100"
-          },
-          "revenue": {
-            "actual": null,
-            "estimate": null,
-            "currency": null,
-            "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=EMA.TO&size=100"
-          },
-          "messages": [],
-          "report_url": null,
-          "sources": [
-            {
-              "label": "Yahoo Finance · calendrier et BPA",
-              "url": "https://finance.yahoo.com/calendar/earnings/?symbol=EMA.TO&size=100"
-            }
-          ]
-        },
-        {
-          "id": "9b6e8463faa7aa74",
-          "report_date": "2026-08-07",
-          "report_at": null,
-          "quarter": "Q2 2026",
-          "date_status": "reported",
-          "eps": {
-            "actual": 0.69,
-            "estimate": null,
-            "currency": "CAD",
-            "source_url": "https://www.marketbeat.com/stocks/TSE/EMA/earnings/"
-          },
-          "revenue": {
-            "actual": 2009999999.9999998,
-            "estimate": null,
-            "currency": "CAD",
-            "source_url": "https://www.marketbeat.com/stocks/TSE/EMA/earnings/"
-          },
-          "messages": [
-            {
-              "text": "New Mexico Gas sale approved",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-8-7-emera-incorporated-emato-stock/",
-              "kind": "call_topic"
-            },
-            {
-              "text": "Rate-base investment remains strong",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-8-7-emera-incorporated-emato-stock/",
-              "kind": "call_topic"
-            }
-          ],
-          "report_url": "https://www.marketbeat.com/earnings/reports/2026-8-7-emera-incorporated-emato-stock/",
-          "sources": [
-            {
-              "label": "MarketBeat · résultats et consensus",
-              "url": "https://www.marketbeat.com/stocks/TSE/EMA/earnings/"
-            }
-          ]
-        },
         {
           "id": "f9ea5aae77ace39f",
           "report_date": "2026-11-06",
@@ -2320,7 +2105,7 @@
     },
     "ENB": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "ENB",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/ENB/earnings/",
       "events": [
@@ -2361,7 +2146,7 @@
     },
     "EQB": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "EQB.TO",
       "source_url": "https://www.marketbeat.com/stocks/TSE/EQB/earnings/",
       "events": [
@@ -2436,48 +2221,10 @@
     },
     "EXE": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "EXE.TO",
       "source_url": "https://www.marketbeat.com/stocks/TSE/EXE/earnings/",
       "events": [
-        {
-          "id": "be00ec406367d821",
-          "report_date": "2026-08-06",
-          "report_at": "2026-08-06T21:00:00+00:00",
-          "quarter": "Q2 2026",
-          "date_status": "reported",
-          "eps": {
-            "actual": 0.39,
-            "estimate": 0.39,
-            "currency": null,
-            "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=EXE.TO&size=100"
-          },
-          "revenue": {
-            "actual": 611040000.0,
-            "estimate": null,
-            "currency": "CAD",
-            "source_url": "https://www.marketbeat.com/stocks/TSE/EXE/earnings/"
-          },
-          "messages": [
-            {
-              "text": "59.4% revenue growth",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-8-6-extendicare-inc-exeto-stock/",
-              "kind": "call_topic"
-            }
-          ],
-          "report_url": "https://www.marketbeat.com/earnings/reports/2026-8-6-extendicare-inc-exeto-stock/",
-          "sources": [
-            {
-              "label": "MarketBeat · résultats et consensus",
-              "url": "https://www.marketbeat.com/stocks/TSE/EXE/earnings/"
-            },
-            {
-              "label": "Yahoo Finance · calendrier et BPA",
-              "url": "https://finance.yahoo.com/calendar/earnings/?symbol=EXE.TO&size=100"
-            }
-          ]
-        },
         {
           "id": "d87a10a20cfbd6ea",
           "report_date": "2026-11-05",
@@ -2511,7 +2258,7 @@
     },
     "FBAL": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "FBAL",
       "source_url": "https://finance.yahoo.com/quote/FBAL.NE/",
       "events": [],
@@ -2519,7 +2266,7 @@
     },
     "FCIN": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "FCIN",
       "source_url": "https://finance.yahoo.com/quote/FCIN.NE/",
       "events": [],
@@ -2527,7 +2274,7 @@
     },
     "FCUV": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "FCUV",
       "source_url": "https://finance.yahoo.com/quote/FCUV.TO/",
       "events": [],
@@ -2535,7 +2282,7 @@
     },
     "FEQT": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "FEQT",
       "source_url": "https://finance.yahoo.com/quote/FEQT.NE/",
       "events": [],
@@ -2543,7 +2290,7 @@
     },
     "FSLR": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "FSLR",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/FSLR/earnings/",
       "events": [
@@ -2613,7 +2360,7 @@
     },
     "FTS": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "FTS",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/FTS/earnings/",
       "events": [
@@ -2654,7 +2401,7 @@
     },
     "GOOGL": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "GOOGL",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/GOOGL/earnings/",
       "events": [
@@ -2746,7 +2493,7 @@
     },
     "GRGD": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "GRGD.TO",
       "source_url": "https://www.marketbeat.com/stocks/TSE/GRGD/earnings/",
       "events": [
@@ -2785,7 +2532,7 @@
     },
     "GS": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "GS",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/GS/earnings/",
       "events": [
@@ -2855,48 +2602,10 @@
     },
     "GSY": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "GSY.TO",
       "source_url": "https://www.marketbeat.com/stocks/TSE/GSY/earnings/",
       "events": [
-        {
-          "id": "8c39c454ae61fa57",
-          "report_date": "2026-08-06",
-          "report_at": "2026-08-06T20:00:00+00:00",
-          "quarter": "Q2 2026",
-          "date_status": "reported",
-          "eps": {
-            "actual": 1.02,
-            "estimate": -1.11,
-            "currency": null,
-            "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=GSY.TO&size=100"
-          },
-          "revenue": {
-            "actual": 390040000.0,
-            "estimate": null,
-            "currency": "CAD",
-            "source_url": "https://www.marketbeat.com/stocks/TSE/GSY/earnings/"
-          },
-          "messages": [
-            {
-              "text": "Liquidity and leverage improved materially",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-8-6-goeasy-ltd-gsyto-stock/",
-              "kind": "call_topic"
-            }
-          ],
-          "report_url": "https://www.marketbeat.com/earnings/reports/2026-8-6-goeasy-ltd-gsyto-stock/",
-          "sources": [
-            {
-              "label": "MarketBeat · résultats et consensus",
-              "url": "https://www.marketbeat.com/stocks/TSE/GSY/earnings/"
-            },
-            {
-              "label": "Yahoo Finance · calendrier et BPA",
-              "url": "https://finance.yahoo.com/calendar/earnings/?symbol=GSY.TO&size=100"
-            }
-          ]
-        },
         {
           "id": "ad3bcd5bcf1b0127",
           "report_date": "2026-11-10",
@@ -2930,7 +2639,7 @@
     },
     "HBM": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "HBM",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/HBM/earnings/",
       "events": [
@@ -2994,7 +2703,7 @@
     },
     "HD": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "HD",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/HD/earnings/",
       "events": [
@@ -3073,7 +2782,7 @@
     },
     "JNJ": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "JNJ",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/JNJ/earnings/",
       "events": [
@@ -3143,7 +2852,7 @@
     },
     "JPM": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "JPM",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/JPM/earnings/",
       "events": [
@@ -3213,7 +2922,7 @@
     },
     "L": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "L.TO",
       "source_url": "https://www.marketbeat.com/stocks/TSE/L/earnings/",
       "events": [
@@ -3250,7 +2959,7 @@
     },
     "LULU": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "LULU",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/LULU/earnings/",
       "events": [
@@ -3297,6 +3006,37 @@
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=LULU&size=100"
             }
           ]
+        },
+        {
+          "id": "182c185435a11cf2",
+          "report_date": "2026-12-10",
+          "report_at": "2026-12-10T21:00:00+00:00",
+          "quarter": null,
+          "date_status": "estimated",
+          "eps": {
+            "actual": null,
+            "estimate": 2.21,
+            "currency": "USD",
+            "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=LULU&size=100"
+          },
+          "revenue": {
+            "actual": null,
+            "estimate": null,
+            "currency": null,
+            "source_url": "https://www.marketbeat.com/stocks/NASDAQ/LULU/earnings/"
+          },
+          "messages": [],
+          "report_url": null,
+          "sources": [
+            {
+              "label": "MarketBeat · résultats et consensus",
+              "url": "https://www.marketbeat.com/stocks/NASDAQ/LULU/earnings/"
+            },
+            {
+              "label": "Yahoo Finance · calendrier et BPA",
+              "url": "https://finance.yahoo.com/calendar/earnings/?symbol=LULU&size=100"
+            }
+          ]
         }
       ],
       "source_warnings": [],
@@ -3304,7 +3044,7 @@
     },
     "MAXQ": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "MAXQ.NE",
       "source_url": "https://www.marketbeat.com/stocks/CNSX/MAXQ/earnings/",
       "events": [
@@ -3343,60 +3083,10 @@
     },
     "MDA": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "MDA.TO",
       "source_url": "https://www.marketbeat.com/stocks/TSE/MDA/earnings/",
       "events": [
-        {
-          "id": "a29390d63ec793f0",
-          "report_date": "2026-08-07",
-          "report_at": "2026-08-07T09:00:00+00:00",
-          "quarter": "Q2 2026",
-          "date_status": "reported",
-          "eps": {
-            "actual": 0.36,
-            "estimate": 0.35,
-            "currency": null,
-            "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=MDA.TO&size=100"
-          },
-          "revenue": {
-            "actual": 498600000.0,
-            "estimate": null,
-            "currency": "CAD",
-            "source_url": "https://www.marketbeat.com/stocks/TSE/MDA/earnings/"
-          },
-          "messages": [
-            {
-              "text": "Strong Q2 performance led to higher guidance",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-8-7-81996-mdato-stock/",
-              "kind": "call_topic"
-            },
-            {
-              "text": "Order momentum remains robust.",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-8-7-81996-mdato-stock/",
-              "kind": "call_topic"
-            },
-            {
-              "text": "Cash generation weakened in the first half",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-8-7-81996-mdato-stock/",
-              "kind": "call_topic"
-            }
-          ],
-          "report_url": "https://www.marketbeat.com/earnings/reports/2026-8-7-81996-mdato-stock/",
-          "sources": [
-            {
-              "label": "MarketBeat · résultats et consensus",
-              "url": "https://www.marketbeat.com/stocks/TSE/MDA/earnings/"
-            },
-            {
-              "label": "Yahoo Finance · calendrier et BPA",
-              "url": "https://finance.yahoo.com/calendar/earnings/?symbol=MDA.TO&size=100"
-            }
-          ]
-        },
         {
           "id": "88caeee3fd0ab10e",
           "report_date": "2026-11-05",
@@ -3430,7 +3120,7 @@
     },
     "META": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "META",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/META/earnings/",
       "events": [
@@ -3442,7 +3132,7 @@
           "date_status": "reported",
           "eps": {
             "actual": 3.83,
-            "estimate": 5.48,
+            "estimate": 5.42,
             "currency": "USD",
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=META&size=100"
           },
@@ -3523,64 +3213,10 @@
     },
     "MFC": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "MFC",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/MFC/earnings/",
       "events": [
-        {
-          "id": "ae79ceeac263744e",
-          "report_date": "2026-08-05",
-          "report_at": "2026-08-05T21:00:00+00:00",
-          "quarter": "Q2 2026",
-          "date_status": "reported",
-          "eps": {
-            "actual": 0.79,
-            "estimate": 0.78,
-            "currency": "USD",
-            "source_url": "https://www.marketbeat.com/stocks/NYSE/MFC/earnings/"
-          },
-          "revenue": {
-            "actual": 2220000000.0,
-            "estimate": 7280000000.0,
-            "currency": "USD",
-            "source_url": "https://www.marketbeat.com/stocks/NYSE/MFC/earnings/"
-          },
-          "messages": [
-            {
-              "text": "Le BPA de base augmente de 16 %, avec une croissance soutenue par l’Asie et la gestion de patrimoine.",
-              "language": "fr",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-8-5-manulife-financial-co-stock/",
-              "kind": "reviewed_summary"
-            },
-            {
-              "text": "Une nouvelle opération de réassurance réduit le risque de morbidité de l’assurance soins de longue durée.",
-              "language": "fr",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-8-5-manulife-financial-co-stock/",
-              "kind": "reviewed_summary"
-            },
-            {
-              "text": "La direction surveille l’incertitude créée par l’application accrue des règles fiscales chinoises aux assurances et placements à l’étranger.",
-              "language": "fr",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-8-5-manulife-financial-co-stock/",
-              "kind": "reviewed_summary"
-            }
-          ],
-          "report_url": "https://www.marketbeat.com/earnings/reports/2026-8-5-manulife-financial-co-stock/",
-          "sources": [
-            {
-              "label": "MarketBeat · résultats et consensus",
-              "url": "https://www.marketbeat.com/stocks/NYSE/MFC/earnings/"
-            },
-            {
-              "label": "Yahoo Finance · calendrier et BPA",
-              "url": "https://finance.yahoo.com/calendar/earnings/?symbol=MFC&size=100"
-            },
-            {
-              "label": "Source des messages clés",
-              "url": "https://www.marketbeat.com/earnings/reports/2026-8-5-manulife-financial-co-stock/"
-            }
-          ]
-        },
         {
           "id": "32cffc84532f23d2",
           "report_date": "2026-11-04",
@@ -3618,7 +3254,7 @@
     },
     "MOD": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "MOD",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/MOD/earnings/",
       "events": [
@@ -3659,48 +3295,10 @@
     },
     "MRK": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "MRK",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/MRK/earnings/",
       "events": [
-        {
-          "id": "2ecfd92cf564d9c5",
-          "report_date": "2026-08-04",
-          "report_at": "2026-08-04T10:00:00+00:00",
-          "quarter": "Q2 2026",
-          "date_status": "reported",
-          "eps": {
-            "actual": -0.13,
-            "estimate": -0.26,
-            "currency": "USD",
-            "source_url": "https://www.marketbeat.com/stocks/NYSE/MRK/earnings/"
-          },
-          "revenue": {
-            "actual": 16610000000.0,
-            "estimate": 16370000000.000002,
-            "currency": "USD",
-            "source_url": "https://www.marketbeat.com/stocks/NYSE/MRK/earnings/"
-          },
-          "messages": [
-            {
-              "text": "Revenus : +5,1 % par rapport au même trimestre un an plus tôt.",
-              "language": "fr",
-              "source_url": "https://www.marketbeat.com/stocks/NYSE/MRK/earnings/",
-              "kind": "calculated"
-            }
-          ],
-          "report_url": "https://www.marketbeat.com/earnings/reports/2026-8-4-merck-co-inc-stock/",
-          "sources": [
-            {
-              "label": "MarketBeat · résultats et consensus",
-              "url": "https://www.marketbeat.com/stocks/NYSE/MRK/earnings/"
-            },
-            {
-              "label": "Yahoo Finance · calendrier et BPA",
-              "url": "https://finance.yahoo.com/calendar/earnings/?symbol=MRK&size=100"
-            }
-          ]
-        },
         {
           "id": "98ed2527fc2318fd",
           "report_date": "2026-10-29",
@@ -3767,7 +3365,7 @@
     },
     "MSFT": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "MSFT",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/MSFT/earnings/",
       "events": [
@@ -3837,7 +3435,7 @@
     },
     "MSFTCDR": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "MSFT",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/MSFT/earnings/",
       "events": [
@@ -3907,7 +3505,7 @@
     },
     "MU": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "MU",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/MU/earnings/",
       "events": [
@@ -3971,7 +3569,7 @@
     },
     "NA": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "NA.TO",
       "source_url": "https://www.marketbeat.com/stocks/TSE/NA/earnings/",
       "events": [
@@ -4035,7 +3633,7 @@
     },
     "NBIX": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "NBIX",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/NBIX/earnings/",
       "events": [
@@ -4076,7 +3674,7 @@
     },
     "NFLX": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "NFLX",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/NFLX/earnings/",
       "events": [
@@ -4146,7 +3744,7 @@
     },
     "NU": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "NU",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/NU/earnings/",
       "events": [
@@ -4254,7 +3852,7 @@
     },
     "NVDA": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "NVDA",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/NVDA/earnings/",
       "events": [
@@ -4349,71 +3947,10 @@
     },
     "NVO": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "NVO",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/NVO/earnings/",
       "events": [
-        {
-          "id": "0abdeef8556d262a",
-          "report_date": "2026-08-04",
-          "report_at": "2026-08-04T21:00:00+00:00",
-          "quarter": null,
-          "date_status": "reported",
-          "eps": {
-            "actual": 6.18,
-            "estimate": 4.98,
-            "currency": "USD",
-            "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=NVO&size=100"
-          },
-          "revenue": {
-            "actual": null,
-            "estimate": null,
-            "currency": null,
-            "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=NVO&size=100"
-          },
-          "messages": [],
-          "report_url": null,
-          "sources": [
-            {
-              "label": "Yahoo Finance · calendrier et BPA",
-              "url": "https://finance.yahoo.com/calendar/earnings/?symbol=NVO&size=100"
-            }
-          ]
-        },
-        {
-          "id": "513c82ff21be7a2d",
-          "report_date": "2026-08-05",
-          "report_at": null,
-          "quarter": "Q2 2026",
-          "date_status": "reported",
-          "eps": {
-            "actual": 0.96,
-            "estimate": 0.77,
-            "currency": "USD",
-            "source_url": "https://www.marketbeat.com/stocks/NYSE/NVO/earnings/"
-          },
-          "revenue": {
-            "actual": 11980000000.0,
-            "estimate": 10890000000.0,
-            "currency": "USD",
-            "source_url": "https://www.marketbeat.com/stocks/NYSE/NVO/earnings/"
-          },
-          "messages": [
-            {
-              "text": "Q2 sales rose 7% to DKK 78.5 billion",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-8-5-novo-nordisk-as-stock/",
-              "kind": "call_topic"
-            }
-          ],
-          "report_url": "https://www.marketbeat.com/earnings/reports/2026-8-5-novo-nordisk-as-stock/",
-          "sources": [
-            {
-              "label": "MarketBeat · résultats et consensus",
-              "url": "https://www.marketbeat.com/stocks/NYSE/NVO/earnings/"
-            }
-          ]
-        },
         {
           "id": "1c2e5ec53e2997bd",
           "report_date": "2026-11-04",
@@ -4451,37 +3988,10 @@
     },
     "NXE": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "NXE",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/NXE/earnings/",
       "events": [
-        {
-          "id": "d823a6956aaa6d7f",
-          "report_date": "2026-08-04",
-          "report_at": "2026-08-05T00:00:00+00:00",
-          "quarter": null,
-          "date_status": "reported",
-          "eps": {
-            "actual": -0.04,
-            "estimate": -0.05,
-            "currency": "USD",
-            "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=NXE&size=100"
-          },
-          "revenue": {
-            "actual": null,
-            "estimate": null,
-            "currency": null,
-            "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=NXE&size=100"
-          },
-          "messages": [],
-          "report_url": null,
-          "sources": [
-            {
-              "label": "Yahoo Finance · calendrier et BPA",
-              "url": "https://finance.yahoo.com/calendar/earnings/?symbol=NXE&size=100"
-            }
-          ]
-        },
         {
           "id": "58dea12e70db3d4a",
           "report_date": "2026-11-03",
@@ -4519,48 +4029,10 @@
     },
     "PFE": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "PFE",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/PFE/earnings/",
       "events": [
-        {
-          "id": "1fa562fd0484a825",
-          "report_date": "2026-08-04",
-          "report_at": "2026-08-04T10:00:00+00:00",
-          "quarter": "Q2 2026",
-          "date_status": "reported",
-          "eps": {
-            "actual": 0.77,
-            "estimate": 0.682,
-            "currency": "USD",
-            "source_url": "https://www.marketbeat.com/stocks/NYSE/PFE/earnings/"
-          },
-          "revenue": {
-            "actual": 15030000000.0,
-            "estimate": 14400000000.0,
-            "currency": "USD",
-            "source_url": "https://www.marketbeat.com/stocks/NYSE/PFE/earnings/"
-          },
-          "messages": [
-            {
-              "text": "Revenus : +2,6 % par rapport au même trimestre un an plus tôt.",
-              "language": "fr",
-              "source_url": "https://www.marketbeat.com/stocks/NYSE/PFE/earnings/",
-              "kind": "calculated"
-            }
-          ],
-          "report_url": "https://www.marketbeat.com/earnings/reports/2026-8-4-pfizer-inc-stock/",
-          "sources": [
-            {
-              "label": "MarketBeat · résultats et consensus",
-              "url": "https://www.marketbeat.com/stocks/NYSE/PFE/earnings/"
-            },
-            {
-              "label": "Yahoo Finance · calendrier et BPA",
-              "url": "https://finance.yahoo.com/calendar/earnings/?symbol=PFE&size=100"
-            }
-          ]
-        },
         {
           "id": "930f3210052c5ce8",
           "report_date": "2026-11-03",
@@ -4598,7 +4070,7 @@
     },
     "POW": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "POW.TO",
       "source_url": "https://www.marketbeat.com/stocks/TSE/POW/earnings/",
       "events": [
@@ -4635,48 +4107,10 @@
     },
     "PRL": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "PRL.TO",
       "source_url": "https://www.marketbeat.com/stocks/TSE/PRL/earnings/",
       "events": [
-        {
-          "id": "abae441f58d3bb81",
-          "report_date": "2026-08-05",
-          "report_at": "2026-08-05T20:00:00+00:00",
-          "quarter": "Q2 2026",
-          "date_status": "reported",
-          "eps": {
-            "actual": 0.58,
-            "estimate": 0.658,
-            "currency": "USD",
-            "source_url": "https://www.marketbeat.com/stocks/TSE/PRL/earnings/"
-          },
-          "revenue": {
-            "actual": 179600000.0,
-            "estimate": 251890000.0,
-            "currency": "USD",
-            "source_url": "https://www.marketbeat.com/stocks/TSE/PRL/earnings/"
-          },
-          "messages": [
-            {
-              "text": "26% year over year to $179.6 million",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-8-5-propel-holdings-inc-stock/",
-              "kind": "call_topic"
-            }
-          ],
-          "report_url": "https://www.marketbeat.com/earnings/reports/2026-8-5-propel-holdings-inc-stock/",
-          "sources": [
-            {
-              "label": "MarketBeat · résultats et consensus",
-              "url": "https://www.marketbeat.com/stocks/TSE/PRL/earnings/"
-            },
-            {
-              "label": "Yahoo Finance · calendrier et BPA",
-              "url": "https://finance.yahoo.com/calendar/earnings/?symbol=PRL.TO&size=100"
-            }
-          ]
-        },
         {
           "id": "f9a7baade76acee9",
           "report_date": "2026-11-03",
@@ -4714,7 +4148,7 @@
     },
     "QCOM": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "QCOM",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/QCOM/earnings/",
       "events": [
@@ -4755,7 +4189,7 @@
     },
     "QQC": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "QQC",
       "source_url": "https://finance.yahoo.com/quote/QQC.TO/",
       "events": [],
@@ -4763,7 +4197,7 @@
     },
     "RY": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "RY",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/RY/earnings/",
       "events": [
@@ -4854,64 +4288,10 @@
     },
     "SHOP": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "SHOP",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/SHOP/earnings/",
       "events": [
-        {
-          "id": "94152bce79ec8157",
-          "report_date": "2026-08-05",
-          "report_at": "2026-08-05T11:00:00+00:00",
-          "quarter": "Q2 2026",
-          "date_status": "reported",
-          "eps": {
-            "actual": 0.42,
-            "estimate": 0.4,
-            "currency": "USD",
-            "source_url": "https://www.marketbeat.com/stocks/NASDAQ/SHOP/earnings/"
-          },
-          "revenue": {
-            "actual": 3580000000.0,
-            "estimate": null,
-            "currency": "USD",
-            "source_url": "https://www.marketbeat.com/stocks/NASDAQ/SHOP/earnings/"
-          },
-          "messages": [
-            {
-              "text": "Revenus : +34 %; volume brut de marchandises : +32 %.",
-              "language": "fr",
-              "source_url": "https://www.wsj.com/business/earnings/shopify-profit-jumps-as-subscriptions-merchant-services-boost-revenues-73693ff6",
-              "kind": "reviewed_summary"
-            },
-            {
-              "text": "Pour le trimestre suivant, Shopify vise une croissance des ventes un peu supérieure à 30 %.",
-              "language": "fr",
-              "source_url": "https://www.wsj.com/business/earnings/shopify-profit-jumps-as-subscriptions-merchant-services-boost-revenues-73693ff6",
-              "kind": "reviewed_summary"
-            },
-            {
-              "text": "Le bénéfice brut devrait progresser de plus de 20 %; les dépenses restent à surveiller.",
-              "language": "fr",
-              "source_url": "https://www.wsj.com/business/earnings/shopify-profit-jumps-as-subscriptions-merchant-services-boost-revenues-73693ff6",
-              "kind": "reviewed_summary"
-            }
-          ],
-          "report_url": "https://www.marketbeat.com/earnings/reports/2026-8-5-shopify-inc-stock/",
-          "sources": [
-            {
-              "label": "MarketBeat · résultats et consensus",
-              "url": "https://www.marketbeat.com/stocks/NASDAQ/SHOP/earnings/"
-            },
-            {
-              "label": "Yahoo Finance · calendrier et BPA",
-              "url": "https://finance.yahoo.com/calendar/earnings/?symbol=SHOP&size=100"
-            },
-            {
-              "label": "Source des messages clés",
-              "url": "https://www.wsj.com/business/earnings/shopify-profit-jumps-as-subscriptions-merchant-services-boost-revenues-73693ff6"
-            }
-          ]
-        },
         {
           "id": "6c2920b9db5ea9ea",
           "report_date": "2026-11-03",
@@ -4945,48 +4325,10 @@
     },
     "SLF": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "SLF",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/SLF/earnings/",
       "events": [
-        {
-          "id": "8a732962feef70d4",
-          "report_date": "2026-08-06",
-          "report_at": "2026-08-06T21:00:00+00:00",
-          "quarter": "Q2 2026",
-          "date_status": "reported",
-          "eps": {
-            "actual": 1.46,
-            "estimate": 1.39,
-            "currency": "USD",
-            "source_url": "https://www.marketbeat.com/stocks/NYSE/SLF/earnings/"
-          },
-          "revenue": {
-            "actual": 10100000000.0,
-            "estimate": 994330000.0,
-            "currency": "USD",
-            "source_url": "https://www.marketbeat.com/stocks/NYSE/SLF/earnings/"
-          },
-          "messages": [
-            {
-              "text": "Strong Q2 performance",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-8-6-sun-life-financial-inc-stock/",
-              "kind": "call_topic"
-            }
-          ],
-          "report_url": "https://www.marketbeat.com/earnings/reports/2026-8-6-sun-life-financial-inc-stock/",
-          "sources": [
-            {
-              "label": "MarketBeat · résultats et consensus",
-              "url": "https://www.marketbeat.com/stocks/NYSE/SLF/earnings/"
-            },
-            {
-              "label": "Yahoo Finance · calendrier et BPA",
-              "url": "https://finance.yahoo.com/calendar/earnings/?symbol=SLF&size=100"
-            }
-          ]
-        },
         {
           "id": "e8e4b392c0c28ca0",
           "report_date": "2026-11-04",
@@ -5024,64 +4366,10 @@
     },
     "SNDK": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "SNDK",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/SNDK/earnings/",
       "events": [
-        {
-          "id": "98c5025a75323067",
-          "report_date": "2026-08-05",
-          "report_at": "2026-08-05T20:00:00+00:00",
-          "quarter": "Q4 2026",
-          "date_status": "reported",
-          "eps": {
-            "actual": 39.25,
-            "estimate": 33.28,
-            "currency": "USD",
-            "source_url": "https://www.marketbeat.com/stocks/NASDAQ/SNDK/earnings/"
-          },
-          "revenue": {
-            "actual": 8970000000.0,
-            "estimate": null,
-            "currency": "USD",
-            "source_url": "https://www.marketbeat.com/stocks/NASDAQ/SNDK/earnings/"
-          },
-          "messages": [
-            {
-              "text": "Sandisk dépasse ses prévisions et vise 10,3–10,8 G$ US de revenus, ainsi que 44–46 $ US de BPA ajusté au trimestre suivant.",
-              "language": "fr",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-8-5-4285541-stock/",
-              "kind": "reviewed_summary"
-            },
-            {
-              "text": "L’inférence en IA accélère la demande de stockage; les revenus des centres de données augmentent de 103 % par rapport au trimestre précédent.",
-              "language": "fr",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-8-5-4285541-stock/",
-              "kind": "reviewed_summary"
-            },
-            {
-              "text": "Les revenus grand public baissent de 32 % sur le trimestre; la demande des PC et téléphones demeure faible.",
-              "language": "fr",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-8-5-4285541-stock/",
-              "kind": "reviewed_summary"
-            }
-          ],
-          "report_url": "https://www.marketbeat.com/earnings/reports/2026-8-5-4285541-stock/",
-          "sources": [
-            {
-              "label": "MarketBeat · résultats et consensus",
-              "url": "https://www.marketbeat.com/stocks/NASDAQ/SNDK/earnings/"
-            },
-            {
-              "label": "Yahoo Finance · calendrier et BPA",
-              "url": "https://finance.yahoo.com/calendar/earnings/?symbol=SNDK&size=100"
-            },
-            {
-              "label": "Source des messages clés",
-              "url": "https://www.marketbeat.com/earnings/reports/2026-8-5-4285541-stock/"
-            }
-          ]
-        },
         {
           "id": "2634b99a77995861",
           "report_date": "2026-10-29",
@@ -5148,64 +4436,10 @@
     },
     "SNDKUS": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "SNDK",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/SNDK/earnings/",
       "events": [
-        {
-          "id": "98c5025a75323067",
-          "report_date": "2026-08-05",
-          "report_at": "2026-08-05T20:00:00+00:00",
-          "quarter": "Q4 2026",
-          "date_status": "reported",
-          "eps": {
-            "actual": 39.25,
-            "estimate": 33.28,
-            "currency": "USD",
-            "source_url": "https://www.marketbeat.com/stocks/NASDAQ/SNDK/earnings/"
-          },
-          "revenue": {
-            "actual": 8970000000.0,
-            "estimate": null,
-            "currency": "USD",
-            "source_url": "https://www.marketbeat.com/stocks/NASDAQ/SNDK/earnings/"
-          },
-          "messages": [
-            {
-              "text": "Sandisk dépasse ses prévisions et vise 10,3–10,8 G$ US de revenus, ainsi que 44–46 $ US de BPA ajusté au trimestre suivant.",
-              "language": "fr",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-8-5-4285541-stock/",
-              "kind": "reviewed_summary"
-            },
-            {
-              "text": "L’inférence en IA accélère la demande de stockage; les revenus des centres de données augmentent de 103 % par rapport au trimestre précédent.",
-              "language": "fr",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-8-5-4285541-stock/",
-              "kind": "reviewed_summary"
-            },
-            {
-              "text": "Les revenus grand public baissent de 32 % sur le trimestre; la demande des PC et téléphones demeure faible.",
-              "language": "fr",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-8-5-4285541-stock/",
-              "kind": "reviewed_summary"
-            }
-          ],
-          "report_url": "https://www.marketbeat.com/earnings/reports/2026-8-5-4285541-stock/",
-          "sources": [
-            {
-              "label": "MarketBeat · résultats et consensus",
-              "url": "https://www.marketbeat.com/stocks/NASDAQ/SNDK/earnings/"
-            },
-            {
-              "label": "Yahoo Finance · calendrier et BPA",
-              "url": "https://finance.yahoo.com/calendar/earnings/?symbol=SNDK&size=100"
-            },
-            {
-              "label": "Source des messages clés",
-              "url": "https://www.marketbeat.com/earnings/reports/2026-8-5-4285541-stock/"
-            }
-          ]
-        },
         {
           "id": "2634b99a77995861",
           "report_date": "2026-10-29",
@@ -5272,7 +4506,7 @@
     },
     "SPYM": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "SPYM",
       "source_url": "https://finance.yahoo.com/quote/SPYM/",
       "events": [],
@@ -5280,54 +4514,10 @@
     },
     "SU": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "SU",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/SU/earnings/",
       "events": [
-        {
-          "id": "d7eb20342847b9c0",
-          "report_date": "2026-08-04",
-          "report_at": "2026-08-04T21:00:00+00:00",
-          "quarter": "Q2 2026",
-          "date_status": "reported",
-          "eps": {
-            "actual": 2.33,
-            "estimate": 2.14,
-            "currency": "USD",
-            "source_url": "https://www.marketbeat.com/stocks/NYSE/SU/earnings/"
-          },
-          "revenue": {
-            "actual": 13410000000.0,
-            "estimate": 11680000000.0,
-            "currency": "USD",
-            "source_url": "https://www.marketbeat.com/stocks/NYSE/SU/earnings/"
-          },
-          "messages": [
-            {
-              "text": "Adjusted funds from operations reached CAD 5.3 billion",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-8-4-suncor-energy-inc-stock/",
-              "kind": "call_topic"
-            },
-            {
-              "text": "CAD 500 million per month",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-8-4-suncor-energy-inc-stock/",
-              "kind": "call_topic"
-            }
-          ],
-          "report_url": "https://www.marketbeat.com/earnings/reports/2026-8-4-suncor-energy-inc-stock/",
-          "sources": [
-            {
-              "label": "MarketBeat · résultats et consensus",
-              "url": "https://www.marketbeat.com/stocks/NYSE/SU/earnings/"
-            },
-            {
-              "label": "Yahoo Finance · calendrier et BPA",
-              "url": "https://finance.yahoo.com/calendar/earnings/?symbol=SU&size=100"
-            }
-          ]
-        },
         {
           "id": "f4825105b10ab8d5",
           "report_date": "2026-11-03",
@@ -5342,7 +4532,7 @@
           },
           "revenue": {
             "actual": null,
-            "estimate": 11950000000.0,
+            "estimate": 11960000000.0,
             "currency": "USD",
             "source_url": "https://www.marketbeat.com/stocks/NYSE/SU/earnings/"
           },
@@ -5365,7 +4555,7 @@
     },
     "T": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "T.TO",
       "source_url": "https://www.marketbeat.com/stocks/TSE/T/earnings/",
       "events": [
@@ -5402,7 +4592,7 @@
     },
     "TD": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "TD",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/TD/earnings/",
       "events": [
@@ -5493,7 +4683,7 @@
     },
     "TOU": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "TOU.TO",
       "source_url": "https://www.marketbeat.com/stocks/TSE/TOU/earnings/",
       "events": [
@@ -5530,7 +4720,7 @@
     },
     "TRP": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "TRP",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/TRP/earnings/",
       "events": [
@@ -5571,7 +4761,7 @@
     },
     "TSM": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "TSM",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/TSM/earnings/",
       "events": [
@@ -5641,7 +4831,7 @@
     },
     "UNH": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "UNH",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/UNH/earnings/",
       "events": [
@@ -5711,7 +4901,7 @@
     },
     "V": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "V",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/V/earnings/",
       "events": [
@@ -5781,7 +4971,7 @@
     },
     "VBAL": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "VBAL",
       "source_url": "https://finance.yahoo.com/quote/VBAL.TO/",
       "events": [],
@@ -5789,7 +4979,7 @@
     },
     "VCN": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "VCN",
       "source_url": "https://finance.yahoo.com/quote/VCN.TO/",
       "events": [],
@@ -5797,7 +4987,7 @@
     },
     "VDY": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "VDY",
       "source_url": "https://finance.yahoo.com/quote/VDY.TO/",
       "events": [],
@@ -5805,7 +4995,7 @@
     },
     "VEE": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "VEE",
       "source_url": "https://finance.yahoo.com/quote/VEE.TO/",
       "events": [],
@@ -5813,7 +5003,7 @@
     },
     "VEQT": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "VEQT",
       "source_url": "https://finance.yahoo.com/quote/VEQT.TO/",
       "events": [],
@@ -5821,7 +5011,7 @@
     },
     "VFV": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "VFV",
       "source_url": "https://finance.yahoo.com/quote/VFV.TO/",
       "events": [],
@@ -5829,7 +5019,7 @@
     },
     "VGRO": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "VGRO",
       "source_url": "https://finance.yahoo.com/quote/VGRO.TO/",
       "events": [],
@@ -5837,7 +5027,7 @@
     },
     "VIU": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "VIU",
       "source_url": "https://finance.yahoo.com/quote/VIU.TO/",
       "events": [],
@@ -5845,48 +5035,10 @@
     },
     "VNP": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "VNP.TO",
       "source_url": "https://www.marketbeat.com/stocks/TSE/VNP/earnings/",
       "events": [
-        {
-          "id": "89a8e2a57d8be776",
-          "report_date": "2026-08-03",
-          "report_at": "2026-08-03T20:00:00+00:00",
-          "quarter": "Q2 2026",
-          "date_status": "reported",
-          "eps": {
-            "actual": 0.17,
-            "estimate": 0.16,
-            "currency": null,
-            "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=VNP.TO&size=100"
-          },
-          "revenue": {
-            "actual": 173840000.0,
-            "estimate": null,
-            "currency": "CAD",
-            "source_url": "https://www.marketbeat.com/stocks/TSE/VNP/earnings/"
-          },
-          "messages": [
-            {
-              "text": "Revenue rose 28% year over year to $122.4 million",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-8-3-5n-plus-inc-vnpto-stock/",
-              "kind": "call_topic"
-            }
-          ],
-          "report_url": "https://www.marketbeat.com/earnings/reports/2026-8-3-5n-plus-inc-vnpto-stock/",
-          "sources": [
-            {
-              "label": "MarketBeat · résultats et consensus",
-              "url": "https://www.marketbeat.com/stocks/TSE/VNP/earnings/"
-            },
-            {
-              "label": "Yahoo Finance · calendrier et BPA",
-              "url": "https://finance.yahoo.com/calendar/earnings/?symbol=VNP.TO&size=100"
-            }
-          ]
-        },
         {
           "id": "c1205650d3e4eb9a",
           "report_date": "2026-11-02",
@@ -5920,7 +5072,7 @@
     },
     "WCN": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "WCN",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/WCN/earnings/",
       "events": [
@@ -5990,7 +5142,7 @@
     },
     "WFC": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "WFC",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/WFC/earnings/",
       "events": [
@@ -6060,7 +5212,7 @@
     },
     "WMT": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "WMT",
       "source_url": "https://www.marketbeat.com/stocks/NASDAQ/WMT/earnings/",
       "events": [
@@ -6139,60 +5291,10 @@
     },
     "WSP": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "WSP.TO",
       "source_url": "https://www.marketbeat.com/stocks/TSE/WSP/earnings/",
       "events": [
-        {
-          "id": "b00ffbde95cfd8d5",
-          "report_date": "2026-08-05",
-          "report_at": "2026-08-05T21:00:00+00:00",
-          "quarter": "Q2 2026",
-          "date_status": "reported",
-          "eps": {
-            "actual": 2.88,
-            "estimate": 2.82,
-            "currency": null,
-            "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=WSP.TO&size=100"
-          },
-          "revenue": {
-            "actual": 5400000000.0,
-            "estimate": null,
-            "currency": "CAD",
-            "source_url": "https://www.marketbeat.com/stocks/TSE/WSP/earnings/"
-          },
-          "messages": [
-            {
-              "text": "Q2 results exceeded expectations",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-8-5-wsp-global-inc-wspto-stock/",
-              "kind": "call_topic"
-            },
-            {
-              "text": "Visibility and demand strengthened.",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-8-5-wsp-global-inc-wspto-stock/",
-              "kind": "call_topic"
-            },
-            {
-              "text": "TRC integration is progressing as planned",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-8-5-wsp-global-inc-wspto-stock/",
-              "kind": "call_topic"
-            }
-          ],
-          "report_url": "https://www.marketbeat.com/earnings/reports/2026-8-5-wsp-global-inc-wspto-stock/",
-          "sources": [
-            {
-              "label": "MarketBeat · résultats et consensus",
-              "url": "https://www.marketbeat.com/stocks/TSE/WSP/earnings/"
-            },
-            {
-              "label": "Yahoo Finance · calendrier et BPA",
-              "url": "https://finance.yahoo.com/calendar/earnings/?symbol=WSP.TO&size=100"
-            }
-          ]
-        },
         {
           "id": "dd22951ca49b4ced",
           "report_date": "2026-11-04",
@@ -6226,7 +5328,7 @@
     },
     "XBB": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "XBB",
       "source_url": "https://finance.yahoo.com/quote/XBB.TO/",
       "events": [],
@@ -6234,7 +5336,7 @@
     },
     "XEF": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "XEF",
       "source_url": "https://finance.yahoo.com/quote/XEF.TO/",
       "events": [],
@@ -6242,7 +5344,7 @@
     },
     "XEQT": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "XEQT",
       "source_url": "https://finance.yahoo.com/quote/XEQT.TO/",
       "events": [],
@@ -6250,7 +5352,7 @@
     },
     "XGD": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "XGD",
       "source_url": "https://finance.yahoo.com/quote/XGD.TO/",
       "events": [],
@@ -6258,7 +5360,7 @@
     },
     "XGRO": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "XGRO",
       "source_url": "https://finance.yahoo.com/quote/XGRO.TO/",
       "events": [],
@@ -6266,7 +5368,7 @@
     },
     "XHY": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "XHY",
       "source_url": "https://finance.yahoo.com/quote/XHY.TO/",
       "events": [],
@@ -6274,7 +5376,7 @@
     },
     "XIC": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "XIC",
       "source_url": "https://finance.yahoo.com/quote/XIC.TO/",
       "events": [],
@@ -6282,7 +5384,7 @@
     },
     "XIG": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "XIG",
       "source_url": "https://finance.yahoo.com/quote/XIG.TO/",
       "events": [],
@@ -6290,7 +5392,7 @@
     },
     "XIU": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "XIU",
       "source_url": "https://finance.yahoo.com/quote/XIU.TO/",
       "events": [],
@@ -6298,7 +5400,7 @@
     },
     "XLF": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "XLF",
       "source_url": "https://finance.yahoo.com/quote/XLF/",
       "events": [],
@@ -6306,7 +5408,7 @@
     },
     "XOM": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "XOM",
       "source_url": "https://www.marketbeat.com/stocks/NYSE/XOM/earnings/",
       "events": [
@@ -6376,7 +5478,7 @@
     },
     "XSB": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "XSB",
       "source_url": "https://finance.yahoo.com/quote/XSB.TO/",
       "events": [],
@@ -6384,7 +5486,7 @@
     },
     "XSP": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "XSP",
       "source_url": "https://finance.yahoo.com/quote/XSP.TO/",
       "events": [],
@@ -6392,7 +5494,7 @@
     },
     "XSU": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "XSU",
       "source_url": "https://finance.yahoo.com/quote/XSU.TO/",
       "events": [],
@@ -6400,7 +5502,7 @@
     },
     "XUS": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "XUS",
       "source_url": "https://finance.yahoo.com/quote/XUS.TO/",
       "events": [],
@@ -6408,7 +5510,7 @@
     },
     "ZAG": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "ZAG",
       "source_url": "https://finance.yahoo.com/quote/ZAG.TO/",
       "events": [],
@@ -6416,7 +5518,7 @@
     },
     "ZEB": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "ZEB",
       "source_url": "https://finance.yahoo.com/quote/ZEB.TO/",
       "events": [],
@@ -6424,7 +5526,7 @@
     },
     "ZLB": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "ZLB",
       "source_url": "https://finance.yahoo.com/quote/ZLB.TO/",
       "events": [],
@@ -6432,7 +5534,7 @@
     },
     "ZRE": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "ZRE",
       "source_url": "https://finance.yahoo.com/quote/ZRE.TO/",
       "events": [],
@@ -6440,7 +5542,7 @@
     },
     "ZUH": {
       "fetch_status": "not_applicable",
-      "fetched_at": "2026-11-01T17:22:49.155977+00:00",
+      "fetched_at": "2026-11-02T21:01:17.301904+00:00",
       "company_symbol": "ZUH",
       "source_url": "https://finance.yahoo.com/quote/ZUH.TO/",
       "events": [],
