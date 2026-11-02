@@ -8,7 +8,7 @@
   const statusNames = {low: "Sous Q1 · zone basse", central: "Entre Q1 et Q3", high: "Au-dessus de Q3", insufficient: "Historique insuffisant", unavailable: "Multiple N/D"};
   const state = {id: "NVDA", horizon: 1, range: "2Y", view: "lists", confirm5y: false, imports: {}};
   let dataset, instruments, charts, summary, note, select, stockControl, horizonControl, rangeControl, horizonButtons, rangeButtons, viewButtons, rankings, auditView, refreshNotice, lastWidth = 0;
-  const number = (n, digits = 2) => F.positive(n) || n === 0 ? new Intl.NumberFormat("fr-CA", {minimumFractionDigits: digits, maximumFractionDigits: digits}).format(n) : "N/D";
+  const number = (n, digits = 2) => Number.isFinite(n) ? new Intl.NumberFormat("fr-CA", {minimumFractionDigits: digits, maximumFractionDigits: digits}).format(n) : "N/D";
   const multiple = n => F.positive(n) ? number(n) + "×" : "N/D";
   const date = value => value ? new Intl.DateTimeFormat("fr-CA", {year: "numeric", month: "short", day: "numeric", timeZone: "UTC"}).format(new Date(value + "T12:00:00Z")) : "N/D";
   function el(tag, className = "", text) {
@@ -73,7 +73,7 @@
     details.append(el("p", "", "Les repères portent uniquement sur les observations positives de la fenêtre affichée : moyenne arithmétique, médiane et quartiles Q1 (25 %) et Q3 (75 %), avec interpolation linéaire entre rangs. Au moins 12 relevés mensuels ou importés, ou 30 relevés quotidiens SAVY, sont nécessaires. Les lacunes restent visibles. Un niveau sous Q1 décrit un multiple historiquement bas, sans constituer une recommandation d’achat."));
     details.append(el("p", "", "Les listes comparent chaque action à ses propres quartiles, sur l’historique choisi. Vert : multiple strictement supérieur à Q3. Rouge : multiple strictement inférieur à Q1. Les titres entre les deux lignes, ceux dont le dernier multiple manque et ceux sans historique suffisant ne sont pas placés dans ces listes. Cliquer sur un titre ouvre son graphique au même horizon. Les listes sont alphabétiques et restent distinctes pour chacun des quatre ratios."));
     details.append(el("p", "", "Le P/E mensuel provient des consensus datés du classeur SAVY du 29 octobre 2026. Il reste distinct des relevés quotidiens MarketScreener : aucune série n’est raccordée et aucun ancien cours n’est divisé par les prévisions d’aujourd’hui. Les historiques génériques dont l’horizon est inconnu ne sont pas utilisés. EV/EBITDA est N/D pour les sociétés financières. Les dates du cours, du consensus et du bilan restent celles des sources."));
-    details.append(el("p", "", "Les séries des graphiques et des listes s’arrêtent au 28–29 octobre 2026. La vérification de cinq titres utilise séparément les prévisions relevées le 2 novembre et les cours rapprochés de la clôture du 30 octobre. Les dates individuelles des révisions d’analystes et l’équivalence des mesures comptables entre fournisseurs ne sont pas certifiées. Aucune nouvelle observation n’est ajoutée rétrospectivement aux quartiles. Un import CSV permet d’utiliser un historique personnel FY1/FY2 dans la session courante, sans envoi de données."));
+    details.append(el("p", "", "Les historiques P/E et les listes s’arrêtent au 28–29 octobre 2026. Le graphique EV/EBITDA annuel reprend le tableau MarketScreener : exercices réalisés, puis prévisions FY1/FY2 en pointillés. Les EV prévisionnelles du fournisseur intègrent sa dette et sa trésorerie projetées ; elles diffèrent des cartes calculées à EV actuelle. Cette courbe annuelle ne constitue pas un historique des multiples forward observés à chaque date et ne sert pas aux quartiles. La croissance de l’EBITDA compare deux exercices consécutifs de cette même source ; une base nulle, négative ou manquante donne N/D. Une base encore estimée est signalée."));
     details.append(el("p", "", "Le refresh du briefing du matin met à jour les cartes de multiples récents dans Graphiques. Il réutilise les clôtures SAVY dans la même devise et la même cotation que les prévisions. Une prévision conservée garde sa date ; un échec ne rajeunit pas les anciennes données. Les relevés matinaux sont conservés séparément, sans modifier les clôtures historiques ou les quartiles DoltHub. Les listes historiques ne deviennent pas un classement actuel par simple changement de cours ou de fournisseur."));
     const format = el("p"); format.append(el("strong", "", "Format CSV : "), el("code", "", "date,ticker,pe_fy1,pe_fy2,ev_ebitda_fy1,ev_ebitda_fy2"), document.createTextNode(". Dates AAAA-MM-JJ, multiples positifs, cellules vides pour N/D. Les données d’import doivent utiliser la même définition fiscale à chaque date.")); details.append(format);
     const importer = el("div", "forward-import"), input = el("input"); input.type = "file"; input.accept = ".csv,text/csv"; input.id = "forwardImport"; input.setAttribute("aria-label", "Importer un historique CSV FY1/FY2");
@@ -107,8 +107,9 @@
     if (dataset.refresh) {
       const r = dataset.refresh, c = r.counts;
       const timestamp = new Intl.DateTimeFormat("fr-CA", {dateStyle: "medium", timeStyle: "short", timeZone: "America/Toronto"}).format(new Date(r.checked_at));
-      refreshNotice.append(el("strong", "", "Actualisation · briefing du matin"), el("p", "", "Dernier contrôle : " + timestamp + " (Montréal). " + c.collected + " prévisions relues · " + c.reused + " relevés réutilisés · " + (c.cached + c.retained) + " données conservées après échec · " + c.unavailable + " indisponibles."),
-        el("p", "", "Les cartes dans Graphiques montrent les multiples récents avec leurs dates. Courbes et listes gardent leurs historiques distincts et datés."));
+      refreshNotice.append(el("strong", "", "Actualisation · briefing du matin"), el("p", "", "Dernier contrôle : " + timestamp + " (Montréal). " + c.collected + " prévisions relues · " + c.reused + " relevés réutilisés · " + (c.cached + c.retained) + " données conservées après échec · " + c.unavailable + " relevés de multiples récents indisponibles."),
+        el("p", "", "Les cartes montrent les multiples récents. Le graphique EV/EBITDA annuel et les historiques P/E gardent leurs propres sources et dates."));
+      if (r.annual_coverage) refreshNotice.append(el("p", "", "EV/EBITDA annuel · " + r.annual_coverage.available + " / " + r.annual_coverage.eligible + " titres non financiers disponibles, avec prévisions et croissance de l’EBITDA selon la couverture de la source."));
       const problems = r.results.filter(item => item.error);
       if (problems.length) {
         const details = el("details"); details.append(el("summary", "", "Détails des sources à reprendre (" + problems.length + ")"));
@@ -138,13 +139,14 @@
       } else if (dataset.refresh && !imported) card.append(el("p", "forward-current-warning", "Refresh indisponible · relevé archivé du " + date(m.latest?.date)));
       summary.append(card);
     }
-    note.replaceChildren(el("strong", "", selected().title + " · FY" + state.horizon), document.createTextNode(selected().current_snapshot ? " — Cartes : multiples récents. Courbes ci-dessous : archives distinctes, avec leurs propres dates. Q1 : 25e percentile. Q3 : 75e percentile." : " — Les repères se recalculent sur l’historique choisi. Q1 : 25e percentile. Q3 : 75e percentile."));
+    note.replaceChildren(el("strong", "", selected().title + " · FY" + state.horizon), document.createTextNode(" — EV/EBITDA annuel : réalisé et prévisions. P/E : historique forward avec moyenne et quartiles. Chaque graphique conserve sa définition et ses dates."));
     if (lists) renderRankings(); else if (audit) renderAudit(); else renderCharts();
   }
   function renderCharts() {
     if (!charts || !selected() || state.view !== "charts") return;
     charts.replaceChildren();
-    for (const key of F.METRICS) charts.append(panel(model(key)));
+    const importedEv = state.imports[state.id]?.some(row => F.positive(row["ev_ebitda_fy" + state.horizon]));
+    charts.append(importedEv || selected().financial ? panel(model("ev_ebitda")) : annualPanel(), panel(model("pe")));
   }
   function renderRankings() {
     rankings.replaceChildren();
@@ -165,6 +167,11 @@
       if (!result.eligible) {
         const empty = el("div", "forward-ranking-empty");
         empty.append(el("strong", "", "Classement indisponible"), el("p", "", "L’historique de ce même ratio et de ce même horizon est insuffisant pour tracer Q1 et Q3. Les multiples disponibles restent consultables dans Graphiques."));
+        if (key === "ev_ebitda") {
+          const button = el("button", "forward-stock-chip forward-annual-link", "Voir le graphique annuel et la croissance de l’EBITDA"); button.type = "button";
+          button.addEventListener("click", () => {state.horizon = horizon; state.view = "charts"; remember(); render(); charts.scrollIntoView({block: "start"});});
+          empty.append(button);
+        }
         card.append(empty);
       } else {
         const groups = el("div", "forward-ranking-groups");
@@ -266,6 +273,37 @@
     for (const review of audit.history_review) {const p = el("p"); p.append(sourceLink(review.url, review.source), document.createTextNode(" — " + review.finding)); details.append(p);}
     auditView.append(details);
   }
+  function annualPanel() {
+    const stock = selected(), m = F.annualEv(stock, state.range), article = el("article", "forward-panel forward-annual-panel"); article.dataset.metric = "ev_ebitda";
+    const heading = el("div", "forward-panel-heading"), left = el("div");
+    left.append(el("h3", "", "EV/EBITDA annuel · historique et prévisions"), el("p", "", "Exercices fiscaux · réalisé puis FY1 / FY2 estimés"));
+    const selectedYear = m.growth.find(item => item.horizon === state.horizon)?.target;
+    const current = el("div", "forward-current"); current.append(el("strong", "", multiple(selectedYear?.ev_ebitda)), el("small", "", selectedYear ? "FY" + selectedYear.fiscal_year + " · " + (selectedYear.ev_ebitda_is_estimate ? "estimation" : "réalisé") : "FY" + state.horizon + " · N/D"));
+    heading.append(left, current); article.append(heading);
+    const growth = el("div", "forward-ebitda-growth"); growth.setAttribute("aria-label", "Croissance annuelle de l’EBITDA");
+    for (const horizon of [1, 2]) {
+      const item = m.growth.find(row => row.horizon === horizon), card = el("div", "forward-growth-card" + (horizon === state.horizon ? " is-selected" : "")); card.dataset.horizon = horizon;
+      const value = item?.value, hasValue = Number.isFinite(value);
+      card.append(el("h4", "", "Croissance EBITDA · FY" + horizon), el("strong", hasValue ? value < 0 ? "is-negative" : "is-positive" : "", hasValue ? (value > 0 ? "+" : "") + number(value, 1) + " %" : "N/D"));
+      card.append(el("p", "", item?.year ? "FY" + item.year + " / FY" + item.baseYear : "Exercices non disponibles"));
+      card.append(el("p", "", hasValue ? "Base " + (item.base.ebitda_is_estimate ? "estimée" : "réalisée") + " → " + (item.target.ebitda_is_estimate ? "prévision" : "réalisé") : item?.reason === "nonpositive_base" ? "Base d’EBITDA nulle ou négative" : "EBITDA manquant pour l’un des exercices")); growth.append(card);
+    }
+    article.append(growth);
+    const legend = el("div", "forward-annual-legend"); legend.append(el("span", "is-actual", "Réalisé"), el("span", "is-estimate", "Prévisions")); article.append(legend);
+    const count = m.points.filter(point => F.positive(point[1])).length;
+    if (count >= 2) {
+      article.append(drawChart(m), el("p", "forward-chart-hint", "Survoler les exercices · flèches gauche / droite au clavier. Prévisions jusqu’à FY2."));
+    } else {
+      const empty = el("div", "forward-empty"); empty.append(el("strong", "", "Tableau annuel indisponible"), el("p", "", "La source ne fournit pas assez de multiples annuels positifs pour ce titre.")); article.append(empty);
+    }
+    const source = el("div", "forward-source-line");
+    if (m.source) {
+      source.append(sourceLink(m.source.source_url, "MarketScreener · tableau annuel"), document.createTextNode(" · Relevé du " + date(m.source.date) + ". Multiples annuels du fournisseur ; EV prévisionnelle avec dette/trésorerie projetées, distincte des cartes à EV actuelle. Aucun quartile forward calculé sur cette courbe."));
+      if (stock.annual_status?.status === "retained") source.append(el("p", "forward-current-warning", "Dernier tableau conservé · source à reprendre."));
+      if (stock.ev_quality?.status === "withheld") source.append(el("p", "forward-current-warning", "MDA : les cartes à EV actuelle restent suspendues en attendant le rapprochement du bilan. La courbe reprend les ratios annuels publiés par le fournisseur."));
+    } else source.textContent = "Tableau annuel non disponible pour ce titre. Les dernières données valides sont conservées lors des refresh.";
+    article.append(source); return article;
+  }
   function panel(m) {
     const article = el("article", "forward-panel"); article.dataset.metric = m.key;
     const heading = el("div", "forward-panel-heading"), left = el("div");
@@ -310,6 +348,7 @@
     article.append(source); return article;
   }
   function drawChart(m) {
+    const annual = m.frequency === "annual";
     const wrap = el("div", "forward-chart"), tooltip = el("div", "forward-tooltip"); tooltip.hidden = true;
     const width = Math.max(300, Math.min(1200, (charts.clientWidth || host.clientWidth || 900) - 20)), height = width < 540 ? 192 : 215;
     const margin = {left: 17, top: 19, right: 52, bottom: 28}, plotW = width - margin.left - margin.right, plotH = height - margin.top - margin.bottom;
@@ -321,30 +360,38 @@
     const bottom = Math.max(0, min - pad), top = max + pad;
     const x = d => margin.left + (Date.parse(d) - start) / (end - start || 1) * plotW;
     const y = v => margin.top + (top - v) / (top - bottom || 1) * plotH;
-    const chart = svg("svg", {viewBox: "0 0 " + width + " " + height, role: "img", tabindex: "0", "aria-label": names[m.key] + " FY" + state.horizon + ", courbe historique, moyenne et quartiles. Utiliser les flèches pour explorer."});
-    chart.append(svg("title", {}, selected().title + " — " + names[m.key] + " FY" + state.horizon));
+    const chartTitle = annual ? "EV/EBITDA annuel, réalisé et prévisions FY1/FY2" : names[m.key] + " FY" + state.horizon + ", courbe historique, moyenne et quartiles";
+    const chart = svg("svg", {viewBox: "0 0 " + width + " " + height, role: "img", tabindex: "0", "aria-label": chartTitle + ". Utiliser les flèches pour explorer."});
+    chart.append(svg("title", {}, selected().title + " — " + chartTitle));
     if (m.stats.available) chart.append(svg("rect", {class: "fv-band", x: margin.left, y: y(m.stats.q3), width: plotW, height: y(m.stats.q1) - y(m.stats.q3)}));
     for (let i = 0; i < 5; i++) {
       const value = bottom + (top - bottom) * i / 4, yy = y(value);
       chart.append(svg("line", {class: "fv-grid", x1: margin.left, x2: width - margin.right, y1: yy, y2: yy}), svg("text", {x: width - margin.right + 8, y: yy + 3}, number(value, max > 100 ? 0 : 1)));
     }
-    const ticks = width < 500 ? 4 : 6;
+    const ticks = Math.min(points.length, width < 500 ? 4 : 6);
     for (let i = 0; i < ticks; i++) {
       const index = Math.round((points.length - 1) * i / (ticks - 1)), d = points[index][0], xx = x(d);
-      const label = new Intl.DateTimeFormat("fr-CA", {year: "2-digit", month: "short", timeZone: "UTC"}).format(new Date(d + "T12:00:00Z"));
+      const label = annual ? "FY" + m.metadata[d].fiscal_year : new Intl.DateTimeFormat("fr-CA", {year: "2-digit", month: "short", timeZone: "UTC"}).format(new Date(d + "T12:00:00Z"));
       chart.append(svg("line", {class: "fv-grid", x1: xx, x2: xx, y1: margin.top, y2: height - margin.bottom}),
         svg("text", {x: xx, y: height - 7, "text-anchor": i === 0 ? "start" : i === ticks - 1 ? "end" : "middle"}, label));
     }
     if (m.stats.available) for (const field of ["q1", "mean", "q3"]) chart.append(svg("line", {class: "fv-" + field, x1: margin.left, x2: width - margin.right, y1: y(m.stats[field]), y2: y(m.stats[field])}));
     let path = "", previous = null;
-    const maxGap = m.frequency === "monthly" ? 75 : m.frequency === "daily" ? 7 : 90;
+    const maxGap = annual ? 400 : m.frequency === "monthly" ? 75 : m.frequency === "daily" ? 7 : 90;
     for (const point of points) {
       if (!F.positive(point[1])) {previous = null; continue;}
       const move = !previous || (Date.parse(point[0]) - Date.parse(previous[0])) / 86400000 > maxGap;
-      path += (move ? "M" : "L") + x(point[0]).toFixed(2) + "," + y(point[1]).toFixed(2) + " "; previous = point;
+      if (annual) {
+        const estimate = m.metadata[point[0]].ev_ebitda_is_estimate;
+        if (!move) chart.append(svg("path", {class: "fv-series" + (estimate || m.metadata[previous[0]].ev_ebitda_is_estimate ? " fv-estimated" : ""), d: "M" + x(previous[0]) + "," + y(previous[1]) + "L" + x(point[0]) + "," + y(point[1])}));
+        chart.append(svg("circle", {class: "fv-annual-point" + (estimate ? " is-estimate" : ""), cx: x(point[0]), cy: y(point[1]), r: m.metadata[point[0]].fiscal_year === m.firstYear + state.horizon - 1 ? 4.5 : 3}));
+      } else path += (move ? "M" : "L") + x(point[0]).toFixed(2) + "," + y(point[1]).toFixed(2) + " ";
+      previous = point;
     }
-    chart.append(svg("path", {class: "fv-series", d: path}));
-    const last = positivePoints.at(-1); chart.append(svg("circle", {class: "fv-focus", cx: x(last[0]), cy: y(last[1]), r: 3.2}));
+    if (!annual) {
+      chart.append(svg("path", {class: "fv-series", d: path}));
+      const last = positivePoints.at(-1); chart.append(svg("circle", {class: "fv-focus", cx: x(last[0]), cy: y(last[1]), r: 3.2}));
+    }
     const crosshair = svg("line", {class: "fv-crosshair", y1: margin.top, y2: height - margin.bottom, visibility: "hidden"});
     const dot = svg("circle", {class: "fv-focus", r: 4, visibility: "hidden"}); chart.append(crosshair, dot);
     let cursor = positivePoints.length - 1;
@@ -352,7 +399,8 @@
       cursor = Math.max(0, Math.min(positivePoints.length - 1, index)); const p = positivePoints[cursor], xx = x(p[0]);
       crosshair.setAttribute("x1", xx); crosshair.setAttribute("x2", xx); crosshair.setAttribute("visibility", "visible");
       dot.setAttribute("cx", xx); dot.setAttribute("cy", y(p[1])); dot.setAttribute("visibility", "visible");
-      tooltip.replaceChildren(document.createTextNode(date(p[0])), el("strong", "", multiple(p[1]))); tooltip.hidden = false;
+      const label = annual ? "FY" + m.metadata[p[0]].fiscal_year + (m.metadata[p[0]].ev_ebitda_is_estimate ? " · prévision" : " · réalisé") : date(p[0]);
+      tooltip.replaceChildren(document.createTextNode(label), el("strong", "", multiple(p[1]))); tooltip.hidden = false;
       tooltip.style.left = Math.max(5, Math.min(width - 210, xx + 12)) + "px";
     }
     function hide() {tooltip.hidden = true; crosshair.setAttribute("visibility", "hidden"); dot.setAttribute("visibility", "hidden");}

@@ -123,28 +123,37 @@ def refresh(dashboard, prices, configs, now, only=None, fetcher=fetch, workers=4
         identity = stock['id']
         prior = stock.get('current_snapshot') or seeds.get(identity) or stock.get('latest')
         close, config = closes.get(identity), definitions.get(identity)
+        annual = stock.get('annual_valuation')
+        annual_status = 'not_applicable' if stock.get('financial') else 'reused' if annual else 'unavailable'
+        annual_error = None
         try:
-            if not prior or not close or not config:
-                raise ValueError('Consensus, cours ou définition manquant')
-            if prior.get('price_date') and close['date'] < prior['price_date']:
-                raise ValueError('Archive de prix antérieure au dernier cours valide')
-            if close.get('quote_symbol') != config.get('valuation_symbol', config['symbol']) or close.get('currency') != prior['currency']:
-                raise ValueError('Devise ou cotation du cours incompatible avec le consensus')
+            if not prior or not config:
+                raise ValueError('Consensus ou définition manquant')
             consensus = prior.get('consensus_date', prior['date'])
-            reused = consensus == today or (now.astimezone(TZ).weekday() >= 5 and close['date'] == prior.get('price_date'))
+            annual_ready = stock.get('financial') or (annual and annual.get('date') == today)
+            weekend_reuse = now.astimezone(TZ).weekday() >= 5 and close and close['date'] == prior.get('price_date') and (annual or stock.get('financial'))
+            reused = (consensus == today and annual_ready) or weekend_reuse
+            inputs = prior
             if reused:
-                candidate = revalue(prior, close, config, clock())
                 status, error = 'reused', None
-                # Preserve the observation timestamp if none of the inputs changed.
-                if candidate['price_date'] == prior.get('price_date') and candidate['price'] == prior['price']:
-                    candidate = deepcopy(prior)
             else:
                 if stop.is_set():
                     raise ValueError('Source suspendue après un refus d’accès')
                 if time.monotonic() >= deadline:
                     raise ValueError('Budget de collecte de trois minutes atteint')
                 try:
-                    candidate = revalue(source_snapshot(identity, config, prior, now, fetcher, clock), close, config, clock())
+                    inputs = source_snapshot(identity, config, prior, now, fetcher, clock)
+                    # Annual ratios and growth use a single provider table; they
+                    # do not need a compatible Yahoo/native-listing close.
+                    rows = inputs.pop('annual_financials', [])
+                    if not stock.get('financial'):
+                        if rows:
+                            stock['annual_valuation'] = {'date': inputs['date'], 'observed_at': inputs['observed_at'],
+                                'source_url': inputs['source_url'], 'currency': inputs['currency'], 'rows': rows}
+                            annual_status = 'collected'
+                        else:
+                            annual_error = 'Tableau annuel absent de la source'
+                            annual_status = 'retained' if annual else 'unavailable'
                     status, error = 'collected', None
                 except SourceRefusal:
                     stop.set()
@@ -153,8 +162,17 @@ def refresh(dashboard, prices, configs, now, only=None, fetcher=fetch, workers=4
                     if exc.code in [401, 403, 429]:
                         stop.set()
                     raise
+            if not close:
+                raise ValueError('Clôture datée absente ; tableau annuel indépendant du cours SAVY')
+            candidate = revalue(inputs, close, config, clock())
+            # Preserve the observation timestamp if none of the inputs changed.
+            if reused and candidate['price_date'] == prior.get('price_date') and candidate['price'] == prior['price']:
+                candidate = deepcopy(prior)
         except Exception as exc:
             error = str(exc)[:250]
+            if annual_status != 'collected' and not stock.get('financial'):
+                annual_status = 'retained' if annual else 'unavailable'
+                annual_error = error
             # A dated retained consensus may still support today's close, but is
             # explicitly cached. An invalid price or old consensus never does.
             try:
@@ -178,15 +196,18 @@ def refresh(dashboard, prices, configs, now, only=None, fetcher=fetch, workers=4
                 history.append(deepcopy(candidate))
                 history.sort(key=lambda s: s['date'])
         stock['current_status'] = {'status': status, 'checked_at': clock().isoformat(), 'error': error}
+        stock['annual_status'] = {'status': annual_status, 'checked_at': clock().isoformat(), 'error': annual_error}
         return {'id': identity, **stock['current_status']}
 
     with ThreadPoolExecutor(max_workers=workers) as pool:
         results = list(pool.map(one, selected))
     counts = {key: sum(r['status'] == key for r in results) for key in ['collected', 'reused', 'cached', 'retained', 'unavailable']}
+    eligible = [s for s in output['instruments'] if not s.get('financial')]
+    annual_coverage = {'eligible': len(eligible), 'available': sum(any(positive(row.get('ev_ebitda')) for row in s.get('annual_valuation', {}).get('rows', [])) for s in eligible)}
     output['refresh'] = {'schema_version': 1, 'kind': 'savy_forward_refresh',
         'checked_at': clock().isoformat(), 'as_of': clock().astimezone(TZ).date().isoformat(), 'runner': 'morning_briefing',
         'prices_generated_at': prices['generated_at'], 'price_dates': sorted({closes[r['id']]['date'] for r in results if r['id'] in closes}),
-        'scope': [r['id'] for r in results], 'counts': counts, 'results': results,
+        'scope': [r['id'] for r in results], 'counts': counts, 'results': results, 'annual_coverage': annual_coverage,
         'source_refused': stop.is_set(), 'historical_quartiles_refreshed': False,
         'note': 'Les multiples récents restent distincts des historiques DoltHub. Les dates du cours et des prévisions sont conservées. Les observations matinales ne sont pas des clôtures rétrospectives.'}
     return output

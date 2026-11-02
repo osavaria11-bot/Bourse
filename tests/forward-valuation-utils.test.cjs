@@ -157,3 +157,54 @@ test("refresh status cannot claim updated historical quartiles or miscount its c
   const bad = structuredClone(data); bad.refresh.historical_quartiles_refreshed = true; assert.throws(()=>F.validate(bad));
   const miscount = structuredClone(data); miscount.refresh.counts.collected = 0; assert.throws(()=>F.validate(miscount));
 });
+function annualStock() {
+  const s = stock();
+  s.annual_valuation = {date: "2026-11-02", observed_at: "2026-11-02T14:00:00Z", source_url: "https://example.com/valuation/", currency: "USD",
+    rows: [
+      {fiscal_year:2025,period_end:"2025-01-26",ebitda_millions:83317,ebitda_is_estimate:false,ev_ebitda:41.4,ev_ebitda_is_estimate:false},
+      {fiscal_year:2026,period_end:"2026-01-25",ebitda_millions:140143,ebitda_is_estimate:false,ev_ebitda:32.2,ev_ebitda_is_estimate:false},
+      {fiscal_year:2027,period_end:"2027-01-31",ebitda_millions:272980,ebitda_is_estimate:true,ev_ebitda:17.6,ev_ebitda_is_estimate:true},
+      {fiscal_year:2028,period_end:"2028-01-30",ebitda_millions:457613,ebitda_is_estimate:true,ev_ebitda:10.1,ev_ebitda_is_estimate:true},
+      {fiscal_year:2029,period_end:"2029-01-28",ebitda_millions:582188,ebitda_is_estimate:true,ev_ebitda:7.48,ev_ebitda_is_estimate:true}
+    ]}; return s;
+}
+test("annual EV uses provider ratios through FY2, with hand-calculated consecutive EBITDA growth", () => {
+  const s = annualStock(), m = F.annualEv(s, "MAX");
+  assert.equal(m.firstYear, 2027); assert.equal(m.points.length, 4);
+  assert.equal(m.points.at(-1)[1], 10.1); assert.equal(m.metadata["2027-01-31"].ev_ebitda_is_estimate, true);
+  close(m.growth[0].value, (272980 / 140143 - 1) * 100);
+  close(m.growth[1].value, (457613 / 272980 - 1) * 100);
+  assert.equal(m.growth[0].base.ebitda_is_estimate, false);
+  assert.equal(m.growth[1].base.ebitda_is_estimate, true);
+  assert.equal(m.stats.available, false);
+  assert.equal(F.annualEv(s, "1Y").points.length, 3);
+  assert.equal(F.rankedLists([s], "ev_ebitda", 1).eligible, 0);
+});
+test("annual EBITDA growth never skips a missing year or divides by a nonpositive base", () => {
+  for (const base of [null, 0, -10]) {
+    const s = annualStock(); s.annual_valuation.rows[1].ebitda_millions = base;
+    assert.equal(F.annualEv(s).growth[0].value, null);
+  }
+  const s = annualStock(); s.annual_valuation.rows.splice(1, 1);
+  assert.equal(F.annualEv(s).growth[0].value, null);
+  const t = annualStock(); t.annual_valuation.rows[3].ebitda_millions = 0;
+  assert.equal(F.annualEv(t).growth[1].value, -100);
+  t.annual_valuation.rows[3].ebitda_millions = -272980;
+  assert.equal(F.annualEv(t).growth[1].value, -200);
+  t.annual_valuation.rows.splice(3, 1);
+  assert.equal(F.annualEv(t).growth[1].value, null);
+});
+test("annual source distinguishes estimated bases and survives a withheld current EV, but excludes banks", () => {
+  const s = annualStock(); s.annual_valuation.rows[1].ebitda_is_estimate = true; s.ev_quality = {status: "withheld"};
+  assert.equal(F.annualEv(s).growth[0].base.ebitda_is_estimate, true);
+  assert.equal(F.annualEv(s).points.length, 4);
+  assert.equal(F.metric(s, "ev_ebitda", 1).reason, "ev_bridge_unreconciled");
+  s.financial = true; assert.equal(F.annualEv(s).reason, "financial"); assert.equal(F.annualEv(s).growth.length, 0);
+});
+test("annual validation rejects duplicate periods, false flags, nonpositive ratios and invalid EBITDA", () => {
+  const wrap = s => ({schema_version:1,kind:"savy_forward_dashboard",instruments:[s]});
+  F.validate(wrap(annualStock()));
+  for (const change of [row=>row.ev_ebitda=0,row=>row.ebitda_millions="100",row=>row.ebitda_is_estimate="yes",row=>row.fiscal_year=2025]) {
+    const s = annualStock(); change(s.annual_valuation.rows[1]); assert.throws(()=>F.validate(wrap(s)));
+  }
+});

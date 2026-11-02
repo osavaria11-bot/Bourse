@@ -148,6 +148,7 @@ def table_snapshot(source, instrument, source_url, now):
     if not unit_titles or any(title != currency + " in Million" for title in unit_titles):
         raise SourceError("Échelle financière non vérifiée")
     forecasts = []
+    annual_financials = []
     actual_indices = []
     for i, year in enumerate(years):
         period_end = date(year, fiscal_month, calendar.monthrange(year, fiscal_month)[1]).isoformat()
@@ -155,6 +156,12 @@ def table_snapshot(source, instrument, source_url, now):
         ebitda = rows["EBITDA"][i]
         is_eps_est = "table-child--bg-estimates" in eps["attrs"].get("class", "")
         is_ebitda_est = "table-child--bg-estimates" in ebitda["attrs"].get("class", "")
+        ratio_cell = rows.get("EV / EBITDA", [None] * len(years))[i]
+        annual_ratio = number(ratio_cell["text"]) if ratio_cell else None
+        annual_financials.append({"fiscal_year": year, "period_end": period_end,
+            "ebitda_millions": number(ebitda["text"]), "ebitda_is_estimate": is_ebitda_est,
+            "ev_ebitda": annual_ratio if annual_ratio is not None and annual_ratio > 0 else None,
+            "ev_ebitda_is_estimate": bool(ratio_cell and "table-child--bg-estimates" in ratio_cell["attrs"].get("class", ""))})
         if not is_eps_est and not is_ebitda_est:
             actual_indices.append(i)
         if is_eps_est or is_ebitda_est:
@@ -194,7 +201,8 @@ def table_snapshot(source, instrument, source_url, now):
         "source_url": source_url, "currency": currency, "price": price,
         "market_cap_millions": cap, "enterprise_value_millions": ev,
         "ev_bridge_date": bridge_date, "ev_method": "current_market_cap_plus_reported_net_debt" if actual_indices and net_debt is not None else "current_market_cap_plus_last_reported_ev_bridge",
-        "fiscal_month": fiscal_month, "forecasts": forecasts}
+        "fiscal_month": fiscal_month, "forecasts": forecasts,
+        "annual_financials": annual_financials}
 
 
 def analyst_count(cell):

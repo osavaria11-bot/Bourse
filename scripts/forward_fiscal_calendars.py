@@ -46,7 +46,7 @@ def normalize_snapshot(identity, snapshot):
     output = deepcopy(snapshot)
     if identity not in CALENDARS:
         return output
-    for forecast in output['forecasts']:
+    for forecast in output['forecasts'] + output.get('annual_financials', []):
         original = forecast.setdefault('source_period_end', forecast['period_end'])
         forecast['period_end'] = fiscal_end(identity, int(original[:4])).isoformat()
     if output.get('ev_bridge_date'):

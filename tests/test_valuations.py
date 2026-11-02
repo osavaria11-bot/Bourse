@@ -19,14 +19,14 @@ URL = C.HOST + "/quote/stock/SYNTHETIC-COMPANY-1234/valuation/"
 def source():
     rows = {"Market Cap":[1000,1500,None,None], "Enterprise Value (EV)":[1200,1650,1600,1400],
         "EPS":[4,5,6,8], "P/E":[20,30,25,18.75], "EBITDA":[100,150,200,300],
-        "Reference price":[80,150,150,150]}
+        "Reference price":[80,150,150,150], "EV / EBITDA":[12,11,8,4.67]}
     html = '<table id="valuationEnterpriseTable"><tr><th>Fiscal Period: December</th>'
     html += ''.join('<th>'+str(y)+'</th>' for y in [2025,2026,2027,2028])+'</tr>'
     for key, values in rows.items():
         unit = 'USD' if key in ['EPS','Reference price'] else 'USD in Million'
         html += '<tr><td>'+key+'<sup title="'+unit+'">1</sup></td>'
         for i,value in enumerate(values):
-            estimate = key in ['EPS','EBITDA'] and i > 0
+            estimate = key in ['EPS','EBITDA','EV / EBITDA'] and i > 0
             html += '<td class="'+('table-child--bg-estimates' if estimate else '')+'" title="Number of financial analysts who provided an estimate: 12">'+(str(value) if value is not None else '-')+'</td>'
         html += '</tr>'
     return html+'</table><span title="EUR">An unrelated sidebar must not change the financial currency.</span>'
@@ -54,6 +54,17 @@ class ValuationTests(unittest.TestCase):
         self.assertAlmostEqual(result['2']['pe'], 150/(6*w+8*(1-w)))
         self.assertAlmostEqual(result['1']['ev_ebitda'], 1700/(150*w+200*(1-w)))
         self.assertAlmostEqual(result['2']['ev_ebitda'], 1700/(200*w+300*(1-w)))
+
+    def test_annual_ratios_keep_provider_ev_and_actual_estimate_flags(self):
+        rows = self.snapshot()['annual_financials']
+        self.assertEqual([r['fiscal_year'] for r in rows], [2025, 2026, 2027, 2028])
+        self.assertEqual(rows[0]['ebitda_millions'], 100)
+        self.assertFalse(rows[0]['ebitda_is_estimate'])
+        self.assertFalse(rows[0]['ev_ebitda_is_estimate'])
+        self.assertTrue(rows[1]['ebitda_is_estimate'])
+        self.assertTrue(rows[1]['ev_ebitda_is_estimate'])
+        self.assertEqual(rows[2]['ev_ebitda'], 8)
+        self.assertNotEqual(rows[2]['ev_ebitda'], 1700 / 200)
 
     def test_no_extrapolation_when_year_three_is_missing(self):
         snap = self.snapshot()

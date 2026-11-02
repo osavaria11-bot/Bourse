@@ -24,6 +24,12 @@ def fixture(identity='TEST'):
     stock = {'id': identity, 'title': identity, 'type': 'stock', 'symbol': identity,
              'financial': False, 'latest': deepcopy(snapshot), 'current_snapshot': deepcopy(snapshot),
              'observations': [deepcopy(snapshot)], 'pe_history': {'rows': [{'date': '2026-10-28', 'fy1': 30, 'fy2': 20}]}}
+    stock['annual_valuation'] = {'date': snapshot['date'], 'observed_at': snapshot['observed_at'],
+        'source_url': snapshot['source_url'], 'currency': 'USD', 'rows': [
+            {'fiscal_year': 2025, 'period_end': '2025-12-31', 'ebitda_millions': 80,
+             'ebitda_is_estimate': False, 'ev_ebitda': 14, 'ev_ebitda_is_estimate': False},
+            {'fiscal_year': 2026, 'period_end': '2026-12-31', 'ebitda_millions': 100,
+             'ebitda_is_estimate': True, 'ev_ebitda': 11, 'ev_ebitda_is_estimate': True}]}
     close = {'id': identity, 'value': 100, 'date': '2026-10-30', 'currency': 'USD', 'quote_symbol': identity,
              'source_url': 'https://finance.yahoo.com/quote/' + identity + '/'}
     dashboard = {'schema_version': 1, 'kind': 'savy_forward_dashboard', 'instruments': [stock]}
@@ -137,6 +143,46 @@ class RefreshTest(unittest.TestCase):
         result = R.refresh(data, prices, config, self.now)
         self.assertEqual(result['instruments'][0]['current_snapshot'], data['instruments'][0]['current_snapshot'])
         self.assertEqual(result['refresh']['counts']['retained'], 1)
+
+    def test_annual_table_is_collected_without_compatible_native_close(self):
+        for missing in [True, False]:
+            data, prices, config = fixture()
+            stock = data['instruments'][0]
+            rows = stock.pop('annual_valuation')['rows']
+            fresh = {**deepcopy(stock['current_snapshot']), 'annual_financials': rows}
+            if missing:
+                prices['series'] = []
+            else:
+                prices['series'][0]['currency'] = 'CAD'
+            with patch.object(R, 'source_snapshot', return_value=fresh) as provider:
+                result = R.refresh(data, prices, config, self.now)
+            updated = result['instruments'][0]
+            self.assertEqual(provider.call_count, 1)
+            self.assertEqual(updated['annual_valuation']['rows'], rows)
+            self.assertEqual(updated['annual_status']['status'], 'collected')
+            self.assertEqual(updated['current_snapshot'], stock['current_snapshot'])
+            self.assertEqual(result['refresh']['annual_coverage'], {'eligible': 1, 'available': 1})
+            self.assertEqual(updated['observations'], stock['observations'])
+
+    def test_annual_source_failure_preserves_its_own_date_and_values(self):
+        data, prices, config = fixture()
+        stock = data['instruments'][0]
+        stock['annual_valuation']['date'] = '2026-10-29'
+        result = R.refresh(data, prices, config, self.now, fetcher=lambda _: (_ for _ in ()).throw(ValueError('offline')))
+        updated = result['instruments'][0]
+        self.assertEqual(updated['annual_valuation'], stock['annual_valuation'])
+        self.assertEqual(updated['annual_status']['status'], 'retained')
+
+    def test_fiscal_calendar_normalizes_annual_rows_without_changing_values(self):
+        data, _, _ = fixture('NVDA')
+        snap = data['instruments'][0]['current_snapshot']
+        snap['annual_financials'] = [{'period_end': '2027-01-31', 'fiscal_year': 2027, 'ebitda_millions': 272980}]
+        normalized = R.normalize_snapshot('NVDA', snap)
+        self.assertEqual(normalized['annual_financials'][0]['period_end'], '2027-01-31')
+        snap['annual_financials'][0]['period_end'] = '2026-01-31'
+        normalized = R.normalize_snapshot('NVDA', snap)
+        self.assertEqual(normalized['annual_financials'][0]['period_end'], '2026-01-25')
+        self.assertEqual(normalized['annual_financials'][0]['ebitda_millions'], 272980)
 
 
 if __name__ == '__main__':

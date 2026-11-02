@@ -115,6 +115,26 @@
       consensus_date: s.consensus_date || s.date, source_url: s.source_url,
       status: instrument.current_status?.status || "retained"};
   }
+  function annualEv(instrument, range = "2Y") {
+    const source = instrument.annual_valuation;
+    const empty = {key: "ev_ebitda", frequency: "annual", points: [], metadata: {}, growth: [], stats: {available: false}, source};
+    if (instrument.financial) return {...empty, reason: "financial"};
+    if (!source?.rows?.length) return {...empty, reason: "missing_annual"};
+    const rows = source.rows, firstFuture = rows.find(row => row.period_end >= source.date);
+    const firstYear = firstFuture?.fiscal_year;
+    const growth = [1, 2].map(horizon => {
+      const year = firstYear === undefined ? null : firstYear + horizon - 1;
+      const target = rows.find(row => row.fiscal_year === year), base = rows.find(row => row.fiscal_year === year - 1);
+      const value = positive(base?.ebitda_millions) && V.finite(target?.ebitda_millions) ? 100 * (target.ebitda_millions / base.ebitda_millions - 1) : null;
+      return {horizon, year, baseYear: year === null ? null : year - 1, value, target, base,
+        reason: !target || !base ? "missing_year" : !positive(base.ebitda_millions) ? "nonpositive_base" : !V.finite(target.ebitda_millions) ? "missing_ebitda" : null};
+    });
+    const start = cutoff(source.date, range), lastYear = firstYear === undefined ? Number(source.date.slice(0, 4)) : firstYear + 1;
+    const shown = rows.filter(row => row.period_end >= start && row.fiscal_year <= lastYear);
+    return {...empty, points: shown.map(row => [row.period_end, row.ev_ebitda]),
+      metadata: Object.fromEntries(shown.map(row => [row.period_end, row])), growth,
+      firstYear, first: shown[0]?.period_end, last: shown.at(-1)?.period_end};
+  }
   function validate(payload, now = Date.now()) {
     if (payload?.schema_version !== 1 || payload.kind !== "savy_forward_dashboard" || !Array.isArray(payload.instruments)) throw new Error("Données forward indisponibles");
     const seen = new Set();
@@ -124,6 +144,15 @@
       seen.add(row.id);
       if (row.latest) V.snapshot(row.latest, now);
       if (row.current_snapshot) V.snapshot(row.current_snapshot, now);
+      if (row.annual_valuation) {
+        const annual = row.annual_valuation;
+        if (!V.day(annual.date) || Date.parse(annual.date) > now || !Number.isFinite(Date.parse(annual.observed_at)) || Date.parse(annual.observed_at) > now + 300000 || !/^https:\/\/[a-z0-9.-]+\//i.test(annual.source_url) || !/^[A-Z]{3}$/.test(annual.currency) || !Array.isArray(annual.rows)) throw new Error("Source annuelle invalide");
+        let previousYear = 0, previousEnd = "";
+        for (const point of annual.rows) {
+          if (!Number.isInteger(point.fiscal_year) || point.fiscal_year <= previousYear || !V.day(point.period_end) || point.period_end <= previousEnd || Number(point.period_end.slice(0, 4)) !== point.fiscal_year || (point.ebitda_millions !== null && !V.finite(point.ebitda_millions)) || (point.ev_ebitda !== null && !positive(point.ev_ebitda)) || typeof point.ebitda_is_estimate !== "boolean" || typeof point.ev_ebitda_is_estimate !== "boolean") throw new Error("Données annuelles invalides");
+          previousYear = point.fiscal_year; previousEnd = point.period_end;
+        }
+      }
       V.history({schema_version: 1, kind: "savy_stock_valuation", id: row.id, observations: row.observations || []}, row.id, now);
       V.history({schema_version: 1, kind: "savy_stock_valuation", id: row.id, observations: row.refresh_history || []}, row.id, now);
       let previous = "";
@@ -199,5 +228,5 @@
     for (const entries of Object.values(output)) entries.sort((a, b) => a.date.localeCompare(b.date));
     return output;
   }
-  return {METRICS, positive, quantile, statistics, cutoff, metric, rankedLists, commonLow, auditMetric, currentMetric, validate, parseImport};
+  return {METRICS, positive, quantile, statistics, cutoff, metric, rankedLists, commonLow, auditMetric, currentMetric, annualEv, validate, parseImport};
 });
