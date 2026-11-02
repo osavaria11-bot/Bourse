@@ -2,7 +2,7 @@
   "schema_version": 1,
   "as_of": "2026-10-30",
   "generated_at": "2026-11-02T05:08:24-05:00",
-  "status": "partial",
+  "status": "stale",
   "errors": {
     "FCMO": "Séances suspectes exclues des périodes qui les traversent : 2020-06-10",
     "FX": "Unexpected stress source identity: CAD=X"
@@ -3113,8 +3113,8 @@
   "retained_snapshot": {
     "source_generated_at": "2026-11-02T05:08:24-05:00",
     "source_as_of": "2026-10-30",
-    "attempted_as_of": "2026-10-30",
-    "checked_at": "2026-11-02T15:48:02-05:00",
+    "attempted_as_of": "2026-11-02",
+    "checked_at": "2026-11-02T16:54:46-05:00",
     "failed_sources": [
       "FX"
     ],

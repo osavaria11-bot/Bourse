@@ -3,9 +3,9 @@
   "currency": "CAD",
   "capital": 10000.0,
   "inception": "2026-10-19",
-  "as_of": "2026-10-30",
-  "updated_at": "2026-10-31T13:54:00-04:00",
-  "ledger_sha256": "52078355e05a00fee9cf41aa9787d3d9e8b6f94e5c0d5a3107f524b2fed3d5e7",
+  "as_of": "2026-11-02",
+  "updated_at": "2026-11-02T16:54:37-05:00",
+  "ledger_sha256": "e126c3d925c51a156a7b62c2ed20698f12c2abb49519e3450e1738a82c3164a9",
   "benchmarks": [
     "FEQT",
     "VEQT",
@@ -73,6 +73,10 @@
         {
           "date": "2026-10-30",
           "value": 9924.910007156566
+        },
+        {
+          "date": "2026-11-02",
+          "value": 9930.278817935015
         }
       ],
       "initial_positions": [
@@ -174,6 +178,10 @@
         {
           "date": "2026-10-30",
           "value": 9963.17959580398
+        },
+        {
+          "date": "2026-11-02",
+          "value": 9987.52987923575
         }
       ],
       "initial_positions": [
@@ -288,6 +296,10 @@
         {
           "date": "2026-10-30",
           "value": 9955.17470450679
+        },
+        {
+          "date": "2026-11-02",
+          "value": 9985.350498348731
         }
       ],
       "initial_positions": [
@@ -398,6 +410,10 @@
         {
           "date": "2026-10-30",
           "value": 9946.206096902362
+        },
+        {
+          "date": "2026-11-02",
+          "value": 9979.75619525398
         }
       ],
       "initial_positions": [
@@ -529,6 +545,10 @@
         {
           "date": "2026-10-30",
           "value": 9888.905195025178
+        },
+        {
+          "date": "2026-11-02",
+          "value": 9910.230405863482
         }
       ],
       "initial_positions": [
@@ -659,6 +679,10 @@
         {
           "date": "2026-10-30",
           "value": 9910.167955813818
+        },
+        {
+          "date": "2026-11-02",
+          "value": 9889.411831063364
         }
       ],
       "initial_positions": [
@@ -782,6 +806,10 @@
         {
           "date": "2026-10-30",
           "value": 9977.304586819691
+        },
+        {
+          "date": "2026-11-02",
+          "value": 9975.341569157561
         }
       ],
       "initial_positions": [
@@ -903,6 +931,10 @@
         {
           "date": "2026-10-30",
           "value": 9848.260343710932
+        },
+        {
+          "date": "2026-11-02",
+          "value": 9841.18976287183
         }
       ],
       "initial_positions": [
@@ -1010,6 +1042,10 @@
         {
           "date": "2026-10-30",
           "value": 9826.230665892643
+        },
+        {
+          "date": "2026-11-02",
+          "value": 9795.185941132471
         }
       ],
       "initial_positions": [
@@ -1116,6 +1152,10 @@
         {
           "date": "2026-10-30",
           "value": 9923.644118526945
+        },
+        {
+          "date": "2026-11-02",
+          "value": 9902.003024111596
         }
       ],
       "initial_positions": [
@@ -1215,6 +1255,10 @@
         {
           "date": "2026-10-30",
           "value": 9929.886930900137
+        },
+        {
+          "date": "2026-11-02",
+          "value": 9935.60354926228
         }
       ],
       "initial_positions": [
@@ -1310,6 +1354,10 @@
         {
           "date": "2026-10-30",
           "value": 9895.670278822132
+        },
+        {
+          "date": "2026-11-02",
+          "value": 9895.670278822132
         }
       ],
       "initial_positions": [
@@ -1377,6 +1425,10 @@
         {
           "date": "2026-10-30",
           "value": 9819.004084154883
+        },
+        {
+          "date": "2026-11-02",
+          "value": 9831.932628058208
         }
       ],
       "initial_positions": [
@@ -1444,6 +1496,10 @@
         {
           "date": "2026-10-30",
           "value": 9877.66335831594
+        },
+        {
+          "date": "2026-11-02",
+          "value": 9890.318401299879
         }
       ],
       "initial_positions": [
@@ -1511,6 +1567,10 @@
         {
           "date": "2026-10-30",
           "value": 9938.977455557275
+        },
+        {
+          "date": "2026-11-02",
+          "value": 9947.87647558846
         }
       ],
       "initial_positions": [
@@ -1585,6 +1645,10 @@
         {
           "date": "2026-10-30",
           "value": 9981.55619093097
+        },
+        {
+          "date": "2026-11-02",
+          "value": 9982.80846377921
         }
       ],
       "initial_positions": [
@@ -1699,6 +1763,10 @@
         {
           "date": "2026-10-30",
           "value": 9815.760377991463
+        },
+        {
+          "date": "2026-11-02",
+          "value": 9847.834181841466
         }
       ],
       "initial_positions": [
@@ -1810,6 +1878,10 @@
         {
           "date": "2026-10-30",
           "value": 9792.031824680716
+        },
+        {
+          "date": "2026-11-02",
+          "value": 9823.756801881305
         }
       ],
       "initial_positions": [
@@ -1949,6 +2021,10 @@
         {
           "date": "2026-10-30",
           "value": 9776.21278914022
+        },
+        {
+          "date": "2026-11-02",
+          "value": 9807.7052152412
         }
       ],
       "initial_positions": [
@@ -2075,6 +2151,10 @@
         {
           "date": "2026-10-30",
           "value": 9923.258957280246
+        },
+        {
+          "date": "2026-11-02",
+          "value": 9896.423492821388
         }
       ],
       "initial_positions": [
@@ -2168,6 +2248,10 @@
         {
           "date": "2026-10-30",
           "value": 9909.95680766067
+        },
+        {
+          "date": "2026-11-02",
+          "value": 9885.883499459404
         }
       ],
       "initial_positions": [
@@ -2275,6 +2359,10 @@
         {
           "date": "2026-10-30",
           "value": 9918.156694539726
+        },
+        {
+          "date": "2026-11-02",
+          "value": 9874.004108219067
         }
       ],
       "initial_positions": [
@@ -2375,6 +2463,10 @@
         {
           "date": "2026-10-30",
           "value": 9919.20584998959
+        },
+        {
+          "date": "2026-11-02",
+          "value": 9883.297696992044
         }
       ],
       "initial_positions": [
@@ -2429,6 +2521,10 @@
         {
           "date": "2026-10-30",
           "value": 9908.341671456055
+        },
+        {
+          "date": "2026-11-02",
+          "value": 9882.766631637334
         }
       ],
       "initial_positions": [
@@ -2529,6 +2625,10 @@
         {
           "date": "2026-10-30",
           "value": 9810.687398450811
+        },
+        {
+          "date": "2026-11-02",
+          "value": 9811.332673355264
         }
       ],
       "initial_positions": [
@@ -2638,6 +2738,10 @@
         {
           "date": "2026-10-30",
           "value": 9859.121823857753
+        },
+        {
+          "date": "2026-11-02",
+          "value": 9850.116335206674
         }
       ],
       "initial_positions": [
@@ -2741,56 +2845,61 @@
       "published_at": "2026-11-01T11:39:03-05:00",
       "method": "buy_hold_fractional_ex_date_close_v1",
       "definition_sha256": "04a820408d62f99ad48f856b2a3eca8796e22dc2381a1b01cee86fc4c70532fe",
-      "history": [],
+      "history": [
+        {
+          "date": "2026-11-02",
+          "value": 10000.0
+        }
+      ],
       "initial_positions": [
         {
           "ticker": "FCMO",
           "name": "Fidelity U.S. Momentum ETF",
           "weight": 0.12,
-          "close": null,
-          "units": null
+          "close": 22.69,
+          "units": 52.88673424416042
         },
         {
           "ticker": "FEQT",
           "name": "Fidelity All-in-One Equity ETF",
           "weight": 0.153,
-          "close": null,
-          "units": null
+          "close": 18.97,
+          "units": 80.65366367949395
         },
         {
           "ticker": "FINN",
           "name": "Fidelity Global Innovators ETF",
           "weight": 0.11,
-          "close": null,
-          "units": null
+          "close": 32.14,
+          "units": 34.225264467952705
         },
         {
           "ticker": "VDY",
           "name": "Vanguard FTSE Canadian High Dividend Yield Index ETF",
           "weight": 0.28,
-          "close": null,
-          "units": null
+          "close": 78.69000244140625,
+          "units": 35.582665054368526
         },
         {
           "ticker": "VEE",
           "name": "Vanguard FTSE Emerging Markets All Cap Index ETF",
           "weight": 0.06,
-          "close": null,
-          "units": null
+          "close": 46.869998931884766,
+          "units": 12.80136577071333
         },
         {
           "ticker": "XMI",
           "name": "iShares MSCI Min Vol EAFE Index ETF",
           "weight": 0.2,
-          "close": null,
-          "units": null
+          "close": 51.15999984741211,
+          "units": 39.09304155522136
         },
         {
           "ticker": "ZUQ",
           "name": "BMO MSCI USA High Quality Index ETF",
           "weight": 0.077,
-          "close": null,
-          "units": null
+          "close": 112.34500122070312,
+          "units": 6.853887503969363
         }
       ]
     }
