@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "portfolio_exposures",
-  "generated_at": "2026-11-03T01:07:00.282405+00:00",
+  "generated_at": "2026-11-03T12:41:54.467012+00:00",
   "benchmark": "FEQT",
   "methodology": "Pondérations par valeur de marché en CAD; FNB décomposés; secteurs GICS; pays de risque ou pays publié par l’émetteur. Aucun calcul selon les devises ou le chiffre d’affaires géographique. Solde non détaillé conservé explicitement. Arrondis de collecte harmonisés à 100 %.",
   "labels": {
@@ -855,7 +855,7 @@
       ],
       "source_url": "https://www.fidelity.ca/en/products/etfs/fcuv/",
       "note": "Répartition publiée par Fidelity; solde hors secteurs et pays non détaillés conservés séparément.",
-      "checked_at": "2026-10-27T09:13:44.827541+00:00",
+      "checked_at": "2026-11-03T12:41:54.467012+00:00",
       "fetch_status": "fresh",
       "refresh": {
         "kind": "fidelity"
@@ -967,7 +967,7 @@
       ],
       "source_url": "https://www.fidelity.ca/en/products/etfs/feqt/",
       "note": "Répartition publiée par Fidelity; solde hors secteurs et pays non détaillés conservés séparément.",
-      "checked_at": "2026-10-27T09:13:44.827541+00:00",
+      "checked_at": "2026-11-03T12:41:54.467012+00:00",
       "fetch_status": "fresh",
       "refresh": {
         "kind": "fidelity"
@@ -1631,47 +1631,47 @@
       "sectors": [
         {
           "id": "communication_services",
-          "weight": 14.31032598
+          "weight": 13.62003036
         },
         {
           "id": "consumer_discretionary",
-          "weight": 10.70708483
+          "weight": 11.34706173
         },
         {
           "id": "consumer_staples",
-          "weight": 6.47708593
+          "weight": 7.03163142
         },
         {
           "id": "energy",
-          "weight": 0.49469406
+          "weight": 0.49149781
         },
         {
           "id": "financials",
-          "weight": 0.21330665
+          "weight": 0.227451
         },
         {
           "id": "health_care",
-          "weight": 4.46466239
+          "weight": 4.90810889
         },
         {
           "id": "industrials",
-          "weight": 3.48669503
+          "weight": 3.62322581
         },
         {
           "id": "materials",
-          "weight": 1.02618393
+          "weight": 1.08423908
         },
         {
           "id": "other_assets",
-          "weight": 1.27007579
+          "weight": 1.28484808
         },
         {
           "id": "technology",
-          "weight": 56.43453654
+          "weight": 55.20750273
         },
         {
           "id": "utilities",
-          "weight": 1.11534887
+          "weight": 1.174403089999992
         }
       ],
       "geography": [
@@ -1702,9 +1702,9 @@
       ],
       "source_url": "https://funds.cifinancial.com/en/documents/static/Fund_Profiles/Exchange_Traded_Funds/383287/CIInvescoNASDAQ100IndexETF_Monthly_Profile.pdf",
       "note": "QQC : part QQQM de 99,51 % publiée par CI au 31 août; placements QQQM au 2026-10-09, reclassés selon les secteurs GICS publiés par BlackRock. ARM classé en technologie d’après son activité de concepteur de semi-conducteurs. Géographie CI au 31 août. Dates distinctes, comparaison sectorielle indicative.",
-      "checked_at": "2026-10-27T09:13:44.827541+00:00",
+      "checked_at": "2026-11-03T12:41:54.467012+00:00",
       "fetch_status": "fresh",
-      "sector_as_of": "2026-10-23",
+      "sector_as_of": "2026-11-02",
       "sector_indicative": true,
       "underlying_source_url": "https://www.invesco.com/us/en/financial-products/etfs/invesco-nasdaq-100-etf.html",
       "classification_source_url": "https://www.blackrock.com/ca/investors/en/products/309480/ishares-core-equity-etf-portfolio-fund",
@@ -2157,7 +2157,7 @@
       ],
       "source_url": "https://www.vanguard.ca/en/product/etf/equity/9561/vanguard-ftse-canada-all-cap-index-etf",
       "note": "Titres sous-jacents reclassés selon les secteurs GICS fournis par Vanguard; pondérations sur la totalité du FNB.",
-      "checked_at": "2026-10-27T09:13:44.827541+00:00",
+      "checked_at": "2026-11-03T12:41:54.467012+00:00",
       "fetch_status": "fresh",
       "refresh": {
         "kind": "vanguard",
@@ -2227,7 +2227,7 @@
       ],
       "source_url": "https://www.vanguard.ca/en/product/etf/equity/9560/vanguard-ftse-canadian-high-dividend-yield-index-etf",
       "note": "Titres sous-jacents reclassés selon les secteurs GICS fournis par Vanguard; pondérations sur la totalité du FNB.",
-      "checked_at": "2026-10-27T09:13:44.827541+00:00",
+      "checked_at": "2026-11-03T12:41:54.467012+00:00",
       "fetch_status": "fresh",
       "refresh": {
         "kind": "vanguard",
@@ -2437,7 +2437,7 @@
       ],
       "source_url": "https://www.vanguard.ca/en/product/etf/equity/9556/vanguard-ftse-emerging-markets-all-cap-index-etf",
       "note": "Titres sous-jacents reclassés selon les secteurs GICS fournis par Vanguard; pondérations sur la totalité du FNB.",
-      "checked_at": "2026-10-27T09:13:44.827541+00:00",
+      "checked_at": "2026-11-03T12:41:54.467012+00:00",
       "fetch_status": "fresh",
       "refresh": {
         "kind": "vanguard",
@@ -2715,7 +2715,7 @@
       ],
       "source_url": "https://www.vanguard.ca/en/product/etf/asset-allocation/9692/vanguard-all-equity-etf-portfolio",
       "note": "Titres sous-jacents reclassés selon les secteurs GICS fournis par Vanguard; pondérations sur la totalité du FNB.",
-      "checked_at": "2026-10-27T09:13:44.827541+00:00",
+      "checked_at": "2026-11-03T12:41:54.467012+00:00",
       "fetch_status": "fresh",
       "refresh": {
         "kind": "vanguard",
@@ -2793,7 +2793,7 @@
       ],
       "source_url": "https://www.vanguard.ca/en/product/etf/equity/9563/vanguard-sp-500-index-etf",
       "note": "Titres sous-jacents reclassés selon les secteurs GICS fournis par Vanguard; pondérations sur la totalité du FNB.",
-      "checked_at": "2026-10-27T09:13:44.827541+00:00",
+      "checked_at": "2026-11-03T12:41:54.467012+00:00",
       "fetch_status": "fresh",
       "refresh": {
         "kind": "vanguard",
@@ -3345,7 +3345,7 @@
       ],
       "source_url": "https://www.vanguard.ca/en/product/etf/equity/9569/vanguard-ftse-developed-all-cap-ex-north-america-index-etf",
       "note": "Titres sous-jacents reclassés selon les secteurs GICS fournis par Vanguard; pondérations sur la totalité du FNB.",
-      "checked_at": "2026-10-27T09:13:44.827541+00:00",
+      "checked_at": "2026-11-03T12:41:54.467012+00:00",
       "fetch_status": "fresh",
       "refresh": {
         "kind": "vanguard",
@@ -3461,54 +3461,54 @@
     {
       "id": "XBB",
       "title": "iShares Core Canadian Universe Bond Index ETF",
-      "as_of": "2026-10-23",
+      "as_of": "2026-11-02",
       "sectors": [
         {
           "id": "bonds",
-          "weight": 100.0
+          "weight": 99.82285716
         },
         {
           "id": "other_assets",
-          "weight": 0.0
+          "weight": 0.17714284
         }
       ],
       "geography": [
         {
           "id": "canada",
-          "weight": 96.16033985
+          "weight": 96.13030511
         },
         {
           "id": "france",
-          "weight": 0.13984106
+          "weight": 0.140256
         },
         {
           "id": "germany",
-          "weight": 0.25418838
+          "weight": 0.25401388
         },
         {
           "id": "luxembourg",
-          "weight": 0.01481426
+          "weight": 0.01488926
         },
         {
           "id": "supranational",
-          "weight": 0.4498256
+          "weight": 0.44933394
         },
         {
           "id": "switzerland",
-          "weight": 0.04865977
+          "weight": 0.04880707
         },
         {
           "id": "united_kingdom",
-          "weight": 0.10311788
+          "weight": 0.10374239
         },
         {
           "id": "united_states",
-          "weight": 2.8292131999999937
+          "weight": 2.858652350000006
         }
       ],
       "source_url": "https://www.blackrock.com/ca/investors/en/products/239493/ishares-canadian-universe-bond-index-etf",
       "note": "Secteurs GICS et pays de risque; pondérations des placements sous-jacents, obligations et liquidités incluses.",
-      "checked_at": "2026-10-27T09:13:44.827541+00:00",
+      "checked_at": "2026-11-03T12:41:54.467012+00:00",
       "fetch_status": "fresh",
       "refresh": {
         "kind": "ishares",
@@ -3944,50 +3944,50 @@
     {
       "id": "XGD",
       "title": "iShares Global Gold",
-      "as_of": "2026-10-23",
+      "as_of": "2026-11-02",
       "sectors": [
         {
           "id": "materials",
-          "weight": 99.90483864
+          "weight": 99.90327798
         },
         {
           "id": "other_assets",
-          "weight": 0.09516136
+          "weight": 0.09672202
         }
       ],
       "geography": [
         {
           "id": "australia",
-          "weight": 0.17491609
+          "weight": 0.19777852
         },
         {
           "id": "brazil",
-          "weight": 0.39553691
+          "weight": 0.34036266
         },
         {
           "id": "canada",
-          "weight": 63.67034293
+          "weight": 63.24331838
         },
         {
           "id": "colombia",
-          "weight": 0.09158175
+          "weight": 0.09430994
         },
         {
           "id": "south_africa",
-          "weight": 11.34718508
+          "weight": 11.38911736
         },
         {
           "id": "united_kingdom",
-          "weight": 1.63596612
+          "weight": 1.61275041
         },
         {
           "id": "united_states",
-          "weight": 22.684471119999998
+          "weight": 23.122362730000006
         }
       ],
       "source_url": "https://www.blackrock.com/ca/investors/en/products/239848/ishares-sptsx-global-gold-index-etf",
       "note": "Secteurs GICS et pays de risque; pondérations des placements sous-jacents, obligations et liquidités incluses.",
-      "checked_at": "2026-10-27T09:13:44.827541+00:00",
+      "checked_at": "2026-11-03T12:41:54.467012+00:00",
       "fetch_status": "fresh",
       "refresh": {
         "kind": "ishares",
@@ -4302,74 +4302,74 @@
     {
       "id": "XIC",
       "title": "iShares Core S&P/TSX Capped Composite ETF",
-      "as_of": "2026-10-23",
+      "as_of": "2026-11-02",
       "sectors": [
         {
           "id": "communication_services",
-          "weight": 1.47141398
+          "weight": 1.50174768
         },
         {
           "id": "consumer_discretionary",
-          "weight": 3.08350592
+          "weight": 3.10980314
         },
         {
           "id": "consumer_staples",
-          "weight": 3.16710486
+          "weight": 3.18497685
         },
         {
           "id": "energy",
-          "weight": 17.18630906
+          "weight": 16.78208962
         },
         {
           "id": "financials",
-          "weight": 34.42938783
+          "weight": 35.27418664
         },
         {
           "id": "health_care",
-          "weight": 0.31068398
+          "weight": 0.3208629
         },
         {
           "id": "industrials",
-          "weight": 10.27603493
+          "weight": 10.46979804
         },
         {
           "id": "materials",
-          "weight": 16.27845612
+          "weight": 16.04558707
         },
         {
           "id": "other_assets",
-          "weight": 0.24983828
+          "weight": 0.19564004
         },
         {
           "id": "real_estate",
-          "weight": 1.21075018
+          "weight": 1.22927309
         },
         {
           "id": "technology",
-          "weight": 9.01914238
+          "weight": 8.48898393
         },
         {
           "id": "utilities",
-          "weight": 3.317372479999992
+          "weight": 3.397051
         }
       ],
       "geography": [
         {
           "id": "bermuda",
-          "weight": 0.64024633
+          "weight": 0.6632476
         },
         {
           "id": "canada",
-          "weight": 97.99184961
+          "weight": 97.95918066
         },
         {
           "id": "united_states",
-          "weight": 1.36790406
+          "weight": 1.3775717399999938
         }
       ],
       "source_url": "https://www.blackrock.com/ca/investors/en/products/239837/ishares-sptsx-capped-composite-index-etf",
       "note": "Secteurs GICS et pays de risque; pondérations des placements sous-jacents, obligations et liquidités incluses.",
-      "checked_at": "2026-10-27T09:13:44.827541+00:00",
+      "checked_at": "2026-11-03T12:41:54.467012+00:00",
       "fetch_status": "fresh",
       "refresh": {
         "kind": "ishares",
@@ -4379,70 +4379,70 @@
     {
       "id": "XIU",
       "title": "iShares S&P/TSX 60 Index ETF",
-      "as_of": "2026-10-23",
+      "as_of": "2026-11-02",
       "sectors": [
         {
           "id": "communication_services",
-          "weight": 1.53598143
+          "weight": 1.56436148
         },
         {
           "id": "consumer_discretionary",
-          "weight": 3.27880083
+          "weight": 3.30506553
         },
         {
           "id": "consumer_staples",
-          "weight": 3.50386764
+          "weight": 3.5147673
         },
         {
           "id": "energy",
-          "weight": 17.67495912
+          "weight": 17.31845524
         },
         {
           "id": "financials",
-          "weight": 40.3102075
+          "weight": 41.14779763
         },
         {
           "id": "industrials",
-          "weight": 7.93427807
+          "weight": 8.09122137
         },
         {
           "id": "materials",
-          "weight": 12.31481816
+          "weight": 12.1674482
         },
         {
           "id": "other_assets",
-          "weight": 0.26977173
+          "weight": 0.25017387
         },
         {
           "id": "real_estate",
-          "weight": 0.19948288
+          "weight": 0.21005036
         },
         {
           "id": "technology",
-          "weight": 10.47820919
+          "weight": 9.87797444
         },
         {
           "id": "utilities",
-          "weight": 2.499623450000002
+          "weight": 2.5526845800000064
         }
       ],
       "geography": [
         {
           "id": "bermuda",
-          "weight": 0.57171356
+          "weight": 0.58686909
         },
         {
           "id": "canada",
-          "weight": 97.79895909
+          "weight": 97.77355034
         },
         {
           "id": "united_states",
-          "weight": 1.62932735
+          "weight": 1.6395805700000063
         }
       ],
       "source_url": "https://www.blackrock.com/ca/investors/en/products/239832/ishares-sptsx-60-index-etf",
       "note": "Secteurs GICS et pays de risque; pondérations des placements sous-jacents, obligations et liquidités incluses.",
-      "checked_at": "2026-10-27T09:13:44.827541+00:00",
+      "checked_at": "2026-11-03T12:41:54.467012+00:00",
       "fetch_status": "fresh",
       "refresh": {
         "kind": "ishares",
@@ -4473,70 +4473,70 @@
     {
       "id": "XUS",
       "title": "iShares Core S&P 500 Index ETF",
-      "as_of": "2026-10-23",
+      "as_of": "2026-11-02",
       "sectors": [
         {
           "id": "communication_services",
-          "weight": 9.13196204
+          "weight": 8.42865191
         },
         {
           "id": "consumer_discretionary",
-          "weight": 8.8729657
+          "weight": 9.26036168
         },
         {
           "id": "consumer_staples",
-          "weight": 4.8781658
+          "weight": 5.08668176
         },
         {
           "id": "energy",
-          "weight": 3.8415908
+          "weight": 3.76604019
         },
         {
           "id": "financials",
-          "weight": 11.96379193
+          "weight": 12.43469064
         },
         {
           "id": "health_care",
-          "weight": 9.86618643
+          "weight": 10.26863737
         },
         {
           "id": "industrials",
-          "weight": 7.95367112
+          "weight": 8.28541634
         },
         {
           "id": "materials",
-          "weight": 1.68927776
+          "weight": 1.77378448
         },
         {
           "id": "other_assets",
-          "weight": 0.17270715
+          "weight": 0.20049469
         },
         {
           "id": "real_estate",
-          "weight": 1.76038557
+          "weight": 1.82165626
         },
         {
           "id": "technology",
-          "weight": 37.83727129
+          "weight": 36.56741611
         },
         {
           "id": "utilities",
-          "weight": 2.03202441
+          "weight": 2.1061685699999937
         }
       ],
       "geography": [
         {
           "id": "canada",
-          "weight": 0.01615584
+          "weight": 0.01518928
         },
         {
           "id": "united_states",
-          "weight": 99.98384416
+          "weight": 99.98481072
         }
       ],
       "source_url": "https://www.blackrock.com/ca/investors/en/products/251422/ishares-sp-500-index-etf",
       "note": "Secteurs GICS et pays de risque; pondérations des placements sous-jacents, obligations et liquidités incluses.",
-      "checked_at": "2026-10-27T09:13:44.827541+00:00",
+      "checked_at": "2026-11-03T12:41:54.467012+00:00",
       "fetch_status": "fresh",
       "refresh": {
         "kind": "ishares",
@@ -4699,7 +4699,7 @@
       ],
       "source_url": "https://www.fidelity.ca/en/products/etfs/fcin/",
       "note": "Répartition publiée par Fidelity; pays non détaillés conservés séparément.",
-      "checked_at": "2026-10-27T09:13:44.827541+00:00",
+      "checked_at": "2026-11-03T12:41:54.467012+00:00",
       "fetch_status": "fresh",
       "refresh": {
         "kind": "fidelity"
@@ -4708,70 +4708,70 @@
     {
       "id": "XSP",
       "title": "iShares Core S&P 500 Index ETF (CAD Hedged)",
-      "as_of": "2026-10-23",
+      "as_of": "2026-11-02",
       "sectors": [
         {
           "id": "communication_services",
-          "weight": 9.14313066
+          "weight": 8.4290076
         },
         {
           "id": "consumer_discretionary",
-          "weight": 8.88381757
+          "weight": 9.26075246
         },
         {
           "id": "consumer_staples",
-          "weight": 4.88413192
+          "weight": 5.08689642
         },
         {
           "id": "energy",
-          "weight": 3.84628916
+          "weight": 3.76619911
         },
         {
           "id": "financials",
-          "weight": 11.97842395
+          "weight": 12.43521537
         },
         {
           "id": "health_care",
-          "weight": 9.87825303
+          "weight": 10.2690707
         },
         {
           "id": "industrials",
-          "weight": 7.96339866
+          "weight": 8.28576598
         },
         {
           "id": "materials",
-          "weight": 1.69134379
+          "weight": 1.77385933
         },
         {
           "id": "other_assets",
-          "weight": 0.05061583
+          "weight": 0.1962832
         },
         {
           "id": "real_estate",
-          "weight": 1.76253857
+          "weight": 1.82173314
         },
         {
           "id": "technology",
-          "weight": 37.88354724
+          "weight": 36.56895924
         },
         {
           "id": "utilities",
-          "weight": 2.0345096200000063
+          "weight": 2.1062574499999935
         }
       ],
       "geography": [
         {
           "id": "canada",
-          "weight": 0.05061583
+          "weight": 0.05545146
         },
         {
           "id": "united_states",
-          "weight": 99.94938417
+          "weight": 99.94454854
         }
       ],
       "source_url": "https://www.blackrock.com/ca/investors/en/products/239727/ishares-sp-500-index-etf-cadhedged-fund",
       "note": "Secteurs GICS et pays des placements sous-jacents publiés par iShares. Actifs au comptant positifs normalisés; dérivés de couverture de change exclus.",
-      "checked_at": "2026-10-27T09:13:44.827541+00:00",
+      "checked_at": "2026-11-03T12:41:54.467012+00:00",
       "fetch_status": "fresh",
       "refresh": {
         "kind": "ishares",
@@ -4782,126 +4782,126 @@
     {
       "id": "XSU",
       "title": "iShares U.S. Small Cap Index ETF (CAD Hedged)",
-      "as_of": "2026-10-23",
+      "as_of": "2026-11-02",
       "sectors": [
         {
           "id": "communication_services",
-          "weight": 2.35406204
+          "weight": 2.32841606
         },
         {
           "id": "consumer_discretionary",
-          "weight": 9.11323581
+          "weight": 9.518071
         },
         {
           "id": "consumer_staples",
-          "weight": 2.03393091
+          "weight": 2.05038086
         },
         {
           "id": "energy",
-          "weight": 6.93252391
+          "weight": 6.64346969
         },
         {
           "id": "financials",
-          "weight": 19.78461066
+          "weight": 19.80846534
         },
         {
           "id": "health_care",
-          "weight": 20.35254357
+          "weight": 20.4292896
         },
         {
           "id": "industrials",
-          "weight": 13.15237612
+          "weight": 13.34610025
         },
         {
           "id": "materials",
-          "weight": 3.97940479
+          "weight": 4.00194009
         },
         {
           "id": "other_assets",
-          "weight": 0.41613194
+          "weight": 0.45246935
         },
         {
           "id": "real_estate",
-          "weight": 5.90262426
+          "weight": 5.82637295
         },
         {
           "id": "technology",
-          "weight": 13.1088784
+          "weight": 12.67235839
         },
         {
           "id": "utilities",
-          "weight": 2.86967759
+          "weight": 2.92266642
         }
       ],
       "geography": [
         {
           "id": "belgium",
-          "weight": 0.01166279
+          "weight": 0.01193623
         },
         {
           "id": "bermuda",
-          "weight": 0.45680104
+          "weight": 0.43465701
         },
         {
           "id": "brazil",
-          "weight": 0.19141996
+          "weight": 0.13155871
         },
         {
           "id": "canada",
-          "weight": 0.65773373
+          "weight": 0.65037965
         },
         {
           "id": "china",
-          "weight": 0.01537687
+          "weight": 0.01549809
         },
         {
           "id": "gibraltar",
-          "weight": 0.00115126
+          "weight": 0.00119062
         },
         {
           "id": "isle_of_man",
-          "weight": 0.004555
+          "weight": 0.00502262
         },
         {
           "id": "israel",
-          "weight": 0.05184687
+          "weight": 0.05260747
         },
         {
           "id": "italy",
-          "weight": 0.02084286
+          "weight": 0.0214412
         },
         {
           "id": "japan",
-          "weight": 0.00104114
+          "weight": 0.00124065
         },
         {
           "id": "monaco",
-          "weight": 0.04344765
+          "weight": 0.04048114
         },
         {
           "id": "norway",
-          "weight": 0.23409677
+          "weight": 0.22128557
         },
         {
           "id": "panama",
-          "weight": 0.0553407
+          "weight": 0.05145687
         },
         {
           "id": "singapore",
-          "weight": 0.03206517
+          "weight": 0.02809467
         },
         {
           "id": "united_kingdom",
-          "weight": 0.07698444
+          "weight": 0.07577958
         },
         {
           "id": "united_states",
-          "weight": 98.14563375
+          "weight": 98.25736992
         }
       ],
       "source_url": "https://www.blackrock.com/ca/investors/en/products/239711/ishares-us-small-cap-index-etf-cadhedged-fund",
       "note": "Secteurs GICS et pays des placements sous-jacents publiés par iShares. Actifs au comptant positifs normalisés; dérivés de couverture de change exclus.",
-      "checked_at": "2026-10-27T09:13:44.827541+00:00",
+      "checked_at": "2026-11-03T12:41:54.467012+00:00",
       "fetch_status": "fresh",
       "refresh": {
         "kind": "ishares",
@@ -4912,46 +4912,46 @@
     {
       "id": "XSB",
       "title": "iShares Core Canadian Short Term Bond Index ETF",
-      "as_of": "2026-10-23",
+      "as_of": "2026-11-02",
       "sectors": [
         {
           "id": "bonds",
-          "weight": 99.66049446
+          "weight": 99.54074485
         },
         {
           "id": "other_assets",
-          "weight": 0.33950554
+          "weight": 0.45925515
         }
       ],
       "geography": [
         {
           "id": "canada",
-          "weight": 95.20265182
+          "weight": 95.06460947
         },
         {
           "id": "france",
-          "weight": 0.2778897
+          "weight": 0.28090163
         },
         {
           "id": "germany",
-          "weight": 0.60758274
+          "weight": 0.61196405
         },
         {
           "id": "supranational",
-          "weight": 1.0798192
+          "weight": 1.08710815
         },
         {
           "id": "switzerland",
-          "weight": 0.05720745
+          "weight": 0.0577616
         },
         {
           "id": "united_states",
-          "weight": 2.7748490900000062
+          "weight": 2.8976551000000064
         }
       ],
       "source_url": "https://www.blackrock.com/ca/investors/en/products/239491/ishares-canadian-short-term-bond-index-etf",
       "note": "Secteurs GICS et pays des placements sous-jacents publiés par iShares.",
-      "checked_at": "2026-10-27T09:13:44.827541+00:00",
+      "checked_at": "2026-11-03T12:41:54.467012+00:00",
       "fetch_status": "fresh",
       "refresh": {
         "kind": "ishares",
@@ -4961,106 +4961,106 @@
     {
       "id": "XHY",
       "title": "iShares U.S. High Yield Bond Index ETF (CAD Hedged)",
-      "as_of": "2026-10-23",
+      "as_of": "2026-11-02",
       "sectors": [
         {
           "id": "bonds",
-          "weight": 96.30264662
+          "weight": 98.41830942
         },
         {
           "id": "other_assets",
-          "weight": 3.69288356
+          "weight": 1.57732778
         },
         {
           "id": "unclassified",
-          "weight": 0.00446982
+          "weight": 0.0043628
         }
       ],
       "geography": [
         {
           "id": "australia",
-          "weight": 0.52456647
+          "weight": 0.53731248
         },
         {
           "id": "canada",
-          "weight": 6.0921712
+          "weight": 5.00964779
         },
         {
           "id": "denmark",
-          "weight": 0.20426823
+          "weight": 0.21092205
         },
         {
           "id": "european_union",
-          "weight": 3.948e-05
+          "weight": 4.417e-05
         },
         {
           "id": "france",
-          "weight": 0.93859323
+          "weight": 0.96411194
         },
         {
           "id": "germany",
-          "weight": 0.48311836
+          "weight": 0.49306983
         },
         {
           "id": "ireland",
-          "weight": 0.12589074
+          "weight": 0.1375878
         },
         {
           "id": "israel",
-          "weight": 0.14895072
+          "weight": 0.15666528
         },
         {
           "id": "italy",
-          "weight": 0.15634515
+          "weight": 0.20616962
         },
         {
           "id": "japan",
-          "weight": 1.56231437
+          "weight": 1.58811454
         },
         {
           "id": "jersey",
-          "weight": 0.03539183
+          "weight": 0.03782665
         },
         {
           "id": "luxembourg",
-          "weight": 0.54795483
+          "weight": 0.57945625
         },
         {
           "id": "macau",
-          "weight": 0.77222905
+          "weight": 0.77323888
         },
         {
           "id": "malaysia",
-          "weight": 0.06514515
+          "weight": 0.06406707
         },
         {
           "id": "netherlands",
-          "weight": 0.4591064
+          "weight": 0.47176827
         },
         {
           "id": "spain",
-          "weight": 0.07796937
+          "weight": 0.0849951
         },
         {
           "id": "sweden",
-          "weight": 0.09996037
+          "weight": 0.09810355
         },
         {
           "id": "switzerland",
-          "weight": 0.1500955
+          "weight": 0.15826103
         },
         {
           "id": "united_kingdom",
-          "weight": 1.59689688
+          "weight": 1.6331933
         },
         {
           "id": "united_states",
-          "weight": 85.95899267
+          "weight": 86.7954444
         }
       ],
       "source_url": "https://www.blackrock.com/ca/investors/en/products/239858/ishares-us-high-yield-bond-index-etf-cadhedged-fund",
       "note": "Secteurs GICS et pays des placements sous-jacents publiés par iShares.",
-      "checked_at": "2026-10-27T09:13:44.827541+00:00",
+      "checked_at": "2026-11-03T12:41:54.467012+00:00",
       "fetch_status": "fresh",
       "refresh": {
         "kind": "ishares",
@@ -5070,86 +5070,86 @@
     {
       "id": "XIG",
       "title": "iShares U.S. IG Corporate Bond Index ETF (CAD Hedged)",
-      "as_of": "2026-10-23",
+      "as_of": "2026-11-02",
       "sectors": [
         {
           "id": "bonds",
-          "weight": 97.92040961
+          "weight": 99.53083565
         },
         {
           "id": "other_assets",
-          "weight": 2.07959039
+          "weight": 0.46916435
         }
       ],
       "geography": [
         {
           "id": "australia",
-          "weight": 0.88251292
+          "weight": 0.88048508
         },
         {
           "id": "belgium",
-          "weight": 0.74284391
+          "weight": 0.72665631
         },
         {
           "id": "brazil",
-          "weight": 0.17808415
+          "weight": 0.16206443
         },
         {
           "id": "canada",
-          "weight": 3.81314674
+          "weight": 2.43148996
         },
         {
           "id": "france",
-          "weight": 0.45687
+          "weight": 0.46386508
         },
         {
           "id": "germany",
-          "weight": 0.33461402
+          "weight": 0.32686741
         },
         {
           "id": "ireland",
-          "weight": 0.53370028
+          "weight": 0.55948458
         },
         {
           "id": "israel",
-          "weight": 0.11337199
+          "weight": 0.11299034
         },
         {
           "id": "japan",
-          "weight": 2.02521545
+          "weight": 1.99874463
         },
         {
           "id": "luxembourg",
-          "weight": 0.04532711
+          "weight": 0.04898413
         },
         {
           "id": "netherlands",
-          "weight": 0.35177067
+          "weight": 0.32693737
         },
         {
           "id": "norway",
-          "weight": 0.08444231
+          "weight": 0.08139702
         },
         {
           "id": "spain",
-          "weight": 0.72272919
+          "weight": 0.71733123
         },
         {
           "id": "switzerland",
-          "weight": 0.65974257
+          "weight": 0.66496889
         },
         {
           "id": "united_kingdom",
-          "weight": 4.41619309
+          "weight": 4.49781506
         },
         {
           "id": "united_states",
-          "weight": 84.6394356
+          "weight": 85.99991848
         }
       ],
       "source_url": "https://www.blackrock.com/ca/investors/en/products/239859/ishares-us-ig-corporate-bond-index-etf-cadhedged-fund",
       "note": "Secteurs GICS et pays des placements sous-jacents publiés par iShares.",
-      "checked_at": "2026-10-27T09:13:44.827541+00:00",
+      "checked_at": "2026-11-03T12:41:54.467012+00:00",
       "fetch_status": "fresh",
       "refresh": {
         "kind": "ishares",
@@ -5159,193 +5159,193 @@
     {
       "id": "ACWV",
       "title": "iShares MSCI Global Min Vol Factor ETF",
-      "as_of": "2026-10-23",
+      "as_of": "2026-11-02",
       "sectors": [
         {
           "id": "communication_services",
-          "weight": 10.40983233
+          "weight": 10.48068831
         },
         {
           "id": "consumer_discretionary",
-          "weight": 4.79459441
+          "weight": 4.90482023
         },
         {
           "id": "consumer_staples",
-          "weight": 9.86321035
+          "weight": 10.11396936
         },
         {
           "id": "energy",
-          "weight": 4.45812458
+          "weight": 4.43819867
         },
         {
           "id": "financials",
-          "weight": 14.48809264
+          "weight": 14.63661283
         },
         {
           "id": "health_care",
-          "weight": 13.63300217
+          "weight": 13.79483707
         },
         {
           "id": "industrials",
-          "weight": 7.03575723
+          "weight": 7.10644003
         },
         {
           "id": "materials",
-          "weight": 0.87295553
+          "weight": 0.87321611
         },
         {
           "id": "other_assets",
-          "weight": 0.4315038
+          "weight": 0.42058185
         },
         {
           "id": "real_estate",
-          "weight": 0.68969954
+          "weight": 0.68853151
         },
         {
           "id": "technology",
-          "weight": 25.97293118
+          "weight": 25.04458444
         },
         {
           "id": "utilities",
-          "weight": 7.350296240000008
+          "weight": 7.49751959
         }
       ],
       "geography": [
         {
           "id": "australia",
-          "weight": 0.47283396
+          "weight": 0.46209251
         },
         {
           "id": "austria",
-          "weight": 0.06608859
+          "weight": 0.06642132
         },
         {
           "id": "belgium",
-          "weight": 0.40848276
+          "weight": 0.40732167
         },
         {
           "id": "brazil",
-          "weight": 0.39282988
+          "weight": 0.31053896
         },
         {
           "id": "canada",
-          "weight": 1.33221113
+          "weight": 1.34495276
         },
         {
           "id": "chile",
-          "weight": 0.04666533
+          "weight": 0.04454322
         },
         {
           "id": "china",
-          "weight": 6.00167087
+          "weight": 6.07655808
         },
         {
           "id": "czech_republic",
-          "weight": 0.00016152
+          "weight": 0.00016078
         },
         {
           "id": "denmark",
-          "weight": 0.00048496
+          "weight": 0.00048251
         },
         {
           "id": "european_union",
-          "weight": 0.00867092
+          "weight": 0.00989285
         },
         {
           "id": "finland",
-          "weight": 0.63873664
+          "weight": 0.62996892
         },
         {
           "id": "france",
-          "weight": 0.94612219
+          "weight": 0.97460515
         },
         {
           "id": "germany",
-          "weight": 0.75988712
+          "weight": 0.75827445
         },
         {
           "id": "greece",
-          "weight": 0.05697738
+          "weight": 0.05516324
         },
         {
           "id": "hong_kong",
-          "weight": 1.11934609
+          "weight": 1.12266036
         },
         {
           "id": "hungary",
-          "weight": 0.10526593
+          "weight": 0.10931367
         },
         {
           "id": "india",
-          "weight": 3.83912513
+          "weight": 3.94570667
         },
         {
           "id": "indonesia",
-          "weight": 0.0659899
+          "weight": 0.06475064
         },
         {
           "id": "ireland",
-          "weight": 0.04674649
+          "weight": 0.0497474
         },
         {
           "id": "israel",
-          "weight": 0.74272404
+          "weight": 0.68560156
         },
         {
           "id": "italy",
-          "weight": 0.48554794
+          "weight": 0.4632273
         },
         {
           "id": "japan",
-          "weight": 10.57458579
+          "weight": 10.29808373
         },
         {
           "id": "korea_south",
-          "weight": 0.3268832
+          "weight": 0.3470698
         },
         {
           "id": "kuwait",
-          "weight": 0.19216756
+          "weight": 0.19377773
         },
         {
           "id": "malaysia",
-          "weight": 0.33654323
+          "weight": 0.33537082
         },
         {
           "id": "mexico",
-          "weight": 0.33422818
+          "weight": 0.33589279
         },
         {
           "id": "netherlands",
-          "weight": 0.88018204
+          "weight": 0.8877801
         },
         {
           "id": "new_zealand",
-          "weight": 0.08487972
+          "weight": 0.08540341
         },
         {
           "id": "norway",
-          "weight": 0.00017191
+          "weight": 0.00017205
         },
         {
           "id": "peru",
-          "weight": 0.12300707
+          "weight": 0.11702345
         },
         {
           "id": "philippines",
-          "weight": 0.09646293
+          "weight": 0.0958556
         },
         {
           "id": "poland",
-          "weight": 0.00014998
+          "weight": 0.00014857
         },
         {
           "id": "portugal",
-          "weight": 0.05372688
+          "weight": 0.05388738
         },
         {
           "id": "qatar",
-          "weight": 0.15306905
+          "weight": 0.16983024
         },
         {
           "id": "russian_federation",
@@ -5353,52 +5353,52 @@
         },
         {
           "id": "saudi_arabia",
-          "weight": 0.7802191
+          "weight": 0.80399332
         },
         {
           "id": "singapore",
-          "weight": 1.05219507
+          "weight": 1.02787997
         },
         {
           "id": "spain",
-          "weight": 0.50208616
+          "weight": 0.51990163
         },
         {
           "id": "sweden",
-          "weight": 0.07849692
+          "weight": 0.08089159
         },
         {
           "id": "switzerland",
-          "weight": 1.64340618
+          "weight": 1.6810962
         },
         {
           "id": "taiwan",
-          "weight": 4.46049258
+          "weight": 4.37079121
         },
         {
           "id": "thailand",
-          "weight": 0.31647572
+          "weight": 0.31563638
         },
         {
           "id": "turkey",
-          "weight": 0.11428283
+          "weight": 0.11464686
         },
         {
           "id": "united_arab_emirates",
-          "weight": 0.40441407
+          "weight": 0.40578095
         },
         {
           "id": "united_kingdom",
-          "weight": 0.50877666
+          "weight": 0.53178589
         },
         {
           "id": "united_states",
-          "weight": 59.44652797
+          "weight": 59.64531588
         }
       ],
       "source_url": "https://www.ishares.com/us/products/239605/ishares-msci-global-min-vol-factor-etf",
       "note": "Secteurs GICS et pays des placements sous-jacents publiés par iShares.",
-      "checked_at": "2026-10-27T09:13:44.827541+00:00",
+      "checked_at": "2026-11-03T12:41:54.467012+00:00",
       "fetch_status": "fresh",
       "refresh": {
         "kind": "ishares",
@@ -5877,30 +5877,30 @@
     {
       "id": "XLF",
       "title": "Financial Select Sector SPDR",
-      "as_of": "2026-10-23",
+      "as_of": "2026-11-02",
       "sectors": [
         {
           "id": "financials",
-          "weight": 99.828379
+          "weight": 99.78419
         },
         {
           "id": "other_assets",
-          "weight": 0.171621
+          "weight": 0.21581
         }
       ],
       "geography": [
         {
           "id": "other_assets",
-          "weight": 0.171621
+          "weight": 0.21581
         },
         {
           "id": "united_states",
-          "weight": 99.828379
+          "weight": 99.78419
         }
       ],
       "source_url": "https://www.ssga.com/us/en/intermediary/etfs/state-street-financial-select-sector-spdr-etf-xlf",
       "note": "Actions financières du Financial Select Sector Index américain; exposition géographique par marché de l’indice. Liquidités, instruments monétaires et solde hors actions conservés séparément.",
-      "checked_at": "2026-10-27T09:13:44.827541+00:00",
+      "checked_at": "2026-11-03T12:41:54.467012+00:00",
       "fetch_status": "fresh",
       "refresh": {
         "kind": "ssga_xlf",
@@ -5953,51 +5953,51 @@
     {
       "id": "SPYM",
       "title": "State Street SPDR Portfolio S&P 500",
-      "as_of": "2026-10-23",
+      "as_of": "2026-11-02",
       "sectors": [
         {
           "id": "communication_services",
-          "weight": 9.15
+          "weight": 8.43915608
         },
         {
           "id": "consumer_discretionary",
-          "weight": 8.89
+          "weight": 9.27907209
         },
         {
           "id": "consumer_staples",
-          "weight": 4.89
+          "weight": 5.10948905
         },
         {
           "id": "energy",
-          "weight": 3.85
+          "weight": 3.76962304
         },
         {
           "id": "financials",
-          "weight": 11.98
+          "weight": 12.45875412
         },
         {
           "id": "health_care",
-          "weight": 9.88
+          "weight": 10.2889711
         },
         {
           "id": "industrials",
-          "weight": 7.97
+          "weight": 8.29917008
         },
         {
           "id": "materials",
-          "weight": 1.69
+          "weight": 1.77982202
         },
         {
           "id": "real_estate",
-          "weight": 1.76
+          "weight": 1.82981702
         },
         {
           "id": "technology",
-          "weight": 37.9
+          "weight": 36.63633637
         },
         {
           "id": "utilities",
-          "weight": 2.04
+          "weight": 2.1097890299999937
         }
       ],
       "geography": [
@@ -6008,7 +6008,7 @@
       ],
       "source_url": "https://www.ssga.com/us/en/individual/etfs/state-street-spdr-portfolio-sp-500-etf-spym",
       "note": "Répartition sectorielle publiée du fonds S&P 500; géographie par marché de l’indice américain. Liquidités techniques non ventilées dans ce tableau de l’émetteur.",
-      "checked_at": "2026-10-27T09:13:44.827541+00:00",
+      "checked_at": "2026-11-03T12:41:54.467012+00:00",
       "fetch_status": "fresh",
       "refresh": {
         "kind": "ssga_spym"
