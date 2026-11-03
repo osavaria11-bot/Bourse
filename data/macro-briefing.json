@@ -1,16 +1,16 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-11-03T13:51:56.009001+00:00",
-  "last_successful_update": "2026-11-03T09:59:10.742519+00:00",
-  "update_status": "partial_data",
+  "generated_at": "2026-11-03T14:01:13.331857+00:00",
+  "last_successful_update": "2026-11-03T14:01:13.331857+00:00",
+  "update_status": "fresh_data",
   "coverage": {
     "total": 42,
-    "fresh": 11,
-    "cached": 31,
+    "fresh": 42,
+    "cached": 0,
     "unavailable": 0
   },
   "data_provider": "FRED / Banque du Canada / Statistique Canada / Numerco / Fed de New York / U.S. Treasury",
-  "briefing_paragraph": "Dernières observations publiées — Inflation CPI · annuelle : 3,72 % (période : 2026-09-01); Inflation PCE sous-jacente · annuelle : 3,12 % (période : 2026-09-01); Inflation Canada · IPC global annuel : 3,1 % (période : 2026-09-01); Inflation Canada · CPI-trim annuel : 1,8 % (période : 2026-09-01); Inflation Canada · CPI-median annuel : 1,9 % (période : 2026-09-01); Taux de chômage · États-Unis : 4,20 % (période : 2026-09-01); Taux de chômage · Canada : 6,50 % (période : 2026-09-01); Assurance-chômage US · demandes initiales : 194000 demandes (période : 2026-10-24); Assurance-chômage US · moyenne de 4 semaines : 196750 demandes (période : 2026-10-24); Créations nettes d’emplois · mensuelles : 29 milliers (période : 2026-09-01); Croissance du PIB réel · trimestre annualisé : 3,37 % (période : 2026-07-01); Taux directeur américain · borne inférieure : 3,75 % (période : 2026-11-02); Taux directeur américain · borne supérieure : 4,00 % (période : 2026-11-02); Trésor américain · 10 ans : 4,91 % (période : 2026-11-02); Taux réel américain · 10 ans (TIPS) : 2,62 % (période : 2026-11-02); Courbe des taux · 10 ans – 2 ans : 0,32 pt (période : 2026-11-02); Volatilité anticipée · VIX : 19,42 points (période : 2026-10-30); USD/CAD · dollars canadiens pour 1 $ US : 1,3957 $ CA/$ US (période : 2026-10-30); Taux directeur canadien : 2,50 % (période : 2026-11-02).",
+  "briefing_paragraph": "Dernières observations publiées — Inflation CPI · annuelle : 3,72 % (période : 2026-09-01); Inflation PCE sous-jacente · annuelle : 3,12 % (période : 2026-09-01); Inflation Canada · IPC global annuel : 3,1 % (période : 2026-09-01); Inflation Canada · CPI-trim annuel : 1,8 % (période : 2026-09-01); Inflation Canada · CPI-median annuel : 1,9 % (période : 2026-09-01); Taux de chômage · États-Unis : 4,20 % (période : 2026-09-01); Taux de chômage · Canada : 6,50 % (période : 2026-09-01); Assurance-chômage US · demandes initiales : 194000 demandes (période : 2026-10-24); Assurance-chômage US · moyenne de 4 semaines : 196750 demandes (période : 2026-10-24); Créations nettes d’emplois · mensuelles : 29 milliers (période : 2026-09-01); Croissance du PIB réel · trimestre annualisé : 3,37 % (période : 2026-07-01); Taux directeur américain · borne inférieure : 3,75 % (période : 2026-11-03); Taux directeur américain · borne supérieure : 4,00 % (période : 2026-11-03); Trésor américain · 10 ans : 4,91 % (période : 2026-11-02); Taux réel américain · 10 ans (TIPS) : 2,62 % (période : 2026-11-02); Courbe des taux · 10 ans – 2 ans : 0,32 pt (période : 2026-11-02); Volatilité anticipée · VIX : 19,42 points (période : 2026-10-30); USD/CAD · dollars canadiens pour 1 $ US : 1,3957 $ CA/$ US (période : 2026-10-30); Taux directeur canadien : 2,50 % (période : 2026-11-02).",
   "news_digest_note": "Veille complémentaire. Les données suivent le calendrier de publication de chaque source.",
   "news_sources": [
     {
@@ -48,22 +48,22 @@
     {
       "id": "DFEDTARU",
       "title": "Taux directeur américain · borne supérieure",
-      "date": "2026-11-02",
+      "date": "2026-11-03",
       "value": 4.0,
       "previous_value": 4.0,
-      "previous_date": "2026-11-01",
+      "previous_date": "2026-11-02",
       "unit": "%",
-      "fetch_status": "cached"
+      "fetch_status": "fresh"
     },
     {
       "id": "DFEDTARL",
       "title": "Taux directeur américain · borne inférieure",
-      "date": "2026-11-02",
+      "date": "2026-11-03",
       "value": 3.75,
       "previous_value": 3.75,
-      "previous_date": "2026-11-01",
+      "previous_date": "2026-11-02",
       "unit": "%",
-      "fetch_status": "cached"
+      "fetch_status": "fresh"
     },
     {
       "id": "DGS10",
@@ -93,7 +93,7 @@
       "previous_value": 3.353016,
       "previous_date": "2026-08-01",
       "unit": "%",
-      "fetch_status": "cached"
+      "fetch_status": "fresh"
     },
     {
       "id": "PCEPILFE",
@@ -103,7 +103,7 @@
       "previous_value": 3.034442,
       "previous_date": "2026-08-01",
       "unit": "%",
-      "fetch_status": "cached"
+      "fetch_status": "fresh"
     },
     {
       "id": "V41690973",
@@ -143,7 +143,7 @@
       "previous_value": 4.1,
       "previous_date": "2026-08-01",
       "unit": "%",
-      "fetch_status": "cached"
+      "fetch_status": "fresh"
     },
     {
       "id": "V2062815",
@@ -163,7 +163,7 @@
       "previous_value": 195000.0,
       "previous_date": "2026-10-17",
       "unit": "demandes",
-      "fetch_status": "cached"
+      "fetch_status": "fresh"
     },
     {
       "id": "IC4WSA",
@@ -173,7 +173,7 @@
       "previous_value": 198000.0,
       "previous_date": "2026-10-17",
       "unit": "demandes",
-      "fetch_status": "cached"
+      "fetch_status": "fresh"
     },
     {
       "id": "PAYEMS",
@@ -183,7 +183,7 @@
       "previous_value": 133.0,
       "previous_date": "2026-08-01",
       "unit": "milliers",
-      "fetch_status": "cached"
+      "fetch_status": "fresh"
     },
     {
       "id": "GDPC1",
@@ -193,7 +193,7 @@
       "previous_value": 2.220208,
       "previous_date": "2026-04-01",
       "unit": "%",
-      "fetch_status": "cached"
+      "fetch_status": "fresh"
     },
     {
       "id": "VIXCLS",
@@ -203,7 +203,7 @@
       "previous_value": 17.2,
       "previous_date": "2026-10-29",
       "unit": "points",
-      "fetch_status": "cached"
+      "fetch_status": "fresh"
     },
     {
       "id": "DEXCAUS",
@@ -213,7 +213,7 @@
       "previous_value": 1.3975,
       "previous_date": "2026-10-29",
       "unit": "$ CA/$ US",
-      "fetch_status": "cached"
+      "fetch_status": "fresh"
     },
     {
       "id": "V39079",
