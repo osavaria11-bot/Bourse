@@ -59,6 +59,15 @@ def parse_history(payload: dict, symbol: str, now: datetime, currency: str | Non
         raise macro.SourceError(f"{symbol}: réponse de cotation invalide") from error
     today = now.astimezone(exchange_timezone).date()
     close_time = meta.get("currentTradingPeriod", {}).get("regular", {}).get("end", 0)
+    awaiting_today_close = isinstance(close_time, (int, float)) and now.timestamp() < close_time
+    if awaiting_today_close:
+        try:
+            # After the close Yahoo may already advertise the next session.
+            # Its end cannot make today's completed bar an intraday quote.
+            # The end is exclusive: midnight belongs to the preceding FX day.
+            awaiting_today_close = datetime.fromtimestamp(close_time - 1, exchange_timezone).date() == today
+        except (ValueError, OverflowError, OSError):
+            pass  # Unusable future metadata remains conservative for today's bar.
     by_date = {}
     for stamp, close in zip(timestamps, closes):
         if not isinstance(stamp, (int, float)) or isinstance(stamp, bool) or not math.isfinite(stamp):
@@ -73,7 +82,7 @@ def parse_history(payload: dict, symbol: str, now: datetime, currency: str | Non
         if symbol.endswith("=X") and day.weekday() >= 5:
             continue
         # Keep only completed sessions, not an intraday quote presented as a close.
-        if day > today or (day == today and isinstance(close_time, (int, float)) and now.timestamp() < close_time):
+        if day > today or (day == today and awaiting_today_close):
             continue
         if close is not None and (not isinstance(close, (int, float)) or isinstance(close, bool) or
                                   not math.isfinite(close) or close <= 0):

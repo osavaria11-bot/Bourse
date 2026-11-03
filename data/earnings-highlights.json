@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "reviewed_earnings_highlights",
-  "reviewed_at": "2026-11-01T10:20:48.414210+00:00",
+  "reviewed_at": "2026-11-03T10:16:29.177296+00:00",
   "reports": {
     "NFLX:2026-10-20": {
       "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-20-netflix-inc-stock/",
@@ -491,6 +491,26 @@
         "Capital — Le dividende trimestriel passe à 1,07 $ US par action et ExxonMobil annonce 20 G$ de rachats pour 2027, sous réserve de conditions de marché raisonnables. La forte couverture actuelle est favorable, mais le programme de rachats reste une intention conditionnelle; sa soutenabilité doit être jugée sur plusieurs régimes de prix."
       ],
       "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-30-exxon-mobil-co-stock/"
+    },
+    "AAPL:2026-11-02": {
+      "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-2-apple-inc-stock/",
+      "source_url": "https://stockanalysis.com/stocks/aapl/transcripts/702819-q4-2026/",
+      "messages": [
+        "Perspectives — Kevan Parekh prévoit pour décembre une croissance des revenus de 7 à 10 % et une marge brute de 45 à 46 %, contre 47,9 % au trimestre publié. La mémoire plus chère et les dépenses liées à Siri limitent la conversion des ventes en profit; la prévision suppose un contexte macro et tarifaire inchangé.",
+        "Qualité du résultat — Le BPA de 2,10 $ US inclut 0,05 $ de remboursement tarifaire, lequel ajoute aussi environ un point à la marge brute. Hors remboursement, la marge du groupe et celle des produits reculent d’un point sur le trimestre précédent, sous l’effet du coût de la mémoire : le soutien ponctuel ne protège pas la suite.",
+        "Moteurs — L’iPhone atteint 57,6 G$ US de revenus (+17 %) et les services 31,6 G$ (+10 %), avec une marge brute des services de 76 %. L’iPad recule de 10 % et les accessoires de 8 % : la récurrence des services soutient le mix, mais la vigueur commerciale ne s’étend pas à toutes les catégories.",
+        "Trésorerie — Les activités génèrent 28,1 G$ US de liquidités et Apple rend environ 28 G$ aux actionnaires, dont 24 G$ de rachats. Avec 137 G$ de trésorerie et placements contre 80 G$ de dette, le financement demeure ample; ma lecture est de suivre la trésorerie après les investissements plutôt que le seul BPA soutenu par les rachats."
+      ]
+    },
+    "VNP.TO:2026-11-02": {
+      "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-2-5n-plus-inc-vnpto-stock/",
+      "source_url": "https://www.5nplus.com/en/news/5n-reports-third-quarter-of-2026-financial-results/",
+      "messages": [
+        "Perspectives — Richard Perron dit viser le haut de la fourchette 2026 de BAIIA ajusté, de 100 à 105 M$ US. La cible est réaffirmée, pas relevée. L’utilisation élevée des capacités et les projets de productivité doivent soutenir les volumes malgré la pression sur les intrants; la conférence du 3 novembre à 8 h reste à venir.",
+        "Rentabilité — Les revenus du T3 montent de 30 % à 136,4 M$ US, mais le BAIIA ajusté ne progresse que de 7 %, à 31,1 M$. La marge brute ajustée de 31,4 % s’améliore sur le T2, tout en restant sous les 36,9 % d’un an plus tôt, notamment avec la normalisation des matériaux de performance. La croissance ne se convertit donc pas intégralement en marge.",
+        "Carnet — Au 30 septembre, les commandes en carnet atteignent 447,3 M$ US, soit 299 jours de revenus annualisés : 14 jours de moins qu’au trimestre précédent et 12 de moins qu’un an plus tôt. Cette couverture donne de la visibilité, sans garantir le calendrier des livraisons ni des encaissements.",
+        "Capital — La dette nette revient à 32,4 M$ US, contre 50,3 M$ à fin 2025, pour un levier de 0,31 fois. Le renforcement des capacités, notamment à St. George pour l’arséniure de gallium, vise les marchés spatial et de défense. Ma lecture : le bilan facilite ces investissements, mais leur rendement dépendra de la montée en production et des coûts."
+      ]
     }
   }
 }

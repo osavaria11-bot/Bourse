@@ -118,6 +118,30 @@ class MarketHistoryTests(unittest.TestCase):
         result["meta"]["currentTradingPeriod"] = {"regular": {"end": int(NOW.timestamp()) + 100}}
         self.assertEqual(len(markets.parse_history(data, "EEM", NOW)), 2)
 
+    def test_next_session_metadata_does_not_hide_an_already_closed_session(self):
+        data = payload()
+        result = data["chart"]["result"][0]
+        after_close = datetime(2026, 11, 3, 1, tzinfo=timezone.utc)  # Monday 20:00 EST.
+        result["timestamp"].append(int(datetime(2026, 11, 2, 14, 30, tzinfo=timezone.utc).timestamp()))
+        result["indicators"]["quote"][0]["close"].append(62.0)
+        # Yahoo can already advertise Tuesday's regular period after Monday's close.
+        result["meta"]["currentTradingPeriod"] = {"regular": {
+            "start": int(datetime(2026, 11, 3, 14, 30, tzinfo=timezone.utc).timestamp()),
+            "end": int(datetime(2026, 11, 3, 21, tzinfo=timezone.utc).timestamp())}}
+        self.assertEqual(markets.parse_history(data, "EEM", after_close)[-1], ["2026-11-02", 62.0])
+        self.assertEqual(markets.parse_history(data, "EEM", after_close.replace(hour=10))[-1], ["2026-11-02", 62.0])
+
+    def test_fx_period_ending_at_midnight_keeps_its_live_bar_out(self):
+        data = payload()
+        result = data["chart"]["result"][0]
+        result["meta"].update(symbol="CAD=X", currency="CAD", exchangeTimezoneName="Europe/London")
+        result["timestamp"].append(int(datetime(2026, 11, 3, tzinfo=timezone.utc).timestamp()))
+        result["indicators"]["quote"][0]["close"].append(1.40)
+        result["meta"]["currentTradingPeriod"] = {"regular": {
+            "end": int(datetime(2026, 11, 4, tzinfo=timezone.utc).timestamp())}}
+        intraday = datetime(2026, 11, 3, 10, tzinfo=timezone.utc)
+        self.assertNotIn("2026-11-03", dict(markets.parse_history(data, "CAD=X", intraday, "CAD")))
+
     def test_invalid_values_and_future_dates_are_discarded(self):
         data = payload()
         result = data["chart"]["result"][0]
