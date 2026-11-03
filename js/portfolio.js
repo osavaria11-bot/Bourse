@@ -366,7 +366,7 @@
       const head = el("thead"), headRow = el("tr"); for (const label of ["", "Publié", "Attendu"]) {const cell = el("th", "", label); cell.scope = "col"; headRow.append(cell);} head.append(headRow);
       const body = el("tbody");
       for (const [key, label] of [["eps", "BPA"], ["revenue", "Revenus"]]) {
-        const metric = report[key], row = el("tr"), name = el("th", "", label), basisLabel = basis => basis ? " · " + (basis === "gaap" ? "GAAP" : "ajusté") : ""; name.scope = "row"; row.append(name, el("td", "", earningsAmount(metric.actual, metric.currency, key === "revenue") + basisLabel(metric.actual_basis)), el("td", "", earningsAmount(metric.estimate, metric.estimate_currency || metric.currency, key === "revenue") + basisLabel(metric.estimate_basis)));
+        const metric = report[key], row = el("tr"), name = el("th", "", label), basisLabel = basis => basis ? " · " + ({gaap:"GAAP", adjusted:"ajusté", unverified:"non vérifié"}[basis] || "N/D") : ""; name.scope = "row"; row.append(name, el("td", "", earningsAmount(metric.actual, metric.currency, key === "revenue") + basisLabel(metric.actual_basis)), el("td", "", earningsAmount(metric.estimate, metric.estimate_currency || metric.currency, key === "revenue") + basisLabel(metric.estimate_basis)));
         body.append(row);
         const outcome = F.earningsOutcome(metric), status = el("tr"), cell = el("td", "earnings-outcome earnings-" + outcome.status, report.date_status !== "reported" ? earningsPendingLabel(report) : outcome.status === "pending" ? "Montant publié N/D" : outcome.label + (U.validNumber(outcome.percent) ? " · " + delta(outcome.percent, true) : "")); cell.colSpan = 3; cell.dataset.metric = key; status.append(cell); body.append(status);
       }

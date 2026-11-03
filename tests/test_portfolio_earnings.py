@@ -224,6 +224,26 @@ class EarningsTests(unittest.TestCase):
         once = copy.deepcopy(feed)
         self.assertEqual(earnings.apply_verified_actuals(feed, highlights, NOW), once)
 
+    def test_verified_publication_fills_an_empty_currency_and_keeps_unverified_consensus(self):
+        event = earnings.parse_marketbeat(sample(), "MSFT", URL, NOW)[1]
+        event["date_status"] = "calendar"
+        event["eps"]["actual"] = None
+        event["revenue"].update(actual=None, estimate=None, currency=None)
+        review = {"source_url": "https://example.com/issuer/2026-q4-results", "report_url": event["report_url"],
+                  "messages": ["La demande accélère.", "Les perspectives sont relevées.", "Les marges restent sous pression."],
+                  "verified_actuals": {"currency": "USD", "eps": -.2, "revenue": 2.3e9,
+                      "eps_basis": {"actual": "adjusted", "estimate": "unverified"},
+                      "verified_at": NOW.isoformat(), "reason": "Actuals verified; provider consensus basis cannot be confirmed."}}
+        highlights = {"schema_version": 1, "kind": "reviewed_earnings_highlights", "reviewed_at": NOW.isoformat(),
+                      "reports": {"MSFT:2026-07-29": review}}
+        self.assertEqual(earnings.validate_reviewed_highlights(highlights), 1)
+        earnings.apply_verified_actuals({"company_symbol": "MSFT", "events": [event]}, highlights, NOW)
+        self.assertEqual(event["date_status"], "reported")
+        self.assertEqual(event["eps"]["estimate"], -.5)
+        self.assertEqual(event["eps"]["estimate_basis"], "unverified")
+        self.assertEqual((event["revenue"]["actual"], event["revenue"]["currency"]), (2.3e9, "USD"))
+        self.assertNotIn("estimate_currency", event["revenue"])
+
     def test_publication_proof_rejects_future_wrong_currency_and_notes_only(self):
         original = earnings.parse_marketbeat(sample(), "MSFT", URL, NOW)[1]
         original["date_status"] = "calendar"

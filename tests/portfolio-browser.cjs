@@ -100,6 +100,7 @@ syntheticEarningsData.instruments.SHOP.events[0].eps = {
   ...syntheticEarningsData.instruments.SHOP.events[0].eps, currency:"CAD", estimate_currency:"USD"};
 syntheticEarningsData.instruments.CLS.events[0].eps = {
   ...syntheticEarningsData.instruments.CLS.events[0].eps, actual_basis:"gaap", estimate_basis:"adjusted"};
+syntheticEarningsData.instruments.CLS.events[0].revenue.estimate_basis = "unverified";
 let profileOffline = false;
 const personalKey = crypto.randomBytes(32).toString("base64url");
 function sealFixture(positions, revision, portfolioId = "1") {
@@ -212,6 +213,8 @@ async function main() {
     assert.match(await page.locator('#portfolioEarningsItems [data-earnings-id="bbbbbbbbbbbbbbbb"] tbody tr').first().innerText(), /CA.*US/);
     assert.match(await page.locator('#portfolioEarningsItems [data-earnings-id="cccccccccccccccc"] [data-metric="eps"]').innerText(), /Bases comptables non comparables/);
     assert.match(await page.locator('#portfolioEarningsItems [data-earnings-id="cccccccccccccccc"] tbody tr').first().innerText(), /GAAP.*ajusté/);
+    assert.match(await page.locator('#portfolioEarningsItems [data-earnings-id="cccccccccccccccc"] [data-metric="revenue"]').innerText(), /Consensus non vérifié/);
+    assert.match(await page.locator('#portfolioEarningsItems [data-earnings-id="cccccccccccccccc"] tbody tr').nth(1).innerText(), /non vérifié/);
     assert.doesNotMatch(await page.locator('#portfolioEarnings').innerText(), /BPA = bénéfice|thème cité en anglais/);
     await page.locator("#portfolioEarningsTicker").selectOption("SHOP");
     assert.equal(await page.locator("#portfolioEarningsItems article").count(), 1);

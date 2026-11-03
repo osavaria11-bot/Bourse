@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "reviewed_earnings_highlights",
-  "reviewed_at": "2026-11-03T13:49:51.605010+00:00",
+  "reviewed_at": "2026-11-03T14:20:20.467977+00:00",
   "reports": {
     "NFLX:2026-10-20": {
       "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-20-netflix-inc-stock/",
@@ -524,13 +524,25 @@
     },
     "SHOP:2026-11-03": {
       "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-3-shopify-inc-stock/",
-      "source_url": "https://finviz.com/news/414087/shopify-sustains-rapid-growth-with-revenue-up-32-and-free-cash-flow-margin-of-22",
+      "source_url": "https://www.shopify.com/investors/press-releases/shopify-sustains-rapid-growth-revenue-32-and-free-cash-flow",
       "messages": [
         "Perspectives — Pour le T4, Shopify vise une croissance des revenus dans le bas de la trentaine en pourcentage, mais du profit brut dans le haut de la vingtaine. Les charges d’exploitation sont prévues à 29–30 % des revenus et la marge de flux disponibles au niveau du T4 2025. Ma lecture : la discipline des dépenses doit compenser un mix moins margé.",
         "Volumes et mix — Le volume de marchandises atteint 119,1 G$ US (+29 %). Les solutions marchands croissent de 35 %, contre 20 % pour les abonnements; le profit brut augmente de 28 %, moins vite que les revenus (+32 %). La hausse des transactions élargit l’activité, mais réduit la part de chaque dollar de vente conservée au niveau brut.",
         "Trésorerie — Shopify dégage 816 M$ US de flux disponibles, soit une marge de 22 %, contre 18 % un an plus tôt. Ce calcul retire 2 M$ d’investissements matériels des 818 M$ de flux opérationnels. Il ne déduit pas les 30 M$ nets d’avances aux marchands désormais classés en investissement : le financement des marchands reste à surveiller séparément.",
         "Exécution — Le résultat opérationnel monte de 343 à 568 M$ US, alors que la R&D passe de 375 à 497 M$ et les ventes et marketing de 410 à 466 M$. La croissance des revenus absorbe ces investissements et améliore le levier opérationnel. Le maintien de cet effet sera déterminant si les coûts des services et de l’IA continuent d’augmenter."
-      ]
+      ],
+      "verified_actuals": {
+        "currency": "USD",
+        "eps": 0.49,
+        "revenue": 3742000000,
+        "eps_basis": {
+          "actual": "adjusted",
+          "estimate": "unverified"
+        },
+        "source_url": "https://www.shopify.com/investors/press-releases/shopify-sustains-rapid-growth-revenue-32-and-free-cash-flow",
+        "verified_at": "2026-11-03T14:20:20.467977+00:00",
+        "reason": "Le communiqué officiel du 3 novembre 2026 publie 3 742 millions USD de revenus et 0,49 USD de BPA ajusté, contre 0,36 USD GAAP. Le fournisseur avait d’abord publié 0,49 USD et 3,74 milliards, puis a retiré ces résultats et rétabli un statut de calendrier. Son estimation de 0,33 USD est conservée mais sa période et sa base ne sont pas confirmées; aucune surprise ne doit en être calculée."
+      }
     },
     "APO:2026-11-03": {
       "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-3-apollo-global-management-inc-stock/",

@@ -194,6 +194,16 @@ test("earnings retain estimates but do not compare different currencies or accou
     assert.throws(() => F.normalizeEarnings(d, earningsCatalog, now));
   }
 });
+test("a verified published EPS keeps an unverified provider consensus without a fabricated surprise", () => {
+  const value = {...metric(.49, .33), actual_basis:"adjusted", estimate_basis:"unverified"};
+  assert.deepEqual(F.earningsOutcome(value), {status:"unknown", label:"Consensus non vérifié", difference:null, percent:null});
+  assert.equal(F.earningsOutcome({...value, actual:null}).status, "pending");
+  const d = earningsFixture(); d.instruments.BIG.events[0].eps = value;
+  const result = F.normalizeEarnings(d, earningsCatalog, Date.parse("2026-10-11T22:00:00Z"));
+  assert.equal(result.instruments.BIG.events[0].eps.actual, .49);
+  assert.equal(result.instruments.BIG.events[0].eps.estimate, .33);
+  assert.equal(result.instruments.BIG.events[0].eps.estimate_basis, "unverified");
+});
 test("earnings analysis displays only three or four reviewed French points, never generic fallback headings", () => {
   const reported = event("aaaaaaaaaaaaaaaa", "2026-10-06");
   assert.deepEqual(F.earningsMessages(reported), []);

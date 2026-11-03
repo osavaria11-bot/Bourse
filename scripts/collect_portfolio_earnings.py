@@ -342,7 +342,8 @@ def valid_actuals(reviewed: dict) -> bool:
     if "eps_basis" in actuals:
         basis = actuals["eps_basis"]
         if ("eps" not in actuals or not isinstance(basis, dict) or set(basis) != {"actual", "estimate"}
-                or any(v not in ("gaap", "adjusted") for v in basis.values())):
+                or basis["actual"] not in ("gaap", "adjusted")
+                or basis["estimate"] not in ("gaap", "adjusted", "unverified")):
             return False
     return all(isinstance(actuals[metric], (int, float)) and not isinstance(actuals[metric], bool)
                and math.isfinite(actuals[metric]) and (metric != "revenue" or actuals[metric] > 0)
@@ -364,6 +365,9 @@ def apply_verified_actuals(feed: dict, highlights: dict, now: datetime | None = 
         actuals = reviewed["verified_actuals"]
         source_url = actuals.get("source_url", reviewed["source_url"])
         provider_currency = actuals.get("provider_currency", actuals["currency"])
+        def compatible_metric(value):
+            return isinstance(value, dict) and (value.get("currency") in (provider_currency, actuals["currency"])
+                or value.get("currency") is None and value.get("actual") is None and value.get("estimate") is None)
         if event["date_status"] != "reported":
             # A provider can temporarily remove its actuals after publication.
             # Only a dated, quarter-bound numerical verification can restore a
@@ -373,8 +377,7 @@ def apply_verified_actuals(feed: dict, highlights: dict, now: datetime | None = 
                 report_day = date.fromisoformat(event["report_date"])
             except ValueError:
                 continue
-            compatible = any(metric in actuals and isinstance(event.get(metric), dict)
-                             and event[metric].get("currency") in (provider_currency, actuals["currency"])
+            compatible = any(metric in actuals and compatible_metric(event.get(metric))
                              for metric in ("eps", "revenue"))
             if (event["date_status"] != "calendar" or not compatible
                     or not report_day <= verified_at.astimezone(TORONTO).date() <= now.astimezone(TORONTO).date()
@@ -394,8 +397,7 @@ def apply_verified_actuals(feed: dict, highlights: dict, now: datetime | None = 
             value = event.get(metric)
             basis = actuals.get("eps_basis", {}) if metric == "eps" else {}
             basis_fields = {"actual_basis": basis["actual"], "estimate_basis": basis["estimate"]} if basis else {}
-            if (metric not in actuals or not isinstance(value, dict)
-                    or value.get("currency") not in (provider_currency, actuals["currency"])
+            if (metric not in actuals or not compatible_metric(value)
                     or (value.get("actual") == actuals[metric] and value.get("currency") == actuals["currency"]
                         and all(value.get(k) == v for k, v in basis_fields.items()))):
                 continue
@@ -412,7 +414,7 @@ def apply_verified_actuals(feed: dict, highlights: dict, now: datetime | None = 
             value["actual"] = actuals[metric]
             value["currency"] = actuals["currency"]
             value.update(basis_fields)
-            if estimate_currency != value["currency"]:
+            if estimate_currency is not None and estimate_currency != value["currency"]:
                 value["estimate_currency"] = estimate_currency
             value["source_url"] = source_url
             if all(source["url"] != source_url for source in event["sources"]):
