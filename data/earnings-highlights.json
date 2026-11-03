@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "reviewed_earnings_highlights",
-  "reviewed_at": "2026-11-03T13:01:09.041778+00:00",
+  "reviewed_at": "2026-11-03T13:22:43.195117+00:00",
   "reports": {
     "NFLX:2026-10-20": {
       "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-20-netflix-inc-stock/",
@@ -531,6 +531,45 @@
         "Trésorerie — Shopify dégage 816 M$ US de flux disponibles, soit une marge de 22 %, contre 18 % un an plus tôt. Ce calcul retire 2 M$ d’investissements matériels des 818 M$ de flux opérationnels. Il ne déduit pas les 30 M$ nets d’avances aux marchands désormais classés en investissement : le financement des marchands reste à surveiller séparément.",
         "Exécution — Le résultat opérationnel monte de 343 à 568 M$ US, alors que la R&D passe de 375 à 497 M$ et les ventes et marketing de 410 à 466 M$. La croissance des revenus absorbe ces investissements et améliore le levier opérationnel. Le maintien de cet effet sera déterminant si les coûts des services et de l’IA continuent d’augmenter."
       ]
+    },
+    "APO:2026-11-03": {
+      "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-3-apollo-global-management-inc-stock/",
+      "source_url": "https://ir.apollo.com/_assets/_6caa86a09f5321c1a84bc05932f603e1/apollo/db/2247/22889/full_earnings_release/AGM_Earnings_Release_3Q%272026.pdf",
+      "messages": [
+        "Gestion — Le résultat lié aux commissions atteint 802 M$ US (+23 %), avec une marge de 58,4 %, contre 56,8 % un an plus tôt. Les actifs générant des frais montent à 880 G$ (+28 %). Ce socle de revenus soutient la récurrence, à condition que la collecte soit convertie en actifs effectivement rémunérateurs.",
+        "Collecte — Apollo reçoit 53 G$ US de capitaux bruts au T3; le flux net ressort à 30,5 G$ après sorties et autres ajustements. L’origination atteint un record de 114 G$ et les actifs gérés 1 074 G$. Marc Rowan met en avant des pipelines records; ma lecture est de suivre aussi la qualité du crédit, pas seulement les volumes.",
+        "Assurance — Le résultat lié aux marges d’Athene est de 844 M$ US, contre 871 M$ un an plus tôt. Hors une charge de 65 M$ liée à la revue annuelle des hypothèses actuarielles, il atteint 909 M$. La distinction montre la sensibilité du résultat aux hypothèses d’assurance, malgré une activité commerciale soutenue.",
+        "Qualité — Le résultat ajusté est de 2,07 $ US par action, ou 2,15 $ hors éléments notables; le résultat GAAP est une perte de 1,78 $. Les pertes latentes sur placements de l’assurance expliquent largement l’écart. Le bénéfice récurrent et la volatilité comptable doivent être suivis séparément pour apprécier la trajectoire."
+      ],
+      "verified_actuals": {
+        "currency": "USD",
+        "eps": 2.07,
+        "revenue": 4739000000,
+        "eps_basis": {
+          "actual": "adjusted",
+          "estimate": "adjusted"
+        },
+        "source_url": "https://ir.apollo.com/_assets/_6caa86a09f5321c1a84bc05932f603e1/apollo/db/2247/22889/full_earnings_release/AGM_Earnings_Release_3Q%272026.pdf",
+        "verified_at": "2026-11-03T13:22:43.195117+00:00",
+        "reason": "Le communiqué officiel du 3 novembre 2026 donne un ANI de 2,07 USD par action et 4 739 millions USD de revenus GAAP. Le fournisseur indiquait 1,82 USD et omettait les revenus. ANI hors éléments notables : 2,15 USD; perte GAAP : 1,78 USD. Le consensus ajusté de 2,19 USD est conservé, corroboré par le compte rendu daté du Wall Street Journal; aucune confusion avec le GAAP."
+      }
+    },
+    "PFE:2026-11-03": {
+      "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-3-pfizer-inc-stock/",
+      "source_url": "https://www.pfizer.com/news/press-release/press-release-detail/pfizer-reports-strong-third-quarter-2026-results-and-raises",
+      "messages": [
+        "Perspectives — Pfizer relève les revenus 2026 à 62–64 G$ US, contre 60,5–62,5 G$, et le BPA ajusté à 2,95–3,05 $, contre 2,80–3,00 $. La hausse du milieu de la cible de ventes atteint 1,5 G$; elle repose sur l’exécution depuis janvier et les initiatives de coûts, sans supposer de nouveaux rachats d’actions.",
+        "Moteurs — Les revenus du T3 sont presque stables à 16,6 G$ US. Hors Comirnaty et Paxlovid, ils augmentent de 7 % à changes constants; les produits lancés ou acquis progressent de 32 % sur cette base. Le portefeuille récent compense donc le recul du COVID, sans accélération équivalente du chiffre d’affaires total.",
+        "Investissement — La cible de R&D ajustée passe à 10,8–11,8 G$ US, contre 10,5–11,5 G$. La nouvelle prévision de BPA intègre déjà une charge ponctuelle de 650 M$ pour l’accord Innovent, soit environ 0,10 $ par action. Le relèvement du bénéfice prévu absorbe ainsi un coût supplémentaire de développement.",
+        "Risques et capital — La prévision intègre 1,1 G$ US d’érosion des revenus liée aux génériques et biosimilaires. Aucun rachat n’est prévu en 2026 et Pfizer maintient une stratégie de désendettement prudente. Ma lecture : les nouveaux produits doivent remplacer les ventes perdues et financer le pipeline; le BPA ne dépend pas ici d’un programme de rachats."
+      ],
+      "verified_actuals": {
+        "currency": "USD",
+        "revenue": 16583000000,
+        "source_url": "https://www.pfizer.com/news/press-release/press-release-detail/pfizer-reports-strong-third-quarter-2026-results-and-raises",
+        "verified_at": "2026-11-03T13:22:43.195117+00:00",
+        "reason": "Le communiqué officiel du 3 novembre 2026 indique 16 583 millions USD de revenus au T3. Le fournisseur avait déjà le BPA publié mais omettait les revenus. Consensus et BPA conservés."
+      }
     }
   }
 }
