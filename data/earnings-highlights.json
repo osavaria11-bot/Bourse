@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "reviewed_earnings_highlights",
-  "reviewed_at": "2026-11-03T10:16:29.177296+00:00",
+  "reviewed_at": "2026-11-03T13:01:09.041778+00:00",
   "reports": {
     "NFLX:2026-10-20": {
       "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-20-netflix-inc-stock/",
@@ -506,10 +506,30 @@
       "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-2-5n-plus-inc-vnpto-stock/",
       "source_url": "https://www.5nplus.com/en/news/5n-reports-third-quarter-of-2026-financial-results/",
       "messages": [
-        "Perspectives — Richard Perron dit viser le haut de la fourchette 2026 de BAIIA ajusté, de 100 à 105 M$ US. La cible est réaffirmée, pas relevée. L’utilisation élevée des capacités et les projets de productivité doivent soutenir les volumes malgré la pression sur les intrants; la conférence du 3 novembre à 8 h reste à venir.",
+        "Perspectives — Richard Perron dit viser le haut de la fourchette 2026 de BAIIA ajusté, de 100 à 105 M$ US. La cible est réaffirmée, pas relevée. L’utilisation élevée des capacités et les projets de productivité doivent soutenir les volumes malgré la pression sur les intrants; lecture du communiqué du 2 novembre, antérieur à la conférence du 3 novembre à 8 h.",
         "Rentabilité — Les revenus du T3 montent de 30 % à 136,4 M$ US, mais le BAIIA ajusté ne progresse que de 7 %, à 31,1 M$. La marge brute ajustée de 31,4 % s’améliore sur le T2, tout en restant sous les 36,9 % d’un an plus tôt, notamment avec la normalisation des matériaux de performance. La croissance ne se convertit donc pas intégralement en marge.",
         "Carnet — Au 30 septembre, les commandes en carnet atteignent 447,3 M$ US, soit 299 jours de revenus annualisés : 14 jours de moins qu’au trimestre précédent et 12 de moins qu’un an plus tôt. Cette couverture donne de la visibilité, sans garantir le calendrier des livraisons ni des encaissements.",
         "Capital — La dette nette revient à 32,4 M$ US, contre 50,3 M$ à fin 2025, pour un levier de 0,31 fois. Le renforcement des capacités, notamment à St. George pour l’arséniure de gallium, vise les marchés spatial et de défense. Ma lecture : le bilan facilite ces investissements, mais leur rendement dépendra de la montée en production et des coûts."
+      ]
+    },
+    "NBIX:2026-11-02": {
+      "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-2-neurocrine-biosciences-inc-stock/",
+      "source_url": "https://www.marketbeat.com/earnings/reports/2026-11-2-neurocrine-biosciences-inc-stock/",
+      "messages": [
+        "Perspectives — La cible 2026 d’INGREZZA passe de 2,825–2,875 à 2,900–2,925 G$ US. Matt Abernethy précise toutefois que 20 M$ du T3 viennent du calendrier des commandes et devraient se renverser au T4; cet effet est déjà inclus dans la cible. La demande sous-jacente reste forte, sans extrapoler mécaniquement les 801 M$ du trimestre.",
+        "Diversification — CRENESSITY atteint 211 M$ US de ventes, contre 98 M$ un an plus tôt, tandis que VYKAT XR apporte 107 M$. Ce dernier est consolidé depuis l’acquisition de Soleno en mai : la croissance totale de 41 % comprend donc un apport acquis, en plus de la progression de 17 % d’INGREZZA portée par les volumes.",
+        "Qualité du bénéfice — Le BPA ajusté de 3,29 $ US se compare à un BPA GAAP de 1,96 $, contre 2,04 $ GAAP un an plus tôt. Les ajustements excluent notamment des coûts liés à Soleno et une perte de 52 M$ sur placements. La rentabilité opérationnelle progresse, mais le bénéfice comptable ne suit pas la même trajectoire que l’ajusté.",
+        "Risque clinique — La direction reconnaît que les événements récents liés à la sécurité de VYKAT XR pourraient retarder sa trajectoire de croissance. Elle poursuit la surveillance et prévoit une étude en 2027 chez des patients Prader-Willi avec problèmes de santé complexes. Ma lecture : la vitesse d’adoption et le suivi de sécurité comptent autant que le potentiel commercial annoncé."
+      ]
+    },
+    "SHOP:2026-11-03": {
+      "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-3-shopify-inc-stock/",
+      "source_url": "https://finviz.com/news/414087/shopify-sustains-rapid-growth-with-revenue-up-32-and-free-cash-flow-margin-of-22",
+      "messages": [
+        "Perspectives — Pour le T4, Shopify vise une croissance des revenus dans le bas de la trentaine en pourcentage, mais du profit brut dans le haut de la vingtaine. Les charges d’exploitation sont prévues à 29–30 % des revenus et la marge de flux disponibles au niveau du T4 2025. Ma lecture : la discipline des dépenses doit compenser un mix moins margé.",
+        "Volumes et mix — Le volume de marchandises atteint 119,1 G$ US (+29 %). Les solutions marchands croissent de 35 %, contre 20 % pour les abonnements; le profit brut augmente de 28 %, moins vite que les revenus (+32 %). La hausse des transactions élargit l’activité, mais réduit la part de chaque dollar de vente conservée au niveau brut.",
+        "Trésorerie — Shopify dégage 816 M$ US de flux disponibles, soit une marge de 22 %, contre 18 % un an plus tôt. Ce calcul retire 2 M$ d’investissements matériels des 818 M$ de flux opérationnels. Il ne déduit pas les 30 M$ nets d’avances aux marchands désormais classés en investissement : le financement des marchands reste à surveiller séparément.",
+        "Exécution — Le résultat opérationnel monte de 343 à 568 M$ US, alors que la R&D passe de 375 à 497 M$ et les ventes et marketing de 410 à 466 M$. La croissance des revenus absorbe ces investissements et améliore le levier opérationnel. Le maintien de cet effet sera déterminant si les coûts des services et de l’IA continuent d’augmenter."
       ]
     }
   }

@@ -3686,10 +3686,28 @@
           },
           "messages": [
             {
-              "text": "Record third-quarter performance",
-              "language": "en",
+              "text": "Perspectives — La cible 2026 d’INGREZZA passe de 2,825–2,875 à 2,900–2,925 G$ US. Matt Abernethy précise toutefois que 20 M$ du T3 viennent du calendrier des commandes et devraient se renverser au T4; cet effet est déjà inclus dans la cible. La demande sous-jacente reste forte, sans extrapoler mécaniquement les 801 M$ du trimestre.",
+              "language": "fr",
               "source_url": "https://www.marketbeat.com/earnings/reports/2026-11-2-neurocrine-biosciences-inc-stock/",
-              "kind": "call_topic"
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Diversification — CRENESSITY atteint 211 M$ US de ventes, contre 98 M$ un an plus tôt, tandis que VYKAT XR apporte 107 M$. Ce dernier est consolidé depuis l’acquisition de Soleno en mai : la croissance totale de 41 % comprend donc un apport acquis, en plus de la progression de 17 % d’INGREZZA portée par les volumes.",
+              "language": "fr",
+              "source_url": "https://www.marketbeat.com/earnings/reports/2026-11-2-neurocrine-biosciences-inc-stock/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Qualité du bénéfice — Le BPA ajusté de 3,29 $ US se compare à un BPA GAAP de 1,96 $, contre 2,04 $ GAAP un an plus tôt. Les ajustements excluent notamment des coûts liés à Soleno et une perte de 52 M$ sur placements. La rentabilité opérationnelle progresse, mais le bénéfice comptable ne suit pas la même trajectoire que l’ajusté.",
+              "language": "fr",
+              "source_url": "https://www.marketbeat.com/earnings/reports/2026-11-2-neurocrine-biosciences-inc-stock/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Risque clinique — La direction reconnaît que les événements récents liés à la sécurité de VYKAT XR pourraient retarder sa trajectoire de croissance. Elle poursuit la surveillance et prévoit une étude en 2027 chez des patients Prader-Willi avec problèmes de santé complexes. Ma lecture : la vitesse d’adoption et le suivi de sécurité comptent autant que le potentiel commercial annoncé.",
+              "language": "fr",
+              "source_url": "https://www.marketbeat.com/earnings/reports/2026-11-2-neurocrine-biosciences-inc-stock/",
+              "kind": "reviewed_summary"
             }
           ],
           "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-2-neurocrine-biosciences-inc-stock/",
@@ -3701,6 +3719,10 @@
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=NBIX&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.marketbeat.com/earnings/reports/2026-11-2-neurocrine-biosciences-inc-stock/"
             }
           ]
         }
@@ -4348,10 +4370,28 @@
           },
           "messages": [
             {
-              "text": "Revenus : +31,7 % par rapport au même trimestre un an plus tôt.",
+              "text": "Perspectives — Pour le T4, Shopify vise une croissance des revenus dans le bas de la trentaine en pourcentage, mais du profit brut dans le haut de la vingtaine. Les charges d’exploitation sont prévues à 29–30 % des revenus et la marge de flux disponibles au niveau du T4 2025. Ma lecture : la discipline des dépenses doit compenser un mix moins margé.",
               "language": "fr",
-              "source_url": "https://www.marketbeat.com/stocks/NASDAQ/SHOP/earnings/",
-              "kind": "calculated"
+              "source_url": "https://finviz.com/news/414087/shopify-sustains-rapid-growth-with-revenue-up-32-and-free-cash-flow-margin-of-22",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Volumes et mix — Le volume de marchandises atteint 119,1 G$ US (+29 %). Les solutions marchands croissent de 35 %, contre 20 % pour les abonnements; le profit brut augmente de 28 %, moins vite que les revenus (+32 %). La hausse des transactions élargit l’activité, mais réduit la part de chaque dollar de vente conservée au niveau brut.",
+              "language": "fr",
+              "source_url": "https://finviz.com/news/414087/shopify-sustains-rapid-growth-with-revenue-up-32-and-free-cash-flow-margin-of-22",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Trésorerie — Shopify dégage 816 M$ US de flux disponibles, soit une marge de 22 %, contre 18 % un an plus tôt. Ce calcul retire 2 M$ d’investissements matériels des 818 M$ de flux opérationnels. Il ne déduit pas les 30 M$ nets d’avances aux marchands désormais classés en investissement : le financement des marchands reste à surveiller séparément.",
+              "language": "fr",
+              "source_url": "https://finviz.com/news/414087/shopify-sustains-rapid-growth-with-revenue-up-32-and-free-cash-flow-margin-of-22",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Exécution — Le résultat opérationnel monte de 343 à 568 M$ US, alors que la R&D passe de 375 à 497 M$ et les ventes et marketing de 410 à 466 M$. La croissance des revenus absorbe ces investissements et améliore le levier opérationnel. Le maintien de cet effet sera déterminant si les coûts des services et de l’IA continuent d’augmenter.",
+              "language": "fr",
+              "source_url": "https://finviz.com/news/414087/shopify-sustains-rapid-growth-with-revenue-up-32-and-free-cash-flow-margin-of-22",
+              "kind": "reviewed_summary"
             }
           ],
           "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-3-shopify-inc-stock/",
@@ -4363,6 +4403,10 @@
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=SHOP&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://finviz.com/news/414087/shopify-sustains-rapid-growth-with-revenue-up-32-and-free-cash-flow-margin-of-22"
             }
           ]
         }
@@ -5106,7 +5150,7 @@
           },
           "messages": [
             {
-              "text": "Perspectives — Richard Perron dit viser le haut de la fourchette 2026 de BAIIA ajusté, de 100 à 105 M$ US. La cible est réaffirmée, pas relevée. L’utilisation élevée des capacités et les projets de productivité doivent soutenir les volumes malgré la pression sur les intrants; la conférence du 3 novembre à 8 h reste à venir.",
+              "text": "Perspectives — Richard Perron dit viser le haut de la fourchette 2026 de BAIIA ajusté, de 100 à 105 M$ US. La cible est réaffirmée, pas relevée. L’utilisation élevée des capacités et les projets de productivité doivent soutenir les volumes malgré la pression sur les intrants; lecture du communiqué du 2 novembre, antérieur à la conférence du 3 novembre à 8 h.",
               "language": "fr",
               "source_url": "https://www.5nplus.com/en/news/5n-reports-third-quarter-of-2026-financial-results/",
               "kind": "reviewed_summary"
@@ -5629,5 +5673,6 @@
       "source_warnings": []
     }
   },
-  "errors": {}
+  "errors": {},
+  "analysis_reviewed_at": "2026-11-03T13:01:09.041778+00:00"
 }
