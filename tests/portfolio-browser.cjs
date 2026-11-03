@@ -214,7 +214,7 @@ async function main() {
     assert.match(await page.locator('#portfolioEarningsItems [data-earnings-id="cccccccccccccccc"] [data-metric="eps"]').innerText(), /Bases comptables non comparables/);
     assert.match(await page.locator('#portfolioEarningsItems [data-earnings-id="cccccccccccccccc"] tbody tr').first().innerText(), /GAAP.*ajusté/);
     assert.match(await page.locator('#portfolioEarningsItems [data-earnings-id="cccccccccccccccc"] [data-metric="revenue"]').innerText(), /Consensus non vérifié/);
-    assert.match(await page.locator('#portfolioEarningsItems [data-earnings-id="cccccccccccccccc"] tbody tr').nth(1).innerText(), /non vérifié/);
+    assert.match(await page.locator('#portfolioEarningsItems [data-earnings-id="cccccccccccccccc"] tbody tr').filter({has: page.getByRole('rowheader', {name: 'Revenus', exact: true})}).innerText(), /non vérifié/);
     assert.doesNotMatch(await page.locator('#portfolioEarnings').innerText(), /BPA = bénéfice|thème cité en anglais/);
     await page.locator("#portfolioEarningsTicker").selectOption("SHOP");
     assert.equal(await page.locator("#portfolioEarningsItems article").count(), 1);
