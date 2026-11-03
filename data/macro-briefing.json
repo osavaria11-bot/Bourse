@@ -1,12 +1,12 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-11-03T14:35:09.389632+00:00",
+  "generated_at": "2026-11-03T18:40:17.820666+00:00",
   "last_successful_update": "2026-11-03T14:35:09.389632+00:00",
-  "update_status": "fresh_data",
+  "update_status": "partial_data",
   "coverage": {
     "total": 42,
-    "fresh": 42,
-    "cached": 0,
+    "fresh": 11,
+    "cached": 31,
     "unavailable": 0
   },
   "data_provider": "FRED / Banque du Canada / Statistique Canada / Numerco / Fed de New York / U.S. Treasury",
@@ -53,7 +53,7 @@
       "previous_value": 4.0,
       "previous_date": "2026-11-02",
       "unit": "%",
-      "fetch_status": "fresh"
+      "fetch_status": "cached"
     },
     {
       "id": "DFEDTARL",
@@ -63,7 +63,7 @@
       "previous_value": 3.75,
       "previous_date": "2026-11-02",
       "unit": "%",
-      "fetch_status": "fresh"
+      "fetch_status": "cached"
     },
     {
       "id": "DGS10",
@@ -93,7 +93,7 @@
       "previous_value": 3.353016,
       "previous_date": "2026-08-01",
       "unit": "%",
-      "fetch_status": "fresh"
+      "fetch_status": "cached"
     },
     {
       "id": "PCEPILFE",
@@ -103,7 +103,7 @@
       "previous_value": 3.034442,
       "previous_date": "2026-08-01",
       "unit": "%",
-      "fetch_status": "fresh"
+      "fetch_status": "cached"
     },
     {
       "id": "V41690973",
@@ -143,7 +143,7 @@
       "previous_value": 4.1,
       "previous_date": "2026-08-01",
       "unit": "%",
-      "fetch_status": "fresh"
+      "fetch_status": "cached"
     },
     {
       "id": "V2062815",
@@ -163,7 +163,7 @@
       "previous_value": 195000.0,
       "previous_date": "2026-10-17",
       "unit": "demandes",
-      "fetch_status": "fresh"
+      "fetch_status": "cached"
     },
     {
       "id": "IC4WSA",
@@ -173,7 +173,7 @@
       "previous_value": 198000.0,
       "previous_date": "2026-10-17",
       "unit": "demandes",
-      "fetch_status": "fresh"
+      "fetch_status": "cached"
     },
     {
       "id": "PAYEMS",
@@ -183,7 +183,7 @@
       "previous_value": 133.0,
       "previous_date": "2026-08-01",
       "unit": "milliers",
-      "fetch_status": "fresh"
+      "fetch_status": "cached"
     },
     {
       "id": "GDPC1",
@@ -193,7 +193,7 @@
       "previous_value": 2.220208,
       "previous_date": "2026-04-01",
       "unit": "%",
-      "fetch_status": "fresh"
+      "fetch_status": "cached"
     },
     {
       "id": "VIXCLS",
@@ -203,7 +203,7 @@
       "previous_value": 17.2,
       "previous_date": "2026-10-29",
       "unit": "points",
-      "fetch_status": "fresh"
+      "fetch_status": "cached"
     },
     {
       "id": "DEXCAUS",
@@ -213,7 +213,7 @@
       "previous_value": 1.3975,
       "previous_date": "2026-10-29",
       "unit": "$ CA/$ US",
-      "fetch_status": "fresh"
+      "fetch_status": "cached"
     },
     {
       "id": "V39079",

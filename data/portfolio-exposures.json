@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "portfolio_exposures",
-  "generated_at": "2026-11-03T14:32:06.348802+00:00",
+  "generated_at": "2026-11-03T18:47:54.131808+00:00",
   "benchmark": "FEQT",
   "methodology": "Pondérations par valeur de marché en CAD; FNB décomposés; secteurs GICS; pays de risque ou pays publié par l’émetteur. Aucun calcul selon les devises ou le chiffre d’affaires géographique. Solde non détaillé conservé explicitement. Arrondis de collecte harmonisés à 100 %.",
   "labels": {
@@ -3518,162 +3518,166 @@
     {
       "id": "XEF",
       "title": "iShares Core MSCI EAFE IMI Index ETF",
-      "as_of": "2026-10-26",
+      "as_of": "2026-11-02",
       "sectors": [
         {
           "id": "communication_services",
-          "weight": 3.76908096
+          "weight": 3.77448821
         },
         {
           "id": "consumer_discretionary",
-          "weight": 8.55045107
+          "weight": 8.52191289
         },
         {
           "id": "consumer_staples",
-          "weight": 6.7888718
+          "weight": 6.76400666
         },
         {
           "id": "energy",
-          "weight": 4.21822838
+          "weight": 4.10534562
         },
         {
           "id": "financials",
-          "weight": 24.50372801
+          "weight": 24.72552974
         },
         {
           "id": "health_care",
-          "weight": 10.10684279
+          "weight": 10.24405145
         },
         {
           "id": "industrials",
-          "weight": 18.81022076
+          "weight": 18.71790319
         },
         {
           "id": "materials",
-          "weight": 6.40349193
+          "weight": 6.40226372
         },
         {
           "id": "other_assets",
-          "weight": 0.59836268
+          "weight": 0.69393075
         },
         {
           "id": "real_estate",
-          "weight": 2.59776223
+          "weight": 2.56705558
         },
         {
           "id": "technology",
-          "weight": 10.06534642
+          "weight": 9.90853464
+        },
+        {
+          "id": "unclassified",
+          "weight": 0.00030226
         },
         {
           "id": "utilities",
-          "weight": 3.58761297
+          "weight": 3.57467529
         }
       ],
       "geography": [
         {
           "id": "australia",
-          "weight": 7.11986842
+          "weight": 7.07760619
         },
         {
           "id": "austria",
-          "weight": 0.40494336
+          "weight": 0.41174862
         },
         {
           "id": "belgium",
-          "weight": 1.16500283
+          "weight": 1.16648103
         },
         {
           "id": "canada",
-          "weight": 0.18464113
+          "weight": 0.23584179
         },
         {
           "id": "denmark",
-          "weight": 1.67513497
+          "weight": 1.72043081
         },
         {
           "id": "european_union",
-          "weight": 0.07368198
+          "weight": 0.07905452
         },
         {
           "id": "finland",
-          "weight": 1.11046552
+          "weight": 1.08803685
         },
         {
           "id": "france",
-          "weight": 8.31998577
+          "weight": 8.42787301
         },
         {
           "id": "germany",
-          "weight": 7.90274744
+          "weight": 7.99680121
         },
         {
           "id": "greece",
-          "weight": 0.01950755
+          "weight": 0.01915508
         },
         {
           "id": "hong_kong",
-          "weight": 1.73571048
+          "weight": 1.73966727
         },
         {
           "id": "ireland",
-          "weight": 0.39005887
+          "weight": 0.39119689
         },
         {
           "id": "israel",
-          "weight": 1.61624555
+          "weight": 1.50085685
         },
         {
           "id": "italy",
-          "weight": 3.0131341
+          "weight": 3.02624178
         },
         {
           "id": "japan",
-          "weight": 25.78972184
+          "weight": 25.21355006
         },
         {
           "id": "netherlands",
-          "weight": 4.92413554
+          "weight": 4.85709886
         },
         {
           "id": "new_zealand",
-          "weight": 0.20323121
+          "weight": 0.19695062
         },
         {
           "id": "norway",
-          "weight": 0.93880031
+          "weight": 0.93344365
         },
         {
           "id": "portugal",
-          "weight": 0.21250573
+          "weight": 0.21252371
         },
         {
           "id": "singapore",
-          "weight": 1.79003451
+          "weight": 1.74016348
         },
         {
           "id": "spain",
-          "weight": 3.49340714
+          "weight": 3.41851359
         },
         {
           "id": "sweden",
-          "weight": 3.65920892
+          "weight": 3.73104051
         },
         {
           "id": "switzerland",
-          "weight": 8.88285301
+          "weight": 9.00819411
         },
         {
           "id": "united_kingdom",
-          "weight": 14.35601963
+          "weight": 14.26565406
         },
         {
           "id": "united_states",
-          "weight": 1.01895419
+          "weight": 1.541875450000008
         }
       ],
       "source_url": "https://www.blackrock.com/ca/investors/en/products/251421/ishares-msci-eafe-imi-index-etf",
       "note": "Secteurs GICS et pays de risque; pondérations des placements sous-jacents, obligations et liquidités incluses.",
-      "checked_at": "2026-10-27T16:02:25.797194+00:00",
+      "checked_at": "2026-11-03T18:47:54.131808+00:00",
       "fetch_status": "fresh",
       "refresh": {
         "kind": "ishares",
@@ -3683,258 +3687,262 @@
     {
       "id": "XEQT",
       "title": "iShares Core Equity ETF Portfolio",
-      "as_of": "2026-10-26",
+      "as_of": "2026-11-02",
       "sectors": [
         {
           "id": "communication_services",
-          "weight": 5.46389444
+          "weight": 5.23581923
         },
         {
           "id": "consumer_discretionary",
-          "weight": 7.27242974
+          "weight": 7.45075488
         },
         {
           "id": "consumer_staples",
-          "weight": 4.69112936
+          "weight": 4.81134063
         },
         {
           "id": "energy",
-          "weight": 7.41163122
+          "weight": 7.27840519
         },
         {
           "id": "financials",
-          "weight": 21.01657189
+          "weight": 21.47724024
         },
         {
           "id": "health_care",
-          "weight": 7.40511445
+          "weight": 7.63477293
         },
         {
           "id": "industrials",
-          "weight": 11.62496115
+          "weight": 11.86500021
         },
         {
           "id": "materials",
-          "weight": 6.91001953
+          "weight": 6.92958496
         },
         {
           "id": "other_assets",
-          "weight": 0.53784476
+          "weight": 0.53390618
         },
         {
           "id": "real_estate",
-          "weight": 1.97740494
+          "weight": 2.01178819
         },
         {
           "id": "technology",
-          "weight": 22.9668997
+          "weight": 21.97662957
+        },
+        {
+          "id": "unclassified",
+          "weight": 7.737e-05
         },
         {
           "id": "utilities",
-          "weight": 2.7220988200000016
+          "weight": 2.7946804199999984
         }
       ],
       "geography": [
         {
           "id": "australia",
-          "weight": 1.72971421
+          "weight": 1.7528206
         },
         {
           "id": "austria",
-          "weight": 0.09786099
+          "weight": 0.10140078
         },
         {
           "id": "belgium",
-          "weight": 0.28154493
+          "weight": 0.2873003
         },
         {
           "id": "bermuda",
-          "weight": 0.16315764
+          "weight": 0.17133309
         },
         {
           "id": "brazil",
-          "weight": 0.18115344
+          "weight": 0.16971739
         },
         {
           "id": "canada",
-          "weight": 25.38888461
+          "weight": 25.53027483
         },
         {
           "id": "chile",
-          "weight": 0.02163982
+          "weight": 0.02132079
         },
         {
           "id": "china",
-          "weight": 0.84451374
+          "weight": 0.83706923
         },
         {
           "id": "colombia",
-          "weight": 0.00930824
+          "weight": 0.00900361
         },
         {
           "id": "czech_republic",
-          "weight": 0.00486915
+          "weight": 0.00484083
         },
         {
           "id": "denmark",
-          "weight": 0.4048361
+          "weight": 0.42373417
         },
         {
           "id": "egypt",
-          "weight": 0.00331115
+          "weight": 0.00333272
         },
         {
           "id": "european_union",
-          "weight": 0.0179543
+          "weight": 0.01975137
         },
         {
           "id": "finland",
-          "weight": 0.26830078
+          "weight": 0.26788085
         },
         {
           "id": "france",
-          "weight": 2.01048273
+          "weight": 2.07536962
         },
         {
           "id": "germany",
-          "weight": 1.90978076
+          "weight": 1.96936031
         },
         {
           "id": "greece",
-          "weight": 0.03345369
+          "weight": 0.03347416
         },
         {
           "id": "hong_kong",
-          "weight": 0.42335324
+          "weight": 0.43151827
         },
         {
           "id": "hungary",
-          "weight": 0.01405989
+          "weight": 0.01427277
         },
         {
           "id": "india",
-          "weight": 0.57073313
+          "weight": 0.58300391
         },
         {
           "id": "indonesia",
-          "weight": 0.02293614
+          "weight": 0.0216703
         },
         {
           "id": "ireland",
-          "weight": 0.09421435
+          "weight": 0.0962748
         },
         {
           "id": "israel",
-          "weight": 0.3906086
+          "weight": 0.36965522
         },
         {
           "id": "italy",
-          "weight": 0.72809755
+          "weight": 0.74514
         },
         {
           "id": "japan",
-          "weight": 6.23206988
+          "weight": 6.20899905
         },
         {
           "id": "korea_south",
-          "weight": 0.82357694
+          "weight": 0.86036504
         },
         {
           "id": "kuwait",
-          "weight": 0.02731405
+          "weight": 0.02652923
         },
         {
           "id": "malaysia",
-          "weight": 0.0524038
+          "weight": 0.05239482
         },
         {
           "id": "mexico",
-          "weight": 0.07988606
+          "weight": 0.07931438
         },
         {
           "id": "netherlands",
-          "weight": 1.18991848
+          "weight": 1.19610173
         },
         {
           "id": "new_zealand",
-          "weight": 0.04910283
+          "weight": 0.0484901
         },
         {
           "id": "norway",
-          "weight": 0.22686938
+          "weight": 0.22984409
         },
         {
           "id": "peru",
-          "weight": 0.01717967
+          "weight": 0.01607139
         },
         {
           "id": "philippines",
-          "weight": 0.01485682
+          "weight": 0.01482316
         },
         {
           "id": "poland",
-          "weight": 0.05913467
+          "weight": 0.05749092
         },
         {
           "id": "portugal",
-          "weight": 0.051346
+          "weight": 0.05232434
         },
         {
           "id": "qatar",
-          "weight": 0.02165363
+          "weight": 0.02309135
         },
         {
           "id": "saudi_arabia",
-          "weight": 0.11045105
+          "weight": 0.11060242
         },
         {
           "id": "singapore",
-          "weight": 0.43258593
+          "weight": 0.42856523
         },
         {
           "id": "south_africa",
-          "weight": 0.145453
+          "weight": 0.14345763
         },
         {
           "id": "spain",
-          "weight": 0.84416159
+          "weight": 0.84182408
         },
         {
           "id": "sweden",
-          "weight": 0.88696802
+          "weight": 0.92150736
         },
         {
           "id": "switzerland",
-          "weight": 2.14657439
+          "weight": 2.21840496
         },
         {
           "id": "taiwan",
-          "weight": 1.31631023
+          "weight": 1.26422909
         },
         {
           "id": "thailand",
-          "weight": 0.05484641
+          "weight": 0.05155459
         },
         {
           "id": "turkey",
-          "weight": 0.02178444
+          "weight": 0.02098579
         },
         {
           "id": "united_arab_emirates",
-          "weight": 0.05765978
+          "weight": 0.05706437
         },
         {
           "id": "united_kingdom",
-          "weight": 3.46910039
+          "weight": 3.51302702
         },
         {
           "id": "united_states",
-          "weight": 46.054023380000004
+          "weight": 45.623417939999996
         }
       ],
       "source_url": "https://www.blackrock.com/ca/investors/en/products/309480/ishares-core-equity-etf-portfolio-fund",
       "note": "Secteurs GICS et pays de risque; pondérations des placements sous-jacents, obligations et liquidités incluses.",
-      "checked_at": "2026-10-27T16:02:25.797194+00:00",
+      "checked_at": "2026-11-03T18:47:54.131808+00:00",
       "fetch_status": "fresh",
       "refresh": {
         "kind": "ishares",
@@ -3997,217 +4005,221 @@
     {
       "id": "XGRO",
       "title": "iShares Core Growth ETF Portfolio",
-      "as_of": "2026-10-26",
+      "as_of": "2026-11-02",
       "sectors": [
         {
           "id": "bonds",
-          "weight": 19.33798429
+          "weight": 19.47008614
         },
         {
           "id": "communication_services",
-          "weight": 4.40021878
+          "weight": 4.20354014
         },
         {
           "id": "consumer_discretionary",
-          "weight": 5.86733337
+          "weight": 5.99246971
         },
         {
           "id": "consumer_staples",
-          "weight": 3.7879917
+          "weight": 3.87335673
         },
         {
           "id": "energy",
-          "weight": 5.94494999
+          "weight": 5.82216589
         },
         {
           "id": "financials",
-          "weight": 16.91573387
+          "weight": 17.23740539
         },
         {
           "id": "health_care",
-          "weight": 5.98435314
+          "weight": 6.15054505
         },
         {
           "id": "industrials",
-          "weight": 9.39040624
+          "weight": 9.55643021
         },
         {
           "id": "materials",
-          "weight": 5.55007017
+          "weight": 5.55186935
         },
         {
           "id": "other_assets",
-          "weight": 0.56227098
+          "weight": 0.66091682
         },
         {
           "id": "real_estate",
-          "weight": 1.5959123
+          "weight": 1.61868066
         },
         {
           "id": "technology",
-          "weight": 18.46811958
+          "weight": 17.61587251
+        },
+        {
+          "id": "unclassified",
+          "weight": 6.313e-05
         },
         {
           "id": "utilities",
-          "weight": 2.1946555899999938
+          "weight": 2.2465982700000016
         }
       ],
       "geography": [
         {
           "id": "australia",
-          "weight": 1.44796958
+          "weight": 1.46315591
         },
         {
           "id": "austria",
-          "weight": 0.08009786
+          "weight": 0.08278795
         },
         {
           "id": "barbados",
-          "weight": 2.373e-05
+          "weight": 2.374e-05
         },
         {
           "id": "belgium",
-          "weight": 0.23912667
+          "weight": 0.24328305
         },
         {
           "id": "bermuda",
-          "weight": 0.13237321
+          "weight": 0.13856886
         },
         {
           "id": "brazil",
-          "weight": 0.15044516
+          "weight": 0.14104349
         },
         {
           "id": "canada",
-          "weight": 34.93700875
+          "weight": 35.19461886
         },
         {
           "id": "cayman_islands",
-          "weight": 2.69e-05
+          "weight": 2.71e-05
         },
         {
           "id": "chile",
-          "weight": 0.02511485
+          "weight": 0.02476076
         },
         {
           "id": "china",
-          "weight": 0.68559175
+          "weight": 0.67803933
         },
         {
           "id": "colombia",
-          "weight": 0.00796876
+          "weight": 0.00770704
         },
         {
           "id": "czech_republic",
-          "weight": 0.00389356
+          "weight": 0.00386137
         },
         {
           "id": "denmark",
-          "weight": 0.33252399
+          "weight": 0.34712961
         },
         {
           "id": "ecuador",
-          "weight": 1.326e-05
+          "weight": 1.346e-05
         },
         {
           "id": "egypt",
-          "weight": 0.0026434
+          "weight": 0.00265403
         },
         {
           "id": "european_union",
-          "weight": 0.01468577
+          "weight": 0.01611567
         },
         {
           "id": "finland",
-          "weight": 0.22013794
+          "weight": 0.21925562
         },
         {
           "id": "france",
-          "weight": 1.72480288
+          "weight": 1.77399662
         },
         {
           "id": "germany",
-          "weight": 1.67400413
+          "weight": 1.71792467
         },
         {
           "id": "greece",
-          "weight": 0.02679992
+          "weight": 0.02674989
         },
         {
           "id": "hong_kong",
-          "weight": 0.3525379
+          "weight": 0.35818949
         },
         {
           "id": "hungary",
-          "weight": 0.01122449
+          "weight": 0.0113662
         },
         {
           "id": "india",
-          "weight": 0.4573665
+          "weight": 0.46601885
         },
         {
           "id": "indonesia",
-          "weight": 0.02306121
+          "weight": 0.02206531
         },
         {
           "id": "ireland",
-          "weight": 0.08973201
+          "weight": 0.09118298
         },
         {
           "id": "israel",
-          "weight": 0.32028821
+          "weight": 0.30240391
         },
         {
           "id": "italy",
-          "weight": 0.6056049
+          "weight": 0.61797781
         },
         {
           "id": "japan",
-          "weight": 5.14320114
+          "weight": 5.11165398
         },
         {
           "id": "kazakhstan",
-          "weight": 0.00104583
+          "weight": 0.00104796
         },
         {
           "id": "korea_south",
-          "weight": 0.66188519
+          "weight": 0.6894888
         },
         {
           "id": "kuwait",
-          "weight": 0.0219524
+          "weight": 0.02127322
         },
         {
           "id": "luxembourg",
-          "weight": 0.003132
+          "weight": 0.00316457
         },
         {
           "id": "macau",
-          "weight": 0.00075383
+          "weight": 0.00075677
         },
         {
           "id": "malaysia",
-          "weight": 0.04464312
+          "weight": 0.04455066
         },
         {
           "id": "mexico",
-          "weight": 0.07571985
+          "weight": 0.07515666
         },
         {
           "id": "morocco",
-          "weight": 0.00104097
+          "weight": 0.00103824
         },
         {
           "id": "netherlands",
-          "weight": 0.98265733
+          "weight": 0.98533597
         },
         {
           "id": "new_zealand",
-          "weight": 0.04213836
+          "weight": 0.04155156
         },
         {
           "id": "norway",
-          "weight": 0.19037979
+          "weight": 0.19235782
         },
         {
           "id": "oman",
@@ -4215,84 +4227,84 @@
         },
         {
           "id": "panama",
-          "weight": 0.00047789
+          "weight": 0.00048258
         },
         {
           "id": "peru",
-          "weight": 0.01462513
+          "weight": 0.01371435
         },
         {
           "id": "philippines",
-          "weight": 0.01186071
+          "weight": 0.0118045
         },
         {
           "id": "poland",
-          "weight": 0.04738073
+          "weight": 0.04595589
         },
         {
           "id": "portugal",
-          "weight": 0.04214124
+          "weight": 0.04283556
         },
         {
           "id": "qatar",
-          "weight": 0.01919335
+          "weight": 0.02028261
         },
         {
           "id": "saudi_arabia",
-          "weight": 0.09728031
+          "weight": 0.09726
         },
         {
           "id": "singapore",
-          "weight": 0.35554775
+          "weight": 0.35118081
         },
         {
           "id": "south_africa",
-          "weight": 0.11837449
+          "weight": 0.11650344
         },
         {
           "id": "spain",
-          "weight": 0.70102548
+          "weight": 0.69745415
         },
         {
           "id": "supranational",
-          "weight": 0.0567325
+          "weight": 0.05726196
         },
         {
           "id": "sweden",
-          "weight": 0.72741706
+          "weight": 0.75380459
         },
         {
           "id": "switzerland",
-          "weight": 1.79622304
+          "weight": 1.85022593
         },
         {
           "id": "taiwan",
-          "weight": 1.05244722
+          "weight": 1.00837631
         },
         {
           "id": "thailand",
-          "weight": 0.04559308
+          "weight": 0.04287507
         },
         {
           "id": "turkey",
-          "weight": 0.0174432
+          "weight": 0.0167641
         },
         {
           "id": "united_arab_emirates",
-          "weight": 0.05136404
+          "weight": 0.05080273
         },
         {
           "id": "united_kingdom",
-          "weight": 2.95160957
+          "weight": 2.98183781
         },
         {
           "id": "united_states",
-          "weight": 41.15964499
+          "weight": 40.7222787
         }
       ],
       "source_url": "https://www.blackrock.com/ca/investors/en/products/239447/ishares-balanced-growth-coreportfoliotm-fund",
       "note": "Secteurs GICS et pays de risque; pondérations des placements sous-jacents, obligations et liquidités incluses.",
-      "checked_at": "2026-10-27T16:02:25.797194+00:00",
+      "checked_at": "2026-11-03T18:47:54.131808+00:00",
       "fetch_status": "fresh",
       "refresh": {
         "kind": "ishares",
