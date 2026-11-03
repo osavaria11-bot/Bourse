@@ -381,20 +381,63 @@
           "report_date": "2026-11-03",
           "report_at": "2026-11-03T13:00:00+00:00",
           "quarter": "Q3 2026",
-          "date_status": "calendar",
+          "date_status": "reported",
           "eps": {
-            "actual": null,
+            "actual": 2.07,
             "estimate": 2.19,
             "currency": "USD",
-            "source_url": "https://www.marketbeat.com/stocks/NYSE/APO/earnings/"
+            "source_url": "https://ir.apollo.com/_assets/_6caa86a09f5321c1a84bc05932f603e1/apollo/db/2247/22889/full_earnings_release/AGM_Earnings_Release_3Q%272026.pdf",
+            "verified_correction": {
+              "provider_actual": null,
+              "provider_source_url": "https://www.marketbeat.com/stocks/NYSE/APO/earnings/",
+              "provider_currency": "USD",
+              "source_url": "https://ir.apollo.com/_assets/_6caa86a09f5321c1a84bc05932f603e1/apollo/db/2247/22889/full_earnings_release/AGM_Earnings_Release_3Q%272026.pdf",
+              "verified_at": "2026-11-03T13:22:43.195117+00:00",
+              "reason": "Le communiqué officiel du 3 novembre 2026 donne un ANI de 2,07 USD par action et 4 739 millions USD de revenus GAAP. Le fournisseur indiquait 1,82 USD et omettait les revenus. ANI hors éléments notables : 2,15 USD; perte GAAP : 1,78 USD. Le consensus ajusté de 2,19 USD est conservé, corroboré par le compte rendu daté du Wall Street Journal; aucune confusion avec le GAAP."
+            },
+            "actual_basis": "adjusted",
+            "estimate_basis": "adjusted"
           },
           "revenue": {
-            "actual": null,
+            "actual": 4739000000,
             "estimate": 5790000000.0,
             "currency": "USD",
-            "source_url": "https://www.marketbeat.com/stocks/NYSE/APO/earnings/"
+            "source_url": "https://ir.apollo.com/_assets/_6caa86a09f5321c1a84bc05932f603e1/apollo/db/2247/22889/full_earnings_release/AGM_Earnings_Release_3Q%272026.pdf",
+            "verified_correction": {
+              "provider_actual": null,
+              "provider_source_url": "https://www.marketbeat.com/stocks/NYSE/APO/earnings/",
+              "provider_currency": "USD",
+              "source_url": "https://ir.apollo.com/_assets/_6caa86a09f5321c1a84bc05932f603e1/apollo/db/2247/22889/full_earnings_release/AGM_Earnings_Release_3Q%272026.pdf",
+              "verified_at": "2026-11-03T13:22:43.195117+00:00",
+              "reason": "Le communiqué officiel du 3 novembre 2026 donne un ANI de 2,07 USD par action et 4 739 millions USD de revenus GAAP. Le fournisseur indiquait 1,82 USD et omettait les revenus. ANI hors éléments notables : 2,15 USD; perte GAAP : 1,78 USD. Le consensus ajusté de 2,19 USD est conservé, corroboré par le compte rendu daté du Wall Street Journal; aucune confusion avec le GAAP."
+            }
           },
-          "messages": [],
+          "messages": [
+            {
+              "text": "Gestion — Le résultat lié aux commissions atteint 802 M$ US (+23 %), avec une marge de 58,4 %, contre 56,8 % un an plus tôt. Les actifs générant des frais montent à 880 G$ (+28 %). Ce socle de revenus soutient la récurrence, à condition que la collecte soit convertie en actifs effectivement rémunérateurs.",
+              "language": "fr",
+              "source_url": "https://ir.apollo.com/_assets/_6caa86a09f5321c1a84bc05932f603e1/apollo/db/2247/22889/full_earnings_release/AGM_Earnings_Release_3Q%272026.pdf",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Collecte — Apollo reçoit 53 G$ US de capitaux bruts au T3; le flux net ressort à 30,5 G$ après sorties et autres ajustements. L’origination atteint un record de 114 G$ et les actifs gérés 1 074 G$. Marc Rowan met en avant des pipelines records; ma lecture est de suivre aussi la qualité du crédit, pas seulement les volumes.",
+              "language": "fr",
+              "source_url": "https://ir.apollo.com/_assets/_6caa86a09f5321c1a84bc05932f603e1/apollo/db/2247/22889/full_earnings_release/AGM_Earnings_Release_3Q%272026.pdf",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Assurance — Le résultat lié aux marges d’Athene est de 844 M$ US, contre 871 M$ un an plus tôt. Hors une charge de 65 M$ liée à la revue annuelle des hypothèses actuarielles, il atteint 909 M$. La distinction montre la sensibilité du résultat aux hypothèses d’assurance, malgré une activité commerciale soutenue.",
+              "language": "fr",
+              "source_url": "https://ir.apollo.com/_assets/_6caa86a09f5321c1a84bc05932f603e1/apollo/db/2247/22889/full_earnings_release/AGM_Earnings_Release_3Q%272026.pdf",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Qualité — Le résultat ajusté est de 2,07 $ US par action, ou 2,15 $ hors éléments notables; le résultat GAAP est une perte de 1,78 $. Les pertes latentes sur placements de l’assurance expliquent largement l’écart. Le bénéfice récurrent et la volatilité comptable doivent être suivis séparément pour apprécier la trajectoire.",
+              "language": "fr",
+              "source_url": "https://ir.apollo.com/_assets/_6caa86a09f5321c1a84bc05932f603e1/apollo/db/2247/22889/full_earnings_release/AGM_Earnings_Release_3Q%272026.pdf",
+              "kind": "reviewed_summary"
+            }
+          ],
           "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-3-apollo-global-management-inc-stock/",
           "sources": [
             {
@@ -404,8 +447,18 @@
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=APO&size=100"
+            },
+            {
+              "label": "Publication du résultat vérifiée",
+              "url": "https://ir.apollo.com/_assets/_6caa86a09f5321c1a84bc05932f603e1/apollo/db/2247/22889/full_earnings_release/AGM_Earnings_Release_3Q%272026.pdf"
             }
-          ]
+          ],
+          "verified_reporting_status": {
+            "provider_date_status": "calendar",
+            "source_url": "https://ir.apollo.com/_assets/_6caa86a09f5321c1a84bc05932f603e1/apollo/db/2247/22889/full_earnings_release/AGM_Earnings_Release_3Q%272026.pdf",
+            "verified_at": "2026-11-03T13:22:43.195117+00:00",
+            "reason": "Le communiqué officiel du 3 novembre 2026 donne un ANI de 2,07 USD par action et 4 739 millions USD de revenus GAAP. Le fournisseur indiquait 1,82 USD et omettait les revenus. ANI hors éléments notables : 2,15 USD; perte GAAP : 1,78 USD. Le consensus ajusté de 2,19 USD est conservé, corroboré par le compte rendu daté du Wall Street Journal; aucune confusion avec le GAAP."
+          }
         }
       ],
       "source_warnings": [],
@@ -2411,7 +2464,32 @@
             "currency": "USD",
             "source_url": "https://www.marketbeat.com/stocks/NYSE/FTS/earnings/"
           },
-          "messages": [],
+          "messages": [
+            {
+              "text": "Croissance — Le plan 2027–2031 atteint 32,2 G$ CA, soit 3,4 G$ de plus que le précédent. Il vise 7,5 % de croissance annuelle de la base tarifaire, surtout par le transport électrique et Tilbury. Ma lecture : l’exécution des projets conditionne les bénéfices supplémentaires.",
+              "language": "fr",
+              "source_url": "https://www.fortisinc.com/news/news-releases/detail?id=9911",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Rentabilité — Le BPA ajusté est de 0,92 $ CA, contre 0,87 $ un an plus tôt. La base tarifaire et les ventes au détail d’UNS soutiennent le résultat; les coûts non encore récupérés dans les tarifs et les frais financiers de la société mère le freinent.",
+              "language": "fr",
+              "source_url": "https://www.fortisinc.com/news/news-releases/detail?id=9911",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Financement — Fortis a émis 1 G$ US de titres subordonnés et 260 M$ CA d’actions au T3. Le plan repose surtout sur les flux d’exploitation et la dette des filiales, avec réinvestissement des dividendes pour les fonds propres. Le coût du financement et la dilution restent à surveiller.",
+              "language": "fr",
+              "source_url": "https://www.fortisinc.com/news/news-releases/detail?id=9911",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Dividende — Le versement trimestriel augmente de 4 %, à 0,665 $ CA. La cible de croissance annuelle de 4–6 % est prolongée jusqu’en 2031. Cette prévision dépend de l’exécution du plan et des décisions du conseil, sans rendement garanti.",
+              "language": "fr",
+              "source_url": "https://www.fortisinc.com/news/news-releases/detail?id=9911",
+              "kind": "reviewed_summary"
+            }
+          ],
           "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-3-fortis-inc-stock/",
           "sources": [
             {
@@ -2421,6 +2499,10 @@
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=FTS&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.fortisinc.com/news/news-releases/detail?id=9911"
             }
           ]
         }
@@ -5681,5 +5763,6 @@
       "source_warnings": []
     }
   },
-  "errors": {}
+  "errors": {},
+  "analysis_reviewed_at": "2026-11-03T13:49:51.605010+00:00"
 }

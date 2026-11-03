@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "reviewed_earnings_highlights",
-  "reviewed_at": "2026-11-03T13:22:43.195117+00:00",
+  "reviewed_at": "2026-11-03T13:49:51.605010+00:00",
   "reports": {
     "NFLX:2026-10-20": {
       "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-20-netflix-inc-stock/",
@@ -570,6 +570,16 @@
         "verified_at": "2026-11-03T13:22:43.195117+00:00",
         "reason": "Le communiqué officiel du 3 novembre 2026 indique 16 583 millions USD de revenus au T3. Le fournisseur avait déjà le BPA publié mais omettait les revenus. Consensus et BPA conservés."
       }
+    },
+    "FTS:2026-11-03": {
+      "source_url": "https://www.fortisinc.com/news/news-releases/detail?id=9911",
+      "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-3-fortis-inc-stock/",
+      "messages": [
+        "Croissance — Le plan 2027–2031 atteint 32,2 G$ CA, soit 3,4 G$ de plus que le précédent. Il vise 7,5 % de croissance annuelle de la base tarifaire, surtout par le transport électrique et Tilbury. Ma lecture : l’exécution des projets conditionne les bénéfices supplémentaires.",
+        "Rentabilité — Le BPA ajusté est de 0,92 $ CA, contre 0,87 $ un an plus tôt. La base tarifaire et les ventes au détail d’UNS soutiennent le résultat; les coûts non encore récupérés dans les tarifs et les frais financiers de la société mère le freinent.",
+        "Financement — Fortis a émis 1 G$ US de titres subordonnés et 260 M$ CA d’actions au T3. Le plan repose surtout sur les flux d’exploitation et la dette des filiales, avec réinvestissement des dividendes pour les fonds propres. Le coût du financement et la dilution restent à surveiller.",
+        "Dividende — Le versement trimestriel augmente de 4 %, à 0,665 $ CA. La cible de croissance annuelle de 4–6 % est prolongée jusqu’en 2031. Cette prévision dépend de l’exécution du plan et des décisions du conseil, sans rendement garanti."
+      ]
     }
   }
 }

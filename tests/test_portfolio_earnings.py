@@ -200,6 +200,50 @@ class EarningsTests(unittest.TestCase):
             invalid = copy.deepcopy(correction); invalid["verified_actuals"][field] = value
             self.assertFalse(earnings.valid_actuals(invalid))
 
+    def test_verified_publication_survives_provider_calendar_regression(self):
+        event = earnings.parse_marketbeat(sample(), "MSFT", URL, NOW)[1]
+        event["date_status"] = "calendar"
+        event["eps"]["actual"] = event["revenue"]["actual"] = None
+        original = copy.deepcopy(event)
+        review = {"source_url": "https://example.com/issuer/2026-q4-results", "report_url": event["report_url"],
+                  "messages": ["La demande accélère.", "Les perspectives sont relevées.", "Les marges restent sous pression."],
+                  "verified_actuals": {"currency": "USD", "eps": -.2, "verified_at": NOW.isoformat(),
+                                       "reason": "Résultat publié et vérifié auprès de l'émetteur."}}
+        highlights = {"reports": {"MSFT:2026-07-29": review}}
+        feed = {"company_symbol": "MSFT", "events": [event], "fetched_at": NOW.isoformat()}
+        earnings.apply_reviewed_messages(earnings.apply_verified_actuals(feed, highlights, NOW), highlights)
+        self.assertEqual(event["date_status"], "reported")
+        self.assertEqual(event["eps"]["actual"], -.2)
+        self.assertEqual(event["eps"]["estimate"], original["eps"]["estimate"])
+        self.assertEqual(event["verified_reporting_status"]["provider_date_status"], "calendar")
+        self.assertEqual(event["verified_reporting_status"]["source_url"], review["source_url"])
+        self.assertEqual(event["revenue"], original["revenue"])
+        self.assertEqual(event["report_at"], original["report_at"])
+        self.assertEqual(len(event["messages"]), 3)
+        self.assertEqual(feed["fetched_at"], NOW.isoformat())
+        once = copy.deepcopy(feed)
+        self.assertEqual(earnings.apply_verified_actuals(feed, highlights, NOW), once)
+
+    def test_publication_proof_rejects_future_wrong_currency_and_notes_only(self):
+        original = earnings.parse_marketbeat(sample(), "MSFT", URL, NOW)[1]
+        original["date_status"] = "calendar"
+        original["eps"]["actual"] = original["revenue"]["actual"] = None
+        review = {"source_url": "https://example.com/issuer/2026-q4-results", "report_url": original["report_url"],
+                  "messages": ["La demande accélère.", "Les perspectives sont relevées.", "Les marges restent sous pression."],
+                  "verified_actuals": {"currency": "USD", "eps": -.2, "verified_at": NOW.isoformat(),
+                                       "reason": "Résultat publié et vérifié auprès de l'émetteur."}}
+        cases = [({"report_date": "2026-10-12"}, {}), ({"date_status": "estimated"}, {}),
+                 ({"report_url": None}, {}), ({}, {"verified_actuals": None}),
+                 ({}, {"verified_actuals": {**review["verified_actuals"], "currency": "CAD"}}),
+                 ({}, {"verified_actuals": {**review["verified_actuals"], "verified_at": "2026-07-28T20:00:00+00:00"}})]
+        for event_changes, review_changes in cases:
+            with self.subTest(event=event_changes, review=review_changes):
+                event = copy.deepcopy(original); event.update(event_changes)
+                before = copy.deepcopy(event)
+                highlights = {"reports": {"MSFT:" + event["report_date"]: {**review, **review_changes}}}
+                earnings.apply_verified_actuals({"company_symbol": "MSFT", "events": [event]}, highlights, NOW)
+                self.assertEqual(event, before)
+
     def test_verified_provider_actuals_are_traced_and_notes_only_preserves_figures(self):
         event = earnings.parse_marketbeat(sample(), "MSFT", URL, NOW)[1]
         original = copy.deepcopy(event)
