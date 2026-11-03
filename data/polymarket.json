@@ -2,11 +2,11 @@
   "schema_version": 1,
   "kind": "polymarket_events",
   "provider": "polymarket",
-  "generated_at": "2026-11-03T13:33:56.515037Z",
+  "generated_at": "2026-11-03T13:59:24.546621Z",
   "groups": {
     "finance": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-03T13:33:56.515037Z",
+      "fetched_at": "2026-11-03T13:59:24.546621Z",
       "ranking": "volume",
       "events": [
         {
@@ -15,7 +15,7 @@
           "title": "How many Fed rate cuts in 2026?",
           "url": "https://polymarket.com/event/how-many-fed-rate-cuts-in-2026",
           "volume": 55347894.315294,
-          "volume_24h": 56911.328516,
+          "volume_24h": 56892.958516,
           "ends_at": "2027-01-01T04:59:00Z",
           "outcomes": [
             {
@@ -43,7 +43,7 @@
           "outcomes": [
             {
               "label": "Conductor",
-              "probability": 0.3,
+              "probability": 0.295,
               "market_id": "6318103",
               "ends_at": "2027-01-01T04:59:00Z"
             },
@@ -60,8 +60,8 @@
           "slug": "fed-decision-in-december-20260729232808632",
           "title": "Fed Decision in December?",
           "url": "https://polymarket.com/event/fed-decision-in-december-20260729232808632",
-          "volume": 10985937.148143,
-          "volume_24h": 678769.498362,
+          "volume": 11014921.284297,
+          "volume_24h": 703955.92023,
           "ends_at": "2026-12-10T04:59:00Z",
           "outcomes": [
             {
@@ -82,7 +82,7 @@
     },
     "popular": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-03T13:33:56.515037Z",
+      "fetched_at": "2026-11-03T13:59:24.546621Z",
       "ranking": "volume24hr",
       "events": [
         {
@@ -90,19 +90,19 @@
           "slug": "which-tossup-senate-states-will-republicans-win-ak-ia-ks-me-mi-oh-tx",
           "title": "Which Senate Swing States will Republicans win? (Build Your Map)",
           "url": "https://polymarket.com/event/which-tossup-senate-states-will-republicans-win-ak-ia-ks-me-mi-oh-tx",
-          "volume": 62874402.907973,
-          "volume_24h": 29160817.828025,
+          "volume": 62959257.901356,
+          "volume_24h": 29123863.272484,
           "ends_at": "2026-11-03T23:59:00Z",
           "outcomes": [
             {
               "label": "None",
-              "probability": 0.345,
+              "probability": 0.335,
               "market_id": "6274257",
               "ends_at": "2026-11-03T23:59:00Z"
             },
             {
               "label": "IA",
-              "probability": 0.096,
+              "probability": 0.0965,
               "market_id": "6274182",
               "ends_at": "2026-11-03T23:59:00Z"
             }
@@ -113,8 +113,8 @@
           "slug": "balance-of-power-2026-midterms",
           "title": "Balance of Power: 2026 Midterms",
           "url": "https://polymarket.com/event/balance-of-power-2026-midterms",
-          "volume": 62102717.476632,
-          "volume_24h": 9545617.824809,
+          "volume": 62170244.322335,
+          "volume_24h": 9609583.65129,
           "ends_at": "2026-11-04T04:59:00Z",
           "outcomes": [
             {
@@ -125,7 +125,7 @@
             },
             {
               "label": "R Senate, D House",
-              "probability": 0.185,
+              "probability": 0.175,
               "market_id": "562830",
               "ends_at": "2026-11-04T04:59:00Z"
             }
@@ -136,8 +136,8 @@
           "slug": "which-party-will-win-the-house-in-2026",
           "title": "Which party will win the House in 2026?",
           "url": "https://polymarket.com/event/which-party-will-win-the-house-in-2026",
-          "volume": 43452323.147864,
-          "volume_24h": 5610318.149963999,
+          "volume": 43521110.921582,
+          "volume_24h": 5680125.165022,
           "ends_at": "2026-11-04T04:59:00Z",
           "outcomes": [
             {
@@ -159,8 +159,8 @@
           "slug": "which-party-will-win-the-senate-in-2026",
           "title": "Which party will win the Senate in 2026?",
           "url": "https://polymarket.com/event/which-party-will-win-the-senate-in-2026",
-          "volume": 18829284.604220003,
-          "volume_24h": 2772089.3706139997,
+          "volume": 18999866.343843002,
+          "volume_24h": 2840394.7848479995,
           "ends_at": "2026-11-04T04:59:00Z",
           "outcomes": [
             {
@@ -171,7 +171,7 @@
             },
             {
               "label": "Republican Party",
-              "probability": 0.215,
+              "probability": 0.225,
               "market_id": "562794",
               "ends_at": "2026-11-04T04:59:00Z"
             }
@@ -182,8 +182,8 @@
           "slug": "presidential-election-winner-2028",
           "title": "Presidential Election Winner 2028",
           "url": "https://polymarket.com/event/presidential-election-winner-2028",
-          "volume": 727037118.1613641,
-          "volume_24h": 2684017.341699,
+          "volume": 727112444.240021,
+          "volume_24h": 2721473.470807,
           "ends_at": "2028-11-08T04:59:00Z",
           "outcomes": [
             {
@@ -193,9 +193,9 @@
               "ends_at": "2028-11-08T04:59:00Z"
             },
             {
-              "label": "Alexandria Ocasio-Cortez",
-              "probability": 0.1215,
-              "market_id": "561231",
+              "label": "Jon Ossoff",
+              "probability": 0.1385,
+              "market_id": "561261",
               "ends_at": "2028-11-08T04:59:00Z"
             }
           ]
@@ -204,7 +204,7 @@
     },
     "trending": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-03T13:33:56.515037Z",
+      "fetched_at": "2026-11-03T13:59:24.546621Z",
       "ranking": "volume24hr",
       "events": [
         {
@@ -212,8 +212,8 @@
           "slug": "texas-senate-election-winner",
           "title": "Texas Senate Election Winner",
           "url": "https://polymarket.com/event/texas-senate-election-winner",
-          "volume": 13481077.276557002,
-          "volume_24h": 2426690.766798,
+          "volume": 13516627.14629,
+          "volume_24h": 2448419.8512669997,
           "ends_at": "2026-11-04T04:59:00Z",
           "outcomes": [
             {
@@ -235,13 +235,13 @@
           "slug": "michigan-senate-election-winner",
           "title": "Michigan Senate Election Winner",
           "url": "https://polymarket.com/event/michigan-senate-election-winner",
-          "volume": 8770195.187874999,
-          "volume_24h": 1466262.407719,
+          "volume": 8873856.428045,
+          "volume_24h": 1491767.618949,
           "ends_at": "2026-11-04T04:59:00Z",
           "outcomes": [
             {
               "label": "Abdul El-Sayed (D)",
-              "probability": 0.795,
+              "probability": 0.805,
               "market_id": "630805",
               "ends_at": "2026-11-04T04:59:00Z"
             },
