@@ -349,6 +349,7 @@ async function check(browser, engine) {
   assert.equal(new URLSearchParams(new URL(page.url()).hash.slice(1)).get("tab"), "analysis");
   await go("dashboard");
   for (const tab of Object.keys(R.PAGES.portefeuilles.tabs)) assert.equal(await page.locator("#panel-portefeuilles-" + tab).isVisible(), true);
+  await page.locator("#portfolioChart svg").waitFor({state: "visible"});
   assert.equal(await page.locator("#portfolioChart svg").isVisible(), true);
   await page.locator("#portfolioExpand").click(); assert.equal(await page.locator("#expandDialog #portfolioRisk").isVisible(), true); await page.keyboard.press("Escape");
   await go("portefeuilles", "positions"); assert.equal(await page.locator("#panel-portefeuilles-allocations").isVisible(), false);
