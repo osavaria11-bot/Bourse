@@ -4747,8 +4747,19 @@
           "eps": {
             "actual": 3.97,
             "estimate": 3.53,
-            "currency": "USD",
-            "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=SU&size=100"
+            "currency": "CAD",
+            "source_url": "https://www.suncor.com/-/media/project/suncor/files/news-releases/2026/2026-11-03-news-release-earnings-q3-2026-en.pdf?created=20261103131130&modified=20261103212632",
+            "verified_correction": {
+              "provider_actual": 3.97,
+              "provider_source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=SU&size=100",
+              "provider_currency": "USD",
+              "source_url": "https://www.suncor.com/-/media/project/suncor/files/news-releases/2026/2026-11-03-news-release-earnings-q3-2026-en.pdf?created=20261103131130&modified=20261103212632",
+              "verified_at": "2026-11-04T14:02:05.936986+00:00",
+              "reason": "Le communiqué officiel du 3 novembre publie un résultat d’exploitation ajusté de 3,97 $ CA par action. Le fournisseur attribue à ce montant la devise USD. Son estimation reste dans sa devise d’origine et sa base n’est pas vérifiée."
+            },
+            "actual_basis": "adjusted",
+            "estimate_basis": "unverified",
+            "estimate_currency": "USD"
           },
           "revenue": {
             "actual": null,

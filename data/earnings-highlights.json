@@ -608,7 +608,19 @@
         "Rich Kruger souligne que les transferts internes de bitume ont aidé à maintenir le débit du réseau pendant un arrêt de maintenance à Edmonton. Les ventes de produits raffinés ont établi un record pour un T3, à 677 000 barils par jour.",
         "Après 5,20 G$ CA de flux de fonds disponibles au T3, le dividende trimestriel passe à 0,66 $ CA par action et les rachats mensuels à 750 M$ CA. La dette nette est descendue à 1,75 G$ CA, contre 4,48 G$ au trimestre précédent.",
         "La cession prévue de Terra Nova, White Rose et West White Rose a entraîné une dépréciation sans effet de trésorerie de 1,08 G$ CA. Dans son communiqué en dollars canadiens, Suncor distingue 3,97 $ de bénéfice d’exploitation ajusté par action de 3,27 $ de bénéfice net par action."
-      ]
+      ],
+      "verified_actuals": {
+        "currency": "CAD",
+        "provider_currency": "USD",
+        "eps": 3.97,
+        "eps_basis": {
+          "actual": "adjusted",
+          "estimate": "unverified"
+        },
+        "source_url": "https://www.suncor.com/-/media/project/suncor/files/news-releases/2026/2026-11-03-news-release-earnings-q3-2026-en.pdf?created=20261103131130&modified=20261103212632",
+        "verified_at": "2026-11-04T14:02:05.936986+00:00",
+        "reason": "Le communiqué officiel du 3 novembre publie un résultat d’exploitation ajusté de 3,97 $ CA par action. Le fournisseur attribue à ce montant la devise USD. Son estimation reste dans sa devise d’origine et sa base n’est pas vérifiée."
+      }
     }
   }
 }
