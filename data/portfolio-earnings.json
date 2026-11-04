@@ -215,10 +215,28 @@
           },
           "messages": [
             {
-              "text": "Record third-quarter results",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-11-3-advanced-micro-devices-inc-stock/",
-              "kind": "call_topic"
+              "text": "La division Centres de données a presque doublé ses ventes et porté sa marge d’exploitation de 25 % à 34 %. Les processeurs EPYC et le lancement des accélérateurs Instinct MI450 contribuent ensemble à cette progression.",
+              "language": "fr",
+              "source_url": "https://ir.amd.com/financial-information/sec-filings/content/0000002488-26-000188/amdq32026earningsslidesf.htm",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "AMD vise environ 17 G$ US de ventes au T4, à 3 % près, avec une marge brute ajustée d’environ 55 % après 56 %. Lisa Su s’attend à ce que les centres de données représentent environ 80 % des ventes en 2027, ce qui rend le rythme de déploiement de Helios particulièrement important.",
+              "language": "fr",
+              "source_url": "https://ir.amd.com/financial-information/sec-filings/content/0000002488-26-000188/amdq32026earningsslidesf.htm",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Les stocks ont augmenté de 35 % sur le trimestre pour atteindre 11,46 G$ US. La dette est passée à 7,08 G$ US après l’émission de 4,75 G$ US de billets en août. Le suivi des livraisons dira à quelle vitesse ces stocks se convertissent en trésorerie.",
+              "language": "fr",
+              "source_url": "https://ir.amd.com/financial-information/sec-filings/content/0000002488-26-000188/amdq32026earningsslidesf.htm",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "La division Client et jeux a reculé de 8 % sur un an. La croissance des processeurs pour ordinateurs a seulement compensé une partie du recul des ventes liées aux consoles et aux produits graphiques.",
+              "language": "fr",
+              "source_url": "https://ir.amd.com/financial-information/sec-filings/content/0000002488-26-000188/amdq32026earningsslidesf.htm",
+              "kind": "reviewed_summary"
             }
           ],
           "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-3-advanced-micro-devices-inc-stock/",
@@ -230,6 +248,10 @@
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=AMD&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://ir.amd.com/financial-information/sec-filings/content/0000002488-26-000188/amdq32026earningsslidesf.htm"
             }
           ]
         }
@@ -401,12 +423,41 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=APO&size=100"
           },
-          "messages": [],
+          "messages": [
+            {
+              "text": "Les bénéfices liés aux frais ont atteint 802 M$ US, en hausse de 23 % sur un an. Apollo a monté 114 G$ US de financements sur le trimestre et les frais de gestion ont augmenté de 18 %, ce qui élargit la base de revenus de la gestion d’actifs.",
+              "language": "fr",
+              "source_url": "https://ir.apollo.com/sec-filings/content/0001858681-26-000063/agmearningsrelease3q2026.htm",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Chez Athene, les bénéfices tirés des écarts de placement atteignent 844 M$ US, ou 909 M$ US hors éléments particuliers. Une mise à jour des hypothèses sur l’utilisation d’options de revenu des rentes a retranché 65 M$ US au résultat publié de cette activité.",
+              "language": "fr",
+              "source_url": "https://ir.apollo.com/sec-filings/content/0001858681-26-000063/agmearningsrelease3q2026.htm",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Le directeur financier vise environ 1 G$ US de bénéfices tirés des écarts chez Athene au T4 sur la même base, aidé par le placement de liquidités en fin de T3. Il vise aussi 10 % de croissance de cet indicateur en 2027, sous l’hypothèse d’un rendement de 11 % sur les placements alternatifs.",
+              "language": "fr",
+              "source_url": "https://ir.apollo.com/sec-filings/content/0001858681-26-000063/agmearningsrelease3q2026.htm",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Apollo a enregistré une perte nette comptable de 1,06 G$ US attribuable aux actionnaires ordinaires, principalement liée à des moins-values latentes dans les services de retraite après la hausse des taux. Ce canal de volatilité compte même quand les bénéfices liés aux frais progressent.",
+              "language": "fr",
+              "source_url": "https://ir.apollo.com/sec-filings/content/0001858681-26-000063/agmearningsrelease3q2026.htm",
+              "kind": "reviewed_summary"
+            }
+          ],
           "report_url": null,
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=APO&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://ir.apollo.com/sec-filings/content/0001858681-26-000063/agmearningsrelease3q2026.htm"
             }
           ]
         }
@@ -3339,10 +3390,22 @@
           },
           "messages": [
             {
-              "text": "Revenus : +34,6 % par rapport au même trimestre un an plus tôt.",
+              "text": "Les ventes des centres de données ont crû de 95 %, surtout auprès des grands clients nord-américains. La marge brute du segment a pourtant cédé 4,7 points à 19,7 %, sous l’effet des matériaux, des composants et des tarifs douaniers.",
               "language": "fr",
-              "source_url": "https://www.marketbeat.com/stocks/NYSE/MOD/earnings/",
-              "kind": "calculated"
+              "source_url": "https://investors.modine.com/news/news-details/2026/Modine-Reports-Second-Quarter-Fiscal-2027-Results/default.aspx",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Après la scission de Performance Technologies le 1er octobre, Neil Brinker vise entre 3,1 et 3,2 G$ US de ventes et entre 470 et 500 M$ US de BAIIA ajusté pour l’exercice 2027. La hausse de 50 à 55 % des ventes se calcule en excluant l’activité cédée des deux périodes.",
+              "language": "fr",
+              "source_url": "https://investors.modine.com/news/news-details/2026/Modine-Reports-Second-Quarter-Fiscal-2027-Results/default.aspx",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Sur six mois, les flux de trésorerie disponibles ont baissé sous l’effet de l’augmentation de capacité de refroidissement et des stocks. La dette nette atteint 573,7 M$ US, soit 210,9 M$ de plus qu’à la fin de l’exercice précédent. La conversion des ventes en liquidités mérite un suivi.",
+              "language": "fr",
+              "source_url": "https://investors.modine.com/news/news-details/2026/Modine-Reports-Second-Quarter-Fiscal-2027-Results/default.aspx",
+              "kind": "reviewed_summary"
             }
           ],
           "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-3-modine-manufacturing-stock/",
@@ -3354,6 +3417,10 @@
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=MOD&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://investors.modine.com/news/news-details/2026/Modine-Reports-Second-Quarter-Fiscal-2027-Results/default.aspx"
             }
           ]
         }
@@ -4689,12 +4756,41 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=SU&size=100"
           },
-          "messages": [],
+          "messages": [
+            {
+              "text": "Les prix réalisés en amont, les marges de raffinage et les exportations à valeur élevée ont porté les fonds ajustés provenant de l’exploitation à 6,71 G$ CA. La production en amont a toutefois reculé de 870 000 à environ 853 000 barils par jour sur un an.",
+              "language": "fr",
+              "source_url": "https://www.suncor.com/-/media/project/suncor/files/news-releases/2026/2026-11-03-news-release-earnings-q3-2026-en.pdf?created=20261103131130&modified=20261103212632",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Rich Kruger souligne que les transferts internes de bitume ont aidé à maintenir le débit du réseau pendant un arrêt de maintenance à Edmonton. Les ventes de produits raffinés ont établi un record pour un T3, à 677 000 barils par jour.",
+              "language": "fr",
+              "source_url": "https://www.suncor.com/-/media/project/suncor/files/news-releases/2026/2026-11-03-news-release-earnings-q3-2026-en.pdf?created=20261103131130&modified=20261103212632",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Après 5,20 G$ CA de flux de fonds disponibles au T3, le dividende trimestriel passe à 0,66 $ CA par action et les rachats mensuels à 750 M$ CA. La dette nette est descendue à 1,75 G$ CA, contre 4,48 G$ au trimestre précédent.",
+              "language": "fr",
+              "source_url": "https://www.suncor.com/-/media/project/suncor/files/news-releases/2026/2026-11-03-news-release-earnings-q3-2026-en.pdf?created=20261103131130&modified=20261103212632",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "La cession prévue de Terra Nova, White Rose et West White Rose a entraîné une dépréciation sans effet de trésorerie de 1,08 G$ CA. Dans son communiqué en dollars canadiens, Suncor distingue 3,97 $ de bénéfice d’exploitation ajusté par action de 3,27 $ de bénéfice net par action.",
+              "language": "fr",
+              "source_url": "https://www.suncor.com/-/media/project/suncor/files/news-releases/2026/2026-11-03-news-release-earnings-q3-2026-en.pdf?created=20261103131130&modified=20261103212632",
+              "kind": "reviewed_summary"
+            }
+          ],
           "report_url": null,
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=SU&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.suncor.com/-/media/project/suncor/files/news-releases/2026/2026-11-03-news-release-earnings-q3-2026-en.pdf?created=20261103131130&modified=20261103212632"
             }
           ]
         }
@@ -5731,5 +5827,6 @@
       "source_warnings": []
     }
   },
-  "errors": {}
+  "errors": {},
+  "analysis_reviewed_at": "2026-11-04T13:55:08.629301+00:00"
 }

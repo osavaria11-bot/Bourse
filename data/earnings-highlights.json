@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "reviewed_earnings_highlights",
-  "reviewed_at": "2026-11-03T14:20:20.467977+00:00",
+  "reviewed_at": "2026-11-04T13:55:08.629301+00:00",
   "reports": {
     "NFLX:2026-10-20": {
       "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-20-netflix-inc-stock/",
@@ -545,26 +545,14 @@
       }
     },
     "APO:2026-11-03": {
-      "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-3-apollo-global-management-inc-stock/",
-      "source_url": "https://ir.apollo.com/_assets/_6caa86a09f5321c1a84bc05932f603e1/apollo/db/2247/22889/full_earnings_release/AGM_Earnings_Release_3Q%272026.pdf",
+      "source_url": "https://ir.apollo.com/sec-filings/content/0001858681-26-000063/agmearningsrelease3q2026.htm",
+      "report_url": null,
       "messages": [
-        "Gestion — Le résultat lié aux commissions atteint 802 M$ US (+23 %), avec une marge de 58,4 %, contre 56,8 % un an plus tôt. Les actifs générant des frais montent à 880 G$ (+28 %). Ce socle de revenus soutient la récurrence, à condition que la collecte soit convertie en actifs effectivement rémunérateurs.",
-        "Collecte — Apollo reçoit 53 G$ US de capitaux bruts au T3; le flux net ressort à 30,5 G$ après sorties et autres ajustements. L’origination atteint un record de 114 G$ et les actifs gérés 1 074 G$. Marc Rowan met en avant des pipelines records; ma lecture est de suivre aussi la qualité du crédit, pas seulement les volumes.",
-        "Assurance — Le résultat lié aux marges d’Athene est de 844 M$ US, contre 871 M$ un an plus tôt. Hors une charge de 65 M$ liée à la revue annuelle des hypothèses actuarielles, il atteint 909 M$. La distinction montre la sensibilité du résultat aux hypothèses d’assurance, malgré une activité commerciale soutenue.",
-        "Qualité — Le résultat ajusté est de 2,07 $ US par action, ou 2,15 $ hors éléments notables; le résultat GAAP est une perte de 1,78 $. Les pertes latentes sur placements de l’assurance expliquent largement l’écart. Le bénéfice récurrent et la volatilité comptable doivent être suivis séparément pour apprécier la trajectoire."
-      ],
-      "verified_actuals": {
-        "currency": "USD",
-        "eps": 2.07,
-        "revenue": 4739000000,
-        "eps_basis": {
-          "actual": "adjusted",
-          "estimate": "adjusted"
-        },
-        "source_url": "https://ir.apollo.com/_assets/_6caa86a09f5321c1a84bc05932f603e1/apollo/db/2247/22889/full_earnings_release/AGM_Earnings_Release_3Q%272026.pdf",
-        "verified_at": "2026-11-03T13:22:43.195117+00:00",
-        "reason": "Le communiqué officiel du 3 novembre 2026 donne un ANI de 2,07 USD par action et 4 739 millions USD de revenus GAAP. Le fournisseur indiquait 1,82 USD et omettait les revenus. ANI hors éléments notables : 2,15 USD; perte GAAP : 1,78 USD. Le consensus ajusté de 2,19 USD est conservé, corroboré par le compte rendu daté du Wall Street Journal; aucune confusion avec le GAAP."
-      }
+        "Les bénéfices liés aux frais ont atteint 802 M$ US, en hausse de 23 % sur un an. Apollo a monté 114 G$ US de financements sur le trimestre et les frais de gestion ont augmenté de 18 %, ce qui élargit la base de revenus de la gestion d’actifs.",
+        "Chez Athene, les bénéfices tirés des écarts de placement atteignent 844 M$ US, ou 909 M$ US hors éléments particuliers. Une mise à jour des hypothèses sur l’utilisation d’options de revenu des rentes a retranché 65 M$ US au résultat publié de cette activité.",
+        "Le directeur financier vise environ 1 G$ US de bénéfices tirés des écarts chez Athene au T4 sur la même base, aidé par le placement de liquidités en fin de T3. Il vise aussi 10 % de croissance de cet indicateur en 2027, sous l’hypothèse d’un rendement de 11 % sur les placements alternatifs.",
+        "Apollo a enregistré une perte nette comptable de 1,06 G$ US attribuable aux actionnaires ordinaires, principalement liée à des moins-values latentes dans les services de retraite après la hausse des taux. Ce canal de volatilité compte même quand les bénéfices liés aux frais progressent."
+      ]
     },
     "PFE:2026-11-03": {
       "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-3-pfizer-inc-stock/",
@@ -591,6 +579,35 @@
         "Rentabilité — Le BPA ajusté est de 0,92 $ CA, contre 0,87 $ un an plus tôt. La base tarifaire et les ventes au détail d’UNS soutiennent le résultat; les coûts non encore récupérés dans les tarifs et les frais financiers de la société mère le freinent.",
         "Financement — Fortis a émis 1 G$ US de titres subordonnés et 260 M$ CA d’actions au T3. Le plan repose surtout sur les flux d’exploitation et la dette des filiales, avec réinvestissement des dividendes pour les fonds propres. Le coût du financement et la dilution restent à surveiller.",
         "Dividende — Le versement trimestriel augmente de 4 %, à 0,665 $ CA. La cible de croissance annuelle de 4–6 % est prolongée jusqu’en 2031. Cette prévision dépend de l’exécution du plan et des décisions du conseil, sans rendement garanti."
+      ]
+    },
+    "AMD:2026-11-03": {
+      "source_url": "https://ir.amd.com/financial-information/sec-filings/content/0000002488-26-000188/amdq32026earningsslidesf.htm",
+      "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-3-advanced-micro-devices-inc-stock/",
+      "messages": [
+        "La division Centres de données a presque doublé ses ventes et porté sa marge d’exploitation de 25 % à 34 %. Les processeurs EPYC et le lancement des accélérateurs Instinct MI450 contribuent ensemble à cette progression.",
+        "AMD vise environ 17 G$ US de ventes au T4, à 3 % près, avec une marge brute ajustée d’environ 55 % après 56 %. Lisa Su s’attend à ce que les centres de données représentent environ 80 % des ventes en 2027, ce qui rend le rythme de déploiement de Helios particulièrement important.",
+        "Les stocks ont augmenté de 35 % sur le trimestre pour atteindre 11,46 G$ US. La dette est passée à 7,08 G$ US après l’émission de 4,75 G$ US de billets en août. Le suivi des livraisons dira à quelle vitesse ces stocks se convertissent en trésorerie.",
+        "La division Client et jeux a reculé de 8 % sur un an. La croissance des processeurs pour ordinateurs a seulement compensé une partie du recul des ventes liées aux consoles et aux produits graphiques."
+      ]
+    },
+    "MOD:2026-11-03": {
+      "source_url": "https://investors.modine.com/news/news-details/2026/Modine-Reports-Second-Quarter-Fiscal-2027-Results/default.aspx",
+      "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-3-modine-manufacturing-stock/",
+      "messages": [
+        "Les ventes des centres de données ont crû de 95 %, surtout auprès des grands clients nord-américains. La marge brute du segment a pourtant cédé 4,7 points à 19,7 %, sous l’effet des matériaux, des composants et des tarifs douaniers.",
+        "Après la scission de Performance Technologies le 1er octobre, Neil Brinker vise entre 3,1 et 3,2 G$ US de ventes et entre 470 et 500 M$ US de BAIIA ajusté pour l’exercice 2027. La hausse de 50 à 55 % des ventes se calcule en excluant l’activité cédée des deux périodes.",
+        "Sur six mois, les flux de trésorerie disponibles ont baissé sous l’effet de l’augmentation de capacité de refroidissement et des stocks. La dette nette atteint 573,7 M$ US, soit 210,9 M$ de plus qu’à la fin de l’exercice précédent. La conversion des ventes en liquidités mérite un suivi."
+      ]
+    },
+    "SU:2026-11-03": {
+      "source_url": "https://www.suncor.com/-/media/project/suncor/files/news-releases/2026/2026-11-03-news-release-earnings-q3-2026-en.pdf?created=20261103131130&modified=20261103212632",
+      "report_url": null,
+      "messages": [
+        "Les prix réalisés en amont, les marges de raffinage et les exportations à valeur élevée ont porté les fonds ajustés provenant de l’exploitation à 6,71 G$ CA. La production en amont a toutefois reculé de 870 000 à environ 853 000 barils par jour sur un an.",
+        "Rich Kruger souligne que les transferts internes de bitume ont aidé à maintenir le débit du réseau pendant un arrêt de maintenance à Edmonton. Les ventes de produits raffinés ont établi un record pour un T3, à 677 000 barils par jour.",
+        "Après 5,20 G$ CA de flux de fonds disponibles au T3, le dividende trimestriel passe à 0,66 $ CA par action et les rachats mensuels à 750 M$ CA. La dette nette est descendue à 1,75 G$ CA, contre 4,48 G$ au trimestre précédent.",
+        "La cession prévue de Terra Nova, White Rose et West White Rose a entraîné une dépréciation sans effet de trésorerie de 1,08 G$ CA. Dans son communiqué en dollars canadiens, Suncor distingue 3,97 $ de bénéfice d’exploitation ajusté par action de 3,27 $ de bénéfice net par action."
       ]
     }
   }
