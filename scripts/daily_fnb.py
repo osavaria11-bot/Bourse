@@ -224,13 +224,10 @@ def collect(config, tickers, first, last, client=None, preferred_tmx=(), anchors
                 # a missing observation or rebase the immutable ledger/units.
                 revised_day = anchor["date"]
                 following = next_session(date.fromisoformat(revised_day)).isoformat()
-                # A revised Yahoo anchor can disagree with TMX as well as the
-                # saved ledger. This is a SOURCE CHANGE, not a confirmed
-                # historical correction. Permit the transition only when both
-                # providers independently confirm the NEW adjacent close. The
-                # old value and units remain frozen, and the discrepancy is
-                # recorded separately for audit/display.
-                if (anchor.get("price_source") == "Yahoo Finance"
+                # The providers can disagree on the archived date even if TMX
+                # supplied the accepted close. Record that discrepancy separately
+                # when both sources independently confirm the next close.
+                if (anchor.get("price_source") in {"Yahoo Finance", "TMX Money"}
                         and revised_day in yahoo and following in yahoo and following in parsed
                         and abs(yahoo[revised_day]["close"] / parsed[revised_day]["close"] - 1) > .0001
                         and abs(yahoo[following]["close"] / parsed[following]["close"] - 1) <= .0001):
@@ -275,7 +272,8 @@ def calculate(account, prices, previous=None):
 def valid_source_change(change, anchor, old, previous_day, day, price):
     evidence = change.get("evidence", [])
     return (change.get("date") == previous_day and change.get("accepted_close") == old["close"]
-        and old.get("price_source") == change.get("accepted_source") == "Yahoo Finance"
+        and old.get("price_source") == change.get("accepted_source")
+        and change.get("accepted_source") in {"Yahoo Finance", "TMX Money"}
         and change.get("historical_close_confirmed") is False
         and change.get("comparison_close") == anchor["close"]
         and change.get("next_date") == day and change.get("next_close") == price["close"]

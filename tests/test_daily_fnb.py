@@ -254,6 +254,15 @@ class PermanentTracking(unittest.TestCase):
         self.assertAlmostEqual(days[1]["accounts"]["FEQT"]["value"], 10100.)
         self.assertNotIn("previous_close_revision", days[1]["prices"]["FEQT"])
         self.assertEqual(days[1]["prices"]["FEQT"]["previous_close_source_change"], change)
+        # A later TMX response can also disagree with a prior TMX close.
+        previous = copy.deepcopy(days[0]); previous["prices"]["FEQT"]["price_source"] = "TMX Money"
+        anchors["FEQT"]["price_source"] = "TMX Money"
+        with patch.object(F, "tmx_closes", return_value=official):
+            q["FEQT"] = F.collect(cfg, {"FEQT"}, F.START, "2026-10-20", Client(),
+                                  preferred_tmx={"FEQT"}, anchors=anchors)["FEQT"]
+        resumed = F.make_day("2026-10-20", F.load_state(self.root)[0], q, previous, days[1]["recorded_at"])
+        self.assertEqual(resumed["prices"]["FEQT"]["previous_close_source_change"]["accepted_source"], "TMX Money")
+        self.assertEqual(resumed["accounts"], days[1]["accounts"])
         # An unconfirmed NEW close or an unknown accepted source still blocks.
         official["2026-10-20"].update(close=102., adjusted_close=102.)
         with patch.object(F, "tmx_closes", return_value=official):

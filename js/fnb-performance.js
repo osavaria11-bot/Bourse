@@ -83,7 +83,7 @@ window.SavyFnbPerformance=(()=>{
    $("performanceStatus").classList.toggle('warning',!health.current);$("performanceRetry").hidden=health.current;
    const revisions=data.price_revisions||[],changes=data.price_source_changes||[],notes=[];
    if(revisions.length)notes.push('Corrections de fournisseur vérifiées : '+revisions.map(r=>r.ticker+' au '+date(r.date)+' : '+money(r.accepted_close)+' → '+money(r.revised_close)).join('; ')+'.');
-   if(changes.length)notes.push('Changement de source pour '+changes.map(r=>r.ticker+' le '+date(r.recorded_on)).join('; ')+'. Les fournisseurs divergent sur une ancienne clôture; leur accord porte sur la nouvelle clôture. Le rendement de transition peut inclure cet écart de source.');
+   if(changes.length)notes.push('Écart entre relevés pour '+changes.map(r=>r.ticker+' le '+date(r.recorded_on)).join('; ')+'. Les fournisseurs divergent sur une ancienne clôture; leur accord porte sur la nouvelle clôture. Le rendement de transition peut inclure cet écart de source.');
    if(notes.length)notes.push('Les valeurs et parts déjà enregistrées sont conservées. Le rendement du jour relie les deux dernières valeurs enregistrées.');
    $("performanceRevisions").textContent=notes.join(' ');$("performanceRevisions").hidden=!notes.length;
    render();$("performance").dataset.ready='true';
