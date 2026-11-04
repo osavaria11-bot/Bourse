@@ -1765,7 +1765,32 @@
             "currency": "USD",
             "source_url": "https://www.marketbeat.com/stocks/NYSE/CVE/earnings/"
           },
-          "messages": [],
+          "messages": [
+            {
+              "text": "La production en amont franchit le million de barils équivalent pétrole par jour, dont 833 000 dans les sables bitumineux. Les records à Foster Creek, Christina Lake et Sunrise s’accompagnent d’une baisse des coûts d’exploitation des sables à 10,23 $ CA le baril.",
+              "language": "fr",
+              "source_url": "https://www.cenovus.com/News-and-Stories/News-releases/2026/3395090",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "La marge d’exploitation du raffinage monte de 1,0 à 1,8 G$ CA sur le trimestre malgré l’arrêt prévu de Lima. Les écarts de raffinage ont aidé. Des exemptions réglementaires à Superior ont aussi favorisé le taux de capture américain, ce qui limite l’extrapolation du 88 % publié.",
+              "language": "fr",
+              "source_url": "https://www.cenovus.com/News-and-Stories/News-releases/2026/3395090",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Les fonds disponibles atteignent 3,57 G$ CA, en baisse sur le trimestre avec la hausse des investissements. Cenovus a rendu 1,9 G$ CA aux actionnaires et ramené la dette nette à 3,0 G$ CA, aidé aussi par la libération de fonds de roulement.",
+              "language": "fr",
+              "source_url": "https://www.cenovus.com/News-and-Stories/News-releases/2026/3395090",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "L’acquisition annoncée d’Athabasca ajouterait environ 45 000 barils équivalent pétrole par jour à la production actuelle et 1,3 milliard de barils de réserves prouvées et probables. La clôture est prévue en décembre 2026.",
+              "language": "fr",
+              "source_url": "https://www.cenovus.com/News-and-Stories/News-releases/2026/3395090",
+              "kind": "reviewed_summary"
+            }
+          ],
           "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-4-cenovus-energy-inc-stock/",
           "sources": [
             {
@@ -1775,6 +1800,10 @@
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=CVE&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.cenovus.com/News-and-Stories/News-releases/2026/3395090"
             }
           ]
         }
@@ -4135,10 +4164,28 @@
           },
           "messages": [
             {
-              "text": "Q3 results exceeded expectations and guidance was raised again.",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-11-4-novo-nordisk-as-stock/",
-              "kind": "call_topic"
+              "text": "Novo relève la croissance 2026 des ventes et du résultat d’exploitation ajustés de −6 % à 0 % vers −2 % à +2 % à taux de change constants. Le groupe table sur une croissance internationale et un recul aux États-Unis, où la concurrence et les prix réalisés restent sous pression.",
+              "language": "fr",
+              "source_url": "https://attachment.news.eu.nasdaq.com/abe4f9fe06f62a70f6cbcdc89007c2238",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Le comprimé Wegovy a généré 5,39 G DKK au T3. Mike Doustdar mise sur l’élargissement de l’accès et la mise en marché internationale. Les ventes américaines de Wegovy injectable ont reculé de 13 % à changes constants, alors que celles des deux formes combinées ont progressé de 21 %.",
+              "language": "fr",
+              "source_url": "https://attachment.news.eu.nasdaq.com/abe4f9fe06f62a70f6cbcdc89007c2238",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Le résultat d’exploitation ajusté croît de 27 % à changes constants, aidé par une base 2025 qui comprenait des coûts de transformation. Le résultat publié recule de 9 % après 8,7 G DKK de dépréciations liées au ziltivekimab et au redimensionnement des capacités.",
+              "language": "fr",
+              "source_url": "https://attachment.news.eu.nasdaq.com/abe4f9fe06f62a70f6cbcdc89007c2238",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "La prévision de flux de trésorerie disponibles passe à 60–70 G DKK contre 45–55 G DKK. Novo abaisse aussi son budget d’investissements corporels d’environ 55 à 50 G DKK. La hausse prévue des flux doit donc se lire avec la baisse des dépenses d’investissement.",
+              "language": "fr",
+              "source_url": "https://attachment.news.eu.nasdaq.com/abe4f9fe06f62a70f6cbcdc89007c2238",
+              "kind": "reviewed_summary"
             }
           ],
           "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-4-novo-nordisk-as-stock/",
@@ -4150,6 +4197,10 @@
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=NVO&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://attachment.news.eu.nasdaq.com/abe4f9fe06f62a70f6cbcdc89007c2238"
             }
           ]
         }
@@ -4337,7 +4388,32 @@
             "currency": "USD",
             "source_url": "https://www.marketbeat.com/stocks/TSE/PRL/earnings/"
           },
-          "messages": [],
+          "messages": [
+            {
+              "text": "Les octrois à de nouveaux clients ont crû de 55 % selon la direction, y compris le prêt en tant que service. Le coût d’acquisition par nouveau dossier financé a baissé de 23 % depuis le T1. L’élargissement de la distribution s’accompagne donc d’un coût unitaire plus faible.",
+              "language": "fr",
+              "source_url": "https://www.newswire.ca/news-releases/propel-reports-third-quarter-results-and-announces-dividend-increase-859421744.html",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Les provisions pour pertes sur prêts et autres passifs représentent 53 % des revenus contre 52 % un an plus tôt, surtout parce que la part des nouveaux clients a monté. Les radiations nettes restent proches de 12 % de l’encours combiné moyen.",
+              "language": "fr",
+              "source_url": "https://www.newswire.ca/news-releases/propel-reports-third-quarter-results-and-announces-dividend-increase-859421744.html",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Le prêt en tant que service atteint 13,5 M$ US de revenus, en hausse de 170 %. Les partenaires financent les prêts de ce programme, ce qui accroît les commissions avec des besoins de financement moindres pour Propel.",
+              "language": "fr",
+              "source_url": "https://www.newswire.ca/news-releases/propel-reports-third-quarter-results-and-announces-dividend-increase-859421744.html",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Le dividende trimestriel passe de 0,255 à 0,27 $ CA par action. Les prêts et avances à recevoir montent de 22 % à 529 M$ US. Le coût du financement et le comportement des cohortes de nouveaux emprunteurs restent les points à surveiller.",
+              "language": "fr",
+              "source_url": "https://www.newswire.ca/news-releases/propel-reports-third-quarter-results-and-announces-dividend-increase-859421744.html",
+              "kind": "reviewed_summary"
+            }
+          ],
           "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-3-propel-holdings-inc-stock/",
           "sources": [
             {
@@ -4347,6 +4423,10 @@
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=PRL.TO&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.newswire.ca/news-releases/propel-reports-third-quarter-results-and-announces-dividend-increase-859421744.html"
             }
           ]
         }
@@ -5877,5 +5957,6 @@
       "source_warnings": []
     }
   },
-  "errors": {}
+  "errors": {},
+  "analysis_reviewed_at": "2026-11-04T14:14:21.053750+00:00"
 }
