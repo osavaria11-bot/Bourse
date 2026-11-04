@@ -2,11 +2,11 @@
   "schema_version": 1,
   "kind": "polymarket_events",
   "provider": "polymarket",
-  "generated_at": "2026-11-04T14:12:35.793802Z",
+  "generated_at": "2026-11-04T14:23:52.289381Z",
   "groups": {
     "finance": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-04T14:12:35.793802Z",
+      "fetched_at": "2026-11-04T14:23:52.289381Z",
       "ranking": "volume",
       "events": [
         {
@@ -43,7 +43,7 @@
           "outcomes": [
             {
               "label": "Conductor",
-              "probability": 0.315,
+              "probability": 0.31,
               "market_id": "6318103",
               "ends_at": "2027-01-01T04:59:00Z"
             },
@@ -82,7 +82,7 @@
     },
     "popular": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-04T14:12:35.793802Z",
+      "fetched_at": "2026-11-04T14:23:52.289381Z",
       "ranking": "volume24hr",
       "events": [
         {
@@ -91,7 +91,7 @@
           "title": "Republican Presidential Nominee 2028",
           "url": "https://polymarket.com/event/republican-presidential-nominee-2028",
           "volume": 724691866.847621,
-          "volume_24h": 3685852.902564,
+          "volume_24h": 3685791.902564,
           "ends_at": "2028-11-08T04:59:00Z",
           "outcomes": [
             {
@@ -119,7 +119,7 @@
           "outcomes": [
             {
               "label": "Jon Ossoff",
-              "probability": 0.182,
+              "probability": 0.1825,
               "market_id": "561261",
               "ends_at": "2028-11-08T04:59:00Z"
             },
@@ -142,7 +142,7 @@
           "outcomes": [
             {
               "label": "Jon Ossoff",
-              "probability": 0.2865,
+              "probability": 0.2845,
               "market_id": "559661",
               "ends_at": "2028-11-08T04:59:00Z"
             },
@@ -188,7 +188,7 @@
             },
             {
               "label": "David Lisnard",
-              "probability": 0.15,
+              "probability": 0.1495,
               "market_id": "679022",
               "ends_at": "2027-04-19T03:59:00Z"
             }
@@ -198,7 +198,7 @@
     },
     "trending": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-04T14:12:35.793802Z",
+      "fetched_at": "2026-11-04T14:23:52.289381Z",
       "ranking": "volume24hr",
       "events": [
         {
@@ -241,7 +241,7 @@
             },
             {
               "label": "November 5",
-              "probability": 0.97,
+              "probability": 0.9715,
               "market_id": "6367373",
               "ends_at": "2026-11-06T04:59:00Z"
             }
