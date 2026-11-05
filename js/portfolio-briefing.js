@@ -97,7 +97,7 @@
     const privatePdf=current&&privatePdfs.get(current.date),pdfUrl=privatePdf||current?.pdf_url;
     pdfLink.hidden=!pdfUrl;
     if(pdfUrl)pdfLink.href=pdfUrl;else pdfLink.removeAttribute("href");
-    if(privatePdf){pdfLink.download="SAVY_Comite_"+current.date+".pdf";pdfLink.textContent="Télécharger le PDF";}else{pdfLink.removeAttribute("download");pdfLink.textContent="Ouvrir le PDF ↗";}
+    if(privatePdf){pdfLink.removeAttribute("target");pdfLink.download="SAVY_Comite_"+current.date+".pdf";pdfLink.textContent="Télécharger le PDF";}else{pdfLink.target="_blank";pdfLink.removeAttribute("download");pdfLink.textContent="Ouvrir le PDF ↗";}
     for(const host of root.querySelectorAll("[data-committee-content]"))markdown(host,current?.sections[host.dataset.committeeContent],host.dataset.emptyText);
     $("#portfolioBriefingExport").disabled=!entries.length;
     archive.replaceChildren();

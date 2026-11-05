@@ -33,5 +33,5 @@
   window.SavyCommitteeReports={load,refresh};
   const actions=document.querySelector('#panel-portefeuilles-analysis .committee-edition-actions');
   if(actions){const button=document.createElement('button');button.type='button';button.className='button quiet';button.id='portfolioBriefingSync';button.textContent='Actualiser le comité';button.addEventListener('click',()=>refresh(true));actions.append(button);}
-  window.addEventListener('focus',()=>refresh(false));refresh();
+  window.addEventListener('focus',()=>refresh(false));window.addEventListener('savy:committee:access',()=>refresh(true));refresh();
 })();
