@@ -1276,7 +1276,32 @@
             "currency": "USD",
             "source_url": "https://www.marketbeat.com/stocks/NYSE/CNQ/earnings/"
           },
-          "messages": [],
+          "messages": [
+            {
+              "text": "Rentabilité — Le bénéfice net ajusté atteint 3,43 G$ CA, ou 1,65 $ par action diluée, contre 1,80 G$ et 0,86 $ un an plus tôt. Les prix réalisés des liquides ont augmenté à 95,93 $ le baril contre 72,57 $; la forte progression du bénéfice reste donc très exposée au cycle des prix.",
+              "language": "fr",
+              "source_url": "https://www.marketscreener.com/news/canadian-natural-resources-financial-reports-09-30-2026-q3-mda-ce785fdcdd8bff2d",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Production — La production moyenne atteint environ 1,65 million de barils équivalent pétrole par jour, contre 1,62 million un an plus tôt. La hausse des volumes complète l’effet des prix, mais elle est beaucoup moins importante que l’amélioration du bénéfice : la thèse demeure dominée par les marges par baril.",
+              "language": "fr",
+              "source_url": "https://www.marketscreener.com/news/canadian-natural-resources-financial-reports-09-30-2026-q3-mda-ce785fdcdd8bff2d",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Trésorerie — Les flux provenant de l’exploitation montent à 7,01 G$ CA et les fonds ajustés à 5,52 G$, contre 3,94 G$ et 3,92 G$. Cette conversion accroît la capacité de financer les investissements et les distributions; elle doit toutefois être évaluée avec les besoins de fonds de roulement du trimestre.",
+              "language": "fr",
+              "source_url": "https://www.marketscreener.com/news/canadian-natural-resources-financial-reports-09-30-2026-q3-mda-ce785fdcdd8bff2d",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Capital — Les dépenses nettes reculent à 1,88 G$ CA contre 2,12 G$, alors que les travaux d’abandon augmentent à 248 M$. Ma lecture : la combinaison de prix élevés et d’investissements moindres soutient le flux libre à court terme, mais les obligations de remise en état restent un usage durable de trésorerie.",
+              "language": "fr",
+              "source_url": "https://www.marketscreener.com/news/canadian-natural-resources-financial-reports-09-30-2026-q3-mda-ce785fdcdd8bff2d",
+              "kind": "reviewed_summary"
+            }
+          ],
           "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-5-canadian-natural-resources-limited-stock/",
           "sources": [
             {
@@ -1286,6 +1311,10 @@
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=CNQ&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.marketscreener.com/news/canadian-natural-resources-financial-reports-09-30-2026-q3-mda-ce785fdcdd8bff2d"
             }
           ]
         }
@@ -3225,10 +3254,28 @@
           },
           "messages": [
             {
-              "text": "Revenus : +21,5 % par rapport au même trimestre un an plus tôt.",
+              "text": "Croissance — Les revenus progressent de 21,5 % à 498,1 M$ CA, menés par les systèmes satellitaires (+26,4 %) avec Telesat Lightspeed et par la géointelligence (+24,8 %). Le carnet recule toutefois à 3,95 G$ contre 4,39 G$ un an plus tôt : les réservations de 444 M$ doivent continuer de se convertir en livraisons.",
               "language": "fr",
-              "source_url": "https://www.marketbeat.com/stocks/TSE/MDA/earnings/",
-              "kind": "calculated"
+              "source_url": "https://mda-en.investorroom.com/2026-11-05-MDA-SPACE-REPORTS-THIRD-QUARTER-2026-RESULTS",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Marges — Le BAIIA ajusté augmente de 15,9 % à 96,0 M$ CA, mais sa marge baisse de 20,2 % à 19,3 %. Le mix des programmes et les frais généraux absorbent une partie de la croissance; la marge brute recule aussi à 25,3 %. La montée des volumes ne garantit donc pas encore un levier opérationnel complet.",
+              "language": "fr",
+              "source_url": "https://mda-en.investorroom.com/2026-11-05-MDA-SPACE-REPORTS-THIRD-QUARTER-2026-RESULTS",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Trésorerie — Les activités génèrent 106,2 M$ CA et le flux libre atteint 61,6 M$, contre une sortie de 36,7 M$ un an plus tôt. La trésorerie nette de 1,33 G$ finance les acquisitions de SatixFy et de Blue Canyon; l’intégration de ces actifs devient le principal test de l’allocation du capital.",
+              "language": "fr",
+              "source_url": "https://mda-en.investorroom.com/2026-11-05-MDA-SPACE-REPORTS-THIRD-QUARTER-2026-RESULTS",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Perspectives — MDA relève sa cible 2026 de revenus à 1,90–1,95 G$ CA et celle du BAIIA ajusté à 355–375 M$, tout en maintenant une marge de 18–20 %. Les investissements restent prévus à 225–275 M$ et le flux libre entre neutre et négatif : le relèvement ne supprime pas la pression de financement de la capacité.",
+              "language": "fr",
+              "source_url": "https://mda-en.investorroom.com/2026-11-05-MDA-SPACE-REPORTS-THIRD-QUARTER-2026-RESULTS",
+              "kind": "reviewed_summary"
             }
           ],
           "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-5-81996-mdato-stock/",
@@ -3240,6 +3287,10 @@
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=MDA.TO&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://mda-en.investorroom.com/2026-11-05-MDA-SPACE-REPORTS-THIRD-QUARTER-2026-RESULTS"
             }
           ]
         }
@@ -4179,12 +4230,41 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=NVO&size=100"
           },
-          "messages": [],
+          "messages": [
+            {
+              "text": "Novo relève la croissance 2026 des ventes et du résultat d’exploitation ajustés de −6 % à 0 % vers −2 % à +2 % à taux de change constants. Le groupe table sur une croissance internationale et un recul aux États-Unis, où la concurrence et les prix réalisés restent sous pression.",
+              "language": "fr",
+              "source_url": "https://attachment.news.eu.nasdaq.com/abe4f9fe06f62a70f6cbcdc89007c2238",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Le comprimé Wegovy a généré 5,39 G DKK au T3. Mike Doustdar mise sur l’élargissement de l’accès et la mise en marché internationale. Les ventes américaines de Wegovy injectable ont reculé de 13 % à changes constants, alors que celles des deux formes combinées ont progressé de 21 %.",
+              "language": "fr",
+              "source_url": "https://attachment.news.eu.nasdaq.com/abe4f9fe06f62a70f6cbcdc89007c2238",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Le résultat d’exploitation ajusté croît de 27 % à changes constants, aidé par une base 2025 qui comprenait des coûts de transformation. Le résultat publié recule de 9 % après 8,7 G DKK de dépréciations liées au ziltivekimab et au redimensionnement des capacités.",
+              "language": "fr",
+              "source_url": "https://attachment.news.eu.nasdaq.com/abe4f9fe06f62a70f6cbcdc89007c2238",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "La prévision de flux de trésorerie disponibles passe à 60–70 G DKK contre 45–55 G DKK. Novo abaisse aussi son budget d’investissements corporels d’environ 55 à 50 G DKK. La hausse prévue des flux doit donc se lire avec la baisse des dépenses d’investissement.",
+              "language": "fr",
+              "source_url": "https://attachment.news.eu.nasdaq.com/abe4f9fe06f62a70f6cbcdc89007c2238",
+              "kind": "reviewed_summary"
+            }
+          ],
           "report_url": null,
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=NVO&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://attachment.news.eu.nasdaq.com/abe4f9fe06f62a70f6cbcdc89007c2238"
             }
           ]
         }
@@ -4697,10 +4777,28 @@
           },
           "messages": [
             {
-              "text": "Revenus : +4,5 % par rapport au même trimestre un an plus tôt.",
+              "text": "Rentabilité — Le bénéfice sous-jacent atteint 1,15 G$ CA, en hausse de 9 %, et le BPA sous-jacent 2,05 $, en hausse de 10 %. Le bénéfice net publié recule toutefois de 29 % à 785 M$ : les effets de marché, d’intégration et de restructuration créent un écart important entre la performance courante et le résultat comptable.",
               "language": "fr",
-              "source_url": "https://www.marketbeat.com/stocks/NYSE/SLF/earnings/",
-              "kind": "calculated"
+              "source_url": "https://finance.yahoo.com/healthcare/articles/sunlife-reports-third-quarter-2026-220100042.html",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Moteurs — La croissance au Canada et en Asie, l’assurance collective américaine et BentallGreenOak soutiennent le bénéfice, avec un apport favorable des placements. L’assurance canadienne et le coût de financement de l’acquisition de GreenOak compensent une partie de ces gains; la diversification aide, mais elle n’élimine pas la pression locale.",
+              "language": "fr",
+              "source_url": "https://finance.yahoo.com/healthcare/articles/sunlife-reports-third-quarter-2026-220100042.html",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Capital — Le rendement des capitaux propres sous-jacent atteint 19 %, contre 13 % sur une base publiée. Le ratio de capital LICAT de 142 % demeure solide et le dividende trimestriel passe de 0,96 $ à 1,00 $. La capacité de distribution est ample, sous réserve des besoins de capital liés aux acquisitions et à l’assurance.",
+              "language": "fr",
+              "source_url": "https://finance.yahoo.com/healthcare/articles/sunlife-reports-third-quarter-2026-220100042.html",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Actifs gérés — Les actifs sous gestion atteignent 1,68 billion de dollars canadiens, en hausse de 3 %. Cette échelle accroît les revenus potentiels, mais les résultats publiés restent sensibles aux marchés et aux rendements des placements. Ma lecture : suivre les flux et les marges est plus utile que la seule variation des actifs.",
+              "language": "fr",
+              "source_url": "https://finance.yahoo.com/healthcare/articles/sunlife-reports-third-quarter-2026-220100042.html",
+              "kind": "reviewed_summary"
             }
           ],
           "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-4-sun-life-financial-inc-stock/",
@@ -4712,6 +4810,10 @@
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=SLF&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://finance.yahoo.com/healthcare/articles/sunlife-reports-third-quarter-2026-220100042.html"
             }
           ]
         }
@@ -4893,10 +4995,28 @@
           },
           "messages": [
             {
-              "text": "Revenus : +46,7 % par rapport au même trimestre un an plus tôt.",
+              "text": "Les prix réalisés en amont, les marges de raffinage et les exportations à valeur élevée ont porté les fonds ajustés provenant de l’exploitation à 6,71 G$ CA. La production en amont a toutefois reculé de 870 000 à environ 853 000 barils par jour sur un an.",
               "language": "fr",
-              "source_url": "https://www.marketbeat.com/stocks/NYSE/SU/earnings/",
-              "kind": "calculated"
+              "source_url": "https://www.suncor.com/-/media/project/suncor/files/news-releases/2026/2026-11-03-news-release-earnings-q3-2026-en.pdf?created=20261103131130&modified=20261103212632",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Rich Kruger souligne que les transferts internes de bitume ont aidé à maintenir le débit du réseau pendant un arrêt de maintenance à Edmonton. Les ventes de produits raffinés ont établi un record pour un T3, à 677 000 barils par jour.",
+              "language": "fr",
+              "source_url": "https://www.suncor.com/-/media/project/suncor/files/news-releases/2026/2026-11-03-news-release-earnings-q3-2026-en.pdf?created=20261103131130&modified=20261103212632",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Après 5,20 G$ CA de flux de fonds disponibles au T3, le dividende trimestriel passe à 0,66 $ CA par action et les rachats mensuels à 750 M$ CA. La dette nette est descendue à 1,75 G$ CA, contre 4,48 G$ au trimestre précédent.",
+              "language": "fr",
+              "source_url": "https://www.suncor.com/-/media/project/suncor/files/news-releases/2026/2026-11-03-news-release-earnings-q3-2026-en.pdf?created=20261103131130&modified=20261103212632",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "La cession prévue de Terra Nova, White Rose et West White Rose a entraîné une dépréciation sans effet de trésorerie de 1,08 G$ CA. Dans son communiqué en dollars canadiens, Suncor distingue 3,97 $ de bénéfice d’exploitation ajusté par action de 3,27 $ de bénéfice net par action.",
+              "language": "fr",
+              "source_url": "https://www.suncor.com/-/media/project/suncor/files/news-releases/2026/2026-11-03-news-release-earnings-q3-2026-en.pdf?created=20261103131130&modified=20261103212632",
+              "kind": "reviewed_summary"
             }
           ],
           "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-3-suncor-energy-inc-stock/",
@@ -4908,6 +5028,10 @@
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=SU&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.suncor.com/-/media/project/suncor/files/news-releases/2026/2026-11-03-news-release-earnings-q3-2026-en.pdf?created=20261103131130&modified=20261103212632"
             }
           ]
         }
@@ -5133,7 +5257,32 @@
             "currency": "USD",
             "source_url": "https://www.marketbeat.com/stocks/NYSE/TRP/earnings/"
           },
-          "messages": [],
+          "messages": [
+            {
+              "text": "Résultat — Le BAIIA comparable atteint 3,00 G$ CA, en hausse de 13 %, et le BPA comparable 0,94 $ contre 0,77 $. Les réseaux de gaz américains et canadiens ainsi que l’énergie progressent; la hausse reflète donc plusieurs actifs, avec un apport particulièrement fort du transport américain et des prix de l’électricité.",
+              "language": "fr",
+              "source_url": "https://www.tcenergy.com/siteassets/pdfs/investors/reports-and-filings/annual-and-quarterly-reports/2026/tce-2026-q3-quarterly-report.pdf",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Perspectives — TC Énergie relève le BAIIA comparable 2026 à 11,8–12,0 G$ CA, contre 11,6–11,8 G$, et vise 12,3–12,5 G$ en 2027. Le ratio dette/BAIIA devrait finir 2026 entre 4,55 et 4,60, sous la cible de 4,75; la réduction du levier reste nécessaire pour financer la croissance sans fragiliser le bilan.",
+              "language": "fr",
+              "source_url": "https://www.tcenergy.com/siteassets/pdfs/investors/reports-and-filings/annual-and-quarterly-reports/2026/tce-2026-q3-quarterly-report.pdf",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Investissements — Le plan 2027 prévoit 6,0–6,5 G$ CA de dépenses nettes. Crossroads et American Midwest ajoutent de la capacité aux États-Unis, notamment pour les centres de données. Ces contrats soutiennent la visibilité, mais l’exécution simultanée de plusieurs projets expose encore aux coûts et aux délais de construction.",
+              "language": "fr",
+              "source_url": "https://www.tcenergy.com/siteassets/pdfs/investors/reports-and-filings/annual-and-quarterly-reports/2026/tce-2026-q3-quarterly-report.pdf",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Coastal GasLink — La phase 2 de 4,9 G$ CA ferait passer la capacité de 2,1 à 4,5 milliards de pieds cubes par jour. Le financement de projet pourrait fournir jusqu’à 3,3 G$, limitant l’apport de TC Énergie à 250 M$ sous certaines conditions. Le contrôle du budget et du calendrier détermine donc la création de valeur.",
+              "language": "fr",
+              "source_url": "https://www.tcenergy.com/siteassets/pdfs/investors/reports-and-filings/annual-and-quarterly-reports/2026/tce-2026-q3-quarterly-report.pdf",
+              "kind": "reviewed_summary"
+            }
+          ],
           "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-5-tc-energy-co-stock/",
           "sources": [
             {
@@ -5143,6 +5292,10 @@
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=TRP&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.tcenergy.com/siteassets/pdfs/investors/reports-and-filings/annual-and-quarterly-reports/2026/tce-2026-q3-quarterly-report.pdf"
             }
           ]
         }
@@ -6007,5 +6160,5 @@
     }
   },
   "errors": {},
-  "analysis_reviewed_at": "2026-11-05T10:07:18.699983+00:00"
+  "analysis_reviewed_at": "2026-11-05T13:30:27.027618+00:00"
 }
