@@ -53,7 +53,7 @@ jobs:
         # The recession source is the NY Fed's legacy XLS workbook.
         # Install the same pinned reader used by scheduled macro updates.
         run: |
-          python -m pip install --disable-pip-version-check -r scripts/requirements-macro.txt -r scripts/requirements-fnb.txt
+          python -m pip install --disable-pip-version-check -r scripts/requirements-macro.txt -r scripts/requirements-fnb.txt -r scripts/requirements-committee.txt
           python -m unittest discover -s tests -p 'test_*.py' -v
       - name: Validate sourced news edition
         run: python scripts/validate_news_briefing.py

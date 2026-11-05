@@ -73,13 +73,3 @@
 @media(max-width:1000px){.committee-edition-head{align-items:flex-start}.committee-summary-grid{grid-template-columns:minmax(0,1fr) minmax(220px,.8fr)}.committee-tab{font-size:12px;padding:9px 10px}}
 @media(max-width:760px){.committee-summary-grid{grid-template-columns:1fr}.committee-summary-grid .committee-reading-card{min-height:0}.committee-edition-actions{width:100%}.portfolio-briefing .portfolio-briefing-grid{grid-template-columns:1fr}.committee-portfolio-card{display:grid;grid-template-columns:1fr auto}.committee-portfolio-card>.portfolio-briefing-card-top,.committee-portfolio-card>p{grid-column:1/-1}.committee-read{grid-column:1/-1}.committee-reading-card{padding:17px}.committee-nav{gap:3px}.committee-tab{flex:1 1 auto;text-align:center}.committee-reports-heading .button{white-space:normal}}
 @media(max-width:440px){.portfolio-briefing>.section-heading h3{font-size:23px}.portfolio-briefing-cadence{font-size:11px}.committee-edition{padding:14px}.committee-edition .portfolio-briefing-latest-title{font-size:18px}.committee-edition-actions{gap:6px}.committee-edition-select{max-width:100%;flex:1 1 160px}.committee-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}.committee-tab{white-space:normal;font-size:11px;padding:8px 5px}.committee-tab:last-child{grid-column:1/-1}.committee-date-fields{grid-template-columns:1fr}.portfolio-briefing .portfolio-briefing-editor{padding:13px}.committee-markdown{font-size:13px}.committee-table-wrap th,.committee-table-wrap td{padding:8px}}
-.committee-source-controls{display:flex;justify-content:flex-end;margin:0 0 10px}
-.committee-source-controls .button{font-size:12px}
-[data-committee-source="remote"] [data-committee-local]{display:none!important}
-.committee-remote{border:1px solid var(--line,#dbe3e2);border-radius:12px;background:#fff;min-width:0;overflow:hidden}
-.committee-remote-toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 16px;border-bottom:1px solid var(--line,#dbe3e2);background:#f5f8f6}
-.committee-remote-toolbar p{margin:0;flex:1;min-width:170px}
-.committee-remote-actions{display:flex;gap:8px;flex-wrap:wrap}
-.committee-remote-actions .button{font-size:12px}
-.committee-remote-frame{display:block;width:100%;height:1050px;border:0;background:white}
-@media(max-width:650px){.committee-remote-toolbar{padding:10px}.committee-remote-frame{height:1150px}.committee-source-controls{justify-content:flex-start}}
