@@ -3353,12 +3353,41 @@
             "currency": "USD",
             "source_url": "https://www.marketbeat.com/stocks/NYSE/MFC/earnings/"
           },
-          "messages": [],
+          "messages": [
+            {
+              "text": "Rentabilité — Le bénéfice de base atteint un record de 2,125 G$ CA, en hausse de 4 % à taux de change constants, et le BPA de base progresse de 6 % à 1,24 $. Le bénéfice net IFRS recule toutefois de 22 % à 1,424 G$ : les rendements inférieurs aux attentes sur les actifs alternatifs et les effets de marché réduisent la qualité du résultat publié.",
+              "language": "fr",
+              "source_url": "https://www.manulife.com/content/dam/manulife-com/ca/financial-documents/investors/MFC_QPR_2026_Q3_EN.pdf",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Moteurs — Le bénéfice de base de l’Asie augmente de 17 %, soutenu par la croissance des affaires et une meilleure sinistralité. La gestion de patrimoine recule de 5 % et affiche 3,6 G$ de sorties nettes; les retraits de régimes de retraite américains compensent les apports institutionnels et de crédit privé.",
+              "language": "fr",
+              "source_url": "https://www.manulife.com/content/dam/manulife-com/ca/financial-documents/investors/MFC_QPR_2026_Q3_EN.pdf",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Capital — Manuvie a rendu 1,3 G$ aux actionnaires tout en conservant un ratio LICAT de 136 % et un levier financier de 23 %. Le coussin demeure solide, mais l’examen actuariel annuel a transféré ses effets entre résultat net, marge sur services contractuels et autres éléments du résultat global : il faut suivre les composantes, pas seulement le BPA de base.",
+              "language": "fr",
+              "source_url": "https://www.manulife.com/content/dam/manulife-com/ca/financial-documents/investors/MFC_QPR_2026_Q3_EN.pdf",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Croissance future — La marge sur services contractuels nette des participations minoritaires atteint 27,3 G$ CA; le mouvement organique annualisé est de 9 % depuis décembre. Les ventes et la valeur des nouvelles affaires sont presque stables sur un an, ce qui rend la progression future plus dépendante de l’Asie et de la conversion de ce stock de profits.",
+              "language": "fr",
+              "source_url": "https://www.manulife.com/content/dam/manulife-com/ca/financial-documents/investors/MFC_QPR_2026_Q3_EN.pdf",
+              "kind": "reviewed_summary"
+            }
+          ],
           "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-4-manulife-financial-co-stock/",
           "sources": [
             {
               "label": "MarketBeat · résultats et consensus",
               "url": "https://www.marketbeat.com/stocks/NYSE/MFC/earnings/"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.manulife.com/content/dam/manulife-com/ca/financial-documents/investors/MFC_QPR_2026_Q3_EN.pdf"
             }
           ]
         }
@@ -4396,16 +4425,28 @@
           },
           "messages": [
             {
-              "text": "$5 billion in fiscal 2027",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-11-4-qualcomm-incorporated-stock/",
-              "kind": "call_topic"
+              "text": "Perspectives — Qualcomm prévoit pour le T1 2027 des revenus de 10,4 à 11,2 G$ US et un BPA ajusté de 2,15 à 2,35 $. La direction vise toujours 5 G$ de revenus de centres de données en 2027, mais précise que les hausses de prix destinées à compenser les intrants plus chers ne soutiendront pleinement les marges qu’au second semestre.",
+              "language": "fr",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/804328/000080432826000127/qcom092726erex991.htm",
+              "kind": "reviewed_summary"
             },
             {
-              "text": "$8 billion annualized run rate",
-              "language": "en",
-              "source_url": "https://www.marketbeat.com/earnings/reports/2026-11-4-qualcomm-incorporated-stock/",
-              "kind": "call_topic"
+              "text": "Mix — Les revenus automobiles trimestriels atteignent un record de 1,99 G$ US, en hausse de 89 %, et l’Internet des objets progresse de 4 %. Les combinés chutent de 26 % à 5,14 G$ : la diversification avance, mais le recul du téléphone demeure assez important pour faire baisser de 8 % les revenus de la division de puces.",
+              "language": "fr",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/804328/000080432826000127/qcom092726erex991.htm",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Marges — La marge avant impôt de la division de puces passe de 29 % à 24 %. Les coûts de fabrication, d’assemblage, d’emballage avancé et de mémoire augmentent avant que les nouveaux prix soient pleinement absorbés; l’investissement dans les accélérateurs et processeurs de centres de données ajoute aussi une pression initiale.",
+              "language": "fr",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/804328/000080432826000127/qcom092726erex991.htm",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Capital — Qualcomm a rendu près de 2,0 G$ US aux actionnaires au trimestre, dont 1,01 G$ de rachats et 987 M$ de dividendes. Sur l’exercice, les rachats atteignent 7,82 G$, mais les stocks ont grimpé à 8,64 G$ contre 6,53 G$ un an plus tôt : la conversion en ventes et la discipline du fonds de roulement deviennent des points de suivi.",
+              "language": "fr",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/804328/000080432826000127/qcom092726erex991.htm",
+              "kind": "reviewed_summary"
             }
           ],
           "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-4-qualcomm-incorporated-stock/",
@@ -4417,6 +4458,10 @@
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=QCOM&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.sec.gov/Archives/edgar/data/804328/000080432826000127/qcom092726erex991.htm"
             }
           ]
         }
@@ -4970,10 +5015,28 @@
           },
           "messages": [
             {
-              "text": "Revenus : +5,0 % par rapport au même trimestre un an plus tôt.",
+              "text": "Perspectives — À la courbe des prix du 15 octobre, Tourmaline porte son estimation de flux de trésorerie disponible 2027 à 1,8 G$ CA, soit 71 % de plus qu’en juillet, avec 2,6 G$ de dépenses d’exploration-production et une croissance des volumes de 4 à 6 %. Cette prévision reste très sensible aux prix du gaz.",
               "language": "fr",
-              "source_url": "https://www.marketbeat.com/stocks/TSE/TOU/earnings/",
-              "kind": "calculated"
+              "source_url": "https://smb.campbellrivermirror.com/article/TOURMALINE-ANNOUNCES-THIRD-QUARTER-RESULTS-WITH-STRONG-EARNINGS-AND-EP-PERFORMANCE-AND-A-andgt70percent-INCREASE-TO-THE-PREVIOUS-2027-FREE-CASH-FLOW-ESTIMATE-NOW-dollar18-BILLION/6aeba132871c4c723c116932",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Production — Le volume moyen de 593 730 bep/j est légèrement sous la cible, car la société a reporté des mises en production et injecté du gaz en stockage. Elle vise 635 000 à 645 000 bep/j au T4 et au moins 670 000 bep/j en sortie d’année; une panne chez un tiers retranche toutefois environ 3 000 bep/j au trimestre.",
+              "language": "fr",
+              "source_url": "https://smb.campbellrivermirror.com/article/TOURMALINE-ANNOUNCES-THIRD-QUARTER-RESULTS-WITH-STRONG-EARNINGS-AND-EP-PERFORMANCE-AND-A-andgt70percent-INCREASE-TO-THE-PREVIOUS-2027-FREE-CASH-FLOW-ESTIMATE-NOW-dollar18-BILLION/6aeba132871c4c723c116932",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Coûts et bilan — Les coûts d’exploitation reculent de 7 % à 4,48 $ CA par bep. La dette nette de 1,54 G$ reste sous la cible de 1,75 G$ et représente environ 0,3 fois le flux de trésorerie prévu pour 2027; cette marge financière soutient le dividende et les rachats, mais dépend de la réalisation du scénario de prix.",
+              "language": "fr",
+              "source_url": "https://smb.campbellrivermirror.com/article/TOURMALINE-ANNOUNCES-THIRD-QUARTER-RESULTS-WITH-STRONG-EARNINGS-AND-EP-PERFORMANCE-AND-A-andgt70percent-INCREASE-TO-THE-PREVIOUS-2027-FREE-CASH-FLOW-ESTIMATE-NOW-dollar18-BILLION/6aeba132871c4c723c116932",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Allocation — Le dividende trimestriel prévu passe à 0,525 $ par action et la société entend utiliser l’essentiel du produit de la vente secondaire de Topaz pour racheter ses titres. Le T3 n’a généré que 60 M$ de flux libre après 728 M$ d’investissements : l’accélération promise repose surtout sur la montée des volumes et les prix internationaux du gaz.",
+              "language": "fr",
+              "source_url": "https://smb.campbellrivermirror.com/article/TOURMALINE-ANNOUNCES-THIRD-QUARTER-RESULTS-WITH-STRONG-EARNINGS-AND-EP-PERFORMANCE-AND-A-andgt70percent-INCREASE-TO-THE-PREVIOUS-2027-FREE-CASH-FLOW-ESTIMATE-NOW-dollar18-BILLION/6aeba132871c4c723c116932",
+              "kind": "reviewed_summary"
             }
           ],
           "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-4-tourmaline-oil-corp-touto-stock/",
@@ -4981,6 +5044,10 @@
             {
               "label": "MarketBeat · résultats et consensus",
               "url": "https://www.marketbeat.com/stocks/TSE/TOU/earnings/"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://smb.campbellrivermirror.com/article/TOURMALINE-ANNOUNCES-THIRD-QUARTER-RESULTS-WITH-STRONG-EARNINGS-AND-EP-PERFORMANCE-AND-A-andgt70percent-INCREASE-TO-THE-PREVIOUS-2027-FREE-CASH-FLOW-ESTIMATE-NOW-dollar18-BILLION/6aeba132871c4c723c116932"
             }
           ]
         }
@@ -5618,10 +5685,28 @@
           },
           "messages": [
             {
-              "text": "Revenus : +16,8 % par rapport au même trimestre un an plus tôt.",
+              "text": "Croissance — Les revenus nets augmentent de 22,1 %, dont 5,1 % en croissance interne. Le Canada et l’Europe–Moyen-Orient–Inde–Afrique progressent à deux chiffres, tandis que la conversion des projets est plus lente dans les Amériques; cette divergence rend l’exécution régionale aussi importante que l’apport des acquisitions.",
               "language": "fr",
-              "source_url": "https://www.marketbeat.com/stocks/TSE/WSP/earnings/",
-              "kind": "calculated"
+              "source_url": "https://www.wsp.com/fr-ch/news/2026/wsp-annonce-de-solides-resultats-pour-le-t3-2026-et-une-croissance-du-carnet-de-commandes",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Carnet et marge — Le carnet atteint un record de 20,3 G$ CA, en hausse organique de 5 % sur douze mois. Le BAIIA ajusté monte à 864,6 M$ et sa marge à 20,5 % contre 20,2 %; le volume futur est visible, mais les coûts d’intégration et de financement ont absorbé une partie de l’amélioration opérationnelle.",
+              "language": "fr",
+              "source_url": "https://www.wsp.com/fr-ch/news/2026/wsp-annonce-de-solides-resultats-pour-le-t3-2026-et-une-croissance-du-carnet-de-commandes",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Trésorerie — Le flux libre trimestriel progresse à 333 M$ CA, mais celui des neuf premiers mois recule à 588 M$ contre 887 M$. Le délai de recouvrement passe de 71 à 73 jours : la génération sur douze mois demeure solide à 1,41 G$, mais le fonds de roulement doit s’améliorer au quatrième trimestre.",
+              "language": "fr",
+              "source_url": "https://www.wsp.com/fr-ch/news/2026/wsp-annonce-de-solides-resultats-pour-le-t3-2026-et-une-croissance-du-carnet-de-commandes",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Bilan — Le levier financier est de 2,2 fois, légèrement au-dessus de la cible de 1 à 2 fois après les acquisitions. La direction prévoit revenir dans la fourchette d’ici la fin de l’exercice et réitère ses perspectives 2026; la réduction de la dette et l’intégration de TRC sont donc les principaux tests de cette cible.",
+              "language": "fr",
+              "source_url": "https://www.wsp.com/fr-ch/news/2026/wsp-annonce-de-solides-resultats-pour-le-t3-2026-et-une-croissance-du-carnet-de-commandes",
+              "kind": "reviewed_summary"
             }
           ],
           "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-4-wsp-global-inc-wspto-stock/",
@@ -5629,6 +5714,10 @@
             {
               "label": "MarketBeat · résultats et consensus",
               "url": "https://www.marketbeat.com/stocks/TSE/WSP/earnings/"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.wsp.com/fr-ch/news/2026/wsp-annonce-de-solides-resultats-pour-le-t3-2026-et-une-croissance-du-carnet-de-commandes"
             }
           ]
         }
@@ -5859,5 +5948,6 @@
       "source_warnings": []
     }
   },
-  "errors": {}
+  "errors": {},
+  "analysis_reviewed_at": "2026-11-05T10:07:18.699983+00:00"
 }
