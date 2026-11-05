@@ -64,7 +64,7 @@
     return french.sort((a, b) => score(b) - score(a))[0] || null;
   }
   function audioManifest(value, content) {
-    if (!content || !value || value.schema_version !== 1 || value.kind !== "briefing_audio" || value.voice !== "fr-CA-AntoineNeural" || value.text !== content.text ||
+    if (!content || !value || value.schema_version !== 1 || value.kind !== "briefing_audio" || value.voice !== "fr-CA-SylvieNeural" || value.text !== content.text ||
         !/^data\/audio\/briefing-[a-f0-9]{24}\.mp3$/.test(value.src || "") ||
         !Number.isFinite(value.duration) || value.duration <= 0 || value.duration > 7200 ||
         !Array.isArray(value.chapters) || value.chapters.length !== content.chapters.length) return null;

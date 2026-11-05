@@ -62,7 +62,7 @@ const server = http.createServer((request, response) => {
     response.writeHead(200, {"Content-Type": "application/json"});
     response.end(JSON.stringify({schema_version: 1, kind: "briefing_audio", text: n.text,
       src: "data/audio/briefing-" + "a".repeat(24) + ".mp3", duration: n.chapters.length * 20,
-      voice: "fr-CA-AntoineNeural", voice_label: "Antoine · Français (Canada)",
+      voice: "fr-CA-SylvieNeural", voice_label: "Sylvie · Français (Canada)",
       chapters: n.chapters.map((chapter, index) => ({...chapter, time_start: index * 20, time_end: (index + 1) * 20}))}));
     return;
   }
@@ -177,7 +177,7 @@ async function run() {
     await naturalPage.goto(url); await waitCount(naturalPage, indicatorCount);
     await naturalPage.waitForFunction(() => window.SavyBriefingAudio?.snapshot().natural);
     assert.match(await naturalPage.locator("#briefingAudioStatus").innerText(), /Voix naturelle/);
-    assert.match(await naturalPage.locator("#briefingAudioNote").innerText(), /Antoine/);
+    assert.match(await naturalPage.locator("#briefingAudioNote").innerText(), /Sylvie/);
     assert.equal(await naturalPage.evaluate(() => window.__savyNaturalTest.plays), 0, "Natural audio never autoplays");
     await naturalPage.locator("#briefingAudioPlay").click();
     assert.equal(await naturalPage.evaluate(() => window.SavyBriefingAudio.snapshot().engine), "neural");
