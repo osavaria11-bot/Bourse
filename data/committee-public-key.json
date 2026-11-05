@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "key_id": "p256:Bxz7rV_sv6_dn9hCqyAYNbkRMpaFe-mHHTQ1mOKOVa8",
+  "public_key": {
+    "crv": "P-256",
+    "kty": "EC",
+    "x": "e6tlFvhN8MgCns0VPvKk0Lb7I3f-3TR9LCz-oJ0-8aY",
+    "y": "u9EYRnX4mcvLGXRlBewaNNLs8TxNasn5VxCA18Etmac"
+  }
+}

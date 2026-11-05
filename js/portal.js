@@ -208,7 +208,7 @@
   const sourceBody = el("div","committee-markdown");sourceBody.dataset.committeeContent="methodology";sourceBody.dataset.emptyText="Les sources et hypothèses seront conservées avec chaque édition.";sourceDetails.append(sourceBody);
   reports.append(reportsHeading,archive,editor,sourceDetails);
   portfolioAnalysis.append(analysisHeading,analysisIntro,analysisLatest,committeeNav,analysisContent,
-    el("p", "meta portfolio-briefing-disclaimer", "Rapports conservés sur cet appareil. Les PDF personnels s’ouvrent dans votre compte ChatGPT. L’import reste manuel tant que la publication privée automatique n’est pas reliée."));
+    el("p", "meta portfolio-briefing-disclaimer", "Les éditions du comité s’ouvrent directement dans SAVY avec ton lien privé. Les rapports déjà importés sur cet appareil restent conservés."));
   // Keep the edit form available when a portfolio is empty; only the data-dependent panels are gated.
   for (const tab of ["overview", "allocations", "performance", "earnings"]) shared.append(pane("portefeuilles", tab));
   const manage = link("Gérer mes positions ↗", "portefeuilles", "positions", "button quiet"); $("#portfolioEmpty").after(manage); manage.id = "portfolioManage";
