@@ -27,7 +27,8 @@ const root=path.resolve(__dirname,'..'),types={'.html':'text/html','.js':'text/j
         const context=await browser.newContext({viewport:{width:1280,height:900},acceptDownloads:true}),page=await context.newPage(),requests=[],errors=[];
         page.on('request',r=>requests.push(r.url()));page.on('pageerror',e=>errors.push(e.message));await page.route('https://**',route=>route.abort());
         await page.goto(origin+'/#view=portefeuilles&tab=analysis&committee-key='+token);
-        await page.locator('#portfolioBriefingLatestTitle').filter({hasText:'5 novembre 2026'}).waitFor();
+        await page.locator('#portfolioBriefingStatus').filter({hasText:'synchronisé dans SAVY'}).waitFor();
+        assert.match(await page.locator('#portfolioBriefingLatestTitle').innerText(),/5 novembre 2026/);
         assert.match(await page.locator('#portfolioBriefingPanel-summary').innerText(),/Comité automatique de test 2026-11-05/);
         assert.match(await page.locator('#portfolioBriefingStatus').innerText(),/synchronisé dans SAVY/);assert.equal(page.url().includes('committee-key'),false);
         assert.ok(requests.every(url=>!url.includes(token)&&!url.includes(jwk.d)),'Access material must never reach an HTTP request');
@@ -35,7 +36,7 @@ const root=path.resolve(__dirname,'..'),types={'.html':'text/html','.js':'text/j
         assert.equal(await page.locator('#portfolioBriefingContent img').count(),0);assert.equal(await page.locator('#portfolioBriefingArchives [data-briefing-date]').count(),2);
         await page.locator('#portfolioBriefingEdition').selectOption('2026-10-29');await page.locator('#portfolioBriefingLatestTitle').filter({hasText:'29 octobre 2026'}).waitFor();
         const downloadPromise=page.waitForEvent('download');await page.locator('#portfolioBriefingPdf').click();const download=await downloadPromise;assert.deepEqual(fs.readFileSync(await download.path()),pdf);
-        await page.reload();await page.locator('#portfolioBriefingLatestTitle').filter({hasText:'5 novembre 2026'}).waitFor();
+        await page.reload();await page.locator('#portfolioBriefingStatus').filter({hasText:'synchronisé dans SAVY'}).waitFor();assert.match(await page.locator('#portfolioBriefingLatestTitle').innerText(),/5 novembre 2026/);
         for(const width of [375,320]){await page.setViewportSize({width,height:812});await page.locator('#portfolioBriefingTab-os').click();assert.match(await page.locator('#portfolioBriefingPanel-os').innerText(),/Analyse complète os/);assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);}
         const anonymous=await browser.newContext(),locked=await anonymous.newPage();await locked.route('https://**',route=>route.abort());await locked.goto(origin+'/#view=portefeuilles&tab=analysis');
         await locked.locator('#portfolioBriefingStatus').filter({hasText:'lien privé'}).waitFor();assert.equal((await locked.locator('#portfolioBriefingContent').innerText()).includes('Comité automatique de test'),false);
