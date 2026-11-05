@@ -4,7 +4,7 @@
   if(!root)return;
   const ORIGIN="https://savy-comite-prive.gentle-newt-9113.chatgpt.site";
   const node=(tag,className,text)=>{const n=document.createElement(tag);if(className)n.className=className;if(text!==undefined)n.textContent=text;return n;};
-  for(const selector of [".committee-edition",".committee-nav","#portfolioBriefingContent"]){const n=root.querySelector(selector);if(n)n.dataset.committeeLocal="true";}
+  for(const selector of [".committee-edition",".committee-nav","#portfolioBriefingContent",".portfolio-briefing-disclaimer"]){const n=root.querySelector(selector);if(n)n.dataset.committeeLocal="true";}
   const controls=node("div","committee-source-controls"),toggle=node("button","button quiet","Rapports enregistrés sur cet appareil");toggle.type="button";toggle.id="portfolioBriefingSource";toggle.setAttribute("aria-pressed","false");controls.append(toggle);
   const remote=node("section","committee-remote");remote.id="portfolioBriefingRemote";remote.setAttribute("aria-label","Comité d’investissement privé synchronisé");
   const toolbar=node("div","committee-remote-toolbar"),status=node("p","meta","Chargement du rapport privé…");status.id="portfolioBriefingRemoteStatus";status.setAttribute("role","status");

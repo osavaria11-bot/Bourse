@@ -166,7 +166,9 @@ jobs:
           python scripts/generate_daily_briefing.py --output-dir "$RUNNER_TEMP/fred-check"
           python - <<'PY'
           import json, os
+          from datetime import datetime
           from pathlib import Path
+          from scripts.generate_daily_briefing import HISTORY_YEARS
           data = json.loads((Path(os.environ["RUNNER_TEMP"]) / "fred-check/macro-data.json").read_text())
           print("Provider coverage:", data["coverage"])
           points = {p["id"]: p for p in data["series"]}
@@ -180,9 +182,20 @@ jobs:
           canada_jobs = points['V2062815']
           assert canada_jobs['provider'] == 'statistics_canada' and canada_jobs['unit'] == '%'
           assert canada_jobs['source_url'].startswith('https://www150.statcan.gc.ca/')
-          assert len(canada_jobs['history']) >= 120
+          # Monthly releases lag the current month. Verify the complete configured
+          # window through each source's latest actual observation, not 120 rows.
+          collected = datetime.fromisoformat(data['generated_at'])
+          first_month = (collected.year - HISTORY_YEARS) * 12 + collected.month - 1
+          def verify_monthly_history(point):
+              latest = datetime.fromisoformat(point['date'])
+              last_month = latest.year * 12 + latest.month - 1
+              expected = [f'{month // 12:04d}-{month % 12 + 1:02d}-01' for month in range(first_month, last_month + 1)]
+              actual = [row[0] for row in point['history']]
+              assert actual == expected, f"Incomplete monthly source history: {point['id']} ({len(actual)} rows, expected {len(expected)})"
+          verify_monthly_history(canada_jobs)
           for sid in ('V41690973', 'V108785715', 'V108785714'):
-              assert points[sid]['provider'] == 'statistics_canada' and len(points[sid]['history']) >= 118
+              assert points[sid]['provider'] == 'statistics_canada'
+              verify_monthly_history(points[sid])
           assert points['ICSA']['frequency'] == points['IC4WSA']['frequency'] == 'weekly'
           assert len(points['DFII10']['history']) > 2000
           PY
