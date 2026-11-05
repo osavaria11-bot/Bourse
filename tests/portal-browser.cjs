@@ -18,6 +18,8 @@ async function check(browser, engine) {
   const context = await browser.newContext({viewport: {width: 1440, height: 900}}), page = await context.newPage(), errors = [], requests = [];
   page.on("pageerror", error => errors.push(error.message)); page.on("request", req => requests.push(req.url()));
   await page.route("https://**", route => route.abort());
+  // Generic iframe fixture only: no owner report or authentication credential.
+  await page.route("https://savy-comite-prive.gentle-newt-9113.chatgpt.site/**", route => route.fulfill({contentType:"text/html",body:'<!doctype html><html lang="fr"><body><p>Comité privé de test</p><script>parent.postMessage({type:"savy:committee:ready",date:"2026-11-05"},"*");parent.postMessage({type:"savy:committee:height",height:900},"*");</script></body></html>'}));
   const url = "http://127.0.0.1:" + server.address().port;
   await page.goto(url); await page.waitForFunction(() => document.querySelectorAll("#homeMarkets a").length === 6 && document.querySelectorAll(".indicator-card").length > 30);
   const go = async (section, tab) => {
@@ -283,6 +285,12 @@ async function check(browser, engine) {
   await go("portefeuilles", "analysis");
   assert.equal(await page.locator("#panel-portefeuilles-analysis").isVisible(), true);
   assert.match(await page.locator("#panel-portefeuilles-analysis").innerText(), /Analyse du portefeuille/);
+  assert.equal(await page.locator("#portfolioBriefingRemote").isVisible(),true);
+  assert.match(await page.locator("#portfolioBriefingRemoteFrame").getAttribute("src"),/^https:\/\/savy-comite-prive\.gentle-newt-9113\.chatgpt\.site\//);
+  await page.waitForFunction(()=>document.getElementById("portfolioBriefingRemoteStatus").textContent.includes("5 novembre 2026"));
+  assert.equal(await page.locator("#portfolioBriefingContent").isVisible(),false,"The synchronized private reader is the default");
+  await page.locator("#portfolioBriefingSource").click();
+  assert.equal(await page.locator("#portfolioBriefingRemote").isVisible(),false);
   assert.equal(await page.locator("#portfolioBriefingCards .portfolio-briefing-card").count(), 3);
   assert.equal(await page.locator("#portfolio .portfolio-choice").isVisible(), false);
   assert.equal(await page.locator("#portfolio .portfolio-overview").isVisible(), false);
@@ -335,6 +343,7 @@ async function check(browser, engine) {
   await page.reload();
   await page.locator('.portal-nav [data-page="portefeuilles"]').click();
   await page.locator('#page-portefeuilles .portal-tabs [data-tab="analysis"]').click();
+  await page.locator("#portfolioBriefingSource").click();
   assert.match(await page.locator("#portfolioBriefingLatestTitle").innerText(), /5 novembre 2026/);
   assert.equal(await page.locator("#portfolioBriefingArchives .portfolio-briefing-archive-row").count(), 2);
   await page.locator("#portfolioBriefingEdition").selectOption("2026-11-03");
@@ -343,6 +352,7 @@ async function check(browser, engine) {
   await page.reload();
   await page.locator('.portal-nav [data-page="portefeuilles"]').click();
   await page.locator('#page-portefeuilles .portal-tabs [data-tab="analysis"]').click();
+  await page.locator("#portfolioBriefingSource").click();
   assert.match(await page.locator("#portfolioBriefingStatus").innerText(), /Aucune édition privée/);
   assert.equal(await page.locator("#panel-portefeuilles-transactions").isVisible(), false);
   assert.equal(await page.locator("#page-portefeuilles .portal-tabs [data-tab='analysis']").getAttribute("aria-current"), "page");
