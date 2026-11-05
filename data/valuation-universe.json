@@ -679,6 +679,22 @@
       "financial": false,
       "valuation_symbol": "000660.KS",
       "listing_note": "Valorisation de l’émetteur sur l’action ordinaire coréenne 000660.KS en KRW. Un ADR Nasdaq SKHY représente 1/10 d’action ordinaire (émetteur et dépositaire Citi, programme actif le 14 juillet 2026). Ne pas combiner cours ADR USD et BPA ordinaire KRW. Source : https://www.skhynix.com/ir/UI-FR-IR03/"
+    },
+    {
+      "id": "ASX",
+      "title": "ASE Technology Holding",
+      "type": "stock",
+      "symbol": "ASX",
+      "financial": false,
+      "listing_note": "ADS NYSE en USD; valorisation canonique éventuelle de 3711.TW en TWD avec conversion ADS explicite."
+    },
+    {
+      "id": "ATAT",
+      "title": "Atour Lifestyle Holdings",
+      "type": "stock",
+      "symbol": "ATAT",
+      "financial": false,
+      "listing_note": "ADS Nasdaq en USD; bénéfices ordinaires en RMB à convertir par unité ADS."
     }
   ],
   "research_editions": [
@@ -749,6 +765,23 @@
       ],
       "source": "reports/stocks/2026-10-28.pdf",
       "note": "13 admissibles analysés intégralement; cotations USD/ADR distinguées des cotations canoniques de valorisation."
+    },
+    {
+      "date": "2026-11-04",
+      "tickers": [
+        "APH",
+        "ASX",
+        "ATAT",
+        "DXCM",
+        "GLBE",
+        "LLY",
+        "MA",
+        "MSFT",
+        "MU",
+        "VIK"
+      ],
+      "source": "reports/stocks/2026-11-04.pdf",
+      "note": "Dix admissibles étudiés. Cotations USD; ASX et ATAT sont des ADS."
     }
   ]
 }
