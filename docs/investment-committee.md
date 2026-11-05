@@ -18,7 +18,8 @@ Finviz effectivement disponible. Le comité couvre OS/FEQT, JMC/VBAL et MCL/VGRO
 | Rapports | Historique chronologique, import/export privés, méthodologie, sources et limites |
 
 L’interface ne calcule et n’invente aucun résultat de comité à partir de la simple
-disponibilité d’un portefeuille. Les chiffres affichés proviennent du rapport importé.
+disponibilité d’un portefeuille. Les chiffres affichés proviennent du rapport publié
+dans le service privé, ou d’une ancienne édition importée sur l’appareil.
 Une rubrique absente reste explicitement sans analyse.
 
 ## Livraison d’une édition par la tâche planifiée
@@ -36,8 +37,9 @@ Une rubrique absente reste explicitement sans analyse.
    accès approprié, reprendre son lien exact retourné par Library dans `pdf_url`.
    Ne pas fabriquer de `library_file_id`. L’interface n’accepte ici que le format
    personnel `https://chatgpt.com/library?file_id=…&account_id=personal`.
-6. Remettre à l’utilisateur le PDF et le JSON compagnon **en privé**. Ils peuvent
-   être chargés via « Ajouter un rapport ». Vérifier la date avant l’enregistrement.
+6. Après autorisation du transfert vers le service privé ci-dessous, y publier le
+   PDF et les dix sections, puis vérifier leur relecture. La remise du PDF et du
+   JSON dans ChatGPT reste une copie personnelle, pas la preuve de publication.
 
 Le site GitHub Pages est public. **Ne jamais committer le PDF personnel, son JSON,
 les positions, les poids ou les montants privés dans ce dépôt.** Un lien masqué dans
@@ -46,11 +48,34 @@ comme s’il était privé. Le lien Library est une référence à ouvrir dans l
 ChatGPT de l’utilisateur; la tâche reste responsable de vérifier les autorisations
 du fichier qu’elle crée ou choisit.
 
-L’import fonctionne dans le navigateur de l’utilisateur. Il n’est pas une API de
-publication distante et ne lit pas automatiquement une tâche ChatGPT en arrière-plan.
-Une publication sans intervention dans SAVY nécessite un chemin privé authentifié
-supplémentaire; ne pas annoncer cette intégration comme active tant qu’elle ne l’est
-pas. En son absence, livrer les fichiers privés et expliquer cette limite.
+## Publication privée reliée à Analyse
+
+Le lecteur distant est hébergé sur
+`https://savy-comite-prive.gentle-newt-9113.chatgpt.site`, projet Sites
+`appgprj_6aec8814d38081918a6ba338dfd6d832`. L’accès doit demeurer limité au
+propriétaire. La page publique ne reçoit ni les analyses, ni les cookies, ni les
+identifiants de service; elle intègre le lecteur privé dans une iframe. Le PDF est
+servi derrière la même protection. Si le navigateur demande une connexion, le lien
+« Ouvrir le comité privé » permet une connexion normale dans une fenêtre.
+
+Avant la première publication, obtenir l’autorisation explicite de transférer les
+rapports personnels vers cette destination précise. Ne pas présenter le service
+comme alimenté tant qu’aucune édition n’y est effectivement publiée et relue.
+
+Pour chaque publication autorisée :
+
+1. Lire `get_site` avec le project_id ci-dessus; vérifier l’accès au propriétaire.
+2. Récupérer les consignes privées à `GET /api/workflow`, avec l’accès de service
+   fourni par Sites, sans enregistrer de jeton ni l’ajouter à un lien.
+3. Envoyer le PDF à `PUT /api/editions/AAAA-MM-JJ/pdf`, puis le JSON complet à
+   `PUT /api/editions/AAAA-MM-JJ`. Les éditions sont persistées par date; aucun
+   nouvel onglet ni aucune nouvelle automatisation ne sont nécessaires.
+4. Relire l’index, le rapport et le PDF. Vérifier les dix sections, les dates et
+   l’égalité des octets PDF. Confirmer aussi qu’un accès anonyme ne les révèle pas.
+5. En cas d’échec, conserver l’édition précédente et signaler la publication incomplète.
+
+L’import local reste disponible via « Rapports enregistrés sur cet appareil ».
+Il conserve l’historique antérieur et ne remplace pas la publication distante.
 
 ## Format du fichier compagnon
 
