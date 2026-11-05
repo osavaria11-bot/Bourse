@@ -44,7 +44,12 @@ async function main() {
     assert.equal(await page.locator("#researchPerformance").evaluate(n=>n.closest("#page-recherche")!==null),true);
     assert.equal(await page.locator("#weeklyReports").evaluate(node => node.closest("#page-recherche") !== null), true);
     assert.deepEqual(await page.locator(".weekly-stock").evaluateAll(nodes => nodes.map(node => node.dataset.ticker)), original.reports.stocks.stocks.map(row=>row.ticker));
-    assert.ok((await page.locator('[data-report-kind="stocks"] .weekly-report-count').innerText()).includes(original.reports.stocks.stocks.length ? original.reports.stocks.stocks.length + " titre" : "Aucun titre"));
+    const stockReport = original.reports.stocks;
+    const countLabel = await page.locator('[data-report-kind="stocks"] .weekly-report-count').innerText();
+    assert.ok(countLabel.startsWith(stockReport.stocks.length ? stockReport.stocks.length + " titre" : "Aucun titre"));
+    if (stockReport.universe_snapshot?.complete && stockReport.universe_snapshot.total_count > stockReport.stocks.length) {
+      assert.ok(countLabel.endsWith(" sur " + stockReport.universe_snapshot.total_count + " admissibles"));
+    }
     if (original.reports.real_estate.document_scope === "summary") assert.match(await page.locator('[data-report-kind="real_estate"] .weekly-report-document').innerText(), /synthèse/);
     for (const [kind, report] of Object.entries(original.reports)) {
       const card = page.locator('[data-report-kind="' + kind + '"]'), link = card.locator(".weekly-report-document a");

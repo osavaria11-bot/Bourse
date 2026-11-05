@@ -33,7 +33,12 @@
       }
       if (kind === "stocks") {
         const count = report.stocks.length;
-        card.append(el("p", "meta weekly-report-count", count ? count + (count > 1 ? " titres admissibles" : " titre admissible") + " dans cette édition" : "Aucun titre admissible dans cette édition"));
+        const screen = report.universe_snapshot;
+        const total = screen?.complete === true && Array.isArray(screen.tickers) && screen.total_count === screen.tickers.length
+          ? screen.total_count : null;
+        const displayed = count === 1 ? "1 titre affiché" : count + " titres affichés";
+        const scope = total > count ? " sur " + total + " admissibles" : " au classement";
+        card.append(el("p", "meta weekly-report-count", count ? displayed + scope : "Aucun titre au classement dans cette édition"));
         const list = el("ol", "weekly-stock-list");
         for (const row of report.stocks) {
           const item = el("li", "weekly-stock"); item.dataset.ticker = row.ticker;
