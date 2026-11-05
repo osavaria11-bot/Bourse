@@ -9,7 +9,11 @@ async function check(browser,engine){
  // Some Chromium versions retain SVG bounding boxes after display:none.
  // Check the CSS selection state directly for SVG series.
  const shownSeries=selector=>page.locator(selector).evaluateAll(ns=>ns.filter(n=>getComputedStyle(n).display!=='none').length);
- await page.clock.install();
+ // Start on the fixture's completed session. After the real market close the
+ // initial UI may already be stale, which would satisfy the later polling
+ // assertion before its HTTP refresh finishes and swallow the focus refresh.
+ const fixtureDate=JSON.parse(fs.readFileSync(path.join(root,'data/fnb-comparison.json'),'utf8')).as_of;
+ await page.clock.install({time:new Date(fixtureDate+'T23:30:00Z')});
  page.on('pageerror',e=>errors.push(e.message));await page.route('https://**',r=>r.abort());
  const url='http://127.0.0.1:'+server.address().port;
  await page.goto(url+'/reports/portefeuilles-fnb.html');await page.waitForSelector('html[data-ready="true"]');
