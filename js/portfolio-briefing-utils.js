@@ -27,8 +27,7 @@
   function dayLabel(value) {
     return validDate(value) ? new Intl.DateTimeFormat("fr-CA", {timeZone:"UTC",day:"numeric",month:"long",year:"numeric"}).format(new Date(value+"T12:00:00Z")) : "Date non indiquée";
   }
-  // Only an account-bound Library reference is accepted here. A public PDF URL
-  // must never be presented as an authenticated personal report.
+  // Preserve personal imports alongside the committee PDFs published in SAVY.
   function libraryUrl(value) {
     if (!value) return null;
     if (typeof value !== "string" || value.length > 500) return null;
@@ -40,6 +39,7 @@
       return u.href;
     } catch {return null;}
   }
+  function publicPdfPath(date) {return validDate(date) ? "reports/committee/"+date+"-comite-investissement.pdf" : null;}
   function sectionHeading(line) {
     let s = line.trim();
     if (!s || s.startsWith("|") || /^[-*+]\s/.test(s)) return null;
@@ -100,8 +100,8 @@
       }
     }
     if (entry.pdf_url) {
-      const url=libraryUrl(entry.pdf_url);
-      if (!url) throw Error("Utilise le lien personnel du PDF dans ChatGPT, pas une adresse de PDF public.");
+      const url=entry.pdf_url===publicPdfPath(entry.date)?entry.pdf_url:libraryUrl(entry.pdf_url);
+      if (!url) throw Error("Utilise le PDF du comité de cette date dans SAVY ou son lien personnel ChatGPT.");
       result.pdf_url=url;
     }
     return result;
@@ -124,5 +124,5 @@
     // No rolling limit: a new report must not silently remove older editions.
     return [...byDate.values()].sort((a,b)=>b.date.localeCompare(a.date));
   }
-  return {MAX_LENGTH,SECTIONS,TITLES,validDate,dayLabel,libraryUrl,sectionHeading,splitText,textFromSections,normalize,entries,importPayload,merge};
+  return {MAX_LENGTH,SECTIONS,TITLES,validDate,dayLabel,libraryUrl,publicPdfPath,sectionHeading,splitText,textFromSections,normalize,entries,importPayload,merge};
 });

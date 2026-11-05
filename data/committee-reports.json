@@ -1,1 +1,13 @@
-{"schema_version":1,"editions":[{"date":"2026-11-05","path":"data/committee/2026-11-05.json","recipient":"p256:Bxz7rV_sv6_dn9hCqyAYNbkRMpaFe-mHHTQ1mOKOVa8","sha256":"R9Rb7zWpcafxYntaELKsuMCcDTFEAnSABoaknGlx4uI"}]}
+{
+  "schema_version": 2,
+  "editions": [
+    {
+      "date": "2026-11-05",
+      "visibility": "public",
+      "path": "data/committee/2026-11-05.json",
+      "pdf_path": "reports/committee/2026-11-05-comite-investissement.pdf",
+      "sha256": "ovmRalrP65dhExMPGOTewjbuyjJeBKS3HHci6Urr92o",
+      "pdf_sha256": "mc90JsG9ThTQM1hV3JZmujqSrXOooLuIhgBSwrPha1k"
+    }
+  ]
+}

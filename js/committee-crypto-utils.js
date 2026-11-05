@@ -28,8 +28,18 @@
     return {report:payload.report,pdf};
   }
   function catalog(value){
-    if(!value||value.schema_version!==1||!Array.isArray(value.editions)||value.editions.length>5000)throw Error('Historique des comités invalide.');
-    const dates=new Set();return value.editions.map(e=>{if(!DATE.test(e.date)||new Date(e.date+'T12:00:00Z').toISOString().slice(0,10)!==e.date||dates.has(e.date)||e.path!=='data/committee/'+e.date+'.json'||!/^p256:[A-Za-z0-9_-]{43}$/.test(e.recipient)||!/^[A-Za-z0-9_-]{43}$/.test(e.sha256))throw Error('Édition du comité invalide.');dates.add(e.date);return {date:e.date,path:e.path,recipient:e.recipient,sha256:e.sha256};}).sort((a,b)=>b.date.localeCompare(a.date));
+    if(!value||![1,2].includes(value.schema_version)||!Array.isArray(value.editions)||value.editions.length>5000)throw Error('Historique des comités invalide.');
+    const dates=new Set(),hash=/^[A-Za-z0-9_-]{43}$/;
+    return value.editions.map(e=>{
+      if(!e||typeof e.date!=='string'||!DATE.test(e.date)||new Date(e.date+'T12:00:00Z').toISOString().slice(0,10)!==e.date||dates.has(e.date)||e.path!=='data/committee/'+e.date+'.json'||!hash.test(e.sha256))throw Error('Édition du comité invalide.');
+      dates.add(e.date);
+      if(value.schema_version===2&&e.visibility==='public'){
+        if(e.pdf_path!=='reports/committee/'+e.date+'-comite-investissement.pdf'||!hash.test(e.pdf_sha256))throw Error('PDF du comité invalide.');
+        return {date:e.date,path:e.path,visibility:'public',sha256:e.sha256,pdf_path:e.pdf_path,pdf_sha256:e.pdf_sha256};
+      }
+      if(e.visibility&&e.visibility!=='encrypted'||!/^p256:[A-Za-z0-9_-]{43}$/.test(e.recipient))throw Error('Édition du comité invalide.');
+      return {date:e.date,path:e.path,recipient:e.recipient,sha256:e.sha256};
+    }).sort((a,b)=>b.date.localeCompare(a.date));
   }
   return {bytes,b64,digest,publicJwk,fingerprint,access,decrypt,catalog};
 });

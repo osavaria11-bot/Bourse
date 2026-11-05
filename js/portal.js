@@ -109,7 +109,7 @@
     "Les décisions de gestion pour OS, JMC et MCL, face à leurs benchmarks. Clôture du mercredi et dernier rapport Finviz à l’appui.");
   const analysisLatest = el("div", "committee-edition");
   const editionHead = el("div", "committee-edition-head"), editionIdentity = el("div");
-  editionIdentity.append(el("p", "eyebrow", "REVUE HEBDOMADAIRE · PRIVÉE"));
+  editionIdentity.append(el("p", "eyebrow", "REVUE HEBDOMADAIRE · PUBLIQUE"));
   const analysisLatestTitle = el("h4", "portfolio-briefing-latest-title", "Première édition à venir");
   analysisLatestTitle.id = "portfolioBriefingLatestTitle";
   editionIdentity.append(analysisLatestTitle);
@@ -182,7 +182,7 @@
   reportsHeading.append(archiveTitle,exportReports);
   const archive = el("div", "portal-archives portfolio-briefing-archives"); archive.id = "portfolioBriefingArchives";
   const editor = el("details", "portfolio-briefing-editor");
-  editor.id="portfolioBriefingEditor";editor.append(el("summary", "", "Ajouter une édition privée sur cet appareil"));
+  editor.id="portfolioBriefingEditor";editor.append(el("summary", "", "Ajouter une édition sur cet appareil"));
   const form = el("form", "portfolio-briefing-form");
   const importLabel = el("label","committee-import-label","Importer le rapport remis par le comité (.json, .md ou .txt)");
   const importFile = el("input");importFile.type="file";importFile.accept=".json,.md,.txt,application/json,text/plain,text/markdown";importFile.id="portfolioBriefingImport";
@@ -193,8 +193,8 @@
   dateLabel.append(dateField);
   const dataLabel = el("label","","Date des données (facultatif)"), dataField=el("input");
   dataField.id="portfolioBriefingDataDate";dataField.type="date";dataLabel.append(dataField);dateFields.append(dateLabel,dataLabel);
-  const pdfLabel = el("label","","Lien personnel du PDF dans ChatGPT (facultatif)"), pdfField=el("input");
-  pdfField.id="portfolioBriefingPdfUrl";pdfField.type="url";pdfField.placeholder="https://chatgpt.com/library?file_id=…&account_id=personal";pdfLabel.append(pdfField);
+  const pdfLabel = el("label","","PDF du comité dans SAVY ou lien personnel ChatGPT (facultatif)"), pdfField=el("input");
+  pdfField.id="portfolioBriefingPdfUrl";pdfField.type="text";pdfField.placeholder="reports/committee/AAAA-MM-JJ-comite-investissement.pdf";pdfLabel.append(pdfField);
   const textLabel = el("label", "", "Texte du rapport"), briefingText = el("textarea");
   briefingText.id = "portfolioBriefingText"; briefingText.rows = 9; briefingText.required = true;
   briefingText.maxLength = window.SavyPortfolioBriefingUtils.MAX_LENGTH; briefingText.placeholder = "Résumé exécutif, OS, JMC, MCL, optimisation, recommandations…";
@@ -203,12 +203,12 @@
   saveBriefing.type = "submit"; saveBriefing.id = "portfolioBriefingSave";
   const formStatus = el("p", "meta"); formStatus.id = "portfolioBriefingFormStatus"; formStatus.setAttribute("role", "status");
   form.append(importLabel,dateFields,pdfLabel,textLabel,saveBriefing,formStatus);
-  editor.append(el("p", "meta", "Importe le fichier privé livré avec le PDF, ou colle le texte du rapport. Une édition de la même date sera mise à jour."), form);
+  editor.append(el("p", "meta", "Importe un rapport ou colle son texte pour conserver une copie sur cet appareil. Une édition de la même date sera mise à jour."), form);
   const sourceDetails = el("details","committee-sources");sourceDetails.append(el("summary","","Méthodologie, sources et limites"));
   const sourceBody = el("div","committee-markdown");sourceBody.dataset.committeeContent="methodology";sourceBody.dataset.emptyText="Les sources et hypothèses seront conservées avec chaque édition.";sourceDetails.append(sourceBody);
   reports.append(reportsHeading,archive,editor,sourceDetails);
   portfolioAnalysis.append(analysisHeading,analysisIntro,analysisLatest,committeeNav,analysisContent,
-    el("p", "meta portfolio-briefing-disclaimer", "Les éditions du comité s’ouvrent directement dans SAVY avec ton lien privé. Les rapports déjà importés sur cet appareil restent conservés."));
+    el("p", "meta portfolio-briefing-disclaimer", "Les éditions du comité et leurs PDF sont publics et s’ouvrent directement dans SAVY, sans activation. Les rapports déjà importés sur cet appareil restent conservés."));
   // Keep the edit form available when a portfolio is empty; only the data-dependent panels are gated.
   for (const tab of ["overview", "allocations", "performance", "earnings"]) shared.append(pane("portefeuilles", tab));
   const manage = link("Gérer mes positions ↗", "portefeuilles", "positions", "button quiet"); $("#portfolioEmpty").after(manage); manage.id = "portfolioManage";

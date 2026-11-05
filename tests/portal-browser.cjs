@@ -293,7 +293,7 @@ async function check(browser, engine) {
   assert.equal(await page.locator("#portfolioBriefingPanel-os").isVisible(), true);
   assert.equal(await page.locator("#portfolioBriefingPanel-summary").isVisible(), false);
   await page.locator('#portfolioBriefingTab-summary').click();
-  assert.match(await page.locator("#portfolioBriefingStatus").innerText(), /Aucune édition privée/);
+  assert.match(await page.locator("#portfolioBriefingStatus").innerText(), /Aucune édition/);
   assert.match(await page.locator("#portfolioBriefingArchives").innerText(), /Aucune édition/);
   await page.locator("#portfolioBriefingAdd").click();
   await page.locator("#portfolioBriefingDate").fill("2026-11-03");
@@ -344,7 +344,7 @@ async function check(browser, engine) {
   await page.reload();
   await page.locator('.portal-nav [data-page="portefeuilles"]').click();
   await page.locator('#page-portefeuilles .portal-tabs [data-tab="analysis"]').click();
-  assert.match(await page.locator("#portfolioBriefingStatus").innerText(), /Aucune édition privée/);
+  assert.match(await page.locator("#portfolioBriefingStatus").innerText(), /Aucune édition/);
   assert.equal(await page.locator("#panel-portefeuilles-transactions").isVisible(), false);
   assert.equal(await page.locator("#page-portefeuilles .portal-tabs [data-tab='analysis']").getAttribute("aria-current"), "page");
   assert.equal(new URLSearchParams(new URL(page.url()).hash.slice(1)).get("tab"), "analysis");

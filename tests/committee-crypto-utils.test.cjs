@@ -26,3 +26,9 @@ test('catalog refuses external URLs, duplicate dates and invalid dates',()=>{
   assert.throws(()=>C.catalog({schema_version:1,editions:[entry,entry]}));
   assert.throws(()=>C.catalog({schema_version:1,editions:[{...entry,date:'2026-02-30'}]}));
 });
+test('public catalogs bind the JSON and PDF to their date and preserve encrypted archives',()=>{
+  const date='2026-11-05',entry={date,visibility:'public',path:'data/committee/'+date+'.json',pdf_path:'reports/committee/'+date+'-comite-investissement.pdf',sha256:'A'.repeat(43),pdf_sha256:'B'.repeat(43)};
+  const legacy={date:'2026-10-29',path:'data/committee/2026-10-29.json',recipient:'p256:'+'A'.repeat(43),sha256:'C'.repeat(43)};
+  assert.equal(C.catalog({schema_version:2,editions:[legacy,entry]})[0].visibility,'public');
+  for(const patch of [{pdf_path:'https://other.example/report.pdf'},{pdf_path:entry.pdf_path.replace(date,'2026-10-29')},{pdf_sha256:'invalid'},{path:'../'+entry.path},{visibility:'unknown'}])assert.throws(()=>C.catalog({schema_version:2,editions:[{...entry,...patch}]}));
+});

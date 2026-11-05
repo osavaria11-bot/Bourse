@@ -13,7 +13,7 @@
   const tabs = [...root.querySelectorAll('[role="tab"][data-committee-section]')];
   let selectedDate = null, selectedSection = "summary", draftBatch = null;
   let remoteEntries=[],remoteCatalog=[];
-  const privatePdfs=new Map();
+  const remotePdfs=new Map(),publicDates=new Set();
   function editions() {return U.merge(U.entries(localStorage.getItem(KEY) || "[]"),remoteEntries);}
   function available(entries){return [...new Set([...entries.map(x=>x.date),...remoteCatalog.map(x=>x.date)])].sort((a,b)=>b.localeCompare(a));}
   function node(tag,className,text) {const n=document.createElement(tag);if(className)n.className=className;if(text!==undefined)n.textContent=text;return n;}
@@ -82,22 +82,22 @@
   }
   function show() {
     let entries=[],error="";
-    try{entries=editions();}catch {error="L’historique privé ne peut pas être lu sur cet appareil. Les rapports existants n’ont pas été modifiés.";}
+    try{entries=editions();}catch {error="L’historique local ne peut pas être lu sur cet appareil. Les rapports existants n’ont pas été modifiés.";entries=remoteEntries;}
     const current=entries.find(x=>x.date===selectedDate)||entries[0];selectedDate=current?.date||null;
     const dates=available(entries);
-    title.textContent=current?"Revue du "+U.dayLabel(current.date):remoteCatalog.length?"Comité du "+U.dayLabel(remoteCatalog[0].date)+" · accès privé":"Première édition à venir";
-    status.textContent=error||(current?(privatePdfs.has(current.date)?"Rapport privé synchronisé dans SAVY":"Rapport privé conservé dans ce navigateur")+" · "+dates.length+" édition"+(dates.length>1?"s":""):
-      remoteCatalog.length?"Aucune édition privée ouverte sur cet appareil. Utilise le lien privé d’Analyse communiqué dans ChatGPT.":"Aucune édition privée enregistrée. Le comité est programmé chaque jeudi à 3 h, heure de Montréal.");
+    title.textContent=current?"Revue du "+U.dayLabel(current.date):remoteCatalog.length?"Comité du "+U.dayLabel(remoteCatalog[0].date):"Première édition à venir";
+    status.textContent=error||(current?(publicDates.has(current.date)?"Rapport public synchronisé dans SAVY":remotePdfs.has(current.date)?"Rapport privé synchronisé dans SAVY":"Rapport conservé dans ce navigateur")+" · "+dates.length+" édition"+(dates.length>1?"s":""):
+      remoteCatalog.length?"Chargement de l’édition du comité…":"Aucune édition enregistrée. Le comité est programmé chaque jeudi à 3 h, heure de Montréal.");
     $("#portfolioBriefingMeta").textContent=current?
       "Données : "+(current.data_date?U.dayLabel(current.data_date):"date non indiquée")+" · Finviz : "+(current.finviz_date?U.dayLabel(current.finviz_date):"date non indiquée"):
       "Base d’analyse : clôture du mercredi · Dernier rapport Finviz du mercredi soir";
     select.replaceChildren();select.disabled=!dates.length;
     if(!dates.length){select.append(node("option","","Aucune édition"));}
     for(const date of dates){const option=node("option","",U.dayLabel(date));option.value=date;option.selected=date===selectedDate;select.append(option);}
-    const privatePdf=current&&privatePdfs.get(current.date),pdfUrl=privatePdf||current?.pdf_url;
+    const remotePdf=current&&remotePdfs.get(current.date),pdfUrl=remotePdf||current?.pdf_url;
     pdfLink.hidden=!pdfUrl;
     if(pdfUrl)pdfLink.href=pdfUrl;else pdfLink.removeAttribute("href");
-    if(privatePdf){pdfLink.removeAttribute("target");pdfLink.download="SAVY_Comite_"+current.date+".pdf";pdfLink.textContent="Télécharger le PDF";}else{pdfLink.target="_blank";pdfLink.removeAttribute("download");pdfLink.textContent="Ouvrir le PDF ↗";}
+    if(remotePdf||pdfUrl===U.publicPdfPath(current?.date)){pdfLink.removeAttribute("target");pdfLink.download="SAVY_Comite_"+current.date+".pdf";pdfLink.textContent="Télécharger le PDF";}else{pdfLink.target="_blank";pdfLink.removeAttribute("download");pdfLink.textContent="Ouvrir le PDF ↗";}
     for(const host of root.querySelectorAll("[data-committee-content]"))markdown(host,current?.sections[host.dataset.committeeContent],host.dataset.emptyText);
     $("#portfolioBriefingExport").disabled=!entries.length;
     archive.replaceChildren();
@@ -109,7 +109,7 @@
       const row=node("div","portfolio-briefing-archive-row"),button=node("button","","Édition du "+U.dayLabel(date));button.type="button";
       button.dataset.briefingDate = date;
       if (current?.date === date) button.setAttribute("aria-current", "true");
-      const meta=node("span","meta",(date===selectedDate?"Affichée":"Consulter")+(privatePdfs.has(date)||entry?.pdf_url?" · PDF personnel":""));
+      const meta=node("span","meta",(date===selectedDate?"Affichée":"Consulter")+(remotePdfs.has(date)||entry?.pdf_url?" · PDF":""));
       row.append(button,meta);archive.append(row);
     }
     section(selectedSection);
@@ -176,8 +176,8 @@
   });
   window.addEventListener("storage",event=>{if(event.key===KEY)show();});
   window.addEventListener("savy:committee:catalog",event=>{remoteCatalog=event.detail.editions;show();});
-  window.addEventListener("savy:committee:loading",event=>{status.textContent="Ouverture privée du comité du "+U.dayLabel(event.detail.date)+"…";});
-  window.addEventListener("savy:committee:loaded",event=>{const value=event.detail;remoteEntries=U.merge(remoteEntries,[value.report]);privatePdfs.set(value.report.date,value.pdfUrl);selectedDate=value.report.date;show();});
+  window.addEventListener("savy:committee:loading",event=>{status.textContent="Chargement du comité du "+U.dayLabel(event.detail.date)+"…";});
+  window.addEventListener("savy:committee:loaded",event=>{const value=event.detail;remoteEntries=U.merge(remoteEntries,[value.report]);remotePdfs.set(value.report.date,value.pdfUrl);if(value.public)publicDates.add(value.report.date);else publicDates.delete(value.report.date);selectedDate=value.report.date;show();});
   window.addEventListener("savy:committee:error",event=>{show();status.textContent=event.detail.message;});
   try {
     dateField.value = new Intl.DateTimeFormat("sv-SE", {timeZone:"America/Toronto",year:"numeric",month:"2-digit",day:"2-digit"}).format(new Date());

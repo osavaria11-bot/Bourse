@@ -19,9 +19,14 @@ test("A complete structured report round-trips dates, sections and the authentic
  assert.match(entry.text,/Portefeuille OS/);assert.equal(entry.sections.os,"OS.");
  const restored=U.importPayload(JSON.stringify({schema_version:1,editions:[entry]}));assert.deepEqual(restored,[entry]);
 });
-test("A PDF cannot be supplied as a public, script, deceptive-host or credential-bearing URL",()=>{
+test("A PDF cannot be supplied as an arbitrary external, script, deceptive-host or credential-bearing URL",()=>{
  const unsafe=["https://osavaria11-bot.github.io/Bourse/reports/private.pdf","javascript:alert(1)",personalPdf.replace("chatgpt.com","chatgpt.com.evil.test"),personalPdf.replace("chatgpt.com","me@chatgpt.com"),personalPdf+"&access_token=secret",personalPdf+"&file_id=libfile_other_report",personalPdf+"#private",personalPdf.replace("personal","another-account"),personalPdf.replace("https:","http:")];
- for(const pdf_url of unsafe){assert.equal(U.libraryUrl(pdf_url),null,pdf_url);assert.throws(()=>U.normalize({date:"2026-11-05",text:"Rapport privé.",pdf_url}),/lien personnel/);}
+ for(const pdf_url of unsafe){assert.equal(U.libraryUrl(pdf_url),null,pdf_url);assert.throws(()=>U.normalize({date:"2026-11-05",text:"Rapport.",pdf_url}),/PDF du comité/);}
+});
+test("Public committee PDF paths are confined to the report's date and local directory",()=>{
+ const date="2026-11-05",pdf_url=U.publicPdfPath(date);
+ assert.equal(U.normalize({date,text:"Rapport public.",pdf_url}).pdf_url,pdf_url);
+ for(const path of [U.publicPdfPath("2026-10-29"),"/"+pdf_url,"../"+pdf_url,pdf_url+"?token=secret",pdf_url+"#x","https://osavaria11-bot.github.io/Bourse/"+pdf_url])assert.throws(()=>U.normalize({date,text:"Rapport.",pdf_url:path}));
 });
 test("Adding and updating editions preserves histories longer than twelve without mutating an older recommendation",()=>{
  const history=Array.from({length:18},(_,i)=>({date:"2026-10-"+String(i+1).padStart(2,"0"),text:"Recommandation initiale "+i}));const before=JSON.stringify(history);

@@ -14,77 +14,70 @@ Les mandats restent OS/FEQT, JMC/VBAL et MCL/VGRO. Aucun nouvel onglet n’est c
 | Décisions & suivi | Recommandations et suivi des éditions précédentes |
 | Rapports | Historique, PDF, méthodologie, sources et limites |
 
-## Publication sur le GitHub SAVY existant
+## Publication publique autorisée
 
-Les rapports et leur PDF sont regroupés dans une enveloppe **chiffrée** publiée
-dans `data/committee/AAAA-MM-JJ.json`. L’index chronologique
-`data/committee-reports.json` contient uniquement date, chemin local, identité
-de la clé publique et empreinte du fichier chiffré. Aucun rapport, poids, montant
-ou PDF personnel en clair ne doit être ajouté au dépôt public.
+Le 5 novembre 2026, le propriétaire a explicitement demandé de rendre le comité
+public dans son GitHub SAVY existant. Cette consigne remplace les anciennes
+exigences d’accès privé, de chiffrement et d’activation pour les rapports du
+comité et leurs PDF, y compris leurs analyses, positions et pondérations.
 
-Le destinataire est défini par `data/committee-public-key.json`. **Ce fichier ne
-contient qu’une clé publique.** Le producteur n’a pas besoin de la clé privée pour
-publier les prochaines éditions. Ne pas remplacer ou régénérer le destinataire
-dans une exécution de routine.
+Publier dans `osavaria11-bot/Bourse` :
 
-Le lien privé remis au propriétaire active l’accès dans son navigateur. La clé
-est consommée dans le fragment `committee-key` avant la navigation du portail,
-puis retirée de la barre d’adresse. Elle reste uniquement dans le navigateur et
-dans la copie personnelle d’accès conservée par le propriétaire. Elle ne doit
-jamais être committée, mise dans une requête HTTP, un lien public, un prompt de
-tâche ou les journaux. Les clés existantes des positions ne sont pas modifiées.
+- `data/committee/AAAA-MM-JJ.json` : les dix analyses complètes en clair;
+- `reports/committee/AAAA-MM-JJ-comite-investissement.pdf` : le PDF public;
+- `data/committee-reports.json` : l’index daté, au format `schema_version: 2`,
+  avec `visibility: public`, les deux chemins et leurs empreintes SHA-256 base64url.
 
-Le lecteur déchiffre le rapport et le PDF dans la page SAVY existante, sans iframe
-ni hébergement externe. Il vérifie l’empreinte du fichier, l’identité du
-destinataire, l’authentification du contenu, les dix sections et l’empreinte du PDF.
-Le PDF téléchargeable est créé dans le navigateur à partir des octets déchiffrés.
-Les anciennes éditions importées sur l’appareil restent accessibles.
+Le lecteur charge automatiquement la dernière édition, sans compte, clé, lien
+d’activation ou import manuel. Le PDF lui-même est accessible publiquement.
+Les autres éditions et les anciens imports sur l’appareil sont conservés.
+La compatibilité avec d’anciennes archives chiffrées reste disponible; elle
+n’est pas requise pour les éditions publiques.
+
+Cette autorisation concerne les rapports du comité et leurs PDF. Elle ne
+demande pas de publier des clés privées, identifiants, jetons ou exports bruts
+des comptes. Les autres systèmes SAVY ne sont pas modifiés.
 
 ## Livraison par la tâche du jeudi
 
 1. Repartir du `main` courant et appliquer le mandat analytique complet.
-2. Vérifier les données des comptes via les sources autorisées. Ne pas contourner
-   les enveloppes des positions ni inventer des quantités, performances ou ratios.
-3. Produire et contrôler le PDF complet et son JSON compagnon dans l’espace
-   personnel de l’utilisateur. Les fichiers doivent contenir les dix analyses
-   effectives ci-dessous, les dates vérifiées et les limites.
-4. Valider le JSON avec `SavyPortfolioBriefingUtils.normalize`, puis chiffrer :
-   `python scripts/encrypt_committee.py --report /chemin/prive/rapport.json --pdf /chemin/prive/rapport.pdf`
-   Installer si nécessaire `scripts/requirements-committee.txt`. Ne fournir à
-   ce script que la clé **publique** existante.
-5. Le script préserve l’index et toutes les autres dates. Publier dans
-   `osavaria11-bot/Bourse` seulement le fichier chiffré de cette date et l’index
-   actualisé. Ne jamais publier les entrées privées utilisées par le script.
-6. Vérifier le validateur du lecteur, les tests de compatibilité Python/WebCrypto,
-   les empreintes des fichiers et la publication Pages. Une production de fichiers
-   sans commit ni publication ne remplit pas Analyse et n’est pas une livraison.
-7. Conserver les copies personnelles du PDF/JSON. Aucun import manuel ne doit être
-   nécessaire pour une édition publiée quand l’accès privé est déjà activé.
+2. Vérifier les données via les sources autorisées. Ne pas inventer de quantités,
+   performances ou ratios. Indiquer les données manquantes ou périmées.
+3. Produire et contrôler le PDF complet et son JSON compagnon avec les dix
+   analyses, les dates réelles et leurs limites.
+4. Valider le JSON avec `SavyPortfolioBriefingUtils.normalize`, puis exécuter :
+   `python scripts/publish_committee.py --report /chemin/rapport.json --pdf /chemin/rapport.pdf`
+   Le script utilise uniquement la bibliothèque standard Python. Il associe le
+   PDF public à sa date et conserve toutes les autres dates de l’index.
+5. Publier les trois fichiers dans le dépôt existant. Les branches, corrections,
+   tests, commits, fusions et publications sont déjà autorisés par le propriétaire;
+   aucune confirmation de routine n’est nécessaire.
+6. Exécuter les tests pertinents et attendre la publication Pages réussie.
+7. Ouvrir l’onglet Analyse sans clé ni session préalable, vérifier les dix
+   contenus et télécharger le PDF public. Vérifier les empreintes des octets
+   servis. Une copie de fichiers sans publication ne remplit pas Analyse.
 
-### Format du JSON compagnon privé
+## Format du rapport
 
 `schema_version: 1`, `date`, `data_date`, `finviz_date`, et `sections` :
 `summary`, `os`, `jmc`, `mcl`, `comparison`, `optimization`,
 `recommendations`, `follow_up`, `outlook`, `methodology`.
 
-Chaque section contient son analyse complète en Markdown, avec tableaux et liens
-de sources. Le lecteur crée uniquement du texte et des éléments DOM contrôlés :
-aucun HTML fourni par un rapport n’est exécuté. Un champ facultatif `pdf_url`
-peut conserver un lien personnel Library validé pour les anciens imports; le PDF
-des éditions chiffrées est téléchargé directement depuis le lecteur.
+Chaque section contient son analyse complète en Markdown, avec tableaux et
+liens de sources. Le lecteur crée uniquement du texte et des éléments DOM
+contrôlés : aucun HTML fourni par un rapport n’est exécuté. Le producteur
+remplace `pdf_url` par le chemin public daté ci-dessus. Les anciens imports
+peuvent toujours utiliser un lien personnel ChatGPT validé.
 
-## Protocole et vérifications
+## Vérifications
 
-Version 1 : ECDH P-256 éphémère, HKDF SHA-256 et AES-256-GCM; sel de 32 octets,
-nonce de 12 octets, tag de 128 bits. L’information HKDF est
-`SAVY committee v1` et l’AAD lie version, date et destinataire.
-Chaque publication utilise un nouvel éphémère, un nouveau sel et un nouveau nonce.
-L’index lie chaque date à l’empreinte SHA-256 de ses octets publiés.
+`python -m unittest discover -s tests -p 'test_publish_committee.py' -v`
 
 `node --test tests/committee-crypto-utils.test.cjs tests/portfolio-briefing-utils.test.cjs`
 
-Les contrôles couvrent la compatibilité de publication Python et de lecture
-WebCrypto, la corruption de contenu, un mauvais destinataire, les dix sections,
-les octets PDF, la conservation des dates, le rechargement, l’absence de clé dans
-les requêtes, les anciens imports et les vues ordinateur/mobile. Les tests
-n’utilisent que des destinataires et analyses fictifs.
+`node tests/committee-public-browser.cjs`
+
+Les contrôles couvrent l’accès anonyme sans clé, les dix rubriques, les octets
+PDF, la détection de corruption, la conservation de l’historique, les anciens
+imports, le rechargement et les vues ordinateur/mobile. Les tests utilisent
+uniquement des analyses fictives.
