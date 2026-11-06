@@ -1,7 +1,8 @@
 "use strict";
 const SavyFnb = (() => {
   function displayOrder(data, ids) {
-    return ids.map((id,index)=>({id,index,published:Date.parse(data.results?.[id]?.published_at)||0}))
+    const canonical=new Map((data.order||ids).map((id,index)=>[id,index]));
+    return ids.map((id,index)=>({id,index:canonical.get(id)??canonical.size+index,published:Date.parse(data.results?.[id]?.published_at)||0}))
       .sort((a,b)=>b.published-a.published||a.index-b.index).map(row=>row.id);
   }
   function relativeMetrics(portfolio, benchmark, riskFree = .0238) {

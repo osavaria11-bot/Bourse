@@ -2,7 +2,7 @@
 // Render every financial value from the same validated monthly snapshot.
 const fs=require("node:fs"),path=require("node:path");
 const root=path.resolve(process.argv[2]||path.join(__dirname,"..")),file=path.join(root,"reports/portefeuilles-fnb.html");
-const displayOrder=(data,ids)=>[...ids].sort((a,b)=>(Date.parse(data.results?.[b]?.published_at)||0)-(Date.parse(data.results?.[a]?.published_at)||0));
+const displayOrder=(data,ids)=>{const canonical=new Map(data.order.map((id,index)=>[id,index]));return [...ids].sort((a,b)=>(Date.parse(data.results?.[b]?.published_at)||0)-(Date.parse(data.results?.[a]?.published_at)||0)||canonical.get(a)-canonical.get(b));};
 const D=JSON.parse(fs.readFileSync(path.join(root,"data/fnb-analysis.json"),"utf8")),R=D.results,O=D.optimization;
 const catalogFile=path.join(root,"data/fnb-catalog.json"),fundCatalog=fs.existsSync(catalogFile)?JSON.parse(fs.readFileSync(catalogFile,"utf8")).funds:{};
 for(const t of Object.keys(D.fund_labels))if(fundCatalog[t])D.fund_labels[t]=fundCatalog[t];

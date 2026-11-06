@@ -7,6 +7,7 @@ test("recent registered portfolios appear first without changing financial ranks
   const before=JSON.stringify(D),ids=[...D.recommended_order,...D.robust_order,...D.prospective_order,...D.proposal_order,...D.custom_order];
   const shown=displayOrder(D,ids);
   assert.deepEqual(shown.slice(0,2),['prospective-2026-11-valeur-fcuv','prospective-2026-11-momentum-fcmo']);
+  assert.deepEqual(displayOrder(D,[...ids].reverse()),shown,'tied publication dates keep one order across differently ranked selectors');
   assert.equal(new Set(shown).size,ids.length);assert.deepEqual([...shown].sort(),[...ids].sort());
   assert.equal(JSON.stringify(D),before);
 });
