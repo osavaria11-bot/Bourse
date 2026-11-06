@@ -578,6 +578,56 @@
       "published_at": "2026-11-01T11:39:03-05:00",
       "method": "buy_hold_fractional_ex_date_close_v1",
       "definition_sha256": "04a820408d62f99ad48f856b2a3eca8796e22dc2381a1b01cee86fc4c70532fe"
+    },
+    {
+      "id": "prospective-2026-11-valeur-fcuv",
+      "name": "Conviction · Valeur FCUV",
+      "color": "#D7A453",
+      "kind": "portfolio",
+      "launch_date": "2026-11-06",
+      "capital": 10000.0,
+      "currency": "CAD",
+      "weights": {
+        "FCUV": 0.149,
+        "FINN": 0.2,
+        "VDY": 0.133,
+        "XBM": 0.08,
+        "XCHP": 0.05,
+        "XEG": 0.05,
+        "XGD": 0.02,
+        "XMTM": 0.084,
+        "ZEB": 0.045,
+        "ZEM": 0.189
+      },
+      "definition_source": "data/fnb-prospective/2026-11-05-conviction.json",
+      "published_at": "2026-11-06T07:43:42-05:00",
+      "method": "buy_hold_fractional_ex_date_close_v1",
+      "definition_sha256": "4063870c7b834905d8c22e4f2157db075af25ce44989f06abdc8bc27b7704073"
+    },
+    {
+      "id": "prospective-2026-11-momentum-fcmo",
+      "name": "Conviction · Momentum FCMO",
+      "color": "#A17FC0",
+      "kind": "portfolio",
+      "launch_date": "2026-11-06",
+      "capital": 10000.0,
+      "currency": "CAD",
+      "weights": {
+        "FCMO": 0.15,
+        "FINN": 0.2,
+        "VDY": 0.163,
+        "XBM": 0.08,
+        "XCHP": 0.05,
+        "XEG": 0.05,
+        "XGD": 0.013,
+        "XMTM": 0.056,
+        "ZEB": 0.052,
+        "ZEM": 0.186
+      },
+      "definition_source": "data/fnb-prospective/2026-11-05-conviction.json",
+      "published_at": "2026-11-06T07:43:42-05:00",
+      "method": "buy_hold_fractional_ex_date_close_v1",
+      "definition_sha256": "327d11b3ca47ace63a79b9ef3a6edcbe812ec25dfb3f2fd8cf4621c830d239f0"
     }
   ]
 }

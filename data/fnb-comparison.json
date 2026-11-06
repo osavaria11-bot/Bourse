@@ -5,7 +5,7 @@
   "capital": 10000.0,
   "inception": "2026-10-19",
   "as_of": "2026-11-05",
-  "updated_at": "2026-11-05T20:32:02-05:00",
+  "updated_at": "2026-11-06T07:51:59-05:00",
   "benchmarks": [
     "FEQT",
     "VEQT",
@@ -3530,11 +3530,329 @@
           "units": 6.744919194983954
         }
       ]
+    },
+    {
+      "id": "prospective-2026-11-valeur-fcuv",
+      "name": "Conviction · Valeur FCUV",
+      "color": "#D7A453",
+      "kind": "portfolio",
+      "launch_date": "2026-10-19",
+      "capital": 10000.0,
+      "currency": "CAD",
+      "weights": {
+        "FCUV": 0.149,
+        "FINN": 0.2,
+        "VDY": 0.133,
+        "XBM": 0.08,
+        "XCHP": 0.05,
+        "XEG": 0.05,
+        "XGD": 0.02,
+        "XMTM": 0.084,
+        "ZEB": 0.045,
+        "ZEM": 0.189
+      },
+      "definition_source": "data/fnb-prospective/2026-11-05-conviction.json",
+      "published_at": "2026-11-06T07:43:42-05:00",
+      "method": "buy_hold_fractional_ex_date_close_v1",
+      "source_definition_sha256": "4063870c7b834905d8c22e4f2157db075af25ce44989f06abdc8bc27b7704073",
+      "actual_launch_date": "2026-11-06",
+      "series_type": "simulation",
+      "status": "complete",
+      "unavailable_reason": null,
+      "history": [
+        {
+          "date": "2026-10-19",
+          "value": 10000.0
+        },
+        {
+          "date": "2026-10-20",
+          "value": 9993.024854354984
+        },
+        {
+          "date": "2026-10-21",
+          "value": 10068.776768439571
+        },
+        {
+          "date": "2026-10-22",
+          "value": 9790.987811763896
+        },
+        {
+          "date": "2026-10-23",
+          "value": 9799.14638155537
+        },
+        {
+          "date": "2026-10-26",
+          "value": 9858.57871642827
+        },
+        {
+          "date": "2026-10-27",
+          "value": 9982.53453540528
+        },
+        {
+          "date": "2026-10-28",
+          "value": 10056.456740240108
+        },
+        {
+          "date": "2026-10-29",
+          "value": 10009.549508824944
+        },
+        {
+          "date": "2026-10-30",
+          "value": 9698.701115860671
+        },
+        {
+          "date": "2026-11-02",
+          "value": 9667.13459159434
+        },
+        {
+          "date": "2026-11-03",
+          "value": 9665.106768233698
+        },
+        {
+          "date": "2026-11-04",
+          "value": 9721.399429372344
+        },
+        {
+          "date": "2026-11-05",
+          "value": 9316.661745134656
+        }
+      ],
+      "initial_positions": [
+        {
+          "ticker": "FCUV",
+          "name": "Fidelity U.S. Value ETF",
+          "weight": 0.149,
+          "close": 27.309999465942383,
+          "units": 54.55877074835325
+        },
+        {
+          "ticker": "FINN",
+          "name": "Fidelity Global Innovators ETF",
+          "weight": 0.2,
+          "close": 33.130001068115234,
+          "units": 60.36824435616536
+        },
+        {
+          "ticker": "VDY",
+          "name": "Vanguard FTSE Canadian High Dividend Yield Index ETF",
+          "weight": 0.133,
+          "close": 77.13999938964844,
+          "units": 17.241379446763066
+        },
+        {
+          "ticker": "XBM",
+          "name": "iShares S&P/TSX Global Base Metals Index ETF",
+          "weight": 0.08,
+          "close": 33.38999938964844,
+          "units": 23.959269680250905
+        },
+        {
+          "ticker": "XCHP",
+          "name": "iShares Semiconductor Index ETF",
+          "weight": 0.05,
+          "close": 123.0,
+          "units": 4.065040650406504
+        },
+        {
+          "ticker": "XEG",
+          "name": "iShares S&P/TSX Capped Energy Index ETF",
+          "weight": 0.05,
+          "close": 31.399999618530273,
+          "units": 15.923567072431808
+        },
+        {
+          "ticker": "XGD",
+          "name": "iShares S&P/TSX Global Gold Index ETF",
+          "weight": 0.02,
+          "close": 54.650001525878906,
+          "units": 3.6596522308474633
+        },
+        {
+          "ticker": "XMTM",
+          "name": "iShares MSCI USA Momentum Factor Index ETF",
+          "weight": 0.084,
+          "close": 51.060001373291016,
+          "units": 16.451233400071857
+        },
+        {
+          "ticker": "ZEB",
+          "name": "BMO Equal Weight Banks Index ETF",
+          "weight": 0.045,
+          "close": 73.37999725341797,
+          "units": 6.132461390614721
+        },
+        {
+          "ticker": "ZEM",
+          "name": "BMO MSCI Emerging Markets Index ETF",
+          "weight": 0.189,
+          "close": 32.18000030517578,
+          "units": 58.73213120187619
+        }
+      ]
+    },
+    {
+      "id": "prospective-2026-11-momentum-fcmo",
+      "name": "Conviction · Momentum FCMO",
+      "color": "#A17FC0",
+      "kind": "portfolio",
+      "launch_date": "2026-10-19",
+      "capital": 10000.0,
+      "currency": "CAD",
+      "weights": {
+        "FCMO": 0.15,
+        "FINN": 0.2,
+        "VDY": 0.163,
+        "XBM": 0.08,
+        "XCHP": 0.05,
+        "XEG": 0.05,
+        "XGD": 0.013,
+        "XMTM": 0.056,
+        "ZEB": 0.052,
+        "ZEM": 0.186
+      },
+      "definition_source": "data/fnb-prospective/2026-11-05-conviction.json",
+      "published_at": "2026-11-06T07:43:42-05:00",
+      "method": "buy_hold_fractional_ex_date_close_v1",
+      "source_definition_sha256": "327d11b3ca47ace63a79b9ef3a6edcbe812ec25dfb3f2fd8cf4621c830d239f0",
+      "actual_launch_date": "2026-11-06",
+      "series_type": "simulation",
+      "status": "complete",
+      "unavailable_reason": null,
+      "history": [
+        {
+          "date": "2026-10-19",
+          "value": 10000.0
+        },
+        {
+          "date": "2026-10-20",
+          "value": 9994.506269167507
+        },
+        {
+          "date": "2026-10-21",
+          "value": 10073.128424714612
+        },
+        {
+          "date": "2026-10-22",
+          "value": 9789.41219864341
+        },
+        {
+          "date": "2026-10-23",
+          "value": 9794.225505018272
+        },
+        {
+          "date": "2026-10-26",
+          "value": 9860.32887710876
+        },
+        {
+          "date": "2026-10-27",
+          "value": 9979.223202061085
+        },
+        {
+          "date": "2026-10-28",
+          "value": 10050.786481988838
+        },
+        {
+          "date": "2026-10-29",
+          "value": 10005.428124400272
+        },
+        {
+          "date": "2026-10-30",
+          "value": 9719.179754068075
+        },
+        {
+          "date": "2026-11-02",
+          "value": 9679.033386433397
+        },
+        {
+          "date": "2026-11-03",
+          "value": 9688.92452290357
+        },
+        {
+          "date": "2026-11-04",
+          "value": 9719.347278596759
+        },
+        {
+          "date": "2026-11-05",
+          "value": 9296.514159662855
+        }
+      ],
+      "initial_positions": [
+        {
+          "ticker": "FCMO",
+          "name": "Fidelity U.S. Momentum ETF",
+          "weight": 0.15,
+          "close": 23.190000534057617,
+          "units": 64.68305155047535
+        },
+        {
+          "ticker": "FINN",
+          "name": "Fidelity Global Innovators ETF",
+          "weight": 0.2,
+          "close": 33.130001068115234,
+          "units": 60.36824435616536
+        },
+        {
+          "ticker": "VDY",
+          "name": "Vanguard FTSE Canadian High Dividend Yield Index ETF",
+          "weight": 0.163,
+          "close": 77.13999938964844,
+          "units": 21.130412404679547
+        },
+        {
+          "ticker": "XBM",
+          "name": "iShares S&P/TSX Global Base Metals Index ETF",
+          "weight": 0.08,
+          "close": 33.38999938964844,
+          "units": 23.959269680250905
+        },
+        {
+          "ticker": "XCHP",
+          "name": "iShares Semiconductor Index ETF",
+          "weight": 0.05,
+          "close": 123.0,
+          "units": 4.065040650406504
+        },
+        {
+          "ticker": "XEG",
+          "name": "iShares S&P/TSX Capped Energy Index ETF",
+          "weight": 0.05,
+          "close": 31.399999618530273,
+          "units": 15.923567072431808
+        },
+        {
+          "ticker": "XGD",
+          "name": "iShares S&P/TSX Global Gold Index ETF",
+          "weight": 0.013,
+          "close": 54.650001525878906,
+          "units": 2.378773950050851
+        },
+        {
+          "ticker": "XMTM",
+          "name": "iShares MSCI USA Momentum Factor Index ETF",
+          "weight": 0.056,
+          "close": 51.060001373291016,
+          "units": 10.967488933381237
+        },
+        {
+          "ticker": "ZEB",
+          "name": "BMO Equal Weight Banks Index ETF",
+          "weight": 0.052,
+          "close": 73.37999725341797,
+          "units": 7.086399829154789
+        },
+        {
+          "ticker": "ZEM",
+          "name": "BMO MSCI Emerging Markets Index ETF",
+          "weight": 0.186,
+          "close": 32.18000030517578,
+          "units": 57.79987515105277
+        }
+      ]
     }
   ],
   "source_ledger_sha256": "15e810a8c6e64e765f123ee793868a2901243908377978430381716fa2eb2a35",
-  "source_registry_sha256": "f2d0d90cac97f07113a4ddc9897ec0eac2a0d188157f77aa36b2aee8e3c1d852",
-  "supplemental_sha256": "312ae37261c0247009126e535e523b1f89054c34f555ce4dd3ad97ba025f21d1",
+  "source_registry_sha256": "aaf162ca44e1258d08415d91c63d7d92a3b4706a627c6d954346fe20a81ac10b",
+  "supplemental_sha256": "9108b0216c33e90bf8b5a229a5dce790d7dcb9f5c7d910e5e4ad8e0b59f319e8",
   "price_revisions": [
     {
       "ticker": "FBAL",

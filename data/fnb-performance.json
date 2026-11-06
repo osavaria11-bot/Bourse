@@ -3226,6 +3226,202 @@
           "units": 6.853887503969363
         }
       ]
+    },
+    {
+      "id": "prospective-2026-11-valeur-fcuv",
+      "name": "Conviction · Valeur FCUV",
+      "color": "#D7A453",
+      "kind": "portfolio",
+      "launch_date": "2026-11-06",
+      "capital": 10000.0,
+      "currency": "CAD",
+      "weights": {
+        "FCUV": 0.149,
+        "FINN": 0.2,
+        "VDY": 0.133,
+        "XBM": 0.08,
+        "XCHP": 0.05,
+        "XEG": 0.05,
+        "XGD": 0.02,
+        "XMTM": 0.084,
+        "ZEB": 0.045,
+        "ZEM": 0.189
+      },
+      "definition_source": "data/fnb-prospective/2026-11-05-conviction.json",
+      "published_at": "2026-11-06T07:43:42-05:00",
+      "method": "buy_hold_fractional_ex_date_close_v1",
+      "definition_sha256": "4063870c7b834905d8c22e4f2157db075af25ce44989f06abdc8bc27b7704073",
+      "history": [],
+      "initial_positions": [
+        {
+          "ticker": "FCUV",
+          "name": "Fidelity U.S. Value ETF",
+          "weight": 0.149,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "FINN",
+          "name": "Fidelity Global Innovators ETF",
+          "weight": 0.2,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "VDY",
+          "name": "Vanguard FTSE Canadian High Dividend Yield Index ETF",
+          "weight": 0.133,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "XBM",
+          "name": "iShares S&P/TSX Global Base Metals Index ETF",
+          "weight": 0.08,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "XCHP",
+          "name": "iShares Semiconductor Index ETF",
+          "weight": 0.05,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "XEG",
+          "name": "iShares S&P/TSX Capped Energy Index ETF",
+          "weight": 0.05,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "XGD",
+          "name": "iShares S&P/TSX Global Gold Index ETF",
+          "weight": 0.02,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "XMTM",
+          "name": "iShares MSCI USA Momentum Factor Index ETF",
+          "weight": 0.084,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "ZEB",
+          "name": "BMO Equal Weight Banks Index ETF",
+          "weight": 0.045,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "ZEM",
+          "name": "BMO MSCI Emerging Markets Index ETF",
+          "weight": 0.189,
+          "close": null,
+          "units": null
+        }
+      ]
+    },
+    {
+      "id": "prospective-2026-11-momentum-fcmo",
+      "name": "Conviction · Momentum FCMO",
+      "color": "#A17FC0",
+      "kind": "portfolio",
+      "launch_date": "2026-11-06",
+      "capital": 10000.0,
+      "currency": "CAD",
+      "weights": {
+        "FCMO": 0.15,
+        "FINN": 0.2,
+        "VDY": 0.163,
+        "XBM": 0.08,
+        "XCHP": 0.05,
+        "XEG": 0.05,
+        "XGD": 0.013,
+        "XMTM": 0.056,
+        "ZEB": 0.052,
+        "ZEM": 0.186
+      },
+      "definition_source": "data/fnb-prospective/2026-11-05-conviction.json",
+      "published_at": "2026-11-06T07:43:42-05:00",
+      "method": "buy_hold_fractional_ex_date_close_v1",
+      "definition_sha256": "327d11b3ca47ace63a79b9ef3a6edcbe812ec25dfb3f2fd8cf4621c830d239f0",
+      "history": [],
+      "initial_positions": [
+        {
+          "ticker": "FCMO",
+          "name": "Fidelity U.S. Momentum ETF",
+          "weight": 0.15,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "FINN",
+          "name": "Fidelity Global Innovators ETF",
+          "weight": 0.2,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "VDY",
+          "name": "Vanguard FTSE Canadian High Dividend Yield Index ETF",
+          "weight": 0.163,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "XBM",
+          "name": "iShares S&P/TSX Global Base Metals Index ETF",
+          "weight": 0.08,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "XCHP",
+          "name": "iShares Semiconductor Index ETF",
+          "weight": 0.05,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "XEG",
+          "name": "iShares S&P/TSX Capped Energy Index ETF",
+          "weight": 0.05,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "XGD",
+          "name": "iShares S&P/TSX Global Gold Index ETF",
+          "weight": 0.013,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "XMTM",
+          "name": "iShares MSCI USA Momentum Factor Index ETF",
+          "weight": 0.056,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "ZEB",
+          "name": "BMO Equal Weight Banks Index ETF",
+          "weight": 0.052,
+          "close": null,
+          "units": null
+        },
+        {
+          "ticker": "ZEM",
+          "name": "BMO MSCI Emerging Markets Index ETF",
+          "weight": 0.186,
+          "close": null,
+          "units": null
+        }
+      ]
     }
   ],
   "methodology": {
