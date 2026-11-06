@@ -26,6 +26,39 @@ def yahoo(symbol="MSFT"):
 
 
 class EarningsTests(unittest.TestCase):
+    def test_report_link_failure_retains_only_same_dated_review_without_touching_metrics(self):
+        feed = {"company_symbol": "MSFT", "source_warnings": ["MarketBeat: HTTP Error 403"],
+                "events": earnings.parse_yahoo(yahoo(), "MSFT", "MSFT", URL, NOW, "USD")}
+        old_metrics = copy.deepcopy(feed["events"][1]["eps"])
+        report = "https://www.marketbeat.com/earnings/reports/2026-7-29-microsoft-co-stock/"
+        notes = {"reviewed_at": NOW.isoformat(), "reports": {"MSFT:2026-07-29": {
+            "report_url": report, "source_url": "https://example.com/official-results"}}}
+        earnings.restore_reviewed_context(feed, notes, NOW)
+        self.assertEqual(feed["events"][1]["report_url"], report)
+        self.assertEqual(feed["events"][1]["eps"], old_metrics)
+        self.assertIsNone(feed["events"][0]["report_url"])
+        feed["events"][1]["report_url"] = "https://example.com/new-report"
+        earnings.restore_reviewed_context(feed, notes, NOW)
+        self.assertEqual(feed["events"][1]["report_url"], "https://example.com/new-report")
+
+    def test_sourced_publication_date_erratum_is_explicit_audited_and_idempotent(self):
+        feed = {"company_symbol": "BCE", "events": [{"id": "old", "report_date": "2026-11-04",
+                "report_at": "2026-11-05T00:00:00+00:00", "date_status": "reported", "quarter": None,
+                "sources": [], "eps": {"actual": .74}}]}
+        now = datetime(2026, 11, 6, 10, tzinfo=timezone.utc)
+        erratum = {"provider_report_date": "2026-11-04", "source_url": "https://example.com/bce-2026-q3",
+                   "verified_at": now.isoformat(), "reason": "Official release dated November 5", "quarter": "Q3 2026"}
+        notes = {"reports": {"BCE:2026-11-05": {"verified_publication": erratum}}}
+        earnings.restore_reviewed_context(feed, notes, now)
+        event = feed["events"][0]
+        self.assertEqual(event["report_date"], "2026-11-05")
+        self.assertIsNone(event["report_at"])
+        self.assertEqual(event["verified_publication"]["provider_report_date"], "2026-11-04")
+        self.assertEqual(event["eps"], {"actual": .74})
+        saved = copy.deepcopy(feed)
+        earnings.restore_reviewed_context(feed, notes, now)
+        self.assertEqual(feed, saved)
+
     def test_cdr_results_use_the_underlying_us_company_and_new_funds_have_no_eps(self):
         def fetch(url):
             if 'calendar' in url:

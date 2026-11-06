@@ -322,6 +322,52 @@ def collect_company(definition: dict, now: datetime, start: date, end: date, fet
             "source_url": marketbeat_url, "events": retained, "source_warnings": errors}
 
 
+def restore_reviewed_context(feed: dict, highlights: dict, now: datetime) -> dict:
+    """Retain dated report links on provider failure and apply sourced date errata.
+
+    Never reuse another quarter or replace a newly supplied report URL. A date
+    correction requires an explicit, audited provider-date alias in the review.
+    """
+    reports = highlights.get("reports", {})
+    for key, reviewed in reports.items():
+        publication = reviewed.get("verified_publication", {})
+        company, _, target = key.partition(":")
+        if company != feed["company_symbol"] or not publication:
+            continue
+        try:
+            target_day = date.fromisoformat(target)
+            stamp = datetime.fromisoformat(publication["verified_at"].replace("Z", "+00:00"))
+            valid = (safe_url(publication.get("source_url")) and publication.get("reason")
+                     and stamp.tzinfo and stamp <= now + timedelta(minutes=5)
+                     and target_day <= now.astimezone(TORONTO).date())
+        except (KeyError, TypeError, ValueError):
+            continue
+        if not valid or any(e["report_date"] == target for e in feed["events"]):
+            continue
+        matches = [e for e in feed["events"] if e["report_date"] == publication.get("provider_report_date")
+                   and e["date_status"] == "reported"]
+        if len(matches) != 1:
+            continue
+        event = matches[0]
+        event["verified_publication"] = {**publication, "provider_report_at": event.get("report_at")}
+        event["report_date"], event["report_at"] = target, None
+        event["id"] = event_id(company, target)
+        event["quarter"] = publication.get("quarter", event.get("quarter"))
+        event["sources"].append({"label": "Date de publication vérifiée", "url": publication["source_url"]})
+    if any(warning.startswith("MarketBeat:") for warning in feed.get("source_warnings", [])):
+        for event in feed["events"]:
+            key = feed["company_symbol"] + ":" + event["report_date"]
+            reviewed = reports.get(key, {})
+            if (event["date_status"] == "reported" and event.get("report_url") is None
+                    and safe_url(reviewed.get("report_url")) and safe_url(reviewed.get("source_url"))):
+                event["report_url"] = reviewed["report_url"]
+                event["retained_report_context"] = {
+                    "reviewed_at": highlights.get("reviewed_at"), "source_url": reviewed["source_url"],
+                    "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés.",
+                }
+    return feed
+
+
 def valid_actuals(reviewed: dict) -> bool:
     actuals = reviewed.get("verified_actuals")
     if not isinstance(actuals, dict) or set(actuals) - {"currency", "provider_currency", "eps", "eps_basis", "revenue", "source_url", "verified_at", "reason"}:
@@ -491,7 +537,8 @@ def collect(catalog: dict, previous: dict | None, now: datetime, fetcher=fetch_t
         for future in as_completed(tasks):
             group = tasks[future]
             try:
-                feed = apply_reviewed_messages(apply_verified_actuals(future.result(), highlights or {}, now), highlights or {})
+                feed = restore_reviewed_context(future.result(), highlights or {}, now)
+                feed = apply_reviewed_messages(apply_verified_actuals(feed, highlights or {}, now), highlights or {})
                 for definition in group:
                     instruments[definition["id"]] = {**feed, "listing_note": "Résultats de l’entreprise sous-jacente; devise des résultats indiquée séparément." if definition["quote_symbol"] != feed["company_symbol"] else None}
             except Exception as error:

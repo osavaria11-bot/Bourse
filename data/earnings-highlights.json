@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "reviewed_earnings_highlights",
-  "reviewed_at": "2026-11-05T13:30:27.027618+00:00",
+  "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
   "reports": {
     "NFLX:2026-10-20": {
       "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-20-netflix-inc-stock/",
@@ -731,6 +731,35 @@
         "Capital — Le rendement des capitaux propres sous-jacent atteint 19 %, contre 13 % sur une base publiée. Le ratio de capital LICAT de 142 % demeure solide et le dividende trimestriel passe de 0,96 $ à 1,00 $. La capacité de distribution est ample, sous réserve des besoins de capital liés aux acquisitions et à l’assurance.",
         "Actifs gérés — Les actifs sous gestion atteignent 1,68 billion de dollars canadiens, en hausse de 3 %. Cette échelle accroît les revenus potentiels, mais les résultats publiés restent sensibles aux marchés et aux rendements des placements. Ma lecture : suivre les flux et les marges est plus utile que la seule variation des actifs."
       ]
+    },
+    "BCE:2026-11-05": {
+      "source_url": "https://www.bce.ca/news-and-media/newsroom?article=bce-reports-third-quarter-2026-results",
+      "report_url": null,
+      "messages": [
+        "Perspectives — BCE maintient pour 2026 une croissance des revenus de 1–5 % et du BAIIA ajusté de 0–4 %, mais un recul du BPA ajusté de 5–11 %. L’intensité des investissements reste proche de 20 % : la croissance commerciale n’efface pas encore le coût de la transformation.",
+        "Moteurs — Les solutions d’entreprise liées à l’IA progressent de 41 %, alors que le revenu mobile par abonné baisse de 1,7 %. Mirko Bibic souligne la fibre et les services aux entreprises; le renouvellement du mix doit compenser la pression sur les télécommunications traditionnelles.",
+        "Trésorerie — Les flux d’exploitation augmentent à 2,22 G$ CA, mais le flux libre baisse à 854 M$ avec les dépenses de Bell AI Fabric et de Ziply. La cible annuelle de flux libre de 2,1–2,3 G$ est maintenue : l’investissement réduit la trésorerie distribuable à court terme.",
+        "Bilan — La vente annoncée de 49,9 % des tours à La Caisse pour 2,45 G$ CA doit libérer du capital. La cible de levier de 3,5 fois fin 2027 reste inchangée; la transaction demeure soumise à ses conditions de clôture."
+      ],
+      "verified_publication": {
+        "provider_report_date": "2026-11-04",
+        "quarter": "Q3 2026",
+        "source_url": "https://www.bce.ca/news-and-media/newsroom?article=bce-reports-third-quarter-2026-results",
+        "verified_at": "2026-11-06T10:08:04.545387+00:00",
+        "reason": "Le communiqué officiel de BCE porte la date du 5 novembre 2026 et confirme la publication du T3. Le calendrier Yahoo affichait le 4 novembre à 19 h EST (5 novembre 00 h UTC). Heure réelle non inférée; report_at retiré avec conservation de sa valeur fournisseur."
+      },
+      "verified_actuals": {
+        "currency": "CAD",
+        "provider_currency": "USD",
+        "eps": 0.74,
+        "eps_basis": {
+          "actual": "adjusted",
+          "estimate": "unverified"
+        },
+        "source_url": "https://www.bce.ca/news-and-media/newsroom?article=bce-reports-third-quarter-2026-results",
+        "verified_at": "2026-11-06T10:08:04.545387+00:00",
+        "reason": "Le communiqué officiel indique un BPA ajusté de 0,74 dollar canadien. Yahoo lui attribue USD. Le consensus est conservé dans sa devise et sa base fournisseur, sans surprise comparable inventée."
+      }
     }
   }
 }

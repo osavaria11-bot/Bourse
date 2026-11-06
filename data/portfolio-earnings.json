@@ -40,14 +40,48 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=AAPL&size=100"
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "Perspectives — Kevan Parekh prévoit pour décembre une croissance des revenus de 7 à 10 % et une marge brute de 45 à 46 %, contre 47,9 % au trimestre publié. La mémoire plus chère et les dépenses liées à Siri limitent la conversion des ventes en profit; la prévision suppose un contexte macro et tarifaire inchangé.",
+              "language": "fr",
+              "source_url": "https://stockanalysis.com/stocks/aapl/transcripts/702819-q4-2026/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Qualité du résultat — Le BPA de 2,10 $ US inclut 0,05 $ de remboursement tarifaire, lequel ajoute aussi environ un point à la marge brute. Hors remboursement, la marge du groupe et celle des produits reculent d’un point sur le trimestre précédent, sous l’effet du coût de la mémoire : le soutien ponctuel ne protège pas la suite.",
+              "language": "fr",
+              "source_url": "https://stockanalysis.com/stocks/aapl/transcripts/702819-q4-2026/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Moteurs — L’iPhone atteint 57,6 G$ US de revenus (+17 %) et les services 31,6 G$ (+10 %), avec une marge brute des services de 76 %. L’iPad recule de 10 % et les accessoires de 8 % : la récurrence des services soutient le mix, mais la vigueur commerciale ne s’étend pas à toutes les catégories.",
+              "language": "fr",
+              "source_url": "https://stockanalysis.com/stocks/aapl/transcripts/702819-q4-2026/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Trésorerie — Les activités génèrent 28,1 G$ US de liquidités et Apple rend environ 28 G$ aux actionnaires, dont 24 G$ de rachats. Avec 137 G$ de trésorerie et placements contre 80 G$ de dette, le financement demeure ample; ma lecture est de suivre la trésorerie après les investissements plutôt que le seul BPA soutenu par les rachats.",
+              "language": "fr",
+              "source_url": "https://stockanalysis.com/stocks/aapl/transcripts/702819-q4-2026/",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-2-apple-inc-stock/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=AAPL&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://stockanalysis.com/stocks/aapl/transcripts/702819-q4-2026/"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://stockanalysis.com/stocks/aapl/transcripts/702819-q4-2026/",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -153,14 +187,48 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=AMD&size=100"
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "La division Centres de données a presque doublé ses ventes et porté sa marge d’exploitation de 25 % à 34 %. Les processeurs EPYC et le lancement des accélérateurs Instinct MI450 contribuent ensemble à cette progression.",
+              "language": "fr",
+              "source_url": "https://ir.amd.com/financial-information/sec-filings/content/0000002488-26-000188/amdq32026earningsslidesf.htm",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "AMD vise environ 17 G$ US de ventes au T4, à 3 % près, avec une marge brute ajustée d’environ 55 % après 56 %. Lisa Su s’attend à ce que les centres de données représentent environ 80 % des ventes en 2027, ce qui rend le rythme de déploiement de Helios particulièrement important.",
+              "language": "fr",
+              "source_url": "https://ir.amd.com/financial-information/sec-filings/content/0000002488-26-000188/amdq32026earningsslidesf.htm",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Les stocks ont augmenté de 35 % sur le trimestre pour atteindre 11,46 G$ US. La dette est passée à 7,08 G$ US après l’émission de 4,75 G$ US de billets en août. Le suivi des livraisons dira à quelle vitesse ces stocks se convertissent en trésorerie.",
+              "language": "fr",
+              "source_url": "https://ir.amd.com/financial-information/sec-filings/content/0000002488-26-000188/amdq32026earningsslidesf.htm",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "La division Client et jeux a reculé de 8 % sur un an. La croissance des processeurs pour ordinateurs a seulement compensé une partie du recul des ventes liées aux consoles et aux produits graphiques.",
+              "language": "fr",
+              "source_url": "https://ir.amd.com/financial-information/sec-filings/content/0000002488-26-000188/amdq32026earningsslidesf.htm",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-3-advanced-micro-devices-inc-stock/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=AMD&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://ir.amd.com/financial-information/sec-filings/content/0000002488-26-000188/amdq32026earningsslidesf.htm"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://ir.amd.com/financial-information/sec-filings/content/0000002488-26-000188/amdq32026earningsslidesf.htm",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -192,14 +260,48 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=AMZN&size=100"
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "AWS — Revenus +39,3 % à 46,0 G$ US et marge opérationnelle de 38,7 %. Jassy vise encore plus de 40 % de croissance en 2027 et 2028, sans garantie de réalisation. Les puces maison et l’intégration des applications, données et outils d’IA soutiennent son avantage; l’investissement nécessaire reste le principal test économique.",
+              "language": "fr",
+              "source_url": "https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-Third-Quarter-Results/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Cash — Sur douze mois, les opérations génèrent 168,3 G$ US, mais les immobilisations nettes absorbent 210,7 G$ : le flux disponible ressort à −42,4 G$. La direction maintient environ 220 G$ de dépenses décaissées en 2026 et prévoit davantage en 2027. La hausse du bénéfice opérationnel ne signifie donc pas un financement déjà autonome de l’expansion.",
+              "language": "fr",
+              "source_url": "https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-Third-Quarter-Results/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Publicité et commerce — La publicité ralentit à +12 %, en partie à cause du déplacement de Prime Day au T2; Jassy attend une croissance proche de 20 % au T4. Le coût de service baisse malgré le carburant, grâce au placement des stocks et aux distances de livraison réduites. Le rebond publicitaire annoncé reste à confirmer.",
+              "language": "fr",
+              "source_url": "https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-Third-Quarter-Results/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Perspectives — Le T4 vise 240–247 G$ US de revenus et 28,5–33,5 G$ de bénéfice opérationnel. Amazon continuera de passer la majorité des coûts de Leo en charges au T4, leur capitalisation étant reportée au T1 suivant. Ce calendrier pèse sur le bénéfice à court terme et doit être séparé de la demande cloud.",
+              "language": "fr",
+              "source_url": "https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-Third-Quarter-Results/",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-29-amazoncom-inc-stock/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=AMZN&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-Third-Quarter-Results/"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://ir.aboutamazon.com/news-release/news-release-details/2026/Amazon-com-Announces-Third-Quarter-Results/",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -231,14 +333,48 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=APH&size=100"
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "La croissance organique atteint 37 %, contre 65 % au total : les acquisitions contribuent fortement, mais la demande propre au groupe reste soutenue, surtout dans les connexions pour centres de données. Les commandes de 12,2 G$ US dépassent les ventes de 19 %; elles ne sont pas toutes des revenus immédiats.",
+              "language": "fr",
+              "source_url": "https://investors.amphenol.com/news-and-events/news-details/2026/Amphenol-Reports-Record-Third-Quarter-2026-Results-and-Announces-Dividend-Increase-and-New-Stock-Repurchase-Program/default.aspx",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "La contribution attendue de CommScope en 2026 monte à 5,1 G$ US de ventes et 0,18 $ US de BPA ajusté, contre 4,6 G$ et 0,15 $ auparavant. Cette révision améliore la rentabilité attendue de l’acquisition; l’intégration et la capacité d’approvisionnement restent à surveiller.",
+              "language": "fr",
+              "source_url": "https://investors.amphenol.com/news-and-events/news-details/2026/Amphenol-Reports-Record-Third-Quarter-2026-Results-and-Announces-Dividend-Increase-and-New-Stock-Repurchase-Program/default.aspx",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Pour le T4, la direction prévoit 10,3–10,5 G$ US de ventes et 0,81–0,83 $ US de BPA ajusté. Pour 2026 : 36,9–37,1 G$ et 2,82–2,84 $. Ces prévisions supposent des conditions de marché et devises constantes et excluent les acquisitions non encore closes.",
+              "language": "fr",
+              "source_url": "https://investors.amphenol.com/news-and-events/news-details/2026/Amphenol-Reports-Record-Third-Quarter-2026-Results-and-Announces-Dividend-Increase-and-New-Stock-Repurchase-Program/default.aspx",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Le trimestre produit 2,1 G$ US de trésorerie opérationnelle et 1,6 G$ de flux disponible. Le dividende trimestriel augmente de 20 %, à 0,15 $ après fractionnement; le nouveau programme de rachats de 4 G$ s’étale sur trois ans à partir de janvier 2027. Ce plafond ne constitue pas un décaissement immédiat.",
+              "language": "fr",
+              "source_url": "https://investors.amphenol.com/news-and-events/news-details/2026/Amphenol-Reports-Record-Third-Quarter-2026-Results-and-Announces-Dividend-Increase-and-New-Stock-Repurchase-Program/default.aspx",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-28-amphenol-co-stock/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=APH&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://investors.amphenol.com/news-and-events/news-details/2026/Amphenol-Reports-Record-Third-Quarter-2026-Results-and-Announces-Dividend-Increase-and-New-Stock-Repurchase-Program/default.aspx"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://investors.amphenol.com/news-and-events/news-details/2026/Amphenol-Reports-Record-Third-Quarter-2026-Results-and-Announces-Dividend-Increase-and-New-Stock-Repurchase-Program/default.aspx",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -470,14 +606,48 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=BAC&size=100"
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "Perspectives — La direction vise une croissance du revenu net d’intérêts d’au moins 8 % en 2027. Cette trajectoire repose notamment sur la hausse des prêts et sur ses hypothèses de taux; elle ne doit pas être extrapolée sans vérifier ces conditions.",
+              "language": "fr",
+              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-14-bank-of-america-co-stock/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Élément exceptionnel — Le règlement réglementaire de 1,2 G$ US, non déductible fiscalement, pénalise le bénéfice publié. La direction considère le dossier réglé et les coûts de remédiation intégrés : distinguer cette charge de la rentabilité récurrente.",
+              "language": "fr",
+              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-14-bank-of-america-co-stock/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Marchés — Les revenus de négociation reculent de 5 %, dont 17 % pour le revenu fixe, les devises et les matières premières. Les prêts et dépôts restent solides, mais cette faiblesse limite l’effet positif de la croissance bancaire.",
+              "language": "fr",
+              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-14-bank-of-america-co-stock/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Capital — Le CET1 revient à 10,9 %, contre un minimum réglementaire indiqué de 10 %, après la croissance des prêts, le règlement et l’effet des taux. Les 8,3 G$ US rendus aux actionnaires montrent pourquoi la marge de capital mérite autant d’attention que le BPA.",
+              "language": "fr",
+              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-14-bank-of-america-co-stock/",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-14-bank-of-america-co-stock/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=BAC&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.marketbeat.com/earnings/reports/2026-10-14-bank-of-america-co-stock/"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-14-bank-of-america-co-stock/",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -531,16 +701,27 @@
       "source_url": "https://www.marketbeat.com/stocks/NYSE/BCE/earnings/",
       "events": [
         {
-          "id": "b999c9e567bc27b2",
-          "report_date": "2026-11-04",
-          "report_at": "2026-11-05T00:00:00+00:00",
-          "quarter": null,
+          "id": "a60f1e7d3b33cca1",
+          "report_date": "2026-11-05",
+          "report_at": null,
+          "quarter": "Q3 2026",
           "date_status": "reported",
           "eps": {
             "actual": 0.74,
             "estimate": 0.7,
-            "currency": "USD",
-            "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=BCE&size=100"
+            "currency": "CAD",
+            "source_url": "https://www.bce.ca/news-and-media/newsroom?article=bce-reports-third-quarter-2026-results",
+            "verified_correction": {
+              "provider_actual": 0.74,
+              "provider_source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=BCE&size=100",
+              "provider_currency": "USD",
+              "source_url": "https://www.bce.ca/news-and-media/newsroom?article=bce-reports-third-quarter-2026-results",
+              "verified_at": "2026-11-06T10:08:04.545387+00:00",
+              "reason": "Le communiqué officiel indique un BPA ajusté de 0,74 dollar canadien. Yahoo lui attribue USD. Le consensus est conservé dans sa devise et sa base fournisseur, sans surprise comparable inventée."
+            },
+            "actual_basis": "adjusted",
+            "estimate_basis": "unverified",
+            "estimate_currency": "USD"
           },
           "revenue": {
             "actual": null,
@@ -548,14 +729,51 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=BCE&size=100"
           },
-          "messages": [],
+          "messages": [
+            {
+              "text": "Perspectives — BCE maintient pour 2026 une croissance des revenus de 1–5 % et du BAIIA ajusté de 0–4 %, mais un recul du BPA ajusté de 5–11 %. L’intensité des investissements reste proche de 20 % : la croissance commerciale n’efface pas encore le coût de la transformation.",
+              "language": "fr",
+              "source_url": "https://www.bce.ca/news-and-media/newsroom?article=bce-reports-third-quarter-2026-results",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Moteurs — Les solutions d’entreprise liées à l’IA progressent de 41 %, alors que le revenu mobile par abonné baisse de 1,7 %. Mirko Bibic souligne la fibre et les services aux entreprises; le renouvellement du mix doit compenser la pression sur les télécommunications traditionnelles.",
+              "language": "fr",
+              "source_url": "https://www.bce.ca/news-and-media/newsroom?article=bce-reports-third-quarter-2026-results",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Trésorerie — Les flux d’exploitation augmentent à 2,22 G$ CA, mais le flux libre baisse à 854 M$ avec les dépenses de Bell AI Fabric et de Ziply. La cible annuelle de flux libre de 2,1–2,3 G$ est maintenue : l’investissement réduit la trésorerie distribuable à court terme.",
+              "language": "fr",
+              "source_url": "https://www.bce.ca/news-and-media/newsroom?article=bce-reports-third-quarter-2026-results",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Bilan — La vente annoncée de 49,9 % des tours à La Caisse pour 2,45 G$ CA doit libérer du capital. La cible de levier de 3,5 fois fin 2027 reste inchangée; la transaction demeure soumise à ses conditions de clôture.",
+              "language": "fr",
+              "source_url": "https://www.bce.ca/news-and-media/newsroom?article=bce-reports-third-quarter-2026-results",
+              "kind": "reviewed_summary"
+            }
+          ],
           "report_url": null,
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=BCE&size=100"
+            },
+            {
+              "label": "Date de publication vérifiée",
+              "url": "https://www.bce.ca/news-and-media/newsroom?article=bce-reports-third-quarter-2026-results"
             }
-          ]
+          ],
+          "verified_publication": {
+            "provider_report_date": "2026-11-04",
+            "quarter": "Q3 2026",
+            "source_url": "https://www.bce.ca/news-and-media/newsroom?article=bce-reports-third-quarter-2026-results",
+            "verified_at": "2026-11-06T10:08:04.545387+00:00",
+            "reason": "Le communiqué officiel de BCE porte la date du 5 novembre 2026 et confirme la publication du T3. Le calendrier Yahoo affichait le 4 novembre à 19 h EST (5 novembre 00 h UTC). Heure réelle non inférée; report_at retiré avec conservation de sa valeur fournisseur.",
+            "provider_report_at": "2026-11-05T00:00:00+00:00"
+          }
         }
       ],
       "source_warnings": [
@@ -808,19 +1026,55 @@
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=CLS&size=100"
           },
           "revenue": {
-            "actual": null,
+            "actual": 5830000000.0,
             "estimate": null,
-            "currency": null,
-            "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=CLS&size=100"
+            "currency": "USD",
+            "source_url": "https://celestica.gcs-web.com/news-releases/news-release-details/celestica-announces-third-quarter-2026-financial-results-and",
+            "verified_correction": {
+              "provider_actual": null,
+              "provider_source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=CLS&size=100",
+              "provider_currency": null,
+              "source_url": "https://celestica.gcs-web.com/news-releases/news-release-details/celestica-announces-third-quarter-2026-financial-results-and",
+              "verified_at": "2026-10-27T09:29:55.474202+00:00",
+              "reason": "Le communiqué officiel du 26 octobre 2026 donne 5,83 G$ US de revenus au T3; MarketBeat indiquait 5,74 G$. Consensus du fournisseur conservé."
+            }
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "Rob Mionis relève les cibles 2026 à 21 G$ US de revenus (20,5 auparavant) et 11,55 $ de BPA ajusté (11,30). Pour 2027, il vise 40 G$ de revenus et une marge ajustée de 9 % : le potentiel repose sur les déploiements des clients, pas sur des commandes toutes fermes.",
+              "language": "fr",
+              "source_url": "https://celestica.gcs-web.com/news-releases/news-release-details/celestica-announces-third-quarter-2026-financial-results-and",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "La connectivité et le nuage réalisent 4,87 G$ US de revenus, en hausse de 102 %. La marge opérationnelle ajustée du groupe passe de 7,6 % à 8,5 % : la croissance des centres de données s’accompagne de gains de rentabilité, à confirmer pendant les prochaines montées en cadence.",
+              "language": "fr",
+              "source_url": "https://celestica.gcs-web.com/news-releases/news-release-details/celestica-announces-third-quarter-2026-financial-results-and",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "La prévision de flux de trésorerie disponible 2026 tombe à 460 M$ US, contre 600 M$, pour financer le fonds de roulement lié à la croissance. Les investissements 2027 visés atteignent 1,5 à 2 G$ US : la conversion du bénéfice en cash devient un test essentiel de l’exécution.",
+              "language": "fr",
+              "source_url": "https://celestica.gcs-web.com/news-releases/news-release-details/celestica-announces-third-quarter-2026-financial-results-and",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-26-celestica-inc-stock/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=CLS&size=100"
+            },
+            {
+              "label": "Correction vérifiée du résultat publié",
+              "url": "https://celestica.gcs-web.com/news-releases/news-release-details/celestica-announces-third-quarter-2026-financial-results-and"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://celestica.gcs-web.com/news-releases/news-release-details/celestica-announces-third-quarter-2026-financial-results-and",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -918,14 +1172,48 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=CNQ&size=100"
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "Rentabilité — Le bénéfice net ajusté atteint 3,43 G$ CA, ou 1,65 $ par action diluée, contre 1,80 G$ et 0,86 $ un an plus tôt. Les prix réalisés des liquides ont augmenté à 95,93 $ le baril contre 72,57 $; la forte progression du bénéfice reste donc très exposée au cycle des prix.",
+              "language": "fr",
+              "source_url": "https://www.marketscreener.com/news/canadian-natural-resources-financial-reports-09-30-2026-q3-mda-ce785fdcdd8bff2d",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Production — La production moyenne atteint environ 1,65 million de barils équivalent pétrole par jour, contre 1,62 million un an plus tôt. La hausse des volumes complète l’effet des prix, mais elle est beaucoup moins importante que l’amélioration du bénéfice : la thèse demeure dominée par les marges par baril.",
+              "language": "fr",
+              "source_url": "https://www.marketscreener.com/news/canadian-natural-resources-financial-reports-09-30-2026-q3-mda-ce785fdcdd8bff2d",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Trésorerie — Les flux provenant de l’exploitation montent à 7,01 G$ CA et les fonds ajustés à 5,52 G$, contre 3,94 G$ et 3,92 G$. Cette conversion accroît la capacité de financer les investissements et les distributions; elle doit toutefois être évaluée avec les besoins de fonds de roulement du trimestre.",
+              "language": "fr",
+              "source_url": "https://www.marketscreener.com/news/canadian-natural-resources-financial-reports-09-30-2026-q3-mda-ce785fdcdd8bff2d",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Capital — Les dépenses nettes reculent à 1,88 G$ CA contre 2,12 G$, alors que les travaux d’abandon augmentent à 248 M$. Ma lecture : la combinaison de prix élevés et d’investissements moindres soutient le flux libre à court terme, mais les obligations de remise en état restent un usage durable de trésorerie.",
+              "language": "fr",
+              "source_url": "https://www.marketscreener.com/news/canadian-natural-resources-financial-reports-09-30-2026-q3-mda-ce785fdcdd8bff2d",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-5-canadian-natural-resources-limited-stock/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=CNQ&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.marketscreener.com/news/canadian-natural-resources-financial-reports-09-30-2026-q3-mda-ce785fdcdd8bff2d"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://www.marketscreener.com/news/canadian-natural-resources-financial-reports-09-30-2026-q3-mda-ce785fdcdd8bff2d",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -957,14 +1245,48 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=CNI&size=100"
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "Perspectives — Le BPA ajusté 2026 reste attendu en croissance dans le milieu à haut de la plage à un chiffre, maintenant plutôt vers le haut. Les tonnes-milles payantes restent visées en faible hausse à un chiffre. La direction ne relève pas officiellement la cible.",
+              "language": "fr",
+              "source_url": "https://www.cn.ca/en/news/2026/10/cn-delivers-strong-third-quarter-performance",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Exploitation — Les tonnes-milles payantes progressent de 4 % et les revenus de 15 %. Le ratio d’exploitation ajusté s’améliore de 40 points de base à 61,0 %, tandis que le ratio GAAP atteint 63,7 %. Le record trimestriel d’efficacité du carburant soutient la productivité.",
+              "language": "fr",
+              "source_url": "https://www.cn.ca/en/news/2026/10/cn-delivers-strong-third-quarter-performance",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Trésorerie — Le flux disponible atteint 2,918 G$ CA sur neuf mois, en hausse de 25 %. Les immobilisations 2026 restent d’environ 2,8 G$ CA, net des remboursements clients; les rachats du T3 totalisent 676 M$. Le cash finance le bilan et les distributions.",
+              "language": "fr",
+              "source_url": "https://www.cn.ca/en/news/2026/10/cn-delivers-strong-third-quarter-performance",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Risques — Les récoltes 2026-2027 sont désormais supposées supérieures à leur moyenne de cinq ans au Canada et aux États-Unis. Ce soutien potentiel aux volumes coexiste avec les risques commerciaux et géopolitiques. La direction conserve une hypothèse WTI de 80–110 $ US pour le reste de 2026.",
+              "language": "fr",
+              "source_url": "https://www.cn.ca/en/news/2026/10/cn-delivers-strong-third-quarter-performance",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-30-canadian-national-railway-stock/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=CNI&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.cn.ca/en/news/2026/10/cn-delivers-strong-third-quarter-performance"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://www.cn.ca/en/news/2026/10/cn-delivers-strong-third-quarter-performance",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -1053,23 +1375,76 @@
           "eps": {
             "actual": 1.28,
             "estimate": 1.31,
-            "currency": "USD",
-            "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=CP&size=100"
+            "currency": "CAD",
+            "source_url": "https://investor.cpkcr.com/news/press-release-details/2026/CPKC-reports-solid-third-quarter-results-on-track-to-deliver-a-strong-2026/default.aspx",
+            "verified_correction": {
+              "provider_actual": 1.28,
+              "provider_source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=CP&size=100",
+              "provider_currency": "USD",
+              "source_url": "https://investor.cpkcr.com/news/press-release-details/2026/CPKC-reports-solid-third-quarter-results-on-track-to-deliver-a-strong-2026/default.aspx",
+              "verified_at": "2026-10-29T09:20:08.173956+00:00",
+              "reason": "Le communiqué officiel du 28 octobre 2026 et les diapositives indiquent un BPA ajusté de base de 1,28 CAD et des revenus de 4 219 millions CAD. Le fournisseur étiquetait le BPA en USD et omettait les revenus; ses consensus USD sont conservés séparément, sans conversion ni surprise entre devises."
+            },
+            "actual_basis": "adjusted",
+            "estimate_basis": "adjusted",
+            "estimate_currency": "USD"
           },
           "revenue": {
-            "actual": null,
+            "actual": 4219000000,
             "estimate": null,
-            "currency": null,
-            "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=CP&size=100"
+            "currency": "CAD",
+            "source_url": "https://investor.cpkcr.com/news/press-release-details/2026/CPKC-reports-solid-third-quarter-results-on-track-to-deliver-a-strong-2026/default.aspx",
+            "verified_correction": {
+              "provider_actual": null,
+              "provider_source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=CP&size=100",
+              "provider_currency": null,
+              "source_url": "https://investor.cpkcr.com/news/press-release-details/2026/CPKC-reports-solid-third-quarter-results-on-track-to-deliver-a-strong-2026/default.aspx",
+              "verified_at": "2026-10-29T09:20:08.173956+00:00",
+              "reason": "Le communiqué officiel du 28 octobre 2026 et les diapositives indiquent un BPA ajusté de base de 1,28 CAD et des revenus de 4 219 millions CAD. Le fournisseur étiquetait le BPA en USD et omettait les revenus; ses consensus USD sont conservés séparément, sans conversion ni surprise entre devises."
+            }
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "Les volumes en tonnes-milles payantes augmentent de 6 %, contre 15 % pour les revenus à 4,219 G$ CA. Keith Creel souligne les grains, l’intermodal et les marchandises. La croissance des ventes intègre aussi les effets du carburant et du change; elle ne mesure pas seule le gain de trafic.",
+              "language": "fr",
+              "source_url": "https://investor.cpkcr.com/news/press-release-details/2026/CPKC-reports-solid-third-quarter-results-on-track-to-deliver-a-strong-2026/default.aspx",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Le ratio d’exploitation ajusté de base atteint 61,9 %, soit 120 points de base de plus qu’un an auparavant. Le carburant le détériore à lui seul de 190 points : l’efficacité sous-jacente compense une partie du choc, sans éliminer le risque de coûts élevés et de sensibilité des clients aux surcharges.",
+              "language": "fr",
+              "source_url": "https://investor.cpkcr.com/news/press-release-details/2026/CPKC-reports-solid-third-quarter-results-on-track-to-deliver-a-strong-2026/default.aspx",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Pour 2026, la direction maintient une croissance modérée à deux chiffres du BPA dilué ajusté de base, face aux 4,61 $ CA de 2025. Les volumes sont visés dans le milieu de la fourchette à un chiffre. Le budget d’immobilisations reste d’environ 2,65 G$ CA; l’exécution du T4 reste nécessaire pour réaliser ces objectifs.",
+              "language": "fr",
+              "source_url": "https://investor.cpkcr.com/news/press-release-details/2026/CPKC-reports-solid-third-quarter-results-on-track-to-deliver-a-strong-2026/default.aspx",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Sur les neuf premiers mois, la trésorerie opérationnelle atteint 4,252 G$ CA et les ajouts aux immobilisations 2,035 G$. La présentation indique un flux disponible ajusté en hausse de 59 % et environ 63 % du programme de rachat de 5 % déjà exécuté. Période annuelle cumulée, pas chiffres du seul T3.",
+              "language": "fr",
+              "source_url": "https://investor.cpkcr.com/news/press-release-details/2026/CPKC-reports-solid-third-quarter-results-on-track-to-deliver-a-strong-2026/default.aspx",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-28-canadian-pacific-railway-limited-stock/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=CP&size=100"
+            },
+            {
+              "label": "Correction vérifiée du résultat publié",
+              "url": "https://investor.cpkcr.com/news/press-release-details/2026/CPKC-reports-solid-third-quarter-results-on-track-to-deliver-a-strong-2026/default.aspx"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://investor.cpkcr.com/news/press-release-details/2026/CPKC-reports-solid-third-quarter-results-on-track-to-deliver-a-strong-2026/default.aspx",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -1233,14 +1608,48 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=CVE&size=100"
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "La production en amont franchit le million de barils équivalent pétrole par jour, dont 833 000 dans les sables bitumineux. Les records à Foster Creek, Christina Lake et Sunrise s’accompagnent d’une baisse des coûts d’exploitation des sables à 10,23 $ CA le baril.",
+              "language": "fr",
+              "source_url": "https://www.cenovus.com/News-and-Stories/News-releases/2026/3395090",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "La marge d’exploitation du raffinage monte de 1,0 à 1,8 G$ CA sur le trimestre malgré l’arrêt prévu de Lima. Les écarts de raffinage ont aidé. Des exemptions réglementaires à Superior ont aussi favorisé le taux de capture américain, ce qui limite l’extrapolation du 88 % publié.",
+              "language": "fr",
+              "source_url": "https://www.cenovus.com/News-and-Stories/News-releases/2026/3395090",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Les fonds disponibles atteignent 3,57 G$ CA, en baisse sur le trimestre avec la hausse des investissements. Cenovus a rendu 1,9 G$ CA aux actionnaires et ramené la dette nette à 3,0 G$ CA, aidé aussi par la libération de fonds de roulement.",
+              "language": "fr",
+              "source_url": "https://www.cenovus.com/News-and-Stories/News-releases/2026/3395090",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "L’acquisition annoncée d’Athabasca ajouterait environ 45 000 barils équivalent pétrole par jour à la production actuelle et 1,3 milliard de barils de réserves prouvées et probables. La clôture est prévue en décembre 2026.",
+              "language": "fr",
+              "source_url": "https://www.cenovus.com/News-and-Stories/News-releases/2026/3395090",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-4-cenovus-energy-inc-stock/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=CVE&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.cenovus.com/News-and-Stories/News-releases/2026/3395090"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://www.cenovus.com/News-and-Stories/News-releases/2026/3395090",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -1272,14 +1681,48 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=CVX&size=100"
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "Raffinage — Le bénéfice aval atteint 4,9 G$ US, contre 1,1 G$ un an plus tôt. Les unités américaines de distillation du brut tournent à près de 98 %, avec un débit record de 1,09 million de barils par jour. La disponibilité industrielle permet de profiter des marges élevées; leur maintien dépend toutefois du contexte de pénurie.",
+              "language": "fr",
+              "source_url": "https://chevroncorp.gcs-web.com/news-releases/news-release-details/chevron-reports-third-quarter-2026-results",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Cash — Le flux opérationnel de 16,0 G$ US finance 12,0 G$ de flux disponible et 6,0 G$ de dividendes et rachats au T3. Le flux disponible ajusté de 14,2 G$ inclut notamment un remboursement de prêt d’environ 1 G$ de TCO et des cessions : il ne faut pas l’extrapoler comme un flux opérationnel récurrent équivalent.",
+              "language": "fr",
+              "source_url": "https://chevroncorp.gcs-web.com/news-releases/news-release-details/chevron-reports-third-quarter-2026-results",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Venezuela — Les coentreprises prévoient 7 G$ US d’investissement sur cinq ans et visent environ 600 000 barils par jour de production brute en 2031. Wirth mise sur de nouvelles conditions fiscales et des infrastructures existantes. Ce volume est celui des coentreprises, pas la quote-part de Chevron; l’exécution et le cadre politique restent des risques.",
+              "language": "fr",
+              "source_url": "https://chevroncorp.gcs-web.com/news-releases/news-release-details/chevron-reports-third-quarter-2026-results",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "T4 — Les rachats sont prévus à 2,5–3,0 G$ US. La clôture attendue de la transaction Hess Midstream entraînerait une charge après impôt de 3–4 G$, traitée comme élément exceptionnel, pour des tarifs du Bakken réduits d’environ 50 % à terme. La charge comptable annoncée doit être séparée des économies futures encore conditionnelles.",
+              "language": "fr",
+              "source_url": "https://chevroncorp.gcs-web.com/news-releases/news-release-details/chevron-reports-third-quarter-2026-results",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-30-chevron-co-stock/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=CVX&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://chevroncorp.gcs-web.com/news-releases/news-release-details/chevron-reports-third-quarter-2026-results"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://chevroncorp.gcs-web.com/news-releases/news-release-details/chevron-reports-third-quarter-2026-results",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -1482,14 +1925,48 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=DXCM&size=100"
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "Perspectives — Dexcom relève le milieu de sa cible 2026 à 5,20–5,25 G$ US de revenus et porte ses marges opérationnelle ajustée et BAIIA ajusté à environ 24 % et 32 %. Le relèvement transmet la surperformance du T3, partiellement absorbée par quelque 5 M$ de change défavorable; il implique environ 10 % de croissance au T4 au milieu de la cible.",
+              "language": "fr",
+              "source_url": "https://investors.dexcom.com/news/news-details/2026/Dexcom-Reports-Third-Quarter-2026-Financial-Results/default.aspx",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Rentabilité — La marge brute ajustée atteint 65,1 %, contre 61,3 % un an plus tôt, grâce notamment aux gains de fabrication et de transport. La marge opérationnelle ajustée progresse à 25,3 % malgré les coûts de lancement de l’usine irlandaise, désormais en production commerciale. L’expansion des capacités ne s’est donc pas faite au prix d’un recul de marge.",
+              "language": "fr",
+              "source_url": "https://investors.dexcom.com/news/news-details/2026/Dexcom-Reports-Third-Quarter-2026-Financial-Results/default.aspx",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Accès au marché — Les États-Unis croissent de 14 %, contre 5 % à l’international. Leach attend une décision Medicare sur les diabétiques de type 2 sans insuline cette année, avec application visée vers mi-2027; ce remboursement n’est pas acquis. Un changement de couverture d’un gestionnaire de prestations reste un risque d’accès pour certains patients.",
+              "language": "fr",
+              "source_url": "https://investors.dexcom.com/news/news-details/2026/Dexcom-Reports-Third-Quarter-2026-Financial-Results/default.aspx",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Capital — Plus de 900 M$ US de flux de trésorerie disponible ont été générés sur neuf mois; le rachat de 1 G$ prévu pour 2026 est exécuté et un nouveau milliard est autorisé. L’acquisition signée d’un distributeur européen doit soutenir la vente directe après clôture en 2027; elle n’apporte aucun revenu supplémentaire au T4 2026.",
+              "language": "fr",
+              "source_url": "https://investors.dexcom.com/news/news-details/2026/Dexcom-Reports-Third-Quarter-2026-Financial-Results/default.aspx",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-29-dexcom-inc-stock/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=DXCM&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://investors.dexcom.com/news/news-details/2026/Dexcom-Reports-Third-Quarter-2026-Financial-Results/default.aspx"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://investors.dexcom.com/news/news-details/2026/Dexcom-Reports-Third-Quarter-2026-Financial-Results/default.aspx",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -1708,14 +2185,48 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=FSLR&size=100"
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "Perspectives — Les revenus 2026 sont ramenés à 4,6–4,9 G$ US, contre 4,9–5,2 G$, et le BAIIA ajusté à 2,55–2,75 G$, contre 2,6–2,8 G$. La baisse des volumes attendus en Inde, des modules internationaux Series 6 et de la finition américaine explique ce recul; le volume prévu de produits entièrement fabriqués aux États-Unis demeure inchangé.",
+              "language": "fr",
+              "source_url": "https://www.nasdaq.com/press-release/first-solar-inc-announces-third-quarter-2026-financial-results-updates-guidance-and",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Qualité de marge — La marge brute approche 58 %, en hausse d’environ 20 points, surtout grâce au mix de modules américains admissibles au crédit 45X, à de moindres coûts logistiques et à la non-répétition d’une charge passée. La cible annuelle comprend 2,07–2,19 G$ US de crédits 45X : cette rentabilité dépend donc fortement du cadre public.",
+              "language": "fr",
+              "source_url": "https://www.nasdaq.com/press-release/first-solar-inc-announces-third-quarter-2026-financial-results-updates-guidance-and",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Carnet et risques — Les contrats représentent 44 GW et environ 13,5 G$ US, avec livraisons jusqu’en 2030. Les prises de commandes ralentissent avec les permis, le financement et l’incertitude tarifaire; la direction privilégie des projets identifiés aux grandes ententes-cadres. Cette discipline améliore la visibilité des livraisons, mais limite le rythme des signatures.",
+              "language": "fr",
+              "source_url": "https://www.nasdaq.com/press-release/first-solar-inc-announces-third-quarter-2026-financial-results-updates-guidance-and",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Bilan — La trésorerie nette de 1,5 G$ US est inférieure aux 2,4 G$ de fin 2025, après besoins de fonds de roulement et investissements. Le budget d’immobilisations 2026 baisse à 0,6–0,8 G$, contre 0,8–1,0 G$. Le nouveau rachat autorisé de 500 M$ n’a pas d’échéance et n’est pas une dépense déjà effectuée.",
+              "language": "fr",
+              "source_url": "https://www.nasdaq.com/press-release/first-solar-inc-announces-third-quarter-2026-financial-results-updates-guidance-and",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-29-first-solar-inc-stock/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=FSLR&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.nasdaq.com/press-release/first-solar-inc-announces-third-quarter-2026-financial-results-updates-guidance-and"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://www.nasdaq.com/press-release/first-solar-inc-announces-third-quarter-2026-financial-results-updates-guidance-and",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -1747,14 +2258,48 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=FTS&size=100"
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "Croissance — Le plan 2027–2031 atteint 32,2 G$ CA, soit 3,4 G$ de plus que le précédent. Il vise 7,5 % de croissance annuelle de la base tarifaire, surtout par le transport électrique et Tilbury. Ma lecture : l’exécution des projets conditionne les bénéfices supplémentaires.",
+              "language": "fr",
+              "source_url": "https://www.fortisinc.com/news/news-releases/detail?id=9911",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Rentabilité — Le BPA ajusté est de 0,92 $ CA, contre 0,87 $ un an plus tôt. La base tarifaire et les ventes au détail d’UNS soutiennent le résultat; les coûts non encore récupérés dans les tarifs et les frais financiers de la société mère le freinent.",
+              "language": "fr",
+              "source_url": "https://www.fortisinc.com/news/news-releases/detail?id=9911",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Financement — Fortis a émis 1 G$ US de titres subordonnés et 260 M$ CA d’actions au T3. Le plan repose surtout sur les flux d’exploitation et la dette des filiales, avec réinvestissement des dividendes pour les fonds propres. Le coût du financement et la dilution restent à surveiller.",
+              "language": "fr",
+              "source_url": "https://www.fortisinc.com/news/news-releases/detail?id=9911",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Dividende — Le versement trimestriel augmente de 4 %, à 0,665 $ CA. La cible de croissance annuelle de 4–6 % est prolongée jusqu’en 2031. Cette prévision dépend de l’exécution du plan et des décisions du conseil, sans rendement garanti.",
+              "language": "fr",
+              "source_url": "https://www.fortisinc.com/news/news-releases/detail?id=9911",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-3-fortis-inc-stock/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=FTS&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.fortisinc.com/news/news-releases/detail?id=9911"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://www.fortisinc.com/news/news-releases/detail?id=9911",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -1778,22 +2323,78 @@
             "actual": 2.12,
             "estimate": 3.01,
             "currency": "USD",
-            "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=GOOGL&size=100"
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000080/googexhibit991q32026.htm",
+            "verified_correction": {
+              "provider_actual": 2.12,
+              "provider_source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=GOOGL&size=100",
+              "provider_currency": "USD",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000080/googexhibit991q32026.htm",
+              "verified_at": "2026-10-29T09:20:08.173956+00:00",
+              "reason": "Le communiqué officiel donne 127 577 millions USD et un BPA GAAP de 2,12 USD. Le consensus 3,02 USD est ajusté selon Reuters (https://wncy.com/2026/10/28/alphabets-heavy-cloud-spending-drives-bigger-than-expected-cash-burn/); le BPA ajusté cité est 2,67 USD. Le chiffre GAAP officiel et le consensus du fournisseur sont conservés, avec bases différentes visibles et sans surprise calculée."
+            },
+            "actual_basis": "gaap",
+            "estimate_basis": "adjusted"
           },
           "revenue": {
-            "actual": null,
+            "actual": 127577000000,
             "estimate": null,
-            "currency": null,
-            "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=GOOGL&size=100"
+            "currency": "USD",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000080/googexhibit991q32026.htm",
+            "verified_correction": {
+              "provider_actual": null,
+              "provider_source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=GOOGL&size=100",
+              "provider_currency": null,
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000080/googexhibit991q32026.htm",
+              "verified_at": "2026-10-29T09:20:08.173956+00:00",
+              "reason": "Le communiqué officiel donne 127 577 millions USD et un BPA GAAP de 2,12 USD. Le consensus 3,02 USD est ajusté selon Reuters (https://wncy.com/2026/10/28/alphabets-heavy-cloud-spending-drives-bigger-than-expected-cash-burn/); le BPA ajusté cité est 2,67 USD. Le chiffre GAAP officiel et le consensus du fournisseur sont conservés, avec bases différentes visibles et sans surprise calculée."
+            }
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "Google Cloud croît de 103 %, à 30,7 G$ US, avec une marge opérationnelle de 36,2 % contre 23,7 % un an avant. Ashkenazi prévient toutefois que le recours croissant à des capacités externes pèsera sur la marge à court terme; le niveau du T3 ne doit pas être extrapolé.",
+              "language": "fr",
+              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-28-alphabet-inc-stock/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Search augmente de 12 %, alors que les requêtes connaissent leur plus forte croissance annuelle en cinq ans. Schindler cite le change, les comparables et la monétisation plus faible d’AI Mode dans le ralentissement. La CFO prévoit encore un effet défavorable des comparables et du change au T4.",
+              "language": "fr",
+              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-28-alphabet-inc-stock/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Le flux disponible est négatif de 9,1 G$ US après 51,4 G$ d’investissements. Le paiement d’une amende européenne de 5,2 G$ et les stocks pour les systèmes TPU réduisent aussi la trésorerie. La perte non réalisée sur SpaceX pèse sur le bénéfice comptable; ce n’est pas la même sortie de fonds.",
+              "language": "fr",
+              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-28-alphabet-inc-stock/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Le budget 2026 de 195–205 G$ US d’investissements est maintenu; la direction prévoit une hausse importante en 2027 sans la chiffrer. Le T3 comprend aussi 28,7 G$ de nouvelles obligations et 12,4 G$ d’émissions d’actions ordinaires : financement disponible, mais intérêts et dilution à surveiller.",
+              "language": "fr",
+              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-28-alphabet-inc-stock/",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-28-alphabet-inc-stock-1/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=GOOGL&size=100"
+            },
+            {
+              "label": "Correction vérifiée du résultat publié",
+              "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000080/googexhibit991q32026.htm"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.marketbeat.com/earnings/reports/2026-10-28-alphabet-inc-stock/"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-28-alphabet-inc-stock/",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -1864,14 +2465,48 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=GS&size=100"
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "Moteur du trimestre — Les revenus des activités actions atteignent 6,44 G$ US, en hausse de 72 % sur un an, portés par le financement et les dérivés. La croissance reste donc très exposée à l’activité des clients sur les marchés.",
+              "language": "fr",
+              "source_url": "https://www.goldmansachs.com/pressroom/press-releases/current/pdfs/2026-q3-results.pdf",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Banque d’investissement — Les commissions progressent de 21 % à 3,22 G$ US avec les fusions-acquisitions et les émissions. Le carnet de commissions diminue toutefois depuis juin : le niveau du trimestre ne constitue pas à lui seul un nouveau rythme durable.",
+              "language": "fr",
+              "source_url": "https://www.goldmansachs.com/pressroom/press-releases/current/pdfs/2026-q3-results.pdf",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Revenus récurrents — Les frais de gestion et autres frais augmentent de 22 %, à 3,59 G$ US; la gestion d’actifs et de patrimoine croît de 14 %. Cette contribution diversifie les revenus au-delà des activités de négociation.",
+              "language": "fr",
+              "source_url": "https://www.goldmansachs.com/pressroom/press-releases/current/pdfs/2026-q3-results.pdf",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Risque de crédit — Les provisions montent à 368 M$ US, contre 102 M$ US au trimestre précédent, principalement sur des prêts à de grands clients. Ma lecture : surveiller leur normalisation et les dépréciations, même lorsque l’activité de marché soutient les profits.",
+              "language": "fr",
+              "source_url": "https://www.goldmansachs.com/pressroom/press-releases/current/pdfs/2026-q3-results.pdf",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-the-goldman-sachs-group-inc-stock/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=GS&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.goldmansachs.com/pressroom/press-releases/current/pdfs/2026-q3-results.pdf"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://www.goldmansachs.com/pressroom/press-releases/current/pdfs/2026-q3-results.pdf",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -2047,14 +2682,48 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=JNJ&size=100"
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "Prévisions — J&J relève ses perspectives de croissance opérationnelle des ventes à 6,7–7,1 % et vise un BPA ajusté publié de 11,05–11,15 $ US pour 2026. Cette révision importe davantage que le faible écart des revenus au consensus.",
+              "language": "fr",
+              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-johnson-johnson-stock/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Médicaments — TREMFYA croît d’environ 68 %, tandis que STELARA recule de 54 % sous la pression des biosimilaires. La capacité des nouvelles franchises à compenser l’érosion des anciens produits reste le test commercial central.",
+              "language": "fr",
+              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-johnson-johnson-stock/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "MedTech — La direction reconnaît une performance inférieure à ses attentes, surtout hors États-Unis et chez Abiomed. Elle vise une amélioration au quatrième trimestre, mais les achats hospitaliers et la concurrence en Asie restent des risques d’exécution.",
+              "language": "fr",
+              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-johnson-johnson-stock/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Acquisitions — Le directeur financier chiffre l’effet dilutif de Firefly Bio et Sail Biomedicines à 0,64 $ US par action en 2026 et 1,36 $ US en 2027. Ma lecture : il faut mesurer le progrès opérationnel sans ignorer le coût de construction du portefeuille futur.",
+              "language": "fr",
+              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-johnson-johnson-stock/",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-johnson-johnson-stock/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=JNJ&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.marketbeat.com/earnings/reports/2026-10-13-johnson-johnson-stock/"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-johnson-johnson-stock/",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -2086,14 +2755,48 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=JPM&size=100"
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "Perspectives — Le directeur financier présente un scénario central préliminaire de 107 G$ US de revenu net d’intérêts hors marchés en 2027. Il insiste sur l’incertitude des hypothèses de taux et de bilan : cette indication n’est pas une garantie de revenus.",
+              "language": "fr",
+              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-jpmorgan-chase-co-stock/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Rentabilité — Les revenus progressent d’environ 8 %, mais les dépenses de 12 %, avec les volumes, les recrutements et les salaires. La croissance commerciale ne se convertit donc pas intégralement en levier opérationnel.",
+              "language": "fr",
+              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-jpmorgan-chase-co-stock/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Allocation du capital — Les rachats d’actions se limitent à 1 G$ US; Jamie Dimon privilégie la croissance organique avant les rachats, surtout lorsque les cours sont élevés. Le CET1 descend de 30 points de base à 13,9 %.",
+              "language": "fr",
+              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-jpmorgan-chase-co-stock/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Crédit — Le coût du crédit atteint 2,7 G$ US, dont une hausse nette des réserves de 539 M$ US. Ma lecture : suivre la consommation et les pertes sur prêts si les taux réels restent élevés, au-delà du dynamisme des commissions et des marchés.",
+              "language": "fr",
+              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-jpmorgan-chase-co-stock/",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-jpmorgan-chase-co-stock/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=JPM&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.marketbeat.com/earnings/reports/2026-10-13-jpmorgan-chase-co-stock/"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-jpmorgan-chase-co-stock/",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -2269,14 +2972,48 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=MDA.TO&size=100"
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "Croissance — Les revenus progressent de 21,5 % à 498,1 M$ CA, menés par les systèmes satellitaires (+26,4 %) avec Telesat Lightspeed et par la géointelligence (+24,8 %). Le carnet recule toutefois à 3,95 G$ contre 4,39 G$ un an plus tôt : les réservations de 444 M$ doivent continuer de se convertir en livraisons.",
+              "language": "fr",
+              "source_url": "https://mda-en.investorroom.com/2026-11-05-MDA-SPACE-REPORTS-THIRD-QUARTER-2026-RESULTS",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Marges — Le BAIIA ajusté augmente de 15,9 % à 96,0 M$ CA, mais sa marge baisse de 20,2 % à 19,3 %. Le mix des programmes et les frais généraux absorbent une partie de la croissance; la marge brute recule aussi à 25,3 %. La montée des volumes ne garantit donc pas encore un levier opérationnel complet.",
+              "language": "fr",
+              "source_url": "https://mda-en.investorroom.com/2026-11-05-MDA-SPACE-REPORTS-THIRD-QUARTER-2026-RESULTS",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Trésorerie — Les activités génèrent 106,2 M$ CA et le flux libre atteint 61,6 M$, contre une sortie de 36,7 M$ un an plus tôt. La trésorerie nette de 1,33 G$ finance les acquisitions de SatixFy et de Blue Canyon; l’intégration de ces actifs devient le principal test de l’allocation du capital.",
+              "language": "fr",
+              "source_url": "https://mda-en.investorroom.com/2026-11-05-MDA-SPACE-REPORTS-THIRD-QUARTER-2026-RESULTS",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Perspectives — MDA relève sa cible 2026 de revenus à 1,90–1,95 G$ CA et celle du BAIIA ajusté à 355–375 M$, tout en maintenant une marge de 18–20 %. Les investissements restent prévus à 225–275 M$ et le flux libre entre neutre et négatif : le relèvement ne supprime pas la pression de financement de la capacité.",
+              "language": "fr",
+              "source_url": "https://mda-en.investorroom.com/2026-11-05-MDA-SPACE-REPORTS-THIRD-QUARTER-2026-RESULTS",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-5-81996-mdato-stock/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=MDA.TO&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://mda-en.investorroom.com/2026-11-05-MDA-SPACE-REPORTS-THIRD-QUARTER-2026-RESULTS"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://mda-en.investorroom.com/2026-11-05-MDA-SPACE-REPORTS-THIRD-QUARTER-2026-RESULTS",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -2308,14 +3045,48 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=META&size=100"
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "Activité — Le PDG décrit un cœur de métier solide. Les revenus publicitaires augmentent de 26 %, avec 10 % d’impressions supplémentaires et un prix moyen par publicité en hausse de 14 %. Ma lecture : la monétisation soutient la croissance; il faut vérifier qu’elle absorbe durablement les nouveaux coûts d’IA.",
+              "language": "fr",
+              "source_url": "https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-Third-Quarter-2026-Results/default.aspx",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Perspectives — Le T4 vise 73–76 G$ US de revenus. La fourchette d’investissements annuels se resserre à 135–145 G$ US, contre 130–145 auparavant : le minimum augmente. Le rendement de ces capacités dépendra de leur utilisation et de revenus qui restent à concrétiser.",
+              "language": "fr",
+              "source_url": "https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-Third-Quarter-2026-Results/default.aspx",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Trésorerie — Les investissements, remboursements de locations-financement compris, atteignent 34,91 G$ US, au-delà des 32,79 G$ US générés par l’exploitation; le cash-flow libre est négatif de 2,12 G$ US. La nouvelle catégorie C prévue en janvier 2027 crée une capacité de financement, sans annoncer un montant de levée immédiat.",
+              "language": "fr",
+              "source_url": "https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-Third-Quarter-2026-Results/default.aspx",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Qualité du résultat — La charge juridique de 9,89 G$ US ramène le BPA dilué GAAP à 3,83 $ US; Meta indique 7,40 $ hors cette charge. Ce dernier montant correspond à celui du tableau fournisseur. Ma lecture : le rebond du bénéfice publié ne suffit pas à mesurer la rentabilité récurrente ni le décaissement futur du règlement.",
+              "language": "fr",
+              "source_url": "https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-Third-Quarter-2026-Results/default.aspx",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-21-facebook-inc-stock/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=META&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-Third-Quarter-2026-Results/default.aspx"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-Third-Quarter-2026-Results/default.aspx",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -2347,14 +3118,48 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=MFC&size=100"
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "Rentabilité — Le bénéfice de base atteint un record de 2,125 G$ CA, en hausse de 4 % à taux de change constants, et le BPA de base progresse de 6 % à 1,24 $. Le bénéfice net IFRS recule toutefois de 22 % à 1,424 G$ : les rendements inférieurs aux attentes sur les actifs alternatifs et les effets de marché réduisent la qualité du résultat publié.",
+              "language": "fr",
+              "source_url": "https://www.manulife.com/content/dam/manulife-com/ca/financial-documents/investors/MFC_QPR_2026_Q3_EN.pdf",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Moteurs — Le bénéfice de base de l’Asie augmente de 17 %, soutenu par la croissance des affaires et une meilleure sinistralité. La gestion de patrimoine recule de 5 % et affiche 3,6 G$ de sorties nettes; les retraits de régimes de retraite américains compensent les apports institutionnels et de crédit privé.",
+              "language": "fr",
+              "source_url": "https://www.manulife.com/content/dam/manulife-com/ca/financial-documents/investors/MFC_QPR_2026_Q3_EN.pdf",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Capital — Manuvie a rendu 1,3 G$ aux actionnaires tout en conservant un ratio LICAT de 136 % et un levier financier de 23 %. Le coussin demeure solide, mais l’examen actuariel annuel a transféré ses effets entre résultat net, marge sur services contractuels et autres éléments du résultat global : il faut suivre les composantes, pas seulement le BPA de base.",
+              "language": "fr",
+              "source_url": "https://www.manulife.com/content/dam/manulife-com/ca/financial-documents/investors/MFC_QPR_2026_Q3_EN.pdf",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Croissance future — La marge sur services contractuels nette des participations minoritaires atteint 27,3 G$ CA; le mouvement organique annualisé est de 9 % depuis décembre. Les ventes et la valeur des nouvelles affaires sont presque stables sur un an, ce qui rend la progression future plus dépendante de l’Asie et de la conversion de ce stock de profits.",
+              "language": "fr",
+              "source_url": "https://www.manulife.com/content/dam/manulife-com/ca/financial-documents/investors/MFC_QPR_2026_Q3_EN.pdf",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-4-manulife-financial-co-stock/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=MFC&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.manulife.com/content/dam/manulife-com/ca/financial-documents/investors/MFC_QPR_2026_Q3_EN.pdf"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://www.manulife.com/content/dam/manulife-com/ca/financial-documents/investors/MFC_QPR_2026_Q3_EN.pdf",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -2386,14 +3191,42 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=MOD&size=100"
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "Les ventes des centres de données ont crû de 95 %, surtout auprès des grands clients nord-américains. La marge brute du segment a pourtant cédé 4,7 points à 19,7 %, sous l’effet des matériaux, des composants et des tarifs douaniers.",
+              "language": "fr",
+              "source_url": "https://investors.modine.com/news/news-details/2026/Modine-Reports-Second-Quarter-Fiscal-2027-Results/default.aspx",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Après la scission de Performance Technologies le 1er octobre, Neil Brinker vise entre 3,1 et 3,2 G$ US de ventes et entre 470 et 500 M$ US de BAIIA ajusté pour l’exercice 2027. La hausse de 50 à 55 % des ventes se calcule en excluant l’activité cédée des deux périodes.",
+              "language": "fr",
+              "source_url": "https://investors.modine.com/news/news-details/2026/Modine-Reports-Second-Quarter-Fiscal-2027-Results/default.aspx",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Sur six mois, les flux de trésorerie disponibles ont baissé sous l’effet de l’augmentation de capacité de refroidissement et des stocks. La dette nette atteint 573,7 M$ US, soit 210,9 M$ de plus qu’à la fin de l’exercice précédent. La conversion des ventes en liquidités mérite un suivi.",
+              "language": "fr",
+              "source_url": "https://investors.modine.com/news/news-details/2026/Modine-Reports-Second-Quarter-Fiscal-2027-Results/default.aspx",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-3-modine-manufacturing-stock/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=MOD&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://investors.modine.com/news/news-details/2026/Modine-Reports-Second-Quarter-Fiscal-2027-Results/default.aspx"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://investors.modine.com/news/news-details/2026/Modine-Reports-Second-Quarter-Fiscal-2027-Results/default.aspx",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -2425,14 +3258,48 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=MRK&size=100"
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "Qualité des ventes — Le T3 bénéficie d’environ 550 M$ US d’achats avancés. Les avantages liés à Keytruda et Winrevair devraient entièrement s’inverser au T4; celui des vaccins, surtout Gardasil, principalement en 2027. La croissance publiée ne doit donc pas être extrapolée comme un rythme de demande récurrent.",
+              "language": "fr",
+              "source_url": "https://www.merck.com/wp-content/uploads/sites/124/2026/10/3Q26-Merck-Prepared-Remarks.pdf",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Perspectives — La cible de revenus 2026 passe de 66,3–67,3 à 66,8–67,3 G$ US, et le BPA ajusté de 2,66–2,76 à 2,77–2,82 $, malgré une charge de licence de 0,12 $. Le taux d’impôt attendu baisse de 35–36 % à 32–33 %. Le relèvement du BPA ne vient donc pas seulement de meilleures ventes ou marges opérationnelles.",
+              "language": "fr",
+              "source_url": "https://www.merck.com/wp-content/uploads/sites/124/2026/10/3Q26-Merck-Prepared-Remarks.pdf",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "2027 — Merck annonce une croissance des revenus modeste : certaines indications de Keytruda approchent leur sommet, Bridion subit les génériques et la vaccination est moins soutenue. Les dépenses opérationnelles sous-jacentes devraient croître d’un pourcentage à un chiffre moyen à élevé. Les nouveaux lancements doivent compenser ces pressions, pas simplement s’ajouter à une base stable.",
+              "language": "fr",
+              "source_url": "https://www.merck.com/wp-content/uploads/sites/124/2026/10/3Q26-Merck-Prepared-Remarks.pdf",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Relève du portefeuille — Winrevair atteint 694 M$ US, +93 %, et Keytruda Qlex 830 M$. Les nouvelles données de phase 3 sur sac-TMT et le vaccin thérapeutique intismeran avec Moderna élargissent les relais possibles. Les résultats cliniques soutiennent la thèse de diversification, mais ne valent pas encore approbation réglementaire ni revenus futurs garantis.",
+              "language": "fr",
+              "source_url": "https://www.merck.com/wp-content/uploads/sites/124/2026/10/3Q26-Merck-Prepared-Remarks.pdf",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-29-merck-co-inc-stock/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=MRK&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.merck.com/wp-content/uploads/sites/124/2026/10/3Q26-Merck-Prepared-Remarks.pdf"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://www.merck.com/wp-content/uploads/sites/124/2026/10/3Q26-Merck-Prepared-Remarks.pdf",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -2464,14 +3331,48 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=MSFT&size=100"
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "Azure progresse de 48 %. Amy Hood attribue le dépassement notamment à Foundry, à une meilleure efficacité des capacités et à la monétisation de processeurs sous-utilisés. La demande dépasse encore l’offre; ces gains d’efficacité peuvent varier d’un trimestre à l’autre.",
+              "language": "fr",
+              "source_url": "https://stockanalysis.com/stocks/msft/transcripts/718712-q1-2027/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Au T2 de l’exercice 2027, Hood prévoit 96–97,1 G$ US de revenus et 49–50 % de croissance d’Azure à devises constantes. Les marges opérationnelles du groupe devraient légèrement baisser sur un an : la croissance n’élimine pas les coûts du mix Cloud et des nouvelles capacités.",
+              "language": "fr",
+              "source_url": "https://stockanalysis.com/stocks/msft/transcripts/718712-q1-2027/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Le flux disponible atteint 18,6 G$ US, avec 45,2 G$ de dépenses en capital, locations-financement comprises. Des livraisons externes sont reportées : plus de 50 G$ sont attendus au T2 et environ 170 G$ sur l’année civile 2026. Le soulagement de trésorerie du T1 ne signifie pas un abandon des investissements.",
+              "language": "fr",
+              "source_url": "https://stockanalysis.com/stocks/msft/transcripts/718712-q1-2027/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Les obligations de performance commerciales restantes atteignent 677 G$ US, en hausse de 73 %. Leur durée moyenne pondérée est de 2,3 ans et environ 30 % devraient devenir des revenus dans les douze mois. Ce carnet donne de la visibilité, mais ne représente ni des encaissements immédiats ni des ventes toutes acquises au prochain exercice.",
+              "language": "fr",
+              "source_url": "https://stockanalysis.com/stocks/msft/transcripts/718712-q1-2027/",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-28-microsoft-co-stock/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=MSFT&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://stockanalysis.com/stocks/msft/transcripts/718712-q1-2027/"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://stockanalysis.com/stocks/msft/transcripts/718712-q1-2027/",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -2503,14 +3404,48 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=MSFT&size=100"
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "Azure progresse de 48 %. Amy Hood attribue le dépassement notamment à Foundry, à une meilleure efficacité des capacités et à la monétisation de processeurs sous-utilisés. La demande dépasse encore l’offre; ces gains d’efficacité peuvent varier d’un trimestre à l’autre.",
+              "language": "fr",
+              "source_url": "https://stockanalysis.com/stocks/msft/transcripts/718712-q1-2027/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Au T2 de l’exercice 2027, Hood prévoit 96–97,1 G$ US de revenus et 49–50 % de croissance d’Azure à devises constantes. Les marges opérationnelles du groupe devraient légèrement baisser sur un an : la croissance n’élimine pas les coûts du mix Cloud et des nouvelles capacités.",
+              "language": "fr",
+              "source_url": "https://stockanalysis.com/stocks/msft/transcripts/718712-q1-2027/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Le flux disponible atteint 18,6 G$ US, avec 45,2 G$ de dépenses en capital, locations-financement comprises. Des livraisons externes sont reportées : plus de 50 G$ sont attendus au T2 et environ 170 G$ sur l’année civile 2026. Le soulagement de trésorerie du T1 ne signifie pas un abandon des investissements.",
+              "language": "fr",
+              "source_url": "https://stockanalysis.com/stocks/msft/transcripts/718712-q1-2027/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Les obligations de performance commerciales restantes atteignent 677 G$ US, en hausse de 73 %. Leur durée moyenne pondérée est de 2,3 ans et environ 30 % devraient devenir des revenus dans les douze mois. Ce carnet donne de la visibilité, mais ne représente ni des encaissements immédiats ni des ventes toutes acquises au prochain exercice.",
+              "language": "fr",
+              "source_url": "https://stockanalysis.com/stocks/msft/transcripts/718712-q1-2027/",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-28-microsoft-co-stock/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=MSFT&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://stockanalysis.com/stocks/msft/transcripts/718712-q1-2027/"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://stockanalysis.com/stocks/msft/transcripts/718712-q1-2027/",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -2647,14 +3582,48 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=NBIX&size=100"
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "Perspectives — La cible 2026 d’INGREZZA passe de 2,825–2,875 à 2,900–2,925 G$ US. Matt Abernethy précise toutefois que 20 M$ du T3 viennent du calendrier des commandes et devraient se renverser au T4; cet effet est déjà inclus dans la cible. La demande sous-jacente reste forte, sans extrapoler mécaniquement les 801 M$ du trimestre.",
+              "language": "fr",
+              "source_url": "https://www.marketbeat.com/earnings/reports/2026-11-2-neurocrine-biosciences-inc-stock/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Diversification — CRENESSITY atteint 211 M$ US de ventes, contre 98 M$ un an plus tôt, tandis que VYKAT XR apporte 107 M$. Ce dernier est consolidé depuis l’acquisition de Soleno en mai : la croissance totale de 41 % comprend donc un apport acquis, en plus de la progression de 17 % d’INGREZZA portée par les volumes.",
+              "language": "fr",
+              "source_url": "https://www.marketbeat.com/earnings/reports/2026-11-2-neurocrine-biosciences-inc-stock/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Qualité du bénéfice — Le BPA ajusté de 3,29 $ US se compare à un BPA GAAP de 1,96 $, contre 2,04 $ GAAP un an plus tôt. Les ajustements excluent notamment des coûts liés à Soleno et une perte de 52 M$ sur placements. La rentabilité opérationnelle progresse, mais le bénéfice comptable ne suit pas la même trajectoire que l’ajusté.",
+              "language": "fr",
+              "source_url": "https://www.marketbeat.com/earnings/reports/2026-11-2-neurocrine-biosciences-inc-stock/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Risque clinique — La direction reconnaît que les événements récents liés à la sécurité de VYKAT XR pourraient retarder sa trajectoire de croissance. Elle poursuit la surveillance et prévoit une étude en 2027 chez des patients Prader-Willi avec problèmes de santé complexes. Ma lecture : la vitesse d’adoption et le suivi de sécurité comptent autant que le potentiel commercial annoncé.",
+              "language": "fr",
+              "source_url": "https://www.marketbeat.com/earnings/reports/2026-11-2-neurocrine-biosciences-inc-stock/",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-2-neurocrine-biosciences-inc-stock/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=NBIX&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.marketbeat.com/earnings/reports/2026-11-2-neurocrine-biosciences-inc-stock/"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://www.marketbeat.com/earnings/reports/2026-11-2-neurocrine-biosciences-inc-stock/",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -2686,14 +3655,48 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=NFLX&size=100"
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "Perspectives — Netflix ramène sa cible de revenus publicitaires 2026 d’environ 3,0 à 2,7 G$ US, car certains outils et liens avec ses partenaires arrivent plus lentement que prévu. L’abonnement dépasse ses attentes, mais ce retard réduit la qualité du mix de croissance.",
+              "language": "fr",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1065280/000106528026000290/ex991_q326.htm",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Rentabilité — La marge opérationnelle atteint 34,6 %, contre 28,2 % un an plus tôt, mais l’avance sur la prévision interne vient surtout du calendrier des dépenses et d’un léger surplus de revenus. La marge prévue au T4 retombe à 26,0 %, dont 120 points de base liés aux réductions d’effectifs.",
+              "language": "fr",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1065280/000106528026000290/ex991_q326.htm",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Cash-flow — Le flux de trésorerie disponible du trimestre monte à 2,884 G$ US, contre 2,660 G$ US. La cible annuelle baisse toutefois de 12,5 à environ 12,0 G$ US, principalement parce que la clôture d’une opération immobilière est maintenant attendue au quatrième trimestre.",
+              "language": "fr",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1065280/000106528026000290/ex991_q326.htm",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Exécution — La rétention s’améliore et le désabonnement est meilleur que prévu, mais la direction veut accélérer les heures de visionnement et reconnaît que les contenus américains ne croissent pas assez vite. Ma lecture : le risque principal passe du nombre d’abonnés à l’engagement et à la monétisation publicitaire.",
+              "language": "fr",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/1065280/000106528026000290/ex991_q326.htm",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-20-netflix-inc-stock/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=NFLX&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.sec.gov/Archives/edgar/data/1065280/000106528026000290/ex991_q326.htm"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/1065280/000106528026000290/ex991_q326.htm",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -2959,19 +3962,61 @@
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=PFE&size=100"
           },
           "revenue": {
-            "actual": null,
+            "actual": 16583000000,
             "estimate": null,
-            "currency": null,
-            "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=PFE&size=100"
+            "currency": "USD",
+            "source_url": "https://www.pfizer.com/news/press-release/press-release-detail/pfizer-reports-strong-third-quarter-2026-results-and-raises",
+            "verified_correction": {
+              "provider_actual": null,
+              "provider_source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=PFE&size=100",
+              "provider_currency": null,
+              "source_url": "https://www.pfizer.com/news/press-release/press-release-detail/pfizer-reports-strong-third-quarter-2026-results-and-raises",
+              "verified_at": "2026-11-03T13:22:43.195117+00:00",
+              "reason": "Le communiqué officiel du 3 novembre 2026 indique 16 583 millions USD de revenus au T3. Le fournisseur avait déjà le BPA publié mais omettait les revenus. Consensus et BPA conservés."
+            }
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "Perspectives — Pfizer relève les revenus 2026 à 62–64 G$ US, contre 60,5–62,5 G$, et le BPA ajusté à 2,95–3,05 $, contre 2,80–3,00 $. La hausse du milieu de la cible de ventes atteint 1,5 G$; elle repose sur l’exécution depuis janvier et les initiatives de coûts, sans supposer de nouveaux rachats d’actions.",
+              "language": "fr",
+              "source_url": "https://www.pfizer.com/news/press-release/press-release-detail/pfizer-reports-strong-third-quarter-2026-results-and-raises",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Moteurs — Les revenus du T3 sont presque stables à 16,6 G$ US. Hors Comirnaty et Paxlovid, ils augmentent de 7 % à changes constants; les produits lancés ou acquis progressent de 32 % sur cette base. Le portefeuille récent compense donc le recul du COVID, sans accélération équivalente du chiffre d’affaires total.",
+              "language": "fr",
+              "source_url": "https://www.pfizer.com/news/press-release/press-release-detail/pfizer-reports-strong-third-quarter-2026-results-and-raises",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Investissement — La cible de R&D ajustée passe à 10,8–11,8 G$ US, contre 10,5–11,5 G$. La nouvelle prévision de BPA intègre déjà une charge ponctuelle de 650 M$ pour l’accord Innovent, soit environ 0,10 $ par action. Le relèvement du bénéfice prévu absorbe ainsi un coût supplémentaire de développement.",
+              "language": "fr",
+              "source_url": "https://www.pfizer.com/news/press-release/press-release-detail/pfizer-reports-strong-third-quarter-2026-results-and-raises",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Risques et capital — La prévision intègre 1,1 G$ US d’érosion des revenus liée aux génériques et biosimilaires. Aucun rachat n’est prévu en 2026 et Pfizer maintient une stratégie de désendettement prudente. Ma lecture : les nouveaux produits doivent remplacer les ventes perdues et financer le pipeline; le BPA ne dépend pas ici d’un programme de rachats.",
+              "language": "fr",
+              "source_url": "https://www.pfizer.com/news/press-release/press-release-detail/pfizer-reports-strong-third-quarter-2026-results-and-raises",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-3-pfizer-inc-stock/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=PFE&size=100"
+            },
+            {
+              "label": "Correction vérifiée du résultat publié",
+              "url": "https://www.pfizer.com/news/press-release/press-release-detail/pfizer-reports-strong-third-quarter-2026-results-and-raises"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://www.pfizer.com/news/press-release/press-release-detail/pfizer-reports-strong-third-quarter-2026-results-and-raises",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -3042,14 +4087,48 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=PRL.TO&size=100"
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "Les octrois à de nouveaux clients ont crû de 55 % selon la direction, y compris le prêt en tant que service. Le coût d’acquisition par nouveau dossier financé a baissé de 23 % depuis le T1. L’élargissement de la distribution s’accompagne donc d’un coût unitaire plus faible.",
+              "language": "fr",
+              "source_url": "https://www.newswire.ca/news-releases/propel-reports-third-quarter-results-and-announces-dividend-increase-859421744.html",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Les provisions pour pertes sur prêts et autres passifs représentent 53 % des revenus contre 52 % un an plus tôt, surtout parce que la part des nouveaux clients a monté. Les radiations nettes restent proches de 12 % de l’encours combiné moyen.",
+              "language": "fr",
+              "source_url": "https://www.newswire.ca/news-releases/propel-reports-third-quarter-results-and-announces-dividend-increase-859421744.html",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Le prêt en tant que service atteint 13,5 M$ US de revenus, en hausse de 170 %. Les partenaires financent les prêts de ce programme, ce qui accroît les commissions avec des besoins de financement moindres pour Propel.",
+              "language": "fr",
+              "source_url": "https://www.newswire.ca/news-releases/propel-reports-third-quarter-results-and-announces-dividend-increase-859421744.html",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Le dividende trimestriel passe de 0,255 à 0,27 $ CA par action. Les prêts et avances à recevoir montent de 22 % à 529 M$ US. Le coût du financement et le comportement des cohortes de nouveaux emprunteurs restent les points à surveiller.",
+              "language": "fr",
+              "source_url": "https://www.newswire.ca/news-releases/propel-reports-third-quarter-results-and-announces-dividend-increase-859421744.html",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-3-propel-holdings-inc-stock/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=PRL.TO&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.newswire.ca/news-releases/propel-reports-third-quarter-results-and-announces-dividend-increase-859421744.html"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://www.newswire.ca/news-releases/propel-reports-third-quarter-results-and-announces-dividend-increase-859421744.html",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -3081,14 +4160,48 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=QCOM&size=100"
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "Perspectives — Qualcomm prévoit pour le T1 2027 des revenus de 10,4 à 11,2 G$ US et un BPA ajusté de 2,15 à 2,35 $. La direction vise toujours 5 G$ de revenus de centres de données en 2027, mais précise que les hausses de prix destinées à compenser les intrants plus chers ne soutiendront pleinement les marges qu’au second semestre.",
+              "language": "fr",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/804328/000080432826000127/qcom092726erex991.htm",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Mix — Les revenus automobiles trimestriels atteignent un record de 1,99 G$ US, en hausse de 89 %, et l’Internet des objets progresse de 4 %. Les combinés chutent de 26 % à 5,14 G$ : la diversification avance, mais le recul du téléphone demeure assez important pour faire baisser de 8 % les revenus de la division de puces.",
+              "language": "fr",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/804328/000080432826000127/qcom092726erex991.htm",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Marges — La marge avant impôt de la division de puces passe de 29 % à 24 %. Les coûts de fabrication, d’assemblage, d’emballage avancé et de mémoire augmentent avant que les nouveaux prix soient pleinement absorbés; l’investissement dans les accélérateurs et processeurs de centres de données ajoute aussi une pression initiale.",
+              "language": "fr",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/804328/000080432826000127/qcom092726erex991.htm",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Capital — Qualcomm a rendu près de 2,0 G$ US aux actionnaires au trimestre, dont 1,01 G$ de rachats et 987 M$ de dividendes. Sur l’exercice, les rachats atteignent 7,82 G$, mais les stocks ont grimpé à 8,64 G$ contre 6,53 G$ un an plus tôt : la conversion en ventes et la discipline du fonds de roulement deviennent des points de suivi.",
+              "language": "fr",
+              "source_url": "https://www.sec.gov/Archives/edgar/data/804328/000080432826000127/qcom092726erex991.htm",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-4-qualcomm-incorporated-stock/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=QCOM&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.sec.gov/Archives/edgar/data/804328/000080432826000127/qcom092726erex991.htm"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://www.sec.gov/Archives/edgar/data/804328/000080432826000127/qcom092726erex991.htm",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -3186,22 +4299,74 @@
             "actual": 0.49,
             "estimate": 0.46,
             "currency": "USD",
-            "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=SHOP&size=100"
+            "source_url": "https://www.shopify.com/investors/press-releases/shopify-sustains-rapid-growth-revenue-32-and-free-cash-flow",
+            "verified_correction": {
+              "provider_actual": 0.49,
+              "provider_source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=SHOP&size=100",
+              "provider_currency": "USD",
+              "source_url": "https://www.shopify.com/investors/press-releases/shopify-sustains-rapid-growth-revenue-32-and-free-cash-flow",
+              "verified_at": "2026-11-03T14:20:20.467977+00:00",
+              "reason": "Le communiqué officiel du 3 novembre 2026 publie 3 742 millions USD de revenus et 0,49 USD de BPA ajusté, contre 0,36 USD GAAP. Le fournisseur avait d’abord publié 0,49 USD et 3,74 milliards, puis a retiré ces résultats et rétabli un statut de calendrier. Son estimation de 0,33 USD est conservée mais sa période et sa base ne sont pas confirmées; aucune surprise ne doit en être calculée."
+            },
+            "actual_basis": "adjusted",
+            "estimate_basis": "unverified"
           },
           "revenue": {
-            "actual": null,
+            "actual": 3742000000,
             "estimate": null,
-            "currency": null,
-            "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=SHOP&size=100"
+            "currency": "USD",
+            "source_url": "https://www.shopify.com/investors/press-releases/shopify-sustains-rapid-growth-revenue-32-and-free-cash-flow",
+            "verified_correction": {
+              "provider_actual": null,
+              "provider_source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=SHOP&size=100",
+              "provider_currency": null,
+              "source_url": "https://www.shopify.com/investors/press-releases/shopify-sustains-rapid-growth-revenue-32-and-free-cash-flow",
+              "verified_at": "2026-11-03T14:20:20.467977+00:00",
+              "reason": "Le communiqué officiel du 3 novembre 2026 publie 3 742 millions USD de revenus et 0,49 USD de BPA ajusté, contre 0,36 USD GAAP. Le fournisseur avait d’abord publié 0,49 USD et 3,74 milliards, puis a retiré ces résultats et rétabli un statut de calendrier. Son estimation de 0,33 USD est conservée mais sa période et sa base ne sont pas confirmées; aucune surprise ne doit en être calculée."
+            }
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "Perspectives — Pour le T4, Shopify vise une croissance des revenus dans le bas de la trentaine en pourcentage, mais du profit brut dans le haut de la vingtaine. Les charges d’exploitation sont prévues à 29–30 % des revenus et la marge de flux disponibles au niveau du T4 2025. Ma lecture : la discipline des dépenses doit compenser un mix moins margé.",
+              "language": "fr",
+              "source_url": "https://www.shopify.com/investors/press-releases/shopify-sustains-rapid-growth-revenue-32-and-free-cash-flow",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Volumes et mix — Le volume de marchandises atteint 119,1 G$ US (+29 %). Les solutions marchands croissent de 35 %, contre 20 % pour les abonnements; le profit brut augmente de 28 %, moins vite que les revenus (+32 %). La hausse des transactions élargit l’activité, mais réduit la part de chaque dollar de vente conservée au niveau brut.",
+              "language": "fr",
+              "source_url": "https://www.shopify.com/investors/press-releases/shopify-sustains-rapid-growth-revenue-32-and-free-cash-flow",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Trésorerie — Shopify dégage 816 M$ US de flux disponibles, soit une marge de 22 %, contre 18 % un an plus tôt. Ce calcul retire 2 M$ d’investissements matériels des 818 M$ de flux opérationnels. Il ne déduit pas les 30 M$ nets d’avances aux marchands désormais classés en investissement : le financement des marchands reste à surveiller séparément.",
+              "language": "fr",
+              "source_url": "https://www.shopify.com/investors/press-releases/shopify-sustains-rapid-growth-revenue-32-and-free-cash-flow",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Exécution — Le résultat opérationnel monte de 343 à 568 M$ US, alors que la R&D passe de 375 à 497 M$ et les ventes et marketing de 410 à 466 M$. La croissance des revenus absorbe ces investissements et améliore le levier opérationnel. Le maintien de cet effet sera déterminant si les coûts des services et de l’IA continuent d’augmenter.",
+              "language": "fr",
+              "source_url": "https://www.shopify.com/investors/press-releases/shopify-sustains-rapid-growth-revenue-32-and-free-cash-flow",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-3-shopify-inc-stock/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=SHOP&size=100"
+            },
+            {
+              "label": "Correction vérifiée du résultat publié",
+              "url": "https://www.shopify.com/investors/press-releases/shopify-sustains-rapid-growth-revenue-32-and-free-cash-flow"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://www.shopify.com/investors/press-releases/shopify-sustains-rapid-growth-revenue-32-and-free-cash-flow",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -3233,14 +4398,48 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=SLF&size=100"
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "Rentabilité — Le bénéfice sous-jacent atteint 1,15 G$ CA, en hausse de 9 %, et le BPA sous-jacent 2,05 $, en hausse de 10 %. Le bénéfice net publié recule toutefois de 29 % à 785 M$ : les effets de marché, d’intégration et de restructuration créent un écart important entre la performance courante et le résultat comptable.",
+              "language": "fr",
+              "source_url": "https://finance.yahoo.com/healthcare/articles/sunlife-reports-third-quarter-2026-220100042.html",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Moteurs — La croissance au Canada et en Asie, l’assurance collective américaine et BentallGreenOak soutiennent le bénéfice, avec un apport favorable des placements. L’assurance canadienne et le coût de financement de l’acquisition de GreenOak compensent une partie de ces gains; la diversification aide, mais elle n’élimine pas la pression locale.",
+              "language": "fr",
+              "source_url": "https://finance.yahoo.com/healthcare/articles/sunlife-reports-third-quarter-2026-220100042.html",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Capital — Le rendement des capitaux propres sous-jacent atteint 19 %, contre 13 % sur une base publiée. Le ratio de capital LICAT de 142 % demeure solide et le dividende trimestriel passe de 0,96 $ à 1,00 $. La capacité de distribution est ample, sous réserve des besoins de capital liés aux acquisitions et à l’assurance.",
+              "language": "fr",
+              "source_url": "https://finance.yahoo.com/healthcare/articles/sunlife-reports-third-quarter-2026-220100042.html",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Actifs gérés — Les actifs sous gestion atteignent 1,68 billion de dollars canadiens, en hausse de 3 %. Cette échelle accroît les revenus potentiels, mais les résultats publiés restent sensibles aux marchés et aux rendements des placements. Ma lecture : suivre les flux et les marges est plus utile que la seule variation des actifs.",
+              "language": "fr",
+              "source_url": "https://finance.yahoo.com/healthcare/articles/sunlife-reports-third-quarter-2026-220100042.html",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-4-sun-life-financial-inc-stock/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=SLF&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://finance.yahoo.com/healthcare/articles/sunlife-reports-third-quarter-2026-220100042.html"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://finance.yahoo.com/healthcare/articles/sunlife-reports-third-quarter-2026-220100042.html",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -3272,14 +4471,48 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=SNDK&size=100"
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "Moteurs — Au T1 fiscal 2027 terminé le 2 octobre, les centres de données atteignent 4,802 G$ US de revenus, +61 % sur le trimestre précédent. Environ 60 % de l’augmentation séquentielle des revenus totaux vient des volumes et 40 % des prix. Le progrès ne repose donc pas uniquement sur une hausse du prix de la mémoire.",
+              "language": "fr",
+              "source_url": "https://investor.sandisk.com/news-releases/news-release-details/sandisk-reports-fiscal-first-quarter-2027-financial-results",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Perspectives — Le T2 fiscal vise 12,2–12,6 G$ US de revenus, une marge brute ajustée de 84,5–85,5 % et un BPA ajusté de 55–57 $ avant fractionnement. La direction maintient son rythme de croissance des bits plutôt que de précipiter les transitions technologiques; l’offre ne peut pas être augmentée instantanément face à la demande d’IA.",
+              "language": "fr",
+              "source_url": "https://investor.sandisk.com/news-releases/news-release-details/sandisk-reports-fiscal-first-quarter-2027-financial-results",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Visibilité et risque — Les accords commerciaux de long terme couvrent environ la moitié des bits de l’exercice 2027 et les deux tiers de 2028 selon la conférence. Ils améliorent la planification, sans supprimer le risque de cycle, de prix ou d’exécution chez les clients. Le déplacement du mix vers les centres de données reste soumis aux contraintes de production.",
+              "language": "fr",
+              "source_url": "https://investor.sandisk.com/news-releases/news-release-details/sandisk-reports-fiscal-first-quarter-2027-financial-results",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Cash et capital — Sandisk dégage 5,7 G$ US de flux disponible ajusté au trimestre et rachète 5 G$ d’actions. Le bilan clôture sans dette, avec 5,1 G$ de liquidités. Le fractionnement 8 pour 1 est prévu pour une cotation ajustée le 20 novembre : il ne crée pas de valeur économique et ne doit pas être appliqué aux BPA actuels avant son entrée en vigueur.",
+              "language": "fr",
+              "source_url": "https://investor.sandisk.com/news-releases/news-release-details/sandisk-reports-fiscal-first-quarter-2027-financial-results",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-29-4285541-stock/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=SNDK&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://investor.sandisk.com/news-releases/news-release-details/sandisk-reports-fiscal-first-quarter-2027-financial-results"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://investor.sandisk.com/news-releases/news-release-details/sandisk-reports-fiscal-first-quarter-2027-financial-results",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -3311,14 +4544,48 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=SNDK&size=100"
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "Moteurs — Au T1 fiscal 2027 terminé le 2 octobre, les centres de données atteignent 4,802 G$ US de revenus, +61 % sur le trimestre précédent. Environ 60 % de l’augmentation séquentielle des revenus totaux vient des volumes et 40 % des prix. Le progrès ne repose donc pas uniquement sur une hausse du prix de la mémoire.",
+              "language": "fr",
+              "source_url": "https://investor.sandisk.com/news-releases/news-release-details/sandisk-reports-fiscal-first-quarter-2027-financial-results",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Perspectives — Le T2 fiscal vise 12,2–12,6 G$ US de revenus, une marge brute ajustée de 84,5–85,5 % et un BPA ajusté de 55–57 $ avant fractionnement. La direction maintient son rythme de croissance des bits plutôt que de précipiter les transitions technologiques; l’offre ne peut pas être augmentée instantanément face à la demande d’IA.",
+              "language": "fr",
+              "source_url": "https://investor.sandisk.com/news-releases/news-release-details/sandisk-reports-fiscal-first-quarter-2027-financial-results",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Visibilité et risque — Les accords commerciaux de long terme couvrent environ la moitié des bits de l’exercice 2027 et les deux tiers de 2028 selon la conférence. Ils améliorent la planification, sans supprimer le risque de cycle, de prix ou d’exécution chez les clients. Le déplacement du mix vers les centres de données reste soumis aux contraintes de production.",
+              "language": "fr",
+              "source_url": "https://investor.sandisk.com/news-releases/news-release-details/sandisk-reports-fiscal-first-quarter-2027-financial-results",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Cash et capital — Sandisk dégage 5,7 G$ US de flux disponible ajusté au trimestre et rachète 5 G$ d’actions. Le bilan clôture sans dette, avec 5,1 G$ de liquidités. Le fractionnement 8 pour 1 est prévu pour une cotation ajustée le 20 novembre : il ne crée pas de valeur économique et ne doit pas être appliqué aux BPA actuels avant son entrée en vigueur.",
+              "language": "fr",
+              "source_url": "https://investor.sandisk.com/news-releases/news-release-details/sandisk-reports-fiscal-first-quarter-2027-financial-results",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-29-4285541-stock/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=SNDK&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://investor.sandisk.com/news-releases/news-release-details/sandisk-reports-fiscal-first-quarter-2027-financial-results"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://investor.sandisk.com/news-releases/news-release-details/sandisk-reports-fiscal-first-quarter-2027-financial-results",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -3349,8 +4616,19 @@
           "eps": {
             "actual": 3.97,
             "estimate": 3.53,
-            "currency": "USD",
-            "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=SU&size=100"
+            "currency": "CAD",
+            "source_url": "https://www.suncor.com/-/media/project/suncor/files/news-releases/2026/2026-11-03-news-release-earnings-q3-2026-en.pdf?created=20261103131130&modified=20261103212632",
+            "verified_correction": {
+              "provider_actual": 3.97,
+              "provider_source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=SU&size=100",
+              "provider_currency": "USD",
+              "source_url": "https://www.suncor.com/-/media/project/suncor/files/news-releases/2026/2026-11-03-news-release-earnings-q3-2026-en.pdf?created=20261103131130&modified=20261103212632",
+              "verified_at": "2026-11-04T14:02:05.936986+00:00",
+              "reason": "Le communiqué officiel du 3 novembre publie un résultat d’exploitation ajusté de 3,97 $ CA par action. Le fournisseur attribue à ce montant la devise USD. Son estimation reste dans sa devise d’origine et sa base n’est pas vérifiée."
+            },
+            "actual_basis": "adjusted",
+            "estimate_basis": "unverified",
+            "estimate_currency": "USD"
           },
           "revenue": {
             "actual": null,
@@ -3358,14 +4636,48 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=SU&size=100"
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "Les prix réalisés en amont, les marges de raffinage et les exportations à valeur élevée ont porté les fonds ajustés provenant de l’exploitation à 6,71 G$ CA. La production en amont a toutefois reculé de 870 000 à environ 853 000 barils par jour sur un an.",
+              "language": "fr",
+              "source_url": "https://www.suncor.com/-/media/project/suncor/files/news-releases/2026/2026-11-03-news-release-earnings-q3-2026-en.pdf?created=20261103131130&modified=20261103212632",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Rich Kruger souligne que les transferts internes de bitume ont aidé à maintenir le débit du réseau pendant un arrêt de maintenance à Edmonton. Les ventes de produits raffinés ont établi un record pour un T3, à 677 000 barils par jour.",
+              "language": "fr",
+              "source_url": "https://www.suncor.com/-/media/project/suncor/files/news-releases/2026/2026-11-03-news-release-earnings-q3-2026-en.pdf?created=20261103131130&modified=20261103212632",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Après 5,20 G$ CA de flux de fonds disponibles au T3, le dividende trimestriel passe à 0,66 $ CA par action et les rachats mensuels à 750 M$ CA. La dette nette est descendue à 1,75 G$ CA, contre 4,48 G$ au trimestre précédent.",
+              "language": "fr",
+              "source_url": "https://www.suncor.com/-/media/project/suncor/files/news-releases/2026/2026-11-03-news-release-earnings-q3-2026-en.pdf?created=20261103131130&modified=20261103212632",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "La cession prévue de Terra Nova, White Rose et West White Rose a entraîné une dépréciation sans effet de trésorerie de 1,08 G$ CA. Dans son communiqué en dollars canadiens, Suncor distingue 3,97 $ de bénéfice d’exploitation ajusté par action de 3,27 $ de bénéfice net par action.",
+              "language": "fr",
+              "source_url": "https://www.suncor.com/-/media/project/suncor/files/news-releases/2026/2026-11-03-news-release-earnings-q3-2026-en.pdf?created=20261103131130&modified=20261103212632",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-3-suncor-energy-inc-stock/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=SU&size=100"
+            },
+            {
+              "label": "Correction vérifiée du résultat publié",
+              "url": "https://www.suncor.com/-/media/project/suncor/files/news-releases/2026/2026-11-03-news-release-earnings-q3-2026-en.pdf?created=20261103131130&modified=20261103212632"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://www.suncor.com/-/media/project/suncor/files/news-releases/2026/2026-11-03-news-release-earnings-q3-2026-en.pdf?created=20261103131130&modified=20261103212632",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -3513,14 +4825,48 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=TRP&size=100"
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "Résultat — Le BAIIA comparable atteint 3,00 G$ CA, en hausse de 13 %, et le BPA comparable 0,94 $ contre 0,77 $. Les réseaux de gaz américains et canadiens ainsi que l’énergie progressent; la hausse reflète donc plusieurs actifs, avec un apport particulièrement fort du transport américain et des prix de l’électricité.",
+              "language": "fr",
+              "source_url": "https://www.tcenergy.com/siteassets/pdfs/investors/reports-and-filings/annual-and-quarterly-reports/2026/tce-2026-q3-quarterly-report.pdf",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Perspectives — TC Énergie relève le BAIIA comparable 2026 à 11,8–12,0 G$ CA, contre 11,6–11,8 G$, et vise 12,3–12,5 G$ en 2027. Le ratio dette/BAIIA devrait finir 2026 entre 4,55 et 4,60, sous la cible de 4,75; la réduction du levier reste nécessaire pour financer la croissance sans fragiliser le bilan.",
+              "language": "fr",
+              "source_url": "https://www.tcenergy.com/siteassets/pdfs/investors/reports-and-filings/annual-and-quarterly-reports/2026/tce-2026-q3-quarterly-report.pdf",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Investissements — Le plan 2027 prévoit 6,0–6,5 G$ CA de dépenses nettes. Crossroads et American Midwest ajoutent de la capacité aux États-Unis, notamment pour les centres de données. Ces contrats soutiennent la visibilité, mais l’exécution simultanée de plusieurs projets expose encore aux coûts et aux délais de construction.",
+              "language": "fr",
+              "source_url": "https://www.tcenergy.com/siteassets/pdfs/investors/reports-and-filings/annual-and-quarterly-reports/2026/tce-2026-q3-quarterly-report.pdf",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Coastal GasLink — La phase 2 de 4,9 G$ CA ferait passer la capacité de 2,1 à 4,5 milliards de pieds cubes par jour. Le financement de projet pourrait fournir jusqu’à 3,3 G$, limitant l’apport de TC Énergie à 250 M$ sous certaines conditions. Le contrôle du budget et du calendrier détermine donc la création de valeur.",
+              "language": "fr",
+              "source_url": "https://www.tcenergy.com/siteassets/pdfs/investors/reports-and-filings/annual-and-quarterly-reports/2026/tce-2026-q3-quarterly-report.pdf",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-5-tc-energy-co-stock/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=TRP&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.tcenergy.com/siteassets/pdfs/investors/reports-and-filings/annual-and-quarterly-reports/2026/tce-2026-q3-quarterly-report.pdf"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://www.tcenergy.com/siteassets/pdfs/investors/reports-and-filings/annual-and-quarterly-reports/2026/tce-2026-q3-quarterly-report.pdf",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -3552,14 +4898,48 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=TSM&size=100"
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "Demande — Le calcul haute performance progresse de 22 % sur le trimestre et représente 68 % des revenus. La demande pour les procédés avancés soutient les ventes, au-delà du seul dépassement du BPA.",
+              "language": "fr",
+              "source_url": "https://investor.tsmc.com/english/quarterly-results/2026/q3",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Perspectives — La direction prévoit 52,3 à 54,3 G$ US de revenus au quatrième trimestre, contre 46,72 G$ US publiés au troisième. Le milieu de fourchette implique environ 14 % de croissance séquentielle; c’est une prévision, pas un résultat acquis.",
+              "language": "fr",
+              "source_url": "https://investor.tsmc.com/english/quarterly-results/2026/q3",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Marges — La marge brute descend de 67,7 à 66,4 %, surtout avec le démarrage du 2 nm. Le directeur financier prévoit aussi une dilution de 3 à 4 points liée aux usines étrangères dans les prochaines années : le coût de l’expansion reste à surveiller.",
+              "language": "fr",
+              "source_url": "https://investor.tsmc.com/english/quarterly-results/2026/q3",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Cash-flow — Les activités génèrent 919,8 G$ NT pour 443,2 G$ NT d’investissements au trimestre. Ma lecture : l’expansion reste autofinancée; la thèse dépend maintenant de la conversion de ces capacités en ventes rentables malgré la pression sur les marges.",
+              "language": "fr",
+              "source_url": "https://investor.tsmc.com/english/quarterly-results/2026/q3",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-15-taiwan-semiconductor-manufacturing-company-limited-stock/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=TSM&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://investor.tsmc.com/english/quarterly-results/2026/q3"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://investor.tsmc.com/english/quarterly-results/2026/q3",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -3591,14 +4971,48 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=UNH&size=100"
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "Prévisions — UnitedHealth relève son objectif annuel de BPA ajusté à au moins 20,50 $ US, contre une fourchette de 19,50–20,00 $ US après le deuxième trimestre. Le relèvement confirme une meilleure trajectoire, sans effacer les risques d’exécution.",
+              "language": "fr",
+              "source_url": "https://www.unitedhealthgroup.com/content/dam/UHG/PDF/investors/2026/unh-reports-third-quarter-2026-results.pdf",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Coûts médicaux — Le ratio de soins médicaux baisse de 89,9 à 88,4 % sur un an, avec la tarification, les changements de garanties et la gestion des coûts. C’est un moteur concret du redressement de la rentabilité de l’assurance.",
+              "language": "fr",
+              "source_url": "https://www.unitedhealthgroup.com/content/dam/UHG/PDF/investors/2026/unh-reports-third-quarter-2026-results.pdf",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Volumes — Les membres Medicare Advantage diminuent de 935 000 depuis le début de l’année et les revenus d’Optum Health reculent de 10 %. Ma lecture : le redressement des marges ne doit pas masquer la contraction de certaines clientèles.",
+              "language": "fr",
+              "source_url": "https://www.unitedhealthgroup.com/content/dam/UHG/PDF/investors/2026/unh-reports-third-quarter-2026-results.pdf",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Trésorerie et dette — Le cash-flow opérationnel atteint 5,1 G$ US, soit 1,2 fois le bénéfice net. Le ratio dette/capital reste à 41,7 %, au-dessus de l’objectif d’environ 40 % en fin d’année : la génération de liquidités doit aussi soutenir le désendettement.",
+              "language": "fr",
+              "source_url": "https://www.unitedhealthgroup.com/content/dam/UHG/PDF/investors/2026/unh-reports-third-quarter-2026-results.pdf",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-unitedhealth-group-incorporated-stock/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=UNH&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.unitedhealthgroup.com/content/dam/UHG/PDF/investors/2026/unh-reports-third-quarter-2026-results.pdf"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://www.unitedhealthgroup.com/content/dam/UHG/PDF/investors/2026/unh-reports-third-quarter-2026-results.pdf",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -3630,14 +5044,48 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=V&size=100"
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "Pour l’exercice 2027, Chris Suh vise une croissance ajustée des revenus et du BPA proche du bas des taux à deux chiffres, avec une borne haute un peu plus élevée pour le BPA. Ce sont des indications qualitatives, à devises constantes et hors acquisitions; elles supposent une consommation résistante et un environnement macro stable.",
+              "language": "fr",
+              "source_url": "https://stockanalysis.com/stocks/v/transcripts/706676-q4-2026/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Environ 25 % des volumes seront renouvelés en 2027, contre 20 % en 2026 : Visa prévoit une accélération des incitatifs. Ils montent déjà de 21 % au T4, à 5,1 G$ US. Ma lecture : sécuriser les grands clients protège le réseau, mais réduit le levier immédiat sur le revenu net.",
+              "language": "fr",
+              "source_url": "https://stockanalysis.com/stocks/v/transcripts/706676-q4-2026/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Les paiements progressent d’environ 9 % à devises constantes, et le transfrontalier hors Europe de 14 %. Chris Suh attribue une partie du dépassement du BPA à un taux d’impôt de 18,4 %, inférieur aux attentes : cet avantage ne doit pas être assimilé à une accélération opérationnelle durable.",
+              "language": "fr",
+              "source_url": "https://stockanalysis.com/stocks/v/transcripts/706676-q4-2026/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Au T4, Visa rachète environ 4 G$ US d’actions et verse 1,3 G$ de dividendes; il reste 24,4 G$ d’autorisation de rachat. Le dividende trimestriel augmente de 16 %, à 0,78 $. La direction prévoit des dépenses ajustées en croissance un peu inférieure aux revenus, condition à surveiller pour les marges.",
+              "language": "fr",
+              "source_url": "https://stockanalysis.com/stocks/v/transcripts/706676-q4-2026/",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-27-visa-inc-stock/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=V&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://stockanalysis.com/stocks/v/transcripts/706676-q4-2026/"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://stockanalysis.com/stocks/v/transcripts/706676-q4-2026/",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -3733,14 +5181,48 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=VNP.TO&size=100"
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "Perspectives — Richard Perron dit viser le haut de la fourchette 2026 de BAIIA ajusté, de 100 à 105 M$ US. La cible est réaffirmée, pas relevée. L’utilisation élevée des capacités et les projets de productivité doivent soutenir les volumes malgré la pression sur les intrants; lecture du communiqué du 2 novembre, antérieur à la conférence du 3 novembre à 8 h.",
+              "language": "fr",
+              "source_url": "https://www.5nplus.com/en/news/5n-reports-third-quarter-of-2026-financial-results/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Rentabilité — Les revenus du T3 montent de 30 % à 136,4 M$ US, mais le BAIIA ajusté ne progresse que de 7 %, à 31,1 M$. La marge brute ajustée de 31,4 % s’améliore sur le T2, tout en restant sous les 36,9 % d’un an plus tôt, notamment avec la normalisation des matériaux de performance. La croissance ne se convertit donc pas intégralement en marge.",
+              "language": "fr",
+              "source_url": "https://www.5nplus.com/en/news/5n-reports-third-quarter-of-2026-financial-results/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Carnet — Au 30 septembre, les commandes en carnet atteignent 447,3 M$ US, soit 299 jours de revenus annualisés : 14 jours de moins qu’au trimestre précédent et 12 de moins qu’un an plus tôt. Cette couverture donne de la visibilité, sans garantir le calendrier des livraisons ni des encaissements.",
+              "language": "fr",
+              "source_url": "https://www.5nplus.com/en/news/5n-reports-third-quarter-of-2026-financial-results/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Capital — La dette nette revient à 32,4 M$ US, contre 50,3 M$ à fin 2025, pour un levier de 0,31 fois. Le renforcement des capacités, notamment à St. George pour l’arséniure de gallium, vise les marchés spatial et de défense. Ma lecture : le bilan facilite ces investissements, mais leur rendement dépendra de la montée en production et des coûts.",
+              "language": "fr",
+              "source_url": "https://www.5nplus.com/en/news/5n-reports-third-quarter-of-2026-financial-results/",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-2-5n-plus-inc-vnpto-stock/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=VNP.TO&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.5nplus.com/en/news/5n-reports-third-quarter-of-2026-financial-results/"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://www.5nplus.com/en/news/5n-reports-third-quarter-of-2026-financial-results/",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -3772,14 +5254,48 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=WCN&size=100"
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "Perspectives — Waste Connections relève une deuxième fois ses objectifs 2026 : revenus d’environ 10,09 G$ US et BAIIA ajusté de 3,345 G$ US. Ces cibles excluent les acquisitions supplémentaires et supposent un environnement économique inchangé.",
+              "language": "fr",
+              "source_url": "https://greenstocknews.com/news/nyse/wcn/waste-connections-reports-third-quarter-2026-results-and-raises-full-year-outlook",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Exécution — Le PDG signale une amélioration séquentielle de 70 points de base des volumes unitaires de déchets solides, menée par les sites d’enfouissement. La marge de BAIIA ajusté atteint 34 %, avec une expansion sous-jacente de 50 points de base malgré la hausse tardive du diesel.",
+              "language": "fr",
+              "source_url": "https://greenstocknews.com/news/nyse/wcn/waste-connections-reports-third-quarter-2026-results-and-raises-full-year-outlook",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Cash-flow — La direction vise 1,40–1,45 G$ US de flux de trésorerie disponible ajusté pour 2026, après environ 1,25 G$ US d’investissements. Ma lecture : vérifier la conversion des marges en cash; cette mesure ajustée ne représente pas tout l’argent libre après le service obligatoire de la dette.",
+              "language": "fr",
+              "source_url": "https://greenstocknews.com/news/nyse/wcn/waste-connections-reports-third-quarter-2026-results-and-raises-full-year-outlook",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Capital — Les rachats dépassent 1 G$ US depuis janvier, soit 2,5 % des actions, et le dividende augmente de 10 % pour une seizième hausse annuelle consécutive. Les acquisitions conclues ajoutent environ 130 M$ US de revenus annualisés; leur intégration doit préserver la discipline financière.",
+              "language": "fr",
+              "source_url": "https://greenstocknews.com/news/nyse/wcn/waste-connections-reports-third-quarter-2026-results-and-raises-full-year-outlook",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-21-waste-connections-inc-stock/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=WCN&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://greenstocknews.com/news/nyse/wcn/waste-connections-reports-third-quarter-2026-results-and-raises-full-year-outlook"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://greenstocknews.com/news/nyse/wcn/waste-connections-reports-third-quarter-2026-results-and-raises-full-year-outlook",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -3811,14 +5327,48 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=WFC&size=100"
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "Activité — Les prêts moyens et les dépôts progressent chacun de 11 % sur un an. Cette croissance du bilan soutient les revenus, mais doit continuer à s’accompagner d’une discipline de souscription plutôt que d’une prise de risque accrue.",
+              "language": "fr",
+              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-wells-fargo-company-stock/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Perspectives — La direction maintient environ 50 G$ US de revenu net d’intérêts pour 2026 et prévoit près de 13 G$ US au quatrième trimestre, avec une marge d’intérêt globalement stable. Les volumes et le renouvellement des actifs à taux fixe sont les moteurs annoncés.",
+              "language": "fr",
+              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-wells-fargo-company-stock/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Efficacité — Le ratio d’efficacité s’améliore de deux points à 63 % et les charges hors intérêts diminuent de 103 M$ US sur un an. Les économies compensent les dépenses liées à l’activité et soutiennent la progression de la rentabilité.",
+              "language": "fr",
+              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-wells-fargo-company-stock/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Crédit — Les pertes nettes sur prêts descendent à 38 points de base. Charlie Scharf ne constate pas encore de dégradation généralisée, mais rappelle que le cycle finira par se détériorer : surveiller les ménages sensibles aux taux et au coût de la vie.",
+              "language": "fr",
+              "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-wells-fargo-company-stock/",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-wells-fargo-company-stock/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=WFC&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.marketbeat.com/earnings/reports/2026-10-13-wells-fargo-company-stock/"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://www.marketbeat.com/earnings/reports/2026-10-13-wells-fargo-company-stock/",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -3916,14 +5466,48 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=WSP.TO&size=100"
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "Croissance — Les revenus nets augmentent de 22,1 %, dont 5,1 % en croissance interne. Le Canada et l’Europe–Moyen-Orient–Inde–Afrique progressent à deux chiffres, tandis que la conversion des projets est plus lente dans les Amériques; cette divergence rend l’exécution régionale aussi importante que l’apport des acquisitions.",
+              "language": "fr",
+              "source_url": "https://www.wsp.com/fr-ch/news/2026/wsp-annonce-de-solides-resultats-pour-le-t3-2026-et-une-croissance-du-carnet-de-commandes",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Carnet et marge — Le carnet atteint un record de 20,3 G$ CA, en hausse organique de 5 % sur douze mois. Le BAIIA ajusté monte à 864,6 M$ et sa marge à 20,5 % contre 20,2 %; le volume futur est visible, mais les coûts d’intégration et de financement ont absorbé une partie de l’amélioration opérationnelle.",
+              "language": "fr",
+              "source_url": "https://www.wsp.com/fr-ch/news/2026/wsp-annonce-de-solides-resultats-pour-le-t3-2026-et-une-croissance-du-carnet-de-commandes",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Trésorerie — Le flux libre trimestriel progresse à 333 M$ CA, mais celui des neuf premiers mois recule à 588 M$ contre 887 M$. Le délai de recouvrement passe de 71 à 73 jours : la génération sur douze mois demeure solide à 1,41 G$, mais le fonds de roulement doit s’améliorer au quatrième trimestre.",
+              "language": "fr",
+              "source_url": "https://www.wsp.com/fr-ch/news/2026/wsp-annonce-de-solides-resultats-pour-le-t3-2026-et-une-croissance-du-carnet-de-commandes",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Bilan — Le levier financier est de 2,2 fois, légèrement au-dessus de la cible de 1 à 2 fois après les acquisitions. La direction prévoit revenir dans la fourchette d’ici la fin de l’exercice et réitère ses perspectives 2026; la réduction de la dette et l’intégration de TRC sont donc les principaux tests de cette cible.",
+              "language": "fr",
+              "source_url": "https://www.wsp.com/fr-ch/news/2026/wsp-annonce-de-solides-resultats-pour-le-t3-2026-et-une-croissance-du-carnet-de-commandes",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-4-wsp-global-inc-wspto-stock/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=WSP.TO&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.wsp.com/fr-ch/news/2026/wsp-annonce-de-solides-resultats-pour-le-t3-2026-et-une-croissance-du-carnet-de-commandes"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://www.wsp.com/fr-ch/news/2026/wsp-annonce-de-solides-resultats-pour-le-t3-2026-et-une-croissance-du-carnet-de-commandes",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -4035,14 +5619,48 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=XOM&size=100"
           },
-          "messages": [],
-          "report_url": null,
+          "messages": [
+            {
+              "text": "Exécution — Woods souligne une production de distillats du golfe américain accrue d’environ 40 % depuis 2019 grâce aux investissements, dont Beaumont. Les économies structurelles cumulées atteignent 16,9 G$ US depuis 2019. Ces gains de capacité et de coûts renforcent l’activité, mais ne rendent pas permanentes les marges de raffinage actuelles.",
+              "language": "fr",
+              "source_url": "https://investor.exxonmobil.com/company-information/press-releases/detail/1213/exxonmobil-announces-third-quarter-2026-results",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Trésorerie — Le T3 génère 25,7 G$ US de flux opérationnel et 19,1 G$ de flux disponible, contre 9,4 G$ distribués aux actionnaires. Les investissements décaissés sont de 7,0 G$. La dette nette a reculé de près de 11 G$ depuis janvier : le cash soutient à la fois le bilan, les projets et les distributions.",
+              "language": "fr",
+              "source_url": "https://investor.exxonmobil.com/company-information/press-releases/detail/1213/exxonmobil-announces-third-quarter-2026-results",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Perspectives — La production annuelle du Permien reste visée autour de 1,8 million de barils équivalent pétrole par jour. Au T4, environ 350 000 barils équivalent pétrole par jour resteraient hors ligne au Moyen-Orient si les perturbations se poursuivent; davantage de maintenance est attendu dans les produits. La disponibilité reste un risque concret.",
+              "language": "fr",
+              "source_url": "https://investor.exxonmobil.com/company-information/press-releases/detail/1213/exxonmobil-announces-third-quarter-2026-results",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Capital — Le dividende trimestriel passe à 1,07 $ US par action et ExxonMobil annonce 20 G$ de rachats pour 2027, sous réserve de conditions de marché raisonnables. La forte couverture actuelle est favorable, mais le programme de rachats reste une intention conditionnelle; sa soutenabilité doit être jugée sur plusieurs régimes de prix.",
+              "language": "fr",
+              "source_url": "https://investor.exxonmobil.com/company-information/press-releases/detail/1213/exxonmobil-announces-third-quarter-2026-results",
+              "kind": "reviewed_summary"
+            }
+          ],
+          "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-30-exxon-mobil-co-stock/",
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=XOM&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://investor.exxonmobil.com/company-information/press-releases/detail/1213/exxonmobil-announces-third-quarter-2026-results"
             }
-          ]
+          ],
+          "retained_report_context": {
+            "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+            "source_url": "https://investor.exxonmobil.com/company-information/press-releases/detail/1213/exxonmobil-announces-third-quarter-2026-results",
+            "reason": "Lien du même rapport daté conservé après échec MarketBeat; chiffres courants préservés."
+          }
         }
       ],
       "source_warnings": [
@@ -4123,5 +5741,6 @@
       "source_warnings": []
     }
   },
-  "errors": {}
+  "errors": {},
+  "analysis_reviewed_at": "2026-11-06T10:08:04.545387+00:00"
 }
