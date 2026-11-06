@@ -270,7 +270,7 @@ def refresh_analysis(current, baseline, sources, config, generated_at):
                 raise ValueError("New ETF missing common history: " + ticker)
             frozen[ticker] = [supplied[month] for month in current["dates"]]
     for ticker in config["funds"]:
-        overlap = [(month, old) for month, old in zip(current["dates"], frozen[ticker]) if month in sources["funds"][ticker]["returns"]]
+        overlap = [(month, old) for month, old in zip(current["dates"], frozen[ticker]) if old is not None and month in sources["funds"][ticker]["returns"]]
         if overlap and max(abs(old - sources["funds"][ticker]["returns"][month]) for month, old in overlap) > .05:
             raise ValueError("Large historical source revision or split error: " + ticker)
         for month in dates[len(current["dates"]):]:
@@ -378,6 +378,9 @@ def validate(d, baseline):
     for key in d["order"]:
         r = d["results"][key]
         if len(r["monthly"]) != n or len(r["wealth"]) != n + 1: raise ValueError("Misaligned series " + key)
+        offset = d["dates"].index(r["available_history_start"]) if r.get("available_history_start", d["dates"][0]) > d["dates"][0] else 0
+        if r["monthly"][:offset] != [None] * offset or r["wealth"][:offset] != [None] * offset or any(not isinstance(v, (int, float)) or not math.isfinite(v) for v in r["monthly"][offset:] + r["wealth"][offset:]):
+            raise ValueError("Unavailable history must remain empty before observed inception: " + key)
         if abs(sum(r["weights"].values()) - 1) > 1e-8 or abs(sum(r["geo_total"]) - 1) > 1e-6: raise ValueError("Invalid weights " + key)
         if key in baseline["results"]:
             old = baseline["results"][key]

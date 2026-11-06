@@ -11,7 +11,7 @@ module.exports=function tracking(html){
  html=html.replace('<section id="overview"',view+'\n<section id="overview"');
  html=html.replace('<button id="performanceRobust">','<button id="performanceRecommended">Les 3 nouveaux</button><button id="performanceRobust">');
  html=html.replace('<option selected>VEQT</option>','<option value="VFV">S&P 500 · VFV (CAD)</option><option selected>VEQT</option>');
- if(!html.includes('src="../js/fnb-performance-utils.js'))html=html.replace(/(<script[^>]+src="\.\.\/js\/fnb-dashboard.js)/,'<script src="../js/fnb-performance-utils.js?v=20261101-preference-rank"></script><script src="../js/fnb-performance.js?v=20261101-preference-rank"></script>$1');
- html=html.replace(/fnb-performance(-utils)?\.js\?v=[^"']+/g,(_,part)=>'fnb-performance'+(part||'')+'.js?v=20261101-preference-rank');
+ if(!html.includes('src="../js/fnb-performance-utils.js'))html=html.replace(/(<script[^>]+src="\.\.\/js\/fnb-dashboard.js)/,'<script src="../js/fnb-performance-utils.js?v=20261105-conviction-reference"></script><script src="../js/fnb-performance.js?v=20261105-conviction-reference"></script>$1');
+ html=html.replace(/fnb-performance(-utils)?\.js\?v=[^"']+/g,(_,part)=>'fnb-performance'+(part||'')+'.js?v=20261105-conviction-reference');
  return html;
 };

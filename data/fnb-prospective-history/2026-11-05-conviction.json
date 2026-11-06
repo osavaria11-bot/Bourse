@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "kind": "user_submitted_allocations",
+  "published_at": "2026-11-06T07:43:42-05:00",
+  "as_of": "2026-10",
+  "benchmark": "VFV",
+  "source_note": "Les deux dernières compositions proposées dans la conversation, version FCUV puis version FCMO, ont été acceptées par l’utilisateur pour ajout à SAVY le 5 novembre 2026. Poids exacts conservés sans nouvelle optimisation. Les résultats consultés lors de la sélection sont rétrospectifs; aucun objectif de rendement futur garanti.",
+  "portfolios": [
+    {
+      "id": "prospective-2026-11-valeur-fcuv",
+      "name": "Conviction · Valeur FCUV",
+      "chart_name": "Valeur FCUV",
+      "style_label": "Innovation, valeur et diversification régionale",
+      "description": "Composition retenue dans la conversation puis autorisée pour le tableau de bord le 5 novembre 2026. Objectif de sélection : bêta ≥ 1,20 face à VFV, sans emprunt ni FNB à levier; le bêta varie selon la fenêtre et les marchés.",
+      "color": "#D7A453",
+      "benchmark": "VFV",
+      "constraints": {
+        "fund_cap": 0.3,
+        "fund_caps": {
+          "FINN": 0.3,
+          "XCHP": 0.05,
+          "ZEB": 0.15
+        },
+        "geo_tolerance": 0.15,
+        "sector_tolerance": 0.15,
+        "sector_cap": 1.0,
+        "crypto_cap": 0.0,
+        "beta_selection_min": 1.2,
+        "beta_benchmark": "VFV",
+        "leverage": false
+      },
+      "weights": {
+        "FINN": 0.2,
+        "ZEM": 0.189,
+        "FCUV": 0.149,
+        "VDY": 0.133,
+        "XMTM": 0.084,
+        "XBM": 0.08,
+        "XCHP": 0.05,
+        "XEG": 0.05,
+        "ZEB": 0.045,
+        "XGD": 0.02
+      },
+      "available_history_start": "2023-10"
+    },
+    {
+      "id": "prospective-2026-11-momentum-fcmo",
+      "name": "Conviction · Momentum FCMO",
+      "chart_name": "Momentum FCMO",
+      "style_label": "Innovation, momentum et dividendes canadiens",
+      "description": "Composition retenue dans la conversation puis autorisée pour le tableau de bord le 5 novembre 2026. Objectif de sélection : bêta ≥ 1,20 face à VFV, sans emprunt ni FNB à levier; le bêta varie selon la fenêtre et les marchés.",
+      "color": "#A17FC0",
+      "benchmark": "VFV",
+      "constraints": {
+        "fund_cap": 0.3,
+        "fund_caps": {
+          "FINN": 0.3,
+          "XCHP": 0.05,
+          "ZEB": 0.15
+        },
+        "geo_tolerance": 0.15,
+        "sector_tolerance": 0.15,
+        "sector_cap": 1.0,
+        "crypto_cap": 0.0,
+        "beta_selection_min": 1.2,
+        "beta_benchmark": "VFV",
+        "leverage": false
+      },
+      "weights": {
+        "FINN": 0.2,
+        "ZEM": 0.186,
+        "VDY": 0.163,
+        "FCMO": 0.15,
+        "XBM": 0.08,
+        "XMTM": 0.056,
+        "ZEB": 0.052,
+        "XCHP": 0.05,
+        "XEG": 0.05,
+        "XGD": 0.013
+      },
+      "available_history_start": "2023-10"
+    }
+  ]
+}

@@ -208,7 +208,7 @@ def fidelity(client, ticker, fund, cutoff):
     returns = {m: v - 1 for m, v in products.items() if m <= cutoff and last_trading_day(m) <= end and m > first.strftime("%Y-%m")}
     alloc = d["allocations"]
     warning = None
-    if ticker not in ["FEQT", "FBAL", "FGRO"]:
+    if ticker not in ["FEQT", "FBAL", "FGRO"] and not fund.get("assets_from_positive_holdings"):
         alloc, warning = fidelity_allocation_snapshot(alloc)
     sector = alloc["sectorAllocations"]["CM"]
     sec = [0.] * len(SECTORS)
@@ -244,19 +244,30 @@ def fidelity(client, ticker, fund, cutoff):
         # The unlisted country residual stays explicit, rather than guessing a country.
         geo[4] += max(0., equity * 100 - sum(geo))
     total = equity + bond + crypto
-    if total > 1.005: raise ValueError("Fidelity excessive asset allocation")
+    if total > 1.005 and not fund.get("assets_from_positive_holdings"): raise ValueError("Fidelity excessive asset allocation")
     if total > 1: equity, bond, crypto = (v / total for v in [equity, bond, crypto])
     assets = {"equity": equity, "bond": bond, "crypto": crypto, "gold": 0., "cash": max(0., 1 - equity - bond - crypto)}
     selected = [c for key, c in d["holdings"]["holdingsByCategory"].items() if "Equit" in key or key == ""]
     if len({c["asOfDate"] for c in selected}) != 1: raise ValueError("Fidelity holdings dates inconsistent")
     positions = [[r["name"], number(r["netPercent"]) / 100] for c in selected for r in c["holdings"]
                  if number(r["marketValue"]) > 0 and not CASH.search(r["name"])]
+    if fund.get("assets_from_positive_holdings"):
+        # The older asset-allocation table can contain a signed settlement
+        # residual. Use the newer, fully disclosed long equity positions for
+        # the asset mix; never interpret that residual as cash or financing.
+        equity = sum(w for _, w in positions)
+        if not .95 <= equity <= 1:
+            raise ValueError("Fidelity disclosed long equity holdings do not cover NAV")
+        assets = {"equity": equity, "bond": 0., "crypto": 0., "gold": 0., "cash": 1 - equity}
     out = result(fund, returns, geo, sec, assets, positions, {"prices": daily["asOfDate"], "holdings": selected[0]["asOfDate"],
         "geography": target.get("asOfDt") if ticker in ["FEQT", "FBAL", "FGRO"] else countries["asOfDate"],
         "sectors": sector["asOfDate"], "assets": target.get("asOfDt") or asset["asOfDate"]},
         return_method="Fidelity : facteurs quotidiens de rendement total composés, arrondis par l’émetteur.")
     out["mer"] = number(d["series"]["L"]["merPct"]) / 100
     out["holdings"]["data_url"] = url
+    if fund.get("assets_from_positive_holdings"):
+        out["dates"]["assets"] = selected[0]["asOfDate"]
+        out["return_method"] += " Actifs : poids des positions d’actions positives détaillées au " + selected[0]["asOfDate"] + "; solde non attribué présenté avec les autres actifs. Pays et secteurs conditionnels aux actions, normalisés à partir de leurs propres relevés datés. Le résiduel signé de l’ancienne ventilation d’actifs n’est pas interprété."
     if warning:
         out["exposure_status"] = warning
         out["return_method"] += (" Expositions : dernier relevé cohérent conservé au " + warning["used_date"]
@@ -325,7 +336,7 @@ def ishares(client, ticker, fund, cutoff):
             {"equity": 0., "bond": 0., "cash": 0., "crypto": 0., "gold": 1.}, [],
             {k: dated for k in ["prices", "holdings", "geography", "sectors", "assets"]},
             return_method="iShares CGL.C : croissance officielle des parts non couvertes en CAD; or physique.")
-    csv_url = url + "/1464253357814.ajax?" + urlencode({"dataType": "fund", "fileName": ticker + "_holdings", "fileType": "csv"})
+    csv_url = url.rstrip("/") + "/1464253357814.ajax?" + urlencode({"dataType": "fund", "fileName": ticker + "_holdings", "fileType": "csv"})
     lines = client.get(csv_url).splitlines()
     headers = [i for i, line in enumerate(lines) if line.startswith("Ticker,")]
     dates = [next(csv.reader([line]))[1] for line in lines if line.startswith("Fund Holdings as of,")]
@@ -343,9 +354,13 @@ def ishares(client, ticker, fund, cutoff):
         elif r["Asset Class"] == "Fixed Income": bond += w
     gold = 1. if ticker == "CGL.C" else 0.
     assets = {"equity": min(1, equity), "bond": bond, "gold": gold, "crypto": 0., "cash": max(0., 1 - equity - bond - gold)}
-    return result(fund, returns, geo, sec, assets, positions, {"prices": max(p[0] for p in points),
+    out = result(fund, returns, geo, sec, assets, positions, {"prices": max(p[0] for p in points),
         "holdings": dated, "geography": dated, "sectors": dated, "assets": dated},
         return_method="iShares : indice officiel de croissance avec distributions réinvesties, clôtures mensuelles.")
+    if fund.get("history_start"):
+        out["dates"]["first_full_month"] = fund["history_start"]
+        out["return_method"] += " Aucun rendement avant le premier mois complet disponible (" + fund["history_start"] + ")."
+    return out
 
 
 def bmo(client, ticker, fund, cutoff):
@@ -365,7 +380,8 @@ def bmo(client, ticker, fund, cutoff):
     p = d["portfolios"][0]
     if p["entityId"] != ticker: raise ValueError("BMO identity")
     equity_rows = [r for r in p["kb2Holdings"] if r["assetClass"] == "Equity"]
-    if len(equity_rows) != p["numberOfEquityPositions"]: raise ValueError("BMO incomplete holdings")
+    count_mismatch = len(equity_rows) != p["numberOfEquityPositions"]
+    if count_mismatch and not fund.get("allow_holdings_count_mismatch"): raise ValueError("BMO incomplete holdings")
     # The reported count includes zero-value corporate-action rights (e.g. ZUQ).
     # Count those rows for completeness, but never give them a positive exposure.
     if any((r.get("allocation") or 0) > 0 and not (r.get("baseMarketValue") or 0) > 0 for r in equity_rows):
@@ -382,10 +398,16 @@ def bmo(client, ticker, fund, cutoff):
     total = equity + bond
     if total > 1.01: raise ValueError("BMO invalid assets")
     if total > 1: equity, bond = equity / total, bond / total
-    return result(fund, monthly_from_levels(points, cutoff), geo, sec,
+    out = result(fund, monthly_from_levels(points, cutoff), geo, sec,
         {"equity": equity, "bond": bond, "cash": max(0., 1 - equity - bond), "gold": 0., "crypto": 0.}, positions,
         {"prices": max(p[0] for p in points), "holdings": p["effectiveDate"], "geography": p["effectiveDate"],
          "sectors": p["effectiveDate"], "assets": p["effectiveDate"]}, return_method="BMO : indice officiel de rendement total quotidien composé par mois; positions officielles.")
+    if count_mismatch:
+        if not .99 <= total <= 1.01:
+            raise ValueError("BMO partial holding weights do not cover NAV")
+        out["holdings"].update(complete=False, partial=True, reported_count=p["numberOfEquityPositions"], disclosed_count=len(equity_rows))
+        out["return_method"] += " Liste détaillée couvrant au moins 99 % de la VL, mais nombre de lignes différent du compteur officiel; couverture signalée partielle, sans nombre consolidé de sociétés ni concentration totale certifiée."
+    return out
 
 
 def globalx(client, ticker, fund, cutoff):

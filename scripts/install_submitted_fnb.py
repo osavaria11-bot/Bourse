@@ -16,6 +16,7 @@ import daily_fnb as F
 import collect_fnb_daily_risk as V
 import install_prospective_portfolio as I
 import prospective_portfolios as P
+import registered_fnb_sources as A
 
 ROOT = Path(__file__).resolve().parents[1]
 BUNDLE = "data/fnb-submitted-sources/2026-10-26.json"
@@ -27,6 +28,11 @@ def prepare(root=ROOT):
         raise ValueError("Unexpected submitted ETF sources")
     catalog = F.read(root / bundle["catalog_path"])
     P.validate_sources(root, catalog)
+    additional = A.load(root)
+    if additional:
+        P.validate_sources(root, F.read(root / additional["catalog_path"]))
+        for key in ("fund_config", "labels", "snapshots", "common_prices"):
+            bundle[key].update(additional[key])
     ids = [p["id"] for p in catalog["portfolios"]]
     config = F.read(root / "data/fnb-model.json")
     for ticker, fund in bundle["fund_config"].items():
@@ -80,6 +86,7 @@ def prepare(root=ROOT):
     for ticker, url in bundle["stress"]["source_urls"].items():
         stress["source_urls"].setdefault(ticker, url)
     F.write(root / "data/fnb-stress-history.json", stress)
+    A.complete(root, additional)
     print("Prepared A — Hybride and B — Multifactoriel using existing repository data.")
 
 

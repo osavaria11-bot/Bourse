@@ -20,8 +20,12 @@ ROOT=Path(__file__).resolve().parents[1]
 CONFIDENCE=.95
 MIN_OBSERVATIONS=252
 
+def window_start(analysis):
+    tickers={t for key in analysis['order'] for t in analysis['results'][key]['weights']}
+    return max([analysis['dates'][0]+'-01']+[analysis.get('source_dates',{}).get(t,{}).get('first_full_month',analysis['dates'][0])+'-01' for t in tickers])
+
 def signature(analysis):
-    value={'start':analysis['dates'][0]+'-01','weights':{key:analysis['results'][key]['weights'] for key in analysis['order']}}
+    value={'start':window_start(analysis),'weights':{key:analysis['results'][key]['weights'] for key in analysis['order']}}
     return hashlib.sha256(json.dumps(value,sort_keys=True,separators=(',',':')).encode()).hexdigest()
 
 def historical_var(returns, confidence=CONFIDENCE):
@@ -39,7 +43,7 @@ def distribution_shape(returns):
     return {'skewness':skew,'excess_kurtosis':excess}
 
 def build(analysis, prices, cutoff, generated_at, return_series=None):
-    start=date.fromisoformat(analysis['dates'][0]+'-01');anchor=F.previous_trading_day(start-timedelta(days=1))
+    start=date.fromisoformat(window_start(analysis));anchor=F.previous_trading_day(start-timedelta(days=1))
     sessions=[];day=anchor
     while day.isoformat()<=cutoff:
         if F.trading_day(day):sessions.append(day.isoformat())
@@ -97,7 +101,7 @@ def validate(data):
 def reweight(analysis, retained, generated_at):
     """Recompute target risk on an unchanged, validated common source sample."""
     validate(retained)
-    if retained.get('schema_version')!=2 or retained.get('status')!='current' or retained.get('window_start',retained['sample_start'])!=analysis['dates'][0]+'-01':
+    if retained.get('schema_version')!=2 or retained.get('status')!='current' or retained.get('window_start',retained['sample_start'])!=window_start(analysis):
         raise ValueError('Retained daily sample does not cover the requested window')
     out=deepcopy(retained);series=out['daily_series'];results={}
     for key in analysis['order']:
@@ -119,10 +123,10 @@ def main(argv=None):
     if old and old.get('schema_version')==2 and old.get('as_of')==cutoff and old.get('weights_signature')==signature(analysis) and old.get('shape_estimators')=='bias_corrected_fisher' and old.get('status')=='current':validate(old);print('Daily VaR already current:',cutoff);return 0
     try:
         config=json.loads((ROOT/'data/fnb-model.json').read_text());tickers={t for key in analysis['order'] for t in analysis['results'][key]['weights']}
-        if old and old.get('schema_version')==2 and old.get('status')=='current' and old.get('as_of')==cutoff and old.get('shape_estimators')=='bias_corrected_fisher' and old.get('window_start',old['sample_start'])==analysis['dates'][0]+'-01' and tickers<=old['daily_series']['returns'].keys():
+        if old and old.get('schema_version')==2 and old.get('status')=='current' and old.get('as_of')==cutoff and old.get('shape_estimators')=='bias_corrected_fisher' and old.get('window_start',old['sample_start'])==window_start(analysis) and tickers<=old['daily_series']['returns'].keys():
             data=reweight(analysis,old,datetime.now(ZoneInfo('America/Toronto')).isoformat(timespec='seconds'))
             F.write(args.output,data);print('Daily risk recomputed from retained validated returns:',cutoff);return 0
-        first=F.previous_trading_day(date.fromisoformat(analysis['dates'][0]+'-01')-timedelta(days=1)).isoformat()
+        first=F.previous_trading_day(date.fromisoformat(window_start(analysis))-timedelta(days=1)).isoformat()
         print('Collecting',len(tickers),'CAD ETF histories:',first,'through',cutoff,flush=True)
         client=Client(args.cache)
         def collect_one(ticker):

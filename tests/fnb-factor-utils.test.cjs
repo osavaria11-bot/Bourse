@@ -21,12 +21,13 @@ test('recovers simultaneous signed exposures in an independently constructed por
   c.factors.forEach((f, i) => {close(f.portfolio, beta[i]); close(f.benchmark, i ? 0 : 1); close(f.delta, beta[i] - (i ? 0 : 1)); close(f.low, f.high, 1e-8);});
   close(c.portfolioR2, 1); close(c.activeR2, 1); close(c.residualContribution, 0);
 });
-test('every current portfolio and benchmark uses the same common sample and reconciles active variance', () => {
+test('every current portfolio and benchmark uses its real common overlap and reconciles active variance', () => {
   const before = JSON.stringify(D);
   for (const id of D.order) for (const reference of D.benchmark_order) {
     const c = F.compare(D, id, reference);
-    assert.equal(c.available, true, `${id} / ${reference}`); assert.equal(c.start, D.dates[0]); assert.equal(c.end, D.dates.at(-1));
-    assert.equal(c.months, D.dates.length);
+    const offset=D.results[id].available_history_start?D.dates.indexOf(D.results[id].available_history_start):0;
+    assert.equal(c.available, true, `${id} / ${reference}`); assert.equal(c.start, D.dates[offset]); assert.equal(c.end, D.dates.at(-1));
+    assert.equal(c.months, D.dates.length-offset);
     for (const f of c.factors) {assert.ok(Number.isFinite(f.portfolio)); assert.ok(f.low <= f.delta && f.delta <= f.high); close(f.delta, f.portfolio - f.benchmark);}
     if (id !== reference) close(c.factors.reduce((s, f) => s + f.contribution, 0) + c.residualContribution, 1);
     else {close(c.trackingError, 0); assert.equal(c.activeR2, null); assert.equal(c.residualContribution, null); c.factors.forEach(f => {close(f.delta, 0); assert.equal(f.contribution, null);});}

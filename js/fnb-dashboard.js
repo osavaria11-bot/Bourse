@@ -1,17 +1,20 @@
 "use strict";
 const SavyFnb = (() => {
   function relativeMetrics(portfolio, benchmark, riskFree = .0238) {
-    const p = portfolio.monthly, b = benchmark.monthly, n = p.length;
-    if (n < 2 || n !== b.length) throw new Error("Périodes incompatibles");
+    if (portfolio.monthly.length !== benchmark.monthly.length) throw new Error("Périodes incompatibles");
+    const pairs = portfolio.monthly.flatMap((v,i) => Number.isFinite(v) && Number.isFinite(benchmark.monthly[i]) ? [[v,benchmark.monthly[i]]] : []);
+    const p = pairs.map(v=>v[0]), b = pairs.map(v=>v[1]), n = p.length;
+    if (n < 2) throw new Error("Périodes incompatibles");
     const mean = values => values.reduce((a, v) => a + v, 0) / n;
     const mp = mean(p), mb = mean(b), active = p.map((v, i) => v - b[i]), ma = mean(active);
     const variance = b.reduce((s, v) => s + (v - mb) ** 2, 0) / (n - 1);
     const covariance = p.reduce((s, v, i) => s + (v - mp) * (b[i] - mb), 0) / (n - 1);
     const tracking = Math.sqrt(active.reduce((s, v) => s + (v - ma) ** 2, 0) / (n - 1)) * Math.sqrt(12);
     const beta = variance > 1e-15 ? covariance / variance : null;
+    const vol = (r,m) => Math.sqrt(r.reduce((s,v)=>s+(v-m)**2,0)/(n-1)*12), cagr = r => r.reduce((s,v)=>s*(1+v),1)**(12/n)-1;
     return {beta, tracking_error: tracking, information: tracking > 1e-12 ? ma * 12 / tracking : null,
       treynor: beta !== null && Math.abs(beta) > 1e-12 ? (mp * 12 - riskFree) / beta : null,
-      vol_diff: portfolio.vol - benchmark.vol, cagr_gap: portfolio.cagr - benchmark.cagr};
+      vol_diff: vol(p,mp) - vol(b,mb), cagr_gap: cagr(p) - cagr(b)};
   }
   function parseCapital(raw) {
     const clean = String(raw).trim().replace(/(?:CAD|\$)/gi, "").replace(/[\s\u00a0\u202f]/g, "");
@@ -99,23 +102,23 @@ const SavyFnb = (() => {
     }
     function showMonth(i) {
       month = Math.max(0,Math.min(D.dates.length,Math.round(Number(i)||0)));$("monthSlider").value = String(month);$("monthLabel").textContent = dateLabel(month);
-      $("growthReadout").innerHTML = [...ids].sort((a,b)=>R[b].wealth[month]-R[a].wealth[month]).map(k=>`<div class="readout-item" data-portfolio="${k}"><span title="${escape(name(k))}">${dot(k)}${escape(name(k))}</span><b>${money(R[k].wealth[month]*capital/10000)}</b></div>`).join("");
+      $("growthReadout").innerHTML = [...ids].sort((a,b)=>(R[b].wealth[month]??-Infinity)-(R[a].wealth[month]??-Infinity)).map(k=>`<div class="readout-item" data-portfolio="${k}"><span title="${escape(name(k))}">${dot(k)}${escape(name(k))}</span><b>${Number.isFinite(R[k].wealth[month])?money(R[k].wealth[month]*capital/10000):'—'}</b></div>`).join("");
       const cross = $("growthCross"), W = width("growthSvg");
       if (cross) {const x=62+month/D.dates.length*(W-78);cross.setAttribute("x1",x);cross.setAttribute("x2",x);cross.setAttribute("opacity",selectedIds("growth").length?"1":"0");}
     }
     function drawGrowth() {
       const W=width("growthSvg"),H=300,p={l:62,r:16,t:22,b:45},w=W-p.l-p.r,h=H-p.t-p.b,scale=capital/10000;
-      const ymax=Math.ceil(Math.max(...ids.flatMap(k=>R[k].wealth))/2500)*2500, ymin=Math.floor(Math.min(7500,...ids.flatMap(k=>R[k].wealth))/2500)*2500;
+      const levels=ids.flatMap(k=>R[k].wealth).filter(Number.isFinite),ymax=Math.ceil(Math.max(...levels)/2500)*2500, ymin=Math.floor(Math.min(7500,...levels)/2500)*2500;
       const x=i=>p.l+i/D.dates.length*w,y=v=>H-p.b-(v-ymin)/(ymax-ymin)*h;let body="";
       for(let i=0;i<=4;i++){const v=ymin+i/4*(ymax-ymin);body+=line(p.l,y(v),W-p.r,y(v))+text(p.l-7,y(v)+4,money(v*scale),'text-anchor="end"');}
       const count=W<440?2:4,ticks=[...new Set(Array.from({length:count+1},(_,i)=>Math.round(i*D.dates.length/count)))];
       for(const i of ticks){const label=new Date(D.wealth_dates[i]+"T12:00:00Z").toLocaleDateString("fr-CA",{month:"short",year:"2-digit",timeZone:"UTC"});body+=text(x(i),H-p.b+23,label,`text-anchor="${i===0?'start':i===D.dates.length?'end':'middle'}"`);}
-      for(const k of ids){const q=R[k],path=q.wealth.map((v,i)=>(i?"L":"M")+x(i).toFixed(2)+","+y(v).toFixed(2)).join(" ");body+=`<path class="wealth-line" data-portfolio="${k}" d="${path}" fill="none" stroke="${seriesInk(k)}" stroke-width="${k===reference?2.8:2}" ${benchmarks.includes(k)?'stroke-dasharray="6 3"':''}><title>${escape(name(k)+" · "+money(q.end*scale))}</title></path>`;}
+      for(const k of ids){const q=R[k];let connected=false;const path=q.wealth.map((v,i)=>{if(!Number.isFinite(v)){connected=false;return '';}const command=connected?'L':'M';connected=true;return command+x(i).toFixed(2)+","+y(v).toFixed(2);}).join(" ");body+=`<path class="wealth-line" data-portfolio="${k}" d="${path}" fill="none" stroke="${seriesInk(k)}" stroke-width="${k===reference?2.8:2}" ${benchmarks.includes(k)?'stroke-dasharray="6 3"':''}><title>${escape(name(k)+" · "+money(q.end*scale)+(q.available_history_start?' · historique depuis '+q.available_history_start:''))}</title></path>`;}
       body+=`<line id="growthCross" x1="0" x2="0" y1="${p.t}" y2="${H-p.b}" stroke="#8395A4" stroke-dasharray="3 3" opacity="0"/>`;
       const host=$("growthSvg"),tip=$("growthTip");host.innerHTML=svg(body,W,H,"Évolution du capital");tip.hidden=true;
       const chart=host.querySelector("svg");
       const inspect=event=>{const rect=chart.getBoundingClientRect();if(!rect.width)return null;const px=(event.clientX-rect.left)*W/rect.width;if(px<p.l||px>W-p.r)return null;const i=Math.max(0,Math.min(D.dates.length,Math.round((px-p.l)/w*D.dates.length)));showMonth(i);return i;};
-      chart.addEventListener("pointermove",event=>{const i=inspect(event);if(i===null||event.pointerType==="touch"||!selectedIds("growth").length){tip.hidden=true;return;}tip.innerHTML='<strong>'+escape(dateLabel(i))+'</strong>'+selectedIds("growth").sort((a,b)=>R[b].wealth[i]-R[a].wealth[i]).slice(0,8).map(k=>'<div>'+escape(name(k))+' <b>'+money(R[k].wealth[i]*scale)+'</b></div>').join("");tip.style.left="auto";tip.style.right="8px";tip.hidden=false;});
+      chart.addEventListener("pointermove",event=>{const i=inspect(event);if(i===null||event.pointerType==="touch"||!selectedIds("growth").length){tip.hidden=true;return;}tip.innerHTML='<strong>'+escape(dateLabel(i))+'</strong>'+selectedIds("growth").sort((a,b)=>(R[b].wealth[i]??-Infinity)-(R[a].wealth[i]??-Infinity)).slice(0,8).map(k=>'<div>'+escape(name(k))+' <b>'+(Number.isFinite(R[k].wealth[i])?money(R[k].wealth[i]*scale):'—')+'</b></div>').join("");tip.style.left="auto";tip.style.right="8px";tip.hidden=false;});
       chart.addEventListener("pointerdown",inspect);chart.addEventListener("pointerleave",()=>{tip.hidden=true;});showMonth(month);
     }
     function statsRows() {
@@ -135,7 +138,7 @@ const SavyFnb = (() => {
       let order=[...own];
       if(allSort)order.sort((a,b)=>{const va=allSort==="rank"?(ranking.get(a)??99):allSort==="stocks"?(D.lookthrough?.results[a]?.stock_count??0):metric(a,allSort),vb=allSort==="rank"?(ranking.get(b)??99):allSort==="stocks"?(D.lookthrough?.results[b]?.stock_count??0):metric(b,allSort);return((va??-Infinity)-(vb??-Infinity))*(allDescending?-1:1);});
       order.push(...selected);
-      body.innerHTML=order.map(k=>{const isOwn=own.includes(k),holdings=D.lookthrough?.results[k];return `<tr class="${proposed.includes(k)?'proposed-row':isOwn?'':'benchmark'}"><td class="rank-cell">${ranking.has(k)?ranking.get(k):'—'}</td><th scope="row">${isOwn?`<button class="stats-open" data-open-portfolio="${k}">`:''}${dot(k)}${escape(name(k))}${isOwn?'</button>':fundNote(k)}</th>${keys.map(key=>`<td>${['beta','sharpe','information'].includes(key)?number(metric(k,key)):pct(metric(k,key),key==='mer'?2:1)}</td>`).join('')}<td>${holdings?.complete===false?'Partiel':holdings?'≈ '+number(holdings.stock_count,0):'—'}</td><td>${holdings?pct(holdings.top10_weight):'—'}</td></tr>`;}).join("");
+      body.innerHTML=order.map(k=>{const isOwn=own.includes(k),holdings=D.lookthrough?.results[k];return `<tr class="${proposed.includes(k)?'proposed-row':isOwn?'':'benchmark'}"><td class="rank-cell">${ranking.has(k)?ranking.get(k):'—'}</td><th scope="row">${isOwn?`<button class="stats-open" data-open-portfolio="${k}">`:''}${dot(k)}${escape(name(k))}${isOwn?'</button>':fundNote(k)}${R[k].available_history_start?'<small class="fund-description">Historique : '+escape(R[k].available_history_start)+' → '+escape(D.dates.at(-1))+'</small>':''}</th>${keys.map(key=>`<td>${['beta','sharpe','information'].includes(key)?number(metric(k,key)):pct(metric(k,key),key==='mer'?2:1)}</td>`).join('')}<td>${holdings?.complete===false?'Partiel':holdings?'≈ '+number(holdings.stock_count,0):'—'}</td><td>${holdings?pct(holdings.top10_weight):'—'}</td></tr>`;}).join("");
       document.querySelectorAll("[data-all-sort]").forEach(n=>n.closest("th").setAttribute("aria-sort",n.dataset.allSort===allSort?(allDescending?"descending":"ascending"):"none"));
     }
     function drawGeo() {

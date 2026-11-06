@@ -187,6 +187,41 @@
       "name": "iShares MSCI Min Vol Canada Index ETF",
       "description": "Volatilité canadienne",
       "source_url": "https://www.blackrock.com/ca/investors/en/products/239616/ishares-msci-canada-minimum-volatility-index-etf"
+    },
+    "FCUV": {
+      "name": "Fidelity U.S. Value ETF",
+      "description": "Valeur américaine",
+      "source_url": "https://www.fidelity.ca/en/products/etfs/fcuv/"
+    },
+    "ZEM": {
+      "name": "BMO MSCI Emerging Markets Index ETF",
+      "description": "Marchés émergents",
+      "source_url": "https://www.bmoetfs.ca/etfs/zem-bmo-msci-emerging-markets-index-etf"
+    },
+    "XMTM": {
+      "name": "iShares MSCI USA Momentum Factor Index ETF",
+      "description": "Momentum américain",
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/309728/ishares-msci-usa-momentum-factor-index-etf"
+    },
+    "XBM": {
+      "name": "iShares S&P/TSX Global Base Metals Index ETF",
+      "description": "Métaux mondiaux",
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239847/ishares-sptsx-global-base-metals-index-etf"
+    },
+    "XCHP": {
+      "name": "iShares Semiconductor Index ETF",
+      "description": "Semi-conducteurs mondiaux",
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/332756/ishares-semiconductor-index-etf"
+    },
+    "XEG": {
+      "name": "iShares S&P/TSX Capped Energy Index ETF",
+      "description": "Énergie canadienne",
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239839/ishares-sptsx-capped-energy-index-etf"
+    },
+    "XGD": {
+      "name": "iShares S&P/TSX Global Gold Index ETF",
+      "description": "Minières aurifères",
+      "source_url": "https://www.blackrock.com/ca/investors/en/products/239848/ishares-sptsx-global-gold-index-etf"
     }
   }
 }

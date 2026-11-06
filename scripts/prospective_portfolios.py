@@ -41,6 +41,14 @@ def validate_catalog(catalog):
         if submitted:
             if any(not isinstance(v, (int, float)) or isinstance(v, bool) or not math.isfinite(v) or not 0 < v <= 1 for v in w.values()):
                 raise ValueError("Invalid submitted weight")
+            if p.get("available_history_start"):
+                datetime.strptime(p["available_history_start"], "%Y-%m")
+                if p["available_history_start"] > catalog["as_of"][:7]:
+                    raise ValueError("Invalid submitted history start")
+            if p.get("constraints"):
+                policy = p["constraints"]
+                if policy.get("leverage") is not False or any(v > policy.get("fund_caps", {}).get(t, policy["fund_cap"]) + 1e-8 for t, v in w.items()):
+                    raise ValueError("Submitted allocation exceeds its own mandate")
             continue
         if any(not math.isfinite(v) or not .02 <= v <= caps.get(t, .35) + 1e-8 for t, v in w.items()):
             raise ValueError("Prospective fund cap exceeded")
@@ -75,5 +83,5 @@ def apply(analysis, selections, previous=None):
     for k in d["prospective_order"]:
         q = d["results"][k]
         q["months_beat_benchmark"] = q.pop("months_beat_veqt")
-        q["months_beat_veqt"] = sum(r > b + 1e-12 for r, b in zip(q["monthly"], d["results"]["VEQT"]["monthly"]))
+        q["months_beat_veqt"] = sum(r is not None and b is not None and r > b + 1e-12 for r, b in zip(q["monthly"], d["results"]["VEQT"]["monthly"]))
     return d

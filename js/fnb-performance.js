@@ -21,7 +21,7 @@ window.SavyFnbPerformance=(()=>{
    if(focus)selected=new Set([focus,reference]);
   }catch{}
  }
- function follow(id){const a=data.accounts.find(a=>a.id===id&&a.kind!=='benchmark'),wasRecommended=focus.startsWith('recommended-');focus=a?.id||'';if(a){if(a.id.startsWith('recommended-')&&data.benchmarks.includes('VFV'))reference='VFV';else if(wasRecommended)reference='VEQT';selected=new Set([a.id,reference]);$("performancePositions").value=a.id;positions();}render();}
+ function follow(id){const a=data.accounts.find(a=>a.id===id&&a.kind!=='benchmark'),usesVfv=k=>k.startsWith('recommended-')||k.startsWith('prospective-'),wasVfv=usesVfv(focus);focus=a?.id||'';if(a){if(usesVfv(a.id)&&data.benchmarks.includes('VFV'))reference='VFV';else if(wasVfv)reference='VEQT';selected=new Set([a.id,reference]);$("performancePositions").value=a.id;positions();}render();}
  function positions(){
   const a=data.accounts.find(a=>a.id===$("performancePositions").value);if(!a)return;
   if(!a.history.length){$("performanceWeights").textContent=a.unavailable_reason;return;}

@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "kind": "registered_user_allocation",
+  "as_of": "2026-10-31",
+  "published_at": "2026-11-06T07:43:42-05:00",
+  "catalog_path": "data/fnb-prospective/2026-11-05-conviction.json",
+  "benchmark": "VFV",
+  "rebalance": "january_targets",
+  "source": "data/fnb-prospective-history/2026-11-05-conviction.json",
+  "source_sha256": "74169a5ca68ae80193a8f7a55c365828c3dadfa2f7e5725e211fd078960a706d",
+  "limitations": "Sélection après consultation des rendements historiques. Backtest rétrospectif, pas un test indépendant. Historique observé depuis octobre 2023 seulement, XCHP étant plus récent; aucun rendement simulé avant sa création. Mêmes calculs et projections que les autres fiches, rééquilibrage en janvier. Le suivi permanent commence après publication; la comparaison de 10 000 $ depuis le 19 octobre 2026 demeure entièrement une simulation. Les contraintes propres à ces deux allocations sont distinctes de celles des anciennes recherches.",
+  "portfolios": [
+    {
+      "id": "prospective-2026-11-valeur-fcuv",
+      "name": "Conviction · Valeur FCUV",
+      "chart_name": "Valeur FCUV",
+      "style_label": "Innovation, valeur et diversification régionale",
+      "description": "Composition retenue dans la conversation puis autorisée pour le tableau de bord le 5 novembre 2026. Objectif de sélection : bêta ≥ 1,20 face à VFV, sans emprunt ni FNB à levier; le bêta varie selon la fenêtre et les marchés.",
+      "color": "#D7A453",
+      "benchmark": "VFV",
+      "constraints": {
+        "fund_cap": 0.3,
+        "fund_caps": {
+          "FINN": 0.3,
+          "XCHP": 0.05,
+          "ZEB": 0.15
+        },
+        "geo_tolerance": 0.15,
+        "sector_tolerance": 0.15,
+        "sector_cap": 1.0,
+        "crypto_cap": 0.0,
+        "beta_selection_min": 1.2,
+        "beta_benchmark": "VFV",
+        "leverage": false
+      },
+      "weights": {
+        "FINN": 0.2,
+        "ZEM": 0.189,
+        "FCUV": 0.149,
+        "VDY": 0.133,
+        "XMTM": 0.084,
+        "XBM": 0.08,
+        "XCHP": 0.05,
+        "XEG": 0.05,
+        "ZEB": 0.045,
+        "XGD": 0.02
+      },
+      "available_history_start": "2023-10"
+    },
+    {
+      "id": "prospective-2026-11-momentum-fcmo",
+      "name": "Conviction · Momentum FCMO",
+      "chart_name": "Momentum FCMO",
+      "style_label": "Innovation, momentum et dividendes canadiens",
+      "description": "Composition retenue dans la conversation puis autorisée pour le tableau de bord le 5 novembre 2026. Objectif de sélection : bêta ≥ 1,20 face à VFV, sans emprunt ni FNB à levier; le bêta varie selon la fenêtre et les marchés.",
+      "color": "#A17FC0",
+      "benchmark": "VFV",
+      "constraints": {
+        "fund_cap": 0.3,
+        "fund_caps": {
+          "FINN": 0.3,
+          "XCHP": 0.05,
+          "ZEB": 0.15
+        },
+        "geo_tolerance": 0.15,
+        "sector_tolerance": 0.15,
+        "sector_cap": 1.0,
+        "crypto_cap": 0.0,
+        "beta_selection_min": 1.2,
+        "beta_benchmark": "VFV",
+        "leverage": false
+      },
+      "weights": {
+        "FINN": 0.2,
+        "ZEM": 0.186,
+        "VDY": 0.163,
+        "FCMO": 0.15,
+        "XBM": 0.08,
+        "XMTM": 0.056,
+        "ZEB": 0.052,
+        "XCHP": 0.05,
+        "XEG": 0.05,
+        "XGD": 0.013
+      },
+      "available_history_start": "2023-10"
+    }
+  ]
+}

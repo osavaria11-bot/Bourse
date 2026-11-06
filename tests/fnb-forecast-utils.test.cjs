@@ -23,7 +23,17 @@ test('calibration reuses real CAD returns, dated proxy history, actual allocatio
  assert.equal(p.longAvailable,true);assert.ok(p.coreDates.length>=120);assert.ok(p.coreDates[0]<='2008-01');
  for(const row of p.rows){
   const weights=D.results[row.id].weights;
-  for(let t=0;t<D.universe.dates.length;t++)close(row.returns[t],Object.entries(weights).reduce((s,[id,w])=>s+w*D.universe.returns[id][t],0));
+  if(row.coverage.observed>1-1e-8){
+   for(let t=0;t<D.universe.dates.length;t++)close(row.returns[t],Object.entries(weights).reduce((s,[id,w])=>s+w*D.universe.returns[id][t],0));
+  }else{
+   // A recent fund's declared geographic model is distinct from the observed
+   // backtest. Missing pre-inception returns never become observed zeroes.
+   const modeled=row.funds.filter(f=>f.classification==='modeled');
+   assert.ok(modeled.length>0);assert.ok(row.returns.every(Number.isFinite));
+   close(row.coverage.modeled,modeled.reduce((s,f)=>s+f.weight,0));
+   assert.equal(row.activeAvailable,false);
+   for(const fund of modeled)assert.ok(D.universe.returns[fund.ticker].some(v=>v===null));
+  }
   close(Object.values(row.coverage).reduce((s,v)=>s+v,0),1);assert.ok(row.meanSE>0);assert.ok(row.exposures.length===9||row.factorReason);
  }
  assert.equal(JSON.stringify([D,H,M]),before,'No portfolio, return history or source snapshot is mutated');

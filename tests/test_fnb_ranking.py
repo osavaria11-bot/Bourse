@@ -31,8 +31,13 @@ class RankingAudit(unittest.TestCase):
                 self.assertAlmostEqual(math.prod(1+r for r in returns)-1, window["total_return"], places=11)
         for portfolio in d["results"].values():
             value = d["assumptions"]["initial"]
+            offset = d["dates"].index(portfolio["available_history_start"]) if portfolio.get("available_history_start") else 0
+            self.assertEqual(portfolio["monthly"][:offset], [None] * offset)
+            self.assertEqual(portfolio["wealth"][:offset], [None] * offset)
             for i, r in enumerate(portfolio["monthly"]):
+                if i < offset:
+                    continue
                 value *= 1+r
                 self.assertAlmostEqual(value, portfolio["wealth"][i+1], places=7)
             self.assertAlmostEqual(value, portfolio["end"], places=7)
-            self.assertAlmostEqual((value/10000)**(12/len(d["dates"]))-1, portfolio["cagr"], places=11)
+            self.assertAlmostEqual((value/10000)**(12/(len(d["dates"])-offset))-1, portfolio["cagr"], places=11)

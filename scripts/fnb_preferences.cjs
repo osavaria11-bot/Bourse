@@ -15,14 +15,16 @@ function period(p,b,rf,dates){
 }
 function limits(q,D,id){
  const flags=[],caps={FEQT:.50,'CGL.C':.05,XIT:.10,ZEB:.10,ZEO:.05,FINN:.15},eps=1e-8;
+ const policy=q.constraints;
+ if(policy)Object.assign(caps,policy.fund_caps||{});
  const veqtAllowed=(D.recommended_selections||[]).some(c=>c.veqt_cap===.40&&c.portfolios.some(p=>p.id===id));
  if(veqtAllowed)caps.VEQT=.40;
- for(const [t,w] of Object.entries(q.weights))if(w>(caps[t]??.35)+eps)flags.push(t+' au-dessus du plafond par fonds');
+ for(const [t,w] of Object.entries(q.weights))if(w>(caps[t]??policy?.fund_cap??.35)+eps)flags.push(t+' au-dessus du plafond par fonds');
  if((q.weights.VEQT&&!veqtAllowed)||q.weights.XEQT)flags.push('Benchmark détenu dans l’allocation');
- if(q.crypto>.03+eps)flags.push('Crypto au-dessus de 3 %');
+ if(q.crypto>(policy?.crypto_cap??.03)+eps)flags.push(policy?.crypto_cap===0?'Crypto non autorisée':'Crypto au-dessus de 3 %');
  const g=q.geo_equity,lo=[.30,.15,.15,.05],hi=[.60,.40,.40,.20];
- if(g.some((v,i)=>Math.abs(v-D.universe.ref_geo[i])>.10+eps)||g.slice(0,4).some((v,i)=>v<lo[i]-eps||v>hi[i]+eps)||g[4]>.05+eps)flags.push('Limite géographique dépassée');
- if(q.sectors.some((v,i)=>v>.35+eps||Math.abs(v-D.universe.ref_sector[i])>.07+eps))flags.push('Limite sectorielle dépassée');
+ if(g.some((v,i)=>Math.abs(v-D.universe.ref_geo[i])>(policy?.geo_tolerance??.10)+eps)||(!policy&&(g.slice(0,4).some((v,i)=>v<lo[i]-eps||v>hi[i]+eps)||g[4]>.05+eps)))flags.push('Limite géographique dépassée');
+ if(q.sectors.some((v,i)=>v>(policy?.sector_cap??.35)+eps||Math.abs(v-D.universe.ref_sector[i])>(policy?.sector_tolerance??.07)+eps))flags.push('Limite sectorielle dépassée');
  return flags;
 }
 module.exports=function preferences(D){
@@ -32,7 +34,9 @@ module.exports=function preferences(D){
  const entries=ids.map(id=>{
   const q=D.results[id];if(q.monthly.length!==n)throw Error('Historique non aligné : '+id);
   const benchmark=[...(D.recommended_order||[]),...(D.prospective_order||[])].includes(id)?'VFV':'VEQT',reference=D.results[benchmark].monthly;
-  const windows={debut_28:[0,28],derniers_24:[n-24,n],derniers_12:[n-12,n],derniers_6:[n-6,n],derniers_3:[n-3,n]},diagnostics={};
+  const offset=q.available_history_start?Math.max(0,dates.indexOf(q.available_history_start)):0;
+  if(q.monthly.slice(0,offset).some(v=>v!==null)||q.monthly.slice(offset).some(v=>!Number.isFinite(v)))throw Error('Historique observé incomplet : '+id);
+  const windows={debut_28:[offset,Math.min(n,offset+28)],derniers_24:[Math.max(offset,n-24),n],derniers_12:[Math.max(offset,n-12),n],derniers_6:[Math.max(offset,n-6),n],derniers_3:[Math.max(offset,n-3),n]},diagnostics={};
   for(const [key,[a,z]] of Object.entries(windows))diagnostics[key]=period(q.monthly.slice(a,z),reference.slice(a,z),rf,dates.slice(a,z));
   const long=[diagnostics.debut_28,diagnostics.derniers_24,diagnostics.derniers_12];
   const worst_information=long.every(r=>r.information!==null)?Math.min(...long.map(r=>r.information)):null;
@@ -51,7 +55,7 @@ module.exports=function preferences(D){
   const num=v=>v===null?'indisponible':new Intl.NumberFormat('fr-CA',{maximumFractionDigits:2,minimumFractionDigits:2}).format(v);
   const reason=(!eligible?'Score indisponible. ':performance_review_required?'Points à surveiller : '+signals.join('; ')+'. ':'')+
    'IR minimal 28 / 24 / 12 mois : '+num(worst_information)+'; Sharpe minimal : '+num(worst_sharpe)+'. '+(benchmark==='VFV'?'Référence : S&P 500 via VFV en CAD. ':'')+
-   'RFG '+num(q.mer*100)+' %. '+(diagnostics.derniers_3.gap<0?'Retard sur les 3 derniers mois à surveiller. ':'')+
+   'RFG '+num(q.mer*100)+' %. '+(offset?'Historique observé depuis '+dates[offset]+'; période plus courte que les anciens portefeuilles. ':'')+(diagnostics.derniers_3.gap<0?'Retard sur les 3 derniers mois à surveiller. ':'')+
    (id==='proposal'?'Le rejeu chronologique de la recherche reste distinct de ce backtest à allocation fixe. ':'');
   return {id,benchmark,eligible,performance_review_required,score,worst_information,worst_sharpe,mer:q.mer,signals,performance_flags,limit_flags,ranking_limit_flags,diagnostics,reason};
  });

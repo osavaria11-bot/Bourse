@@ -75,17 +75,27 @@ def apply_frozen(analysis, selections, previous=None, *, family, validator, benc
             k, w = item["id"], item["weights"]
             if any(t not in u["returns"] or len(u["returns"][t]) != len(dates) for t in w):
                 raise ValueError("Missing aligned robust return source: " + k)
+            offset = dates.index(item["available_history_start"]) if item.get("available_history_start", dates[0]) > dates[0] else 0
+            observed = {t: u["returns"][t][offset:] for t in w}
+            if any(any(not isinstance(v, (int, float)) or not math.isfinite(v) for v in values) for values in observed.values()):
+                raise ValueError("Missing observed portfolio history: " + k)
             q = deepcopy(item)
             q.update({"label": item["name"], "short_name": item["name"], "published_at": catalog["published_at"],
                 "backtest_method": "January target rebalance, distributions reinvested; same convention as other dashboard portfolios",
                 "selection_note": catalog["limitations"]})
-            rr = portfolio_returns(w, u["returns"], dates)
+            rr = [None] * offset + portfolio_returns(w, observed, dates[offset:])
             old = prior.get("results", {}).get(k)
             if old:
-                if old["weights"] != w or any(abs(a-b) > 1e-10 for a,b in zip(rr, old["monthly"])):
+                if old["weights"] != w or any(a != b if a is None or b is None else abs(a-b) > 1e-10 for a,b in zip(rr, old["monthly"])):
                     raise ValueError("Frozen robust allocation or acquired return changed: " + k)
                 rr[:len(old["monthly"])] = old["monthly"]
-            q.update(stats(rr, d["results"][benchmark_id]["monthly"], rf, dates))
+            reference = d["results"][benchmark_id]["monthly"]
+            q.update(stats(rr[offset:], reference[offset:], rf, dates[offset:]))
+            if offset:
+                q["monthly"] = rr
+                q["wealth"] = [None] * offset + q["wealth"]
+                q["drawdown_path"] = [None] * offset + q["drawdown_path"]
+                q["history_months"] = len(dates) - offset
             q["mer"] = sum(v * u["mer"][t] for t, v in w.items())
             for asset in ["equity", "bond", "cash", "gold", "crypto"]:
                 q[asset] = sum(v * u[asset][t] for t, v in w.items())
@@ -94,10 +104,11 @@ def apply_frozen(analysis, selections, previous=None, *, family, validator, benc
             q["geo_total"] = [v*q["equity"] for v in q["geo_equity"]] + [q[a] for a in ["gold", "crypto", "bond", "cash"]]
             q["max_geo_gap"] = max(abs(a-b) for a,b in zip(q["geo_equity"], u["ref_geo"]))
             q["max_sector_gap"] = max(abs(a-b) for a,b in zip(q["sectors"], u["ref_sector"]))
-            q["vol_diff"], q["cagr_gap"] = q["vol"]-d["results"][benchmark_id]["vol"], q["cagr"]-d["results"][benchmark_id]["cagr"]
-            windows = {"debut_28": (0, min(28,len(dates))), "derniers_12": (max(0,len(dates)-12),len(dates)),
-                "derniers_24": (max(0,len(dates)-24),len(dates)), "derniers_6": (max(0,len(dates)-6),len(dates)),
-                "derniers_3": (max(0,len(dates)-3),len(dates))}
+            ref_stats = period_stats(reference[offset:], reference[offset:], rf) if offset else d["results"][benchmark_id]
+            q["vol_diff"], q["cagr_gap"] = q["vol"]-ref_stats["vol"], q["cagr"]-ref_stats["cagr"]
+            windows = {"debut_28": (offset, min(offset+28,len(dates))), "derniers_12": (max(offset,len(dates)-12),len(dates)),
+                "derniers_24": (max(offset,len(dates)-24),len(dates)), "derniers_6": (max(offset,len(dates)-6),len(dates)),
+                "derniers_3": (max(offset,len(dates)-3),len(dates))}
             diagnostics = {}
             for key,(start,end) in windows.items():
                 r, b = rr[start:end], d["results"][benchmark_id]["monthly"][start:end]
@@ -111,16 +122,19 @@ def apply_frozen(analysis, selections, previous=None, *, family, validator, benc
             if recent["information"] is None or recent["information"] < 0: signals.append("IR 12 mois négatif ou indisponible")
             if diagnostics["derniers_6"]["gap"] < 0: signals.append("Retard cumulé sur 6 mois face à " + benchmark_id)
             region = q["geo_equity"]
-            if q["max_geo_gap"] > .1+1e-8 or any(not lo-1e-8 <= v <= hi+1e-8 for v,lo,hi in zip(region[:4],[.30,.15,.15,.05],[.60,.40,.40,.20])) or region[4] > .05+1e-8:
+            policy = item.get("constraints", {})
+            geo_tolerance, sector_tolerance = policy.get("geo_tolerance", .10), policy.get("sector_tolerance", .07)
+            old_bounds = not policy and (any(not lo-1e-8 <= v <= hi+1e-8 for v,lo,hi in zip(region[:4],[.30,.15,.15,.05],[.60,.40,.40,.20])) or region[4] > .05+1e-8)
+            if q["max_geo_gap"] > geo_tolerance+1e-8 or old_bounds:
                 signals.append("Limite géographique dépassée")
-            if q["max_sector_gap"] > .07+1e-8 or max(q["sectors"]) > .35+1e-8: signals.append("Limite sectorielle dépassée")
+            if q["max_sector_gap"] > sector_tolerance+1e-8 or max(q["sectors"]) > policy.get("sector_cap", .35)+1e-8: signals.append("Limite sectorielle dépassée")
             if q["crypto"] > .03+1e-8: signals.append("Limite crypto dépassée")
             q["robust_review"] = {"as_of": d["assumptions"]["as_of"], "review_required": bool(signals), "signals": signals}
             d["results"][k] = q
             d["asset_dates"][k] = {t: d["source_dates"][t]["assets"] for t in w}
             d["checks"][k] = {"weight_sum": sum(w.values()), "allocation_sum": sum(q["geo_total"]),
-                "sector_sum": sum(q["sectors"]), "months": len(dates), "geo_limit_pass": q["max_geo_gap"] <= .1+1e-8,
-                "sector_limit_pass": q["max_sector_gap"] <= .07+1e-8, "allocation_preserved": True}
+                "sector_sum": sum(q["sectors"]), "months": len(dates)-offset, "geo_limit_pass": q["max_geo_gap"] <= geo_tolerance+1e-8,
+                "sector_limit_pass": q["max_sector_gap"] <= sector_tolerance+1e-8, "allocation_preserved": True}
             d[family + "_order"].append(k)
     d["order"] = d[family + "_order"] + d["order"]
     d["exposure_order"] = d[family + "_order"] + d["exposure_order"]

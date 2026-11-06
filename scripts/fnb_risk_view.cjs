@@ -40,6 +40,6 @@ module.exports=function riskView(html,dailyRisk=null,stressInput=null){
  if(section<0||target<section)throw Error('Risk snapshot exposure target missing');
  html=html.slice(0,target)+view+html.slice(target);
  if(!html.includes('src="../js/fnb-stress-utils.js'))html=html.replace(/(<script[^>]+src="\.\.\/js\/fnb-dashboard.js)/,'<script src="../js/fnb-stress-utils.js?v=20261024-adaptive-risk"></script>$1');
- if(!html.includes('src="../js/fnb-risk-utils.js'))html=html.replace(/(<script[^>]+src="\.\.\/js\/fnb-dashboard.js)/,'<script src="../js/fnb-risk-utils.js?v=20261101-monthly-variance"></script>$1');
- return html.replace(/fnb-risk-utils\.js\?v=[^"']+/g,'fnb-risk-utils.js?v=20261101-monthly-variance').replace(/fnb-stress-utils\.js\?v=[^"']+/g,'fnb-stress-utils.js?v=20261025-missing-shock');
+ if(!html.includes('src="../js/fnb-risk-utils.js'))html=html.replace(/(<script[^>]+src="\.\.\/js\/fnb-dashboard.js)/,'<script src="../js/fnb-risk-utils.js?v=20261105-observed-overlap"></script>$1');
+ return html.replace(/fnb-risk-utils\.js\?v=[^"']+/g,'fnb-risk-utils.js?v=20261105-observed-overlap').replace(/fnb-stress-utils\.js\?v=[^"']+/g,'fnb-stress-utils.js?v=20261025-missing-shock');
 };

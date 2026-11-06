@@ -108,17 +108,20 @@
   function compare(D,id,reference,snapshot=null){
     let cache=memo.get(D);if(cache?.snapshot!==snapshot){cache={snapshot,results:new Map()};memo.set(D,cache);}const key=id+'|'+reference;if(cache.results.has(key))return cache.results.get(key);
     const p=D?.results?.[id],b=D?.results?.[reference],n=D?.dates?.length;
-    if(!p||!b||n<2||p.monthly?.length!==n||b.monthly?.length!==n||!p.monthly.every(Number.isFinite)||!b.monthly.every(Number.isFinite))return {available:false,reason:'Périodes communes complètes indisponibles.'};
+    if(!p||!b||n<2||p.monthly?.length!==n||b.monthly?.length!==n)return {available:false,reason:'Périodes communes complètes indisponibles.'};
+    const offset=D.dates.findIndex((_,i)=>Number.isFinite(p.monthly[i])&&Number.isFinite(b.monthly[i])),pm=p.monthly.slice(offset),bm=b.monthly.slice(offset),mn=pm.length;
+    if(offset<0||mn<2||!pm.every(Number.isFinite)||!bm.every(Number.isFinite))return {available:false,reason:'Périodes communes complètes indisponibles.'};
     const joint=jointSeries(D,id,reference,snapshot),daily=dailyMeasure(D,id,snapshot),blocks=joint?compoundBlocks(joint.p,joint.session_indices):[],bb=joint?compoundBlocks(joint.b,joint.session_indices):[];
     const a=blocks.length>=24?losses(blocks):null,benchmark=a?losses(bb):null;
     const matched=JSON.stringify(D.universe?.dates)===JSON.stringify(D.dates);
     // Monthly target-weight covariance is distinct from the daily sample used
     // for VaR. Refreshing daily prices must not change this decomposition.
-    const all=matched?contributions(p.weights,D.universe?.returns,n):null;
-    const active=joint?activeContributions(p.weights,b.weights,joint.returns,joint.dates.length):matched?activeContributions(p.weights,b.weights,D.universe?.returns,n):null;
+    const monthlyReturns=matched?Object.fromEntries(Object.entries(D.universe.returns).map(([t,r])=>[t,r.slice(offset)])):null;
+    const all=matched?contributions(p.weights,monthlyReturns,mn):null;
+    const active=joint?activeContributions(p.weights,b.weights,joint.returns,joint.dates.length):matched?activeContributions(p.weights,b.weights,monthlyReturns,mn):null;
     const top=all?.slice(0,4)||[],other=all?1-top.reduce((s,v)=>s+v.share,0):null;
     const contiguous=joint&&joint.session_indices.at(-1)-joint.session_indices[0]===joint.dates.length-1;
-    const dp=contiguous?joint.p:p.monthly,db=contiguous?joint.b:b.monthly;
+    const dp=contiguous?joint.p:pm,db=contiguous?joint.b:bm;
     const offsets=a?Array.from({length:21},(_,i)=>losses(compoundBlocks(joint.p,joint.session_indices,21,i))).filter(Boolean):[];
     const effective=a?effectiveObservations(blocks):0;
     const result={available:true,var:a?.var??null,cvar:a?.cvar??null,confidence:.95,horizonSessions:21,monthlyStart:joint&&blocks.length?joint.dates[joint.dates.length%21]:null,monthlyEnd:joint&&blocks.length?joint.dates.at(-1):null,observations:blocks.length,tailObservations:a?.tailObservations??0,effectiveObservations:effective,
@@ -127,9 +130,9 @@
       coherence:a?{cvarAboveVar:a.cvar>=a.var-1e-12,monthlyAboveDaily:a.var>=daily.var,note:'La VaR ne croît pas nécessairement avec l’horizon pour toute distribution; aucune règle racine de 21 imposée.'}:null,
       backtesting:joint?{daily:backtest(joint.p,joint.session_indices),monthly:backtest(joint.p,joint.session_indices,21)}:null,
       fragile:effective*.05<10,reason:a?null:'Au moins 24 blocs complets non chevauchants de 21 séances requis.',
-      drawdown:{portfolio:maximumDrawdown(dp),benchmark:maximumDrawdown(db),frequency:contiguous?'quotidienne':'mensuelle',start:contiguous?joint.dates[0]:D.dates[0],end:contiguous?joint.dates.at(-1):D.dates.at(-1),method:contiguous?'Rendements des FNB observés, simulation à poids cibles quotidiens constants':'Simulation du backtest mensuel; creux intramensuels non mesurés'},
-      capture:downsideCapture(p.monthly,b.monthly),downside:F.downside(p.monthly,b.monthly),beta:F.beta(p.monthly,b.monthly),
-      contributions:all,activeContributions:active,contributionFrequency:'mensuelle',contributionStart:D.dates[0],contributionEnd:D.dates.at(-1),activeContributionFrequency:joint?'quotidienne':'mensuelle',top,other,start:joint?joint.dates[0]:D.dates[0],end:joint?joint.dates.at(-1):D.dates.at(-1),reference,daily};
+      drawdown:{portfolio:maximumDrawdown(dp),benchmark:maximumDrawdown(db),frequency:contiguous?'quotidienne':'mensuelle',start:contiguous?joint.dates[0]:D.dates[offset],end:contiguous?joint.dates.at(-1):D.dates.at(-1),method:contiguous?'Rendements des FNB observés, simulation à poids cibles quotidiens constants':'Simulation du backtest mensuel; creux intramensuels non mesurés'},
+      capture:downsideCapture(pm,bm),downside:F.downside(pm,bm),beta:F.beta(pm,bm),
+      contributions:all,activeContributions:active,contributionFrequency:'mensuelle',contributionStart:D.dates[offset],contributionEnd:D.dates.at(-1),activeContributionFrequency:joint?'quotidienne':'mensuelle',top,other,start:joint?joint.dates[0]:D.dates[offset],end:joint?joint.dates.at(-1):D.dates.at(-1),reference,daily};
     cache.results.set(key,result);return result;
   }
   return {losses,contributions,compare,dailyMeasure,maximumDrawdown,downsideCapture,compoundBlocks,effectiveObservations,bootstrapTail,backtest,jointSeries,activeContributions};

@@ -25,9 +25,10 @@ def install(root, snapshots):
             continue
         source = M.read(snapshots / (t + ".json"))
         if t not in d["universe"]["returns"]:
-            if any(m not in source["returns"] for m in d["dates"]):
+            first = source["dates"].get("first_full_month", d["dates"][0])
+            if any(m not in source["returns"] for m in d["dates"] if m >= first):
                 raise ValueError("Missing common ETF return: " + t)
-            d["universe"]["returns"][t] = [source["returns"][m] for m in d["dates"]]
+            d["universe"]["returns"][t] = [source["returns"].get(m) for m in d["dates"]]
             for key in ("geo", "sector", "mer"):
                 d["universe"][key][t] = source[key]
             for key, value in source["assets"].items():

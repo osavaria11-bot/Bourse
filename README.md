@@ -219,6 +219,8 @@ Le workflow `Daily FNB performance` tente la clôture à 16 h 15, 16 h 45 et 17 
 
 Contrôles locaux : `python scripts/daily_fnb.py --check`, `python -m unittest discover -s tests -p 'test_daily_fnb.py'`, `node --test tests/fnb-performance-utils.test.cjs`. Le workflow de publication vérifie le registre et déploie aussi les mises à jour du workflow quotidien.
 
+Les deux compositions **Conviction · Valeur FCUV** et **Conviction · Momentum FCMO**, autorisées le 5 novembre 2026, rejoignent les mêmes fiches, graphiques, ratios, projections et suivis. Leurs historiques observés commencent en octobre 2023, après le lancement de XCHP; les périodes précédentes restent vides et les anciens historiques sont conservés. Leur suivi permanent commence à la clôture du 6 novembre, après publication le matin même. Pondérations, sources et conventions sont détaillées dans [docs/fnb-conviction.md](docs/fnb-conviction.md).
+
 
 ### Trois portefeuilles indépendants
 

@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "kind": "compressed_public_etf_source_bundle",
+  "compression": "gzip_base64",
+  "sha256": "4b9d5b331afb7f5691248e8ff0bb96ded94875da9be53c2acb8554351d703739",
+  "catalog_path": "data/fnb-prospective/2026-11-05-conviction.json",
+  "parts": [
+    "data/fnb-submitted-sources/2026-11-05-conviction/part-01.b64",
+    "data/fnb-submitted-sources/2026-11-05-conviction/part-02.b64",
+    "data/fnb-submitted-sources/2026-11-05-conviction/part-03.b64",
+    "data/fnb-submitted-sources/2026-11-05-conviction/part-04.b64"
+  ],
+  "note": "Instantanés publics des émetteurs, clôtures et rendements CAD réels. Compression pour préserver la provenance des données et permettre une installation reproductible."
+}

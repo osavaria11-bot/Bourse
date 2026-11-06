@@ -39,6 +39,12 @@ async function check(browser,engine){
   for(const [t,w] of Object.entries(q.weights))assert.equal(await card.locator('[data-fund="'+t+'"] + td').innerText(),new Intl.NumberFormat('fr-CA',{minimumFractionDigits:1,maximumFractionDigits:1}).format(w*100)+' %');
   assert.match(await card.locator('.holdings-section').innerText(),/Couverture partielle/);
  }
+ const newConviction=require('../data/fnb-prospective/2026-11-05-conviction.json').portfolios;
+ for(const q of newConviction){
+  const card=page.locator('[data-fiche="'+q.id+'"]');
+  assert.equal(await card.locator('[data-history-start="2023-10"]').count(),1);
+  for(const [t,w] of Object.entries(q.weights))assert.equal(await card.locator('[data-fund="'+t+'"] + td').innerText(),new Intl.NumberFormat('fr-CA',{minimumFractionDigits:1,maximumFractionDigits:1}).format(w*100)+' %');
+ }
  const prospectiveId=D.prospective_order[0];
  assert.equal(await page.locator('.prospective-project').count(),0);
  for(const selector of ['summaryFocus','sectorFocus','ficheFocus'])assert.equal(await page.locator('#'+selector+' option[value="'+prospectiveId+'"]').count(),1);
@@ -204,7 +210,7 @@ async function check(browser,engine){
  // Changing the followed portfolio must change the actual curves, amounts
  // and companion selectors, not only the four summary figures.
  await page.locator('.nav [data-tab="overview"]').click();
- for(const k of ['robust-2026-10-1','5','robust-2026-10-2','2']){
+ for(const k of ['robust-2026-10-1','5','robust-2026-10-2',...newConviction.map(q=>q.id),'2']){
   const previous=await page.locator('#summaryFocus').inputValue();
   await page.locator('#summaryFocus').selectOption(k);
   assert.equal(await page.locator('#sectorFocus').inputValue(),k);assert.equal(await page.locator('#ficheFocus').inputValue(),k);
@@ -212,6 +218,15 @@ async function check(browser,engine){
   assert.equal(await page.locator('#growthSvg .wealth-line[data-portfolio="'+k+'"]').isVisible(),true);
   if(previous!==k)assert.equal(await page.locator('#growthSvg .wealth-line[data-portfolio="'+previous+'"]').evaluate(n=>getComputedStyle(n).display!=='none'),false);
   assert.equal(await page.locator('#growthReadout [data-portfolio="'+k+'"] b').innerText(),new Intl.NumberFormat('fr-CA',{style:'currency',currency:'CAD',currencyDisplay:'narrowSymbol',maximumFractionDigits:0}).format(D.results[k].end));
+  if(D.results[k].available_history_start){
+   await page.locator('#monthSlider').fill('0');
+   assert.equal(await page.locator('#growthReadout [data-portfolio="'+k+'"] b').innerText(),'—');
+   const offset=D.dates.indexOf(D.results[k].available_history_start);
+   await page.locator('#monthSlider').fill(String(offset));
+   assert.equal(await page.locator('#growthReadout [data-portfolio="'+k+'"] b').innerText(),new Intl.NumberFormat('fr-CA',{style:'currency',currency:'CAD',currencyDisplay:'narrowSymbol',maximumFractionDigits:0}).format(10000));
+   assert.ok(Number((await page.locator('#growthSvg .wealth-line[data-portfolio="'+k+'"]').getAttribute('d')).trim().match(/^M([\d.]+)/)[1])>62);
+   await page.locator('#monthSlider').fill(String(D.dates.length));
+  }
  }
  await page.locator('.nav [data-tab="allPortfolios"]').click();
  await page.locator('#robustCharts').click();assert.equal(await page.locator('#overview').isVisible(),true);
@@ -248,7 +263,7 @@ async function check(browser,engine){
    assert.equal(await page.locator('.risk-snapshot-metrics>div').count(),4);
    assert.equal(await page.locator('[data-risk-contribution]').count(),Math.min(4,Object.keys(D.results[id].weights).length));
    assert.equal(await page.locator('#factorValues [data-factor]').count(), 5);
-   assert.match(await page.locator('#factorStatus').innerText(), new RegExp(ref + '.*' + D.dates.length + ' mois'));
+   assert.match(await page.locator('#factorStatus').innerText(), new RegExp(ref + '.*' + c.months + ' mois'));
    assert.equal(await row.locator('td').nth(0).innerText(), (c.factors[0].portfolio > .0005 ? '+' : '') + new Intl.NumberFormat('fr-CA', {minimumFractionDigits:2,maximumFractionDigits:2}).format(c.factors[0].portfolio));
    assert.equal(await page.locator('#factorValues .factor-unavailable').innerText().then(t => t.includes('Non estimé')), true);
   }
@@ -324,6 +339,14 @@ async function check(browser,engine){
   assert.equal(await page.locator('#performanceChart .performance-series').count(),2);
   assert.match(await page.locator('#performanceBody [data-performance-row="'+k+'"]').innerText(),/Simulation depuis le 19 oct/);
   await page.locator('#performanceSlider').fill('0');assert.match(await page.locator('#performanceReadout').innerText(),/10\s000,00/);
+ }
+ const conviction=require('../data/fnb-prospective/2026-11-05-conviction.json').portfolios;
+ for(const q of conviction){
+  await page.locator('#performanceFocus').selectOption(q.id);
+  assert.equal(await page.locator('#performanceBenchmark').inputValue(),'VFV');
+  assert.equal(await page.locator('#performanceChart .performance-series').count(),2);
+  assert.match(await page.locator('#performanceBody [data-performance-row="'+q.id+'"]').innerText(),/Simulation depuis le 19 oct/);
+  assert.equal(await page.locator('#performanceWeights tbody tr').count(),Object.keys(q.weights).length);
  }
  for(const k of ['savy-5','savy-2']){
   await page.locator('#performanceFocus').selectOption(k);
