@@ -2,11 +2,11 @@
   "schema_version": 1,
   "kind": "polymarket_events",
   "provider": "polymarket",
-  "generated_at": "2026-11-06T14:25:57.725782Z",
+  "generated_at": "2026-11-06T14:38:28.187524Z",
   "groups": {
     "finance": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-06T14:25:57.725782Z",
+      "fetched_at": "2026-11-06T14:38:28.187524Z",
       "ranking": "volume",
       "events": [
         {
@@ -26,7 +26,7 @@
             },
             {
               "label": "1 (25 bps)",
-              "probability": 0.0065,
+              "probability": 0.0125,
               "market_id": "616903",
               "ends_at": "2027-01-01T04:59:00Z"
             }
@@ -66,7 +66,7 @@
           "outcomes": [
             {
               "label": "25 bps increase",
-              "probability": 0.775,
+              "probability": 0.785,
               "market_id": "3215008",
               "ends_at": "2026-12-09T23:59:00Z"
             },
@@ -82,7 +82,7 @@
     },
     "popular": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-06T14:25:57.725782Z",
+      "fetched_at": "2026-11-06T14:38:28.187524Z",
       "ranking": "volume24hr",
       "events": [
         {
@@ -91,7 +91,7 @@
           "title": "Democratic Presidential Nominee 2028",
           "url": "https://polymarket.com/event/democratic-presidential-nominee-2028",
           "volume": 1311605074.252542,
-          "volume_24h": 1782509.6536130002,
+          "volume_24h": 1782493.5936130001,
           "ends_at": "2028-11-08T04:59:00Z",
           "outcomes": [
             {
@@ -188,13 +188,13 @@
           "outcomes": [
             {
               "label": "300-319",
-              "probability": 0.93,
+              "probability": 0.935,
               "market_id": "6288570",
               "ends_at": "2026-11-06T17:00:00Z"
             },
             {
               "label": "320-339",
-              "probability": 0.0725,
+              "probability": 0.047,
               "market_id": "6288574",
               "ends_at": "2026-11-06T17:00:00Z"
             }
@@ -204,7 +204,7 @@
     },
     "trending": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-06T14:25:57.725782Z",
+      "fetched_at": "2026-11-06T14:38:28.187524Z",
       "ranking": "volume24hr",
       "events": [
         {
@@ -218,13 +218,13 @@
           "outcomes": [
             {
               "label": "November 6",
-              "probability": 0.978,
+              "probability": 0.9815,
               "market_id": "6367375",
               "ends_at": "2026-11-07T04:59:00Z"
             },
             {
               "label": "November 7",
-              "probability": 0.954,
+              "probability": 0.926,
               "market_id": "6367378",
               "ends_at": "2026-11-08T04:59:00Z"
             }
@@ -247,7 +247,7 @@
             },
             {
               "label": "70,000",
-              "probability": 0.998,
+              "probability": 0.994,
               "market_id": "6423884",
               "ends_at": "2026-11-06T17:00:00Z"
             }
