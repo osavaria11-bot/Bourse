@@ -679,12 +679,41 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=BAM&size=100"
           },
-          "messages": [],
+          "messages": [
+            {
+              "text": "Collecte — Connor Teskey souligne 123 G$ US levés depuis janvier, dont 25 G$ au trimestre. Le capital rémunéré gagne 13 % à 682 G$ et le bénéfice lié aux commissions progresse de 15 % à 864 M$ : les entrées nourrissent directement le moteur récurrent.",
+              "language": "fr",
+              "source_url": "https://bam.brookfield.com/sites/brookfield-bam-v2/files/BAM-IR-Master/Press-Releases/2026/2026-q3-press-release-bam.pdf",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Qualité — Le bénéfice net de 3,0 G$ US comprend un gain sans encaissement de 2,0 G$ lié à Oaktree. Le bénéfice distribuable augmente plutôt de 15 % à 763 M$; le gain comptable ne doit pas être extrapolé comme revenu récurrent.",
+              "language": "fr",
+              "source_url": "https://bam.brookfield.com/sites/brookfield-bam-v2/files/BAM-IR-Master/Press-Releases/2026/2026-q3-press-release-bam.pdf",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Réalisations — BAM a investi 18 G$ US et cédé 12 G$ au trimestre; les commissions de surperformance réalisées nettes atteignent 48 M$. Ma lecture : leur conversion en encaisse devient un deuxième moteur, mais reste tributaire des sorties d’actifs.",
+              "language": "fr",
+              "source_url": "https://bam.brookfield.com/sites/brookfield-bam-v2/files/BAM-IR-Master/Press-Releases/2026/2026-q3-press-release-bam.pdf",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Potentiel — Sur 148 G$ US d’engagements non appelés, 68 G$ devraient générer environ 680 M$ de commissions annuelles une fois investis. Le calendrier de déploiement reste donc déterminant; les engagements ne sont pas encore tous des revenus.",
+              "language": "fr",
+              "source_url": "https://bam.brookfield.com/sites/brookfield-bam-v2/files/BAM-IR-Master/Press-Releases/2026/2026-q3-press-release-bam.pdf",
+              "kind": "reviewed_summary"
+            }
+          ],
           "report_url": null,
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=BAM&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://bam.brookfield.com/sites/brookfield-bam-v2/files/BAM-IR-Master/Press-Releases/2026/2026-q3-press-release-bam.pdf"
             }
           ]
         }
@@ -4653,12 +4682,41 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=T.TO&size=100"
           },
-          "messages": [],
+          "messages": [
+            {
+              "text": "Perspectives — La direction maintient les cibles 2026 révisées en juillet : revenus de services stables à −2 %, BAIIA ajusté de −2 à −4 %, flux libre d’environ 1,8 G$ CA. Le nouveau plan vise 900 M$ d’économies de trésorerie annualisées à la sortie de 2028; elles restent à réaliser.",
+              "language": "fr",
+              "source_url": "https://www.prnewswire.com/news-releases/telus-reports-third-quarter-2026-results-demonstrates-continued-discipline-in-core-telecom-advances-transformation-strategy-302931502.html",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Exploitation — Les revenus mobiles gagnent 1 %, avec 84 000 nouveaux abonnés téléphoniques nets et un revenu moyen stable. Mais la baisse des volumes de deux clients hyperscale de TELUS Digital pèse sur le groupe : le BAIIA ajusté recule de 5 %, ou de 2 % hors éléments ponctuels.",
+              "language": "fr",
+              "source_url": "https://www.prnewswire.com/news-releases/telus-reports-third-quarter-2026-results-demonstrates-continued-discipline-in-core-telecom-advances-transformation-strategy-302931502.html",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Trésorerie — Le flux libre chute de 35 % à 396 M$ CA, avec un BAIIA plus faible et davantage d’investissements. Le levier atteint 3,6 fois; la cible de 3 fois ou moins fin 2028 dépend des économies et des cessions prévues de Santé et d’Agriculture.",
+              "language": "fr",
+              "source_url": "https://www.prnewswire.com/news-releases/telus-reports-third-quarter-2026-results-demonstrates-continued-discipline-in-core-telecom-advances-transformation-strategy-302931502.html",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Risque — La perte nette de 660 M$ CA inclut une dépréciation sans encaissement de 800 M$ avant impôt chez TELUS Santé, liée notamment aux attentes de croissance revues. Ma lecture : la monétisation doit encore démontrer une valeur compatible avec le désendettement.",
+              "language": "fr",
+              "source_url": "https://www.prnewswire.com/news-releases/telus-reports-third-quarter-2026-results-demonstrates-continued-discipline-in-core-telecom-advances-transformation-strategy-302931502.html",
+              "kind": "reviewed_summary"
+            }
+          ],
           "report_url": null,
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=T.TO&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.prnewswire.com/news-releases/telus-reports-third-quarter-2026-results-demonstrates-continued-discipline-in-core-telecom-advances-transformation-strategy-302931502.html"
             }
           ]
         }
@@ -5685,5 +5743,6 @@
       "source_warnings": []
     }
   },
-  "errors": {}
+  "errors": {},
+  "analysis_reviewed_at": "2026-11-06T14:40:56.639207+00:00"
 }
