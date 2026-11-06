@@ -2902,7 +2902,7 @@
               "kind": "reviewed_summary"
             },
             {
-              "text": "Trésorerie — Les activités génèrent 106,2 M$ CA et le flux libre atteint 61,6 M$, contre une sortie de 36,7 M$ un an plus tôt. La trésorerie nette de 1,33 G$ finance les acquisitions de SatixFy et de Blue Canyon; l’intégration de ces actifs devient le principal test de l’allocation du capital.",
+              "text": "Trésorerie — Les activités génèrent 106,2 M$ CA et le flux libre atteint 61,6 M$, contre une sortie de 36,7 M$ un an plus tôt. La trésorerie nette de 1,33 G$ doit financer les acquisitions prévues de CLS et de Blue Canyon; l’intégration de ces actifs devient le principal test de l’allocation du capital.",
               "language": "fr",
               "source_url": "https://mda-en.investorroom.com/2026-11-05-MDA-SPACE-REPORTS-THIRD-QUARTER-2026-RESULTS",
               "kind": "reviewed_summary"
@@ -5629,5 +5629,6 @@
       "source_warnings": []
     }
   },
-  "errors": {}
+  "errors": {},
+  "analysis_reviewed_at": "2026-11-06T14:29:29.818151+00:00"
 }

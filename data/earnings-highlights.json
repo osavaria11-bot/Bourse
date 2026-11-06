@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "reviewed_earnings_highlights",
-  "reviewed_at": "2026-11-06T10:08:04.545387+00:00",
+  "reviewed_at": "2026-11-06T14:29:29.818151+00:00",
   "reports": {
     "NFLX:2026-10-20": {
       "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-20-netflix-inc-stock/",
@@ -698,8 +698,17 @@
       "messages": [
         "Croissance — Les revenus progressent de 21,5 % à 498,1 M$ CA, menés par les systèmes satellitaires (+26,4 %) avec Telesat Lightspeed et par la géointelligence (+24,8 %). Le carnet recule toutefois à 3,95 G$ contre 4,39 G$ un an plus tôt : les réservations de 444 M$ doivent continuer de se convertir en livraisons.",
         "Marges — Le BAIIA ajusté augmente de 15,9 % à 96,0 M$ CA, mais sa marge baisse de 20,2 % à 19,3 %. Le mix des programmes et les frais généraux absorbent une partie de la croissance; la marge brute recule aussi à 25,3 %. La montée des volumes ne garantit donc pas encore un levier opérationnel complet.",
-        "Trésorerie — Les activités génèrent 106,2 M$ CA et le flux libre atteint 61,6 M$, contre une sortie de 36,7 M$ un an plus tôt. La trésorerie nette de 1,33 G$ finance les acquisitions de SatixFy et de Blue Canyon; l’intégration de ces actifs devient le principal test de l’allocation du capital.",
+        "Trésorerie — Les activités génèrent 106,2 M$ CA et le flux libre atteint 61,6 M$, contre une sortie de 36,7 M$ un an plus tôt. La trésorerie nette de 1,33 G$ doit financer les acquisitions prévues de CLS et de Blue Canyon; l’intégration de ces actifs devient le principal test de l’allocation du capital.",
         "Perspectives — MDA relève sa cible 2026 de revenus à 1,90–1,95 G$ CA et celle du BAIIA ajusté à 355–375 M$, tout en maintenant une marge de 18–20 %. Les investissements restent prévus à 225–275 M$ et le flux libre entre neutre et négatif : le relèvement ne supprime pas la pression de financement de la capacité."
+      ],
+      "editorial_corrections": [
+        {
+          "corrected_at": "2026-11-06T14:29:29.818151+00:00",
+          "field": "messages[2]",
+          "previous_text": "Trésorerie — Les activités génèrent 106,2 M$ CA et le flux libre atteint 61,6 M$, contre une sortie de 36,7 M$ un an plus tôt. La trésorerie nette de 1,33 G$ finance les acquisitions de SatixFy et de Blue Canyon; l’intégration de ces actifs devient le principal test de l’allocation du capital.",
+          "reason": "Le communiqué du 5 novembre 2026 désigne CLS et Blue Canyon comme acquisitions prévues à financer; SatixFy a été acquise le 2 juillet 2025.",
+          "source_url": "https://mda-en.investorroom.com/2026-11-05-MDA-SPACE-REPORTS-THIRD-QUARTER-2026-RESULTS"
+        }
       ]
     },
     "TRP:2026-11-05": {
