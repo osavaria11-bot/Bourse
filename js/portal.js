@@ -254,7 +254,8 @@
   const fundAnalysis = pane("analyses", "overview"), fundHeading = el("div", "portal-section-heading"), fundTitle = el("div");
   fundTitle.append(el("h2", "", "Portefeuilles FNB"));
   const fundFullScreen = el("a", "button quiet", "Ouvrir en plein écran ↗");
-  const fundReportUrl = () => "reports/portefeuilles-fnb.html?v=20261025-integrated&month=" + new Intl.DateTimeFormat("fr-CA",{timeZone:"America/Toronto",year:"numeric",month:"2-digit"}).format(new Date());
+  let fundReportRefresh = "";
+  const fundReportUrl = () => "reports/portefeuilles-fnb.html?v=20261106-portfolio-lists&month=" + new Intl.DateTimeFormat("fr-CA",{timeZone:"America/Toronto",year:"numeric",month:"2-digit"}).format(new Date()) + fundReportRefresh;
   fundFullScreen.href = fundReportUrl(); fundFullScreen.target = "_blank"; fundFullScreen.rel = "noopener noreferrer";
   fundHeading.append(fundTitle, fundFullScreen);
   const fundFrame = el("iframe", "portal-report-frame"); fundFrame.id = "fundAnalysisFrame";
@@ -426,7 +427,23 @@
   });
   window.addEventListener("hashchange", () => applyRoute()); window.addEventListener("popstate", () => applyRoute());
   document.addEventListener("savy:quotes", () => homeMarkets());
-  $("#refreshButton").addEventListener("click", () => {archives();fundFrame.contentWindow?.SavyFnbPerformance?.refresh();});
+  $("#refreshButton").addEventListener("click", async () => {
+    archives();
+    fundFrame.contentWindow?.SavyFnbPerformance?.refresh();
+    if (fundFrame.getAttribute("src")) {
+      try {
+        const response = await fetch("data/fnb-analysis.json", {cache: "no-store"});
+        if (!response.ok) return;
+        const latest = await response.json();
+        const current = JSON.parse(fundFrame.contentDocument?.getElementById("analysis")?.textContent || "{}");
+        if (JSON.stringify(latest.order) !== JSON.stringify(current.order) || JSON.stringify(latest.dates) !== JSON.stringify(current.dates)) {
+          fundReportRefresh = "&refresh=" + Date.now();
+          fundFullScreen.href = fundReportUrl();
+          fundFrame.src = fundReportUrl();
+        }
+      } catch { /* Keep the displayed report and its selections during an outage. */ }
+    }
+  });
   window.SavyPortal = {navigate, syncIndicators, syncMarkets, homeMarkets, homeBriefing, homeReports, preserveRoute: url => R.preserveRoute(url, location.href)};
   applyRoute(); archives();
 })();

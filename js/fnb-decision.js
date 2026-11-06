@@ -28,7 +28,7 @@ window.SavyFnbDecision=(()=>{
     const limit=()=>{const raw=$('decisionLoss').value.trim().replace(/%/g,'').replace(',','.');return /^\d+(?:\.\d+)?$/.test(raw)&&Number(raw)>0&&Number(raw)<=100?Number(raw)/100:null;};
     const persist=()=>{try{localStorage.setItem(storage,JSON.stringify({mode:$('decisionMode').value,goal:$('decisionGoal').value,horizon:$('decisionHorizon').value,loss:limit()===null?null:limit()*100,capital:capital(),selected}));}catch{}};
     const historicalHead=$('decisionHead').innerHTML;
-    const forward=window.SavyFnbForward.start(D,stress,{selected:()=>selected,reference,capital,limit,label,allowed:()=>U.candidates(D,reference()),open:actions.open});
+    const forward=window.SavyFnbForward.start(D,stress,{selected:()=>selected,reference,capital,limit,label,allowed:()=>SavyFnb.displayOrder(D,U.candidates(D,reference())),open:actions.open});
     function model(){
       selected=U.choices(D,reference(),selected);const key=selected.join('|')+'|'+reference();
       if(key!==signature){signature=key;analysis=U.analyse(D,selected,reference(),daily,stress);sensKey='';}
@@ -46,7 +46,7 @@ window.SavyFnbDecision=(()=>{
       return '<small>'+esc(t.status==='unavailable'?'Seuil non évaluable':'Pas de dépassement parmi les estimations disponibles')+(t.missing?' · '+t.missing+' scénario(s) incomplet(s)':'')+'</small>';
     }
     function table(a){
-      const goal=$('decisionGoal').value,g=U.GOALS[goal],rank=U.ranks(a.rows,goal),allowed=U.candidates(D,reference());
+      const goal=$('decisionGoal').value,g=U.GOALS[goal],rank=U.ranks(a.rows,goal),allowed=SavyFnb.displayOrder(D,U.candidates(D,reference()));
       $('decisionBody').innerHTML=a.rows.map(row=>{
         const chosen=selected.indexOf(row.id),first=rank.get(row.id)===1,global=goal==='global'?window.SavyFnbForecast.global(a.rows):null;
         const title=row.isBenchmark?'<b>'+esc(label(row.id))+'</b><small>Référence commune</small>':'<div class="decision-selector"><select data-decision-choice="'+chosen+'" aria-label="Candidat '+(chosen+1)+'">'+allowed.map(id=>'<option value="'+esc(id)+'"'+(id===row.id?' selected':'')+(selected.includes(id)&&id!==row.id?' disabled':'')+'>'+esc(label(id))+'</option>').join('')+'</select><div class="decision-actions"><button type="button" data-decision-open="'+esc(row.id)+'">Fiche</button><button type="button" data-decision-risk="'+esc(row.id)+'">Risque</button></div></div>';

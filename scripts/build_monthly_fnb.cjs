@@ -2,6 +2,7 @@
 // Render every financial value from the same validated monthly snapshot.
 const fs=require("node:fs"),path=require("node:path");
 const root=path.resolve(process.argv[2]||path.join(__dirname,"..")),file=path.join(root,"reports/portefeuilles-fnb.html");
+const displayOrder=(data,ids)=>[...ids].sort((a,b)=>(Date.parse(data.results?.[b]?.published_at)||0)-(Date.parse(data.results?.[a]?.published_at)||0));
 const D=JSON.parse(fs.readFileSync(path.join(root,"data/fnb-analysis.json"),"utf8")),R=D.results,O=D.optimization;
 const catalogFile=path.join(root,"data/fnb-catalog.json"),fundCatalog=fs.existsSync(catalogFile)?JSON.parse(fs.readFileSync(catalogFile,"utf8")).funds:{};
 for(const t of Object.keys(D.fund_labels))if(fundCatalog[t])D.fund_labels[t]=fundCatalog[t];
@@ -10,7 +11,7 @@ let html=fs.readFileSync(file,"utf8");
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const num=(v,n=2)=>!Number.isFinite(v)?"—":new Intl.NumberFormat("fr-CA",{minimumFractionDigits:n,maximumFractionDigits:n}).format(v);
 const pct=(v,n=1)=>v===null?"—":num(v*100,n)+" %";
-const robust=D.robust_order||[],recommended=D.recommended_order||[],prospective=D.prospective_order||[],frozen=[...recommended,...robust,...prospective],own=[...frozen,...(D.proposal_order||[]),...D.custom_order],label=k=>k==='VFV'?'S&P 500 · VFV':frozen.includes(k)?R[k].name:k==="proposal"?"Proposition · "+O.month:D.custom_order.includes(k)?"Nº "+k+" · "+R[k].short_name:k;
+const robust=D.robust_order||[],recommended=D.recommended_order||[],prospective=D.prospective_order||[],frozen=displayOrder(D,[...recommended,...robust,...prospective]),own=displayOrder(D,[...frozen,...(D.proposal_order||[]),...D.custom_order]),label=k=>k==='VFV'?'S&P 500 · VFV':frozen.includes(k)?R[k].name:k==="proposal"?"Proposition · "+O.month:D.custom_order.includes(k)?"Nº "+k+" · "+R[k].short_name:k;
 const fund=t=>{const f=D.fund_labels[t];if(!f)throw Error("Missing label "+t);return `<span class="fund-ticker">${esc(t)}</span><a class="fund-name" href="${esc(f.source_url)}" target="_blank" rel="noopener noreferrer">${esc(f.name)}</a><span class="fund-description">${esc(f.description)}</span>`;};
 const table=(headers,rows)=>'<div class="table-wrap" tabindex="0"><table><thead><tr>'+headers.map(h=>'<th scope="col">'+h+'</th>').join('')+'</tr></thead><tbody>'+rows.join('')+'</tbody></table></div>';
 function historicalCard(k){
@@ -41,7 +42,7 @@ const start=html.indexOf('<div class="portfolio-grid">'),end=html.indexOf('<sect
 if(start<0||end<start)throw Error("Portfolio template not found");
 html=html.slice(0,start)+'<div class="portfolio-grid">'+cards+'</div></section>\n'+html.slice(end);
 for(const id of ["summaryFocus","sectorFocus","ficheFocus"]){
- const list=id==="sectorFocus"?D.order:own;
+ const list=id==="sectorFocus"?displayOrder(D,D.order):own;
  const opts=(id==="ficheFocus"?'<option value="all">Tous · '+own.length+' portefeuilles</option>':'')+list.map(k=>`<option value="${k}"${k==="2"?' selected':''}>${esc(id==="ficheFocus"&&D.custom_order.includes(k)?'Nº '+k+' — '+R[k].name:label(k))}</option>`).join('');
  html=html.replace(new RegExp('(<select id="'+id+'"[^>]*>)[\\s\\S]*?(</select>)'),(_,a,b)=>a+opts+b);
 }
@@ -93,7 +94,7 @@ const stressInput=fs.existsSync(stressFile)?JSON.parse(fs.readFileSync(stressFil
 const dailyRiskFile=path.join(root,'data/fnb-daily-risk.json');
 html=require('./fnb_risk_view.cjs')(html,fs.existsSync(dailyRiskFile)?JSON.parse(fs.readFileSync(dailyRiskFile,'utf8')):null,stressInput);
 html=require('./fnb_decision_view.cjs')(html,D,root);
-html=html.replace(/fnb-dashboard\.(js|css)\?v=[^"']+/g,'fnb-dashboard.$1?v=20261105-conviction-history');
+html=html.replace(/fnb-dashboard\.(js|css)\?v=[^"']+/g,'fnb-dashboard.$1?v=20261106-portfolio-lists');
 // Remove any archived data from the serialized payload before replacing it.
 html=html.replace(/(<script[^>]*id="analysis"[^>]*>)[\s\S]*?(<\/script>)/,(_,a,b)=>a+JSON.stringify(D).replace(/</g,"\\u003c")+b);
 html=require("./fnb_frontier_overlay.cjs")(html,root);

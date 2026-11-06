@@ -1,8 +1,15 @@
 const test = require("node:test"), assert = require("node:assert/strict"), fs = require("node:fs"), path = require("node:path");
-const {relativeMetrics, parseCapital} = require("../js/fnb-dashboard.js");
+const {relativeMetrics, parseCapital, displayOrder} = require("../js/fnb-dashboard.js");
 const html = fs.readFileSync(path.join(__dirname, "../reports/portefeuilles-fnb.html"), "utf8");
 const D = JSON.parse(html.match(/<script id="analysis" type="application\/json">([\s\S]*?)<\/script>/)[1]);
 function close(a, b, context) {if (a === null || b === null) assert.equal(a, b, context); else assert.ok(Math.abs(a - b) < 1e-9, context + ": " + a + " / " + b);}
+test("recent registered portfolios appear first without changing financial ranks or stored order", () => {
+  const before=JSON.stringify(D),ids=[...D.recommended_order,...D.robust_order,...D.prospective_order,...D.proposal_order,...D.custom_order];
+  const shown=displayOrder(D,ids);
+  assert.deepEqual(shown.slice(0,2),['prospective-2026-11-valeur-fcuv','prospective-2026-11-momentum-fcmo']);
+  assert.equal(new Set(shown).size,ids.length);assert.deepEqual([...shown].sort(),[...ids].sort());
+  assert.equal(JSON.stringify(D),before);
+});
 test("each portfolio's declared benchmark reproduces every stored relative ratio", () => {
   for (const k of D.order) {
     const benchmark=D.results[k].benchmark||'VEQT';

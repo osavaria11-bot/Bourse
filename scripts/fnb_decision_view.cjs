@@ -38,6 +38,6 @@ module.exports=function decisionView(html,D,root){
   html=html.replace(/<script[^>]*id="fnbForecastMacro"[^>]*>[\s\S]*?<\/script>/g,'');
   html=html.replace(/<script[^>]+src="\.\.\/js\/fnb-forecast(?:-utils|-ui)?\.js[^>]*><\/script>/g,'');
   html=html.replace(/(<script[^>]+src="\.\.\/js\/fnb-decision-utils\.js)/,forwardData+'<script src="../js/fnb-forecast-utils.js?v=20261025-readable-v3"></script><script src="../js/fnb-forecast-ui.js?v=20261025-readable-v3"></script>$1');
-  html=html.replace(/fnb-decision(-utils)?\.js\?v=[^"']+/g,(_,part)=>'fnb-decision'+(part||'')+'.js?v=20261025-integrated').replace(/fnb-decision\.css\?v=[^"']+/g,'fnb-decision.css?v=20261025-integrated');
+  html=html.replace(/fnb-decision(-utils)?\.js\?v=[^"']+/g,(_,part)=>'fnb-decision'+(part||'')+'.js?v=20261106-portfolio-lists').replace(/fnb-decision\.css\?v=[^"']+/g,'fnb-decision.css?v=20261025-integrated');
   return html;
 };

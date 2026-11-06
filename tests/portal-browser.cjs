@@ -57,6 +57,33 @@ async function check(browser, engine) {
   await fundReport.locator('html[data-ready="true"]').waitFor();
   assert.equal(await fundReport.locator('.nav [data-tab]').first().textContent(), "Vue d’ensemble");
   assert.equal(await fundReport.locator("#allPortfolios").isVisible(), true);
+  const additions=['prospective-2026-11-valeur-fcuv','prospective-2026-11-momentum-fcmo'];
+  assert.match(await page.locator('#fundAnalysisFrame').getAttribute('src'),/v=20261106-portfolio-lists/);
+  assert.deepEqual(await fundReport.locator('#allPortfolioBody [data-open-portfolio]').evaluateAll(ns=>ns.slice(0,2).map(n=>n.dataset.openPortfolio)),additions);
+  for(const selector of ['summaryFocus','sectorFocus','ficheFocus']){
+    assert.deepEqual(await fundReport.locator('#'+selector+' option:not([value="all"])').evaluateAll(ns=>ns.slice(0,2).map(n=>n.value)),additions);
+  }
+  await fundReport.locator('.nav [data-tab="decision"]').click();
+  assert.deepEqual(await fundReport.locator('[data-decision-choice]').first().locator('option').evaluateAll(ns=>ns.slice(0,2).map(n=>n.value)),additions);
+  for(const id of additions){
+    await fundReport.locator('.nav [data-tab="portfolios"]').click();
+    await fundReport.locator('#ficheFocus').selectOption(id);
+    assert.equal(await fundReport.locator('[data-fiche="'+id+'"]').isVisible(),true);
+    await fundReport.locator('.nav [data-tab="exposures"]').click();
+    assert.equal(await fundReport.locator('#sectorFocus').inputValue(),id);
+    await fundReport.locator('.nav [data-tab="overview"]').click();
+    assert.equal(await fundReport.locator('#summaryFocus').inputValue(),id);
+  }
+  await fundReport.locator('#summaryFocus').selectOption('2');
+  const priorSource=await page.locator('#fundAnalysisFrame').getAttribute('src');
+  await page.route('**/data/fnb-analysis.json',route=>route.fulfill({contentType:'application/json',body:JSON.stringify({...fnbData,order:[...fnbData.order,'new-publication']})}));
+  await page.locator('#refreshButton').click();
+  await page.waitForFunction(previous=>document.getElementById('fundAnalysisFrame').getAttribute('src')!==previous,priorSource);
+  assert.match(await page.locator('#fundAnalysisFrame').getAttribute('src'),/refresh=/);
+  await page.waitForFunction(()=>{const f=document.getElementById('fundAnalysisFrame');return f.contentWindow.location.href===new URL(f.getAttribute('src'),location.href).href&&f.contentDocument.documentElement.dataset.ready==='true';});
+  await fundReport.locator('html[data-ready="true"]').waitFor();
+  await page.unroute('**/data/fnb-analysis.json');
+
   assert.equal(await fundReport.locator('#decisionBody tr').count(),4);
   await fundReport.locator('.nav [data-tab="decision"]').click();
   assert.equal(await fundReport.locator('#decision .horizon-columns [data-open-portfolio]:visible').count(),15);

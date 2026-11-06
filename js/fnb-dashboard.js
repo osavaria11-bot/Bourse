@@ -1,5 +1,9 @@
 "use strict";
 const SavyFnb = (() => {
+  function displayOrder(data, ids) {
+    return ids.map((id,index)=>({id,index,published:Date.parse(data.results?.[id]?.published_at)||0}))
+      .sort((a,b)=>b.published-a.published||a.index-b.index).map(row=>row.id);
+  }
   function relativeMetrics(portfolio, benchmark, riskFree = .0238) {
     if (portfolio.monthly.length !== benchmark.monthly.length) throw new Error("Périodes incompatibles");
     const pairs = portfolio.monthly.flatMap((v,i) => Number.isFinite(v) && Number.isFinite(benchmark.monthly[i]) ? [[v,benchmark.monthly[i]]] : []);
@@ -33,7 +37,7 @@ const SavyFnb = (() => {
     const stressInput = JSON.parse(document.getElementById('fnbStressInput')?.textContent || 'null');
     let stressScenario = 'world20';
     const dailyRisk = JSON.parse(document.getElementById('fnbDailyRisk')?.textContent || 'null');
-    const ids = D.order, custom = D.custom_order, proposed = D.proposal_order || [], robust = D.robust_order || [], recommended = D.recommended_order || [], prospective = D.prospective_order || [], frozen = [...recommended,...robust,...prospective], own = [...frozen, ...proposed, ...custom], benchmarks = D.benchmark_order;
+    const ids = D.order, custom = D.custom_order, proposed = D.proposal_order || [], robust = D.robust_order || [], recommended = D.recommended_order || [], prospective = D.prospective_order || [], frozen = displayOrder(D,[...recommended,...robust,...prospective]), own = displayOrder(D,[...frozen, ...proposed, ...custom]), benchmarks = D.benchmark_order;
     const $ = id => document.getElementById(id), escape = s => String(s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
     const number = (v, digits = 2) => v === null || !Number.isFinite(v) ? "—" : new Intl.NumberFormat("fr-CA", {minimumFractionDigits:digits, maximumFractionDigits:digits}).format(v);
     const pct = (v, digits = 1) => v === null || !Number.isFinite(v) ? "—" : number(v * 100, digits) + " %";
@@ -326,7 +330,7 @@ const SavyFnb = (() => {
     window.SavyFnbDecision?.start(D,dailyRisk,stressInput,{capital:()=>capital,parseCapital,open:(id,ref,view)=>{choosePortfolio(id,true);$('referenceSelect').value=ref;$('referenceSelect').dispatchEvent(new Event('change',{bubbles:true}));switchView(view);}});
     document.documentElement.dataset.ready="true";
   }
-  return {relativeMetrics,parseCapital,start};
+  return {relativeMetrics,parseCapital,displayOrder,start};
 })();
 if (typeof module === "object" && module.exports) module.exports = SavyFnb;
 else SavyFnb.start(document);
