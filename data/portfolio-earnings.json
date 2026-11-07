@@ -1598,12 +1598,41 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=CSU.TO&size=100"
           },
-          "messages": [],
+          "messages": [
+            {
+              "text": "Croissance — Les revenus du T3 atteignent 3,512 G$ US, en hausse de 19 %, mais la croissance organique n’est que de 2 %. Ma lecture : les acquisitions restent le moteur dominant; la cadence organique mesure mieux la santé des activités existantes.",
+              "language": "fr",
+              "source_url": "https://www.csisoftware.com/constellation-software-inc-announces-results-for-the-third-quarter-ended-september-30-2026-and-declares-quarterly-dividend/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Trésorerie — Les flux de trésorerie d’exploitation progressent de 5 % à 717 M$ US, tandis que le flux disponible aux actionnaires recule de 16 % à 443 M$ US. Une réévaluation de 77 M$ US de passifs liés aux membres d’IRGA/TSS pèse sur la comparaison.",
+              "language": "fr",
+              "source_url": "https://www.csisoftware.com/constellation-software-inc-announces-results-for-the-third-quarter-ended-september-30-2026-and-declares-quarterly-dividend/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Acquisitions — Constellation a engagé 609 M$ US au trimestre, puis 589 M$ US après la clôture, paiements différés compris. Le déploiement demeure soutenu; le rendement futur dépendra de l’intégration et de la discipline de prix.",
+              "language": "fr",
+              "source_url": "https://www.csisoftware.com/constellation-software-inc-announces-results-for-the-third-quarter-ended-september-30-2026-and-declares-quarterly-dividend/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Bénéfice — Le bénéfice net attribuable aux actionnaires atteint 212 M$ US et le BPA dilué publié 10,01 $ US, contre 9,89 $ US un an plus tôt. Cette mesure publiée n’est pas directement comparable au consensus ajusté du calendrier.",
+              "language": "fr",
+              "source_url": "https://www.csisoftware.com/constellation-software-inc-announces-results-for-the-third-quarter-ended-september-30-2026-and-declares-quarterly-dividend/",
+              "kind": "reviewed_summary"
+            }
+          ],
           "report_url": null,
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=CSU.TO&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.csisoftware.com/constellation-software-inc-announces-results-for-the-third-quarter-ended-september-30-2026-and-declares-quarterly-dividend/"
             }
           ]
         }
@@ -2027,12 +2056,41 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=EMA.TO&size=100"
           },
-          "messages": [],
+          "messages": [
+            {
+              "text": "Investissements — Emera dévoile un plan de 21,5 G$ CA sur cinq ans, dont 82 % en Floride, et vise une croissance de la base tarifaire de 7,5 à 8,5 %. La capacité d’exécuter ces projets sans dégrader le crédit devient centrale.",
+              "language": "fr",
+              "source_url": "https://investors.emera.com/news/news-details/2026/Emera-Reports-2026-Third-Quarter-Financial-Results-and-Unveils-21-5-Billion-Five-Year-Capital-Plan/default.aspx",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Perspectives — La direction prévoit une croissance du BPA ajusté 2026 supérieure à sa cible annuelle de 5 à 7 %, puis maintient cette fourchette jusqu’en 2030. C’est une cible, sensible aux décisions réglementaires, aux coûts et au financement.",
+              "language": "fr",
+              "source_url": "https://investors.emera.com/news/news-details/2026/Emera-Reports-2026-Third-Quarter-Financial-Results-and-Unveils-21-5-Billion-Five-Year-Capital-Plan/default.aspx",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Financement — Le flux d’exploitation cumulatif progresse de 7 % et Emera prévoit financer 45 à 50 % du plan par les liquidités réinvesties. Le reste exigera une combinaison disciplinée de dette, partenariats et capital.",
+              "language": "fr",
+              "source_url": "https://investors.emera.com/news/news-details/2026/Emera-Reports-2026-Third-Quarter-Financial-Results-and-Unveils-21-5-Billion-Five-Year-Capital-Plan/default.aspx",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Portefeuille — Le rapprochement annoncé avec Canadian Utilities vise à réduire le coût du capital et à renforcer le profil de crédit; la clôture n’est attendue qu’au T3 ou T4 2027, sous réserve des approbations.",
+              "language": "fr",
+              "source_url": "https://investors.emera.com/news/news-details/2026/Emera-Reports-2026-Third-Quarter-Financial-Results-and-Unveils-21-5-Billion-Five-Year-Capital-Plan/default.aspx",
+              "kind": "reviewed_summary"
+            }
+          ],
           "report_url": null,
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=EMA.TO&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://investors.emera.com/news/news-details/2026/Emera-Reports-2026-Third-Quarter-Financial-Results-and-Unveils-21-5-Billion-Five-Year-Capital-Plan/default.aspx"
             }
           ]
         }
@@ -2066,12 +2124,41 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=ENB&size=100"
           },
-          "messages": [],
+          "messages": [
+            {
+              "text": "Résultat — Le BPA ajusté atteint 0,49 $ CA, contre 0,46 $ CA un an plus tôt, et le BAIIA ajusté 4,4 G$ CA. Le flux distribuable monte à 2,7 G$ CA, alors que le flux d’exploitation recule à 2,7 G$ CA contre 2,9 G$ CA.",
+              "language": "fr",
+              "source_url": "https://www.enbridge.com/media-center/news/details?id=123894&lang=en",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Perspectives — Enbridge maintient ses prévisions 2026 et ses objectifs à moyen terme. Ma lecture : cette stabilité compte davantage que l’écart nul au consensus, mais dépend de la disponibilité des actifs et des volumes contractuels.",
+              "language": "fr",
+              "source_url": "https://www.enbridge.com/media-center/news/details?id=123894&lang=en",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Croissance — Enbridge a mis en service 3 G$ CA de projets et porte son carnet garanti à 38 G$ CA. Elle ajoute les actifs pétroliers de Tallgrass pour 2,6 G$ US et d’autres projets, ce qui accroît aussi les besoins de financement et d’exécution.",
+              "language": "fr",
+              "source_url": "https://www.enbridge.com/media-center/news/details?id=123894&lang=en",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Capital — L’offre d’actions ordinaires de 3 G$ CA et les engagements de KKR/Apollo pour les projets de Colombie-Britannique partagent le financement. Le risque à surveiller est la création de valeur par action après cette émission et les acquisitions.",
+              "language": "fr",
+              "source_url": "https://www.enbridge.com/media-center/news/details?id=123894&lang=en",
+              "kind": "reviewed_summary"
+            }
+          ],
           "report_url": null,
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=ENB&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.enbridge.com/media-center/news/details?id=123894&lang=en"
             }
           ]
         }
@@ -2171,12 +2258,41 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=EXE.TO&size=100"
           },
-          "messages": [],
+          "messages": [
+            {
+              "text": "Croissance — Le BAIIA ajusté augmente de 41 % à 71,7 M$ CA et le BPA ajusté à 0,410 $ CA. CBI Home Health contribue 20,3 M$ CA au bénéfice d’exploitation net; la croissance reflète donc à la fois l’acquisition et l’organique.",
+              "language": "fr",
+              "source_url": "https://www.tmxnewsfile.com/release/322693/Extendicare-Announces-2026-Third-Quarter-Results?lang=fr",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Soins à domicile — Le volume quotidien moyen double, à 79 557, dont 34 873 apportés par CBI. Les investissements technologiques et administratifs ainsi que l’absence de hausse tarifaire en Ontario ramènent toutefois la marge à 13,3 %, contre 13,6 %.",
+              "language": "fr",
+              "source_url": "https://www.tmxnewsfile.com/release/322693/Extendicare-Announces-2026-Third-Quarter-Results?lang=fr",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Trésorerie — Le flux disponible ajusté atteint 43,4 M$ CA, ou 0,449 $ par action, et le taux de distribution descend à 29 %. Avec 75,3 M$ CA d’encaisse et 170,7 M$ CA de crédit disponible, la direction conserve une marge d’allocation du capital.",
+              "language": "fr",
+              "source_url": "https://www.tmxnewsfile.com/release/322693/Extendicare-Announces-2026-Third-Quarter-Results?lang=fr",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Exécution — L’intégration de Closing the Gap est largement terminée et celle de CBI devient prioritaire. Les soins de longue durée restent occupés à 98,3 %, mais leur marge publiée recule de 13,3 à 12,6 %, en partie à cause d’éléments de financement hors période.",
+              "language": "fr",
+              "source_url": "https://www.tmxnewsfile.com/release/322693/Extendicare-Announces-2026-Third-Quarter-Results?lang=fr",
+              "kind": "reviewed_summary"
+            }
+          ],
           "report_url": null,
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=EXE.TO&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.tmxnewsfile.com/release/322693/Extendicare-Announces-2026-Third-Quarter-Results?lang=fr"
             }
           ]
         }
@@ -5889,5 +6005,6 @@
       "source_warnings": []
     }
   },
-  "errors": {}
+  "errors": {},
+  "analysis_reviewed_at": "2026-11-07T10:03:22.262434+00:00"
 }

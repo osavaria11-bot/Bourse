@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "reviewed_earnings_highlights",
-  "reviewed_at": "2026-11-06T14:40:56.639207+00:00",
+  "reviewed_at": "2026-11-07T10:03:22.262434+00:00",
   "reports": {
     "NFLX:2026-10-20": {
       "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-20-netflix-inc-stock/",
@@ -788,6 +788,46 @@
         "Exploitation — Les revenus mobiles gagnent 1 %, avec 84 000 nouveaux abonnés téléphoniques nets et un revenu moyen stable. Mais la baisse des volumes de deux clients hyperscale de TELUS Digital pèse sur le groupe : le BAIIA ajusté recule de 5 %, ou de 2 % hors éléments ponctuels.",
         "Trésorerie — Le flux libre chute de 35 % à 396 M$ CA, avec un BAIIA plus faible et davantage d’investissements. Le levier atteint 3,6 fois; la cible de 3 fois ou moins fin 2028 dépend des économies et des cessions prévues de Santé et d’Agriculture.",
         "Risque — La perte nette de 660 M$ CA inclut une dépréciation sans encaissement de 800 M$ avant impôt chez TELUS Santé, liée notamment aux attentes de croissance revues. Ma lecture : la monétisation doit encore démontrer une valeur compatible avec le désendettement."
+      ]
+    },
+    "CSU.TO:2026-11-05": {
+      "source_url": "https://www.csisoftware.com/constellation-software-inc-announces-results-for-the-third-quarter-ended-september-30-2026-and-declares-quarterly-dividend/",
+      "report_url": null,
+      "messages": [
+        "Croissance — Les revenus du T3 atteignent 3,512 G$ US, en hausse de 19 %, mais la croissance organique n’est que de 2 %. Ma lecture : les acquisitions restent le moteur dominant; la cadence organique mesure mieux la santé des activités existantes.",
+        "Trésorerie — Les flux de trésorerie d’exploitation progressent de 5 % à 717 M$ US, tandis que le flux disponible aux actionnaires recule de 16 % à 443 M$ US. Une réévaluation de 77 M$ US de passifs liés aux membres d’IRGA/TSS pèse sur la comparaison.",
+        "Acquisitions — Constellation a engagé 609 M$ US au trimestre, puis 589 M$ US après la clôture, paiements différés compris. Le déploiement demeure soutenu; le rendement futur dépendra de l’intégration et de la discipline de prix.",
+        "Bénéfice — Le bénéfice net attribuable aux actionnaires atteint 212 M$ US et le BPA dilué publié 10,01 $ US, contre 9,89 $ US un an plus tôt. Cette mesure publiée n’est pas directement comparable au consensus ajusté du calendrier."
+      ]
+    },
+    "EMA.TO:2026-11-06": {
+      "source_url": "https://investors.emera.com/news/news-details/2026/Emera-Reports-2026-Third-Quarter-Financial-Results-and-Unveils-21-5-Billion-Five-Year-Capital-Plan/default.aspx",
+      "report_url": null,
+      "messages": [
+        "Investissements — Emera dévoile un plan de 21,5 G$ CA sur cinq ans, dont 82 % en Floride, et vise une croissance de la base tarifaire de 7,5 à 8,5 %. La capacité d’exécuter ces projets sans dégrader le crédit devient centrale.",
+        "Perspectives — La direction prévoit une croissance du BPA ajusté 2026 supérieure à sa cible annuelle de 5 à 7 %, puis maintient cette fourchette jusqu’en 2030. C’est une cible, sensible aux décisions réglementaires, aux coûts et au financement.",
+        "Financement — Le flux d’exploitation cumulatif progresse de 7 % et Emera prévoit financer 45 à 50 % du plan par les liquidités réinvesties. Le reste exigera une combinaison disciplinée de dette, partenariats et capital.",
+        "Portefeuille — Le rapprochement annoncé avec Canadian Utilities vise à réduire le coût du capital et à renforcer le profil de crédit; la clôture n’est attendue qu’au T3 ou T4 2027, sous réserve des approbations."
+      ]
+    },
+    "ENB:2026-11-06": {
+      "source_url": "https://www.enbridge.com/media-center/news/details?id=123894&lang=en",
+      "report_url": null,
+      "messages": [
+        "Résultat — Le BPA ajusté atteint 0,49 $ CA, contre 0,46 $ CA un an plus tôt, et le BAIIA ajusté 4,4 G$ CA. Le flux distribuable monte à 2,7 G$ CA, alors que le flux d’exploitation recule à 2,7 G$ CA contre 2,9 G$ CA.",
+        "Perspectives — Enbridge maintient ses prévisions 2026 et ses objectifs à moyen terme. Ma lecture : cette stabilité compte davantage que l’écart nul au consensus, mais dépend de la disponibilité des actifs et des volumes contractuels.",
+        "Croissance — Enbridge a mis en service 3 G$ CA de projets et porte son carnet garanti à 38 G$ CA. Elle ajoute les actifs pétroliers de Tallgrass pour 2,6 G$ US et d’autres projets, ce qui accroît aussi les besoins de financement et d’exécution.",
+        "Capital — L’offre d’actions ordinaires de 3 G$ CA et les engagements de KKR/Apollo pour les projets de Colombie-Britannique partagent le financement. Le risque à surveiller est la création de valeur par action après cette émission et les acquisitions."
+      ]
+    },
+    "EXE.TO:2026-11-05": {
+      "source_url": "https://www.tmxnewsfile.com/release/322693/Extendicare-Announces-2026-Third-Quarter-Results?lang=fr",
+      "report_url": null,
+      "messages": [
+        "Croissance — Le BAIIA ajusté augmente de 41 % à 71,7 M$ CA et le BPA ajusté à 0,410 $ CA. CBI Home Health contribue 20,3 M$ CA au bénéfice d’exploitation net; la croissance reflète donc à la fois l’acquisition et l’organique.",
+        "Soins à domicile — Le volume quotidien moyen double, à 79 557, dont 34 873 apportés par CBI. Les investissements technologiques et administratifs ainsi que l’absence de hausse tarifaire en Ontario ramènent toutefois la marge à 13,3 %, contre 13,6 %.",
+        "Trésorerie — Le flux disponible ajusté atteint 43,4 M$ CA, ou 0,449 $ par action, et le taux de distribution descend à 29 %. Avec 75,3 M$ CA d’encaisse et 170,7 M$ CA de crédit disponible, la direction conserve une marge d’allocation du capital.",
+        "Exécution — L’intégration de Closing the Gap est largement terminée et celle de CBI devient prioritaire. Les soins de longue durée restent occupés à 98,3 %, mais leur marge publiée recule de 13,3 à 12,6 %, en partie à cause d’éléments de financement hors période."
       ]
     }
   }
