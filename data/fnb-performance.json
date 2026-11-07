@@ -3,9 +3,9 @@
   "currency": "CAD",
   "capital": 10000.0,
   "inception": "2026-10-19",
-  "as_of": "2026-11-05",
-  "updated_at": "2026-11-05T20:32:00-05:00",
-  "ledger_sha256": "15e810a8c6e64e765f123ee793868a2901243908377978430381716fa2eb2a35",
+  "as_of": "2026-11-06",
+  "updated_at": "2026-11-06T19:14:04-05:00",
+  "ledger_sha256": "be341e41541107eb5f0c99376342509cf02cf9595a5847fc6402092bfce6f0ee",
   "benchmarks": [
     "FEQT",
     "VEQT",
@@ -89,6 +89,10 @@
         {
           "date": "2026-11-05",
           "value": 9794.570843979176
+        },
+        {
+          "date": "2026-11-06",
+          "value": 9838.415687491308
         }
       ],
       "initial_positions": [
@@ -206,6 +210,10 @@
         {
           "date": "2026-11-05",
           "value": 9980.733411388317
+        },
+        {
+          "date": "2026-11-06",
+          "value": 9998.322584356987
         }
       ],
       "initial_positions": [
@@ -336,6 +344,10 @@
         {
           "date": "2026-11-05",
           "value": 9991.53486169558
+        },
+        {
+          "date": "2026-11-06",
+          "value": 10019.680242653378
         }
       ],
       "initial_positions": [
@@ -462,6 +474,10 @@
         {
           "date": "2026-11-05",
           "value": 9995.941740158356
+        },
+        {
+          "date": "2026-11-06",
+          "value": 10007.074209079052
         }
       ],
       "initial_positions": [
@@ -609,6 +625,10 @@
         {
           "date": "2026-11-05",
           "value": 9876.334837270797
+        },
+        {
+          "date": "2026-11-06",
+          "value": 9910.39020387939
         }
       ],
       "initial_positions": [
@@ -755,6 +775,10 @@
         {
           "date": "2026-11-05",
           "value": 9745.158745278759
+        },
+        {
+          "date": "2026-11-06",
+          "value": 9782.667387027604
         }
       ],
       "initial_positions": [
@@ -894,6 +918,10 @@
         {
           "date": "2026-11-05",
           "value": 9858.084762357492
+        },
+        {
+          "date": "2026-11-06",
+          "value": 9856.59370186192
         }
       ],
       "initial_positions": [
@@ -1031,6 +1059,10 @@
         {
           "date": "2026-11-05",
           "value": 9694.081002270552
+        },
+        {
+          "date": "2026-11-06",
+          "value": 9771.08032141643
         }
       ],
       "initial_positions": [
@@ -1154,6 +1186,10 @@
         {
           "date": "2026-11-05",
           "value": 9598.510640913732
+        },
+        {
+          "date": "2026-11-06",
+          "value": 9691.085844858968
         }
       ],
       "initial_positions": [
@@ -1276,6 +1312,10 @@
         {
           "date": "2026-11-05",
           "value": 9819.111516381927
+        },
+        {
+          "date": "2026-11-06",
+          "value": 9848.038403126213
         }
       ],
       "initial_positions": [
@@ -1391,6 +1431,10 @@
         {
           "date": "2026-11-05",
           "value": 9892.552055714135
+        },
+        {
+          "date": "2026-11-06",
+          "value": 9911.397783282919
         }
       ],
       "initial_positions": [
@@ -1502,6 +1546,10 @@
         {
           "date": "2026-11-05",
           "value": 9838.288954063542
+        },
+        {
+          "date": "2026-11-06",
+          "value": 9869.58785847732
         }
       ],
       "initial_positions": [
@@ -1585,6 +1633,10 @@
         {
           "date": "2026-11-05",
           "value": 9663.865256116416
+        },
+        {
+          "date": "2026-11-06",
+          "value": 9749.515318308679
         }
       ],
       "initial_positions": [
@@ -1668,6 +1720,10 @@
         {
           "date": "2026-11-05",
           "value": 9759.544527880722
+        },
+        {
+          "date": "2026-11-06",
+          "value": 9833.368294016043
         }
       ],
       "initial_positions": [
@@ -1751,6 +1807,10 @@
         {
           "date": "2026-11-05",
           "value": 9870.327456779376
+        },
+        {
+          "date": "2026-11-06",
+          "value": 9921.179415494906
         }
       ],
       "initial_positions": [
@@ -1841,6 +1901,10 @@
         {
           "date": "2026-11-05",
           "value": 9901.806954509879
+        },
+        {
+          "date": "2026-11-06",
+          "value": 9934.569555418024
         }
       ],
       "initial_positions": [
@@ -1971,6 +2035,10 @@
         {
           "date": "2026-11-05",
           "value": 9722.722052478997
+        },
+        {
+          "date": "2026-11-06",
+          "value": 9751.912668874133
         }
       ],
       "initial_positions": [
@@ -2098,6 +2166,10 @@
         {
           "date": "2026-11-05",
           "value": 9700.35113486563
+        },
+        {
+          "date": "2026-11-06",
+          "value": 9744.98587527933
         }
       ],
       "initial_positions": [
@@ -2253,6 +2325,10 @@
         {
           "date": "2026-11-05",
           "value": 9685.437189790053
+        },
+        {
+          "date": "2026-11-06",
+          "value": 9740.368012882796
         }
       ],
       "initial_positions": [
@@ -2395,6 +2471,10 @@
         {
           "date": "2026-11-05",
           "value": 9626.447594728597
+        },
+        {
+          "date": "2026-11-06",
+          "value": 9738.42988803339
         }
       ],
       "initial_positions": [
@@ -2504,6 +2584,10 @@
         {
           "date": "2026-11-05",
           "value": 9651.653213945849
+        },
+        {
+          "date": "2026-11-06",
+          "value": 9758.01393916221
         }
       ],
       "initial_positions": [
@@ -2627,6 +2711,10 @@
         {
           "date": "2026-11-05",
           "value": 9577.338175552204
+        },
+        {
+          "date": "2026-11-06",
+          "value": 9689.433026853336
         }
       ],
       "initial_positions": [
@@ -2743,6 +2831,10 @@
         {
           "date": "2026-11-05",
           "value": 9648.308149387714
+        },
+        {
+          "date": "2026-11-06",
+          "value": 9763.954093258704
         }
       ],
       "initial_positions": [
@@ -2813,6 +2905,10 @@
         {
           "date": "2026-11-05",
           "value": 9604.043520439389
+        },
+        {
+          "date": "2026-11-06",
+          "value": 9717.27544161646
         }
       ],
       "initial_positions": [
@@ -2929,6 +3025,10 @@
         {
           "date": "2026-11-05",
           "value": 9614.318183555035
+        },
+        {
+          "date": "2026-11-06",
+          "value": 9707.434224387818
         }
       ],
       "initial_positions": [
@@ -3054,6 +3154,10 @@
         {
           "date": "2026-11-05",
           "value": 9631.425085620682
+        },
+        {
+          "date": "2026-11-06",
+          "value": 9699.089973412149
         }
       ],
       "initial_positions": [
@@ -3173,6 +3277,10 @@
         {
           "date": "2026-11-05",
           "value": 9836.319323229867
+        },
+        {
+          "date": "2026-11-06",
+          "value": 9873.183666890454
         }
       ],
       "initial_positions": [
@@ -3251,77 +3359,82 @@
       "published_at": "2026-11-06T07:43:42-05:00",
       "method": "buy_hold_fractional_ex_date_close_v1",
       "definition_sha256": "4063870c7b834905d8c22e4f2157db075af25ce44989f06abdc8bc27b7704073",
-      "history": [],
+      "history": [
+        {
+          "date": "2026-11-06",
+          "value": 10000.0
+        }
+      ],
       "initial_positions": [
         {
           "ticker": "FCUV",
           "name": "Fidelity U.S. Value ETF",
           "weight": 0.149,
-          "close": null,
-          "units": null
+          "close": 27.0,
+          "units": 55.18518518518518
         },
         {
           "ticker": "FINN",
           "name": "Fidelity Global Innovators ETF",
           "weight": 0.2,
-          "close": null,
-          "units": null
+          "close": 32.04,
+          "units": 62.421972534332085
         },
         {
           "ticker": "VDY",
           "name": "Vanguard FTSE Canadian High Dividend Yield Index ETF",
           "weight": 0.133,
-          "close": null,
-          "units": null
+          "close": 76.83999633789062,
+          "units": 17.308694213773183
         },
         {
           "ticker": "XBM",
           "name": "iShares S&P/TSX Global Base Metals Index ETF",
           "weight": 0.08,
-          "close": null,
-          "units": null
+          "close": 30.100000381469727,
+          "units": 26.57807275286611
         },
         {
           "ticker": "XCHP",
           "name": "iShares Semiconductor Index ETF",
           "weight": 0.05,
-          "close": null,
-          "units": null
+          "close": 100.5,
+          "units": 4.975124378109452
         },
         {
           "ticker": "XEG",
           "name": "iShares S&P/TSX Capped Energy Index ETF",
           "weight": 0.05,
-          "close": null,
-          "units": null
+          "close": 27.559999465942383,
+          "units": 18.142235474927396
         },
         {
           "ticker": "XGD",
           "name": "iShares S&P/TSX Global Gold Index ETF",
           "weight": 0.02,
-          "close": null,
-          "units": null
+          "close": 55.70000076293945,
+          "units": 3.5906642237080897
         },
         {
           "ticker": "XMTM",
           "name": "iShares MSCI USA Momentum Factor Index ETF",
           "weight": 0.084,
-          "close": null,
-          "units": null
+          "close": 44.0,
+          "units": 19.09090909090909
         },
         {
           "ticker": "ZEB",
           "name": "BMO Equal Weight Banks Index ETF",
           "weight": 0.045,
-          "close": null,
-          "units": null
+          "close": 75.51000213623047,
+          "units": 5.959475397552471
         },
         {
           "ticker": "ZEM",
           "name": "BMO MSCI Emerging Markets Index ETF",
           "weight": 0.189,
-          "close": null,
-          "units": null
+          "close": 30.3799991607666,
+          "units": 62.21198328539744
         }
       ]
     },
@@ -3349,77 +3462,82 @@
       "published_at": "2026-11-06T07:43:42-05:00",
       "method": "buy_hold_fractional_ex_date_close_v1",
       "definition_sha256": "327d11b3ca47ace63a79b9ef3a6edcbe812ec25dfb3f2fd8cf4621c830d239f0",
-      "history": [],
+      "history": [
+        {
+          "date": "2026-11-06",
+          "value": 10000.0
+        }
+      ],
       "initial_positions": [
         {
           "ticker": "FCMO",
           "name": "Fidelity U.S. Momentum ETF",
           "weight": 0.15,
-          "close": null,
-          "units": null
+          "close": 21.81,
+          "units": 68.7757909215956
         },
         {
           "ticker": "FINN",
           "name": "Fidelity Global Innovators ETF",
           "weight": 0.2,
-          "close": null,
-          "units": null
+          "close": 32.04,
+          "units": 62.421972534332085
         },
         {
           "ticker": "VDY",
           "name": "Vanguard FTSE Canadian High Dividend Yield Index ETF",
           "weight": 0.163,
-          "close": null,
-          "units": null
+          "close": 76.83999633789062,
+          "units": 21.21291095372202
         },
         {
           "ticker": "XBM",
           "name": "iShares S&P/TSX Global Base Metals Index ETF",
           "weight": 0.08,
-          "close": null,
-          "units": null
+          "close": 30.100000381469727,
+          "units": 26.57807275286611
         },
         {
           "ticker": "XCHP",
           "name": "iShares Semiconductor Index ETF",
           "weight": 0.05,
-          "close": null,
-          "units": null
+          "close": 100.5,
+          "units": 4.975124378109452
         },
         {
           "ticker": "XEG",
           "name": "iShares S&P/TSX Capped Energy Index ETF",
           "weight": 0.05,
-          "close": null,
-          "units": null
+          "close": 27.559999465942383,
+          "units": 18.142235474927396
         },
         {
           "ticker": "XGD",
           "name": "iShares S&P/TSX Global Gold Index ETF",
           "weight": 0.013,
-          "close": null,
-          "units": null
+          "close": 55.70000076293945,
+          "units": 2.333931745410258
         },
         {
           "ticker": "XMTM",
           "name": "iShares MSCI USA Momentum Factor Index ETF",
           "weight": 0.056,
-          "close": null,
-          "units": null
+          "close": 44.0,
+          "units": 12.727272727272727
         },
         {
           "ticker": "ZEB",
           "name": "BMO Equal Weight Banks Index ETF",
           "weight": 0.052,
-          "close": null,
-          "units": null
+          "close": 75.51000213623047,
+          "units": 6.886504903838411
         },
         {
           "ticker": "ZEM",
           "name": "BMO MSCI Emerging Markets Index ETF",
           "weight": 0.186,
-          "close": null,
-          "units": null
+          "close": 30.3799991607666,
+          "units": 61.224491487216525
         }
       ]
     }
@@ -3431,7 +3549,7 @@
     "history": "Registre quotidien figé, distinct des backtests. Les nouvelles optimisations ont leur propre date de lancement et ne remplacent aucun compte.",
     "source": "Clôtures quotidiennes Yahoo Finance, complétées par l’historique daté TMX Money si nécessaire; distributions et fractionnements Yahoo Finance, contrôle par clôtures ajustées.",
     "source_url": "https://help.yahoo.com/kb/SLN28256.html",
-    "schedule": "Premier passage à 16 h 15 (Québec); reprises à 16 h 45, 17 h 15, 18 h 37, 21 h 37, 6 h 17 et 7 h 47. Séances complètes uniquement, selon la disponibilité des clôtures et le délai du planificateur.",
+    "schedule": "Premier passage automatique à 16 h 30 (Québec); reprises à 16 h 45, 17 h 15, 18 h 37, 21 h 37, 6 h 17 et 7 h 47. Séances complètes uniquement, selon la disponibilité des clôtures et le délai du planificateur.",
     "source_changes": "Si les fournisseurs divergent sur une ancienne clôture, un changement vers TMX exige leur accord sur la nouvelle clôture adjacente. L’écart historique reste non confirmé et est signalé séparément. Les valeurs et parts déjà enregistrées restent figées; le rendement de transition peut inclure un écart de source.",
     "revisions": "Une correction de cours historique exige l’accord de Yahoo et TMX sur le cours révisé. Les deux clôtures adjacentes viennent ensemble de TMX; si Yahoo publie aussi la suivante, elle doit concorder. Une séance Yahoo absente est signalée, jamais inventée. La correction est consignée dans la séance suivante. Les cours, parts et valeurs déjà archivés restent figés; le rendement quotidien relie les deux valeurs réellement enregistrées."
   }

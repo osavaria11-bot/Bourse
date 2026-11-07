@@ -2,7 +2,11 @@ name: Daily FNB performance
 
 on:
   schedule:
-    - cron: "15 16,17 * * 1-5"
+    # Take the completed trading day into every ETF portfolio at 16:30 local.
+    - cron: "30 16 * * *"
+      timezone: "America/Toronto"
+    # Retain the existing retries when an exchange publishes its close late.
+    - cron: "15 17 * * 1-5"
       timezone: "America/Toronto"
     - cron: "45 16 * * 1-5"
       timezone: "America/Toronto"
