@@ -80,7 +80,7 @@ async function check(browser, engine) {
   await page.locator('#refreshButton').click();
   await page.waitForFunction(previous=>document.getElementById('fundAnalysisFrame').getAttribute('src')!==previous,priorSource);
   assert.match(await page.locator('#fundAnalysisFrame').getAttribute('src'),/refresh=/);
-  await page.waitForFunction(()=>{const f=document.getElementById('fundAnalysisFrame');return f.contentWindow.location.href===new URL(f.getAttribute('src'),location.href).href&&f.contentDocument.documentElement.dataset.ready==='true';});
+  await page.waitForFunction(()=>{const f=document.getElementById('fundAnalysisFrame');return f?.contentDocument?.documentElement?.dataset.ready==='true'&&f.contentWindow.location.href===new URL(f.getAttribute('src'),location.href).href;});
   await fundReport.locator('html[data-ready="true"]').waitFor();
   await page.unroute('**/data/fnb-analysis.json');
 
