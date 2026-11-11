@@ -189,6 +189,61 @@ class PermanentTracking(unittest.TestCase):
         with patch.object(F,"tmx_closes",return_value=official):
             with self.assertRaisesRegex(ValueError,"Unconfirmed"):F.collect(cfg,{"FBAL"},F.START,"2026-10-20",Client(),anchors={"FBAL":{"date":F.START,"close":100.}})
 
+    def test_dated_fidelity_market_price_confirms_new_close_when_history_is_revised(self):
+        day = "2026-10-20"
+        ticker, symbol = "FGRO", "FGRO.NE"
+        opening = self.quotes()
+        opening[ticker][F.START].update(close=19.11, adjusted_close=19.11, price_source="TMX Money")
+        self.run_day(quotes=opening)
+        archive = self.root / "data/fnb-performance/days/2026-10-19.json"
+        frozen = archive.read_bytes()
+        timestamp = lambda date: int(datetime.fromisoformat(date + "T13:30:00+00:00").timestamp())
+        payload = {"chart": {"result": [{
+            "meta": {"symbol": symbol, "currency": "CAD", "instrumentType": "ETF", "exchangeTimezoneName": "America/Toronto"},
+            "timestamp": [timestamp(F.START), timestamp(day)],
+            "indicators": {"quote": [{"close": [19.41, 19.38]}], "adjclose": [{"adjclose": [19.41, 19.38]}]},
+        }]}}
+        tmx = {date: {"close": price, "adjusted_close": price, "source_url": "https://money.tmx.com/en/quote/FGRO%3ACC"}
+               for date, price in [(F.START, 19.41), (day, 19.37)]}
+        market = {"priceAmt": "$19.38", "priceAmtDt": day}
+        fund = {"axisCode": ticker, "etf": True, "series": {"L": {
+            "axisCd": ticker, "currency": "CAD", "exchangeName": "Cboe CA", "etfMarketPrice": market, "nav": 19.3676,
+        }}}
+
+        class Client:
+            def json(self, url):
+                return fund if url == F.FID + "fund/EN/FGRO" else payload
+
+        config = {"funds": {ticker: {"quote_symbol": symbol, "provider": "fidelity"}}}
+        anchors = {ticker: {"date": F.START, "close": 19.11, "price_source": "TMX Money"}}
+        with patch.object(F, "tmx_closes", return_value=tmx):
+            market["priceAmtDt"] = F.START
+            with self.assertRaisesRegex(ValueError, "Unconfirmed"):
+                F.collect(config, {ticker}, F.START, day, Client(), anchors=anchors)
+            market["priceAmtDt"] = day
+            verified = F.collect(config, {ticker}, F.START, day, Client(), anchors=anchors)[ticker]
+
+        quotes = self.quotes(day)
+        quotes[ticker] = verified
+        self.run_day(day, quotes)
+        self.assertEqual(archive.read_bytes(), frozen)
+        _, days = F.load_state(self.root)
+        new = days[-1]["prices"][ticker]
+        self.assertEqual(new["close"], 19.38)
+        self.assertEqual(new["price_source"], "Yahoo Finance")
+        self.assertEqual(new["previous_close_revision"]["revised_close"], 19.41)
+        self.assertEqual(new["previous_close_revision"]["evidence"][1]["next_close"], 19.37)
+        self.assertEqual(new["previous_close_revision"]["next_close_confirmation"]["source"], F.FIDELITY_MARKET_SOURCE)
+        tmx[F.START].update(close=19.40, adjusted_close=19.40)
+        with patch.object(F, "tmx_closes", return_value=tmx):
+            quotes[ticker] = F.collect(config, {ticker}, F.START, day, Client(), anchors=anchors)[ticker]
+        revised = F.make_day(day, F.load_state(self.root)[0], quotes, days[0], days[-1]["recorded_at"])
+        change = revised["prices"][ticker]["previous_close_source_change"]
+        self.assertFalse(change["historical_close_confirmed"])
+        self.assertEqual(change["next_close_confirmation"]["close"], 19.38)
+        self.assertEqual(revised["accounts"], days[-1]["accounts"])
+        self.assertEqual(archive.read_bytes(), frozen)
+
     def test_confirmed_revision_with_late_yahoo_session_uses_one_official_history(self):
         self.run_day(); q=self.quotes("2026-10-20")
         symbol="FEQT.NE";stamp=int(datetime.fromisoformat(F.START+"T13:30:00+00:00").timestamp())

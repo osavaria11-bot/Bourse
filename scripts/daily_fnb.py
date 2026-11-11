@@ -17,9 +17,9 @@ from urllib.parse import quote, urlencode
 from zoneinfo import ZoneInfo
 
 try:
-    from .fnb_sources import Client, previous_trading_day
+    from .fnb_sources import Client, FID, previous_trading_day
 except ImportError:
-    from fnb_sources import Client, previous_trading_day
+    from fnb_sources import Client, FID, previous_trading_day
 
 TZ = ZoneInfo("America/Toronto")
 START = "2026-10-19"
@@ -27,6 +27,7 @@ CAPITAL = 10000.
 BENCHMARKS = ["FEQT", "VEQT", "VGRO", "VBAL"]
 BASELINE = "data/fnb-history/2026-10.json"
 METHOD = "buy_hold_fractional_ex_date_close_v1"
+FIDELITY_MARKET_SOURCE = "Fidelity Investments Canada"
 
 
 def read(path):
@@ -188,10 +189,26 @@ def tmx_closes(client, ticker, first, last):
         if row["datetime"][:10] in adjusted and row["closePrice"] is not None and adjusted[row["datetime"][:10]] is not None}
 
 
+def fidelity_market_close(client, ticker, day):
+    source_url = FID + "fund/EN/" + quote(ticker)
+    fund = client.json(source_url)
+    series = fund["series"]["L"]
+    market = series["etfMarketPrice"]
+    if (fund.get("axisCode") != ticker or fund.get("etf") is not True
+            or series.get("axisCd") != ticker or series.get("currency") != "CAD"
+            or series.get("exchangeName") != "Cboe CA" or market.get("priceAmtDt") != day):
+        raise ValueError("Missing dated Fidelity Cboe CAD market price")
+    close = float(market["priceAmt"].removeprefix("$").replace(",", ""))
+    if not math.isfinite(close) or close <= 0:
+        raise ValueError("Invalid Fidelity market price")
+    return {"source": FIDELITY_MARKET_SOURCE, "source_url": source_url, "date": day, "close": close}
+
+
 def collect(config, tickers, first, last, client=None, preferred_tmx=(), anchors=None):
     client = client or Client()
     def one(ticker):
-        symbol = config["funds"][ticker]["quote_symbol"]
+        fund = config["funds"][ticker]
+        symbol = fund["quote_symbol"]
         # Request through NOW, even during catch-up: future splits alter vendor history.
         params = {"period1": int(datetime.combine(date.fromisoformat(first), time(), TZ).timestamp()),
                   "period2": int(datetime.combine(date.fromisoformat(last) + timedelta(days=1), time(), TZ).timestamp()),
@@ -217,45 +234,51 @@ def collect(config, tickers, first, last, client=None, preferred_tmx=(), anchors
             # revision even when TMX still confirms the immutable ledger price.
             parsed = parse_prices(payload, symbol, first, last, official, prefer_fallback=True)
             if anchor and anchor["date"] in parsed and abs(parsed[anchor["date"]]["close"] / anchor["close"] - 1) > .0001:
-                # Confirm the REVISED historical close with two histories. TMX
-                # supplies both adjacent endpoints when Yahoo's newest session
-                # is late, just as in the ordinary missing-session fallback.
-                # Any available Yahoo next close must also agree. Never invent
-                # a missing observation or rebase the immutable ledger/units.
                 revised_day = anchor["date"]
                 following = next_session(date.fromisoformat(revised_day)).isoformat()
-                # The providers can disagree on the archived date even if TMX
-                # supplied the accepted close. Record that discrepancy separately
-                # when both sources independently confirm the next close.
-                if (anchor.get("price_source") in {"Yahoo Finance", "TMX Money"}
-                        and revised_day in yahoo and following in yahoo and following in parsed
-                        and abs(yahoo[revised_day]["close"] / parsed[revised_day]["close"] - 1) > .0001
-                        and abs(yahoo[following]["close"] / parsed[following]["close"] - 1) <= .0001):
-                    parsed[revised_day]["verified_source_change"] = {
-                        "date": revised_day, "accepted_close": anchor["close"],
-                        "accepted_source": anchor["price_source"], "historical_close_confirmed": False,
-                        "comparison_close": parsed[revised_day]["close"],
-                        "next_date": following, "next_close": parsed[following]["close"],
-                        "confirmation": "New adjacent close confirmed by Yahoo and TMX. Historical sources disagree; accepted historical value and units retained.",
-                        "evidence": [{"source": "Yahoo Finance", "source_url": yahoo[revised_day]["source_url"],
-                                      "close": yahoo[revised_day]["close"], "next_close": yahoo[following]["close"]},
-                                     {"source": "TMX Money", "source_url": parsed[revised_day]["source_url"],
-                                      "close": parsed[revised_day]["close"], "next_close": parsed[following]["close"]}]}
-                    return ticker, parsed
-                if (revised_day not in yahoo or following not in parsed
-                        or abs(yahoo[revised_day]["close"] / parsed[revised_day]["close"] - 1) > .0001
-                        or following in yahoo and abs(yahoo[following]["close"] / parsed[following]["close"] - 1) > .0001):
+                if revised_day not in yahoo or following not in parsed:
                     raise ValueError("Unconfirmed historical close revision: " + ticker)
-                parsed[revised_day]["verified_revision"] = {
+                tmx = parsed
+                historical_agreement = abs(yahoo[revised_day]["close"] / tmx[revised_day]["close"] - 1) <= .0001
+                if not historical_agreement and (following not in yahoo or anchor.get("price_source") not in {"Yahoo Finance", "TMX Money"}):
+                    raise ValueError("Unconfirmed historical close revision: " + ticker)
+
+                # TMX supplies the adjacent pair when the latest Yahoo observation is late.
+                # A published disagreement needs the dated market price for the same listing.
+                issuer = None
+                if following in yahoo and abs(yahoo[following]["close"] / tmx[following]["close"] - 1) > .0001:
+                    if fund.get("provider") != "fidelity" or not symbol.endswith(".NE"):
+                        raise ValueError("Unconfirmed historical close revision: " + ticker)
+                    try:
+                        issuer = fidelity_market_close(client, ticker, following)
+                    except (AttributeError, KeyError, TypeError, ValueError) as exc:
+                        raise ValueError(f"Unconfirmed historical close revision: {ticker}; {exc}") from exc
+                    confirmed = [history for history in (yahoo, tmx)
+                                 if abs(history[following]["close"] / issuer["close"] - 1) <= .0001]
+                    if len(confirmed) != 1 or not set(expected).issubset(confirmed[0]):
+                        raise ValueError("Unconfirmed historical close revision: " + ticker)
+                    parsed = confirmed[0]
+                verification = {
                     "date": revised_day, "accepted_close": anchor["close"],
-                    "revised_close": parsed[revised_day]["close"], "next_date": following,
-                    "next_close": parsed[following]["close"],
-                    "confirmation": "Revised historical close confirmed by Yahoo and TMX; adjacent closes taken together from TMX.",
-                    "yahoo_next_close_available": following in yahoo,
+                    "next_date": following, "next_close": parsed[following]["close"],
                     "evidence": [{"source": "Yahoo Finance", "source_url": yahoo[revised_day]["source_url"],
                                   "close": yahoo[revised_day]["close"], "next_close": yahoo.get(following, {}).get("close")},
-                                 {"source": "TMX Money", "source_url": parsed[revised_day]["source_url"],
-                                  "close": parsed[revised_day]["close"], "next_close": parsed[following]["close"]}]}
+                                 {"source": "TMX Money", "source_url": tmx[revised_day]["source_url"],
+                                  "close": tmx[revised_day]["close"], "next_close": tmx[following]["close"]}]}
+                if issuer:
+                    verification["next_close_confirmation"] = issuer
+                if historical_agreement:
+                    verification.update(revised_close=parsed[revised_day]["close"], yahoo_next_close_available=following in yahoo,
+                        confirmation=("Revised historical close confirmed by Yahoo and TMX. Fidelity's dated market price confirms the new close."
+                                      if issuer else "Revised historical close confirmed by Yahoo and TMX; adjacent closes taken together from TMX."))
+                    parsed[revised_day]["verified_revision"] = verification
+                else:
+                    verification.update(accepted_source=anchor["price_source"], historical_close_confirmed=False,
+                        comparison_close=parsed[revised_day]["close"],
+                        confirmation=("Fidelity's dated market price corroborates the new close."
+                                      if issuer else "New adjacent close confirmed by Yahoo and TMX.")
+                                     + " Historical sources disagree; accepted historical value and units retained.")
+                    parsed[revised_day]["verified_source_change"] = verification
         return ticker, parsed
     with ThreadPoolExecutor(max_workers=4) as pool: return dict(pool.map(one, sorted(tickers)))
 
@@ -271,19 +294,43 @@ def calculate(account, prices, previous=None):
 
 def valid_source_change(change, anchor, old, previous_day, day, price):
     evidence = change.get("evidence", [])
+    source = price.get("price_source")
     return (change.get("date") == previous_day and change.get("accepted_close") == old["close"]
         and old.get("price_source") == change.get("accepted_source")
         and change.get("accepted_source") in {"Yahoo Finance", "TMX Money"}
         and change.get("historical_close_confirmed") is False
         and change.get("comparison_close") == anchor["close"]
         and change.get("next_date") == day and change.get("next_close") == price["close"]
-        and anchor.get("price_source") == price.get("price_source") == "TMX Money"
+        and anchor.get("price_source") == source
+        and (source == "TMX Money" or change.get("next_close_confirmation") is not None)
         and len(evidence) == 2 and {e.get("source") for e in evidence} == {"Yahoo Finance", "TMX Money"}
-        and all(isinstance(e.get("next_close"), (float, int)) and math.isfinite(e["next_close"])
-                and abs(e["next_close"] / price["close"] - 1) <= .0001 for e in evidence)
+        and all(e.get("next_close") is not None for e in evidence)
+        and valid_next_close(change, anchor, day, price)
         and all(isinstance(e.get("close"), (float, int)) and math.isfinite(e["close"]) and e["close"] > 0 for e in evidence)
         and abs(evidence[0]["close"] / evidence[1]["close"] - 1) > .0001
-        and next(e["close"] for e in evidence if e["source"] == "TMX Money") == anchor["close"])
+        and next(e["close"] for e in evidence if e["source"] == source) == anchor["close"])
+
+
+def valid_next_close(verification, anchor, day, price):
+    evidence = verification["evidence"]
+    issuer = verification.get("next_close_confirmation")
+    if issuer is None:
+        return all(
+            (e.get("next_close") is None and e["source"] == "Yahoo Finance" and verification.get("yahoo_next_close_available") is False)
+            or (isinstance(e.get("next_close"), (float, int)) and abs(e["next_close"] / price["close"] - 1) <= .0001)
+            for e in evidence)
+    issuer_close = issuer.get("close") if isinstance(issuer, dict) else None
+    if not isinstance(issuer_close, (float, int)) or not math.isfinite(issuer_close) or issuer_close <= 0:
+        return False
+    symbol = price["symbol"]
+    return (symbol.endswith(".NE") and anchor["price_source"] == price["price_source"]
+        and verification.get("yahoo_next_close_available", True) is True
+        and issuer.get("source") == FIDELITY_MARKET_SOURCE and issuer.get("date") == day
+        and issuer.get("source_url") == FID + "fund/EN/" + quote(symbol.removesuffix(".NE"))
+        and abs(issuer_close / price["close"] - 1) <= .0001
+        and all(isinstance(e.get("next_close"), (float, int)) and math.isfinite(e["next_close"]) and e["next_close"] > 0
+                for e in evidence)
+        and [e["source"] for e in evidence if abs(e["next_close"] / issuer_close - 1) <= .0001] == [price["price_source"]])
 
 
 def make_day(day, registry, quotes, previous, recorded_at):
@@ -314,11 +361,10 @@ def make_day(day, registry, quotes, previous, recorded_at):
                 if (revision.get("date") != previous["date"] or revision.get("accepted_close") != old["close"] or
                     revision.get("revised_close") != anchor["close"] or revision.get("next_date") != day or
                     revision.get("next_close") != p["close"] or
-                    {e.get("source") for e in revision.get("evidence", [])} != {"Yahoo Finance", "TMX Money"} or
-                    any(abs(e["close"] / anchor["close"] - 1) > .0001 or
-                        (e.get("next_close") is None and not (e.get("source") == "Yahoo Finance" and revision.get("yahoo_next_close_available") is False)) or
-                        (e.get("next_close") is not None and abs(e["next_close"] / p["close"] - 1) > .0001)
-                        for e in revision["evidence"])):
+                    len(revision.get("evidence", [])) != 2 or
+                    {e.get("source") for e in revision["evidence"]} != {"Yahoo Finance", "TMX Money"} or
+                    any(abs(e["close"] / anchor["close"] - 1) > .0001 for e in revision["evidence"]) or
+                    not valid_next_close(revision, anchor, day, p)):
                     raise ValueError("Previously accepted nominal close revised: " + t)
                 prices[t]["previous_close_revision"] = revision
     accounts = {}
@@ -372,6 +418,14 @@ def snapshot(registry, days, config):
                 "close": launch["prices"][t]["close"] if launch else None,
                 "units": launch["accounts"][a["id"]]["units"][t] if launch else None})
         accounts.append({**a, "history": history, "initial_positions": positions})
+    issuer_confirmation = any("next_close_confirmation" in p.get(key, {})
+                              for record in days for p in record["prices"].values()
+                              for key in ("previous_close_revision", "previous_close_source_change"))
+    revisions = "Une correction de cours historique exige l’accord de Yahoo et TMX sur le cours révisé. Les deux clôtures adjacentes viennent ensemble de TMX; si Yahoo publie aussi la suivante, elle doit concorder. Une séance Yahoo absente est signalée, jamais inventée."
+    source_changes = "Si les fournisseurs divergent sur une ancienne clôture, un changement vers TMX exige leur accord sur la nouvelle clôture adjacente. L’écart historique reste non confirmé et est signalé séparément."
+    if issuer_confirmation:
+        revisions = "Une correction de cours historique exige l’accord de Yahoo et TMX sur le cours révisé. Si les fournisseurs divergent sur la nouvelle clôture d’un FNB Fidelity coté à Cboe Canada, le cours de marché daté de l’émetteur doit corroborer une seule des deux séries. Les deux clôtures adjacentes proviennent de la même série."
+        source_changes = "Si les fournisseurs divergent sur une ancienne clôture, deux sources doivent corroborer le nouveau cours. Le registre signale séparément l’écart historique."
     return {"schema_version": 1, "currency": "CAD", "capital": CAPITAL, "inception": START,
             "as_of": days[-1]["date"] if days else None, "updated_at": days[-1]["recorded_at"] if days else None,
             "ledger_sha256": days[-1]["sha256"] if days else None, "benchmarks": benchmark_ids(registry), "accounts": accounts,
@@ -380,8 +434,8 @@ def snapshot(registry, days, config):
                 "history": "Registre quotidien figé, distinct des backtests. Les nouvelles optimisations ont leur propre date de lancement et ne remplacent aucun compte.",
                 "source": "Clôtures quotidiennes Yahoo Finance, complétées par l’historique daté TMX Money si nécessaire; distributions et fractionnements Yahoo Finance, contrôle par clôtures ajustées.",
                 "source_url": "https://help.yahoo.com/kb/SLN28256.html", "schedule": "Premier passage automatique à 16 h 30 (Québec); reprises à 16 h 45, 17 h 15, 18 h 37, 21 h 37, 6 h 17 et 7 h 47. Séances complètes uniquement, selon la disponibilité des clôtures et le délai du planificateur.",
-                "source_changes": "Si les fournisseurs divergent sur une ancienne clôture, un changement vers TMX exige leur accord sur la nouvelle clôture adjacente. L’écart historique reste non confirmé et est signalé séparément. Les valeurs et parts déjà enregistrées restent figées; le rendement de transition peut inclure un écart de source.",
-                "revisions": "Une correction de cours historique exige l’accord de Yahoo et TMX sur le cours révisé. Les deux clôtures adjacentes viennent ensemble de TMX; si Yahoo publie aussi la suivante, elle doit concorder. Une séance Yahoo absente est signalée, jamais inventée. La correction est consignée dans la séance suivante. Les cours, parts et valeurs déjà archivés restent figés; le rendement quotidien relie les deux valeurs réellement enregistrées."}}
+                "source_changes": source_changes + " Les valeurs et parts déjà enregistrées restent figées; le rendement de transition peut inclure un écart de source.",
+                "revisions": revisions + " La correction est consignée dans la séance suivante. Les cours, parts et valeurs déjà archivés restent figés; le rendement quotidien relie les deux valeurs réellement enregistrées."}}
 
 
 def load_state(root):
