@@ -603,14 +603,14 @@
       "id": "MAXQ",
       "title": "Maritime Launch Services",
       "currency": "CAD",
-      "quote_symbol": "MAXQ.NE",
+      "quote_symbol": "MAXQ.TO",
       "unit": "CAD",
       "decimals": 4,
       "frequency": "daily",
       "transform": "none",
       "max_age_days": 7,
-      "history_range": "2y",
-      "source_url": "https://finance.yahoo.com/quote/MAXQ.NE/"
+      "history_range": "5y",
+      "source_url": "https://finance.yahoo.com/quote/MAXQ.TO/"
     },
     {
       "id": "MDA",

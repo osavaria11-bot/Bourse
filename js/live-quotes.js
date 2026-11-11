@@ -4,10 +4,16 @@
   const LIVE = "https://raw.githubusercontent.com/osavaria11-bot/Bourse/savy-live-quotes/intraday-quotes.json";
   let data = null, pending = null;
   const rejectedListings = new Map();
-  try {data = I.normalize(JSON.parse(localStorage.getItem(KEY)));} catch { /* Daily closes remain available. */ }
+  // Cboe stopped listing MAXQ on November 2, 2026. Old caches can still contain this symbol.
+  function isFormerListing(q) {return q.id === "MAXQ" && q.quote_symbol === "MAXQ.NE";}
+  try {
+    data = I.normalize(JSON.parse(localStorage.getItem(KEY)));
+    data.quotes = data.quotes.filter(q => !isFormerListing(q));
+  } catch { /* Daily closes remain available. */ }
   function merge(rows) {
     const byId = new Map((data?.quotes || []).map(q => [q.id, q]));
     for (const q of rows) {
+      if (isFormerListing(q)) continue;
       const old = byId.get(q.id);
       const rejected = rejectedListings.get(q.id);
       if (!old && rejected && (rejected.quote_symbol !== q.quote_symbol || rejected.currency !== q.currency)) continue;
