@@ -23,7 +23,13 @@ jobs:
     # A failed daily close still publishes its diagnostic status, so a stale
     # comparison must be visibly flagged on the site after normal validation.
     if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' || github.event.workflow_run.name == 'Daily FNB performance'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    container:
+      # Keep the browser binaries and system dependencies aligned with package-lock.json.
+      image: mcr.microsoft.com/playwright:v1.62.1-noble
+    defaults:
+      run:
+        shell: bash
     timeout-minutes: 15
     outputs:
       source_sha: ${{ steps.source.outputs.sha }}
@@ -129,10 +135,6 @@ jobs:
           JS
       - name: Install browser test dependency
         run: npm ci --ignore-scripts --no-audit --no-fund
-      - name: Install Chromium and WebKit
-        run: |
-          sudo python3 scripts/prepare_browser_apt.py
-          node scripts/install_browser_test_dependencies.cjs
       - name: Browser interaction and mobile checks
         run: npm run test:browser
         env:
