@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "reviewed_earnings_highlights",
-  "reviewed_at": "2026-11-07T10:03:22.262434+00:00",
+  "reviewed_at": "2026-11-11T14:29:36.480738+00:00",
   "reports": {
     "NFLX:2026-10-20": {
       "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-20-netflix-inc-stock/",
@@ -829,6 +829,23 @@
         "Trésorerie — Le flux disponible ajusté atteint 43,4 M$ CA, ou 0,449 $ par action, et le taux de distribution descend à 29 %. Avec 75,3 M$ CA d’encaisse et 170,7 M$ CA de crédit disponible, la direction conserve une marge d’allocation du capital.",
         "Exécution — L’intégration de Closing the Gap est largement terminée et celle de CBI devient prioritaire. Les soins de longue durée restent occupés à 98,3 %, mais leur marge publiée recule de 13,3 à 12,6 %, en partie à cause d’éléments de financement hors période."
       ]
+    },
+    "NXE:2026-11-09": {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1698535/000106299326005850/exhibit99-2.htm",
+      "report_url": null,
+      "messages": [
+        "Le terrassement et les infrastructures de surface se sont accélérés à Rook I. L’entrepreneur chargé des puits est mobilisé. La direction vise le début du fonçage au T3 2027, le jalon qui devrait accélérer les décaissements.",
+        "NexGen détenait 822 M$ CA en trésorerie et placements à court terme au 30 septembre. La direction estime que ces liquidités couvrent les travaux jusqu’à la fin du T3 2027. Le financement nécessaire pour achever Rook I reste à boucler.",
+        "La tranche de 110 M$ US de débentures convertibles émises en 2023 avait été intégralement convertie en actions au 9 novembre. La conversion réduit le principal à rembourser et augmente le nombre d’actions.",
+        "La direction privilégie des contrats de vente d’uranium plus courts et liés au prix au moment de la livraison. Cette structure laisse à NexGen davantage de potentiel si le prix monte et rend ses futurs revenus plus sensibles à un repli."
+      ],
+      "verified_publication": {
+        "provider_report_date": "2026-11-08",
+        "quarter": "Q3 2026",
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1698535/000106299326005850/form6k.htm",
+        "verified_at": "2026-11-11T14:29:36.480738+00:00",
+        "reason": "Yahoo date l’événement du 8 novembre à 19 h, heure de Montréal. Le formulaire 6-K signé par le directeur financier et le rapport de gestion du T3 2026 sont datés du 9 novembre."
+      }
     }
   }
 }
