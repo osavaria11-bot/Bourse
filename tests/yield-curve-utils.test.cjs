@@ -65,7 +65,14 @@ test("date defaults use published days and calendar-aware one-month/one-year/YTD
 });
 test("published yield curves validate with enough history and all nominal maturity definitions", () => {
   const data = C.normalize(JSON.parse(fs.readFileSync(path.join(__dirname, "../data/yield-curves.json"), "utf8")));
-  for (const country of data.countries) {assert.ok(country.history.length > 2000); assert.ok(country.history[0][0].startsWith("2016")); assert.ok(country.history.at(-1).slice(1).every(Number.isFinite));}
+  for (const country of data.countries) {
+    assert.ok(country.history.length > 2000);
+    assert.ok(country.history[0][0].startsWith("2016"));
+    assert.ok(country.history.some(row => row.slice(1).every(Number.isFinite)), country.id);
+    const [latestDate, ...latestRates] = country.history.at(-1);
+    assert.ok(latestRates.some(Number.isFinite), country.id);
+    assert.deepEqual(C.snapshot(country, latestDate).values, latestRates);
+  }
 });
 test("one-day comparisons skip weekends and holidays without comparing the latest curve to itself", () => {
   const data = C.normalize(fixture(), NOW);
