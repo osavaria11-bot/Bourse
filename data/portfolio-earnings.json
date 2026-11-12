@@ -4236,12 +4236,41 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=POW.TO&size=100"
           },
-          "messages": [],
+          "messages": [
+            {
+              "text": "Valeur des actifs — La valeur liquidative ajustée atteint 113,28 $ CA par action au 30 septembre, en hausse de 32,1 % depuis décembre. Les sociétés cotées du groupe expliquent l’essentiel du gain; la valeur demeure donc sensible à leurs cours.",
+              "language": "fr",
+              "source_url": "https://www.powercorporation.com/en/news/press-releases/2026/2026-11-11-power-corporation-reports-third-quarter-2026-financial-results/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Assurance et retraite — Le bénéfice ajusté de Great-West progresse de 8 %, tiré par Empower et les nouvelles affaires en solutions de capital. L’expérience d’assurance défavorable au Canada tempère cette progression. Le bénéfice net publié de Great-West recule légèrement.",
+              "language": "fr",
+              "source_url": "https://www.powercorporation.com/en/news/press-releases/2026/2026-11-11-power-corporation-reports-third-quarter-2026-financial-results/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Wealthsimple — Les actifs administrés atteignent 169 G$ CA, en hausse de 67,9 % sur un an. Lors du financement annoncé après la clôture, Power et IGM ont souscrit respectivement 68 M$ et 96 M$ CA; la transaction valorise la participation du groupe à 5,4 G$ CA.",
+              "language": "fr",
+              "source_url": "https://www.powercorporation.com/en/news/press-releases/2026/2026-11-11-power-corporation-reports-third-quarter-2026-financial-results/",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Capital — Power a rendu 2,4 G$ CA aux actionnaires sur neuf mois, répartis également entre dividendes et rachats. Ma lecture : la capacité de maintenir ce rythme dépend des flux remontés par les filiales et des capitaux réinvestis dans la croissance.",
+              "language": "fr",
+              "source_url": "https://www.powercorporation.com/en/news/press-releases/2026/2026-11-11-power-corporation-reports-third-quarter-2026-financial-results/",
+              "kind": "reviewed_summary"
+            }
+          ],
           "report_url": null,
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=POW.TO&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.powercorporation.com/en/news/press-releases/2026/2026-11-11-power-corporation-reports-third-quarter-2026-financial-results/"
             }
           ]
         }
@@ -6020,5 +6049,6 @@
       "source_warnings": []
     }
   },
-  "errors": {}
+  "errors": {},
+  "analysis_reviewed_at": "2026-11-12T10:12:34.000469+00:00"
 }

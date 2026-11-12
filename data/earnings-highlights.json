@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "reviewed_earnings_highlights",
-  "reviewed_at": "2026-11-12T10:08:06.554948+00:00",
+  "reviewed_at": "2026-11-12T10:12:34.000469+00:00",
   "reports": {
     "NFLX:2026-10-20": {
       "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-20-netflix-inc-stock/",
@@ -855,6 +855,16 @@
         "Rentabilité — Le résultat d’exploitation ajusté tombe à 56,3 M$ CA contre 163,4 M$ CA. Le rendement des prêts, produits accessoires compris, diminue alors que les pertes de crédit restent élevées; les deux effets expliquent le passage à une perte ajustée de 15,5 M$ CA.",
         "Bilan — Le portefeuille net de prêts diminue de 692,8 M$ CA sur un an, mais le ratio dette sur capitaux propres corporels ajustés monte à 5,02 fois, contre 4,95 fois en juin. Ma lecture : la contraction des prêts ne suffit pas encore à réduire le levier.",
         "Capital — Le dividende et les rachats demeurent suspendus. Le flux d’exploitation avant le principal net avancé est de 606,8 M$ CA, contre 623,0 M$ CA; cette mesure ne constitue pas de la trésorerie disponible après financement des prêts."
+      ]
+    },
+    "POW.TO:2026-11-11": {
+      "report_url": null,
+      "source_url": "https://www.powercorporation.com/en/news/press-releases/2026/2026-11-11-power-corporation-reports-third-quarter-2026-financial-results/",
+      "messages": [
+        "Valeur des actifs — La valeur liquidative ajustée atteint 113,28 $ CA par action au 30 septembre, en hausse de 32,1 % depuis décembre. Les sociétés cotées du groupe expliquent l’essentiel du gain; la valeur demeure donc sensible à leurs cours.",
+        "Assurance et retraite — Le bénéfice ajusté de Great-West progresse de 8 %, tiré par Empower et les nouvelles affaires en solutions de capital. L’expérience d’assurance défavorable au Canada tempère cette progression. Le bénéfice net publié de Great-West recule légèrement.",
+        "Wealthsimple — Les actifs administrés atteignent 169 G$ CA, en hausse de 67,9 % sur un an. Lors du financement annoncé après la clôture, Power et IGM ont souscrit respectivement 68 M$ et 96 M$ CA; la transaction valorise la participation du groupe à 5,4 G$ CA.",
+        "Capital — Power a rendu 2,4 G$ CA aux actionnaires sur neuf mois, répartis également entre dividendes et rachats. Ma lecture : la capacité de maintenir ce rythme dépend des flux remontés par les filiales et des capitaux réinvestis dans la croissance."
       ]
     }
   }
