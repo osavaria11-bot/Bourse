@@ -15,15 +15,10 @@ module.exports = async function queueRefresh({github, context, core, collectedAt
     core.info("Weekend: keeping the dated last observations; weekday cron will restart the feed.");
     return "weekend";
   }
-  const workflow_id = "intraday-quotes.yml";
-  const {data} = await github.rest.actions.listWorkflowRuns({...repo, workflow_id, per_page: 100});
-  const pending = data.workflow_runs.some(run => run.id !== context.runId && run.head_branch === "main" &&
-    ["queued", "pending", "waiting", "requested", "in_progress"].includes(run.status));
-  if (pending) {
-    core.info("Another refresh is already queued; keeping one refresh chain.");
-    return "already_queued";
-  }
-  await github.rest.actions.createWorkflowDispatch({...repo, workflow_id, ref: "main"});
+  // Workflow concurrency permits one running and one pending refresh. The
+  // runs API can still list a stranded run as queued long after newer runs
+  // have completed, so its status cannot decide whether to dispatch.
+  await github.rest.actions.createWorkflowDispatch({...repo, workflow_id: "intraday-quotes.yml", ref: "main"});
   core.info("Next actual quote collection queued after the five-minute interval.");
   return "queued";
 };

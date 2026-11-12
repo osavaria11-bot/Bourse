@@ -11,8 +11,9 @@ Quote collection runs its focused Python and JavaScript checks before publishing
 It never deploys Pages, waits for a full-site validation, or changes `main`. Failed
 collections retain the last successful file and queue a retry. Main changes and
 cancelled site builds cannot stop the next collection. Cron and build completion
-are additional recovery triggers; a single queued successor prevents multiplying
-the refresh chain. Weekend self-dispatch stops; weekday cron restarts it.
+are additional recovery triggers. GitHub Actions concurrency keeps one running
+and one pending refresh, even if an older run remains listed as queued. Weekend
+self-dispatch stops; weekday cron restarts it.
 
 The branch uses normal fast-forward commits. Publication refuses an older or
 invalid collection; consumers also merge by each observation's timestamp so a
