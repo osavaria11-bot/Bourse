@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "reviewed_earnings_highlights",
-  "reviewed_at": "2026-11-11T14:29:36.480738+00:00",
+  "reviewed_at": "2026-11-12T10:08:06.554948+00:00",
   "reports": {
     "NFLX:2026-10-20": {
       "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-20-netflix-inc-stock/",
@@ -846,6 +846,16 @@
         "verified_at": "2026-11-11T14:29:36.480738+00:00",
         "reason": "Yahoo date l’événement du 8 novembre à 19 h, heure de Montréal. Le formulaire 6-K signé par le directeur financier et le rapport de gestion du T3 2026 sont datés du 9 novembre."
       }
+    },
+    "GSY.TO:2026-11-10": {
+      "report_url": null,
+      "source_url": "https://www.newswire.ca/news-releases/goeasy-ltd-reports-results-for-the-third-quarter-2026-811874771.html",
+      "messages": [
+        "Octroi — Les nouveaux prêts reculent de 40 % à 567,5 M$ CA. Le resserrement de la souscription cible surtout les prêts automobiles et de véhicules récréatifs distribués par les marchands, où le risque de crédit demeure défavorable.",
+        "Rentabilité — Le résultat d’exploitation ajusté tombe à 56,3 M$ CA contre 163,4 M$ CA. Le rendement des prêts, produits accessoires compris, diminue alors que les pertes de crédit restent élevées; les deux effets expliquent le passage à une perte ajustée de 15,5 M$ CA.",
+        "Bilan — Le portefeuille net de prêts diminue de 692,8 M$ CA sur un an, mais le ratio dette sur capitaux propres corporels ajustés monte à 5,02 fois, contre 4,95 fois en juin. Ma lecture : la contraction des prêts ne suffit pas encore à réduire le levier.",
+        "Capital — Le dividende et les rachats demeurent suspendus. Le flux d’exploitation avant le principal net avancé est de 606,8 M$ CA, contre 623,0 M$ CA; cette mesure ne constitue pas de la trésorerie disponible après financement des prêts."
+      ]
     }
   }
 }

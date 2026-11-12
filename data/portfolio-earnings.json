@@ -2711,12 +2711,41 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=GSY.TO&size=100"
           },
-          "messages": [],
+          "messages": [
+            {
+              "text": "Octroi — Les nouveaux prêts reculent de 40 % à 567,5 M$ CA. Le resserrement de la souscription cible surtout les prêts automobiles et de véhicules récréatifs distribués par les marchands, où le risque de crédit demeure défavorable.",
+              "language": "fr",
+              "source_url": "https://www.newswire.ca/news-releases/goeasy-ltd-reports-results-for-the-third-quarter-2026-811874771.html",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Rentabilité — Le résultat d’exploitation ajusté tombe à 56,3 M$ CA contre 163,4 M$ CA. Le rendement des prêts, produits accessoires compris, diminue alors que les pertes de crédit restent élevées; les deux effets expliquent le passage à une perte ajustée de 15,5 M$ CA.",
+              "language": "fr",
+              "source_url": "https://www.newswire.ca/news-releases/goeasy-ltd-reports-results-for-the-third-quarter-2026-811874771.html",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Bilan — Le portefeuille net de prêts diminue de 692,8 M$ CA sur un an, mais le ratio dette sur capitaux propres corporels ajustés monte à 5,02 fois, contre 4,95 fois en juin. Ma lecture : la contraction des prêts ne suffit pas encore à réduire le levier.",
+              "language": "fr",
+              "source_url": "https://www.newswire.ca/news-releases/goeasy-ltd-reports-results-for-the-third-quarter-2026-811874771.html",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Capital — Le dividende et les rachats demeurent suspendus. Le flux d’exploitation avant le principal net avancé est de 606,8 M$ CA, contre 623,0 M$ CA; cette mesure ne constitue pas de la trésorerie disponible après financement des prêts.",
+              "language": "fr",
+              "source_url": "https://www.newswire.ca/news-releases/goeasy-ltd-reports-results-for-the-third-quarter-2026-811874771.html",
+              "kind": "reviewed_summary"
+            }
+          ],
           "report_url": null,
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=GSY.TO&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://www.newswire.ca/news-releases/goeasy-ltd-reports-results-for-the-third-quarter-2026-811874771.html"
             }
           ]
         }
@@ -5991,5 +6020,6 @@
       "source_warnings": []
     }
   },
-  "errors": {}
+  "errors": {},
+  "analysis_reviewed_at": "2026-11-12T10:08:06.554948+00:00"
 }

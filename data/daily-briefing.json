@@ -3,100 +3,87 @@
   "kind": "news_digest",
   "language": "fr",
   "timezone": "America/Toronto",
-  "edition_date": "2026-11-11",
-  "generated_at": "2026-11-11T14:27:36.394503+00:00",
-  "editorial_note": "Les variations boursières de mardi sont des clôtures. Les cotations de CoreWeave et du pétrole du mercredi matin sont des relevés en cours de séance ou en préouverture. Pour le jour des anciens combattants, la SIFMA recommande une fermeture du marché obligataire américain.",
+  "edition_date": "2026-11-12",
+  "generated_at": "2026-11-12T10:08:06.554948+00:00",
+  "editorial_note": "Préparé à 5 h 08, heure de Montréal. Les cours hors séance et les relevés du matin sont distingués des clôtures. Les prix à la production américains d’octobre restent attendus vendredi.",
   "stories": [
     {
-      "topic": "Inflation américaine",
-      "title": "L’IPC américain dépasse les attentes et propulse le deux ans",
-      "summary": "L’IPC américain a augmenté de 0,4 % en octobre sur un mois, contre 0,3 % attendu par le consensus Reuters et 0,6 % en septembre. Le logement a expliqué plus de 30 % de la hausse et l’alimentation a augmenté de 0,5 %. L’énergie a ralenti de 5,2 % à 0,7 %, tandis que l’indice hors alimentation et énergie est resté à 0,3 %, au-dessus du 0,2 % prévu. Le trou de collecte d’octobre 2025 empêche le BLS de publier le taux sur douze mois pour l’indice global. Mardi, Reuters relevait une hausse d’environ 18 points de base du rendement américain à deux ans, à 4,73 %, et un dix ans tout près de 5 %. Le Nasdaq Composite a clôturé en baisse de 0,74 %.",
-      "impact": "Ma lecture. La surprise sous-jacente compte davantage pour la Fed que le ralentissement de l’énergie. Les swaps américains suivis par BlueGamma le 10 novembre intégraient déjà une hausse le 9 décembre. Une inflation des services qui persiste rendrait le refinancement plus coûteux et pèserait sur les multiples des sociétés dont les flux sont éloignés. Une décélération des services réduirait cette pression. Si elle découle d’une demande qui faiblit, les obligations pourraient en profiter pendant que les bénéfices sont révisés à la baisse. Le prochain IPC est prévu le 10 décembre, au lendemain de la décision.",
-      "source_label": "Bureau of Labor Statistics",
-      "source_url": "https://www.bls.gov/news.release/archives/cpi_11102026.htm",
-      "published_date": "2026-11-10"
-    },
-    {
-      "topic": "Canada et dollar",
-      "title": "La Banque du Canada a débattu du statu quo avant de relever son taux",
-      "summary": "Le compte rendu publié mardi montre que le Conseil a envisagé de garder le taux à 2,25 % le 28 octobre avant de le relever à 2,50 %. L’IPC hors essence était à 2,2 % et les tarifs américains pesaient sur les perspectives. La Banque a néanmoins jugé que la durée du choc énergétique augmentait le risque que les entreprises répercutent leurs coûts sur les prix de vente. Les swaps canadiens compilés par BlueGamma le 10 novembre donnaient 48 % à une hausse le 9 décembre et 52 % au maintien. Après l’IPC américain, Reuters a observé un dollar américain à 1,4185 $ CA mardi en séance et un écart de près de 149 points de base entre les taux à deux ans américain et canadien.",
-      "impact": "Ma lecture. L’écart de rendement à court terme favorise le billet vert et augmente en dollars canadiens la valeur des actifs américains détenus sans couverture, toutes choses égales par ailleurs. Un huard plus faible renchérit aussi les intrants importés des entreprises canadiennes. Si l’énergie baisse durablement et que l’emploi se détériore, la Banque aura plus de latitude pour attendre. Une hausse des prix hors énergie accompagnée d’une demande résiliente fragiliserait ce scénario de pause.",
-      "source_label": "Banque du Canada",
-      "source_url": "https://www.bankofcanada.ca/2026/11/summary-of-governing-council-deliberations-fixed-announcement-date-of-october-28-2026/",
-      "published_date": "2026-11-10"
-    },
-    {
-      "topic": "Infrastructures d’IA",
-      "title": "CoreWeave relève ses prévisions et compte sur les avances des clients",
-      "summary": "CoreWeave a publié 3,66 G$ US de revenus au troisième trimestre, contre 3,55 G$ US au consensus LSEG, et relève sa prévision 2026 de 12,4–13,2 à 13,0–13,3 G$ US. La marge d’exploitation ajustée atteint 10 %, contre 16 % un an plus tôt, et le carnet passe de 104 à 132,5 G$ US depuis juin. Le PDG Mike Intrator attend environ 9 G$ US d’avances et de dépôts de clients dans les trois prochains mois. Les dépenses d’investissement prévues atteignent 37 à 39 G$ US en 2026, avec un plancher relevé de 2 G$ US. CoreWeave dit avoir déjà vendu l’essentiel de sa capacité disponible jusqu’en 2027. La société vise une rentabilité ajustée au premier semestre 2028. Après un recul de plus de 40 % en un mois selon Reuters, CRWV gagnait plus de 15,6 % en préouverture au Nasdaq mercredi, d’après le point de Reuters de 8 h 54, heure de Montréal.",
-      "impact": "Ma lecture. Le fournisseur de capacité spécialisée pour l’intelligence artificielle peut financer une partie de son expansion avec des contrats et des avances clients. Cela réduit sa dépendance immédiate à la dette non garantie et soutient la demande pour ses fournisseurs d’équipements. Le test est la conversion du carnet en revenus facturés et en trésorerie après investissements et intérêts. Des retards de raccordement ou des avances inférieures aux attentes affaibliraient cette lecture, surtout avec un coût de la dette élevé.",
-      "source_label": "Reuters, repris par Investing.com",
-      "source_url": "https://www.investing.com/news/economy-news/coreweave-beats-quarterly-revenue-estimates-as-ai-demand-defies-growing-doubts-5016823",
-      "published_date": "2026-11-10"
-    },
-    {
-      "topic": "Énergie",
-      "title": "Le Brent rebondit à 92,81 $ US avec le regain de tension autour de l’Iran",
-      "summary": "À 8 h 14, heure de Montréal, le contrat Brent gagnait 1,4 % à 92,81 $ US le baril après un creux de deux mois la veille. Le responsable iranien de la sécurité a déclaré que Téhéran refuserait de laisser sortir des matières nucléaires enrichies. Washington veut aborder le nucléaire dès l’ouverture d’éventuelles négociations. Reuters cite 37 navires attaqués en octobre selon le Washington Institute, le plus haut bilan mensuel depuis le début de la guerre, alors que les risques de transport persistent dans le détroit d’Ormuz.",
-      "impact": "Ma lecture. Le signal à suivre est le transit physique. Si les passages deviennent plus rares, des coûts de fret et d’assurance plus élevés peuvent soutenir le brut et les marges des producteurs à coûts stables, tout en pesant sur les transporteurs et les consommateurs de carburant. Une reprise durable du trafic et une détente des primes d’assurance réduiraient cette pression et le risque d’un nouveau choc énergétique pour les banques centrales.",
+      "topic": "Puces et gouvernance",
+      "title": "Nvidia rechute hors séance et pèse sur les marchés asiatiques",
+      "summary": "Mercredi, le Nasdaq a gagné 1,60 % à la clôture et Nvidia 2,9 % sur le Nasdaq. Le titre a ensuite perdu jusqu’à 8,8 % dans les échanges prolongés, selon Reuters, après des informations sur une réunion de son conseil pour discuter de l’avenir de Jensen Huang. Aucun départ n’était confirmé au moment du relevé. Jeudi matin en Asie, Reuters relevait un recul de 2,6 % de l’indice taïwanais et de 0,9 % du Kospi. Ces relevés et la baisse hors séance de Nvidia ne sont pas des clôtures américaines du jeudi.",
+      "impact": "Ma lecture : le marché doit maintenant distinguer un risque de succession d’un changement dans les commandes de puces. Les clients ont besoin de visibilité sur les livraisons et le soutien logiciel, surtout quand ils engagent du capital longtemps avant de facturer. La baisse peut donc s’étendre aux fabricants de serveurs et aux exploitants de centres de données même en l’absence de révision de leurs ventes. Un plan de succession crédible et des calendriers de livraison réaffirmés réduiraient ce risque. À l’inverse, des reports de commandes ou de nouvelles restrictions officielles sur les exportations changeraient les perspectives de bénéfices. La réaction du titre ne permet pas de conclure que ces scénarios se réalisent.",
       "source_label": "Reuters",
-      "source_url": "https://www.reuters.com/business/energy/oil-rises-two-month-low-hormuz-shipping-attacks-offset-iran-truce-hopes-2026-11-11/",
-      "published_date": "2026-11-11"
+      "source_url": "https://www.reuters.com/world/china/global-markets-wrapup-1-2026-11-12/",
+      "published_date": "2026-11-12"
+    },
+    {
+      "topic": "Financement de l’IA",
+      "title": "L’entrée en Bourse d’Anthropic teste la capacité du marché à financer l’IA",
+      "summary": "Le prospectus préliminaire du 10 novembre prévoit 825 millions d’actions à 70–78 $ US. Environ 801 millions seraient émises par Anthropic; le solde correspond à des ventes d’actionnaires existants. Un placement privé conditionnel de 26 G$ US auprès de partenaires stratégiques, dont Microsoft, Google et Nvidia, s’ajouterait à l’offre, au même prix par action. Reuters relève ce matin qu’environ 6 % des actions en circulation seraient offertes au public. Le prix et les fonds levés restent à confirmer.",
+      "impact": "Ma lecture : le montant annoncé renseigne sur la capacité de financement d’Anthropic; le faible flottant limite ce que la première cotation dira de sa valeur. Le placement rapproche certains fournisseurs de leur client et peut soutenir sa capacité d’achat, mais ne prouve pas que les recettes couvriront ses engagements de calcul. Pour les fabricants de puces et les fournisseurs de nuage, le signal à suivre est la conversion des engagements en commandes rentables et payées. Un placement redimensionné ou des coûts d’inférence qui progressent plus vite que les recettes rendraient une valorisation élevée plus difficile à défendre, même si l’action monte à son premier jour.",
+      "source_label": "Reuters · prospectus Anthropic du 10 novembre",
+      "source_url": "https://www.reuters.com/business/spacex-anthropic-markets-have-new-playbook-mega-share-debuts-2026-11-12/",
+      "published_date": "2026-11-12"
+    },
+    {
+      "topic": "Énergie, Canada et inflation",
+      "title": "Le Brent reperd du terrain; les taux américains restent sous pression",
+      "summary": "Le Brent avait réglé mercredi à 92,76 $ US. Jeudi, il reculait à 92,39 $ US à 4 h 46, heure de Montréal, selon Reuters : un relevé en séance. La hausse de la production et les perspectives de négociations ont contribué au recul, sans accord confirmé dans ce relevé. Le marché des Treasuries a rouvert jeudi après la pause du jour des anciens combattants; le dernier dix ans de référence dans SAVY est donc celui du 10 novembre, à 4,98 %. Le Bureau of Labor Statistics publiera l’indice américain des prix à la production d’octobre vendredi à 8 h 30.",
+      "impact": "Ma lecture : un pétrole plus bas réduit le risque d’une nouvelle impulsion sur les prix de l’énergie, mais ne revient pas sur l’inflation déjà mesurée. Pour le Canada, il diminue le soutien au dollar canadien et aux flux de trésorerie des producteurs si la baisse persiste; l’écart de taux avec les États-Unis compte aussi pour la devise. Si les prix à la production surprennent à la hausse jusque dans les services ou les composantes qui alimentent les prix de la consommation, les rendements courts et le dollar américain pourraient monter et peser sur les multiples. Une surprise baissière assez large pourrait desserrer cette pression, à moins qu’elle s’accompagne de signes de demande plus faible. Une interruption des exportations de brut ferait revoir le scénario énergétique.",
+      "source_label": "Reuters · calendrier du Bureau of Labor Statistics",
+      "source_url": "https://www.reuters.com/business/energy/oil-prices-drop-more-than-1-hopes-iran-ukraine-peace-talks-pressure-markets-2026-11-12/",
+      "published_date": "2026-11-12"
     }
   ],
   "fred_watch": [
     {
       "series_id": "DGS10",
-      "title": "Le dix ans américain approche 5 %",
-      "explanation": "Le 10 novembre, le rendement nominal de référence à dix ans atteint 4,98 %, contre 4,88 % le 9. La hausse de 10 points de base renchérit le taux de référence qui entre dans le coût des emprunts à long terme.",
+      "title": "Le dix ans nominal se rapproche de 5 %",
+      "explanation": "Le 10 novembre, le rendement du Trésor américain à dix ans atteint 4,98 %, contre 4,88 % à l’observation précédente. Le coût du financement à long terme augmente; la série n’a pas de nouveau point le 11 novembre, jour férié obligataire américain.",
       "observation_date": "2026-11-10",
       "source_url": "https://fred.stlouisfed.org/series/DGS10"
     },
     {
+      "series_id": "DFII10",
+      "title": "Le taux réel monte lui aussi",
+      "explanation": "Le rendement réel des obligations américaines indexées à dix ans passe de 2,66 % à 2,78 % le 10 novembre. La pression sur les valorisations de long terme passe donc aussi par le taux réel; il ne s’agit pas d’une mesure de l’inflation réalisée.",
+      "observation_date": "2026-11-10",
+      "source_url": "https://fred.stlouisfed.org/series/DFII10"
+    },
+    {
       "series_id": "T10Y2Y",
-      "title": "Le court terme remonte plus vite que le long",
-      "explanation": "Le 10 novembre, l’écart entre les rendements à dix et deux ans est de 0,25 point de pourcentage, contre 0,32 le 9. La courbe reste ascendante et s’aplatit par remontée plus rapide du deux ans, cohérente avec une révision du taux directeur anticipé à court terme.",
+      "title": "Le segment court monte plus vite",
+      "explanation": "Le 10 novembre, l’écart dix ans moins deux ans tombe de 0,32 à 0,25 point de pourcentage. La pente reste positive; son aplatissement en même temps qu’une remontée du dix ans indique une pression plus forte sur le deux ans.",
       "observation_date": "2026-11-10",
       "source_url": "https://fred.stlouisfed.org/series/T10Y2Y"
     },
     {
-      "series_id": "MEDCPIM158SFRBCLE",
-      "title": "L’inflation médiane mensuelle se raffermit",
-      "explanation": "Pour octobre, période datée du 1er octobre, l’IPC médian de la Fed de Cleveland progresse à un rythme mensuel annualisé de 3,66 %, contre 2,81 % en septembre. Cette mesure atténue le poids des variations extrêmes et indique une pression plus forte au milieu du panier sur le mois.",
-      "observation_date": "2026-10-01",
-      "source_url": "https://fred.stlouisfed.org/series/MEDCPIM158SFRBCLE"
-    },
-    {
       "series_id": "BAMLH0A0HYM2",
-      "title": "Le haut rendement partait d’une prime de 3,34 points",
-      "explanation": "Au 9 novembre, l’écart ajusté pour les options du haut rendement américain est de 3,34 points de pourcentage, contre 3,42 le 6. Ce resserrement indique que le marché exigeait une prime moindre avant la publication de l’IPC. La prochaine observation permettra d’évaluer la réaction du crédit.",
+      "title": "Le crédit n’a pas encore confirmé le mouvement des taux",
+      "explanation": "L’écart ajusté des obligations américaines à haut rendement ressort à 3,34 points de pourcentage le 9 novembre, contre 3,42 à l’observation précédente. Ce resserrement précède la remontée des taux du 10 : il ne permet pas de juger la réaction du crédit à cette séance.",
       "observation_date": "2026-11-09",
       "source_url": "https://fred.stlouisfed.org/series/BAMLH0A0HYM2"
     }
   ],
   "audio_script": {
-    "edition_date": "2026-11-11",
-    "source_generated_at": "2026-11-11T14:27:36.394503+00:00",
-    "intro": "Bonjour. Voici les nouvelles qui comptent, ce mercredi onze novembre. Le briefing a été préparé à 9 h 27, heure de Montréal. L’inflation américaine d’hier a fait bondir les rendements obligataires. Ce matin, on a aussi des résultats qui éclairent la demande pour les centres de calcul, et un rebond du pétrole. C’est le jour des anciens combattants aux États-Unis. La fermeture recommandée du marché obligataire donne un point de repère pour lire les mouvements d’aujourd’hui.",
+    "edition_date": "2026-11-12",
+    "source_generated_at": "2026-11-12T10:08:06.554948+00:00",
+    "intro": "Bonjour. Voici le briefing du jeudi douze novembre, préparé à 5 h 08, heure de Montréal. On commence par le revirement de Nvidia après la clôture. Ensuite, l’entrée en Bourse d’Anthropic nous aide à poser une question plus large sur le financement de l’intelligence artificielle. On termine avec le pétrole et les taux. Les prix à la production aux États-Unis sont attendus vendredi; ils ne sont pas encore connus.",
     "stories": [
       {
-        "title": "L’IPC américain dépasse les attentes et propulse le deux ans",
-        "text": "Commençons par les prix aux États-Unis. L’indice des prix à la consommation a monté de quatre dixièmes en octobre. Les économistes en attendaient trois. Le chiffre est plus bas qu’en septembre, surtout parce que l’énergie a beaucoup moins augmenté. Le logement, à lui seul, explique près du tiers de la hausse du mois. Et une fois l’alimentation et l’énergie retirées, la hausse est encore de trois dixièmes. Le marché en attendait deux. Le Bureau des statistiques du travail n’avait pas les relevés d’octobre de l’an dernier pour calculer le taux annuel de l’indice global. Mardi, le deux ans américain a grimpé d’environ dix-huit points de base. Le dix ans a frôlé cinq pour cent et le Nasdaq a terminé en baisse. Ma lecture. Les swaps suivis par BlueGamma intégraient déjà une hausse de la Fed en décembre. Ce qui peut encore faire bouger les marchés, c’est la durée du resserrement si les services restent chers. Ça compte pour le coût de refinancement des entreprises et la valeur des profits attendus loin dans le futur. Une décélération des services calmerait les taux. Si elle vient d’un affaiblissement de la demande, on pourrait voir les obligations remonter pendant que les analystes baissent leurs prévisions de bénéfices. Le prochain indice des prix est prévu le lendemain de la décision de décembre."
+        "title": "Nvidia rechute hors séance et pèse sur les marchés asiatiques",
+        "text": "Hier, le Nasdaq a terminé en hausse de un virgule six pour cent. Nvidia a aussi monté pendant la séance régulière, avant de perdre jusqu’à près de neuf pour cent après la cloche. Reuters rapporte que le conseil s’est réuni pour discuter de l’avenir de Jensen Huang. Au moment du relevé, son départ n’était pas confirmé. La baisse des puces s’est ensuite propagée en Asie, notamment à Taïwan. Ma lecture : la première question est la continuité de l’entreprise. Est-ce que les livraisons et le soutien aux clients se poursuivent comme prévu? Si la réponse est oui, une partie du risque de succession peut se dissiper sans que les bénéfices changent. Des reports de commandes ou de nouvelles restrictions officielles sur les exportations auraient une tout autre portée. Pour l’instant, la baisse du titre traduit de l’incertitude. Elle ne démontre pas que ces changements ont eu lieu."
       },
       {
-        "title": "La Banque du Canada a débattu du statu quo avant de relever son taux",
-        "text": "Ce mouvement des taux se fait sentir ici aussi. Le compte rendu de la Banque du Canada, publié mardi, revient sur la décision d’octobre. Le Conseil a hésité entre garder le taux à deux et quart et le porter à deux et demi. Il a choisi la hausse parce qu’un choc énergétique qui dure finit par se transmettre aux coûts des entreprises, puis à leurs prix de vente. En même temps, les tarifs américains continuent de peser sur la croissance, et l’inflation sans l’essence était autour de deux pour cent. Les swaps canadiens donnaient des chances presque égales à une hausse et à un maintien en décembre. Mardi, le dollar américain valait environ un dollar quarante-deux canadien en séance. Ma lecture. Les rendements à court terme plus élevés aux États-Unis soutiennent le billet vert. Pour un investisseur d’ici qui détient des titres américains sans couverture, ça change leur valeur en dollars canadiens. Pour une entreprise qui importe ses intrants, ça peut aussi vouloir dire une facture plus lourde. Une baisse durable de l’énergie et un emploi qui ralentit donneraient du temps à la Banque. Si les entreprises commencent à répercuter leurs coûts sur davantage de prix, le marché pourrait revoir ses chances de hausse."
+        "title": "L’entrée en Bourse d’Anthropic teste la capacité du marché à financer l’IA",
+        "text": "Pendant que Nvidia fait face à un enjeu de gouvernance, Anthropic se prépare à demander beaucoup de capital aux investisseurs. Son prospectus propose une fourchette de soixante-dix à soixante-dix-huit dollars américains par action. Il prévoit aussi un placement privé de vingt-six milliards auprès de partenaires stratégiques. Tout cela reste conditionnel. Une petite part des actions serait offerte au public. Ma lecture : si les acheteurs se disputent un nombre limité d’actions, la première cotation peut grimper sans nous apprendre grand-chose sur le rendement du capital investi. La participation des fournisseurs peut aider Anthropic à financer ses achats de capacité. Elle ne répond pas à la question qui compte à long terme : combien reste-t-il une fois le calcul payé? Je regarderais donc le prix final, mais surtout les recettes et les coûts de service. Une belle première séance ne suffit pas à valider le modèle."
       },
       {
-        "title": "CoreWeave relève ses prévisions et compte sur les avances des clients",
-        "text": "Du côté des résultats, CoreWeave, qui fournit des centres de calcul spécialisés en intelligence artificielle, a réalisé trois milliards six cent soixante millions de dollars américains de revenus au troisième trimestre. C’est un peu plus de cent millions au-dessus du consensus. La direction a relevé ses perspectives de ventes et le carnet a beaucoup grossi depuis juin. La marge d’exploitation ajustée a atteint dix pour cent, contre seize il y a un an. Le PDG s’attend à recevoir environ neuf milliards d’avances et de dépôts de clients d’ici trois mois, alors que l’entreprise prévoit au moins trente-sept milliards d’investissements cette année. Elle vise la rentabilité ajustée au premier semestre de deux mille vingt-huit. Le titre avait perdu plus de quarante pour cent en un mois. Il gagnait plus de quinze pour cent en préouverture mercredi au Nasdaq. Ma lecture. Les avances réduisent le besoin de se financer tout de suite sur un marché obligataire cher. Elles donnent aussi du poids au carnet. Pour que ça dure, il faut mettre les capacités en service, les facturer et générer de la trésorerie après les investissements et les intérêts. Si les sites tardent à être raccordés ou si les avances sont moins élevées que prévu, le risque de financement revient au premier plan."
-      },
-      {
-        "title": "Le Brent rebondit à 92,81 $ US avec le regain de tension autour de l’Iran",
-        "text": "Enfin, le pétrole a rebondi ce matin après son creux de deux mois mardi. Le Brent valait un peu moins de quatre-vingt-treize dollars américains à huit heures quatorze. Le responsable de la sécurité iranienne refuse la sortie de matières nucléaires enrichies du pays. De son côté, Washington veut aborder la question nucléaire dès les premières négociations. Le risque concret reste la navigation dans le détroit d’Ormuz. Reuters rapporte que trente-sept navires ont été attaqués en octobre, le plus haut total mensuel depuis le début de la guerre. Ma lecture. Une dégradation des passages peut faire grimper le fret, l’assurance et le prix du baril. Ça peut aider les producteurs dont les coûts restent stables et compliquer la vie des transporteurs qui achètent du carburant. Si le trafic se rétablit et que les primes d’assurance reculent, cette pression s’atténuera. C’est aussi le scénario qui donnerait le plus d’air aux banques centrales."
+        "title": "Le Brent reperd du terrain; les taux américains restent sous pression",
+        "text": "Enfin, le pétrole a légèrement reculé ce matin. Le Brent était à environ quatre-vingt-douze dollars américains et quarante cents avant cinq heures, à Montréal. C’est un relevé, pas une clôture. Reuters rapporte que les perspectives de négociations et l’augmentation de la production ont pesé sur le prix. Ma lecture : si le recul tient, c’est un peu moins de pression sur les prix de l’énergie, mais aussi moins de soutien aux producteurs canadiens et au huard. Il faut suivre le pétrole et les taux ensemble. Vendredi à huit heures trente, le Bureau américain des statistiques du travail publie les prix à la production. Si la hausse dépasse les attentes dans plusieurs composantes, surtout les services, les rendements à court terme pourraient monter. Un chiffre plus faible pourrait aider les obligations; si la faiblesse vient surtout d’une demande qui plie, elle pourrait aussi peser sur les bénéfices. Et le scénario de détente énergétique changerait si les exportations étaient interrompues."
       }
     ],
-    "watch": "Dans les graphiques, le rendement américain à dix ans atteint quatre virgule quatre-vingt-dix-huit pour cent le dix novembre. L’écart entre le dix ans et le deux ans s’est resserré à un quart de point, puisque le court terme a monté plus vite. En octobre, l’inflation médiane mesurée par la Fed de Cleveland atteignait trois virgule soixante-six pour cent au rythme du mois annualisé. Ça nous renseigne sur le milieu du panier sur un mois. Enfin, la dernière prime de crédit à haut rendement est celle du neuf novembre. Elle s’était resserrée à trois virgule trente-quatre points avant la surprise sur les prix. Il faudra la prochaine lecture pour voir comment le crédit a réagi.",
-    "outro": "C’est tout pour ce matin. Les sources et les graphiques se trouvent dans l’édition écrite de Nouvelles qui comptent sur SAVY. Bonne journée."
+    "watch": "Quatre repères dans les graphiques. Le dix novembre, le taux nominal américain à dix ans est monté à quatre virgule quatre-vingt-dix-huit pour cent. Le taux réel à dix ans, mesuré sur les obligations indexées sur l’inflation, a aussi monté, à deux virgule soixante-dix-huit. Le même jour, l’écart entre le dix ans et le deux ans a diminué à un quart de point. C’est cohérent avec une pression plus forte sur les échéances courtes. Il n’y a pas de nouveau point du Trésor pour le onze novembre, jour férié obligataire. Enfin, le dernier écart du crédit à haut rendement dans le tableau est de trois virgule trente-quatre points, daté du neuf novembre. Il a diminué, mais ce relevé précède le mouvement des taux.",
+    "outro": "Merci d’avoir écouté. Tu trouveras les sources, les dates des relevés et les quatre graphiques dans le briefing écrit. Bonne journée."
   }
 }
