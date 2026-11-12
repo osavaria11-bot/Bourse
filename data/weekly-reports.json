@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "savy_weekly_reports",
-  "generated_at": "2026-11-12T03:31:12Z",
+  "generated_at": "2026-11-12T03:41:45Z",
   "reports": {
     "real_estate": {
       "title": "Débriefing immobilier",
@@ -1419,8 +1419,8 @@
         "label": "Lire le rapport complet",
         "mime_type": "application/pdf",
         "pages": 29,
-        "size_bytes": 181936,
-        "sha256": "dae984d7361ff3a5dcbbff4948288ba6c1000a007ddb57780bc4683f4e8b945e"
+        "size_bytes": 181780,
+        "sha256": "b1bb7d6b827ee4a9f27c1eeaea1d3399bc70745e27d0405bda85c06003704d73"
       }
     }
   }
