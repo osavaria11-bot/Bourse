@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "reviewed_earnings_highlights",
-  "reviewed_at": "2026-11-12T10:12:34.000469+00:00",
+  "reviewed_at": "2026-11-13T10:01:34.388953+00:00",
   "reports": {
     "NFLX:2026-10-20": {
       "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-20-netflix-inc-stock/",
@@ -865,6 +865,26 @@
         "Assurance et retraite — Le bénéfice ajusté de Great-West progresse de 8 %, tiré par Empower et les nouvelles affaires en solutions de capital. L’expérience d’assurance défavorable au Canada tempère cette progression. Le bénéfice net publié de Great-West recule légèrement.",
         "Wealthsimple — Les actifs administrés atteignent 169 G$ CA, en hausse de 67,9 % sur un an. Lors du financement annoncé après la clôture, Power et IGM ont souscrit respectivement 68 M$ et 96 M$ CA; la transaction valorise la participation du groupe à 5,4 G$ CA.",
         "Capital — Power a rendu 2,4 G$ CA aux actionnaires sur neuf mois, répartis également entre dividendes et rachats. Ma lecture : la capacité de maintenir ce rythme dépend des flux remontés par les filiales et des capitaux réinvestis dans la croissance."
+      ]
+    },
+    "HBM:2026-11-12": {
+      "report_url": null,
+      "source_url": "https://hudbayminerals.com/investors/press-releases/press-release-details/2026/Hudbay-Delivers-Record-Third-Quarter-2026-Results-Further-Improves-Cost-Guidance-and-Advances-Copper-Growth-Pipeline/default.aspx",
+      "messages": [
+        "Production — Hudbay a produit 30 152 tonnes de cuivre et 69 513 onces d’or, en hausse de 7 % et 36 % depuis le T2. La direction maintient ses fourchettes annuelles de production : les gains du trimestre ne se traduisent pas par un relèvement des volumes prévus.",
+        "Coûts — La direction abaisse sa fourchette 2026 du coût de maintien, net des crédits de sous-produits, à 1,40–1,80 $ US par livre de cuivre, contre 1,70–2,10 $ US initialement. Les crédits liés à l’or et le contrôle des coûts contribuent à l’amélioration.",
+        "Risque — Au Pérou et en Colombie-Britannique, les coûts de trésorerie trimestriels dépassent le haut de leurs fourchettes annuelles respectives. Des crédits plus faibles au Pérou et le carburant en Colombie-Britannique montrent ce que le bon résultat consolidé peut masquer.",
+        "Financement — Les liquidités disponibles totalisent 964,3 M$ US au 30 septembre, avant l’augmentation de 250 M$ US des facilités de crédit en novembre. Cette capacité facilite le financement des projets; une ligne inutilisée n’est pas de la trésorerie générée."
+      ]
+    },
+    "NU:2026-11-12": {
+      "report_url": null,
+      "source_url": "https://nu.com/en/newsroom/company/nu-holdings-ltd-reports-third-quarter-2026-financial-results",
+      "messages": [
+        "Efficacité — Nu ramène sa cible 2026 de ratio d’efficacité à 19–19,5 %, contre environ 20 %. Le ratio atteint 19,3 % au T3, aidé par les coûts de personnel et par le report de certaines charges; la direction prévoit une remontée au T4.",
+        "Qualité du crédit — Les prêts en retard de plus de 90 jours passent de 6,9 % à 7,3 % tandis que le portefeuille grossit de 33 % sur un an. La couverture de ces prêts s’établit à 234 %; le coût du risque reste le test de cette croissance.",
+        "Financement — Les dépôts montent de 19 % sur un an à 47,5 G$ US, et leur coût relatif baisse à 87 % du taux interbancaire. Cela aide le financement des prêts, mais la marge nette d’intérêt ajustée du risque publiée recule à 12,1 %, même si elle progresse hors éléments non récurrents.",
+        "Expansion — Nu compte 143 millions de clients, dont 16,6 millions au Mexique. Le premier trimestre sous statut bancaire mexicain a ajouté 870 000 clients et permis d’offrir les comptes de paie, ce qui élargit les possibilités de capter les dépôts."
       ]
     }
   }
