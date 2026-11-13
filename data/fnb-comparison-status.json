@@ -1,9 +1,9 @@
 {
   "schema_version": 1,
   "status": "current",
-  "checked_at": "2026-11-12T15:28:11-05:00",
-  "as_of": "2026-11-11",
-  "expected_session": "2026-11-11",
+  "checked_at": "2026-11-12T21:00:05-05:00",
+  "as_of": "2026-11-12",
+  "expected_session": "2026-11-12",
   "unavailable": [],
   "errors": {},
   "message": "Toutes les clôtures attendues sont intégrées."
