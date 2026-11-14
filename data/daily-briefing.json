@@ -3,34 +3,34 @@
   "kind": "news_digest",
   "language": "fr",
   "timezone": "America/Toronto",
-  "edition_date": "2026-11-13",
-  "generated_at": "2026-11-13T10:01:34.388953+00:00",
-  "editorial_note": "Préparé à 05 h 01, heure de Montréal. Les prix à la production américains d’octobre sont attendus à 8 h 30; les cours du pétrole de ce matin sont des relevés en séance.",
+  "edition_date": "2026-11-14",
+  "generated_at": "2026-11-14T10:04:32.589546+00:00",
+  "editorial_note": "Édition de fin de semaine préparée à 05 h 04, heure de Montréal, à partir des clôtures du vendredi. L’IPC canadien d’octobre est attendu lundi.",
   "stories": [
     {
-      "topic": "Actions et semi-conducteurs",
-      "title": "Nvidia confirme le départ de Jensen Huang; les concurrents montent",
-      "summary": "Le conseil de Nvidia a accepté le départ de Jensen Huang le 11 novembre, avec effet immédiat, selon le dépôt réglementaire. L’annonce publique du 12 confirme que Colette Kress, directrice financière, assure la direction générale par intérim. Jeudi à la clôture du Nasdaq, Nvidia a perdu environ 4,3 %, tandis qu’AMD et Broadcom ont gagné plus de 5 %. Le S&P 500 et le Nasdaq Composite ont reculé d’environ 0,4 %. Le départ est confirmé; le mouvement boursier ne suffit pas à établir une perte de commandes ou une nouvelle restriction commerciale.",
-      "impact": "Ma lecture : le marché a surtout réévalué la dépendance à un dirigeant et la possibilité que certains clients diversifient leurs puces. Pour Nvidia, les délais de livraison et la capacité de ses clients à continuer de déployer leurs logiciels sur ses systèmes comptent davantage que la variation d’une séance. Pour AMD et Broadcom, l’intérêt des clients doit encore se convertir en contrats et en marges. Des perspectives de ventes confirmées et une succession crédible réduiraient le risque pour Nvidia; des reports de déploiement ou des gains de parts documentés chez ses concurrents lui donneraient une portée plus durable.",
-      "source_label": "Reuters; communiqué Nvidia et dépôt réglementaire américain",
-      "source_url": "https://www.reuters.com/business/nasdaq-futures-fall-nvidia-turmoil-rattles-ai-stocks-2026-11-12/",
-      "published_date": "2026-11-12"
+      "topic": "Inflation et obligations",
+      "title": "Les prix à la production ralentissent sur le mois; le dix ans finit tout de même à 5,15 %",
+      "summary": "Le Bureau of Labor Statistics a publié vendredi une hausse désaisonnalisée de 0,3 % des prix à la production d’octobre, contre 0,4 % attendu selon le consensus Dow Jones relayé par Stock Titan, et 1,4 % en septembre après révision. Sur un an, le taux accélère de 6,3 % à 6,5 %, légèrement sous les 6,6 % attendus. Les biens augmentent de 0,5 % et les services de 0,2 %; hors alimentation, énergie et services commerciaux, l’indice avance encore de 0,5 % sur le mois. Le Wall Street Journal a relevé un repli du dix ans de 5,145 % juste avant la publication à 5,127 % à 8 h 46. Le relevé quotidien de référence est néanmoins passé de 5,10 % jeudi à 5,15 % vendredi.",
+      "impact": "Ma lecture : la réaction immédiate des obligations correspond à une surprise un peu plus faible, mais le détail ne valide pas une désinflation généralisée. Si la pression sur les prix hors énergie persiste, les anticipations de taux peuvent rester fermes, ce qui soutient le dollar américain et complique le refinancement des entreprises. Les actions dont la valeur dépend de profits lointains restent sensibles au rendement réel. Une décélération prolongée des services remettrait cette lecture en cause. Si elle provenait surtout d’une demande plus faible, le soulagement obligataire pourrait coexister avec des révisions de bénéfices à la baisse.",
+      "source_label": "Bureau of Labor Statistics; relevé intrajournalier du Wall Street Journal",
+      "source_url": "https://www.bls.gov/news.release/archives/ppi_11132026.htm",
+      "published_date": "2026-11-13"
     },
     {
-      "topic": "Taux et inflation",
-      "title": "Le dix ans américain repasse à 5,10 % avant les prix à la production",
-      "summary": "Le rendement de référence à dix ans du Trésor américain est passé de 4,98 % le 10 novembre à 5,10 % le 12, après la pause obligataire du 11. Le taux réel à dix ans est monté de 2,78 % à 2,86 %. La prochaine donnée est l’indice américain des prix à la production d’octobre, prévu ce vendredi à 8 h 30, heure de Montréal. Le consensus compilé par Dow Jones au 11 novembre, relayé par Stock Titan, est de 6,6 % sur un an, après 6,3 % en septembre. Le chiffre d’octobre n’est pas encore connu.",
-      "impact": "Ma lecture : la hausse du taux réel augmente déjà le coût du capital, indépendamment du chiffre à venir. Une surprise haussière concentrée dans les services ou les prix entrant dans le calcul des dépenses de consommation renforcerait le risque de resserrement et pourrait relever les rendements courts et le dollar. Cela pèserait sur les emprunteurs à taux variable et les actions dont les profits sont attendus loin dans le temps. Une surprise baissière largement répartie pourrait faire reculer les rendements, mais un ralentissement surtout lié à la demande pourrait aussi réduire les bénéfices. Le taux annuel peut monter par effet de base même si le rythme mensuel ralentit : je regarderais les composantes et la variation du mois avant de conclure.",
-      "source_label": "Bureau of Labor Statistics; FRED; consensus Dow Jones relayé par Stock Titan",
-      "source_url": "https://www.bls.gov/schedule/2026/11_sched_list.htm",
-      "published_date": "2026-11-03"
+      "topic": "Actions et semi-conducteurs",
+      "title": "Le Nasdaq recule vendredi, mais Wall Street conserve son gain hebdomadaire",
+      "summary": "Le Nasdaq Composite a perdu 0,9 % vendredi et le S&P 500 0,4 %, alors que le Dow a gagné 0,1 %. Sur la semaine, le S&P 500 a néanmoins repris 2,5 % et le Nasdaq 2,3 %. Nvidia a clôturé en baisse d’environ 2,5 % au Nasdaq, dans la foulée du départ confirmé de Jensen Huang. À Toronto, le TSX a reculé de 0,1 % vendredi mais progressé de 0,9 % sur la semaine, sa deuxième hausse hebdomadaire de suite selon Reuters.",
+      "impact": "Ma lecture : le contraste entre la séance et la semaine invite à distinguer la volatilité des puces de la santé des bénéfices hors technologie. Le décrochage de Nvidia mérite d’être suivi, mais ne confirme pas à lui seul un recul des commandes. Quand les rendements réels montent, les investisseurs exigent aussi plus de preuves que les dépenses dans les centres de données se convertiront en revenus. Des perspectives de livraison intactes et des gains répartis entre davantage de secteurs rendraient le rebond plus crédible. Si les reports de projets et les révisions bénéficiaires se multiplient, le gain hebdomadaire dira peu sur la suite.",
+      "source_label": "Associated Press; Reuters pour le TSX",
+      "source_url": "https://apnews.com/article/wall-street-stocks-dow-nasdaq-12c1e8155fb85c3c7b09e058ed6d3c74",
+      "published_date": "2026-11-13"
     },
     {
       "topic": "Énergie et Canada",
-      "title": "Le Brent rebondit vendredi matin, mais reste en baisse sur la semaine",
-      "summary": "À 4 h, heure de Montréal, le Brent valait 96,35 $ US et le WTI 88,94 $ US, en hausse en séance, d’après Reuters. À cette heure, les deux contrats perdaient encore environ 2 % sur la semaine. Les données américaines publiées jeudi font état d’une hausse des stocks de brut et de carburants, avec plus d’importations de pétrole et une demande plus faible pour les produits raffinés. Le maintien des restrictions américaines sur les expéditions iraniennes et le risque de perturbation dans le détroit d’Ormuz limitent toutefois ce que l’on peut déduire des seuls stocks américains.",
-      "impact": "Ma lecture : pour les producteurs canadiens, la tenue des flux physiques et des prix de vente réalisés importe davantage que le rebond du matin. Si les stocks continuent de monter et que les exportations du Golfe se maintiennent, un brut moins cher peut soulager les consommateurs tout en pesant sur les marges des producteurs et le soutien pétrolier au dollar canadien. Si les exportations baissent effectivement, la prime de risque peut remonter malgré une demande américaine modeste. Je surveillerais les volumes expédiés et les stocks sur plusieurs semaines pour départager ces scénarios.",
-      "source_label": "Reuters; Energy Information Administration",
+      "title": "Le Brent perd 2,5 % sur la semaine; le Canada attend son IPC lundi",
+      "summary": "Le contrat de janvier sur le Brent a réglé vendredi à 95,84 $ US le baril, presque inchangé sur la séance mais en baisse de 2,5 % sur la semaine. C’est le deuxième recul hebdomadaire consécutif. Les indices d’un excédent mondial d’offre coexistent avec des perturbations des exportations au Moyen-Orient. Au Canada, Statistique Canada prévoit publier lundi 16 novembre l’indice des prix à la consommation d’octobre. La baisse du pétrole de cette semaine est postérieure à la période mesurée et ne change pas le chiffre d’octobre.",
+      "impact": "Ma lecture : le repli hebdomadaire réduit la pression sur les prix à la pompe s’il dure et se transmet au détail, mais peut comprimer les flux des producteurs canadiens. Pour le huard, le pétrole et l’écart de taux avec les États-Unis peuvent jouer en sens opposés. Lundi, une surprise haussière dans les mesures sous-jacentes pourrait pousser les rendements courts canadiens et soutenir le dollar canadien; une surprise faible et assez large pourrait avoir l’effet inverse. Un chiffre global surtout expliqué par l’essence aurait moins de poids qu’un mouvement diffus. Sur le brut, une nouvelle contraction des exportations remettrait en question le scénario d’offre abondante.",
+      "source_label": "Reuters et Wall Street Journal; calendrier de Statistique Canada",
       "source_url": "https://www.reuters.com/business/energy/oil-prices-set-second-weekly-decline-trump-stay-with-iran-blockade-2026-11-13/",
       "published_date": "2026-11-13"
     }
@@ -38,52 +38,52 @@
   "fred_watch": [
     {
       "series_id": "DGS10",
-      "title": "Le dix ans nominal franchit 5 %",
-      "explanation": "Le 12 novembre, le rendement du Trésor américain à dix ans atteint 5,10 %, contre 4,98 % le 10. Ce relèvement renchérit le financement à long terme; la série n’isole pas la part de la prime de terme.",
-      "observation_date": "2026-11-12",
+      "title": "Le taux nominal dépasse le niveau de jeudi",
+      "explanation": "Le 13 novembre, le rendement nominal américain à dix ans est de 5,15 %, contre 5,10 % la veille. Il renchérit le financement de référence; ce taux n’est pas le coût final d’un emprunt d’entreprise.",
+      "observation_date": "2026-11-13",
       "source_url": "https://fred.stlouisfed.org/series/DGS10"
     },
     {
       "series_id": "DFII10",
-      "title": "Le rendement réel suit la hausse",
-      "explanation": "Le 12 novembre, le rendement réel américain à dix ans des titres indexés atteint 2,86 %, contre 2,78 %. Même à inflation donnée, le taux auquel on actualise des revenus futurs est donc plus exigeant.",
-      "observation_date": "2026-11-12",
+      "title": "Le coût réel du capital monte également",
+      "explanation": "Le 13 novembre, le rendement réel à dix ans des titres indexés américains monte à 2,91 %, contre 2,86 %. La hausse du nominal s’accompagne donc d’une hausse du taux réel utilisé pour actualiser les flux futurs.",
+      "observation_date": "2026-11-13",
       "source_url": "https://fred.stlouisfed.org/series/DFII10"
     },
     {
-      "series_id": "BAMLH0A0HYM2",
-      "title": "Le dernier relevé du crédit précède le saut des taux",
-      "explanation": "Le 11 novembre, l’écart ajusté des obligations américaines à haut rendement est de 3,30 points de pourcentage, contre 3,34. Il ne mesure pas la réaction du crédit à la hausse des rendements souverains du 12.",
-      "observation_date": "2026-11-11",
-      "source_url": "https://fred.stlouisfed.org/series/BAMLH0A0HYM2"
+      "series_id": "T10Y2Y",
+      "title": "La pente se redresse sans détente du dix ans",
+      "explanation": "Le 13 novembre, l’écart dix ans moins deux ans passe de 0,24 à 0,27 point de pourcentage. L’écart s’élargit alors que le dix ans monte; ce n’est pas en soi un signal d’assouplissement.",
+      "observation_date": "2026-11-13",
+      "source_url": "https://fred.stlouisfed.org/series/T10Y2Y"
     },
     {
-      "series_id": "IC4WSA",
-      "title": "Les nouvelles demandes de chômage restent stables",
-      "explanation": "Pour la semaine terminée le 7 novembre, la moyenne mobile sur quatre semaines des demandes initiales aux États-Unis reste à 195 250. Cela ne signale pas d’accélération des nouvelles demandes, mais ne mesure ni les embauches ni le chômage total.",
-      "observation_date": "2026-11-07",
-      "source_url": "https://fred.stlouisfed.org/series/IC4WSA"
+      "series_id": "BAMLH0A0HYM2",
+      "title": "Le crédit à haut rendement se resserre au dernier relevé",
+      "explanation": "Le 12 novembre, l’écart ajusté du crédit américain à haut rendement passe de 3,30 à 3,20 points de pourcentage. Une prime moins élevée peut amortir une remontée des taux souverains; le relevé ne couvre pas la séance du 13.",
+      "observation_date": "2026-11-12",
+      "source_url": "https://fred.stlouisfed.org/series/BAMLH0A0HYM2"
     }
   ],
   "audio_script": {
-    "edition_date": "2026-11-13",
-    "source_generated_at": "2026-11-13T10:01:34.388953+00:00",
-    "intro": "Bonjour. Voici le briefing du vendredi treize novembre, préparé à 05 h 01, heure de Montréal. On regarde la transition chez Nvidia, la remontée des taux et ce que les stocks de pétrole changent pour le Canada. Le chiffre américain des prix à la production est encore attendu.",
+    "edition_date": "2026-11-14",
+    "source_generated_at": "2026-11-14T10:04:32.589546+00:00",
+    "intro": "Bonjour! Voici le briefing du samedi quatorze novembre, préparé à 05 h 04, heure de Montréal. On regarde les prix à la production aux États-Unis, puis le contraste entre la séance de vendredi et le bilan de la semaine. Au Canada, les prix à la consommation d’octobre sont encore attendus lundi.",
     "stories": [
       {
-        "title": "Nvidia confirme le départ de Jensen Huang; les concurrents montent",
-        "text": "Hier, Nvidia a confirmé le départ de Jensen Huang. La directrice financière, Colette Kress, assure la direction générale par intérim. À la clôture du Nasdaq, Nvidia reculait d’un peu plus de quatre pour cent. Au même moment, AMD et Broadcom terminaient chacune en hausse de plus de cinq pour cent. Le marché a donc distingué le chef de file de certains de ses concurrents. Ma lecture : une transition peut pousser des clients à revoir leur dépendance à un seul fournisseur. Mais faire tourner des modèles sur une autre puce demande aussi du temps, du logiciel et du soutien. Le vrai test est de voir si les commandes ou les calendriers changent. Un plan de succession crédible et des livraisons confirmées réduiraient ce risque. Si des clients déplacent effectivement une partie de leurs commandes, le changement compterait davantage pour les bénéfices que le mouvement d’hier."
+        "title": "Les prix à la production ralentissent sur le mois; le dix ans finit tout de même à 5,15 %",
+        "text": "Vendredi, les producteurs américains ont reçu des prix un peu moins élevés qu’attendu, si on compare octobre à septembre. Sur le mois, la hausse est de trois dixièmes de point, contre quatre dixièmes attendus. Sur un an, elle accélère à six virgule cinq pour cent. Ces deux lectures peuvent coexister : la variation annuelle repose aussi sur ce qui sort de la comparaison. Et quand on enlève l’alimentation, l’énergie et les services commerciaux, les prix montent encore d’un demi-point sur le mois. Le dix ans a d’abord reculé après l’annonce. Mais le relevé quotidien se retrouve à cinq virgule quinze pour cent, au-dessus de jeudi. Ma lecture : il faut retenir les deux horizons. Le chiffre a donné un peu de répit sur le coup, sans faire disparaître la pression sur le coût du capital. Des services qui ralentissent plusieurs mois de suite changeraient ce portrait. Si ce ralentissement venait d’une demande qui s’essouffle, il faudrait aussi regarder la capacité des entreprises à maintenir leurs marges."
       },
       {
-        "title": "Le dix ans américain repasse à 5,10 % avant les prix à la production",
-        "text": "Passons aux taux. Au retour du jour férié obligataire, le dix ans américain a franchi cinq pour cent, et le rendement réel a monté lui aussi. Ça compte pour les projets qu’il faut financer aujourd’hui et dont les recettes arriveront dans plusieurs années. Ce matin, à huit heures trente, on attend les prix à la production d’octobre. Le consensus disponible prévoit une hausse annuelle plus forte qu’en septembre. Une partie pourrait venir du mois de comparaison qui sort du calcul. Il faut donc regarder le mouvement mensuel et les services. Ma lecture : si la hausse dépasse les attentes dans plusieurs composantes, les rendements courts et le dollar pourraient monter. Une surprise plus faible pourrait soulager les obligations et les valorisations, mais si elle indique surtout que la demande fléchit, les entreprises pourraient aussi perdre du pouvoir de fixation des prix. À l’heure de préparer cette édition, le chiffre n’est pas encore sorti."
+        "title": "Le Nasdaq recule vendredi, mais Wall Street conserve son gain hebdomadaire",
+        "text": "En actions, vendredi a été moins bon que l’ensemble de la semaine. Le Nasdaq a perdu près de un pour cent sur la séance. Le S&P cinq cents a reculé un peu moins, mais a tout de même gagné deux et demi pour cent sur la semaine. Le TSX finit aussi la semaine en hausse après un léger recul vendredi. Nvidia a de nouveau baissé à la clôture du Nasdaq. Ma lecture : on a deux questions à distinguer. La première, c’est la transition à la tête de Nvidia. La seconde, c’est la rentabilité des investissements dans les centres de données quand les taux réels montent. Tant que les clients ne reportent pas leurs commandes et que les livraisons tiennent, le recul du titre ne suffit pas pour conclure que la demande a tourné. En revanche, si les prévisions de ventes et de marges baissent chez plusieurs fournisseurs, ce serait une preuve plus solide qu’un mouvement d’indice."
       },
       {
-        "title": "Le Brent rebondit vendredi matin, mais reste en baisse sur la semaine",
-        "text": "Enfin, le Brent remontait à un peu plus de quatre-vingt-seize dollars américains vers quatre heures, à Montréal. C’est un cours en séance. Sur la semaine, le Brent et le WTI perdaient encore environ deux pour cent à ce moment-là. Aux États-Unis, les stocks ont monté, avec plus d’importations de brut et moins de demande pour les produits raffinés. Mais ce portrait local ne dit pas combien de barils pourront sortir du Golfe. Ma lecture : pour les producteurs canadiens, il faut regarder les prix de vente sur plusieurs semaines. Si les stocks continuent de s’accumuler sans interruption des exportations, les consommateurs peuvent en profiter et les producteurs perdre une partie de leurs marges. Si les expéditions diminuent, le pétrole peut remonter malgré des signes de demande moins forte aux États-Unis."
+        "title": "Le Brent perd 2,5 % sur la semaine; le Canada attend son IPC lundi",
+        "text": "On termine au Canada. Le Brent a fini vendredi à un peu moins de quatre-vingt-seize dollars américains. Il a peu bougé sur la séance, mais il a perdu deux et demi pour cent sur la semaine. Le marché voit des signes d’excédent d’offre, même si les expéditions au Moyen-Orient restent perturbées. Une baisse qui dure peut aider les automobilistes et enlever des revenus aux producteurs. Lundi, on attend les prix à la consommation canadiens pour octobre. Le pétrole de cette semaine n’entre donc pas dans ce chiffre. Ma lecture : si plusieurs mesures de l’inflation sous-jacente surprennent à la hausse, les taux courts canadiens pourraient monter, ce qui soutiendrait le huard. Un résultat plus faible dans plusieurs catégories pourrait avoir l’effet inverse. Si le mouvement vient surtout de l’essence, je serais prudent avant d’en tirer une conclusion sur la prochaine décision de la Banque du Canada."
       }
     ],
-    "watch": "Dans les graphiques, le douze novembre, le dix ans nominal américain atteint cinq virgule dix pour cent et son équivalent réel atteint deux virgule quatre-vingt-six pour cent. Les deux montent. Le dernier écart du crédit à haut rendement, trois virgule trente points le onze novembre, précède cette hausse des taux. Il ne dit donc pas si les prêteurs ont exigé plus de prime le lendemain. Enfin, pour la semaine terminée le sept novembre, la moyenne des demandes initiales d’assurance-emploi sur quatre semaines reste à cent quatre-vingt-quinze mille deux cent cinquante. C’est un repère sur les nouvelles demandes, pas une mesure des embauches.",
-    "outro": "Tu trouveras les sources et les dates précises des graphiques dans le briefing écrit. Bonne journée."
+    "watch": "Dans les graphiques, le treize novembre, le dix ans américain atteint cinq virgule quinze pour cent et le dix ans réel, mesuré sur les titres indexés, deux virgule quatre-vingt-onze. Les deux taux montent. L’écart entre le dix ans et le deux ans s’élargit à vingt-sept centièmes de point, sans baisse du dix ans. Du côté du crédit le plus risqué, l’écart de rendement a diminué à trois virgule vingt points au relevé du douze novembre. Ce repère précède donc la séance de vendredi.",
+    "outro": "Les sources et les dates exactes des relevés sont dans le briefing écrit. Bonne fin de semaine."
   }
 }
