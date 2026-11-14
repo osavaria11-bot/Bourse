@@ -32205,7 +32205,7 @@
   "weights_signature": "85b355b260aab43597581d4b4869a63822e03f1d3ba1b396d1bad3f58582cecf",
   "shape_estimators": "bias_corrected_fisher",
   "status": "stale",
-  "error": "Latest completed session missing from daily VaR sample",
+  "error": "Insufficient common daily coverage: 217/784",
   "results": {
     "prospective-2026-10-perspectives": {
       "weights": {
