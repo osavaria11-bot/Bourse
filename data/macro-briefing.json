@@ -1,16 +1,16 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-11-14T06:26:31.938017+00:00",
+  "generated_at": "2026-11-14T17:19:08.061977+00:00",
   "last_successful_update": "2026-11-06T03:39:51.087872+00:00",
   "update_status": "partial_data",
   "coverage": {
     "total": 42,
-    "fresh": 40,
-    "cached": 2,
+    "fresh": 41,
+    "cached": 1,
     "unavailable": 0
   },
   "data_provider": "FRED / Banque du Canada / Statistique Canada / Numerco / Fed de New York / U.S. Treasury",
-  "briefing_paragraph": "Dernières observations publiées — Inflation CPI · annuelle : 3,72 % (période : 2026-09-01); Inflation PCE sous-jacente · annuelle : 3,12 % (période : 2026-09-01); Inflation Canada · IPC global annuel : 3,1 % (période : 2026-09-01); Inflation Canada · CPI-trim annuel : 1,8 % (période : 2026-09-01); Inflation Canada · CPI-median annuel : 1,9 % (période : 2026-09-01); Taux de chômage · États-Unis : 4,10 % (période : 2026-10-01); Taux de chômage · Canada : 6,70 % (période : 2026-10-01); Assurance-chômage US · demandes initiales : 200000 demandes (période : 2026-11-07); Assurance-chômage US · moyenne de 4 semaines : 195250 demandes (période : 2026-11-07); Créations nettes d’emplois · mensuelles : 165 milliers (période : 2026-10-01); Croissance du PIB réel · trimestre annualisé : 3,37 % (période : 2026-07-01); Taux directeur américain · borne inférieure : 3,75 % (période : 2026-11-13); Taux directeur américain · borne supérieure : 4,00 % (période : 2026-11-13); Trésor américain · 10 ans : 5,15 % (période : 2026-11-13); Taux réel américain · 10 ans (TIPS) : 2,91 % (période : 2026-11-13); Courbe des taux · 10 ans – 2 ans : 0,27 pt (période : 2026-11-13); Volatilité anticipée · VIX : 18,70 points (période : 2026-11-12); USD/CAD · dollars canadiens pour 1 $ US : 1,4106 $ CA/$ US (période : 2026-11-06); Taux directeur canadien : 2,50 % (période : 2026-11-12).",
+  "briefing_paragraph": "Dernières observations publiées — Inflation CPI · annuelle : 3,72 % (période : 2026-09-01); Inflation PCE sous-jacente · annuelle : 3,12 % (période : 2026-09-01); Inflation Canada · IPC global annuel : 3,1 % (période : 2026-09-01); Inflation Canada · CPI-trim annuel : 1,8 % (période : 2026-09-01); Inflation Canada · CPI-median annuel : 1,9 % (période : 2026-09-01); Taux de chômage · États-Unis : 4,10 % (période : 2026-10-01); Taux de chômage · Canada : 6,70 % (période : 2026-10-01); Assurance-chômage US · demandes initiales : 200000 demandes (période : 2026-11-07); Assurance-chômage US · moyenne de 4 semaines : 195250 demandes (période : 2026-11-07); Créations nettes d’emplois · mensuelles : 165 milliers (période : 2026-10-01); Croissance du PIB réel · trimestre annualisé : 3,37 % (période : 2026-07-01); Taux directeur américain · borne inférieure : 3,75 % (période : 2026-11-14); Taux directeur américain · borne supérieure : 4,00 % (période : 2026-11-14); Trésor américain · 10 ans : 5,15 % (période : 2026-11-13); Taux réel américain · 10 ans (TIPS) : 2,91 % (période : 2026-11-13); Courbe des taux · 10 ans – 2 ans : 0,27 pt (période : 2026-11-13); Volatilité anticipée · VIX : 18,70 points (période : 2026-11-12); USD/CAD · dollars canadiens pour 1 $ US : 1,4106 $ CA/$ US (période : 2026-11-06); Taux directeur canadien : 2,50 % (période : 2026-11-12).",
   "news_digest_note": "Veille complémentaire. Les données suivent le calendrier de publication de chaque source.",
   "news_sources": [
     {
@@ -48,20 +48,20 @@
     {
       "id": "DFEDTARU",
       "title": "Taux directeur américain · borne supérieure",
-      "date": "2026-11-13",
+      "date": "2026-11-14",
       "value": 4.0,
       "previous_value": 4.0,
-      "previous_date": "2026-11-12",
+      "previous_date": "2026-11-13",
       "unit": "%",
       "fetch_status": "fresh"
     },
     {
       "id": "DFEDTARL",
       "title": "Taux directeur américain · borne inférieure",
-      "date": "2026-11-13",
+      "date": "2026-11-14",
       "value": 3.75,
       "previous_value": 3.75,
-      "previous_date": "2026-11-12",
+      "previous_date": "2026-11-13",
       "unit": "%",
       "fetch_status": "fresh"
     },
