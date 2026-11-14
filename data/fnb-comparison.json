@@ -4,8 +4,8 @@
   "currency": "CAD",
   "capital": 10000.0,
   "inception": "2026-10-19",
-  "as_of": "2026-11-12",
-  "updated_at": "2026-11-12T21:00:05-05:00",
+  "as_of": "2026-11-13",
+  "updated_at": "2026-11-13T20:32:10-05:00",
   "benchmarks": [
     "FEQT",
     "VEQT",
@@ -113,6 +113,10 @@
         {
           "date": "2026-11-12",
           "value": 10073.858118869559
+        },
+        {
+          "date": "2026-11-13",
+          "value": 10072.035305045532
         }
       ],
       "initial_positions": [
@@ -254,6 +258,10 @@
         {
           "date": "2026-11-12",
           "value": 10215.881192859842
+        },
+        {
+          "date": "2026-11-13",
+          "value": 10247.597122780922
         }
       ],
       "initial_positions": [
@@ -408,6 +416,10 @@
         {
           "date": "2026-11-12",
           "value": 10268.04664302966
+        },
+        {
+          "date": "2026-11-13",
+          "value": 10314.860700632526
         }
       ],
       "initial_positions": [
@@ -558,6 +570,10 @@
         {
           "date": "2026-11-12",
           "value": 10193.354477679892
+        },
+        {
+          "date": "2026-11-13",
+          "value": 10225.912796532295
         }
       ],
       "initial_positions": [
@@ -729,6 +745,10 @@
         {
           "date": "2026-11-12",
           "value": 10120.747201245797
+        },
+        {
+          "date": "2026-11-13",
+          "value": 10138.16944812608
         }
       ],
       "initial_positions": [
@@ -899,6 +919,10 @@
         {
           "date": "2026-11-12",
           "value": 10047.328684008045
+        },
+        {
+          "date": "2026-11-13",
+          "value": 10055.043723245699
         }
       ],
       "initial_positions": [
@@ -1062,6 +1086,10 @@
         {
           "date": "2026-11-12",
           "value": 10063.705786470433
+        },
+        {
+          "date": "2026-11-13",
+          "value": 10092.662262159804
         }
       ],
       "initial_positions": [
@@ -1223,6 +1251,10 @@
         {
           "date": "2026-11-12",
           "value": 10011.969578263279
+        },
+        {
+          "date": "2026-11-13",
+          "value": 10007.924397371855
         }
       ],
       "initial_positions": [
@@ -1370,6 +1402,10 @@
         {
           "date": "2026-11-12",
           "value": 9973.560992475252
+        },
+        {
+          "date": "2026-11-13",
+          "value": 9964.731003533638
         }
       ],
       "initial_positions": [
@@ -1516,6 +1552,10 @@
         {
           "date": "2026-11-12",
           "value": 9999.377723490845
+        },
+        {
+          "date": "2026-11-13",
+          "value": 9986.418502528906
         }
       ],
       "initial_positions": [
@@ -1655,6 +1695,10 @@
         {
           "date": "2026-11-12",
           "value": 10067.767240421384
+        },
+        {
+          "date": "2026-11-13",
+          "value": 10073.952218433404
         }
       ],
       "initial_positions": [
@@ -1790,6 +1834,10 @@
         {
           "date": "2026-11-12",
           "value": 10099.113157511674
+        },
+        {
+          "date": "2026-11-13",
+          "value": 10093.896673442712
         }
       ],
       "initial_positions": [
@@ -1897,6 +1945,10 @@
         {
           "date": "2026-11-12",
           "value": 10027.472231094209
+        },
+        {
+          "date": "2026-11-13",
+          "value": 10011.312167681957
         }
       ],
       "initial_positions": [
@@ -2004,6 +2056,10 @@
         {
           "date": "2026-11-12",
           "value": 10042.185354056772
+        },
+        {
+          "date": "2026-11-13",
+          "value": 10025.310890586581
         }
       ],
       "initial_positions": [
@@ -2111,6 +2167,10 @@
         {
           "date": "2026-11-12",
           "value": 10058.479413050705
+        },
+        {
+          "date": "2026-11-13",
+          "value": 10119.500987572992
         }
       ],
       "initial_positions": [
@@ -2225,6 +2285,10 @@
         {
           "date": "2026-11-12",
           "value": 10203.52589661188
+        },
+        {
+          "date": "2026-11-13",
+          "value": 10234.633084397392
         }
       ],
       "initial_positions": [
@@ -2387,6 +2451,10 @@
         {
           "date": "2026-11-12",
           "value": 10039.66240079368
+        },
+        {
+          "date": "2026-11-13",
+          "value": 10066.91787118501
         }
       ],
       "initial_positions": [
@@ -2546,6 +2614,10 @@
         {
           "date": "2026-11-12",
           "value": 10030.516486818151
+        },
+        {
+          "date": "2026-11-13",
+          "value": 10048.553680892715
         }
       ],
       "initial_positions": [
@@ -2733,6 +2805,10 @@
         {
           "date": "2026-11-12",
           "value": 10024.419210834467
+        },
+        {
+          "date": "2026-11-13",
+          "value": 10036.310887364518
         }
       ],
       "initial_positions": [
@@ -2915,6 +2991,10 @@
         {
           "date": "2026-11-12",
           "value": 9958.953184894817
+        },
+        {
+          "date": "2026-11-13",
+          "value": 9938.41849897867
         }
       ],
       "initial_positions": [
@@ -3064,6 +3144,10 @@
         {
           "date": "2026-11-12",
           "value": 9938.144572676329
+        },
+        {
+          "date": "2026-11-13",
+          "value": 9923.648244248272
         }
       ],
       "initial_positions": [
@@ -3227,6 +3311,10 @@
         {
           "date": "2026-11-12",
           "value": 9916.324113905524
+        },
+        {
+          "date": "2026-11-13",
+          "value": 9892.889889937534
         }
       ],
       "initial_positions": [
@@ -3383,6 +3471,10 @@
         {
           "date": "2026-11-12",
           "value": 9977.142730316558
+        },
+        {
+          "date": "2026-11-13",
+          "value": 9942.856825791396
         }
       ],
       "initial_positions": [
@@ -3497,6 +3589,10 @@
         {
           "date": "2026-11-12",
           "value": 10003.518170698568
+        },
+        {
+          "date": "2026-11-13",
+          "value": 9984.605915707685
         }
       ],
       "initial_positions": [
@@ -3661,6 +3757,10 @@
         {
           "date": "2026-11-12",
           "value": 10065.676533943088
+        },
+        {
+          "date": "2026-11-13",
+          "value": 10038.031437645257
         }
       ],
       "initial_positions": [
@@ -3834,6 +3934,10 @@
         {
           "date": "2026-11-12",
           "value": 10051.151024946807
+        },
+        {
+          "date": "2026-11-13",
+          "value": 10044.773812302992
         }
       ],
       "initial_positions": [
@@ -4017,6 +4121,10 @@
         {
           "date": "2026-11-12",
           "value": 10104.336739951717
+        },
+        {
+          "date": "2026-11-13",
+          "value": 10126.857353313093
         }
       ],
       "initial_positions": [
@@ -4175,6 +4283,10 @@
         {
           "date": "2026-11-12",
           "value": 9781.914239389464
+        },
+        {
+          "date": "2026-11-13",
+          "value": 9733.414736273236
         }
       ],
       "initial_positions": [
@@ -4354,6 +4466,10 @@
         {
           "date": "2026-11-12",
           "value": 9786.291472929834
+        },
+        {
+          "date": "2026-11-13",
+          "value": 9739.673242164934
         }
       ],
       "initial_positions": [
@@ -4430,7 +4546,7 @@
       ]
     }
   ],
-  "source_ledger_sha256": "b9e0f31e8416454ed0ef5cd7cfa1a871b056e755ec18cfd8fa26ca2dddf8dc56",
+  "source_ledger_sha256": "6845bb91462b7f477b496a219c8f21167081fb8e4110863b88edf6bdf6474424",
   "source_registry_sha256": "aaf162ca44e1258d08415d91c63d7d92a3b4706a627c6d954346fe20a81ac10b",
   "supplemental_sha256": "9108b0216c33e90bf8b5a229a5dce790d7dcb9f5c7d910e5e4ad8e0b59f319e8",
   "price_revisions": [
@@ -4610,6 +4726,31 @@
       "revised_close": 19.40999984741211,
       "yahoo_next_close_available": true,
       "confirmation": "Revised historical close confirmed by Yahoo and TMX. Fidelity's dated market price confirms the new close."
+    },
+    {
+      "ticker": "VEE",
+      "recorded_on": "2026-11-13",
+      "date": "2026-11-12",
+      "accepted_close": 48.345001220703125,
+      "next_date": "2026-11-13",
+      "next_close": 48.84,
+      "evidence": [
+        {
+          "source": "Yahoo Finance",
+          "source_url": "https://finance.yahoo.com/quote/VEE.TO/history/",
+          "close": 48.349998474121094,
+          "next_close": 48.84000015258789
+        },
+        {
+          "source": "TMX Money",
+          "source_url": "https://money.tmx.com/en/quote/VEE",
+          "close": 48.35,
+          "next_close": 48.84
+        }
+      ],
+      "revised_close": 48.35,
+      "yahoo_next_close_available": true,
+      "confirmation": "Revised historical close confirmed by Yahoo and TMX; adjacent closes taken together from TMX."
     }
   ],
   "price_source_changes": [

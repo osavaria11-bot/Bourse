@@ -1,0 +1,762 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-13",
+  "recorded_at": "2026-11-13T20:32:08-05:00",
+  "previous_sha256": "b9e0f31e8416454ed0ef5cd7cfa1a871b056e755ec18cfd8fa26ca2dddf8dc56",
+  "prices": {
+    "CGL.C": {
+      "close": 46.119998931884766,
+      "adjusted_close": 46.119998931884766,
+      "distribution": 0.0,
+      "split": 1.0,
+      "symbol": "CGL-C.TO",
+      "source_url": "https://finance.yahoo.com/quote/CGL-C.TO/history/",
+      "price_source": "Yahoo Finance",
+      "corporate_actions_source": "Yahoo Finance"
+    },
+    "FBAL": {
+      "close": 15.74,
+      "adjusted_close": 15.74,
+      "distribution": 0.0,
+      "split": 1.0,
+      "symbol": "FBAL.NE",
+      "source_url": "https://money.tmx.com/en/quote/FBAL%3ACC",
+      "price_source": "TMX Money",
+      "corporate_actions_source": "Yahoo Finance"
+    },
+    "FCIV": {
+      "close": 55.040000915527344,
+      "adjusted_close": 55.040000915527344,
+      "distribution": 0.0,
+      "split": 1.0,
+      "symbol": "FCIV.TO",
+      "source_url": "https://finance.yahoo.com/quote/FCIV.TO/history/",
+      "price_source": "Yahoo Finance",
+      "corporate_actions_source": "Yahoo Finance"
+    },
+    "FCMO": {
+      "close": 22.83,
+      "adjusted_close": 22.83,
+      "distribution": 0.0,
+      "split": 1.0,
+      "symbol": "FCMO.NE",
+      "source_url": "https://money.tmx.com/en/quote/FCMO%3ACC",
+      "price_source": "TMX Money",
+      "corporate_actions_source": "Yahoo Finance"
+    },
+    "FCUL": {
+      "close": 60.75,
+      "adjusted_close": 60.75,
+      "distribution": 0.0,
+      "split": 1.0,
+      "symbol": "FCUL.NE",
+      "source_url": "https://money.tmx.com/en/quote/FCUL%3ACC",
+      "price_source": "TMX Money",
+      "corporate_actions_source": "Yahoo Finance"
+    },
+    "FCUQ": {
+      "close": 77.49,
+      "adjusted_close": 77.49,
+      "distribution": 0.0,
+      "split": 1.0,
+      "symbol": "FCUQ.TO",
+      "source_url": "https://money.tmx.com/en/quote/FCUQ",
+      "price_source": "TMX Money",
+      "corporate_actions_source": "Yahoo Finance"
+    },
+    "FCUV": {
+      "close": 27.360000610351562,
+      "adjusted_close": 27.360000610351562,
+      "distribution": 0.0,
+      "split": 1.0,
+      "symbol": "FCUV.TO",
+      "source_url": "https://finance.yahoo.com/quote/FCUV.TO/history/",
+      "price_source": "Yahoo Finance",
+      "corporate_actions_source": "Yahoo Finance"
+    },
+    "FEQT": {
+      "close": 19.35,
+      "adjusted_close": 19.35,
+      "distribution": 0.0,
+      "split": 1.0,
+      "symbol": "FEQT.NE",
+      "source_url": "https://money.tmx.com/en/quote/FEQT%3ACC",
+      "price_source": "TMX Money",
+      "corporate_actions_source": "Yahoo Finance"
+    },
+    "FGRO": {
+      "close": 19.420000076293945,
+      "adjusted_close": 19.420000076293945,
+      "distribution": 0.0,
+      "split": 1.0,
+      "symbol": "FGRO.NE",
+      "source_url": "https://finance.yahoo.com/quote/FGRO.NE/history/",
+      "price_source": "Yahoo Finance",
+      "corporate_actions_source": "Yahoo Finance"
+    },
+    "FINN": {
+      "close": 32.70000076293945,
+      "adjusted_close": 32.70000076293945,
+      "distribution": 0.0,
+      "split": 1.0,
+      "symbol": "FINN.NE",
+      "source_url": "https://finance.yahoo.com/quote/FINN.NE/history/",
+      "price_source": "Yahoo Finance",
+      "corporate_actions_source": "Yahoo Finance"
+    },
+    "HXQ": {
+      "close": 114.7300033569336,
+      "adjusted_close": 114.7300033569336,
+      "distribution": 0.0,
+      "split": 1.0,
+      "symbol": "HXQ.TO",
+      "source_url": "https://finance.yahoo.com/quote/HXQ.TO/history/",
+      "price_source": "Yahoo Finance",
+      "corporate_actions_source": "Yahoo Finance"
+    },
+    "RUD": {
+      "close": 31.850000381469727,
+      "adjusted_close": 31.850000381469727,
+      "distribution": 0.0,
+      "split": 1.0,
+      "symbol": "RUD.TO",
+      "source_url": "https://finance.yahoo.com/quote/RUD.TO/history/",
+      "price_source": "Yahoo Finance",
+      "corporate_actions_source": "Yahoo Finance"
+    },
+    "VBAL": {
+      "close": 39.79999923706055,
+      "adjusted_close": 39.79999923706055,
+      "distribution": 0.0,
+      "split": 1.0,
+      "symbol": "VBAL.TO",
+      "source_url": "https://finance.yahoo.com/quote/VBAL.TO/history/",
+      "price_source": "Yahoo Finance",
+      "corporate_actions_source": "Yahoo Finance"
+    },
+    "VCN": {
+      "close": 73.4749984741211,
+      "adjusted_close": 73.4749984741211,
+      "distribution": 0.0,
+      "split": 1.0,
+      "symbol": "VCN.TO",
+      "source_url": "https://finance.yahoo.com/quote/VCN.TO/history/",
+      "price_source": "Yahoo Finance",
+      "corporate_actions_source": "Yahoo Finance"
+    },
+    "VDY": {
+      "close": 78.62000274658203,
+      "adjusted_close": 78.62000274658203,
+      "distribution": 0.0,
+      "split": 1.0,
+      "symbol": "VDY.TO",
+      "source_url": "https://finance.yahoo.com/quote/VDY.TO/history/",
+      "price_source": "Yahoo Finance",
+      "corporate_actions_source": "Yahoo Finance"
+    },
+    "VEE": {
+      "close": 48.84,
+      "adjusted_close": 48.84,
+      "distribution": 0.0,
+      "split": 1.0,
+      "symbol": "VEE.TO",
+      "source_url": "https://money.tmx.com/en/quote/VEE",
+      "price_source": "TMX Money",
+      "corporate_actions_source": "Yahoo Finance",
+      "previous_close_revision": {
+        "date": "2026-11-12",
+        "accepted_close": 48.345001220703125,
+        "next_date": "2026-11-13",
+        "next_close": 48.84,
+        "evidence": [
+          {
+            "source": "Yahoo Finance",
+            "source_url": "https://finance.yahoo.com/quote/VEE.TO/history/",
+            "close": 48.349998474121094,
+            "next_close": 48.84000015258789
+          },
+          {
+            "source": "TMX Money",
+            "source_url": "https://money.tmx.com/en/quote/VEE",
+            "close": 48.35,
+            "next_close": 48.84
+          }
+        ],
+        "revised_close": 48.35,
+        "yahoo_next_close_available": true,
+        "confirmation": "Revised historical close confirmed by Yahoo and TMX; adjacent closes taken together from TMX."
+      }
+    },
+    "VEQT": {
+      "close": 61.95000076293945,
+      "adjusted_close": 61.95000076293945,
+      "distribution": 0.0,
+      "split": 1.0,
+      "symbol": "VEQT.TO",
+      "source_url": "https://finance.yahoo.com/quote/VEQT.TO/history/",
+      "price_source": "Yahoo Finance",
+      "corporate_actions_source": "Yahoo Finance"
+    },
+    "VFV": {
+      "close": 191.39999389648438,
+      "adjusted_close": 191.39999389648438,
+      "distribution": 0.0,
+      "split": 1.0,
+      "symbol": "VFV.TO",
+      "source_url": "https://finance.yahoo.com/quote/VFV.TO/history/",
+      "price_source": "Yahoo Finance",
+      "corporate_actions_source": "Yahoo Finance"
+    },
+    "VGRO": {
+      "close": 47.529998779296875,
+      "adjusted_close": 47.529998779296875,
+      "distribution": 0.0,
+      "split": 1.0,
+      "symbol": "VGRO.TO",
+      "source_url": "https://finance.yahoo.com/quote/VGRO.TO/history/",
+      "price_source": "Yahoo Finance",
+      "corporate_actions_source": "Yahoo Finance"
+    },
+    "VMO": {
+      "close": 87.68000030517578,
+      "adjusted_close": 87.68000030517578,
+      "distribution": 0.0,
+      "split": 1.0,
+      "symbol": "VMO.TO",
+      "source_url": "https://finance.yahoo.com/quote/VMO.TO/history/",
+      "price_source": "Yahoo Finance",
+      "corporate_actions_source": "Yahoo Finance"
+    },
+    "VVL": {
+      "close": 77.25,
+      "adjusted_close": 77.25,
+      "distribution": 0.0,
+      "split": 1.0,
+      "symbol": "VVL.TO",
+      "source_url": "https://finance.yahoo.com/quote/VVL.TO/history/",
+      "price_source": "Yahoo Finance",
+      "corporate_actions_source": "Yahoo Finance"
+    },
+    "XBM": {
+      "close": 29.920000076293945,
+      "adjusted_close": 29.920000076293945,
+      "distribution": 0.0,
+      "split": 1.0,
+      "symbol": "XBM.TO",
+      "source_url": "https://finance.yahoo.com/quote/XBM.TO/history/",
+      "price_source": "Yahoo Finance",
+      "corporate_actions_source": "Yahoo Finance"
+    },
+    "XCHP": {
+      "close": 111.06999969482422,
+      "adjusted_close": 111.06999969482422,
+      "distribution": 0.0,
+      "split": 1.0,
+      "symbol": "XCHP.TO",
+      "source_url": "https://finance.yahoo.com/quote/XCHP.TO/history/",
+      "price_source": "Yahoo Finance",
+      "corporate_actions_source": "Yahoo Finance"
+    },
+    "XEF": {
+      "close": 52.060001373291016,
+      "adjusted_close": 52.060001373291016,
+      "distribution": 0.0,
+      "split": 1.0,
+      "symbol": "XEF.TO",
+      "source_url": "https://finance.yahoo.com/quote/XEF.TO/history/",
+      "price_source": "Yahoo Finance",
+      "corporate_actions_source": "Yahoo Finance"
+    },
+    "XEG": {
+      "close": 28.690000534057617,
+      "adjusted_close": 28.690000534057617,
+      "distribution": 0.0,
+      "split": 1.0,
+      "symbol": "XEG.TO",
+      "source_url": "https://finance.yahoo.com/quote/XEG.TO/history/",
+      "price_source": "Yahoo Finance",
+      "corporate_actions_source": "Yahoo Finance"
+    },
+    "XGD": {
+      "close": 52.400001525878906,
+      "adjusted_close": 52.400001525878906,
+      "distribution": 0.0,
+      "split": 1.0,
+      "symbol": "XGD.TO",
+      "source_url": "https://finance.yahoo.com/quote/XGD.TO/history/",
+      "price_source": "Yahoo Finance",
+      "corporate_actions_source": "Yahoo Finance"
+    },
+    "XIC": {
+      "close": 57.77000045776367,
+      "adjusted_close": 57.77000045776367,
+      "distribution": 0.0,
+      "split": 1.0,
+      "symbol": "XIC.TO",
+      "source_url": "https://finance.yahoo.com/quote/XIC.TO/history/",
+      "price_source": "Yahoo Finance",
+      "corporate_actions_source": "Yahoo Finance"
+    },
+    "XIT": {
+      "close": 80.94999694824219,
+      "adjusted_close": 80.94999694824219,
+      "distribution": 0.0,
+      "split": 1.0,
+      "symbol": "XIT.TO",
+      "source_url": "https://finance.yahoo.com/quote/XIT.TO/history/",
+      "price_source": "Yahoo Finance",
+      "corporate_actions_source": "Yahoo Finance"
+    },
+    "XMI": {
+      "close": 52.56999969482422,
+      "adjusted_close": 52.56999969482422,
+      "distribution": 0.0,
+      "split": 1.0,
+      "symbol": "XMI.TO",
+      "source_url": "https://finance.yahoo.com/quote/XMI.TO/history/",
+      "price_source": "Yahoo Finance",
+      "corporate_actions_source": "Yahoo Finance"
+    },
+    "XMTM": {
+      "close": 47.5,
+      "adjusted_close": 47.5,
+      "distribution": 0.0,
+      "split": 1.0,
+      "symbol": "XMTM.TO",
+      "source_url": "https://finance.yahoo.com/quote/XMTM.TO/history/",
+      "price_source": "Yahoo Finance",
+      "corporate_actions_source": "Yahoo Finance"
+    },
+    "XMV": {
+      "close": 63.29999923706055,
+      "adjusted_close": 63.29999923706055,
+      "distribution": 0.0,
+      "split": 1.0,
+      "symbol": "XMV.TO",
+      "source_url": "https://finance.yahoo.com/quote/XMV.TO/history/",
+      "price_source": "Yahoo Finance",
+      "corporate_actions_source": "Yahoo Finance"
+    },
+    "XSU": {
+      "close": 51.83000183105469,
+      "adjusted_close": 51.83000183105469,
+      "distribution": 0.0,
+      "split": 1.0,
+      "symbol": "XSU.TO",
+      "source_url": "https://finance.yahoo.com/quote/XSU.TO/history/",
+      "price_source": "Yahoo Finance",
+      "corporate_actions_source": "Yahoo Finance"
+    },
+    "ZEB": {
+      "close": 76.7300033569336,
+      "adjusted_close": 76.7300033569336,
+      "distribution": 0.0,
+      "split": 1.0,
+      "symbol": "ZEB.TO",
+      "source_url": "https://finance.yahoo.com/quote/ZEB.TO/history/",
+      "price_source": "Yahoo Finance",
+      "corporate_actions_source": "Yahoo Finance"
+    },
+    "ZEM": {
+      "close": 31.350000381469727,
+      "adjusted_close": 31.350000381469727,
+      "distribution": 0.0,
+      "split": 1.0,
+      "symbol": "ZEM.TO",
+      "source_url": "https://finance.yahoo.com/quote/ZEM.TO/history/",
+      "price_source": "Yahoo Finance",
+      "corporate_actions_source": "Yahoo Finance"
+    },
+    "ZEO": {
+      "close": 110.36000061035156,
+      "adjusted_close": 110.36000061035156,
+      "distribution": 0.0,
+      "split": 1.0,
+      "symbol": "ZEO.TO",
+      "source_url": "https://finance.yahoo.com/quote/ZEO.TO/history/",
+      "price_source": "Yahoo Finance",
+      "corporate_actions_source": "Yahoo Finance"
+    },
+    "ZLB": {
+      "close": 64.4000015258789,
+      "adjusted_close": 64.4000015258789,
+      "distribution": 0.0,
+      "split": 1.0,
+      "symbol": "ZLB.TO",
+      "source_url": "https://finance.yahoo.com/quote/ZLB.TO/history/",
+      "price_source": "Yahoo Finance",
+      "corporate_actions_source": "Yahoo Finance"
+    },
+    "ZLU": {
+      "close": 69.02999877929688,
+      "adjusted_close": 69.02999877929688,
+      "distribution": 0.0,
+      "split": 1.0,
+      "symbol": "ZLU.TO",
+      "source_url": "https://finance.yahoo.com/quote/ZLU.TO/history/",
+      "price_source": "Yahoo Finance",
+      "corporate_actions_source": "Yahoo Finance"
+    },
+    "ZNQ": {
+      "close": 128.8300018310547,
+      "adjusted_close": 128.8300018310547,
+      "distribution": 0.0,
+      "split": 1.0,
+      "symbol": "ZNQ.TO",
+      "source_url": "https://finance.yahoo.com/quote/ZNQ.TO/history/",
+      "price_source": "Yahoo Finance",
+      "corporate_actions_source": "Yahoo Finance"
+    },
+    "ZUQ": {
+      "close": 115.81999969482422,
+      "adjusted_close": 115.81999969482422,
+      "distribution": 0.0,
+      "split": 1.0,
+      "symbol": "ZUQ.TO",
+      "source_url": "https://finance.yahoo.com/quote/ZUQ.TO/history/",
+      "price_source": "Yahoo Finance",
+      "corporate_actions_source": "Yahoo Finance"
+    }
+  },
+  "accounts": {
+    "savy-1": {
+      "value": 10072.035305045532,
+      "units": {
+        "FCMO": 21.56101718349179,
+        "FCUQ": 25.903380391141045,
+        "FEQT": 208.6593627585057,
+        "FINN": 30.18412217808268,
+        "VDY": 32.40860798263734
+      }
+    },
+    "savy-2": {
+      "value": 10247.597122780922,
+      "units": {
+        "FCIV": 18.79699221163596,
+        "FCUL": 34.42340882144498,
+        "FEQT": 130.41210172406605,
+        "FINN": 45.276183267124026,
+        "VDY": 12.963443193054937,
+        "VEE": 10.162601468425821,
+        "ZLB": 24.879747507412688
+      }
+    },
+    "savy-3": {
+      "value": 10314.860700632526,
+      "units": {
+        "FCIV": 31.954886759781136,
+        "FCUL": 60.240965437528715,
+        "FEQT": 78.24726103443963,
+        "VDY": 7.778065915832962,
+        "VEE": 30.487804405277462,
+        "ZLB": 19.90379800593015
+      }
+    },
+    "savy-4": {
+      "value": 10225.912796532295,
+      "units": {
+        "CGL.C": 10.264832876159621,
+        "FCIV": 18.79699221163596,
+        "FCUL": 25.817556616083735,
+        "FEQT": 130.41210172406605,
+        "FINN": 30.18412217808268,
+        "VDY": 12.963443193054937,
+        "VEE": 10.162601468425821,
+        "XMI": 9.91473323367566,
+        "ZLB": 24.879747507412688
+      }
+    },
+    "savy-5": {
+      "value": 10138.16944812608,
+      "units": {
+        "CGL.C": 10.264832876159621,
+        "FCIV": 18.79699221163596,
+        "FCUL": 17.21170441072249,
+        "FEQT": 130.41210172406605,
+        "FINN": 30.18412217808268,
+        "VDY": 12.963443193054937,
+        "VEE": 10.162601468425821,
+        "ZLB": 24.879747507412688,
+        "ZNQ": 7.422802783097992
+      }
+    },
+    "savy-6": {
+      "value": 10055.043723245699,
+      "units": {
+        "CGL.C": 10.264832876159621,
+        "FCIV": 19.924811744334118,
+        "RUD": 33.12302759397904,
+        "VDY": 6.870624892319117,
+        "XMI": 21.0192344553924,
+        "ZEO": 9.206183825073898,
+        "ZLB": 34.99751149376051,
+        "ZNQ": 19.521971319547717
+      }
+    },
+    "savy-7": {
+      "value": 10092.662262159804,
+      "units": {
+        "CGL.C": 10.264832876159621,
+        "FCIV": 23.87218010877767,
+        "FINN": 57.349832138357094,
+        "RUD": 59.93690707481921,
+        "VDY": 21.908218996262843,
+        "XMI": 23.00218110212753,
+        "ZEB": 11.46963667604833,
+        "ZEO": 6.426958519391213
+      }
+    },
+    "savy-8": {
+      "value": 10007.924397371855,
+      "units": {
+        "FEQT": 208.6593627585057,
+        "FINN": 30.18412217808268,
+        "VCN": 34.23719686294161,
+        "VEE": 10.162601468425821,
+        "VMO": 16.666666666666668,
+        "XEF": 9.798158180690619
+      }
+    },
+    "savy-9": {
+      "value": 9964.731003533638,
+      "units": {
+        "FEQT": 182.57694241369248,
+        "FINN": 45.276183267124026,
+        "VCN": 20.542318117764964,
+        "VEE": 10.162601468425821,
+        "VMO": 27.77777777777778,
+        "XEF": 9.798158180690619
+      }
+    },
+    "savy-10": {
+      "value": 9986.418502528906,
+      "units": {
+        "CGL.C": 10.264832876159621,
+        "FBAL": 448.43050313622007,
+        "VDY": 12.963443193054937,
+        "ZEO": 4.342539540129198,
+        "ZNQ": 7.422802783097992
+      }
+    },
+    "savy-11": {
+      "value": 10073.952218433404,
+      "units": {
+        "CGL.C": 10.264832876159621,
+        "FGRO": 306.1753949062806,
+        "FINN": 33.20253439589095,
+        "VDY": 20.7415091088879,
+        "XMI": 17.846519820616187
+      }
+    },
+    "FEQT": {
+      "value": 10093.896673442712,
+      "units": {
+        "FEQT": 521.6484068962642
+      }
+    },
+    "VEQT": {
+      "value": 10011.312167681957,
+      "units": {
+        "VEQT": 161.60309999013037
+      }
+    },
+    "VGRO": {
+      "value": 10025.310890586581,
+      "units": {
+        "VGRO": 210.92596566514973
+      }
+    },
+    "VBAL": {
+      "value": 10119.500987572992,
+      "units": {
+        "VBAL": 254.25882365721304
+      }
+    },
+    "proposal-2026-10": {
+      "value": 10234.633084397392,
+      "units": {
+        "FCUL": 33.39070655680163,
+        "FCUQ": 8.548115529076545,
+        "VDY": 12.704174329193838,
+        "VEE": 17.2764224963239,
+        "XMI": 50.96172882109289,
+        "ZEO": 4.342539540129198,
+        "ZLB": 22.55763774005417,
+        "ZNQ": 8.46199517273171
+      }
+    },
+    "robust-2026-10-1": {
+      "value": 10011.03832088103,
+      "units": {
+        "CGL.C": 10.33057818671051,
+        "FCIV": 51.19950197342381,
+        "FCMO": 95.00874967356017,
+        "FINN": 44.0609379471052,
+        "VEE": 10.663155485499606,
+        "XMV": 33.31064026754519,
+        "ZEO": 4.325633842382077
+      }
+    },
+    "robust-2026-10-2": {
+      "value": 9992.61494336201,
+      "units": {
+        "CGL.C": 10.33057818671051,
+        "FCIV": 35.83965138139666,
+        "FCMO": 66.50612477149213,
+        "FCUQ": 3.099173553719009,
+        "FINN": 30.842656562973644,
+        "VCN": 11.369789269464796,
+        "VEE": 11.12795799691656,
+        "VFV": 5.432533146893161,
+        "XEF": 10.520163271712562,
+        "XMV": 23.317448187281627,
+        "ZEO": 3.0279436896674534
+      }
+    },
+    "robust-2026-10-3": {
+      "value": 9980.332691682663,
+      "units": {
+        "CGL.C": 10.33057818671051,
+        "FCIV": 25.599750986711904,
+        "FCMO": 47.50437483678009,
+        "FCUQ": 5.1652892561983474,
+        "FINN": 22.0304689735526,
+        "VCN": 18.949648782441326,
+        "VEE": 11.437826337861196,
+        "VFV": 9.054221911488602,
+        "XEF": 17.533605452854268,
+        "XMV": 16.655320133772594,
+        "ZEO": 2.1628169211910384
+      }
+    },
+    "recommended-2026-10-sp500-surperformance": {
+      "value": 10081.448169022664,
+      "units": {
+        "VCN": 6.869075336051294,
+        "VDY": 24.071703415243334,
+        "VEE": 13.795986578070641,
+        "XEF": 23.790642995072883,
+        "ZNQ": 26.68903474370668,
+        "ZUQ": 20.147989987448263
+      }
+    },
+    "recommended-2026-10-sp500-sharpe-or": {
+      "value": 10073.435907603001,
+      "units": {
+        "CGL.C": 10.6997647099928,
+        "VDY": 11.523687805169681,
+        "VEE": 13.16889627906743,
+        "XEF": 22.60111084531924,
+        "ZEO": 4.323389480354788,
+        "ZLB": 14.36734693877551,
+        "ZNQ": 26.68903474370668,
+        "ZUQ": 17.384327644037217
+      }
+    },
+    "recommended-2026-10-sp500-noyau-veqt": {
+      "value": 10035.824262413798,
+      "units": {
+        "VDY": 16.389244878463547,
+        "VEE": 10.660535083054585,
+        "VEQT": 32.738582337608264,
+        "VVL": 3.3602149848483713,
+        "XEF": 16.25693937996647,
+        "ZEO": 4.323389480354788,
+        "ZNQ": 26.68903474370668,
+        "ZUQ": 10.16314539189868
+      }
+    },
+    "VFV": {
+      "value": 10107.197488073052,
+      "units": {
+        "VFV": 52.806676125284355
+      }
+    },
+    "prospective-2026-10-perspectives": {
+      "value": 9972.768208570122,
+      "units": {
+        "FINN": 45.509710001983734,
+        "VCN": 16.1312368473778,
+        "VEE": 11.342154864047428,
+        "VMO": 16.772894944440555,
+        "XEF": 17.75147902281452,
+        "XIT": 12.099213327744291,
+        "XSU": 56.04947634176295,
+        "ZNQ": 3.6182721751054694
+      }
+    },
+    "prospective-2026-10-hybride": {
+      "value": 9999.793602042182,
+      "units": {
+        "HXQ": 16.524787222858997,
+        "VFV": 7.794637190657473,
+        "XEF": 14.095535908189172,
+        "XIC": 29.25900362033009,
+        "XIT": 6.614551893048644,
+        "ZEB": 13.200983293586845,
+        "ZLB": 5.05050496261777,
+        "ZLU": 3.829950121117731,
+        "ZUQ": 17.699115044247787
+      }
+    },
+    "prospective-2026-10-multifactoriel": {
+      "value": 10003.45113857782,
+      "units": {
+        "FCIV": 3.9410716074197203,
+        "FCMO": 19.573727902569413,
+        "FINN": 44.88330587025098,
+        "HXQ": 8.345852132757068,
+        "VDY": 13.98068118624091,
+        "VVL": 10.06711409395973,
+        "XEF": 6.068911293803671,
+        "XIT": 8.659049750900044,
+        "ZEB": 13.200983293586845,
+        "ZEO": 3.757427392752475,
+        "ZUQ": 22.38938053097345
+      }
+    },
+    "proposal-2026-11": {
+      "value": 10158.88506899888,
+      "units": {
+        "FCMO": 52.88673424416042,
+        "FEQT": 80.65366367949395,
+        "FINN": 34.225264467952705,
+        "VDY": 35.582665054368526,
+        "VEE": 12.80136577071333,
+        "XMI": 39.09304155522136,
+        "ZUQ": 6.853887503969363
+      }
+    },
+    "prospective-2026-11-valeur-fcuv": {
+      "value": 10282.763843497334,
+      "units": {
+        "FCUV": 55.18518518518518,
+        "FINN": 62.421972534332085,
+        "VDY": 17.308694213773183,
+        "XBM": 26.57807275286611,
+        "XCHP": 4.975124378109452,
+        "XEG": 18.142235474927396,
+        "XGD": 3.5906642237080897,
+        "XMTM": 19.09090909090909,
+        "ZEB": 5.959475397552471,
+        "ZEM": 62.21198328539744
+      }
+    },
+    "prospective-2026-11-momentum-fcmo": {
+      "value": 10322.04557853283,
+      "units": {
+        "FCMO": 68.7757909215956,
+        "FINN": 62.421972534332085,
+        "VDY": 21.21291095372202,
+        "XBM": 26.57807275286611,
+        "XCHP": 4.975124378109452,
+        "XEG": 18.142235474927396,
+        "XGD": 2.333931745410258,
+        "XMTM": 12.727272727272727,
+        "ZEB": 6.886504903838411,
+        "ZEM": 61.224491487216525
+      }
+    }
+  },
+  "sha256": "6845bb91462b7f477b496a219c8f21167081fb8e4110863b88edf6bdf6474424"
+}
