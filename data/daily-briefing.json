@@ -3,87 +3,80 @@
   "kind": "news_digest",
   "language": "fr",
   "timezone": "America/Toronto",
-  "edition_date": "2026-11-14",
-  "generated_at": "2026-11-14T10:04:32.589546+00:00",
-  "editorial_note": "Édition de fin de semaine préparée à 05 h 04, heure de Montréal, à partir des clôtures du vendredi. L’IPC canadien d’octobre est attendu lundi.",
+  "edition_date": "2026-11-15",
+  "generated_at": "2026-11-15T10:00:38.066457+00:00",
+  "editorial_note": "Édition préparée à 05 h 00, heure de Montréal. Les annonces de samedi sont postérieures aux clôtures de vendredi. L’IPC canadien d’octobre est attendu lundi.",
   "stories": [
     {
-      "topic": "Inflation et obligations",
-      "title": "Les prix à la production ralentissent sur le mois; le dix ans finit tout de même à 5,15 %",
-      "summary": "Le Bureau of Labor Statistics a publié vendredi une hausse désaisonnalisée de 0,3 % des prix à la production d’octobre, contre 0,4 % attendu selon le consensus Dow Jones relayé par Stock Titan, et 1,4 % en septembre après révision. Sur un an, le taux accélère de 6,3 % à 6,5 %, légèrement sous les 6,6 % attendus. Les biens augmentent de 0,5 % et les services de 0,2 %; hors alimentation, énergie et services commerciaux, l’indice avance encore de 0,5 % sur le mois. Le Wall Street Journal a relevé un repli du dix ans de 5,145 % juste avant la publication à 5,127 % à 8 h 46. Le relevé quotidien de référence est néanmoins passé de 5,10 % jeudi à 5,15 % vendredi.",
-      "impact": "Ma lecture : la réaction immédiate des obligations correspond à une surprise un peu plus faible, mais le détail ne valide pas une désinflation généralisée. Si la pression sur les prix hors énergie persiste, les anticipations de taux peuvent rester fermes, ce qui soutient le dollar américain et complique le refinancement des entreprises. Les actions dont la valeur dépend de profits lointains restent sensibles au rendement réel. Une décélération prolongée des services remettrait cette lecture en cause. Si elle provenait surtout d’une demande plus faible, le soulagement obligataire pourrait coexister avec des révisions de bénéfices à la baisse.",
-      "source_label": "Bureau of Labor Statistics; relevé intrajournalier du Wall Street Journal",
-      "source_url": "https://www.bls.gov/news.release/archives/ppi_11132026.htm",
-      "published_date": "2026-11-13"
+      "topic": "Commerce Canada–États-Unis",
+      "title": "Carney fait état de progrès commerciaux, sans accord annoncé",
+      "summary": "Samedi 14 novembre, à Manille, Mark Carney a dit avoir eu des échanges substantiels avec Donald Trump et que les deux pays progressaient vers un accord commercial. Il a aussi précisé qu’un accord n’avait pas été conclu. Le compte rendu ne donne ni liste de droits modifiés ni date d’entrée en vigueur. L’annonce est arrivée après la dernière clôture de Toronto : elle ne peut pas expliquer le cours du huard vendredi.",
+      "impact": "Ma lecture : une baisse de l’incertitude peut encourager des entreprises à revenir sur des projets d’investissement reportés. Pour chiffrer l’effet sur les bénéfices, il faut toutefois savoir quels produits seraient couverts et à partir de quand. Un allègement durable aiderait surtout les exportateurs qui absorbent une partie des droits ou perdent des volumes; le huard pourrait aussi en bénéficier. Un accord étroit ou des exceptions temporaires remettraient en cause cette lecture. L’IPC canadien d’octobre, attendu lundi selon Statistique Canada, reste un test distinct : une surprise dans les mesures sous-jacentes pourrait déplacer les rendements courts et le huard dans un sens ou l’autre avant même que les modalités commerciales soient connues.",
+      "source_label": "Reuters; calendrier de Statistique Canada",
+      "source_url": "https://www.investing.com/news/economy-news/canada-us-make-progress-on-trade-deal-carney-says-5027146",
+      "published_date": "2026-11-14"
     },
     {
-      "topic": "Actions et semi-conducteurs",
-      "title": "Le Nasdaq recule vendredi, mais Wall Street conserve son gain hebdomadaire",
-      "summary": "Le Nasdaq Composite a perdu 0,9 % vendredi et le S&P 500 0,4 %, alors que le Dow a gagné 0,1 %. Sur la semaine, le S&P 500 a néanmoins repris 2,5 % et le Nasdaq 2,3 %. Nvidia a clôturé en baisse d’environ 2,5 % au Nasdaq, dans la foulée du départ confirmé de Jensen Huang. À Toronto, le TSX a reculé de 0,1 % vendredi mais progressé de 0,9 % sur la semaine, sa deuxième hausse hebdomadaire de suite selon Reuters.",
-      "impact": "Ma lecture : le contraste entre la séance et la semaine invite à distinguer la volatilité des puces de la santé des bénéfices hors technologie. Le décrochage de Nvidia mérite d’être suivi, mais ne confirme pas à lui seul un recul des commandes. Quand les rendements réels montent, les investisseurs exigent aussi plus de preuves que les dépenses dans les centres de données se convertiront en revenus. Des perspectives de livraison intactes et des gains répartis entre davantage de secteurs rendraient le rebond plus crédible. Si les reports de projets et les révisions bénéficiaires se multiplient, le gain hebdomadaire dira peu sur la suite.",
-      "source_label": "Associated Press; Reuters pour le TSX",
-      "source_url": "https://apnews.com/article/wall-street-stocks-dow-nasdaq-12c1e8155fb85c3c7b09e058ed6d3c74",
-      "published_date": "2026-11-13"
+      "topic": "Logiciels et risque opérationnel",
+      "title": "Microsoft annonce le rétablissement d’Outlook et de Teams",
+      "summary": "Microsoft a annoncé samedi le rétablissement de ses services après une panne mondiale de plus de 24 heures, selon Reuters. Outlook et Teams figuraient parmi les produits touchés; l’interruption a gêné des entreprises et des administrations. Le rétablissement annoncé ne chiffre ni le coût pour Microsoft ni les pertes de ses clients. Les sources consultées n’établissent pas qu’il s’agissait d’une cyberattaque, et aucun cours de clôture postérieur à l’annonce de samedi n’est disponible.",
+      "impact": "Ma lecture : le premier enjeu financier est la capacité de Microsoft à respecter ses engagements de service et à retenir les clients, plus que le nombre de signalements au plus fort de la panne. Les suites intégrées réduisent les coûts de coordination au quotidien, mais une interruption commune peut aussi rendre plusieurs outils indisponibles en même temps. Des récurrences, des crédits de service significatifs ou des clients qui diversifient effectivement leurs outils rendraient le risque plus visible dans les résultats. Un incident isolé, suivi de mesures correctives crédibles et sans effet sur les renouvellements, limiterait cette lecture.",
+      "source_label": "Reuters, repris par Euronext",
+      "source_url": "https://live.euronext.com/en/financial-news/microsoft-restores-service-outlook-and-teams-after-global-outage",
+      "published_date": "2026-11-14"
     },
     {
-      "topic": "Énergie et Canada",
-      "title": "Le Brent perd 2,5 % sur la semaine; le Canada attend son IPC lundi",
-      "summary": "Le contrat de janvier sur le Brent a réglé vendredi à 95,84 $ US le baril, presque inchangé sur la séance mais en baisse de 2,5 % sur la semaine. C’est le deuxième recul hebdomadaire consécutif. Les indices d’un excédent mondial d’offre coexistent avec des perturbations des exportations au Moyen-Orient. Au Canada, Statistique Canada prévoit publier lundi 16 novembre l’indice des prix à la consommation d’octobre. La baisse du pétrole de cette semaine est postérieure à la période mesurée et ne change pas le chiffre d’octobre.",
-      "impact": "Ma lecture : le repli hebdomadaire réduit la pression sur les prix à la pompe s’il dure et se transmet au détail, mais peut comprimer les flux des producteurs canadiens. Pour le huard, le pétrole et l’écart de taux avec les États-Unis peuvent jouer en sens opposés. Lundi, une surprise haussière dans les mesures sous-jacentes pourrait pousser les rendements courts canadiens et soutenir le dollar canadien; une surprise faible et assez large pourrait avoir l’effet inverse. Un chiffre global surtout expliqué par l’essence aurait moins de poids qu’un mouvement diffus. Sur le brut, une nouvelle contraction des exportations remettrait en question le scénario d’offre abondante.",
-      "source_label": "Reuters et Wall Street Journal; calendrier de Statistique Canada",
-      "source_url": "https://www.reuters.com/business/energy/oil-prices-set-second-weekly-decline-trump-stay-with-iran-blockade-2026-11-13/",
-      "published_date": "2026-11-13"
+      "topic": "Pétrole et risque d’offre",
+      "title": "Le scénario de nouvelles frappes contre l’Iran paraît moins immédiat",
+      "summary": "Reuters rapporte samedi, d’après des personnes au fait des discussions, que Donald Trump a indiqué à ses conseillers qu’il pourrait différer de nouvelles frappes contre l’Iran en l’absence de nouvelle provocation. Il s’agit d’une option rapportée et conditionnelle, sans accord de paix ni confirmation d’une reprise des exportations. Les contrats pétroliers de vendredi précèdent cette information.",
+      "impact": "Ma lecture : le marché peut réduire la part du prix liée à une escalade à court terme avant de voir un seul baril supplémentaire. Il faut distinguer cette révision du risque des volumes réellement exportés. Une normalisation des expéditions, si elle se confirme, favoriserait les acheteurs de carburant et pourrait réduire les marges des producteurs canadiens. Une nouvelle perturbation maritime ou une reprise des frappes inverserait ce scénario. Les volumes et les conditions d’assurance donneront un signal plus robuste qu’une seule manchette.",
+      "source_label": "Reuters",
+      "source_url": "https://www.reuters.com/world/middle-east/trump-tells-advisers-he-may-hold-off-iran-attacks-barring-new-provocations-2026-11-14/",
+      "published_date": "2026-11-14"
     }
   ],
   "fred_watch": [
     {
-      "series_id": "DGS10",
-      "title": "Le taux nominal dépasse le niveau de jeudi",
-      "explanation": "Le 13 novembre, le rendement nominal américain à dix ans est de 5,15 %, contre 5,10 % la veille. Il renchérit le financement de référence; ce taux n’est pas le coût final d’un emprunt d’entreprise.",
-      "observation_date": "2026-11-13",
-      "source_url": "https://fred.stlouisfed.org/series/DGS10"
-    },
-    {
       "series_id": "DFII10",
-      "title": "Le coût réel du capital monte également",
-      "explanation": "Le 13 novembre, le rendement réel à dix ans des titres indexés américains monte à 2,91 %, contre 2,86 %. La hausse du nominal s’accompagne donc d’une hausse du taux réel utilisé pour actualiser les flux futurs.",
+      "title": "Le taux réel fixe une barre plus haute aux projets",
+      "explanation": "Au 13 novembre, le rendement réel américain à dix ans est de 2,91 %, contre 2,86 %. Cela augmente le taux d’actualisation de référence; le risque propre au projet s’ajoute à ce taux.",
       "observation_date": "2026-11-13",
       "source_url": "https://fred.stlouisfed.org/series/DFII10"
     },
     {
       "series_id": "T10Y2Y",
-      "title": "La pente se redresse sans détente du dix ans",
-      "explanation": "Le 13 novembre, l’écart dix ans moins deux ans passe de 0,24 à 0,27 point de pourcentage. L’écart s’élargit alors que le dix ans monte; ce n’est pas en soi un signal d’assouplissement.",
+      "title": "Le financement long se renchérit relativement au court",
+      "explanation": "Au 13 novembre, l’écart dix ans moins deux ans est de 0,27 point de pourcentage, contre 0,24. Comme le dix ans monte aussi, cet élargissement ne signale pas à lui seul une détente monétaire.",
       "observation_date": "2026-11-13",
       "source_url": "https://fred.stlouisfed.org/series/T10Y2Y"
     },
     {
-      "series_id": "BAMLH0A0HYM2",
-      "title": "Le crédit à haut rendement se resserre au dernier relevé",
-      "explanation": "Le 12 novembre, l’écart ajusté du crédit américain à haut rendement passe de 3,30 à 3,20 points de pourcentage. Une prime moins élevée peut amortir une remontée des taux souverains; le relevé ne couvre pas la séance du 13.",
+      "series_id": "VIXCLS",
+      "title": "La volatilité implicite remonte au dernier relevé",
+      "explanation": "Au 12 novembre, le VIX passe de 17,49 à 18,70 points d’indice. Les options sur le S&P 500 reflètent une volatilité attendue plus élevée; l’indice ne prévoit pas le sens du prochain mouvement.",
       "observation_date": "2026-11-12",
-      "source_url": "https://fred.stlouisfed.org/series/BAMLH0A0HYM2"
+      "source_url": "https://fred.stlouisfed.org/series/VIXCLS"
     }
   ],
   "audio_script": {
-    "edition_date": "2026-11-14",
-    "source_generated_at": "2026-11-14T10:04:32.589546+00:00",
-    "intro": "Bonjour! Voici le briefing du samedi quatorze novembre, préparé à 05 h 04, heure de Montréal. On regarde les prix à la production aux États-Unis, puis le contraste entre la séance de vendredi et le bilan de la semaine. Au Canada, les prix à la consommation d’octobre sont encore attendus lundi.",
+    "edition_date": "2026-11-15",
+    "source_generated_at": "2026-11-15T10:00:38.066457+00:00",
+    "intro": "Bonjour. Voici le briefing du dimanche quinze novembre, préparé à 05 h 00, heure de Montréal. On revient sur trois développements de samedi, avant la publication des prix à la consommation au Canada lundi.",
     "stories": [
       {
-        "title": "Les prix à la production ralentissent sur le mois; le dix ans finit tout de même à 5,15 %",
-        "text": "Vendredi, les producteurs américains ont reçu des prix un peu moins élevés qu’attendu, si on compare octobre à septembre. Sur le mois, la hausse est de trois dixièmes de point, contre quatre dixièmes attendus. Sur un an, elle accélère à six virgule cinq pour cent. Ces deux lectures peuvent coexister : la variation annuelle repose aussi sur ce qui sort de la comparaison. Et quand on enlève l’alimentation, l’énergie et les services commerciaux, les prix montent encore d’un demi-point sur le mois. Le dix ans a d’abord reculé après l’annonce. Mais le relevé quotidien se retrouve à cinq virgule quinze pour cent, au-dessus de jeudi. Ma lecture : il faut retenir les deux horizons. Le chiffre a donné un peu de répit sur le coup, sans faire disparaître la pression sur le coût du capital. Des services qui ralentissent plusieurs mois de suite changeraient ce portrait. Si ce ralentissement venait d’une demande qui s’essouffle, il faudrait aussi regarder la capacité des entreprises à maintenir leurs marges."
+        "title": "Carney fait état de progrès commerciaux, sans accord annoncé",
+        "text": "On commence au Canada. Samedi, à Manille, Mark Carney a dit que les discussions commerciales avec Donald Trump avaient avancé. Il n’a pas annoncé d’accord. On n’a donc ni nouveaux taux de droits ni date d’application à intégrer aux prévisions. Ma lecture : moins d’incertitude pourrait suffire pour que certaines entreprises rouvrent des dossiers d’investissement. Mais pour revoir les marges d’un exportateur, il faut savoir quels produits seraient visés et si le changement est durable. Comme l’annonce est survenue après la clôture de vendredi, le cours de vendredi ne nous dit rien sur la réaction à cette nouvelle. Lundi, on attend aussi l’indice des prix à la consommation au Canada. Si les mesures sous-jacentes surprennent à la hausse, les taux courts pourraient monter et soutenir le huard. Une surprise plus faible ferait plutôt l’inverse. Ce sera un signal séparé des négociations."
       },
       {
-        "title": "Le Nasdaq recule vendredi, mais Wall Street conserve son gain hebdomadaire",
-        "text": "En actions, vendredi a été moins bon que l’ensemble de la semaine. Le Nasdaq a perdu près de un pour cent sur la séance. Le S&P cinq cents a reculé un peu moins, mais a tout de même gagné deux et demi pour cent sur la semaine. Le TSX finit aussi la semaine en hausse après un léger recul vendredi. Nvidia a de nouveau baissé à la clôture du Nasdaq. Ma lecture : on a deux questions à distinguer. La première, c’est la transition à la tête de Nvidia. La seconde, c’est la rentabilité des investissements dans les centres de données quand les taux réels montent. Tant que les clients ne reportent pas leurs commandes et que les livraisons tiennent, le recul du titre ne suffit pas pour conclure que la demande a tourné. En revanche, si les prévisions de ventes et de marges baissent chez plusieurs fournisseurs, ce serait une preuve plus solide qu’un mouvement d’indice."
+        "title": "Microsoft annonce le rétablissement d’Outlook et de Teams",
+        "text": "Microsoft dit avoir rétabli Outlook, Teams et les autres services touchés après une panne de plus de vingt-quatre heures. La reprise est la nouvelle de samedi. Elle ne permet pas encore de dire combien l’incident a coûté ni d’en attribuer la cause à une cyberattaque. Ma lecture : pour les investisseurs, il faut regarder ce que feront les clients. Une suite intégrée est pratique quand tout fonctionne. Quand plusieurs outils s’arrêtent ensemble, la dépendance devient concrète. Si les pannes se répètent et que des clients répartissent vraiment leurs usages entre fournisseurs, cela peut peser sur les renouvellements. Si la panne reste isolée et que les mesures correctives tiennent, l’incidence sur les résultats pourrait rester limitée."
       },
       {
-        "title": "Le Brent perd 2,5 % sur la semaine; le Canada attend son IPC lundi",
-        "text": "On termine au Canada. Le Brent a fini vendredi à un peu moins de quatre-vingt-seize dollars américains. Il a peu bougé sur la séance, mais il a perdu deux et demi pour cent sur la semaine. Le marché voit des signes d’excédent d’offre, même si les expéditions au Moyen-Orient restent perturbées. Une baisse qui dure peut aider les automobilistes et enlever des revenus aux producteurs. Lundi, on attend les prix à la consommation canadiens pour octobre. Le pétrole de cette semaine n’entre donc pas dans ce chiffre. Ma lecture : si plusieurs mesures de l’inflation sous-jacente surprennent à la hausse, les taux courts canadiens pourraient monter, ce qui soutiendrait le huard. Un résultat plus faible dans plusieurs catégories pourrait avoir l’effet inverse. Si le mouvement vient surtout de l’essence, je serais prudent avant d’en tirer une conclusion sur la prochaine décision de la Banque du Canada."
+        "title": "Le scénario de nouvelles frappes contre l’Iran paraît moins immédiat",
+        "text": "Enfin, un développement à suivre pour le pétrole. Reuters rapporte que le président américain pourrait attendre avant de lancer de nouvelles frappes contre l’Iran, à moins d’une nouvelle provocation. C’est une option rapportée, pas un accord. Ma lecture : le prix du pétrole peut refléter un risque d’escalade moins élevé avant même que les volumes changent. Pour savoir si cela aide durablement les acheteurs de carburant ou réduit les marges des producteurs, je regarderais les expéditions et les conditions d’assurance. Une reprise des perturbations ferait vite remonter le risque. Les règlements de vendredi sont antérieurs à cette nouvelle."
       }
     ],
-    "watch": "Dans les graphiques, le treize novembre, le dix ans américain atteint cinq virgule quinze pour cent et le dix ans réel, mesuré sur les titres indexés, deux virgule quatre-vingt-onze. Les deux taux montent. L’écart entre le dix ans et le deux ans s’élargit à vingt-sept centièmes de point, sans baisse du dix ans. Du côté du crédit le plus risqué, l’écart de rendement a diminué à trois virgule vingt points au relevé du douze novembre. Ce repère précède donc la séance de vendredi.",
-    "outro": "Les sources et les dates exactes des relevés sont dans le briefing écrit. Bonne fin de semaine."
+    "watch": "Dans les graphiques, le treize novembre, le taux réel américain à dix ans est monté à deux virgule quatre-vingt-onze pour cent. L’écart entre le dix ans et le deux ans est passé à vingt-sept centièmes de point, alors que le dix ans montait aussi. Le dernier relevé de volatilité implicite du S&P cinq cents, daté du douze novembre, est de dix-huit virgule soixante-dix points. Il nous renseigne sur l’amplitude attendue des mouvements, sans dire de quel côté ils iront.",
+    "outro": "Les sources et les dates des graphiques sont dans le briefing écrit. Bonne fin de semaine."
   }
 }
