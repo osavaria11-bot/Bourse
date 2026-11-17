@@ -3,80 +3,80 @@
   "kind": "news_digest",
   "language": "fr",
   "timezone": "America/Toronto",
-  "edition_date": "2026-11-16",
-  "generated_at": "2026-11-16T10:18:34.002874+00:00",
-  "editorial_note": "Préparé à 05 h 18, heure de Montréal. L’IPC canadien d’octobre reste attendu à 8 h 30. Les relevés de marché du matin ne sont pas des clôtures.",
+  "edition_date": "2026-11-17",
+  "generated_at": "2026-11-17T10:01:27.568927+00:00",
+  "editorial_note": "Édition du mardi 17 novembre, préparée avant l’ouverture nord-américaine. Les résultats de Nvidia restent à venir. Les références à la clôture concernent lundi; les cotations obligataires et de change citées dans le relevé Reuters canadien sont des observations en séance.",
   "stories": [
     {
-      "topic": "Inflation Canada",
-      "title": "L’IPC canadien d’octobre teste la hausse anticipée des taux",
-      "summary": "Statistique Canada publiera ce lundi à 8 h 30 l’indice des prix à la consommation d’octobre. En septembre, l’inflation globale était de 3,1 % sur un an, après 3,0 % en août. Hors essence, elle avait au contraire ralenti de 2,4 % à 2,2 %. Au relevé du 13 novembre, les swaps sur le taux des opérations de pension à un jour (CORRA), selon BlueGamma, donnaient 63 % à une hausse de la Banque du Canada le 9 décembre et 37 % au statu quo. Le résultat d’octobre n’est pas encore connu.",
-      "impact": "Ma lecture : une surprise haussière dans plusieurs catégories, notamment dans les services, rendrait plus plausible une hausse des taux. Le deux ans canadien et le huard pourraient monter, ce qui renchérirait le refinancement à court terme et pèserait sur les secteurs sensibles aux taux. Si l’inflation ralentit largement, l’effet pourrait s’inverser. Mais si le recul se limite à l’essence ou à un effet de comparaison d’une année à l’autre, je ne réviserais pas le scénario de taux sur le seul chiffre global. Une faiblesse qui traduit une demande moins forte peut aussi réduire les perspectives de bénéfices malgré la détente obligataire.",
-      "source_label": "Statistique Canada; BlueGamma (swaps CORRA, 13 novembre)",
-      "source_url": "https://www.statcan.gc.ca/en/subjects-start/prices_and_price_indexes/consumer_price_indexes",
+      "topic": "Semi-conducteurs",
+      "title": "Washington cible l’accès aux puces à distance, Nvidia publie ce soir",
+      "summary": "Washington a annoncé lundi que l’expédition de certaines puces avancées vers cinq pays, dont la Malaisie et Singapour, nécessiterait une licence. La règle vise aussi les centres de données étrangers qui fournissent une capacité de calcul importante à des entreprises établies en Chine; Reuters précise que les exigences de licence décrites ne visent pas les entreprises américaines qui exploitent leurs propres centres dans ces pays. Nvidia a clôturé lundi en baisse de 4,1 % au Nasdaq, et le Nasdaq Composite a reculé de 2,5 %. Cette clôture précède la publication des résultats, prévue par Nvidia ce mardi vers 16 h 20, heure de Montréal. Colette Kress, la directrice financière, assure l’intérim à la direction après le départ de Jensen Huang.",
+      "impact": "Ma lecture : le trimestre clos mesure les livraisons passées. C’est la prévision suivante, avec le calendrier des livraisons, la marge et le financement des clients, qui dira si la demande hors Chine peut absorber la capacité qui ne trouve plus les mêmes débouchés. Si les licences arrivent rapidement ou si les grands clients américains absorbent les volumes, le choc sur les fabricants peut se limiter à un déplacement des ventes. Si des centres tiers reportent leurs engagements, la pression peut s’étendre aux fournisseurs de réseaux et d’électricité, même avec un trimestre supérieur aux attentes.",
+      "source_label": "Reuters, via Euronext",
+      "source_url": "https://live.euronext.com/en/financial-news/us-curb-chinas-access-ai-chips-trump-heads-asia-0",
       "published_date": "2026-11-16"
     },
     {
-      "topic": "Puces et résultats",
-      "title": "Le premier rapport de Nvidia sous la direction intérimaire est attendu mardi",
-      "summary": "Nvidia a confirmé que ses résultats du troisième trimestre fiscal 2027 seront publiés mardi 17 novembre après la clôture, vers 16 h 20 à Montréal. Reuters rapporte que les analystes attendent environ 109 G$ US de revenus. Ce sont des attentes, pas des résultats. La direction par intérim de Colette Kress présentera ses premières perspectives depuis le départ de Jensen Huang. En attendant, Reuters signalait lundi un repli des actions mondiales; ce relevé ne constitue pas une réaction aux résultats de Nvidia.",
-      "impact": "Ma lecture : le marché aura besoin de savoir si le rythme de livraison et les commandes des grands clients justifient leurs dépenses de calcul, compte tenu du coût élevé du capital. Un dépassement des ventes assorti d’une prévision prudente sur les livraisons ou d’une pression sur les marges pourrait ne pas suffire à soutenir le titre. À l’inverse, des perspectives solides accompagnées de livraisons et de marges confirmées rendraient moins plausible le scénario d’un report généralisé des investissements. Il faut distinguer une contrainte d’offre temporaire d’un recul de la demande finale : les deux peuvent réduire les ventes du trimestre, mais leurs implications à moyen terme diffèrent.",
-      "source_label": "Reuters, repris par Global Banking & Finance Review; calendrier investisseurs de Nvidia",
-      "source_url": "https://www.globalbankingandfinance.com/asian-shares-fall-nvidia-earnings-anthropic-ipo-test-tech/",
+      "topic": "Inflation canadienne",
+      "title": "Au Canada, l’inflation reste à 3,1 %, mais le huard et les rendements cèdent",
+      "summary": "L’indice des prix à la consommation a progressé de 3,1 % sur un an en octobre, comme en septembre, sous le 3,2 % attendu dans le sondage Reuters. Sur un mois, la hausse de 0,2 % était aussi sous le 0,3 % attendu. Chez Statistique Canada, l’inflation hors énergie a glissé de 2,1 % à 2,0 %. L’essence a coûté 2,5 % de moins qu’en septembre, même si sa hausse annuelle s’est accentuée à 30,9 %, en partie parce qu’un recul d’octobre 2025 sort de la comparaison. Dans le relevé Reuters de lundi après-midi, le dollar américain valait 1,4305 $ CA et le taux canadien à dix ans reculait de 5,1 points de base à 3,805 %.",
+      "impact": "Ma lecture : les chiffres sous les attentes réduisent l’urgence de resserrer au Canada. La détente des rendements peut aider les emprunteurs qui refinancent à taux fixe, tandis qu’un huard plus faible renchérit les achats en dollars américains. Les swaps indexés sur le taux CORRA de BlueGamma, datés du 16 novembre, indiquaient encore 53 % pour une hausse le 9 décembre et 47 % pour un statu quo. La décision reste ouverte : une accélération des prix hors énergie dans les prochains relevés irait contre cette lecture.",
+      "source_label": "Reuters, via Mint",
+      "source_url": "https://www.livemint.com/market/canadian-dollar-hits-19-month-low-on-tame-inflation-report-11794855720637.html",
       "published_date": "2026-11-16"
     },
     {
-      "topic": "Énergie",
-      "title": "Le Brent baisse en début de séance, avec une amélioration des flux à Ormuz",
-      "summary": "À 4 h 19, heure de Montréal, le Brent reculait de 0,7 % à 95,15 $ US le baril, selon Reuters. Il s’agit d’un cours en séance. Des signes de reprise des exportations via le détroit d’Ormuz ont renforcé les attentes d’une offre plus abondante, alors que de nouveaux incidents touchant des pétroliers rappellent que le risque de livraison demeure. La reprise rapportée des flux ne garantit pas leur normalisation durable.",
-      "impact": "Ma lecture : la baisse devient plus convaincante si les volumes expédiés se maintiennent et se traduisent par des stocks disponibles chez les acheteurs. Un brut durablement moins cher réduirait la pression sur les coûts pour les transporteurs et les consommateurs, mais pourrait réduire les flux de trésorerie de certains producteurs canadiens. Le huard peut perdre une partie de son soutien lié au pétrole même si les taux canadiens montent après l’IPC. Une nouvelle réduction des expéditions ou des coûts d’assurance durablement plus élevés remettrait en cause ce scénario.",
-      "source_label": "Reuters",
-      "source_url": "https://www.reuters.com/business/energy/oil-prices-fall-expectations-coming-supply-surplus-2026-11-16/",
+      "topic": "Énergie canadienne",
+      "title": "Canadian Natural mise 2,53 G$ sur les actifs d’Advantage en Alberta",
+      "summary": "Canadian Natural Resources a annoncé lundi une entente pour acquérir Advantage Energy à 13,55 $ CA par action, en espèces. La valeur de la transaction atteint environ 2,53 G$ CA, dette nette et débentures convertibles comprises. Les actifs de Montney et de Charlie Lake produisent environ 79 000 barils équivalent pétrole par jour et jouxtent les activités du groupe près de Grande Prairie. Canadian Natural prévoit de financer l’achat avec ses liquidités et ses lignes de crédit existantes. La direction vise une clôture au premier trimestre de 2027, sous réserve des conditions usuelles, et prévoit de maintenir sa politique annoncée de rachats, selon les conditions de marché.",
+      "impact": "Ma lecture : des actifs voisins peuvent partager des infrastructures et réduire le coût de développement, ce qui rend l’achat plus intéressant qu’un simple ajout de volumes. Le test sera le flux de trésorerie supplémentaire après dépenses et intérêts, surtout si les prix du gaz et des liquides faiblissent. Un recours durable au crédit ou des économies d’exploitation inférieures aux attentes réduiraient la marge de manœuvre pour les rachats, même si la politique annoncée reste en place.",
+      "source_label": "Canadian Natural Resources, dépôt SEC",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1017413/000101741326000054/a11162026pradvantageacq.htm",
       "published_date": "2026-11-16"
     }
   ],
   "fred_watch": [
     {
       "series_id": "DGS10",
-      "title": "Le taux long américain reste un coût de référence élevé",
-      "explanation": "Le 13 novembre, le dix ans nominal américain est de 5,15 %, contre 5,10 % au relevé précédent. C’est le taux souverain de référence, avant la prime de crédit propre à une entreprise.",
-      "observation_date": "2026-11-13",
+      "title": "Le dix ans américain fléchit, mais reste au-dessus de 5 %",
+      "observation_date": "2026-11-16",
+      "explanation": "Le 16 novembre, le rendement nominal du Trésor américain à dix ans a reculé de 5,15 % à 5,12 %. La baisse soulage un peu l’actualisation des bénéfices futurs, mais le niveau absolu continue de peser sur les refinancements. Ce taux de marché n’est pas le taux directeur.",
       "source_url": "https://fred.stlouisfed.org/series/DGS10"
     },
     {
-      "series_id": "ICSA",
-      "title": "Plus de demandes initiales, sans conclusion sur la tendance",
-      "explanation": "Pour la semaine terminée le 7 novembre, les demandes initiales d’assurance-emploi américaines passent de 191 000 à 200 000, en données hebdomadaires désaisonnalisées. Attendre plusieurs relevés avant de conclure à une inflexion de l’emploi.",
-      "observation_date": "2026-11-07",
-      "source_url": "https://fred.stlouisfed.org/series/ICSA"
+      "series_id": "T10Y2Y",
+      "title": "La courbe se redresse légèrement",
+      "observation_date": "2026-11-16",
+      "explanation": "Le 16 novembre, l’écart entre les rendements américains à dix ans et à deux ans atteignait 0,29 point de pourcentage, contre 0,27 le 13. Comme le dix ans a baissé, le redressement reflète un recul plus marqué du deux ans; il ne signale pas une hausse du coût à dix ans.",
+      "source_url": "https://fred.stlouisfed.org/series/T10Y2Y"
     },
     {
       "series_id": "BAMLH0A0HYM2",
-      "title": "La prime de crédit ne monte pas au dernier relevé",
-      "explanation": "Le 12 novembre, l’écart de rendement ajusté des obligations américaines à haut rendement est de 3,20 points de pourcentage, contre 3,30. Une prime plus faible peut amortir une hausse du taux souverain, sans effacer le risque de refinancement.",
-      "observation_date": "2026-11-12",
+      "title": "Le crédit risqué avait commencé à s’écarter vendredi",
+      "observation_date": "2026-11-13",
+      "explanation": "Le 13 novembre, l’écart ajusté des options des obligations américaines à haut rendement s’établissait à 3,23 points de pourcentage, contre 3,20 la veille. C’est une légère hausse de la prime de crédit. La série disponible ne couvre pas la baisse boursière du lundi; elle ne permet donc pas de conclure à une contagion.",
       "source_url": "https://fred.stlouisfed.org/series/BAMLH0A0HYM2"
     }
   ],
   "audio_script": {
-    "edition_date": "2026-11-16",
-    "source_generated_at": "2026-11-16T10:18:34.002874+00:00",
-    "intro": "Bonjour. Voici le briefing du lundi seize novembre, préparé à 05 h 18, heure de Montréal. Les prix à la consommation canadiens ne sont pas encore connus. On regarde aussi les attentes pour Nvidia et le pétrole en début de séance.",
+    "edition_date": "2026-11-17",
+    "source_generated_at": "2026-11-17T10:01:27.568927+00:00",
+    "intro": "Bonjour, voici le briefing du mardi dix-sept novembre, préparé à 5 h 01, heure de Montréal. On regarde ce que les nouvelles restrictions sur les puces changent avant les résultats de Nvidia. Ensuite, on revient sur l’inflation canadienne et sur une acquisition en Alberta.",
     "stories": [
       {
-        "title": "L’IPC canadien d’octobre teste la hausse anticipée des taux",
-        "text": "On commence au Canada, où le chiffre d’octobre sort à huit heures trente. En septembre, l’inflation totale avait monté un peu, alors que la mesure sans essence avait ralenti. C’est la première distinction à garder en tête. Les swaps suivis par BlueGamma vendredi donnaient environ deux chances sur trois à une hausse de taux en décembre. C’est ce que le marché anticipait avant le nouveau chiffre. Ma lecture : une hausse des prix répartie dans plusieurs services pourrait renforcer cette anticipation, faire monter le deux ans et aider le dollar canadien. Si les prix ralentissent dans plusieurs catégories, ce serait l’inverse. Un mouvement qui vient surtout de l’essence a moins de chances de changer le diagnostic. Et si la demande ralentit vraiment, des taux plus bas peuvent aider les obligations pendant que les perspectives de ventes se détériorent."
+        "title": "Washington cible l’accès aux puces à distance, Nvidia publie ce soir",
+        "text": "On commence par les puces. Washington veut désormais resserrer l’accès au calcul, même quand la puce ne traverse pas la frontière chinoise. Pensez à une entreprise qui loue des serveurs à l’étranger pour entraîner son modèle. C’est ce genre d’accès que les nouvelles exigences cherchent à encadrer. Il y a une exception de licence pour les entreprises américaines qui exploitent leurs centres dans les pays visés. À la clôture de lundi, Nvidia avait perdu un peu plus de quatre pour cent au Nasdaq. Ses résultats, eux, ne sont pas encore sortis. La publication est prévue vers quatre heures vingt cet après-midi, et la directrice financière Colette Kress assure maintenant l’intérim. Ma lecture : le chiffre de ventes du trimestre dira ce que Nvidia avait déjà livré. Je vais surtout écouter ce que la direction prévoit livrer ensuite, à quelle marge, et si les clients ont le financement pour suivre. Si d’autres clients prennent les volumes, on parlera surtout d’un déplacement des débouchés. Si les commandes sont plutôt reportées, l’effet peut atteindre les fournisseurs des centres de données."
       },
       {
-        "title": "Le premier rapport de Nvidia sous la direction intérimaire est attendu mardi",
-        "text": "Le deuxième rendez-vous est demain après la fermeture : les résultats de Nvidia. Reuters rapporte des attentes de revenus d’environ cent neuf milliards de dollars américains. On aura aussi les premières perspectives présentées par Colette Kress depuis le départ de Jensen Huang. Ma lecture : le niveau des ventes compte, mais les investisseurs auront surtout besoin de savoir ce qui peut être livré ensuite, avec quelle marge et avec quelles commandes. Un retard lié à une capacité de production insuffisante ne raconte pas la même histoire qu’un client qui réduit ses investissements. Si les livraisons et la demande tiennent, le scénario d’un report généralisé perd en crédibilité. Si la prévision déçoit et que les clients reculent, un bon trimestre à lui seul donnera peu d’information sur la suite."
+        "title": "Au Canada, l’inflation reste à 3,1 %, mais le huard et les rendements cèdent",
+        "text": "Au Canada, le chiffre qui ressort est le même qu’en septembre : trois virgule un pour cent d’inflation en un an. Pourtant, le marché s’attendait à un peu plus. L’image change aussi quand on retire l’énergie : la hausse des prix revient à deux pour cent sur un an. Regardez l’essence. Elle coûtait moins cher qu’en septembre, mais l’écart avec l’an dernier a grandi. Une baisse d’octobre deux mille vingt-cinq est sortie du calcul annuel. Les deux observations peuvent donc être vraies en même temps. Lundi après-midi, le huard était plus faible et le rendement canadien à dix ans reculait. Ma lecture : le chiffre donne du temps à la Banque du Canada, mais le marché des swaps était encore partagé pour décembre. Des rendements moins élevés peuvent alléger le coût d’un refinancement. En même temps, un dollar canadien plus faible coûte plus cher aux entreprises qui paient leurs fournisseurs en dollars américains. L’équilibre changerait si les prix recommençaient à accélérer au-delà de l’énergie."
       },
       {
-        "title": "Le Brent baisse en début de séance, avec une amélioration des flux à Ormuz",
-        "text": "Enfin, le Brent était autour de quatre-vingt-quinze dollars américains et quinze cents à quatre heures dix-neuf, à Montréal. Il reculait pendant la séance. Reuters décrit une reprise de certains flux par Ormuz, avec de nouveaux incidents qui maintiennent le risque de livraison. Ma lecture : pour qualifier la baisse de durable, je regarderais si les barils arrivent réellement chez les acheteurs. Si oui, des coûts d’énergie plus bas pourraient aider les transporteurs et les ménages, tout en pesant sur certains producteurs canadiens. Le dollar canadien peut alors recevoir deux signaux opposés : un pétrole plus faible et des taux canadiens potentiellement plus élevés. Si les expéditions repartent à la baisse, la lecture sur le pétrole change."
+        "title": "Canadian Natural mise 2,53 G$ sur les actifs d’Advantage en Alberta",
+        "text": "On termine en Alberta. Canadian Natural a signé une entente pour acheter Advantage Energy. On parle d’environ deux milliards et demi de dollars canadiens en comptant la dette. Une partie de l’intérêt tient à la carte : les actifs sont voisins de ceux que Canadian Natural exploite déjà. Il peut donc être plus facile de partager certaines installations et de rentabiliser les prochains forages. La société prévoit utiliser ses liquidités et ses lignes de crédit. Elle dit aussi vouloir maintenir sa politique de rachats, selon le marché. Ma lecture : ce sont les dollars qui restent après les dépenses et les intérêts qui vont départager une bonne acquisition d’une simple hausse des volumes. Si les prix du gaz baissent ou que les économies tardent, la marge de manœuvre pour les rachats peut se resserrer. L’achat reste à conclure; la cible est le premier trimestre de l’an prochain."
       }
     ],
-    "watch": "Trois repères dans les graphiques. Au treize novembre, le taux américain à dix ans est de cinq virgule quinze pour cent. C’est la référence souveraine avant la prime que doit payer une entreprise. Pour la semaine terminée le sept novembre, les demandes initiales d’assurance-emploi ont monté à deux cent mille, après correction des variations saisonnières. Une semaine ne suffit pas pour conclure sur la tendance. Enfin, le douze novembre, la prime du haut rendement américain a diminué à trois virgule vingt points. Cela amortit une partie d’une hausse du taux de référence, sans éliminer le risque au moment de se refinancer.",
-    "outro": "Tu trouveras les sources et la date de chaque relevé dans le briefing écrit. Bonne journée."
+    "watch": "Trois repères pour finir. Le dix ans américain a légèrement reculé lundi, mais il reste au-dessus de cinq pour cent. L’écart entre le dix ans et le deux ans a un peu augmenté, parce que le deux ans a baissé davantage. Et du côté des obligations à haut rendement, la prime de crédit s’était légèrement élargie vendredi. C’est bien la date du vendredi treize : cette observation ne nous dit encore rien sur la réaction du crédit à la séance de lundi.",
+    "outro": "Voilà pour ce matin. Les graphiques et les sources sont dans la version écrite. Bonne journée."
   }
 }
