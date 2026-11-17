@@ -2,11 +2,11 @@
   "schema_version": 1,
   "kind": "polymarket_events",
   "provider": "polymarket",
-  "generated_at": "2026-11-16T21:15:59.278944Z",
+  "generated_at": "2026-11-17T01:53:12.856193Z",
   "groups": {
     "finance": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-16T21:15:59.278944Z",
+      "fetched_at": "2026-11-17T01:53:12.856193Z",
       "ranking": "volume",
       "events": [
         {
@@ -14,8 +14,8 @@
           "slug": "how-many-fed-rate-cuts-in-2026",
           "title": "How many Fed rate cuts in 2026?",
           "url": "https://polymarket.com/event/how-many-fed-rate-cuts-in-2026",
-          "volume": 55973760.169937,
-          "volume_24h": 48798.997866,
+          "volume": 55994883.837937,
+          "volume_24h": 69510.55836000001,
           "ends_at": "2027-01-01T04:59:00Z",
           "outcomes": [
             {
@@ -37,8 +37,8 @@
           "slug": "fed-decision-in-december-20260729232808632",
           "title": "Fed Decision in December?",
           "url": "https://polymarket.com/event/fed-decision-in-december-20260729232808632",
-          "volume": 35658835.36567,
-          "volume_24h": 1111241.8276220001,
+          "volume": 35710228.480588995,
+          "volume_24h": 1097857.382478,
           "ends_at": "2026-12-10T04:59:00Z",
           "outcomes": [
             {
@@ -82,39 +82,16 @@
     },
     "popular": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-16T21:15:59.278944Z",
+      "fetched_at": "2026-11-17T01:53:12.856193Z",
       "ranking": "volume24hr",
       "events": [
-        {
-          "id": "31875",
-          "slug": "republican-presidential-nominee-2028",
-          "title": "Republican Presidential Nominee 2028",
-          "url": "https://polymarket.com/event/republican-presidential-nominee-2028",
-          "volume": 739215933.15215,
-          "volume_24h": 1454767.779391,
-          "ends_at": "2028-11-08T04:59:00Z",
-          "outcomes": [
-            {
-              "label": "J.D. Vance",
-              "probability": 0.3715,
-              "market_id": "561974",
-              "ends_at": "2028-11-08T04:59:00Z"
-            },
-            {
-              "label": "Marco Rubio",
-              "probability": 0.1655,
-              "market_id": "561975",
-              "ends_at": "2028-11-08T04:59:00Z"
-            }
-          ]
-        },
         {
           "id": "30829",
           "slug": "democratic-presidential-nominee-2028",
           "title": "Democratic Presidential Nominee 2028",
           "url": "https://polymarket.com/event/democratic-presidential-nominee-2028",
-          "volume": 1322607686.209524,
-          "volume_24h": 860943.4799329999,
+          "volume": 1323000388.971974,
+          "volume_24h": 961128.9490220001,
           "ends_at": "2028-11-08T04:59:00Z",
           "outcomes": [
             {
@@ -125,7 +102,7 @@
             },
             {
               "label": "Alexandria Ocasio-Cortez",
-              "probability": 0.1465,
+              "probability": 0.1455,
               "market_id": "559653",
               "ends_at": "2028-11-08T04:59:00Z"
             }
@@ -136,13 +113,13 @@
           "slug": "presidential-election-winner-2028",
           "title": "Presidential Election Winner 2028",
           "url": "https://polymarket.com/event/presidential-election-winner-2028",
-          "volume": 743546562.9562631,
-          "volume_24h": 837870.626184,
+          "volume": 743761888.538506,
+          "volume_24h": 651169.338766,
           "ends_at": "2028-11-08T04:59:00Z",
           "outcomes": [
             {
               "label": "Jon Ossoff",
-              "probability": 0.184,
+              "probability": 0.1815,
               "market_id": "561261",
               "ends_at": "2028-11-08T04:59:00Z"
             },
@@ -159,8 +136,8 @@
           "slug": "taipei-mayor-election-winner-20260813125857100",
           "title": "Taipei Mayor Election Winner",
           "url": "https://polymarket.com/event/taipei-mayor-election-winner-20260813125857100",
-          "volume": 5981550.907117002,
-          "volume_24h": 585584.096582,
+          "volume": 6000498.514251001,
+          "volume_24h": 490463.134791,
           "ends_at": "2026-11-29T04:59:00Z",
           "outcomes": [
             {
@@ -171,9 +148,32 @@
             },
             {
               "label": "Puma Shen",
-              "probability": 0.3935,
+              "probability": 0.3985,
               "market_id": "3580933",
               "ends_at": "2026-11-29T04:59:00Z"
+            }
+          ]
+        },
+        {
+          "id": "79987",
+          "slug": "next-french-presidential-election",
+          "title": "Next French Presidential Election",
+          "url": "https://polymarket.com/event/next-french-presidential-election",
+          "volume": 176301776.003184,
+          "volume_24h": 383278.27733899996,
+          "ends_at": "2027-04-19T03:59:00Z",
+          "outcomes": [
+            {
+              "label": "Marine Le Pen",
+              "probability": 0.4645,
+              "market_id": "679018",
+              "ends_at": "2027-04-19T03:59:00Z"
+            },
+            {
+              "label": "David Lisnard",
+              "probability": 0.16,
+              "market_id": "679022",
+              "ends_at": "2027-04-19T03:59:00Z"
             }
           ]
         },
@@ -182,20 +182,20 @@
           "slug": "elon-musk-of-tweets-november-10-november-17-2026",
           "title": "Elon Musk # tweets November 10 - November 17, 2026?",
           "url": "https://polymarket.com/event/elon-musk-of-tweets-november-10-november-17-2026",
-          "volume": 2064604.744527,
-          "volume_24h": 346585.704998,
+          "volume": 2132872.71096,
+          "volume_24h": 379388.96377,
           "ends_at": "2026-11-17T17:00:00Z",
           "outcomes": [
             {
-              "label": "260-279",
-              "probability": 0.5415,
-              "market_id": "6771183",
+              "label": "280-299",
+              "probability": 0.4585,
+              "market_id": "6771186",
               "ends_at": "2026-11-17T17:00:00Z"
             },
             {
-              "label": "280-299",
-              "probability": 0.277,
-              "market_id": "6771186",
+              "label": "260-279",
+              "probability": 0.3275,
+              "market_id": "6771183",
               "ends_at": "2026-11-17T17:00:00Z"
             }
           ]
@@ -204,7 +204,7 @@
     },
     "trending": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-16T21:15:59.278944Z",
+      "fetched_at": "2026-11-17T01:53:12.856193Z",
       "ranking": "volume24hr",
       "events": [
         {
@@ -212,8 +212,8 @@
           "slug": "jensen-huang-rejoins-nvidia-byptptpt",
           "title": "Jensen Huang rejoins NVIDIA by...?",
           "url": "https://polymarket.com/event/jensen-huang-rejoins-nvidia-byptptpt",
-          "volume": 2852622.600575,
-          "volume_24h": 1605034.58331,
+          "volume": 3031936.081912,
+          "volume_24h": 1583620.203856,
           "ends_at": "2028-01-01T04:59:00Z",
           "outcomes": [
             {
@@ -224,7 +224,7 @@
             },
             {
               "label": "December 31, 2026",
-              "probability": 0.1205,
+              "probability": 0.1075,
               "market_id": "6998285",
               "ends_at": "2027-01-01T04:59:00Z"
             }
@@ -235,13 +235,13 @@
           "slug": "next-ceo-of-nvidia",
           "title": "Next CEO of NVIDIA?",
           "url": "https://polymarket.com/event/next-ceo-of-nvidia",
-          "volume": 3949301.044412,
-          "volume_24h": 1322017.03131,
+          "volume": 4026448.367711,
+          "volume_24h": 1056700.5577349998,
           "ends_at": "2029-01-01T04:59:00Z",
           "outcomes": [
             {
               "label": "Rene Haas",
-              "probability": 0.3105,
+              "probability": 0.262,
               "market_id": "6919851",
               "ends_at": "2029-01-01T04:59:00Z"
             },
