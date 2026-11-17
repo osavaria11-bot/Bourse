@@ -49,6 +49,24 @@ def fetch_security(definition: dict, now: datetime) -> dict:
     }]
     return point
 
+def collect_prices(config: list[dict], previous: dict | None, now: datetime) -> dict:
+    prior = {point["id"]: point for point in (previous or {}).get("series", [])}
+
+    def fetch(definition, timestamp):
+        point = fetch_security(definition, timestamp)
+        cached = prior.get(definition["id"])
+        if (markets.macro.usable_previous(cached, definition, timestamp.date())
+                and point["date"] < cached["date"]):
+            # A successful HTTP response can contain a null latest bar.
+            # Treat a date regression as a source failure, so the existing
+            # fallback keeps the actual close, source and fetch time.
+            raise markets.macro.SourceError(
+                f"{definition['id']} : clôture reçue du {point['date']}, "
+                f"antérieure à celle conservée du {cached['date']}")
+        return point
+
+    return markets.macro.collect_sources(config, previous, now, fetcher=fetch)
+
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output-dir", type=Path, default=ROOT / "data")
@@ -56,8 +74,7 @@ def main(argv=None) -> int:
     output = args.output_dir / "security-prices.json"
     try:
         config = definitions()
-        data = markets.macro.collect_sources(config, markets.macro.read_json(output),
-                    datetime.now(timezone.utc), fetcher=fetch_security)
+        data = collect_prices(config, markets.macro.read_json(output), datetime.now(timezone.utc))
         data.update(kind="security_prices", data_provider="Yahoo Finance — clôtures et USD/CAD")
         urls = {p["id"]: p["source_url"] for p in config}
         for point in data["series"]:

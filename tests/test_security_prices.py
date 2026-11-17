@@ -47,5 +47,24 @@ class SecurityTests(unittest.TestCase):
         self.assertEqual(update['series'][0]['fetch_status'], 'cached')
         self.assertEqual(update['series'][0]['history'], point['history'])
 
+    def test_successful_fetch_with_null_last_close_does_not_erase_published_close(self):
+        definition = next(p for p in securities.definitions() if p['id'] == 'AAPL')
+        old_time = datetime(2026, 11, 16, 22, tzinfo=timezone.utc)
+        now = datetime(2026, 11, 17, 2, tzinfo=timezone.utc)
+        history = [['2026-11-12', 354.88], ['2026-11-13', 356.27], ['2026-11-16', 352.78]]
+        old = macro.summarize(definition, history, old_time)
+        delayed = macro.summarize(definition, history[:-1] + [['2026-11-16', None]], now)
+        with patch.object(securities, 'fetch_security', return_value=delayed):
+            result = securities.collect_prices([definition], {'series': [old]}, now)
+        point = result['series'][0]
+        self.assertEqual((point['date'], point['value']), ('2026-11-16', 352.78))
+        self.assertEqual(point['history'], history)
+        self.assertEqual(point['last_successful_fetch'], old_time.isoformat())
+        self.assertEqual(result['coverage'], {'total': 1, 'fresh': 0, 'cached': 1, 'unavailable': 0})
+        with patch.object(securities, 'fetch_security', return_value={**old, 'last_successful_fetch': now.isoformat()}):
+            result = securities.collect_prices([definition], result, now)
+        self.assertEqual(result['coverage']['fresh'], 1)
+        self.assertFalse(result['errors'])
+
 if __name__ == '__main__':
     unittest.main()
