@@ -4079,10 +4079,18 @@
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=NVDA&size=100"
           },
           "revenue": {
-            "actual": null,
+            "actual": 115844000000,
             "estimate": null,
-            "currency": null,
-            "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=NVDA&size=100"
+            "currency": "USD",
+            "source_url": "https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Announces-Financial-Results-for-Third-Quarter-Fiscal-2027/default.aspx",
+            "verified_correction": {
+              "provider_actual": null,
+              "provider_source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=NVDA&size=100",
+              "provider_currency": null,
+              "source_url": "https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Announces-Financial-Results-for-Third-Quarter-Fiscal-2027/default.aspx",
+              "verified_at": "2026-11-18T10:11:06.826561+00:00",
+              "reason": "T3 fiscal 2027 clos le 25 octobre : 115 844 M$ US dans le tableau consolidé. Le repli Yahoo après refus de MarketBeat ne fournit pas le chiffre d’affaires. Conserver le consensus tel que collecté."
+            }
           },
           "messages": [
             {
@@ -6172,5 +6180,6 @@
       "source_warnings": []
     }
   },
-  "errors": {}
+  "errors": {},
+  "analysis_reviewed_at": "2026-11-18T10:11:06.826561+00:00"
 }

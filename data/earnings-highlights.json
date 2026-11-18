@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "reviewed_earnings_highlights",
-  "reviewed_at": "2026-11-18T10:04:23.020803+00:00",
+  "reviewed_at": "2026-11-18T10:11:06.826561+00:00",
   "reports": {
     "NFLX:2026-10-20": {
       "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-20-netflix-inc-stock/",
@@ -915,7 +915,14 @@
         "Les centres de données ont atteint 107,6 G$ US au T3, en hausse de 110 % sur un an. Colette Kress confirme les premières livraisons de Vera Rubin. La marge brute ajustée visée baisse toutefois à 71–72 %, après 74,9 % au T3.",
         "Le groupe a rendu 28,1 G$ US aux actionnaires au T3 par rachats et dividendes. Il restait 227,3 G$ US d’autorisation de rachat après la hausse annoncée en septembre, une capacité de rachat qui ne constitue pas un engagement de dépenser ce montant.",
         "Le titre a clôturé le 17 novembre au Nasdaq à 155,46 $ US (−0,44 %) puis gagnait environ 2 % en après-séance dans le relevé Reuters de 18 h 34. La surprise sur les ventes n’élimine pas le risque d’une pression durable sur la marge pendant la montée de Rubin."
-      ]
+      ],
+      "verified_actuals": {
+        "currency": "USD",
+        "revenue": 115844000000,
+        "source_url": "https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Announces-Financial-Results-for-Third-Quarter-Fiscal-2027/default.aspx",
+        "verified_at": "2026-11-18T10:11:06.826561+00:00",
+        "reason": "T3 fiscal 2027 clos le 25 octobre : 115 844 M$ US dans le tableau consolidé. Le repli Yahoo après refus de MarketBeat ne fournit pas le chiffre d’affaires. Conserver le consensus tel que collecté."
+      }
     }
   }
 }
