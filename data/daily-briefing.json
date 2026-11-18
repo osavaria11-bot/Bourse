@@ -3,80 +3,93 @@
   "kind": "news_digest",
   "language": "fr",
   "timezone": "America/Toronto",
-  "edition_date": "2026-11-17",
-  "generated_at": "2026-11-17T10:01:27.568927+00:00",
-  "editorial_note": "Édition du mardi 17 novembre, préparée avant l’ouverture nord-américaine. Les résultats de Nvidia restent à venir. Les références à la clôture concernent lundi; les cotations obligataires et de change citées dans le relevé Reuters canadien sont des observations en séance.",
+  "edition_date": "2026-11-18",
+  "generated_at": "2026-11-18T10:04:22.923855+00:00",
+  "editorial_note": "Édition du mercredi 18 novembre, avant l’ouverture nord-américaine. Les clôtures citées datent du 17. Le compte rendu de la Fed et le prix final de l’introduction d’Anthropic sont encore attendus.",
   "stories": [
     {
       "topic": "Semi-conducteurs",
-      "title": "Washington cible l’accès aux puces à distance, Nvidia publie ce soir",
-      "summary": "Washington a annoncé lundi que l’expédition de certaines puces avancées vers cinq pays, dont la Malaisie et Singapour, nécessiterait une licence. La règle vise aussi les centres de données étrangers qui fournissent une capacité de calcul importante à des entreprises établies en Chine; Reuters précise que les exigences de licence décrites ne visent pas les entreprises américaines qui exploitent leurs propres centres dans ces pays. Nvidia a clôturé lundi en baisse de 4,1 % au Nasdaq, et le Nasdaq Composite a reculé de 2,5 %. Cette clôture précède la publication des résultats, prévue par Nvidia ce mardi vers 16 h 20, heure de Montréal. Colette Kress, la directrice financière, assure l’intérim à la direction après le départ de Jensen Huang.",
-      "impact": "Ma lecture : le trimestre clos mesure les livraisons passées. C’est la prévision suivante, avec le calendrier des livraisons, la marge et le financement des clients, qui dira si la demande hors Chine peut absorber la capacité qui ne trouve plus les mêmes débouchés. Si les licences arrivent rapidement ou si les grands clients américains absorbent les volumes, le choc sur les fabricants peut se limiter à un déplacement des ventes. Si des centres tiers reportent leurs engagements, la pression peut s’étendre aux fournisseurs de réseaux et d’électricité, même avec un trimestre supérieur aux attentes.",
-      "source_label": "Reuters, via Euronext",
-      "source_url": "https://live.euronext.com/en/financial-news/us-curb-chinas-access-ai-chips-trump-heads-asia-0",
-      "published_date": "2026-11-16"
+      "title": "Nvidia dépasse les attentes, mais prévoit une marge plus basse",
+      "summary": "Pour son trimestre clos le 25 octobre, Nvidia a publié mardi 115,8 G$ US de revenus contre 109,0 G$ attendus chez MarketBeat, et un bénéfice dilué ajusté de 2,68 $ US par action contre 2,47 $. Les centres de données ont fourni 107,6 G$ US, en hausse de 110 % sur un an. La PDG par intérim et directrice financière Colette Kress a confirmé les premières livraisons de la plateforme Vera Rubin. La direction vise 130 G$ US de ventes au prochain trimestre, dans une fourchette de ±3 %, contre un consensus LSEG d’un peu plus de 125 G$. La prévision exclut les revenus de puces de calcul pour centres de données en Chine et couvre une semaine de plus. La marge brute ajustée est attendue entre 71 % et 72 %, après 74,9 %. Au Nasdaq, l’action a clos la séance du 17 novembre à 155,46 $ US (−0,44 %); elle gagnait ensuite environ 2 % en après-séance dans le relevé Reuters mis à jour à 18 h 34, heure de Montréal.",
+      "impact": "Ma lecture : l’écart sur les ventes rend moins crédible un arrêt immédiat des commandes, mais la semaine supplémentaire et la marge prévue tempèrent la surprise. Le point à surveiller est le bénéfice généré par chaque dollar de ventes pendant la montée en production de Rubin. Si les volumes progressent et que la marge se rétablit, les fournisseurs de mémoire et de réseaux ont aussi de quoi bénéficier de la demande. Si les clients étalent leurs déploiements ou si la marge reste durablement sous son niveau récent, le maintien de la croissance des revenus ne suffira pas à valider les mêmes multiples.",
+      "source_label": "Nvidia · résultats du T3 fiscal 2027",
+      "source_url": "https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Announces-Financial-Results-for-Third-Quarter-Fiscal-2027/default.aspx",
+      "published_date": "2026-11-17"
     },
     {
-      "topic": "Inflation canadienne",
-      "title": "Au Canada, l’inflation reste à 3,1 %, mais le huard et les rendements cèdent",
-      "summary": "L’indice des prix à la consommation a progressé de 3,1 % sur un an en octobre, comme en septembre, sous le 3,2 % attendu dans le sondage Reuters. Sur un mois, la hausse de 0,2 % était aussi sous le 0,3 % attendu. Chez Statistique Canada, l’inflation hors énergie a glissé de 2,1 % à 2,0 %. L’essence a coûté 2,5 % de moins qu’en septembre, même si sa hausse annuelle s’est accentuée à 30,9 %, en partie parce qu’un recul d’octobre 2025 sort de la comparaison. Dans le relevé Reuters de lundi après-midi, le dollar américain valait 1,4305 $ CA et le taux canadien à dix ans reculait de 5,1 points de base à 3,805 %.",
-      "impact": "Ma lecture : les chiffres sous les attentes réduisent l’urgence de resserrer au Canada. La détente des rendements peut aider les emprunteurs qui refinancent à taux fixe, tandis qu’un huard plus faible renchérit les achats en dollars américains. Les swaps indexés sur le taux CORRA de BlueGamma, datés du 16 novembre, indiquaient encore 53 % pour une hausse le 9 décembre et 47 % pour un statu quo. La décision reste ouverte : une accélération des prix hors énergie dans les prochains relevés irait contre cette lecture.",
-      "source_label": "Reuters, via Mint",
-      "source_url": "https://www.livemint.com/market/canadian-dollar-hits-19-month-low-on-tame-inflation-report-11794855720637.html",
-      "published_date": "2026-11-16"
+      "topic": "Marchés des capitaux",
+      "title": "Anthropic se prépare à fixer le prix de son entrée au Nasdaq",
+      "summary": "La fixation du prix de l’introduction d’Anthropic est attendue mercredi, avant un début de cotation visé jeudi. Le prospectus préliminaire du 10 novembre indiquait une fourchette de 70 à 78 $ US et 825 millions d’actions offertes, dont environ 801 millions émises par l’entreprise. Reuters, citant Bloomberg, rapporte que le prix pourrait atteindre le haut de la fourchette ou le dépasser. Le prospectus prévoit aussi un placement privé parallèle de 26 G$ US auprès de partenaires, dont Nvidia, Microsoft et Google. Le prix final et les capitaux effectivement levés restent à confirmer.",
+      "impact": "Ma lecture : le résultat de Nvidia renseigne sur les achats de matériel; l’opération Anthropic teste combien les investisseurs acceptent de payer pour financer les entreprises qui utilisent ce matériel. Un prix élevé peut faciliter le financement du calcul, mais la répartition entre investisseurs externes et partenaires commerciaux compte. Un prix en haut de fourchette suivi d’échanges faibles, ou des dépenses de calcul qui croissent plus vite que la trésorerie générée, réduirait la portée du signal.",
+      "source_label": "Reuters · marchés mondiaux",
+      "source_url": "https://www.reuters.com/world/china/global-markets-wrapup-1-2026-11-18/",
+      "published_date": "2026-11-18"
     },
     {
-      "topic": "Énergie canadienne",
-      "title": "Canadian Natural mise 2,53 G$ sur les actifs d’Advantage en Alberta",
-      "summary": "Canadian Natural Resources a annoncé lundi une entente pour acquérir Advantage Energy à 13,55 $ CA par action, en espèces. La valeur de la transaction atteint environ 2,53 G$ CA, dette nette et débentures convertibles comprises. Les actifs de Montney et de Charlie Lake produisent environ 79 000 barils équivalent pétrole par jour et jouxtent les activités du groupe près de Grande Prairie. Canadian Natural prévoit de financer l’achat avec ses liquidités et ses lignes de crédit existantes. La direction vise une clôture au premier trimestre de 2027, sous réserve des conditions usuelles, et prévoit de maintenir sa politique annoncée de rachats, selon les conditions de marché.",
-      "impact": "Ma lecture : des actifs voisins peuvent partager des infrastructures et réduire le coût de développement, ce qui rend l’achat plus intéressant qu’un simple ajout de volumes. Le test sera le flux de trésorerie supplémentaire après dépenses et intérêts, surtout si les prix du gaz et des liquides faiblissent. Un recours durable au crédit ou des économies d’exploitation inférieures aux attentes réduiraient la marge de manœuvre pour les rachats, même si la politique annoncée reste en place.",
-      "source_label": "Canadian Natural Resources, dépôt SEC",
-      "source_url": "https://www.sec.gov/Archives/edgar/data/1017413/000101741326000054/a11162026pradvantageacq.htm",
+      "topic": "Consommation américaine",
+      "title": "Home Depot vend plus par achat, avec moins de transactions",
+      "summary": "Home Depot a déclaré mardi un bénéfice dilué ajusté de 3,86 $ US par action et 43,4 G$ US de ventes pour son troisième trimestre fiscal 2026, contre 3,84 $ et 42,8 G$ attendus chez MarketBeat. Les ventes comparables ont augmenté de 2,2 %. En conférence, la direction a indiqué que le panier comparable avait progressé de 3 % tandis que les transactions avaient baissé de 0,5 %. Les achats de plus de 1 000 $ ont augmenté de 4,5 %, surtout dans l’électroménager et l’outillage motorisé. La marge brute est tombée à 32,8 % (−0,6 point), avec des coûts et une composition des ventes moins favorables. Le groupe prévoit maintenant des ventes comparables annuelles en hausse d’environ 1,4 % et un bénéfice ajusté en hausse d’environ 2 %, dans les fourchettes antérieures. Le titre a clôturé mardi au NYSE à 339,01 $ US, en baisse de 2,45 %.",
+      "impact": "Ma lecture : les paniers plus chers soutiennent les ventes, alors que la fréquentation demeure sous pression. La résistance des achats d’électroménager ne suffit pas pour conclure à un retour des rénovations financées à crédit. Si les taux hypothécaires redescendent et que les transactions reprennent, les détaillants et fournisseurs résidentiels pourraient retrouver du volume. Si les transactions continuent de baisser alors que les coûts restent élevés, les marges risquent d’être plus difficiles à défendre.",
+      "source_label": "Home Depot · résultats du T3 fiscal 2026",
+      "source_url": "https://ir.homedepot.com/news-releases/2026/11-17-2026-110221331",
+      "published_date": "2026-11-17"
+    },
+    {
+      "topic": "Taux américains",
+      "title": "Le compte rendu de la Fed arrive avant une décision de décembre déjà très anticipée",
+      "summary": "La Réserve fédérale publie mercredi à 14 h, heure de Montréal, le compte rendu de sa réunion des 27 et 28 octobre. Le comité avait maintenu son taux à 3,75–4,00 % par dix voix contre deux; Lisa Cook et Beth Hammack préféraient une hausse de 25 points de base. Cette réunion précède les rapports d’octobre sur l’emploi et les prix. Les swaps indexés sur le SOFR, selon BlueGamma au 18 novembre, indiquaient 100 % pour une hausse à la décision du 9 décembre, un chiffre arrondi qui traduit le prix du marché. La fourchette affichée par SAVY reste celle du 17 novembre.",
+      "impact": "Ma lecture : un compte rendu qui montre d’autres responsables proches du camp des hausses peut surtout déplacer les attentes sur l’ampleur et la suite du resserrement, avec un risque de hausse des rendements à court terme, de soutien au dollar et de pression sur les multiples. À l’inverse, si la majorité jugeait déjà les conditions de crédit assez restrictives, une partie de cette prime pourrait se défaire. Les données publiées depuis la réunion et les propos récents des décideurs peuvent toutefois peser davantage que le document d’octobre.",
+      "source_label": "PNC Economics · calendrier de la semaine",
+      "source_url": "https://www.pnc.com/content/dam/pnc-com/pdf/aboutpnc/EconomicReports/neoandrounduparchives/PNC_Economics_Research_Weekly_Economic_Roundup_16_November_2026.pdf",
       "published_date": "2026-11-16"
     }
   ],
   "fred_watch": [
     {
       "series_id": "DGS10",
-      "title": "Le dix ans américain fléchit, mais reste au-dessus de 5 %",
-      "observation_date": "2026-11-16",
-      "explanation": "Le 16 novembre, le rendement nominal du Trésor américain à dix ans a reculé de 5,15 % à 5,12 %. La baisse soulage un peu l’actualisation des bénéfices futurs, mais le niveau absolu continue de peser sur les refinancements. Ce taux de marché n’est pas le taux directeur.",
+      "title": "Le dix ans américain reste à 5,10 %",
+      "explanation": "Le 17 novembre, le rendement nominal à dix ans a baissé de 5,12 % à 5,10 %. Le léger recul soutient la valeur des obligations déjà émises, mais le niveau reste élevé pour les nouveaux emprunts et le refinancement.",
+      "observation_date": "2026-11-17",
       "source_url": "https://fred.stlouisfed.org/series/DGS10"
     },
     {
-      "series_id": "T10Y2Y",
-      "title": "La courbe se redresse légèrement",
+      "series_id": "BAMLH0A0HYM2",
+      "title": "Le coût relatif du crédit risqué s’élargit",
+      "explanation": "Le 16 novembre, l’écart ajusté des options du haut rendement américain atteignait 3,34 points de pourcentage, contre 3,23 le 13 novembre. La hausse indique une prime de risque plus élevée par rapport aux titres du Trésor. Une seule observation ne suffit pas à conclure à un resserrement durable du crédit.",
       "observation_date": "2026-11-16",
-      "explanation": "Le 16 novembre, l’écart entre les rendements américains à dix ans et à deux ans atteignait 0,29 point de pourcentage, contre 0,27 le 13. Comme le dix ans a baissé, le redressement reflète un recul plus marqué du deux ans; il ne signale pas une hausse du coût à dix ans.",
-      "source_url": "https://fred.stlouisfed.org/series/T10Y2Y"
+      "source_url": "https://fred.stlouisfed.org/series/BAMLH0A0HYM2"
     },
     {
-      "series_id": "BAMLH0A0HYM2",
-      "title": "Le crédit risqué avait commencé à s’écarter vendredi",
-      "observation_date": "2026-11-13",
-      "explanation": "Le 13 novembre, l’écart ajusté des options des obligations américaines à haut rendement s’établissait à 3,23 points de pourcentage, contre 3,20 la veille. C’est une légère hausse de la prime de crédit. La série disponible ne couvre pas la baisse boursière du lundi; elle ne permet donc pas de conclure à une contagion.",
-      "source_url": "https://fred.stlouisfed.org/series/BAMLH0A0HYM2"
+      "series_id": "VIXCLS",
+      "title": "La volatilité implicite a remonté lundi",
+      "explanation": "L’indice VIX est passé de 19,30 points le 13 novembre à 22,91 points le 16. Les options sur le S&P 500 intégraient plus de volatilité à court terme. Cet indice ne donne ni la direction des actions ni leur réaction aux résultats de Nvidia après la séance du 17.",
+      "observation_date": "2026-11-16",
+      "source_url": "https://fred.stlouisfed.org/series/VIXCLS"
     }
   ],
   "audio_script": {
-    "edition_date": "2026-11-17",
-    "source_generated_at": "2026-11-17T10:01:27.568927+00:00",
-    "intro": "Bonjour, voici le briefing du mardi dix-sept novembre, préparé à 5 h 01, heure de Montréal. On regarde ce que les nouvelles restrictions sur les puces changent avant les résultats de Nvidia. Ensuite, on revient sur l’inflation canadienne et sur une acquisition en Alberta.",
+    "edition_date": "2026-11-18",
+    "source_generated_at": "2026-11-18T10:04:22.923855+00:00",
+    "intro": "Bonjour, voici le briefing du mercredi dix-huit novembre, préparé à 5 h 04, heure de Montréal. On a les résultats de Nvidia et de Home Depot. Par contre, le prix de l’introduction d’Anthropic et le compte rendu de la Réserve fédérale sont encore à venir.",
     "stories": [
       {
-        "title": "Washington cible l’accès aux puces à distance, Nvidia publie ce soir",
-        "text": "On commence par les puces. Washington veut désormais resserrer l’accès au calcul, même quand la puce ne traverse pas la frontière chinoise. Pensez à une entreprise qui loue des serveurs à l’étranger pour entraîner son modèle. C’est ce genre d’accès que les nouvelles exigences cherchent à encadrer. Il y a une exception de licence pour les entreprises américaines qui exploitent leurs centres dans les pays visés. À la clôture de lundi, Nvidia avait perdu un peu plus de quatre pour cent au Nasdaq. Ses résultats, eux, ne sont pas encore sortis. La publication est prévue vers quatre heures vingt cet après-midi, et la directrice financière Colette Kress assure maintenant l’intérim. Ma lecture : le chiffre de ventes du trimestre dira ce que Nvidia avait déjà livré. Je vais surtout écouter ce que la direction prévoit livrer ensuite, à quelle marge, et si les clients ont le financement pour suivre. Si d’autres clients prennent les volumes, on parlera surtout d’un déplacement des débouchés. Si les commandes sont plutôt reportées, l’effet peut atteindre les fournisseurs des centres de données."
+        "title": "Nvidia dépasse les attentes, mais prévoit une marge plus basse",
+        "text": "Commençons par Nvidia. Hier, après la clôture, le fabricant a annoncé près de cent seize milliards de dollars américains de ventes et un bénéfice ajusté de deux dollars soixante-huit par action. Les deux dépassent les attentes. La majeure partie des ventes vient des centres de données. Et la directrice financière, Colette Kress, qui dirige aussi l’entreprise par intérim, a confirmé que les premières plateformes Vera Rubin ont été livrées. Le groupe prévoit environ cent trente milliards de ventes au prochain trimestre, au-dessus du consensus cité par Reuters. Deux détails comptent. Il y a une semaine de plus dans ce trimestre. Et Nvidia ne compte aucune vente de puces de calcul pour les centres de données en Chine dans ce chiffre. La marge brute, elle, devrait reculer vers soixante et onze à soixante-douze pour cent. L’action avait fini la séance régulière légèrement en baisse. Elle gagnait environ deux pour cent en après-séance dans le relevé Reuters de dix-huit heures trente-quatre. Ma lecture : les commandes tiennent. Pour savoir ce que ça vaut pour les bénéfices, je veux voir si la marge remonte à mesure que Rubin prend de la place. Si les coûts restent élevés ou si les clients repoussent des projets, la croissance des ventes ne racontera qu’une partie de l’histoire."
       },
       {
-        "title": "Au Canada, l’inflation reste à 3,1 %, mais le huard et les rendements cèdent",
-        "text": "Au Canada, le chiffre qui ressort est le même qu’en septembre : trois virgule un pour cent d’inflation en un an. Pourtant, le marché s’attendait à un peu plus. L’image change aussi quand on retire l’énergie : la hausse des prix revient à deux pour cent sur un an. Regardez l’essence. Elle coûtait moins cher qu’en septembre, mais l’écart avec l’an dernier a grandi. Une baisse d’octobre deux mille vingt-cinq est sortie du calcul annuel. Les deux observations peuvent donc être vraies en même temps. Lundi après-midi, le huard était plus faible et le rendement canadien à dix ans reculait. Ma lecture : le chiffre donne du temps à la Banque du Canada, mais le marché des swaps était encore partagé pour décembre. Des rendements moins élevés peuvent alléger le coût d’un refinancement. En même temps, un dollar canadien plus faible coûte plus cher aux entreprises qui paient leurs fournisseurs en dollars américains. L’équilibre changerait si les prix recommençaient à accélérer au-delà de l’énergie."
+        "title": "Anthropic se prépare à fixer le prix de son entrée au Nasdaq",
+        "text": "Restons dans l’intelligence artificielle, mais changeons de point de vue. Nvidia vend le matériel. Anthropic doit financer les services qui vont rouler sur ce matériel. Le prix de son introduction en Bourse est attendu aujourd’hui et la cotation est visée pour demain. Dans le prospectus préliminaire, la grande majorité des actions offertes sont des actions neuves. Ça veut dire qu’une grande part du produit de la vente irait à l’entreprise elle-même. Il y a aussi un placement privé prévu auprès de partenaires, dont Nvidia, Microsoft et Google. Bloomberg, repris par Reuters, indique que le prix pourrait se retrouver au haut de la fourchette ou au-dessus. Ce n’est pas encore un prix confirmé. Ma lecture : le signal le plus utile sera la capacité d’attirer des capitaux au-delà des partenaires déjà engagés. Même un gros placement ne montrera pas à lui seul que les ventes de services vont couvrir les dépenses de calcul."
       },
       {
-        "title": "Canadian Natural mise 2,53 G$ sur les actifs d’Advantage en Alberta",
-        "text": "On termine en Alberta. Canadian Natural a signé une entente pour acheter Advantage Energy. On parle d’environ deux milliards et demi de dollars canadiens en comptant la dette. Une partie de l’intérêt tient à la carte : les actifs sont voisins de ceux que Canadian Natural exploite déjà. Il peut donc être plus facile de partager certaines installations et de rentabiliser les prochains forages. La société prévoit utiliser ses liquidités et ses lignes de crédit. Elle dit aussi vouloir maintenir sa politique de rachats, selon le marché. Ma lecture : ce sont les dollars qui restent après les dépenses et les intérêts qui vont départager une bonne acquisition d’une simple hausse des volumes. Si les prix du gaz baissent ou que les économies tardent, la marge de manœuvre pour les rachats peut se resserrer. L’achat reste à conclure; la cible est le premier trimestre de l’an prochain."
+        "title": "Home Depot vend plus par achat, avec moins de transactions",
+        "text": "Chez Home Depot, il y a un autre contraste. Le détaillant a vendu plus et son bénéfice ajusté a légèrement dépassé les attentes. Mais dans les magasins comparables, il y a eu un peu moins de transactions, et le montant moyen payé par achat a augmenté. Les achats de plus de mille dollars ont progressé, surtout pour les appareils et l’outillage motorisé. Ça ne veut pas dire que les grands projets de rénovation sont revenus. La marge brute a baissé et l’action a terminé mardi en recul d’environ deux et demi pour cent à New York. Ma lecture : je surveillerais le nombre de transactions autant que le chiffre d’affaires. S’il remonte avec une détente du financement hypothécaire, ce sera un signal plus solide pour les fournisseurs de la rénovation. Pour l’instant, un panier plus élevé aide les ventes, mais il ne règle pas la question des coûts."
+      },
+      {
+        "title": "Le compte rendu de la Fed arrive avant une décision de décembre déjà très anticipée",
+        "text": "Enfin, la Réserve fédérale publie le compte rendu d’octobre aujourd’hui à deux heures. Lors de cette réunion, deux responsables voulaient déjà monter le taux, mais la majorité a choisi de le garder entre trois virgule soixante-quinze et quatre pour cent. Le marché des swaps a depuis intégré une hausse pour décembre. Le chiffre publié par BlueGamma est arrondi; la décision reste à prendre. Ma lecture : le document peut nous dire si les deux voix dissidentes étaient isolées. Si plusieurs autres responsables hésitaient déjà à attendre, le marché pourrait relever ses attentes de taux pour les mois suivants. Si la majorité craignait surtout un resserrement déjà visible dans le crédit, on pourrait avoir le mouvement inverse. Dans les deux cas, gardons en tête que les chiffres d’emploi et d’inflation d’octobre sont arrivés après la réunion."
       }
     ],
-    "watch": "Trois repères pour finir. Le dix ans américain a légèrement reculé lundi, mais il reste au-dessus de cinq pour cent. L’écart entre le dix ans et le deux ans a un peu augmenté, parce que le deux ans a baissé davantage. Et du côté des obligations à haut rendement, la prime de crédit s’était légèrement élargie vendredi. C’est bien la date du vendredi treize : cette observation ne nous dit encore rien sur la réaction du crédit à la séance de lundi.",
-    "outro": "Voilà pour ce matin. Les graphiques et les sources sont dans la version écrite. Bonne journée."
+    "watch": "Pour les graphiques, le dix ans américain a légèrement reculé mardi, mais il reste à cinq virgule dix pour cent. C’est encore élevé pour les entreprises qui doivent se refinancer. Les deux autres observations datent de lundi. La prime du haut rendement s’est élargie, et le VIX, qui mesure la volatilité attendue à partir des options sur le S et P cinq cents, a monté. Ces deux points nous disent que le marché demandait davantage de protection lundi. Ils ne mesurent pas encore la réaction aux résultats de Nvidia.",
+    "outro": "C’est tout pour ce matin. Retrouvez les communiqués, les autres sources et les graphiques dans la version écrite. Bonne journée."
   }
 }

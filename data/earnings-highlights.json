@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "reviewed_earnings_highlights",
-  "reviewed_at": "2026-11-13T10:01:34.388953+00:00",
+  "reviewed_at": "2026-11-18T10:04:23.020803+00:00",
   "reports": {
     "NFLX:2026-10-20": {
       "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-20-netflix-inc-stock/",
@@ -885,6 +885,36 @@
         "Qualité du crédit — Les prêts en retard de plus de 90 jours passent de 6,9 % à 7,3 % tandis que le portefeuille grossit de 33 % sur un an. La couverture de ces prêts s’établit à 234 %; le coût du risque reste le test de cette croissance.",
         "Financement — Les dépôts montent de 19 % sur un an à 47,5 G$ US, et leur coût relatif baisse à 87 % du taux interbancaire. Cela aide le financement des prêts, mais la marge nette d’intérêt ajustée du risque publiée recule à 12,1 %, même si elle progresse hors éléments non récurrents.",
         "Expansion — Nu compte 143 millions de clients, dont 16,6 millions au Mexique. Le premier trimestre sous statut bancaire mexicain a ajouté 870 000 clients et permis d’offrir les comptes de paie, ce qui élargit les possibilités de capter les dépôts."
+      ]
+    },
+    "DIS:2026-11-17": {
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1744489/000174448926000065/fy2026_q4xerxex991.htm",
+      "report_url": null,
+      "messages": [
+        "Le BPA ajusté annuel a progressé d’environ 16 % hors 53e semaine, au-delà de l’objectif d’environ 12 %. Disney maintient une hausse à deux chiffres du BPA ajusté en 2027 sur cette base, avec l’essentiel de la croissance attendu au premier semestre.",
+        "La fréquentation du segment Experiences a progressé de 4 % au T4 hors semaine additionnelle. La capacité accrue des croisières, Orlando et Paris ont soutenu le segment; Hong Kong et Shanghai ont faibli, un écart à surveiller avant d’extrapoler les marges.",
+        "Les flux de trésorerie disponibles annuels ont augmenté de 5 % à 10,6 G$ US malgré la hausse des investissements dans les parcs. Disney a racheté 9 G$ US d’actions en 2026 et a déclaré un dividende de 2 $ US par action, contre 1,50 $ US versé pendant l’exercice.",
+        "Josh D’Amaro concentre les investissements sur la diffusion en ligne et Experiences. Disney prévoit de cesser de publier le bénéfice d’exploitation distinct de la vidéo par abonnement; il sera donc plus difficile d’isoler la rentabilité de cette activité dans Entertainment."
+      ]
+    },
+    "HD:2026-11-17": {
+      "source_url": "https://ir.homedepot.com/news-releases/2026/11-17-2026-110221331",
+      "report_url": null,
+      "messages": [
+        "Home Depot prévoit désormais des ventes comparables en hausse d’environ 1,4 % et un BPA ajusté en hausse d’environ 2 % en 2026, à l’intérieur des fourchettes d’août. La marge d’exploitation ajustée visée, à 12,8 %, se situe au bas de l’ancienne fourchette.",
+        "Au T3, le panier comparable a augmenté de 3 %, mais les transactions ont reculé de 0,5 %. La direction a relevé une hausse de 4,5 % des achats comparables de plus de 1 000 $ US, surtout en électroménager et outillage motorisé; les pros ont mieux résisté que les particuliers.",
+        "La marge brute a cédé 60 points de base à 32,8 %. La direction a cité la hausse des coûts et la composition des ventes après acquisitions. Avec des transactions comparables encore en recul, la hausse des ventes ne garantit pas un redressement rapide de la marge.",
+        "La société maintient ses investissements à environ 2,5 % des ventes et réduit son estimation de charges d’intérêts nettes annuelles de 2,3 à 2,2 G$ US. Ce dernier appui au bénéfice ne dépend pas d’un rebond de la demande de rénovation."
+      ]
+    },
+    "NVDA:2026-11-17": {
+      "source_url": "https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Announces-Financial-Results-for-Third-Quarter-Fiscal-2027/default.aspx",
+      "report_url": "https://www.marketbeat.com/earnings/reports/2026-11-17-nvidia-co-stock/",
+      "messages": [
+        "Nvidia vise 130 G$ US de ventes au T4 fiscal 2027, à ±3 %, contre un peu plus de 125 G$ US selon LSEG cité par Reuters. La prévision couvre une semaine de plus et ne suppose aucune vente de puces de calcul pour centres de données en Chine.",
+        "Les centres de données ont atteint 107,6 G$ US au T3, en hausse de 110 % sur un an. Colette Kress confirme les premières livraisons de Vera Rubin. La marge brute ajustée visée baisse toutefois à 71–72 %, après 74,9 % au T3.",
+        "Le groupe a rendu 28,1 G$ US aux actionnaires au T3 par rachats et dividendes. Il restait 227,3 G$ US d’autorisation de rachat après la hausse annoncée en septembre, une capacité de rachat qui ne constitue pas un engagement de dépenser ce montant.",
+        "Le titre a clôturé le 17 novembre au Nasdaq à 155,46 $ US (−0,44 %) puis gagnait environ 2 % en après-séance dans le relevé Reuters de 18 h 34. La surprise sur les ventes n’élimine pas le risque d’une pression durable sur la marge pendant la montée de Rubin."
       ]
     }
   }
