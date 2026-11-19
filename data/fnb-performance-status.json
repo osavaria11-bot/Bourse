@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "status": "retrying",
-  "checked_at": "2026-11-18T23:28:10-05:00",
+  "status": "current",
+  "checked_at": "2026-11-19T05:06:51-05:00",
+  "as_of": "2026-11-18",
   "expected_session": "2026-11-18",
-  "message": "Clôtures incomplètes : dernier historique validé conservé. Reprise automatique.",
-  "error": "Unconfirmed historical close revision: FEQT; Missing dated Fidelity Cboe CAD market price"
+  "added_sessions": 1
 }
