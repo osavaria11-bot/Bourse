@@ -1,16 +1,16 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-11-19T19:38:38.624094+00:00",
+  "generated_at": "2026-11-19T21:47:10.936948+00:00",
   "last_successful_update": "2026-11-06T03:39:51.087872+00:00",
   "update_status": "partial_data",
   "coverage": {
     "total": 42,
-    "fresh": 40,
-    "cached": 2,
+    "fresh": 41,
+    "cached": 1,
     "unavailable": 0
   },
   "data_provider": "FRED / Banque du Canada / Statistique Canada / Numerco / Fed de New York / U.S. Treasury",
-  "briefing_paragraph": "Dernières observations publiées — Inflation CPI · annuelle : 3,72 % (période : 2026-09-01); Inflation PCE sous-jacente · annuelle : 3,12 % (période : 2026-09-01); Inflation Canada · IPC global annuel : 3,1 % (période : 2026-10-01); Inflation Canada · CPI-trim annuel : 1,8 % (période : 2026-10-01); Inflation Canada · CPI-median annuel : 2,0 % (période : 2026-10-01); Taux de chômage · États-Unis : 4,10 % (période : 2026-10-01); Taux de chômage · Canada : 6,70 % (période : 2026-10-01); Assurance-chômage US · demandes initiales : 203000 demandes (période : 2026-11-14); Assurance-chômage US · moyenne de 4 semaines : 197750 demandes (période : 2026-11-14); Créations nettes d’emplois · mensuelles : 165 milliers (période : 2026-10-01); Croissance du PIB réel · trimestre annualisé : 3,37 % (période : 2026-07-01); Taux directeur américain · borne inférieure : 3,75 % (période : 2026-11-19); Taux directeur américain · borne supérieure : 4,00 % (période : 2026-11-19); Trésor américain · 10 ans : 5,07 % (période : 2026-11-18); Taux réel américain · 10 ans (TIPS) : 2,88 % (période : 2026-11-18); Courbe des taux · 10 ans – 2 ans : 0,27 pt (période : 2026-11-18); Volatilité anticipée · VIX : 24,56 points (période : 2026-11-18); USD/CAD · dollars canadiens pour 1 $ US : 1,4256 $ CA/$ US (période : 2026-11-13); Taux directeur canadien : 2,50 % (période : 2026-11-18).",
+  "briefing_paragraph": "Dernières observations publiées — Inflation CPI · annuelle : 3,72 % (période : 2026-09-01); Inflation PCE sous-jacente · annuelle : 3,12 % (période : 2026-09-01); Inflation Canada · IPC global annuel : 3,1 % (période : 2026-10-01); Inflation Canada · CPI-trim annuel : 1,8 % (période : 2026-10-01); Inflation Canada · CPI-median annuel : 2,0 % (période : 2026-10-01); Taux de chômage · États-Unis : 4,10 % (période : 2026-10-01); Taux de chômage · Canada : 6,70 % (période : 2026-10-01); Assurance-chômage US · demandes initiales : 203000 demandes (période : 2026-11-14); Assurance-chômage US · moyenne de 4 semaines : 197750 demandes (période : 2026-11-14); Créations nettes d’emplois · mensuelles : 165 milliers (période : 2026-10-01); Croissance du PIB réel · trimestre annualisé : 3,37 % (période : 2026-07-01); Taux directeur américain · borne inférieure : 3,75 % (période : 2026-11-19); Taux directeur américain · borne supérieure : 4,00 % (période : 2026-11-19); Trésor américain · 10 ans : 5,04 % (période : 2026-11-19); Taux réel américain · 10 ans (TIPS) : 2,88 % (période : 2026-11-19); Courbe des taux · 10 ans – 2 ans : 0,28 pt (période : 2026-11-19); Volatilité anticipée · VIX : 24,56 points (période : 2026-11-18); USD/CAD · dollars canadiens pour 1 $ US : 1,4256 $ CA/$ US (période : 2026-11-13); Taux directeur canadien : 2,50 % (période : 2026-11-18).",
   "news_digest_note": "Veille complémentaire. Les données suivent le calendrier de publication de chaque source.",
   "news_sources": [
     {
@@ -38,10 +38,10 @@
     {
       "id": "T10Y2Y",
       "title": "Courbe des taux · 10 ans – 2 ans",
-      "date": "2026-11-18",
-      "value": 0.27,
-      "previous_value": 0.3,
-      "previous_date": "2026-11-17",
+      "date": "2026-11-19",
+      "value": 0.28,
+      "previous_value": 0.27,
+      "previous_date": "2026-11-18",
       "unit": "pt",
       "fetch_status": "fresh"
     },
@@ -68,20 +68,20 @@
     {
       "id": "DGS10",
       "title": "Trésor américain · 10 ans",
-      "date": "2026-11-18",
-      "value": 5.07,
-      "previous_value": 5.1,
-      "previous_date": "2026-11-17",
+      "date": "2026-11-19",
+      "value": 5.04,
+      "previous_value": 5.07,
+      "previous_date": "2026-11-18",
       "unit": "%",
       "fetch_status": "fresh"
     },
     {
       "id": "DFII10",
       "title": "Taux réel américain · 10 ans (TIPS)",
-      "date": "2026-11-18",
+      "date": "2026-11-19",
       "value": 2.88,
-      "previous_value": 2.89,
-      "previous_date": "2026-11-17",
+      "previous_value": 2.88,
+      "previous_date": "2026-11-18",
       "unit": "%",
       "fetch_status": "fresh"
     },
