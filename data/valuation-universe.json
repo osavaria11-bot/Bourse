@@ -809,6 +809,20 @@
       ],
       "source": "reports/stocks/2026-11-11.pdf",
       "note": "Douze admissibles individuels analysés. Cotations USD de clôture, dont les ADS ASX, ATAT et TSM. GAU coté NYSE American en USD."
+    },
+    {
+      "date": "2026-11-18",
+      "tickers": [
+        "APH",
+        "ATAT",
+        "DXCM",
+        "GLBE",
+        "MA",
+        "MSFT",
+        "VIK"
+      ],
+      "source": "reports/stocks/2026-11-18.pdf",
+      "note": "Sept titres individuels analysés. Clôtures régulières USD, dont ATAT, ADS Nasdaq de trois actions ordinaires."
     }
   ]
 }
