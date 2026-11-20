@@ -335,8 +335,12 @@ async function check(browser, engine) {
     sections:{summary:"ÉDITION SYNTHÉTIQUE DE TEST.\n\n<img src=x onerror=alert(1)>",os:"### Valorisation\n\nAnalyse OS de test.",jmc:"Analyse JMC de test.",mcl:"Analyse MCL de test.",
       comparison:"Comparaison de test.",optimization:"Scénarios de test.",recommendations:"| Actif | Décision |\n| --- | --- |\n| TEST | Conserver |",follow_up:"Suivi de test.",outlook:"Catalyseurs de test.",methodology:"Source de test."}};
   await page.locator("#portfolioBriefingImport").setInputFiles({name:"comite-test-2026-11-05.json",mimeType:"application/json",buffer:Buffer.from(JSON.stringify(committeeFixture))});
-  await page.waitForFunction(()=>document.getElementById("portfolioBriefingDate").value==="2026-11-05");
-  await page.locator("#portfolioBriefingSave").click();
+  await page.waitForFunction(()=>document.getElementById("portfolioBriefingDate").value==="2026-11-05"
+    && document.getElementById("portfolioBriefingFormStatus").textContent.includes("Rapport chargé"));
+  // Submit through the focused button after the native file input has settled.
+  // WebKit can still be scrolling the changed form when the import completes.
+  await page.locator("#portfolioBriefingSave").press("Enter");
+  await page.waitForFunction(()=>document.getElementById("portfolioBriefingFormStatus").textContent.includes("Édition enregistrée"));
   assert.match(await page.locator("#portfolioBriefingLatestTitle").innerText(), /5 novembre 2026/);
   assert.match(await page.locator("#portfolioBriefingMeta").innerText(), /4 novembre 2026/);
   assert.equal(await page.locator("#portfolioBriefingContent img").count(), 0);
