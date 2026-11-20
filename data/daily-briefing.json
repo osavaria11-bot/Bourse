@@ -3,87 +3,100 @@
   "kind": "news_digest",
   "language": "fr",
   "timezone": "America/Toronto",
-  "edition_date": "2026-11-19",
-  "generated_at": "2026-11-19T10:08:14.010970+00:00",
-  "editorial_note": "Édition du 19 novembre, préparée avant l’ouverture nord-américaine. Le prix d’offre d’Anthropic est fixé; sa première cotation est encore attendue. Walmart prévoit publier ses résultats à 7 h, heure de Montréal, selon son calendrier du 12 novembre.",
+  "edition_date": "2026-11-20",
+  "generated_at": "2026-11-20T10:05:48.367426+00:00",
+  "editorial_note": "Préparé à 5 h 05, heure de Montréal. Les réactions de marché sont celles de la séance du 19 novembre. La publication canadienne sur le commerce de détail de septembre est encore attendue à 8 h 30.",
   "stories": [
     {
-      "topic": "Introduction en Bourse",
-      "title": "Anthropic fixe son prix à 83 $ US, au-delà de la fourchette",
-      "summary": "Mercredi soir, Anthropic a fixé son prix d’introduction à 83 $ US, contre une fourchette préliminaire de 70 à 78 $. L’offre élargie porte sur 980 millions d’actions, soit 81,3 G$ US au total avant frais. Environ 79,4 G$ US bruts reviennent à l’entreprise si l’offre est conclue selon ces modalités; le reste va à des actionnaires vendeurs. Reuters chiffre la valorisation implicite à environ 1 500 G$ US. La première cotation est attendue jeudi au Nasdaq, sous ANT. À 4 h 13, heure de Montréal, les contrats à terme sur le Nasdaq 100 gagnaient 1,83 % selon Reuters. Ce mouvement précédait les premiers échanges d’Anthropic.",
-      "impact": "Ma lecture : le prix obtenu montre qu’il restait de la demande pour financer l’IA aux conditions négociées avec les placeurs. Le produit des actions neuves peut financer du calcul et des infrastructures plus longtemps, ce qui compte pour les fournisseurs de puces et de services infonuagiques. La première cotation donnera un signal distinct : à ce prix, le coût du calcul doit finir par se traduire en revenus et en flux de trésorerie. Si l’action ne tient pas son prix d’offre ou que les engagements de calcul absorbent les capitaux plus vite que prévu, la lecture positive pour le secteur s’affaiblit.",
-      "source_label": "Anthropic · fixation du prix",
-      "source_url": "https://www.anthropic.com/news/anthropic-prices-initial-public-offering",
-      "published_date": "2026-11-18"
+      "topic": "Actions et IA",
+      "title": "Anthropic gagne 17 % à ses débuts, Wall Street décroche",
+      "summary": "À la clôture du jeudi 19 novembre, Anthropic valait 97,17 $ US au Nasdaq, soit 17,1 % au-dessus du prix d’introduction de 83 $ US, après avoir dépassé 115 $ US en séance. Les 980 millions d’actions de l’offre de base représentent 81,3 G$ US au prix d’émission, dont une partie revient à des actionnaires vendeurs. Le S&P 500, qui avait gagné jusqu’à 1,3 %, a terminé en baisse de 2 %, sa sixième séance négative de suite. Plus de 90 % de ses titres ont reculé. Nvidia a effacé son gain du matin pour finir en baisse de 3,3 % au Nasdaq.",
+      "impact": "Ma lecture : la demande pour cette introduction montre que le capital est encore disponible pour certains projets d’intelligence artificielle. Les baisses de Nvidia, de Micron et de CoreWeave montrent toutefois que les investisseurs n’ont pas revalorisé toute la chaîne des centres de données. Chez les exploitants qui empruntent pour accroître leur capacité, le test est la marge que procurent les contrats après le coût du financement et du matériel. Des commandes fermes, accompagnées d’un redressement qui s’étend au-delà de quelques titres, me feraient revoir cette lecture.",
+      "source_label": "Associated Press",
+      "source_url": "https://apnews.com/article/stocks-markets-ai-us-anthropic-206c84045137824feabe052a29ff6140",
+      "published_date": "2026-11-19"
     },
     {
-      "topic": "Politique monétaire",
-      "title": "La Fed envisageait déjà de remonter ses taux après octobre",
-      "summary": "Le compte rendu de la réunion des 27 et 28 octobre, publié mercredi, montre que presque tous les participants jugeaient un resserrement supplémentaire probablement approprié si l’inflation et l’emploi évoluaient comme dans leur scénario central. Deux participants envisageaient une hausse de plus de 25 points de base à la réunion suivante si l’inflation se révélait défavorable. En octobre, le comité avait maintenu la fourchette à 3,75–4,00 % par dix voix contre deux. Pour le 9 décembre, les swaps indexés sur le SOFR suivis par BlueGamma affichaient une probabilité arrondie de hausse de 100 % au 19 novembre. Le dix ans américain a fini le 18 à 5,07 %, contre 5,10 % la veille dans FRED; ce mouvement de fin de séance ne permet pas d’attribuer la baisse au compte rendu.",
-      "impact": "Ma lecture : une hausse ordinaire étant déjà largement intégrée, c’est surtout sa taille et le rythme des décisions suivantes qui pourraient déplacer les marchés. Un resserrement plus marqué ferait monter le coût de refinancement, pourrait soutenir le dollar américain et pèserait sur les multiples des entreprises dont les profits sont attendus loin dans le temps. Si les prix mensuels ou le marché du travail refroidissent assez pour réduire le risque de plusieurs hausses, cette pression pourrait diminuer. Le compte rendu décrit une discussion d’octobre, conditionnelle aux données.",
-      "source_label": "Réserve fédérale · compte rendu du FOMC",
-      "source_url": "https://www.federalreserve.gov/monetarypolicy/fomcminutes20261028.htm",
-      "published_date": "2026-11-18"
+      "topic": "Économie et taux US",
+      "title": "Philadelphie : les commandes calent, les hausses de prix se propagent",
+      "summary": "L’enquête manufacturière régionale de la Fed de Philadelphie publiée le 19 novembre indique un recul de l’indice d’activité à 6,3, après 20,9 en octobre et contre 23,2 attendu selon Econoday. L’indice des nouvelles commandes est passé juste sous zéro, pour un quatrième repli de suite, alors que celui des livraisons a remonté à 25,7. Les hausses de coûts se sont répandues et l’indice des prix reçus a atteint 47, son plus haut depuis juin 2022. Du côté de l’emploi américain, les premières demandes d’assurance-chômage ont atteint 203 000 pour la semaine du 14 novembre, contre 198 000 attendues et 202 000 la semaine précédente après révision. Le rendement du Trésor américain à dix ans est passé de 5,07 % à 5,04 % le 19, lors d’une séance de baisse des actions.",
+      "impact": "Ma lecture : des usines qui expédient davantage mais engrangent moins de commandes peuvent finir par réduire leur production. Si la hausse des coûts persiste, les entreprises qui ne peuvent pas la répercuter perdront de la marge. Cela fragilise le crédit industriel, même si un ralentissement plus net pourrait faire baisser les rendements du Trésor. Si les prix continuent de se propager hors de la région, la Fed aura moins de latitude pour assouplir sa politique. Un rebond des commandes ou un apaisement durable des prix changerait ce diagnostic; une enquête régionale ne suffit pas pour extrapoler au pays.",
+      "source_label": "Fed de Philadelphie",
+      "source_url": "https://www.philadelphiafed.org/surveys-and-data/regional-economic-analysis/mbos-2026-11",
+      "published_date": "2026-11-19"
     },
     {
-      "topic": "Canada",
-      "title": "La baisse des métaux et du pétrole frappe le TSX",
-      "summary": "Le S&P/TSX a clôturé mercredi à 34 578,05 points, en baisse de 2,1 %, son plus bas niveau de clôture depuis le 10 juin, selon Reuters. Les matériaux ont cédé 5,4 %, l’énergie 3,8 % et les financières 2,2 %. Les contrats sur le brut américain ont réglé à 83,26 $ US le baril (−3,2 %), dans un contexte de hausse des stocks américains de brut et de produits. Le cuivre a aussi reculé de plus de 5 %, selon le relevé Reuters. Le S&P 500 a cédé environ 0,2 % à la même clôture.",
-      "impact": "Ma lecture : la concentration sectorielle du marché canadien explique pourquoi une baisse des matières premières peut faire beaucoup plus mal au TSX qu’au S&P 500. Si des prix plus faibles persistent, ils réduisent les flux attendus des producteurs et peuvent peser sur le huard. Une détente des prix de l’énergie aiderait certains consommateurs et transporteurs, mais le bénéfice diminuerait si la baisse du brut accompagnait un recul de la demande. Des stocks qui se remettent à baisser ou un rebond durable des métaux fragiliseraient cette lecture.",
-      "source_label": "Reuters · clôture de Toronto, via MarketScreener",
-      "source_url": "https://ca.marketscreener.com/news/tsx-hits-more-than-4-month-low-as-miners-slide-on-weaker-metal-prices-ce785eddda80f221",
-      "published_date": "2026-11-18"
+      "topic": "Commerce US",
+      "title": "Walmart relève ses cibles, mais la consommation reste sélective",
+      "summary": "Au troisième trimestre de l’exercice 2027, Walmart a publié un bénéfice ajusté de 0,65 $ US par action et des revenus de 188,8 G$ US, contre 0,64 $ US et 187,3 G$ US attendus selon Visible Alpha. Les ventes comparables de Walmart aux États-Unis hors essence ont crû de 2,9 %, contre 4,5 % un an plus tôt; les ventes en ligne américaines ont bondi de 23 %. John Furner mise sur les magasins pour accélérer la livraison. La publicité et les abonnements aident à rentabiliser ce réseau. Walmart a relevé son bénéfice ajusté annuel attendu à 2,84–2,89 $ US par action, contre 2,80–2,87 $ US; la moyenne LSEG de 2,88 $ US se situait déjà près du haut de la nouvelle fourchette. Le titre a perdu 1,0 % à la clôture du 19 novembre au Nasdaq.",
+      "impact": "Ma lecture : la capacité de gagner des clients grâce aux prix bas et de vendre en parallèle publicité et abonnements distingue Walmart des détaillants plus tributaires des achats discrétionnaires. Le cours de clôture représente toutefois près de 44 fois le milieu de la prévision de bénéfice ajusté pour l’exercice. Une amélioration modeste de la prévision laisse donc peu de marge si les ventes des Fêtes déçoivent ou si les investissements continuent d’absorber le gain de trésorerie. Une accélération des ventes comparables accompagnée d’une hausse de la trésorerie disponible rendrait cette valorisation plus facile à défendre.",
+      "source_label": "Walmart · résultats déposés à la SEC",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/104169/000010416926000168/earningsreleasefy27q3.htm",
+      "published_date": "2026-11-19"
+    },
+    {
+      "topic": "Commerce Canada",
+      "title": "Chez Loblaw, les pharmacies compensent une épicerie moins dynamique",
+      "summary": "Au troisième trimestre, les ventes de détail de Loblaw ont crû de 3,6 % à 19,86 G$ CA. Le bénéfice dilué ajusté de 0,74 $ CA par action, en hausse de 8,8 %, correspond à l’attente rapportée par Seeking Alpha. Les ventes d’alimentation à magasins comparables n’ont crû que de 0,6 %, contre 2 % un an plus tôt. Chez Shoppers Drug Mart, la pharmacie et les soins ont progressé de 7,6 % à magasins comparables. En conférence, la direction a dit que les magasins à escompte ont fait mieux que la moyenne en alimentation et que les ventes comparables d’épicerie s’amélioraient en début de T4. Elle maintient sa prévision de croissance annuelle du bénéfice ajusté par action dans le haut de la fourchette à un chiffre, sans l’effet de la 53e semaine de 2025. L’action a clôturé en hausse de 0,5 % à Toronto le 19.",
+      "impact": "Ma lecture : les ordonnances récurrentes et les bannières à escompte amortissent les pressions sur le panier, mais la croissance du réseau demande des investissements; la trésorerie disponible du commerce de détail a reculé ce trimestre. Les ventes canadiennes de septembre sont attendues à 8 h 30. Un volume hors essence supérieur aux attentes indiquerait une demande plus large et pourrait soutenir le dollar canadien en réduisant les paris sur un assouplissement. Un chiffre faible en volume pointerait plutôt vers un panier sous pression, même si les ventes en dollars tiennent. Pour Loblaw, un meilleur trafic comparable sans promotions plus coûteuses serait le signe le plus convaincant.",
+      "source_label": "Loblaw · communiqué trimestriel",
+      "source_url": "https://www.loblaw.ca/en/loblaw-reports-third-quarter-retail-sales-growth-of-36-and-adjusted-diluted-net-earnings-per-common-share-growth-of-88/",
+      "published_date": "2026-11-19"
     }
   ],
   "fred_watch": [
     {
-      "series_id": "DGS10",
-      "title": "Le dix ans américain baisse de trois points de base",
-      "explanation": "Le 18 novembre, le rendement nominal à dix ans s’établissait à 5,07 %, contre 5,10 % le 17. La baisse aide à la marge la valeur des obligations déjà émises; le niveau de départ reste élevé pour les emprunteurs.",
-      "observation_date": "2026-11-18",
-      "source_url": "https://fred.stlouisfed.org/series/DGS10"
+      "series_id": "DFII10",
+      "title": "Le coût réel du capital ne baisse pas",
+      "explanation": "Le 19 novembre, le rendement réel du Trésor américain indexé sur l’inflation à dix ans reste à 2,88 %, comme le 18. Le rendement nominal a baissé, mais le taux réel utilisé comme repère pour actualiser les profits ne s’est pas détendu ce jour-là.",
+      "observation_date": "2026-11-19",
+      "source_url": "https://fred.stlouisfed.org/series/DFII10"
     },
     {
-      "series_id": "T10Y2Y",
-      "title": "La pente entre deux et dix ans se resserre",
-      "explanation": "Le 18 novembre, le dix ans dépassait le deux ans de 0,27 point de pourcentage, contre 0,30 le 17. L’écart reste positif, avec un recul du taux à dix ans. Cet aplatissement ne confirme pas à lui seul un changement des attentes de croissance.",
-      "observation_date": "2026-11-18",
-      "source_url": "https://fred.stlouisfed.org/series/T10Y2Y"
+      "series_id": "MEDCPIM158SFRBCLE",
+      "title": "L’inflation médiane accélère sur le mois",
+      "explanation": "En octobre, la variation mensuelle annualisée de l’IPC médian de Cleveland atteint 3,66 %, contre 2,81 % en septembre. C’est la cadence du mois extrapolée sur un an; elle aide à voir si la pression dépasse quelques postes volatils, et ne mesure pas l’inflation des douze derniers mois.",
+      "observation_date": "2026-10-01",
+      "source_url": "https://fred.stlouisfed.org/series/MEDCPIM158SFRBCLE"
+    },
+    {
+      "series_id": "RRSFS",
+      "title": "Les ventes américaines reculent une fois les prix retirés",
+      "explanation": "En octobre, les ventes au détail et de restauration américaines s’établissent à 221 711 M$ US constants de 1982–1984, contre 222 016 M$ en septembre. Ce léger recul réel invite à distinguer la hausse des recettes en dollars de la demande en volume; un mois ne fait pas une tendance.",
+      "observation_date": "2026-10-01",
+      "source_url": "https://fred.stlouisfed.org/series/RRSFS"
     },
     {
       "series_id": "BAMLH0A0HYM2",
-      "title": "La prime du crédit à haut rendement s’élargit",
-      "explanation": "Le 17 novembre, l’écart ajusté des options sur le haut rendement américain montait à 3,43 points de pourcentage, contre 3,34 le 16. Un recul des rendements du Trésor peut donc coexister avec une prime de risque plus élevée. Cette observation précède la publication du compte rendu de la Fed.",
-      "observation_date": "2026-11-17",
+      "title": "Le crédit à haut rendement s’écarte modestement",
+      "explanation": "Le 18 novembre, l’écart de crédit américain à haut rendement, ajusté pour les options, atteint 3,47 points de pourcentage, contre 3,43 la veille. Cette observation précède la chute boursière du 19. Un élargissement persistant signalerait que les prêteurs exigent eux aussi une prime de risque accrue.",
+      "observation_date": "2026-11-18",
       "source_url": "https://fred.stlouisfed.org/series/BAMLH0A0HYM2"
-    },
-    {
-      "series_id": "VIXCLS",
-      "title": "Les options intégraient davantage de volatilité",
-      "explanation": "Le VIX a atteint 25,46 points le 17 novembre, contre 22,91 le 16. L’indice mesure la volatilité implicite à court terme du S&P 500, sans prédire la direction du marché. La donnée date d’avant la fixation du prix d’Anthropic.",
-      "observation_date": "2026-11-17",
-      "source_url": "https://fred.stlouisfed.org/series/VIXCLS"
     }
   ],
   "audio_script": {
-    "edition_date": "2026-11-19",
-    "source_generated_at": "2026-11-19T10:08:14.010970+00:00",
-    "intro": "Bonjour. Voici le briefing du jeudi dix-neuf novembre, préparé à 5 h 08, heure de Montréal. On connaît le prix de l’offre d’Anthropic, et on attend encore sa première cotation. Les résultats de Walmart sont prévus à sept heures. D’ici là, on regarde aussi le compte rendu de la Réserve fédérale et la baisse du marché de Toronto.",
+    "edition_date": "2026-11-20",
+    "source_generated_at": "2026-11-20T10:05:48.367426+00:00",
+    "intro": "Bonjour. Voici les nouvelles qui comptent pour ce vendredi vingt novembre. Je prépare cette édition vers cinq heures à Montréal, avant les ventes au détail de Statistique Canada à huit heures et demie. On revient sur la séance de jeudi et sur ce que les entreprises nous disent de la demande, aux États-Unis et ici.",
     "stories": [
       {
-        "title": "Anthropic fixe son prix à 83 $ US, au-delà de la fourchette",
-        "text": "Commençons par Anthropic. Mercredi soir, l’entreprise derrière Claude a fixé son prix d’entrée à quatre-vingt-trois dollars américains par action. C’est au-dessus de sa fourchette, et l’offre a aussi grossi. Au total, on parle d’un peu plus de quatre-vingts milliards de dollars avant frais. La grande majorité irait à l’entreprise à la clôture de l’offre, parce que ce sont surtout des actions neuves. C’est du financement qui peut servir à payer les puces, les serveurs et les contrats de calcul. Mais on n’a pas encore le prix auquel le premier acheteur et le premier vendeur s’entendront au Nasdaq. Les contrats sur le Nasdaq cent étaient déjà en hausse tôt ce matin, avant les premiers échanges d’Anthropic. Ma lecture : cette opération montre que des investisseurs acceptent encore de financer de gros projets d’intelligence artificielle. Le prix d’entrée et la rentabilité sont deux questions différentes. Je surveillerais à la fois la tenue de l’action une fois cotée et la capacité de la société à faire croître sa trésorerie assez vite pour suivre ses engagements."
+        "title": "Anthropic gagne 17 % à ses débuts, Wall Street décroche",
+        "text": "Jeudi, deux choses se sont produites en même temps. Anthropic, qui développe Claude, a réussi son entrée en Bourse. Le titre est parti d’un prix d’émission de quatre-vingt-trois dollars américains. Il a dépassé cent quinze dollars en séance et a fini un peu au-dessus de quatre-vingt-dix-sept dollars au Nasdaq. Pendant ce temps, le grand indice américain, le S et P cinq cents, a fait le trajet inverse. Il est passé d’un gain en début de séance à une baisse de deux pour cent à la clôture. Plus de neuf titres sur dix ont reculé. Nvidia a aussi effacé son avance et a fini en baisse. Ma lecture : il y a de l’argent pour financer certains projets d’intelligence artificielle, mais les investisseurs font la différence entre les entreprises. Pour celles qui empruntent pour bâtir les centres de données, une commande ne règle pas tout. Il faut qu’elle laisse un profit après le coût du matériel et des intérêts. Ce que je surveille, ce sont des commandes fermes et une reprise qui touche aussi les fournisseurs et les exploitants. Une belle première journée pour une seule action, c’est encore mince pour conclure que le secteur est reparti."
       },
       {
-        "title": "La Fed envisageait déjà de remonter ses taux après octobre",
-        "text": "Passons aux taux. Hier, la Réserve fédérale a publié le compte rendu de sa réunion d’octobre. On savait déjà que deux membres auraient préféré une hausse immédiate. Le document montre que l’idée de remonter les taux plus tard était beaucoup plus répandue parmi les participants, si leur scénario sur l’économie se réalisait. Deux personnes envisageaient même de discuter d’un mouvement plus fort si les nouvelles données sur les prix étaient défavorables. Dans les swaps de taux, une hausse en décembre est déjà presque entièrement intégrée. Ça ne garantit pas la décision. Ma lecture : une hausse d’un quart de point aurait moins de chances de surprendre que des indications de plusieurs hausses, ou d’une hausse plus forte. Ce serait surtout important pour les entreprises qui doivent emprunter de nouveau et pour celles dont une bonne partie de la valeur dépend de bénéfices lointains. Si l’inflation se calme ou si l’emploi ralentit assez, ce scénario de taux élevés pourrait perdre du poids."
+        "title": "Philadelphie : les commandes calent, les hausses de prix se propagent",
+        "text": "Passons aux usines de la région de Philadelphie. Les livraisons se sont améliorées en novembre, mais les nouvelles commandes ont reculé pour un quatrième mois et l’indice est passé tout juste sous zéro. L’indicateur général a nettement moins bien fait que prévu. Les entreprises sont aussi plus nombreuses à faire monter leurs prix de vente. Et côté emploi, les nouvelles demandes d’assurance-chômage aux États-Unis ont un peu dépassé les attentes, sans grand changement comparativement à la semaine précédente. Sur le marché obligataire, le rendement du Trésor à dix ans a légèrement replié, tout en restant au-dessus de cinq pour cent. Ma lecture : si les commandes restent faibles, les bonnes livraisons d’aujourd’hui pourraient finir par manquer de relais. Et si les coûts continuent de monter, une usine qui ne peut pas hausser ses prix perd de la marge. C’est délicat pour le crédit industriel. La Réserve fédérale aurait plus de marge pour assouplir si la demande et les prix ralentissaient ensemble. Il faudra vérifier si le même portrait se dessine dans le reste du pays."
       },
       {
-        "title": "La baisse des métaux et du pétrole frappe le TSX",
-        "text": "À Toronto, le marché a beaucoup plus reculé qu’aux États-Unis mercredi. Les minières et les producteurs d’énergie ont été particulièrement touchés. Le cuivre a perdu plus de cinq pour cent dans le relevé de Reuters. Le brut américain a terminé autour de quatre-vingt-trois dollars le baril sur le marché à terme, après une hausse des stocks américains de brut et de carburants. Ma lecture : quand plusieurs matières premières baissent ensemble, la composition du TSX amplifie le choc. À des prix plus faibles pendant plusieurs semaines, les producteurs devraient réévaluer les recettes qu’ils attendent de chaque baril ou tonne vendue. Les entreprises qui paient pour transporter leurs marchandises pourraient profiter de carburants moins chers, surtout si la demande tient. Si les stocks repartent à la baisse ou si les métaux se reprennent durablement, le signal pour le Canada sera différent."
+        "title": "Walmart relève ses cibles, mais la consommation reste sélective",
+        "text": "Chez Walmart, les ventes en ligne américaines ont augmenté de vingt-trois pour cent. John Furner, le patron, compte sur un atout concret : des magasins déjà proches des clients, qui servent aussi à préparer et livrer les commandes. Une livraison rapide donne une raison de revenir. La publicité et les abonnements aident à payer ce service. Les résultats trimestriels dépassent légèrement les attentes et Walmart relève sa cible de bénéfice annuel. Mais la prévision moyenne des analystes était déjà près du haut de la nouvelle fourchette. Le titre a perdu environ un pour cent jeudi. Ma lecture : Walmart peut gagner des clients sensibles aux prix tout en tirant plus d’argent du même réseau. Le cours suppose déjà que cette stratégie fonctionne bien. Pendant les Fêtes, je regarderai si les ventes comparables accélèrent et si les investissements laissent plus d’argent disponible. Une hausse du chiffre d’affaires seule ne répond pas à ces deux questions."
+      },
+      {
+        "title": "Chez Loblaw, les pharmacies compensent une épicerie moins dynamique",
+        "text": "Au Canada, Loblaw raconte une histoire un peu différente. À magasins comparables, l’épicerie a à peine avancé, alors que les services de pharmacie et de santé chez Shoppers Drug Mart ont augmenté de plus de sept pour cent. La direction dit que ses bannières à escompte résistent mieux et que les ventes comparables d’épicerie s’amélioraient en début de trimestre. Elle maintient sa prévision pour l’année. À Toronto, le titre a gagné environ un demi pour cent à la clôture de jeudi. Ma lecture : les ordonnances et l’escompte donnent deux sources de résistance si le panier est serré. Mais ouvrir des magasins absorbe du capital; ce que je veux voir, c’est plus de clients dans les magasins existants sans promotions qui mangent la marge. Statistique Canada doit publier les ventes de septembre à huit heures et demie. Des volumes hors essence plus forts que prévu pourraient soutenir le dollar canadien en retirant un peu d’urgence à un assouplissement. Des volumes plus faibles diraient plutôt que la demande fatigue, même si la facture en dollars ne le montre pas tout de suite."
       }
     ],
-    "watch": "Côté graphiques, le dix ans américain a reculé mercredi à cinq virgule zéro sept pour cent. L’écart entre le dix ans et le deux ans s’est resserré un peu. Les deux autres observations remontent à mardi. La prime sur les obligations américaines à haut rendement a monté. Le VIX aussi, ce qui indique que les options sur le S et P cinq cents intégraient davantage de volatilité. Ces deux signaux précèdent la fixation du prix d’Anthropic et le compte rendu de la Réserve fédérale. Ils donnent un point de départ pour interpréter la séance, sans prédire la direction des cours.",
-    "outro": "C’est tout pour ce matin. Les sources et les dates exactes des graphiques sont dans la version écrite. Bonne journée."
+    "watch": "Quatre graphiques pour finir. Le dix ans américain indexé sur l’inflation est resté à deux virgule quatre-vingt-huit pour cent le dix-neuf novembre. Le taux nominal a baissé ce jour-là, mais le rendement réel n’a pas suivi. En octobre, la mesure médiane des prix à la consommation de Cleveland a accéléré. C’est le rythme du mois annualisé, pas l’inflation d’une année entière. En octobre aussi, les ventes au détail américaines ont légèrement reculé une fois corrigées du niveau des prix. Enfin, la prime des obligations américaines à haut rendement a un peu remonté le dix-huit novembre. C’était avant le recul de jeudi. Je surveillerai si la hausse se prolonge quand les nouvelles données de crédit seront disponibles.",
+    "outro": "Bonne journée. Vous trouverez les publications et les graphiques avec leurs dates dans le briefing écrit de SAVY."
   }
 }

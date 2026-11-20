@@ -1,6 +1,7 @@
 """Synthetic NY Fed workbook and forecast-date regressions."""
 import unittest
 from datetime import date
+from types import SimpleNamespace
 from unittest.mock import patch
 
 from scripts import generate_daily_briefing as G
@@ -23,6 +24,30 @@ class RecessionTests(unittest.TestCase):
     def test_forecast_month_is_shifted_back_exactly_twelve_months(self):
         self.assertEqual(G.parse_recession_rows(rows(), date(2026, 10, 20)),
                          [["2026-08-01", 25.0], ["2026-09-01", 12.5]])
+
+    def test_native_xls_dates_keep_the_input_month_and_require_a_date_cell(self):
+        import xlrd
+
+        data = rows()
+        month_ends = [date(year, month, day) for year in (2026, 2027)
+                      for month, day in ((8, 31), (9, 30), (10, 31))]
+        for row, day in zip(data[1:], month_ends):
+            row[0] = float((day - date(1904, 1, 1)).days)
+        kinds = [xlrd.XL_CELL_TEXT] + [xlrd.XL_CELL_DATE] * (len(data) - 1)
+        sheet = SimpleNamespace(nrows=len(data), row_values=lambda i: data[i].copy(),
+                                cell_type=lambda i, col: kinds[i])
+        book = SimpleNamespace(datemode=1, sheet_by_name=lambda name: sheet)
+        with patch.object(xlrd, "open_workbook", return_value=book):
+            self.assertEqual(G.parse_recession_workbook(b"xls", date(2026, 10, 20)),
+                             [["2026-08-01", 25.0], ["2026-09-01", 12.5]])
+            september = data[2][0]
+            data[2][0] = data[1][0] - 1
+            with self.assertRaisesRegex(G.SourceError, "mois historique dupliqué"):
+                G.parse_recession_workbook(b"xls", date(2026, 10, 20))
+            data[2][0] = september
+            kinds[1] = xlrd.XL_CELL_NUMBER
+            with self.assertRaisesRegex(G.SourceError, "mois historique non reconnu"):
+                G.parse_recession_workbook(b"xls", date(2026, 10, 20))
 
     def test_bad_headers_duplicate_months_and_invalid_probabilities_are_rejected(self):
         for value in (-.1, 1.01, float("nan"), True, "bad"):

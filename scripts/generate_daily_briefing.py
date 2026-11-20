@@ -107,10 +107,13 @@ def parse_recession_rows(rows: list[list], today: date) -> list[list]:
     for row in rows[1:]:
         if len(row) != 7:
             raise SourceError("Fed de New York : ligne historique incomplète")
-        match = re.fullmatch(r"01-([A-Za-z]{3})-(\d{4})", str(row[0]))
-        if not match or match[1] not in months:
-            raise SourceError("Fed de New York : mois historique non reconnu")
-        day = date(int(match[2]), months[match[1]], 1)
+        if type(row[0]) is date:
+            day = row[0].replace(day=1)
+        else:
+            match = re.fullmatch(r"01-([A-Za-z]{3})-(\d{4})", str(row[0]))
+            if not match or match[1] not in months:
+                raise SourceError("Fed de New York : mois historique non reconnu")
+            day = date(int(match[2]), months[match[1]], 1)
         if day in dated:
             raise SourceError("Fed de New York : mois historique dupliqué")
         dated[day] = row
@@ -139,7 +142,15 @@ def parse_recession_workbook(content: bytes, today: date) -> list[list]:
     try:
         workbook = xlrd.open_workbook(file_contents=content)
         sheet = workbook.sheet_by_name("rec_prob")
-        return parse_recession_rows([sheet.row_values(i) for i in range(sheet.nrows)], today)
+        rows = [sheet.row_values(i) for i in range(sheet.nrows)]
+        # The source now stores month labels as native XLS dates. Decode only
+        # date cells; a plain numeric column must not become an inferred date.
+        for i, row in enumerate(rows[1:], 1):
+            if sheet.cell_type(i, 0) == xlrd.XL_CELL_DATE:
+                if row[0] != int(row[0]):
+                    raise SourceError("Fed de New York : mois historique non reconnu")
+                row[0] = xlrd.xldate_as_datetime(row[0], workbook.datemode).date()
+        return parse_recession_rows(rows, today)
     except SourceError:
         raise
     except Exception as exc:
