@@ -45,3 +45,24 @@ test("Long reports and literal HTML stay report data; the old 30 000-character c
  assert.ok(text.length>30000);const entry=U.normalize({date:"2026-11-05",text});assert.equal(entry.text,text);assert.match(entry.sections.summary,/<img/);
  assert.throws(()=>U.normalize({date:"2026-11-05",text:"x".repeat(U.MAX_LENGTH+1)}),/taille permise/);
 });
+
+test("A report can replace a rebuilding public cache when local storage is full",()=>{
+ const editionKey="savy:portfolio-private-briefings:v1", positionsKey="savy:private-holdings:v1";
+ const old=[{date:"2026-11-03",text:"Old review"}], next=[{date:"2026-11-05",text:"New review"},...old];
+ const existing=new Map([[editionKey,JSON.stringify(old)], [positionsKey,"synthetic positions"],
+   ["savy:intraday-quotes:v1","public intraday history"], ["savy:market-indices:v1","public indices"]]);
+ const storage={
+   getItem:key=>existing.get(key)??null, removeItem:key=>existing.delete(key),
+   setItem:(key,value)=>{
+     if(existing.has("savy:intraday-quotes:v1")) throw Object.assign(new Error("Full"),{name:"QuotaExceededError"});
+     existing.set(key,value);
+   },
+ };
+ U.saveEditions(storage,editionKey,next);
+ assert.deepEqual(JSON.parse(existing.get(editionKey)),next);
+ assert.equal(existing.get(positionsKey),"synthetic positions");
+ assert.equal(existing.get("savy:market-indices:v1"),"public indices");
+ assert.equal(existing.has("savy:intraday-quotes:v1"),false);
+ assert.throws(()=>U.saveEditions({...storage,setItem:()=>{throw Object.assign(new Error("Blocked"),{name:"SecurityError"});},
+   removeItem:()=>assert.fail("Storage access errors must not evict caches")},editionKey,next),{name:"SecurityError"});
+});

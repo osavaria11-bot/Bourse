@@ -124,5 +124,27 @@
     // No rolling limit: a new report must not silently remove older editions.
     return [...byDate.values()].sort((a,b)=>b.date.localeCompare(a.date));
   }
-  return {MAX_LENGTH,SECTIONS,TITLES,validDate,dayLabel,libraryUrl,publicPdfPath,sectionHeading,splitText,textFromSections,normalize,entries,importPayload,merge};
+  const PUBLIC_PRICE_CACHES = ["savy:intraday-quotes:v1", "savy:security-prices:v1", "savy:market-indices:v1", "savy:macro-data:v2"];
+  function saveEditions(storage, key, editions) {
+    const value = JSON.stringify(editions);
+    let shortage;
+    const attempt = () => {
+      try { storage.setItem(key, value); return true; }
+      catch (error) {
+        if (error?.name !== "QuotaExceededError") throw error;
+        shortage = error;
+        return false;
+      }
+    };
+    if (attempt()) return;
+    // Rebuildable public quotes may share the origin's quota with saved reports.
+    // Delete only explicit cache keys, and stop as soon as the report fits.
+    for (const cache of PUBLIC_PRICE_CACHES) {
+      if (storage.getItem(cache) === null) continue;
+      storage.removeItem(cache);
+      if (attempt()) return;
+    }
+    throw shortage;
+  }
+  return {MAX_LENGTH,SECTIONS,TITLES,validDate,dayLabel,libraryUrl,publicPdfPath,sectionHeading,splitText,textFromSections,normalize,entries,importPayload,merge,saveEditions};
 });

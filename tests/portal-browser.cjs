@@ -322,10 +322,17 @@ async function check(browser, engine) {
   await page.locator('#portfolioBriefingTab-summary').click();
   assert.match(await page.locator("#portfolioBriefingStatus").innerText(), /Aucune édition/);
   assert.match(await page.locator("#portfolioBriefingArchives").innerText(), /Aucune édition/);
+  const saveBriefing = async () => {
+    await page.locator("#portfolioBriefingSave").click();
+    await page.waitForFunction(()=>/Édition enregistrée|Enregistrement impossible/.test(
+      document.getElementById("portfolioBriefingFormStatus").textContent));
+    const message = await page.locator("#portfolioBriefingFormStatus").textContent();
+    assert.match(message, /Édition enregistrée/, "Review form did not save: " + message);
+  };
   await page.locator("#portfolioBriefingAdd").click();
   await page.locator("#portfolioBriefingDate").fill("2026-11-03");
   await page.locator("#portfolioBriefingText").fill("Synthèse des changements.\\nOS : allocation.\\nJMC : risque.\\nMCL : résultats.");
-  await page.locator("#portfolioBriefingSave").click();
+  await saveBriefing();
   assert.match(await page.locator("#portfolioBriefingLatestTitle").innerText(), /3 novembre 2026/);
   assert.match(await page.locator("#portfolioBriefingContent").innerText(), /OS : allocation/);
   assert.equal(await page.locator("#portfolioBriefingArchives .portfolio-briefing-archive-row").count(), 1);
@@ -337,10 +344,7 @@ async function check(browser, engine) {
   await page.locator("#portfolioBriefingImport").setInputFiles({name:"comite-test-2026-11-05.json",mimeType:"application/json",buffer:Buffer.from(JSON.stringify(committeeFixture))});
   await page.waitForFunction(()=>document.getElementById("portfolioBriefingDate").value==="2026-11-05"
     && document.getElementById("portfolioBriefingFormStatus").textContent.includes("Rapport chargé"));
-  // Submit through the focused button after the native file input has settled.
-  // WebKit can still be scrolling the changed form when the import completes.
-  await page.locator("#portfolioBriefingSave").press("Enter");
-  await page.waitForFunction(()=>document.getElementById("portfolioBriefingFormStatus").textContent.includes("Édition enregistrée"));
+  await saveBriefing();
   assert.match(await page.locator("#portfolioBriefingLatestTitle").innerText(), /5 novembre 2026/);
   assert.match(await page.locator("#portfolioBriefingMeta").innerText(), /4 novembre 2026/);
   assert.equal(await page.locator("#portfolioBriefingContent img").count(), 0);

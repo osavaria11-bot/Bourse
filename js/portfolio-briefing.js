@@ -159,7 +159,7 @@
         finviz_date:original?.finviz_date,sections:original?.text===text?original.sections:undefined});
       const incoming=draftBatch?.length>1?[candidate,...draftBatch.slice(1)]:[candidate];
       const entries=U.merge(editions(),incoming);
-      try{localStorage.setItem(KEY,JSON.stringify(entries));}
+      try{U.saveEditions(localStorage,KEY,entries);}
       catch{throw Error("Enregistrement impossible : le stockage de cet appareil est indisponible ou plein. Les éditions précédentes sont conservées; exporte l’historique pour en garder une copie.");}
       selectedDate=candidate.date;selectedSection="summary";draftBatch=null;
       textField.value="";pdfField.value="";dataDate.value="";$("#portfolioBriefingSave").textContent="Conserver la revue dans SAVY";
