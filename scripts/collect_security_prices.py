@@ -83,6 +83,7 @@ def main(argv=None) -> int:
             data["data_provider"] += "; TMX Money pour clôtures FNB manquantes, ancre vérifiée"
         if any(point.get("history_sources") for point in data["series"]):
             data["data_provider"] += " · TMX Money pour l’historique Cboe de MAXQ"
+        markets.apply_verified_closes(data)
         markets.macro.atomic_write_json(output, data, compact=True)
     except markets.macro.SourceError as error:
         print(str(error)); return 1

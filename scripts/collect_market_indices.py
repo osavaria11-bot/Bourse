@@ -159,6 +159,48 @@ def fetch_index(definition: dict, now: datetime) -> dict:
             last_error = error
     raise macro.SourceError(f"{symbol}: cotations inaccessibles ({last_error})")
 
+def apply_verified_closes(data: dict) -> None:
+    """Keep exact-listing corrections backed by dated exchange observations.
+
+    The correction matches the observed provider price as well as its session.
+    A third value might be on a new split basis; leave it for verification.
+    No quote is inserted into a missing session or into the FNB ledger.
+    """
+    catalog = macro.read_json(ROOT / "data/verified-market-closes.json") or {}
+    if catalog.get("schema_version") != 1 or catalog.get("kind") != "verified_market_closes":
+        return
+    by_listing = {}
+    for entry in catalog["corrections"]:
+        by_listing.setdefault((entry["quote_symbol"], entry["currency"]), {})[entry["session"]] = entry
+
+    for point in data["series"]:
+        reviews = by_listing.get((point.get("quote_symbol"), point.get("currency")))
+        if not reviews:
+            continue
+        history, applied = [], {}
+        for session, value in point.get("history", []):
+            review = reviews.get(session)
+            if review and value is not None and any(
+                    math.isclose(value, review[key], rel_tol=0, abs_tol=1e-6)
+                    for key in ("provider_close", "close")):
+                value = review["close"]
+                applied[session] = review
+            history.append([session, value])
+        if not applied:
+            continue
+        valid = [row for row in history if row[1] is not None][-2:]
+        latest, value = valid[-1]
+        prior, previous = valid[0] if len(valid) == 2 else (None, None)
+        point.update(history=history, date=latest, value=value, previous_date=prior,
+                     previous_value=previous, change=round(value - previous, 6) if previous is not None else None,
+                     verified_closes=list(applied.values()))
+        if latest in applied:
+            point["source_url"] = applied[latest]["source_urls"][0]
+            point["source_label"] = "TMX Money · clôture vérifiée"
+    if any(p.get("verified_closes") for p in data["series"]):
+        data["data_provider"] += "; corrections de clôture datées et sourcées"
+
+
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output-dir", type=Path, default=ROOT / "data")
@@ -174,6 +216,7 @@ def main(argv=None) -> int:
             point["source_url"] = point.get("observation_source", {}).get("source_url") or urls[point["id"]]
         if any(point.get("observation_source", {}).get("id") == "tmx_closing_history" for point in data["series"]):
             data["data_provider"] += "; TMX Money pour clôtures FNB manquantes, ancre vérifiée"
+        apply_verified_closes(data)
         macro.atomic_write_json(output, data, compact=True)
     except macro.SourceError as error:
         print(str(error))

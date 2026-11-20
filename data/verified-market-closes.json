@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "kind": "verified_market_closes",
+  "corrections": [
+    {
+      "quote_symbol": "FBAL.NE",
+      "currency": "CAD",
+      "session": "2026-11-19",
+      "provider_close": 15.43,
+      "close": 15.28,
+      "verified_at": "2026-11-20T10:19:01.879874+00:00",
+      "source_urls": [
+        "https://money.tmx.com/en/quote/FBAL%3ACC",
+        "https://fidcaproductsapi.fidelity.ca/FidcaProductsAPI/api/fundPage/fund/EN/FBAL"
+      ]
+    },
+    {
+      "quote_symbol": "FCIN.NE",
+      "currency": "CAD",
+      "session": "2026-11-19",
+      "provider_close": 15.67,
+      "close": 15.48,
+      "verified_at": "2026-11-20T10:19:01.879874+00:00",
+      "source_urls": [
+        "https://money.tmx.com/en/quote/FCIN%3ACC",
+        "https://fidcaproductsapi.fidelity.ca/FidcaProductsAPI/api/fundPage/fund/EN/FCIN"
+      ]
+    },
+    {
+      "quote_symbol": "FEQT.NE",
+      "currency": "CAD",
+      "session": "2026-11-19",
+      "provider_close": 18.74,
+      "close": 18.44,
+      "verified_at": "2026-11-20T10:19:01.879874+00:00",
+      "source_urls": [
+        "https://money.tmx.com/en/quote/FEQT%3ACC",
+        "https://fidcaproductsapi.fidelity.ca/FidcaProductsAPI/api/fundPage/fund/EN/FEQT"
+      ]
+    },
+    {
+      "quote_symbol": "MAXQ.TO",
+      "currency": "CAD",
+      "session": "2026-11-19",
+      "provider_close": 0.39,
+      "close": 0.385,
+      "verified_at": "2026-11-20T10:19:01.879874+00:00",
+      "source_urls": [
+        "https://money.tmx.com/en/quote/MAXQ",
+        "https://www.investing.com/equities/maritime-launch-services-historical-data"
+      ]
+    }
+  ]
+}

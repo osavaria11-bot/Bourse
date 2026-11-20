@@ -58,6 +58,27 @@ class MarketHistoryTests(unittest.TestCase):
             self.assertEqual(markets.complete_etf_history({**definition, "currency": "USD"}, history, NOW, "ETF"), (history, None))
             fetch.assert_not_called()
 
+    def test_confirmed_close_fixes_only_the_dated_canadian_listing(self):
+        definition = next(d for d in markets.definitions() if d["id"] == "FEQT")
+        history = [["2026-10-07", 60.0], ["2026-10-08", 61.0], ["2026-10-09", 63.0]]
+        point = markets.macro.summarize(definition, history, NOW)
+        unrelated = copy.deepcopy({**point, "quote_symbol": "FEQT.TO"})
+        different_basis = {**point, "history": history[:-1] + [["2026-10-09", 31.5]]}
+        review = {"quote_symbol": "FEQT.NE", "currency": "CAD", "session": "2026-10-09",
+                  "provider_close": 63.0, "close": 62.0,
+                  "source_urls": ["https://money.tmx.com/en/quote/FEQT%3ACC", "https://example.com/dated-close"]}
+        payload = {"series": [point, unrelated, different_basis], "data_provider": "Yahoo Finance"}
+        with patch.object(markets.macro, "read_json", return_value={
+            "kind": "verified_market_closes", "schema_version": 1, "corrections": [review],
+        }):
+            markets.apply_verified_closes(payload)
+        self.assertEqual((point["value"], point["previous_value"], point["change"]), (62.0, 61.0, 1.0))
+        self.assertEqual(point["history"], history[:-1] + [["2026-10-09", 62.0]])
+        self.assertEqual(point["source_url"], review["source_urls"][0])
+        self.assertEqual(point["verified_closes"], [review])
+        self.assertEqual(unrelated["history"], history)
+        self.assertEqual(different_basis["history"][-1], ["2026-10-09", 31.5])
+
     def test_feqt_uses_the_canadian_etf_listing(self):
         definition = next(d for d in markets.definitions() if d["id"] == "FEQT")
         self.assertEqual(definition["quote_symbol"], "FEQT.NE")
