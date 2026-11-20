@@ -2,11 +2,11 @@
   "schema_version": 1,
   "kind": "polymarket_events",
   "provider": "polymarket",
-  "generated_at": "2026-11-20T00:38:07.242591Z",
+  "generated_at": "2026-11-20T10:07:42.325639Z",
   "groups": {
     "finance": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-20T00:38:07.242591Z",
+      "fetched_at": "2026-11-20T10:07:42.325639Z",
       "ranking": "volume",
       "events": [
         {
@@ -14,19 +14,19 @@
           "slug": "how-many-fed-rate-cuts-in-2026",
           "title": "How many Fed rate cuts in 2026?",
           "url": "https://polymarket.com/event/how-many-fed-rate-cuts-in-2026",
-          "volume": 56103376.232305,
-          "volume_24h": 35136.198054,
+          "volume": 56117899.741554,
+          "volume_24h": 43733.944539,
           "ends_at": "2027-01-01T04:59:00Z",
           "outcomes": [
             {
               "label": "0 (0 bps)",
-              "probability": 0.9835,
+              "probability": 0.983,
               "market_id": "616902",
               "ends_at": "2027-01-01T04:59:00Z"
             },
             {
               "label": "1 (25 bps)",
-              "probability": 0.0125,
+              "probability": 0.0075,
               "market_id": "616903",
               "ends_at": "2027-01-01T04:59:00Z"
             }
@@ -37,8 +37,8 @@
           "slug": "fed-decision-in-december-20260729232808632",
           "title": "Fed Decision in December?",
           "url": "https://polymarket.com/event/fed-decision-in-december-20260729232808632",
-          "volume": 43492011.193071,
-          "volume_24h": 2839338.3068770003,
+          "volume": 44551725.598391004,
+          "volume_24h": 3681541.507153,
           "ends_at": "2026-12-10T04:59:00Z",
           "outcomes": [
             {
@@ -49,7 +49,7 @@
             },
             {
               "label": "50+ bps increase",
-              "probability": 0.0505,
+              "probability": 0.038,
               "market_id": "3215009",
               "ends_at": "2026-12-09T23:59:00Z"
             }
@@ -60,13 +60,13 @@
           "slug": "which-companies-will-be-acquired-before-2027",
           "title": "Which companies will be acquired before 2027?",
           "url": "https://polymarket.com/event/which-companies-will-be-acquired-before-2027",
-          "volume": 18444813.00242,
-          "volume_24h": 730.280442,
+          "volume": 18445144.07242,
+          "volume_24h": 416.2,
           "ends_at": "2027-01-01T04:59:00Z",
           "outcomes": [
             {
               "label": "Viking Therapeutics",
-              "probability": 0.07,
+              "probability": 0.105,
               "market_id": "694938",
               "ends_at": "2027-01-01T04:59:00Z"
             },
@@ -82,44 +82,21 @@
     },
     "popular": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-20T00:38:07.242591Z",
+      "fetched_at": "2026-11-20T10:07:42.325639Z",
       "ranking": "volume24hr",
       "events": [
-        {
-          "id": "79987",
-          "slug": "next-french-presidential-election",
-          "title": "Next French Presidential Election",
-          "url": "https://polymarket.com/event/next-french-presidential-election",
-          "volume": 179557388.045006,
-          "volume_24h": 1089039.696021,
-          "ends_at": "2027-04-19T03:59:00Z",
-          "outcomes": [
-            {
-              "label": "Marine Le Pen",
-              "probability": 0.4555,
-              "market_id": "679018",
-              "ends_at": "2027-04-19T03:59:00Z"
-            },
-            {
-              "label": "David Lisnard",
-              "probability": 0.1805,
-              "market_id": "679022",
-              "ends_at": "2027-04-19T03:59:00Z"
-            }
-          ]
-        },
         {
           "id": "30829",
           "slug": "democratic-presidential-nominee-2028",
           "title": "Democratic Presidential Nominee 2028",
           "url": "https://polymarket.com/event/democratic-presidential-nominee-2028",
-          "volume": 1328891752.639874,
-          "volume_24h": 951695.075765,
+          "volume": 1329058311.534781,
+          "volume_24h": 1004249.718507,
           "ends_at": "2028-11-08T04:59:00Z",
           "outcomes": [
             {
               "label": "Jon Ossoff",
-              "probability": 0.2665,
+              "probability": 0.2625,
               "market_id": "559661",
               "ends_at": "2028-11-08T04:59:00Z"
             },
@@ -132,24 +109,70 @@
           ]
         },
         {
+          "id": "31875",
+          "slug": "republican-presidential-nominee-2028",
+          "title": "Republican Presidential Nominee 2028",
+          "url": "https://polymarket.com/event/republican-presidential-nominee-2028",
+          "volume": 742284283.91518,
+          "volume_24h": 564989.499411,
+          "ends_at": "2028-11-08T04:59:00Z",
+          "outcomes": [
+            {
+              "label": "J.D. Vance",
+              "probability": 0.3075,
+              "market_id": "561974",
+              "ends_at": "2028-11-08T04:59:00Z"
+            },
+            {
+              "label": "Marco Rubio",
+              "probability": 0.2525,
+              "market_id": "561975",
+              "ends_at": "2028-11-08T04:59:00Z"
+            }
+          ]
+        },
+        {
+          "id": "79987",
+          "slug": "next-french-presidential-election",
+          "title": "Next French Presidential Election",
+          "url": "https://polymarket.com/event/next-french-presidential-election",
+          "volume": 179696015.71499202,
+          "volume_24h": 538855.0161359999,
+          "ends_at": "2027-04-19T03:59:00Z",
+          "outcomes": [
+            {
+              "label": "Marine Le Pen",
+              "probability": 0.4565,
+              "market_id": "679018",
+              "ends_at": "2027-04-19T03:59:00Z"
+            },
+            {
+              "label": "David Lisnard",
+              "probability": 0.1775,
+              "market_id": "679022",
+              "ends_at": "2027-04-19T03:59:00Z"
+            }
+          ]
+        },
+        {
           "id": "1354158",
           "slug": "elon-musk-of-tweets-november-13-november-20-2026",
           "title": "Elon Musk # tweets November 13 - November 20, 2026?",
           "url": "https://polymarket.com/event/elon-musk-of-tweets-november-13-november-20-2026",
-          "volume": 2070306.499178,
-          "volume_24h": 574545.8732510001,
+          "volume": 2323148.57151,
+          "volume_24h": 532706.746478,
           "ends_at": "2026-11-20T17:00:00Z",
           "outcomes": [
             {
-              "label": "360-379",
-              "probability": 0.4985,
-              "market_id": "6921914",
+              "label": "340-359",
+              "probability": 0.7625,
+              "market_id": "6921909",
               "ends_at": "2026-11-20T17:00:00Z"
             },
             {
-              "label": "340-359",
-              "probability": 0.2975,
-              "market_id": "6921909",
+              "label": "360-379",
+              "probability": 0.134,
+              "market_id": "6921914",
               "ends_at": "2026-11-20T17:00:00Z"
             }
           ]
@@ -159,13 +182,13 @@
           "slug": "presidential-election-winner-2028",
           "title": "Presidential Election Winner 2028",
           "url": "https://polymarket.com/event/presidential-election-winner-2028",
-          "volume": 745028360.399276,
-          "volume_24h": 417825.070855,
+          "volume": 745172015.009477,
+          "volume_24h": 480922.573054,
           "ends_at": "2028-11-08T04:59:00Z",
           "outcomes": [
             {
               "label": "Jon Ossoff",
-              "probability": 0.1695,
+              "probability": 0.167,
               "market_id": "561261",
               "ends_at": "2028-11-08T04:59:00Z"
             },
@@ -176,74 +199,57 @@
               "ends_at": "2028-11-08T04:59:00Z"
             }
           ]
-        },
-        {
-          "id": "699735",
-          "slug": "us-announces-end-of-iranian-blockade-byptptpt-20260713152715080",
-          "title": "US announces end of Iranian blockade by...?",
-          "url": "https://polymarket.com/event/us-announces-end-of-iranian-blockade-byptptpt-20260713152715080",
-          "volume": 54212984.846844,
-          "volume_24h": 325748.333919,
-          "ends_at": "2027-04-01T03:59:00Z",
-          "outcomes": [
-            {
-              "label": "March 31",
-              "probability": 0.445,
-              "market_id": "4906129",
-              "ends_at": "2027-04-01T03:59:00Z"
-            },
-            {
-              "label": "February 28",
-              "probability": 0.335,
-              "market_id": "7155711",
-              "ends_at": "2027-03-01T04:59:00Z"
-            }
-          ]
         }
       ]
     },
     "trending": {
       "fetch_status": "fresh",
-      "fetched_at": "2026-11-20T00:38:07.242591Z",
+      "fetched_at": "2026-11-20T10:07:42.325639Z",
       "ranking": "volume24hr",
       "events": [
         {
-          "id": "912410",
-          "slug": "anthropic-ipo-closing-market-cap-above",
-          "title": "Anthropic IPO closing market cap above ___ ?",
-          "url": "https://polymarket.com/event/anthropic-ipo-closing-market-cap-above",
-          "volume": 5371880.93651,
-          "volume_24h": 5122051.0060910005,
-          "ends_at": "2028-01-01T04:59:00Z",
+          "id": "711714",
+          "slug": "israel-x-iran-ceasefire-continues-throughptptpt-20260716224448963",
+          "title": "Israel x Iran ceasefire continues through...?",
+          "url": "https://polymarket.com/event/israel-x-iran-ceasefire-continues-throughptptpt-20260716224448963",
+          "volume": 58574863.845557004,
+          "volume_24h": 812589.682283,
+          "ends_at": "2026-12-31T20:29:00Z",
           "outcomes": [
             {
-              "label": "$1.3T",
-              "probability": 0.0005,
-              "market_id": "7157997",
-              "ends_at": "2028-01-01T04:59:00Z"
+              "label": "November 20",
+              "probability": 0.99,
+              "market_id": "6908163",
+              "ends_at": "2026-11-21T04:59:00Z"
+            },
+            {
+              "label": "November 22",
+              "probability": 0.955,
+              "market_id": "6367372",
+              "ends_at": "2026-11-23T04:59:00Z"
             }
           ]
         },
         {
-          "id": "1318455",
-          "slug": "nba-nyk-min-2026-11-19",
-          "title": "Knicks vs. Timberwolves",
-          "url": "https://polymarket.com/event/nba-nyk-min-2026-11-19",
-          "volume": 1247223.48627,
-          "volume_24h": 1243812.307192,
-          "ends_at": "2026-11-20T01:00:00Z",
+          "id": "89502",
+          "slug": "what-price-will-bitcoin-hit-before-2027",
+          "title": "What price will Bitcoin hit in 2026?",
+          "url": "https://polymarket.com/event/what-price-will-bitcoin-hit-before-2027",
+          "volume": 91377602.30792,
+          "volume_24h": 759425.599917,
+          "ends_at": "2027-01-01T05:00:00Z",
           "outcomes": [
             {
-              "label": "LaMelo Ball: Rebounds O/U 1.5",
-              "probability": 0.895,
-              "market_id": "7168214",
-              "ends_at": "2026-11-20T01:00:00Z"
+              "label": "↓ 60,000",
+              "probability": 0.855,
+              "market_id": "3013350",
+              "ends_at": "2027-01-01T05:00:00Z"
             },
             {
-              "label": "Trey Lyles: Rebounds O/U 1.5",
-              "probability": 0.885,
-              "market_id": "7177316",
-              "ends_at": "2026-11-20T01:00:00Z"
+              "label": "↓ 55,000",
+              "probability": 0.455,
+              "market_id": "701501",
+              "ends_at": "2027-01-01T05:00:00Z"
             }
           ]
         }
