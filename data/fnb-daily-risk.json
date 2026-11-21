@@ -32410,7 +32410,7 @@
   "weights_signature": "85b355b260aab43597581d4b4869a63822e03f1d3ba1b396d1bad3f58582cecf",
   "shape_estimators": "bias_corrected_fisher",
   "status": "stale",
-  "error": "Public source unavailable: https://fidcaproductsapi.fidelity.ca/FidcaProductsAPI/api/fundPage/fund/EN/FEQT: The read operation timed out",
+  "error": "Insufficient common daily coverage: 223/789",
   "results": {
     "prospective-2026-10-perspectives": {
       "weights": {

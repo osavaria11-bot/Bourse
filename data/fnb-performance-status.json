@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "status": "retrying",
-  "checked_at": "2026-11-20T23:14:34-05:00",
+  "checked_at": "2026-11-21T12:59:15-05:00",
   "expected_session": "2026-11-20",
   "message": "Clôtures incomplètes : dernier historique validé conservé. Reprise automatique.",
-  "error": "Unconfirmed historical close revision: FINN; Public source unavailable: https://fidcaproductsapi.fidelity.ca/FidcaProductsAPI/api/fundPage/fund/EN/FINN: The read operation timed out"
+  "error": "Unconfirmed historical close revision: FINN"
 }
