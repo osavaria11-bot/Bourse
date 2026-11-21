@@ -58,6 +58,43 @@ class MarketHistoryTests(unittest.TestCase):
             self.assertEqual(markets.complete_etf_history({**definition, "currency": "USD"}, history, NOW, "ETF"), (history, None))
             fetch.assert_not_called()
 
+    def test_reviewed_anchor_unlocks_the_next_close_only_on_the_confirmed_basis(self):
+        definition = next(d for d in markets.definitions() if d["id"] == "FEQT")
+        history = [["2026-10-07", 60.0], ["2026-10-08", 61.3]]
+        source_url = "https://money.tmx.com/en/quote/FEQT%3ACC"
+        issuer_url = markets.daily.FID + "fund/EN/FEQT"
+        official = {"2026-10-08": {"close": 61.0},
+                    "2026-10-09": {"close": 62.0, "source_url": source_url}}
+        review = {"quote_symbol": definition["quote_symbol"], "currency": "CAD",
+                  "session": "2026-10-08", "provider_close": 61.3, "close": 61.0,
+                  "source_urls": [source_url, issuer_url]}
+        catalog = {"kind": "verified_market_closes", "schema_version": 1, "corrections": [review]}
+        issuer_close = {"source_url": issuer_url, "date": "2026-10-09", "close": 62.0}
+        with patch.object(markets.macro, "read_json", return_value=catalog), \
+                patch.object(markets.daily, "tmx_closes", return_value=official) as fetch, \
+                patch.object(markets.daily, "fidelity_market_close", return_value=issuer_close) as confirm:
+            merged, source = markets.complete_etf_history(definition, history, NOW)
+            point = markets.macro.summarize(definition, merged, NOW)
+            markets.apply_verified_closes({"series": [point], "data_provider": "Yahoo Finance"})
+            self.assertEqual(point["history"], [["2026-10-07", 60.0], ["2026-10-08", 61.0], ["2026-10-09", 62.0]])
+            self.assertEqual((point["previous_value"], point["change"]), (61.0, 1.0))
+            self.assertEqual((source["anchor_close"], source["anchor_provider_close"]), (61.0, 61.3))
+            self.assertEqual(source["close_confirmation"], issuer_close)
+            self.assertEqual(point["verified_closes"], [review])
+            confirm.return_value = {**issuer_close, "close": 62.1}
+            with self.assertRaisesRegex(markets.macro.SourceError, "TMX/Fidelity"):
+                markets.complete_etf_history(definition, history, NOW)
+            with self.assertRaisesRegex(markets.macro.SourceError, "ancrage"):
+                markets.complete_etf_history(definition, history[:-1] + [["2026-10-08", 30.5]], NOW)
+            fetch.return_value = {**official, "2026-10-08": {"close": 61.1}}
+            with self.assertRaisesRegex(markets.macro.SourceError, "ancrage"):
+                markets.complete_etf_history(definition, history, NOW)
+            latest_repeats = history + [["2026-10-09", 61.3]]
+            with self.assertRaisesRegex(markets.macro.SourceError, "répété"):
+                markets.complete_etf_history(definition, latest_repeats, NOW)
+            fetch.return_value = {"2026-10-09": {"close": 61.3}}
+            self.assertEqual(markets.complete_etf_history(definition, latest_repeats, NOW), (latest_repeats, None))
+
     def test_confirmed_close_fixes_only_the_dated_canadian_listing(self):
         definition = next(d for d in markets.definitions() if d["id"] == "FEQT")
         history = [["2026-10-07", 60.0], ["2026-10-08", 61.0], ["2026-10-09", 63.0]]

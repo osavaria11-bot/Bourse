@@ -93,11 +93,34 @@ def parse_history(payload: dict, symbol: str, now: datetime, currency: str | Non
         raise macro.SourceError(f"{symbol}: moins de deux clôtures valides")
     return history
 
+
+def verified_close_catalog() -> dict:
+    catalog = macro.read_json(ROOT / "data/verified-market-closes.json") or {}
+    if catalog.get("schema_version") != 1 or catalog.get("kind") != "verified_market_closes":
+        return {}
+    by_listing = {}
+    for entry in catalog["corrections"]:
+        by_listing.setdefault((entry["quote_symbol"], entry["currency"]), {})[entry["session"]] = entry
+    return by_listing
+
+
+def matches_reviewed_close(value, review: dict) -> bool:
+    return value is not None and any(
+        math.isclose(value, review[key], rel_tol=0, abs_tol=1e-6)
+        for key in ("provider_close", "close"))
+
+
+def market_close_agrees(value, reference) -> bool:
+    return (isinstance(value, (int, float)) and not isinstance(value, bool)
+            and math.isfinite(value) and value > 0 and abs(value / reference - 1) <= .0001)
+
+
 def complete_etf_history(definition: dict, history: list[list], now: datetime, instrument_type=None) -> tuple[list[list], dict | None]:
     """Append missing Cboe ETF closes from the existing official-market pipeline.
 
-    Never overwrite Yahoo history, mix listings or use a live quote. The last
-    Yahoo close must agree with the official anchor before adding later days.
+    Never mix listings or use a live quote. The last Yahoo close, or its
+    dated review on the same price basis, must match the official anchor.
+    The publication step applies the already recorded history correction.
     """
     symbol = definition["quote_symbol"]
     if (definition.get("currency") != "CAD" or not symbol.endswith(".NE")
@@ -105,15 +128,40 @@ def complete_etf_history(definition: dict, history: list[list], now: datetime, i
         return history, None
     expected = daily.completed_session(now)
     last, close = next(row for row in reversed(history) if row[1] is not None)
+    tm_symbol = symbol[:-3] + ":CC"
     if last >= expected.isoformat():
+        # A new timestamp can still carry the rejected price of the preceding
+        # session. Keep a dated cached close if the new bar fails confirmation.
+        prior = next((row for row in reversed(history) if row[1] is not None and row[0] < last), None)
+        if last == expected.isoformat() and prior and math.isclose(close, prior[1], rel_tol=0, abs_tol=1e-6):
+            review = verified_close_catalog().get((symbol, definition["currency"]), {}).get(prior[0])
+            if review and matches_reviewed_close(close, review) and not market_close_agrees(close, review["close"]):
+                official = daily.tmx_closes(daily.Client(), tm_symbol, last, last)
+                if not market_close_agrees(official.get(last, {}).get("close"), close):
+                    raise macro.SourceError(symbol + ": cours Yahoo répété après correction et non confirmé au " + last)
         return history, None
     if (expected - datetime.fromisoformat(last).date()).days > 10:
         raise macro.SourceError(symbol + ": historique trop ancien pour compléter les clôtures")
-    official = daily.tmx_closes(daily.Client(), symbol[:-3] + ":CC", last, expected.isoformat())
+    client = daily.Client()
+    official = daily.tmx_closes(client, tm_symbol, last, expected.isoformat())
     anchor = official.get(last, {}).get("close")
-    if (not isinstance(anchor, (int, float)) or isinstance(anchor, bool) or not math.isfinite(anchor) or anchor <= 0
-            or abs(anchor / close - 1) > .0001):
-        raise macro.SourceError(symbol + ": désaccord sur la clôture d’ancrage Yahoo/TMX")
+    checked_close = close
+    confirmation = None
+    if not market_close_agrees(anchor, close):
+        review = verified_close_catalog().get((symbol, definition["currency"]), {}).get(last)
+        if not review or not matches_reviewed_close(close, review) or not market_close_agrees(anchor, review["close"]):
+            raise macro.SourceError(symbol + ": désaccord sur la clôture d’ancrage Yahoo/TMX")
+        checked_close = review["close"]
+        # When the reviewed anchor relied on this issuer's market close, use
+        # the same independent check before accepting a new official close.
+        issuer_url = daily.FID + "fund/EN/" + quote(symbol[:-3])
+        if issuer_url in review.get("source_urls", []):
+            try:
+                confirmation = daily.fidelity_market_close(client, symbol[:-3], expected.isoformat())
+            except (KeyError, TypeError, ValueError) as error:
+                raise macro.SourceError(symbol + ": clôture Fidelity non confirmée") from error
+            if not market_close_agrees(official.get(expected.isoformat(), {}).get("close"), confirmation["close"]):
+                raise macro.SourceError(symbol + ": désaccord sur la dernière clôture TMX/Fidelity au " + expected.isoformat())
     additions = {}
     day = datetime.fromisoformat(last).date() + timedelta(days=1)
     while day <= expected:
@@ -126,7 +174,11 @@ def complete_etf_history(definition: dict, history: list[list], now: datetime, i
     merged = dict(history); merged.update(additions)
     source = {"id": "tmx_closing_history", "source_url": official[expected.isoformat()]["source_url"],
               "date": expected.isoformat(), "checked_at": now.isoformat(), "anchor_date": last,
-              "anchor_close": close, "dates": list(additions), "history_source_url": definition["source_url"]}
+              "anchor_close": checked_close, "dates": list(additions), "history_source_url": definition["source_url"]}
+    if checked_close != close:
+        source["anchor_provider_close"] = close
+    if confirmation:
+        source["close_confirmation"] = confirmation
     return [[day, value] for day, value in sorted(merged.items())], source
 
 
@@ -166,12 +218,7 @@ def apply_verified_closes(data: dict) -> None:
     A third value might be on a new split basis; leave it for verification.
     No quote is inserted into a missing session or into the FNB ledger.
     """
-    catalog = macro.read_json(ROOT / "data/verified-market-closes.json") or {}
-    if catalog.get("schema_version") != 1 or catalog.get("kind") != "verified_market_closes":
-        return
-    by_listing = {}
-    for entry in catalog["corrections"]:
-        by_listing.setdefault((entry["quote_symbol"], entry["currency"]), {})[entry["session"]] = entry
+    by_listing = verified_close_catalog()
 
     for point in data["series"]:
         reviews = by_listing.get((point.get("quote_symbol"), point.get("currency")))
@@ -180,9 +227,7 @@ def apply_verified_closes(data: dict) -> None:
         history, applied = [], {}
         for session, value in point.get("history", []):
             review = reviews.get(session)
-            if review and value is not None and any(
-                    math.isclose(value, review[key], rel_tol=0, abs_tol=1e-6)
-                    for key in ("provider_close", "close")):
+            if review and matches_reviewed_close(value, review):
                 value = review["close"]
                 applied[session] = review
             history.append([session, value])
