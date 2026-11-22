@@ -89,7 +89,11 @@ async function check(browser, engine) {
   assert.equal(await fundReport.locator('#decision .horizon-columns [data-open-portfolio]:visible').count(),15);
   await fundReport.locator('#decisionGoal').selectOption('balance');
   await fundReport.locator('#decisionDetails>summary').click();
-  assert.match(await fundReport.locator('#decisionSensitivity').innerText(),/variantes/);
+  const riskSnapshot=require('../data/fnb-daily-risk.json'),sessions=riskSnapshot.daily_series.session_indices;
+  const continuous=sessions.length>=252&&sessions.at(-1)-sessions[0]===sessions.length-1;
+  assert.match(await fundReport.locator('#decisionPeriod').innerText(),continuous?/Backtest quotidien/:/Backtest mensuel/);
+  assert.match(await fundReport.locator('#decisionSensitivity').innerText(),continuous?/variantes/:/Non estimable/);
+  if(riskSnapshot.status==='stale')assert.match(await fundReport.locator('#decisionDataStatus').innerText(),/Données de risque en retard/);
   assert.match(await fundReport.locator('#decisionSources').innerText(),/2008/);
   await fundReport.locator('#decisionDetails>summary').click();
   await fundReport.locator('#decisionGoal').selectOption('');
