@@ -3,87 +3,100 @@
   "kind": "news_digest",
   "language": "fr",
   "timezone": "America/Toronto",
-  "edition_date": "2026-11-21",
-  "generated_at": "2026-11-21T10:12:37.522878+00:00",
-  "editorial_note": "Bilan de la clôture du vendredi 20 novembre et des publications connues samedi matin à Montréal. Les marchés ont baissé alors que le dix ans américain reculait; au Canada, la différence entre recettes et volumes aide à lire la demande. Les swaps de taux donnent un état des anticipations au 20 novembre, qui peuvent évoluer.",
+  "edition_date": "2026-11-22",
+  "generated_at": "2026-11-22T10:10:34.450119+00:00",
+  "editorial_note": "Préparé dimanche à 5 h 10, heure de Montréal. Les chiffres américains de mercredi et l’issue de la COP31 sont encore à venir à cette heure. Les réactions boursières citées sont celles de la clôture du vendredi 20 novembre.",
   "stories": [
     {
-      "topic": "Actions américaines et IA",
-      "title": "Wall Street décroche même si les taux longs reculent",
-      "summary": "À la clôture du vendredi 20 novembre, le S&P 500 a cédé 3,70 % et le Nasdaq Composite, 5,28 %. C’était le septième recul consécutif du S&P 500, qui se trouve, comme le Dow Jones, à plus de 10 % de son sommet récent. Au Nasdaq, Nvidia a perdu près de 14 % et Anthropic a reculé de 9,1 %, après avoir terminé sa première séance au-dessus de son prix d’introduction. En parallèle, le rendement du Trésor américain à dix ans est passé de 5,04 % jeudi à 4,92 % vendredi.",
-      "impact": "Ma lecture : la baisse du dix ans aurait normalement allégé le taux d’actualisation des bénéfices lointains. Le recul simultané des actions suggère que les investisseurs exigent une compensation plus élevée pour le risque ou revoient à la baisse les profits qu’ils attendent de l’intelligence artificielle. Les exploitants de centres de données très endettés sont particulièrement sensibles au coût de leur propre crédit : il peut monter même si le rendement du Trésor descend. Des contrats qui se convertissent en encaissements prévisibles et des écarts de crédit qui se stabilisent mettraient cette lecture à l’épreuve. Une seule séance n’établit pas que la demande de calcul se contracte.",
+      "topic": "États-Unis · Inflation et taux",
+      "title": "L’inflation américaine sera publiée avant la pause de Thanksgiving",
+      "summary": "Le Bureau of Economic Analysis publiera mercredi 25 novembre à 8 h 30, heure de Montréal, les dépenses et revenus d’octobre, dont l’indice des prix des dépenses de consommation personnelle (PCE), ainsi que la deuxième estimation du PIB du troisième trimestre. En première estimation, le PIB réel avait crû de 3,4 % en rythme annualisé. U.S. Bank prévoit une hausse mensuelle de 0,3 % des prix PCE hors alimentation et énergie; ce scénario porterait le taux sur douze mois à 3,2 %, contre 3,1 % en septembre. Il s’agit de sa prévision. La Bourse de New York sera fermée jeudi et sa séance régulière s’achèvera à 13 h vendredi.",
+      "impact": "Ma lecture : une hausse de 25 points de base le 9 décembre est déjà largement anticipée dans les swaps SOFR OIS de BlueGamma, datés du 20 novembre (97 %). Un chiffre supérieur aux attentes, surtout si la pression s’étend aux services, déplacerait donc surtout le débat vers les décisions suivantes. Des rendements à court terme plus élevés tendraient alors à soutenir le dollar et à peser sur les multiples. Une surprise à la baisse, avec des dépenses réelles qui tiennent, offrirait un meilleur scénario pour les obligations et les actions. Si les prix ralentissent parce que les ménages achètent moins, le recul des taux pourrait s’accompagner de révisions de bénéfices à la baisse. Je regarderais les prix du mois et les volumes avant de tirer une conclusion du taux annuel.",
+      "source_label": "U.S. Bank Economics",
+      "source_url": "https://www.usbank.com/content/dam/usbank/en/documents/pdfs/corporate-and-commercial-banking/econ-weekly-pdf-11-20-26.pdf",
+      "published_date": "2026-11-20"
+    },
+    {
+      "topic": "Crédit · Financement de l’IA",
+      "title": "SpaceX obtient le financement de ses puces, à plus de 8 % sur la plus grosse tranche",
+      "summary": "Apollo et Goldman Sachs ont annoncé vendredi 20 novembre la fixation du prix d’environ 44 G$ US de titres de dette destinés à financer des accélérateurs Nvidia et de l’équipement pour les centres de calcul terrestres de SpaceX. Les arrangeurs disent avoir augmenté la taille de l’opération après avoir reçu plus de demandes qu’il n’y avait de titres à placer. D’après Reuters, la plus importante tranche de dette senior garantie, de 25,17 G$ US, a été placée à un rendement de 8,259 %. Le calendrier prévoit que les loyers démarrent avec les livraisons, attendues au premier semestre 2027. Au Nasdaq, SpaceX a clôturé vendredi à 127,79 $ US à 16 h, en baisse de 7,69 %, dans une séance de repli plus large.",
+      "impact": "Ma lecture : la demande de crédit était suffisante pour financer le projet, mais le rendement montre le prix demandé pour immobiliser autant de capital. Les livraisons financées aident à étayer le carnet de Nvidia; pour l’exploitant, la question est de savoir combien d’heures de calcul il pourra vendre et à quel prix une fois l’équipement installé. Des retards ou des tarifs de location en baisse laisseraient moins de revenus pour couvrir des charges fixes. À l’inverse, des contrats de clients qui couvrent durablement ces charges et des financements comparables obtenus à de meilleures conditions affaibliraient cette inquiétude. La baisse de l’action, à elle seule, ne permet pas d’isoler l’effet de l’opération.",
       "source_label": "Reuters",
-      "source_url": "https://www.reuters.com/legal/transactional/wall-st-futures-slip-anthropic-debut-fails-reassure-ai-investors-2026-11-20/",
+      "source_url": "https://www.reuters.com/business/media-telecom/apollo-goldman-lead-44-billion-spacex-gpu-debt-financing-2026-11-20/",
       "published_date": "2026-11-20"
     },
     {
-      "topic": "Canada : consommation et taux",
-      "title": "L’essence gonfle les ventes canadiennes; les volumes stagnent presque",
-      "summary": "Les ventes au détail ont progressé de 0,8 % en dollars en septembre, contre 0,7 % attendu selon Econoday et après 1,4 % en août, chiffre révisé. Les ventes aux stations-service et chez les marchands de combustible ont bondi de 6,9 % en valeur, mais de 1,6 % en volume. Dans l’ensemble, le volume des ventes n’a gagné que 0,1 %; hors carburants et véhicules, la hausse a aussi été de 0,1 %, en dollars. Le volume trimestriel a toutefois augmenté de 1,0 %. Statistique Canada estime provisoirement que les ventes ont baissé de 1,5 % en octobre; l’estimation repose sur une réponse partielle à l’enquête et peut être révisée.",
-      "impact": "Ma lecture : septembre donne peu d’appui à l’idée d’une réaccélération de la demande. Pour les détaillants, il sera plus difficile d’absorber les frais fixes si les volumes plafonnent et que les promotions se multiplient. Pour la Banque du Canada, un repli confirmé et généralisé affaiblirait l’argument d’une nouvelle hausse; à l’inverse, une demande qui résiste et des hausses de prix qui se diffusent hors énergie le renforceraient. Vendredi, les swaps canadiens suivis par BlueGamma donnaient presque autant de poids au maintien qu’à une hausse en décembre. Une révision importante des ventes d’octobre ou un rebond des volumes changerait le diagnostic.",
-      "source_label": "Statistique Canada",
-      "source_url": "https://www150.statcan.gc.ca/n1/daily-quotidien/261120/dq261120a-eng.htm",
-      "published_date": "2026-11-20"
+      "topic": "Canada · Droits de douane",
+      "title": "Ottawa cherche toujours un répit pour l’auto et l’acier",
+      "summary": "Lors d’une rencontre avec son comité consultatif jeudi 19 novembre, le ministre Dominic LeBlanc a fait état de discussions avec Washington, mais de peu de progrès vers un allègement provisoire des droits américains, selon deux personnes citées par Reuters. LeBlanc a aussi dit à CBC que les échanges n’avaient pas encore abouti à un compromis acceptable et qu’une partie des droits sectoriels pourrait subsister même en cas d’accord. Reuters rapporte qu’en l’état, le taux américain visé sur les automobiles canadiennes doit passer de 25 % à 50 % en janvier. Vendredi, Donald Trump a dit qu’il restait du travail avant un accord; il n’a annoncé aucun allègement.",
+      "impact": "Ma lecture : la première question pour les constructeurs et leurs fournisseurs est le coût d’une commande supplémentaire produite au Canada. Si un tarif plus élevé dure, une partie du coût peut être absorbée dans les marges, refilée aux acheteurs ou contournée en déplaçant de futurs volumes vers une autre usine. Ce dernier choix pèse sur l’investissement et l’emploi canadiens, même avant la prochaine ronde de prix. Un accord écrit qui réduit les droits sur un volume important, avec une date d’effet claire, renverserait cette lecture. Des contacts ministériels seuls ne suffisent pas à établir que les coûts vont baisser ou que le dollar canadien va se renforcer.",
+      "source_label": "Reuters",
+      "source_url": "https://www.reuters.com/markets/commodities/canada-sees-little-us-movement-tariff-relief-sources-say-2026-11-19/",
+      "published_date": "2026-11-19"
     },
     {
-      "topic": "États-Unis : confiance et inflation",
-      "title": "Michigan : la confiance remonte et l’inflation anticipée baisse",
-      "summary": "L’Université du Michigan a publié vendredi un indice final de confiance à 51,5 en novembre, contre 51,0 en première lecture et 48,0 en octobre. Les jugements sur la conjoncture future ont davantage progressé que ceux sur la situation actuelle. L’inflation médiane attendue à un an est descendue de 4,7 % à 3,7 %, et celle de long terme, de 3,5 % à 3,3 %. Les entretiens se sont terminés le 16 novembre. Ils n’intègrent donc pas la chute boursière de vendredi et mesurent les perceptions, pas les achats réalisés.",
-      "impact": "Ma lecture : la détente des anticipations est utile si elle s’accompagne d’une modération des prix effectivement payés et des salaires. Dans ce cas, la Réserve fédérale aurait plus de marge pour éviter d’autres hausses, ce qui soulagerait les emprunteurs et pourrait peser sur le dollar américain à taux étrangers inchangés. Mais le marché des swaps américains continuait vendredi de privilégier fortement une hausse en décembre. Si l’inflation sous-jacente reste ferme, le sondage seul ne renversera pas ce scénario. Et si les dépenses ralentissent franchement, l’appui des taux aux multiples pourrait être annulé par des bénéfices plus faibles.",
-      "source_label": "Université du Michigan",
-      "source_url": "https://isr.umich.edu/news-events/news-releases/sentiment-ticks-up-as-election-expected-to-usher-in-changes-to-economic-policy/",
-      "published_date": "2026-11-20"
+      "topic": "Énergie · Politique climatique",
+      "title": "COP31 : l’électrification demeure dans le projet, sans accord sur les fossiles",
+      "summary": "La Turquie et l’Australie ont soumis à Antalya un nouveau projet de décision, toujours en discussion tôt dimanche. Selon l’Agence France-Presse, le texte propose de porter la part de l’électricité à 35 % de la consommation finale mondiale d’énergie d’ici 2035, sans demander explicitement que cette électricité provienne de sources renouvelables. Il ne nomme pas directement les combustibles fossiles, ce qui a suscité des objections européennes et de petits États insulaires. L’objectif financier de 120 G$ pour l’adaptation ne figure plus dans cette version. Ces éléments décrivent le projet disponible à l’heure de préparation; ils ne constituent pas un accord adopté.",
+      "impact": "Ma lecture : si l’objectif d’électrification se traduit par des budgets et des commandes, le débouché le plus direct est l’équipement de réseau, qui doit suivre la demande quelle que soit la source d’électricité. Pour les producteurs de pétrole et de gaz, un texte qui ne fixe aucune trajectoire explicite laisse l’effet sur les volumes indéterminé. Pour les développeurs de projets, les conditions de financement et les décisions nationales sur le réseau compteront davantage à court terme. Des engagements adoptés, chiffrés et accompagnés de calendriers d’investissement changeraient cette lecture; le projet seul ne justifie pas une révision des prix de l’énergie.",
+      "source_label": "Agence France-Presse",
+      "source_url": "https://www.afp.com/en/cop31-teeters-brink-fossil-fuel-rift-deepens",
+      "published_date": "2026-11-22"
     }
   ],
   "fred_watch": [
     {
-      "series_id": "DGS10",
-      "title": "Le dix ans américain sous 5 %",
-      "explanation": "Le 20 novembre, le rendement du Trésor à dix ans est descendu à 4,92 %, contre 5,04 % le 19. Ce recul allège le taux de référence; il ne dit pas à combien les entreprises risquées peuvent se financer et n’implique pas un changement imminent du taux directeur.",
+      "series_id": "PCEPILFE",
+      "title": "Inflation PCE de base : le point de départ de mercredi",
+      "observation_date": "2026-09-01",
+      "explanation": "Pour septembre 2026 (observation datée du 1er septembre), les prix PCE hors alimentation et énergie progressaient de 3,12 % sur douze mois, contre 3,03 % en août. L’écart avec la cible de 2 % demeure. Mercredi, le rythme mensuel aidera à distinguer une accélération courante d’un effet de comparaison.",
+      "source_url": "https://fred.stlouisfed.org/series/PCEPILFE"
+    },
+    {
+      "series_id": "DFII10",
+      "title": "Le coût réel des fonds à long terme reste élevé",
       "observation_date": "2026-11-20",
-      "source_url": "https://fred.stlouisfed.org/series/DGS10"
+      "explanation": "Le 20 novembre, le rendement réel de marché des obligations américaines indexées sur l’inflation à dix ans est passé de 2,88 % à 2,77 %. La baisse allège légèrement le taux réel de référence, toujours positif. Le rendement demandé à une entreprise dépend aussi de sa prime de risque.",
+      "source_url": "https://fred.stlouisfed.org/series/DFII10"
     },
     {
-      "series_id": "BAMLH0A0HYM2",
-      "title": "Crédit risqué : comparer l’écart au taux du Trésor",
-      "explanation": "Le 19 novembre, l’écart ajusté des options des obligations américaines à haut rendement atteignait 3,52 points de pourcentage, contre 3,47 la veille. La hausse est modeste et précède la chute de vendredi. La prochaine observation dira si la pression s’est propagée au-delà des actions.",
-      "observation_date": "2026-11-19",
-      "source_url": "https://fred.stlouisfed.org/series/BAMLH0A0HYM2"
+      "series_id": "ICSA",
+      "title": "Assurance-emploi américaine : peu de changement à la marge",
+      "observation_date": "2026-11-14",
+      "explanation": "La semaine terminée le 14 novembre, il y a eu 203 000 nouvelles demandes d’assurance-emploi aux États-Unis, en données désaisonnalisées, contre 202 000 la semaine précédente. Cette variation n’indique pas une vague de licenciements et ne mesure pas l’embauche. Il faudra plusieurs observations pour confirmer un infléchissement.",
+      "source_url": "https://fred.stlouisfed.org/series/ICSA"
     },
     {
-      "series_id": "PAYEMS",
-      "title": "Emploi américain : un rebond à confirmer",
-      "explanation": "En octobre 2026, dernier mois publié (daté du 1er octobre sur la série), l’emploi salarié non agricole américain a gagné environ 165 000 postes, après 60 000 en septembre. Le graphique montre la variation mensuelle du nombre d’emplois, corrigée des variations saisonnières. Le rebond signale une demande de travail encore présente, mais une seule lecture ne fait pas une tendance.",
-      "observation_date": "2026-10-01",
-      "source_url": "https://fred.stlouisfed.org/series/PAYEMS"
-    },
-    {
-      "series_id": "MEDCPIM158SFRBCLE",
-      "title": "Inflation médiane : la cadence mensuelle remonte",
-      "explanation": "En octobre 2026, observation datée du 1er octobre, l’inflation médiane de la Fed de Cleveland s’est établie à 3,66 % au rythme mensuel annualisé, contre 2,81 % en septembre. C’est la cadence d’un mois projetée sur un an, pas l’inflation mesurée sur douze mois. Une cadence élevée qui se répète serait un signal plus convaincant qu’une seule accélération.",
-      "observation_date": "2026-10-01",
-      "source_url": "https://fred.stlouisfed.org/series/MEDCPIM158SFRBCLE"
+      "series_id": "NFCI",
+      "title": "Conditions financières : un point de repère antérieur au repli",
+      "observation_date": "2026-11-13",
+      "explanation": "Pour la semaine terminée le 13 novembre, l’indice de la Fed de Chicago s’établissait à −0,478, contre −0,473 la semaine précédente. Sous zéro, les conditions sont plus souples que leur moyenne historique selon cet indice. La lecture précède toutefois la dernière semaine de baisse boursière et ne permet pas de juger de son effet sur le crédit.",
+      "source_url": "https://fred.stlouisfed.org/series/NFCI"
     }
   ],
   "audio_script": {
-    "edition_date": "2026-11-21",
-    "source_generated_at": "2026-11-21T10:12:37.522878+00:00",
-    "intro": "Bonjour. Voici Nouvelles qui comptent, préparé ce samedi matin à Montréal. On regarde la chute de Wall Street vendredi, puis deux lectures différentes de la consommation : ce que les Canadiens ont acheté et ce à quoi les ménages américains s’attendent.",
+    "edition_date": "2026-11-22",
+    "source_generated_at": "2026-11-22T10:10:34.450119+00:00",
+    "intro": "Bonjour. C’est le briefing de dimanche, préparé un peu après cinq heures, heure de Montréal. Les chiffres américains qu’on attend mercredi n’ont pas encore été publiés. On regarde pourquoi ils comptent, puis le coût du financement de SpaceX, les droits sur l’auto canadienne et ce que le nouveau projet à la conférence sur le climat changerait, s’il était adopté.",
     "stories": [
       {
-        "title": "Wall Street décroche même si les taux longs reculent",
-        "text": "On commence à Wall Street. Vendredi, à la clôture, le S et P cinq cents a perdu trois virgule sept pour cent. Le Nasdaq Composite a cédé plus de cinq pour cent, avec Nvidia en baisse de près de quatorze pour cent. Anthropic aussi a reculé, après un bon départ en Bourse jeudi. Le mouvement touche assez de titres pour que le S et P cinq cents et le Dow Jones soient maintenant plus de dix pour cent sous leur sommet récent. Il y a un détail qui change la lecture : le rendement des obligations fédérales américaines à dix ans a baissé en même temps.\n\nMa lecture, c’est que le marché demande surtout d’être mieux payé pour le risque qu’il prend. Par exemple, le coût de financement d’un exploitant de centres de données dépend du taux de base, mais aussi de la prime que ses prêteurs exigent. Cette prime peut augmenter même quand le Trésor baisse. Et pour les actionnaires, il faut encore que les gros contrats génèrent assez de liquidités pour payer les équipements et la dette. Si les encaissements suivent les contrats et que le crédit se calme, ce scénario de tension perdra de sa force. Une baisse des titres ne prouve pas, à elle seule, que la demande de calcul se replie."
+        "title": "L’inflation américaine sera publiée avant la pause de Thanksgiving",
+        "text": "On commence par l’inflation américaine. Mercredi, à huit heures et demie du matin à Montréal, on aura deux publications en même temps. D’abord, les revenus, les dépenses et les prix à la consommation pour octobre. Ensuite, la deuxième lecture du produit intérieur brut de l’été. La première indiquait une croissance d’un peu plus de trois pour cent en rythme annualisé. Pour les prix des dépenses de consommation personnelle, U.S. Bank s’attend à trois dixièmes de hausse sur le mois, sans les aliments ni l’énergie. C’est sa prévision. Le rapport n’est pas sorti. Et il sera suivi d’une journée de fermeture à New York, puis d’une séance écourtée vendredi.\n\nMa lecture : vendredi, le marché des swaps de taux accordait déjà beaucoup de poids à une hausse en décembre. Avec un chiffre plus fort que prévu, je surveillerais surtout si le marché prolonge ses attentes de hausse au-delà de décembre. Si les rendements courts remontent, le dollar peut se raffermir et les valorisations deviennent plus sensibles. Si les prix surprennent à la baisse et que les gens continuent d’acheter en volume, c’est plus favorable pour les obligations et pour les profits. Si les prix ralentissent parce que les ventes réelles faiblissent, il faut surveiller les profits en même temps que les taux."
       },
       {
-        "title": "L’essence gonfle les ventes canadiennes; les volumes stagnent presque",
-        "text": "Au Canada, parlons de ce qu’on achète et de ce qu’on paie. Les ventes de septembre ont augmenté de zéro virgule huit pour cent en dollars. C’est un peu mieux que prévu, mais moins qu’en août, et l’essence a beaucoup contribué. Aux stations-service et chez les marchands de combustible, les recettes ont augmenté beaucoup plus vite que les quantités. Quand on tient compte des prix, le volume des ventes dans l’ensemble des commerces n’a gagné qu’un dixième de point en septembre. Le trimestre reste positif. Et pour octobre, Statistique Canada entrevoit un recul en dollars. Son estimation peut encore changer.\n\nMa lecture : il faut que le recul d’octobre se confirme dans plusieurs catégories et dans les volumes avant de parler de faiblesse généralisée. Ce serait important pour les détaillants, parce que payer les mêmes frais avec moins de ventes laisse moins de place pour absorber des rabais. Pour la Banque du Canada, la situation est moins claire qu’un seul gros chiffre pourrait le laisser croire. Une demande qui mollit enlève un argument pour une nouvelle hausse. Des prix qui accélèrent au-delà de l’énergie lui en redonneraient un. Vendredi, les swaps de taux mettaient le maintien et la hausse de décembre presque à égalité."
+        "title": "SpaceX obtient le financement de ses puces, à plus de 8 % sur la plus grosse tranche",
+        "text": "Passons au financement des centres de calcul. Apollo et Goldman Sachs ont annoncé vendredi avoir fixé le prix d’un montage d’environ quarante-quatre milliards de dollars américains pour du matériel de SpaceX. Il s’agit d’équipement pour des installations au sol, dont des puces de Nvidia. Les arrangeurs ont pu augmenter la taille de l’opération parce que les investisseurs en demandaient plus. Mais le plus gros bloc de dette se place à un rendement de plus de huit pour cent. Les loyers devraient commencer avec les livraisons, attendues au premier semestre de l’année prochaine. En Bourse, SpaceX a fini vendredi en baisse de près de huit pour cent au Nasdaq. Il y avait aussi un repli plus large, donc le mouvement ne nous dit pas, à lui seul, ce que les investisseurs ont pensé du financement.\n\nMa lecture : Nvidia a de l’équipement à livrer. Pour SpaceX, le défi, c’est ensuite de louer assez d’heures de calcul, à des tarifs qui couvrent les coûts fixes du montage. S’il y a des retards ou si les clients négocient leurs prix à la baisse, cette marge de manœuvre diminue. J’accorderais plus de poids aux encaissements que promettent les contrats avec les clients et au prix de la prochaine émission comparable. Ce sont de meilleurs tests de la rentabilité que la taille de l’annonce."
       },
       {
-        "title": "Michigan : la confiance remonte et l’inflation anticipée baisse",
-        "text": "Revenons aux États-Unis avec le sondage du Michigan. Les ménages étaient un peu plus confiants en novembre et ils s’attendaient à une hausse des prix moins forte au cours de la prochaine année. Leur anticipation médiane a baissé d’un point, à trois virgule sept pour cent. À long terme, elle a aussi reculé, plus modestement. Les entrevues se sont terminées le seize novembre, avant la chute de vendredi. Et ce qu’une personne s’attend à payer n’est pas une mesure de ce qu’elle a dépensé.\n\nMa lecture : ce serait un bon signal pour la banque centrale si les prix et les salaires ralentissaient eux aussi. Une pression moins forte pour remonter les taux aiderait les ménages qui renouvellent un prêt et les entreprises qui doivent refinancer leur dette. Pour l’instant, les swaps américains privilégient toujours une hausse en décembre. Si les prochains chiffres montrent des prix encore tenaces, le sondage ne changera pas grand-chose à cette attente. À l’inverse, si les prix baissent parce que la demande s’affaisse, regardons aussi ce qu’il advient des profits."
+        "title": "Ottawa cherche toujours un répit pour l’auto et l’acier",
+        "text": "Au Canada, je reviens sur un dossier qui n’a pas trouvé de solution avant la fin de semaine. Le ministre Dominic LeBlanc a fait le point jeudi sur les discussions avec Washington. Ottawa cherche un allègement provisoire, mais selon les personnes à qui Reuters a parlé, le mouvement est limité. Le ministre a aussi dit à CBC qu’une partie des tarifs sur l’acier et l’auto pourrait rester même avec un accord. Reuters rappelle que le taux visé sur l’auto canadienne doit passer de vingt-cinq à cinquante pour cent en janvier si rien ne change. Vendredi, Donald Trump a dit qu’il restait du travail. Il n’a pas annoncé de réduction.\n\nMa lecture : pour une entreprise qui assemble des véhicules, ce qui compte, c’est de savoir si la prochaine commande sera rentable à produire ici et à expédier aux États-Unis. L’entreprise peut absorber une partie du coût ou augmenter le prix payé par ses clients. Elle peut aussi décider de fabriquer les prochains modèles ailleurs. Cette décision a un effet plus durable sur l’emploi et sur les commandes aux sous-traitants. Pour revoir ce scénario, je chercherais un accord écrit qui précise les volumes visés et la date d’entrée en vigueur."
+      },
+      {
+        "title": "COP31 : l’électrification demeure dans le projet, sans accord sur les fossiles",
+        "text": "Enfin, à Antalya, le sommet sur le climat a débordé sur dimanche. Le projet présenté par la Turquie et l’Australie donne encore une place à l’électrification. Il propose que l’électricité fournisse trente-cinq pour cent de l’énergie consommée à l’échelle mondiale d’ici deux mille trente-cinq. Il ne dit pas que cette électricité doit venir de sources renouvelables, et les combustibles fossiles ne sont pas nommés directement. C’est une des raisons des objections européennes et de petits États insulaires. Un objectif de financement de l’adaptation a aussi été retiré. Au moment de préparer ce briefing, je parle du projet; il n’est pas adopté.\n\nMa lecture : les réseaux et leurs fournisseurs peuvent bénéficier d’une demande d’électricité plus grande, mais il leur faut des budgets, des permis et des commandes. On ne connaît pas le mélange des sources d’énergie qu’un accord produirait. Il serait donc prématuré d’en déduire une nouvelle trajectoire pour le pétrole ou le gaz. Ce qui changerait cette lecture, ce sont des engagements adoptés et assortis de dates et de financement."
       }
     ],
-    "watch": "Quatre repères dans les graphiques. Le dix ans américain est revenu à quatre virgule quatre-vingt-douze pour cent vendredi vingt novembre. Pour le crédit à haut rendement, la dernière donnée est du jeudi dix-neuf : sa prime montait légèrement. On ne voit pas encore la réaction de vendredi. Côté emploi, octobre a donné environ cent soixante-cinq mille postes salariés de plus sur un mois, après soixante mille en septembre. Enfin, l’inflation médiane de Cleveland a accéléré en octobre. Son trois virgule soixante-six pour cent correspond à la cadence d’un seul mois convertie en rythme annuel. Ce n’est pas une mesure sur douze mois.",
-    "outro": "Je vous laisse les sources et les quatre graphiques dans le briefing écrit. Ils vous permettront de suivre si le mouvement de vendredi s’étend au crédit et si la faiblesse des ventes se confirme. Merci d’avoir écouté, et bonne fin de semaine."
+    "watch": "Quatre graphiques à surveiller. Le premier montre que les prix américains hors alimentation et énergie ont augmenté d’un peu plus de trois pour cent sur douze mois en septembre. Mercredi, regardez aussi la variation d’octobre sur un seul mois : les deux mesures ne racontent pas exactement la même chose. Le vingt novembre, le rendement réel à dix ans des obligations américaines indexées à l’inflation est descendu à deux virgule soixante-dix-sept pour cent. Du côté de l’emploi, les demandes de chômage ont peu bougé la semaine terminée le quatorze novembre. Ça renseigne sur les mises à pied, pas directement sur les embauches. Enfin, l’indice de conditions financières de la Fed de Chicago reste sous zéro au treize novembre. Ça correspond à des conditions plus souples que sa moyenne historique. La donnée précède le repli de la dernière semaine, alors on ne peut pas encore s’en servir pour mesurer l’effet du repli sur le crédit.",
+    "outro": "Les sources et les quatre graphiques se trouvent dans le briefing écrit. Mercredi, je surveillerais ensemble les prix du mois et les dépenses en volume : c’est leur combinaison qui guidera la lecture des taux et des bénéfices. Merci d’avoir écouté, et bon dimanche."
   }
 }

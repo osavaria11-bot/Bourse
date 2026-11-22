@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "reviewed_earnings_highlights",
-  "reviewed_at": "2026-11-20T10:05:48.367426+00:00",
+  "reviewed_at": "2026-11-22T10:12:36.823194+00:00",
   "reports": {
     "NFLX:2026-10-20": {
       "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-20-netflix-inc-stock/",
@@ -260,12 +260,26 @@
       ]
     },
     "DSGX:2026-09-10": {
-      "source_url": "https://www.marketbeat.com/earnings/reports/2026-9-10-the-descartes-systems-group-inc-stock/",
+      "source_url": "https://www.sec.gov/Archives/edgar/data/1050140/000110465926106807/dsgx-20260731xex99d2.htm",
+      "report_url": null,
       "messages": [
-        "Descartes annonce des revenus en hausse de 12 % et un BAIIA ajusté en croissance de 18 %, avec une marge record de 47 %.",
-        "Les services affichent un peu plus de 9 % de croissance interne, soutenus par les outils de commerce, de douanes et de conformité.",
-        "Les faibles volumes de transport, le carburant, les pénuries de chauffeurs et l’incertitude tarifaire demeurent des freins."
-      ]
+        "Les ventes ont progressé de 12 % au T2 de l’exercice 2027. Les services atteignent 188,6 M$ US (+13 %); les clients nouveaux et existants ont apporté 17,1 M$ US de plus aux ventes de services. Descartes attribue l’essentiel de cette croissance aux outils de commerce international et de gestion de flotte.",
+        "La marge de BAIIA ajusté atteint 47 %, contre 45 % un an plus tôt. À l’appel, le directeur financier a maintenu la fourchette de marge de 40–45 % : la composition des ventes, le change et l’intégration des acquisitions peuvent faire varier le résultat d’un trimestre à l’autre.",
+        "Les flux d’exploitation atteignent 81,3 M$ US, en hausse de 28 %. Le trimestre de comparaison avait subi des coûts de restructuration. Descartes a utilisé 24,3 M$ US pour les rachats d’actions et 29,5 M$ US pour les acquisitions du trimestre, net de l’encaisse acquise.",
+        "Après le 31 juillet, Descartes a acheté TAI (99,3 M$ US) et Extensiv (119,9 M$ US), net de l’encaisse acquise et financés sur la trésorerie. Ces achats étendent l’offre des courtiers en transport et des entrepôts. Ma lecture : l’intégration des deux plateformes et la vente de services aux clients acquis deviennent les prochains tests."
+      ],
+      "verified_actuals": {
+        "currency": "USD",
+        "eps": 0.57,
+        "revenue": 201100000,
+        "eps_basis": {
+          "actual": "gaap",
+          "estimate": "unverified"
+        },
+        "source_url": "https://www.sec.gov/Archives/edgar/data/1050140/000110465926106807/dsgx-20260731xex99d2.htm",
+        "verified_at": "2026-11-22T10:12:36.823194+00:00",
+        "reason": "Le communiqué officiel du 10 septembre 2026 (T2 de l’exercice 2027) indique un BPA dilué US GAAP de 0,57 $ US et des revenus de 201,1 M$ US. Le BPA Yahoo de 0,80 $ US est remplacé et conservé dans la provenance. L’estimation Yahoo de 0,74 $ US est conservée; sa base comptable n’est pas vérifiée."
+      }
     },
     "MFC:2026-08-05": {
       "source_url": "https://www.marketbeat.com/earnings/reports/2026-8-5-manulife-financial-co-stock/",
