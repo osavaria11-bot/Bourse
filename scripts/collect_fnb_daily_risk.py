@@ -19,6 +19,7 @@ from fnb_sources import Client, FID
 ROOT=Path(__file__).resolve().parents[1]
 CONFIDENCE=.95
 MIN_OBSERVATIONS=252
+MARKET_RETURN_BASIS='adjusted_market_close_total_return'
 
 def window_start(analysis):
     tickers={t for key in analysis['order'] for t in analysis['results'][key]['weights']}
@@ -72,7 +73,7 @@ def build(analysis, prices, cutoff, generated_at, return_series=None):
         'observations':len(accepted),'expected_observations':expected,'missing_sessions':missing,
         'weights_signature':signature(analysis),'shape_estimators':'bias_corrected_fisher','status':'current','error':None,'results':results,
         'source':'CAD, rendement total. FEQT : rendements quotidiens officiels Fidelity sur valeur liquidative, utilisés sur toute la fenêtre. Autres FNB : clôtures boursières ajustées Yahoo Finance. Distributions et fractionnements ajustés.',
-        'return_basis':{t:('issuer_nav_total_return' if t in return_series else 'adjusted_market_close_total_return') for t in tickers},
+        'return_basis':{t:('issuer_nav_total_return' if t in return_series else MARKET_RETURN_BASIS) for t in tickers},
         'source_urls':sorted({p['source_url'] for t,rows in prices.items() if t not in return_series for p in rows.values()} | ({'https://www.fidelity.ca/en/products/etfs/feqt/'} if 'FEQT' in return_series else set())),
         'method_note':'Simulation historique à poids cibles actuels constants : somme des poids × rendements réels de chaque séance. Échantillon commun à tous les portefeuilles et benchmarks. FEQT utilise les rendements totaux quotidiens de valeur liquidative de son émetteur sur toute la fenêtre, sans raccorder des prix de fournisseurs différents. Les autres fonds utilisent deux clôtures ajustées consécutives d’une même source. Les séances manquantes sont exclues; aucun rendement sur plusieurs séances ne devient une observation à un jour. Distinct du backtest mensuel rééquilibré en janvier et du suivi réel depuis lancement.'}
 
@@ -98,6 +99,84 @@ def validate(data):
             if abs(historical_var(recomputed)-row['var95'])>1e-10:raise ValueError('Daily VaR inconsistent with retained returns')
     return data
 
+def market_zero_conflicts(data, ledger_dir):
+    """Find flat market returns contradicted by two consecutive ledger closes.
+
+    Use the ledger only to check observations; never splice its prices into
+    the risk history. Skip NAV returns and any pair with a corporate action
+    or change in price source.
+    """
+    series=data.get('daily_series')
+    if not series:
+        return
+    basis=data.get('return_basis',{})
+    market={t:rows for t,rows in series['returns'].items() if basis.get(t)==MARKET_RETURN_BASIS}
+    for i,day in enumerate(series['dates']):
+        current_file=ledger_dir/(day+'.json')
+        if not current_file.is_file():
+            continue
+        flat=[t for t,rows in market.items() if rows[i]==0.]
+        if not flat:
+            continue
+        previous_day=F.previous_trading_day(date.fromisoformat(day)-timedelta(days=1)).isoformat()
+        previous_file=ledger_dir/(previous_day+'.json')
+        if not previous_file.is_file():
+            continue
+        previous,current=F.read(previous_file)['prices'],F.read(current_file)['prices']
+        for ticker in flat:
+            a,b=previous.get(ticker),current.get(ticker)
+            if (not a or not b or b.get('symbol')!=a.get('symbol')
+                    or b.get('price_source') not in ('Yahoo Finance','TMX Money')
+                    or b.get('price_source')!=a.get('price_source') or b.get('split')!=1.
+                    or b.get('distribution')!=0. or b.get('previous_close_revision')
+                    or b.get('previous_close_source_change')):
+                continue
+            if abs(b['close']/a['close']-1.)>.001:
+                yield day,ticker
+
+
+def verify_market_zeros(data, ledger_dir):
+    conflict=next(market_zero_conflicts(data,ledger_dir),None)
+    if conflict:
+        day,ticker=conflict
+        raise ValueError(f'Rendement de marché nul contredit par le registre : {ticker} le {day}.')
+
+
+def quarantine_market_conflicts(data, ledger_dir):
+    """Exclude suspect consecutive returns without substituting prices."""
+    conflicts={}
+    for day,ticker in market_zero_conflicts(data,ledger_dir):
+        conflicts.setdefault(day,[]).append(ticker)
+    if not conflicts:
+        return data
+    out=deepcopy(data)
+    series=out['daily_series']
+    excluded=set(conflicts)
+    # Either endpoint of the flat observation may be stale. The following
+    # return shares the newer endpoint and cannot be used either.
+    excluded.update(F.next_session(date.fromisoformat(day)).isoformat() for day in conflicts)
+    excluded={d for d in excluded if d<=data['as_of']}
+    kept=[i for i,day in enumerate(series['dates']) if day not in excluded]
+    if not kept:
+        raise ValueError('Aucun rendement quotidien vérifiable après mise en quarantaine')
+    last_old_index=series['session_indices'][-1]
+    for field in ('dates','session_indices'):
+        series[field]=[series[field][i] for i in kept]
+    series['returns']={ticker:[rows[i] for i in kept] for ticker,rows in series['returns'].items()}
+    first,last=series['dates'][0],series['dates'][-1]
+    missing=sorted({d for d in set(out['missing_sessions'])|excluded if d<=last})
+    out.update(as_of=last,sample_start=first,sample_end=last,observations=len(kept),
+               expected_observations=out['expected_observations']-last_old_index+series['session_indices'][-1],
+               missing_sessions=missing,
+               market_source_exclusions={'ledger_conflicts':conflicts,'excluded_sessions':sorted(excluded)})
+    if last!=data['as_of']:
+        out.update(status='stale',error=f'Clôtures non confirmées dans le risque FNB. Dernier échantillon validé : {last}.')
+    for row in out['results'].values():
+        values=[sum(w*series['returns'][t][j] for t,w in row['weights'].items()) for j in range(len(kept))]
+        row.update(var95=historical_var(values),**distribution_shape(values))
+    return validate(out)
+
+
 def reweight(analysis, retained, generated_at):
     """Recompute target risk on an unchanged, validated common source sample."""
     validate(retained)
@@ -116,10 +195,21 @@ def main(argv=None):
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output',type=Path,default=ROOT/'data/fnb-daily-risk.json');parser.add_argument('--check',action='store_true');parser.add_argument('--cache',type=Path)
     args=parser.parse_args(argv)
+    ledger=ROOT/'data/fnb-performance/days'
     if args.check:
-        data=validate(json.loads(args.output.read_text()));print('Validated actual one-session VaR:',data['observations'],'sessions,',len(data['results']),'series');return 0
+        data=validate(json.loads(args.output.read_text()));verify_market_zeros(data,ledger)
+        print('Validated actual one-session VaR:',data['observations'],'sessions,',len(data['results']),'series');return 0
     analysis=json.loads((ROOT/'data/fnb-analysis.json').read_text());cutoff=F.completed_session(datetime.now(ZoneInfo('America/Toronto'))).isoformat()
     old=json.loads(args.output.read_text()) if args.output.exists() else None
+    if old:
+        try:
+            repaired=quarantine_market_conflicts(old,ledger)
+            if repaired is not old:
+                F.write(args.output,repaired)
+            old=repaired
+        except ValueError:
+            # Do not reuse or write back a snapshot that failed the cross-check.
+            old=None
     if old and old.get('schema_version')==2 and old.get('as_of')==cutoff and old.get('weights_signature')==signature(analysis) and old.get('shape_estimators')=='bias_corrected_fisher' and old.get('status')=='current':validate(old);print('Daily VaR already current:',cutoff);return 0
     try:
         config=json.loads((ROOT/'data/fnb-model.json').read_text());tickers={t for key in analysis['order'] for t in analysis['results'][key]['weights']}
@@ -150,7 +240,10 @@ def main(argv=None):
             if not isinstance(value,(int,float)) or not math.isfinite(value) or not .5<value<1.5:raise ValueError('Invalid official FEQT one-session factor')
             feqt[(first_official+timedelta(days=i)).isoformat()]=value-1
         data=build(analysis,prices,cutoff,datetime.now(ZoneInfo('America/Toronto')).isoformat(timespec='seconds'),{'FEQT':feqt})
-        validate(data);F.write(args.output,data);print('Daily VaR:',data['observations'],'common sessions;',len(data['results']),'series',flush=True);return 0
+        data=quarantine_market_conflicts(validate(data),ledger)
+        verify_market_zeros(data,ledger);F.write(args.output,data)
+        print('Daily VaR:',data['as_of'],data['status'],data['observations'],'common sessions;',len(data['results']),'series',flush=True)
+        return int(data['status']!='current')
     except Exception as error:
         if old:
             old.update(status='stale',error=str(error)[:500]);F.write(args.output,old)
