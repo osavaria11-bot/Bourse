@@ -38,10 +38,13 @@ test('walk-forward forecasts cannot change when future data are perturbed',()=>{
 });
 test('daily histories below 12, 24 and 36 months obey horizon-specific minimums',()=>{
  for(const n of [100,251,252,400,503,504,755]){
-  const a=structuredClone(A);a.observations=n;a.daily_series.dates=a.daily_series.dates.slice(-n);a.daily_series.session_indices=a.daily_series.session_indices.slice(-n);for(const t in a.daily_series.returns)a.daily_series.returns[t]=a.daily_series.returns[t].slice(-n);
+  // The count thresholds use a complete test window, regardless of the
+  // production snapshot's status or holes in today's history.
+  const a=structuredClone(A);a.status='current';a.observations=n;a.daily_series.dates=a.daily_series.dates.slice(-n);a.daily_series.session_indices=Array.from({length:n},(_,i)=>i);for(const t in a.daily_series.returns)a.daily_series.returns[t]=a.daily_series.returns[t].slice(-n);
   const c=R.compare(structuredClone(D),'2','VEQT',a);assert.equal(c.daily.available,n>=252);assert.equal(c.var!==null,n>=504);if(c.var!==null){assert.ok(c.cvar>=c.var-1e-12);assert.equal(c.observations,Math.floor(n/21));assert.equal(c.fragile,true);}
  }
  const missing=R.compare(structuredClone(D),'2','VEQT',null);assert.equal(missing.var,null);assert.equal(missing.drawdown.frequency,'mensuelle');
+ const stale=R.compare(structuredClone(D),'2','VEQT',{...A,status:'stale'});assert.equal(stale.daily.status,'stale');assert.equal(stale.daily.end,A.sample_end);
 });
 test('absolute and active Euler contributions retain negative hedges and reconcile independently',()=>{
  const returns={X:[-.1,.1,-.2,.2],Y:[.1,-.1,.2,-.2]},c=R.activeContributions({X:.8,Y:.2},{X:.5,Y:.5},returns,4);

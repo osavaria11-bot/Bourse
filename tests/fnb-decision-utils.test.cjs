@@ -1,7 +1,11 @@
 'use strict';
 const {test}=require('node:test'),assert=require('node:assert/strict');
 const U=require('../js/fnb-decision-utils'),R=require('../js/fnb-risk-utils');
-const D=require('../data/fnb-analysis.json'),A=require('../data/fnb-daily-risk.json'),H=require('../data/fnb-stress-history.json'),P=require('../data/fnb-performance.json');
+const D=require('../data/fnb-analysis.json'),H=require('../data/fnb-stress-history.json'),P=require('../data/fnb-performance.json');
+// Daily method tests need a continuous scenario, regardless of source gaps
+// in the changing public snapshot. The gap fallback is tested separately.
+const A=structuredClone(require('../data/fnb-daily-risk.json'));A.status='current';
+A.daily_series.session_indices=A.daily_series.dates.map((_,i)=>i);
 const close=(a,b)=>assert.ok(Number.isFinite(a)&&Number.isFinite(b)&&Math.abs(a-b)<1e-10,`${a} ≈ ${b}`);
 test('daily decision metrics recover compounded returns, sample volatility and arithmetic Sharpe',()=>{
   const x=Array.from({length:252},(_,i)=>i%2?.01:-.01),m=U.metrics(x,252,.02,x.map((_,i)=>i));
@@ -23,7 +27,7 @@ test('every candidate and benchmark uses identical dates, conventions and daily 
 });
 test('short histories and absent daily weights never produce a fabricated monthly CVaR',()=>{
   for(const n of [100,251,252,400,503,504,755]){
-    const a=structuredClone(A);a.observations=n;a.daily_series.dates=a.daily_series.dates.slice(-n);a.daily_series.session_indices=a.daily_series.session_indices.slice(-n);
+    const a=structuredClone(A);a.observations=n;a.daily_series.dates=a.daily_series.dates.slice(-n);a.daily_series.session_indices=Array.from({length:n},(_,i)=>i);
     for(const t in a.daily_series.returns)a.daily_series.returns[t]=a.daily_series.returns[t].slice(-n);
     const result=U.analyse(structuredClone(D),['2','7'],'VEQT',a,H);assert.equal(result.basis,n>=252?'daily':'monthly');
     for(const row of result.rows)assert.equal(row.cvar!==null,n>=504);
@@ -33,7 +37,8 @@ test('short histories and absent daily weights never produce a fabricated monthl
   const missing=U.analyse(D,['2'],'VEQT',null,H);assert.equal(missing.basis,'monthly');
   const incomplete=structuredClone(D);incomplete.results['2'].monthly=[];assert.equal(U.analyse(incomplete,['2','7'],'VEQT',null,H).available,false);
   const gaps=structuredClone(A);gaps.daily_series.session_indices[gaps.daily_series.session_indices.length-1]++;
-  assert.equal(U.analyse(structuredClone(D),['2'],'VEQT',gaps,H).basis,'monthly');
+  gaps.status='stale';const stale=U.analyse(structuredClone(D),['2'],'VEQT',gaps,H);
+  assert.equal(stale.basis,'monthly');assert.equal(stale.dailyStatus,'stale');assert.ok(stale.rows.every(r=>r.cvar===null));
 });
 test('mandates and benchmark-relative rankings stay separate, with distinct user choices',()=>{
   assert.deepEqual(U.candidates(D,'VBAL'),['10']);assert.deepEqual(U.candidates(D,'FBAL'),['10']);assert.deepEqual(U.candidates(D,'VGRO'),['11']);

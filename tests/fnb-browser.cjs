@@ -58,8 +58,11 @@ async function check(browser,engine){
  for(const row of expectedDecision.rows){
   const actual=page.locator('[data-decision-row="'+row.id+'"]');
   assert.equal(await actual.locator('[data-decision-value="sharpe"]').innerText(),new Intl.NumberFormat('fr-CA',{minimumFractionDigits:2,maximumFractionDigits:2}).format(row.sharpe));
-  assert.equal(await actual.locator('[data-decision-value="cvar"]').innerText().then(t=>t.includes('fragile')),true);
+  const tail=await actual.locator('[data-decision-value="cvar"]').innerText();
+  if(row.cvar===null)assert.match(tail,/Échantillon insuffisant/);
+  else assert.equal(tail.includes('fragile'),row.tailFragile);
  }
+ if(daily.status==='stale')assert.match(await page.locator('#decisionDataStatus').innerText(),/Données de risque en retard/);
  await page.locator('#decisionHorizon').selectOption('2');
  assert.match(await page.locator('#decisionResultTitle').innerText(),/2 ans/);
  const trailing=decision.horizon(expectedDecision,2);
@@ -79,7 +82,7 @@ async function check(browser,engine){
  assert.equal(await page.locator('#decisionGoal').inputValue(),'balance');assert.equal(await page.locator('#decisionLoss').inputValue(),'10');
  await page.locator('#decisionDetails>summary').click();
  assert.match(await page.locator('#decisionProtection').innerText(),/projection linéaire fondée sur le bêta/);
- assert.match(await page.locator('#decisionSensitivity').innerText(),/variantes/);
+ assert.match(await page.locator('#decisionSensitivity').innerText(),expectedDecision.basis==='daily'?/variantes/:/Non estimable/);
  assert.match(await page.locator('#decisionSources').innerText(),/2008/);
  await page.locator('#decisionDetails>summary').click();
  await page.locator('#decisionGoal').selectOption('');await page.locator('#decisionHorizon').selectOption('');await page.locator('#decisionLoss').fill('');await page.locator('#decisionCapital').fill('10 000');

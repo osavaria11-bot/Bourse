@@ -43,7 +43,9 @@ test('the same forecast and ranking methods apply to the new portfolio at 2, 5 a
   const D=require('../data/fnb-analysis.json'),H=require('../data/fnb-stress-history.json'),M=require('../data/macro-data.json'),F=require('../js/fnb-forecast-utils.js'),U=require('../js/fnb-decision-utils.js');
   const id=D.prospective_order[0],before=JSON.stringify(D),p=F.prepare(D,H,M);
   assert.equal(p.available,true);assert.ok(p.rows.some(r=>r.id===id));assert.ok(!p.unavailable.some(r=>r.id===id));
-  const historical=U.analyse(D,[id,'7',D.robust_order[0]],'VFV',require('../data/fnb-daily-risk.json'),H);
+  const dailyScenario=structuredClone(require('../data/fnb-daily-risk.json'));dailyScenario.status='current';
+  dailyScenario.daily_series.session_indices=dailyScenario.daily_series.dates.map((_,i)=>i);
+  const historical=U.analyse(D,[id,'7',D.robust_order[0]],'VFV',dailyScenario,H);
   assert.equal(historical.available,true);assert.equal(historical.basis,'daily');assert.ok(historical.rows.find(r=>r.id===id).cvar>0);
   for(const years of [2,5,10]){
     const a=F.simulate(p,years,{ids:[id,'7'],paths:300,internal:true}),r=a.rows.find(r=>r.id===id);
