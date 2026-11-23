@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "status": "retrying",
-  "checked_at": "2026-11-22T22:57:39-05:00",
-  "expected_session": "2026-11-20",
+  "checked_at": "2026-11-23T17:40:31-05:00",
+  "expected_session": "2026-11-23",
   "message": "Clôtures incomplètes : dernier historique validé conservé. Reprise automatique.",
-  "error": "[{'message': 'Sorry, we couldn\\'t find any results for \"FBAL:CC\". Please try again.', 'code': '404', 'locations': [{'line': 2, 'column': 7}], 'path': ['identity']}]"
+  "error": "Unconfirmed historical close revision: FINN"
 }
