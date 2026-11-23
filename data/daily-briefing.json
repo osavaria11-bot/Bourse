@@ -3,100 +3,100 @@
   "kind": "news_digest",
   "language": "fr",
   "timezone": "America/Toronto",
-  "edition_date": "2026-11-22",
-  "generated_at": "2026-11-22T10:10:34.450119+00:00",
-  "editorial_note": "Préparé dimanche à 5 h 10, heure de Montréal. Les chiffres américains de mercredi et l’issue de la COP31 sont encore à venir à cette heure. Les réactions boursières citées sont celles de la clôture du vendredi 20 novembre.",
+  "edition_date": "2026-11-23",
+  "generated_at": "2026-11-23T10:05:24.330873+00:00",
+  "editorial_note": "Préparé à 5 h 05, heure de Montréal. Les variations des contrats à terme sont des relevés avant l’ouverture américaine. Mercredi 25 novembre à 8 h 30, le Bureau of Economic Analysis doit publier les prix des dépenses de consommation d’octobre et la deuxième estimation du PIB américain du troisième trimestre, accompagnée des bénéfices des entreprises. Ces chiffres restent à venir.",
   "stories": [
     {
-      "topic": "États-Unis · Inflation et taux",
-      "title": "L’inflation américaine sera publiée avant la pause de Thanksgiving",
-      "summary": "Le Bureau of Economic Analysis publiera mercredi 25 novembre à 8 h 30, heure de Montréal, les dépenses et revenus d’octobre, dont l’indice des prix des dépenses de consommation personnelle (PCE), ainsi que la deuxième estimation du PIB du troisième trimestre. En première estimation, le PIB réel avait crû de 3,4 % en rythme annualisé. U.S. Bank prévoit une hausse mensuelle de 0,3 % des prix PCE hors alimentation et énergie; ce scénario porterait le taux sur douze mois à 3,2 %, contre 3,1 % en septembre. Il s’agit de sa prévision. La Bourse de New York sera fermée jeudi et sa séance régulière s’achèvera à 13 h vendredi.",
-      "impact": "Ma lecture : une hausse de 25 points de base le 9 décembre est déjà largement anticipée dans les swaps SOFR OIS de BlueGamma, datés du 20 novembre (97 %). Un chiffre supérieur aux attentes, surtout si la pression s’étend aux services, déplacerait donc surtout le débat vers les décisions suivantes. Des rendements à court terme plus élevés tendraient alors à soutenir le dollar et à peser sur les multiples. Une surprise à la baisse, avec des dépenses réelles qui tiennent, offrirait un meilleur scénario pour les obligations et les actions. Si les prix ralentissent parce que les ménages achètent moins, le recul des taux pourrait s’accompagner de révisions de bénéfices à la baisse. Je regarderais les prix du mois et les volumes avant de tirer une conclusion du taux annuel.",
-      "source_label": "U.S. Bank Economics",
-      "source_url": "https://www.usbank.com/content/dam/usbank/en/documents/pdfs/corporate-and-commercial-banking/econ-weekly-pdf-11-20-26.pdf",
+      "topic": "Actions et crédit",
+      "title": "Le rebond des contrats américains se heurte encore à la nervosité sur l’IA",
+      "summary": "Lundi, pendant la séance asiatique et avant l’ouverture de Wall Street, les contrats à terme montaient d’environ 3 % sur le Nasdaq 100 et de 2 % sur le S&P 500, selon Reuters. À Taïwan, le marché a remonté d’environ 2 % après le durcissement des règles de vente à découvert; la Chine a annoncé un assouplissement de certaines exigences de financement sur marge. En Corée du Sud, le Kospi perdait encore environ 2,5 % en fin d’après-midi local, après avoir touché un creux de dix mois. Vendredi, Anthropic a clôturé en baisse de 8,5 % au Nasdaq lors de sa première séance complète, par rapport à sa clôture de jeudi.",
+      "impact": "Ma lecture : les mesures asiatiques peuvent freiner des ventes forcées et les contrats américains peuvent rebondir sans que le marché ait revu ses hypothèses de bénéfices. Le test est le passage des commandes et des annonces de centres de données aux encaissements. Les fabricants de puces et d’équipement peuvent encore livrer beaucoup, même si les clients les plus endettés doivent revoir leur rythme d’investissement. Si les marges et les flux de trésorerie suivent les commandes, et si les écarts de crédit cessent de s’élargir, le rebond aura de meilleurs appuis. Sinon, la baisse récente du dix ans américain soulage le taux d’actualisation sans répondre au risque de financement.",
+      "source_label": "Reuters, via Euronext",
+      "source_url": "https://live.euronext.com/en/financial-news/us-futures-bounce-asia-scrambles-slow-ai-stocks-rout",
+      "published_date": "2026-11-23"
+    },
+    {
+      "topic": "Énergie",
+      "title": "Le Brent recule malgré de nouvelles attaques signalées près d’Ormuz",
+      "summary": "À 3 h 44, heure de Montréal, les contrats sur le Brent valaient 91,97 $ US le baril et ceux sur le West Texas Intermediate 82,92 $ US, tous deux en baisse d’environ 0,6 %. Les deux références avaient déjà perdu respectivement 4 % et 5 % la semaine dernière. Les autorités britanniques chargées des avis à la navigation ont signalé plusieurs attaques contre des navires dans le Golfe et près du détroit d’Ormuz durant la fin de semaine. L’OPEP et ses partenaires doivent se réunir le 29 novembre au sujet de leur politique de production pour 2027.",
+      "impact": "Ma lecture : tant que les cargaisons continuent de sortir, le recul du brut allège les coûts de transport et de carburant; il réduit aussi le soutien aux revenus des producteurs canadiens. Un blocage durable des exportations ou une hausse persistante du coût d’assurer les navires invaliderait ce scénario. Il faut surveiller les volumes expédiés et le différentiel entre le brut canadien et le brut américain : un même mouvement du Brent ne donne pas le même prix réalisé à tous les producteurs. Pour le dollar canadien, le pétrole est un facteur parmi d’autres; la demande de dollars américains en période de vente boursière peut dominer à court terme.",
+      "source_label": "Reuters, via Investing.com",
+      "source_url": "https://au.investing.com/news/commodities-news/oil-prices-fall-amid-equity-selloff-though-iran-war-attacks-limit-losses-4789095",
+      "published_date": "2026-11-23"
+    },
+    {
+      "topic": "Économie canadienne",
+      "title": "Les usines et les grossistes donnent les premiers repères sur octobre",
+      "summary": "Les estimations avancées des ventes d’octobre sont attendues lundi pour la fabrication canadienne et mercredi pour le commerce de gros, selon RBC Économie. Elles suivent un mois de septembre où les ventes manufacturières avaient reculé de 1,5 % et les ventes de gros de 0,2 %. RBC note que les importations canadiennes de véhicules ont baissé de 16 % entre juillet et septembre, dans un contexte d’arrêts de production aux États-Unis. À l’inverse, les ventes de machinerie et de matériel ont mieux tenu, notamment avec les achats de matériel informatique pour les centres de données.",
+      "impact": "Ma lecture : un rebond limité à l’auto pourrait surtout refléter des livraisons retardées. Il faudrait une amélioration dans plusieurs industries, et de préférence en volume, pour lire un redressement de la demande. À l’inverse, un autre recul généralisé pèserait sur les revenus des entreprises cycliques et réduirait, toutes choses égales, le besoin de resserrer rapidement les taux au Canada. Une hausse des ventes de serveurs importés peut être très réelle pour les distributeurs tout en contribuant peu à la production canadienne; des dépenses de construction et de raccordement ici auraient un effet plus direct. Ce sont des relevés préliminaires, pas des résultats du quatrième trimestre.",
+      "source_label": "RBC Économie",
+      "source_url": "https://www.rbc.com/en/economics/forward-guidance/first-look-at-canadas-economy-in-q4-with-manufacturing-and-wholesales/",
       "published_date": "2026-11-20"
     },
     {
-      "topic": "Crédit · Financement de l’IA",
-      "title": "SpaceX obtient le financement de ses puces, à plus de 8 % sur la plus grosse tranche",
-      "summary": "Apollo et Goldman Sachs ont annoncé vendredi 20 novembre la fixation du prix d’environ 44 G$ US de titres de dette destinés à financer des accélérateurs Nvidia et de l’équipement pour les centres de calcul terrestres de SpaceX. Les arrangeurs disent avoir augmenté la taille de l’opération après avoir reçu plus de demandes qu’il n’y avait de titres à placer. D’après Reuters, la plus importante tranche de dette senior garantie, de 25,17 G$ US, a été placée à un rendement de 8,259 %. Le calendrier prévoit que les loyers démarrent avec les livraisons, attendues au premier semestre 2027. Au Nasdaq, SpaceX a clôturé vendredi à 127,79 $ US à 16 h, en baisse de 7,69 %, dans une séance de repli plus large.",
-      "impact": "Ma lecture : la demande de crédit était suffisante pour financer le projet, mais le rendement montre le prix demandé pour immobiliser autant de capital. Les livraisons financées aident à étayer le carnet de Nvidia; pour l’exploitant, la question est de savoir combien d’heures de calcul il pourra vendre et à quel prix une fois l’équipement installé. Des retards ou des tarifs de location en baisse laisseraient moins de revenus pour couvrir des charges fixes. À l’inverse, des contrats de clients qui couvrent durablement ces charges et des financements comparables obtenus à de meilleures conditions affaibliraient cette inquiétude. La baisse de l’action, à elle seule, ne permet pas d’isoler l’effet de l’opération.",
-      "source_label": "Reuters",
-      "source_url": "https://www.reuters.com/business/media-telecom/apollo-goldman-lead-44-billion-spacex-gpu-debt-financing-2026-11-20/",
-      "published_date": "2026-11-20"
-    },
-    {
-      "topic": "Canada · Droits de douane",
-      "title": "Ottawa cherche toujours un répit pour l’auto et l’acier",
-      "summary": "Lors d’une rencontre avec son comité consultatif jeudi 19 novembre, le ministre Dominic LeBlanc a fait état de discussions avec Washington, mais de peu de progrès vers un allègement provisoire des droits américains, selon deux personnes citées par Reuters. LeBlanc a aussi dit à CBC que les échanges n’avaient pas encore abouti à un compromis acceptable et qu’une partie des droits sectoriels pourrait subsister même en cas d’accord. Reuters rapporte qu’en l’état, le taux américain visé sur les automobiles canadiennes doit passer de 25 % à 50 % en janvier. Vendredi, Donald Trump a dit qu’il restait du travail avant un accord; il n’a annoncé aucun allègement.",
-      "impact": "Ma lecture : la première question pour les constructeurs et leurs fournisseurs est le coût d’une commande supplémentaire produite au Canada. Si un tarif plus élevé dure, une partie du coût peut être absorbée dans les marges, refilée aux acheteurs ou contournée en déplaçant de futurs volumes vers une autre usine. Ce dernier choix pèse sur l’investissement et l’emploi canadiens, même avant la prochaine ronde de prix. Un accord écrit qui réduit les droits sur un volume important, avec une date d’effet claire, renverserait cette lecture. Des contacts ministériels seuls ne suffisent pas à établir que les coûts vont baisser ou que le dollar canadien va se renforcer.",
-      "source_label": "Reuters",
-      "source_url": "https://www.reuters.com/markets/commodities/canada-sees-little-us-movement-tariff-relief-sources-say-2026-11-19/",
-      "published_date": "2026-11-19"
-    },
-    {
-      "topic": "Énergie · Politique climatique",
-      "title": "COP31 : l’électrification demeure dans le projet, sans accord sur les fossiles",
-      "summary": "La Turquie et l’Australie ont soumis à Antalya un nouveau projet de décision, toujours en discussion tôt dimanche. Selon l’Agence France-Presse, le texte propose de porter la part de l’électricité à 35 % de la consommation finale mondiale d’énergie d’ici 2035, sans demander explicitement que cette électricité provienne de sources renouvelables. Il ne nomme pas directement les combustibles fossiles, ce qui a suscité des objections européennes et de petits États insulaires. L’objectif financier de 120 G$ pour l’adaptation ne figure plus dans cette version. Ces éléments décrivent le projet disponible à l’heure de préparation; ils ne constituent pas un accord adopté.",
-      "impact": "Ma lecture : si l’objectif d’électrification se traduit par des budgets et des commandes, le débouché le plus direct est l’équipement de réseau, qui doit suivre la demande quelle que soit la source d’électricité. Pour les producteurs de pétrole et de gaz, un texte qui ne fixe aucune trajectoire explicite laisse l’effet sur les volumes indéterminé. Pour les développeurs de projets, les conditions de financement et les décisions nationales sur le réseau compteront davantage à court terme. Des engagements adoptés, chiffrés et accompagnés de calendriers d’investissement changeraient cette lecture; le projet seul ne justifie pas une révision des prix de l’énergie.",
-      "source_label": "Agence France-Presse",
-      "source_url": "https://www.afp.com/en/cop31-teeters-brink-fossil-fuel-rift-deepens",
+      "topic": "Transition énergétique",
+      "title": "La COP31 se termine sans accord politique d’ensemble",
+      "summary": "Les négociations à Antalya se sont terminées dimanche sans consensus sur le texte politique préparé par la Turquie et l’Australie. L’Union européenne et d’autres délégations ont rejeté le projet final, jugé trop faible, notamment en raison de l’impasse sur la place des combustibles fossiles dans le texte. Les engagements déjà pris aux conférences précédentes restent en vigueur. Le résultat clôt l’incertitude sur le projet de la fin de semaine; il ne change ni les règles nationales déjà adoptées ni les flux de pétrole à court terme.",
+      "impact": "Ma lecture : l’échec enlève un signal commun aux investisseurs qui doivent évaluer l’évolution des règles du carbone et du financement de projets. Les décisions nationales sur les réseaux, les autorisations et les contrats d’achat d’électricité pèseront davantage dans la rentabilité à court terme. Pour un développeur, un contrat ferme et un raccordement planifié comptent plus dans le coût du financement qu’une déclaration sans calendrier. Des mesures nationales coordonnées et déjà financées réduiraient cet écart de visibilité, même sans déclaration finale.",
+      "source_label": "Reuters, via GMA News",
+      "source_url": "https://www.gmanetwork.com/news/topstories/world/1010425/cop31-climate-talks-break-down-as-eu-others-reject-deal/story/",
       "published_date": "2026-11-22"
     }
   ],
   "fred_watch": [
     {
-      "series_id": "PCEPILFE",
-      "title": "Inflation PCE de base : le point de départ de mercredi",
-      "observation_date": "2026-09-01",
-      "explanation": "Pour septembre 2026 (observation datée du 1er septembre), les prix PCE hors alimentation et énergie progressaient de 3,12 % sur douze mois, contre 3,03 % en août. L’écart avec la cible de 2 % demeure. Mercredi, le rythme mensuel aidera à distinguer une accélération courante d’un effet de comparaison.",
-      "source_url": "https://fred.stlouisfed.org/series/PCEPILFE"
-    },
-    {
-      "series_id": "DFII10",
-      "title": "Le coût réel des fonds à long terme reste élevé",
+      "series_id": "DGS10",
+      "title": "Le dix ans américain repasse sous 5 %",
+      "explanation": "Le 20 novembre, le rendement nominal du Trésor américain à dix ans s’établissait à 4,92 %, contre 5,04 % le 19. Un taux long plus bas peut améliorer le prix des obligations et les valorisations des actions; son recul ne garantit ni une détente du crédit ni une baisse prochaine du taux directeur.",
       "observation_date": "2026-11-20",
-      "explanation": "Le 20 novembre, le rendement réel de marché des obligations américaines indexées sur l’inflation à dix ans est passé de 2,88 % à 2,77 %. La baisse allège légèrement le taux réel de référence, toujours positif. Le rendement demandé à une entreprise dépend aussi de sa prime de risque.",
-      "source_url": "https://fred.stlouisfed.org/series/DFII10"
+      "source_url": "https://fred.stlouisfed.org/series/DGS10"
     },
     {
-      "series_id": "ICSA",
-      "title": "Assurance-emploi américaine : peu de changement à la marge",
-      "observation_date": "2026-11-14",
-      "explanation": "La semaine terminée le 14 novembre, il y a eu 203 000 nouvelles demandes d’assurance-emploi aux États-Unis, en données désaisonnalisées, contre 202 000 la semaine précédente. Cette variation n’indique pas une vague de licenciements et ne mesure pas l’embauche. Il faudra plusieurs observations pour confirmer un infléchissement.",
-      "source_url": "https://fred.stlouisfed.org/series/ICSA"
+      "series_id": "BAMLH0A0HYM2",
+      "title": "Le crédit à haut rendement coûte plus cher relativement au Trésor",
+      "explanation": "Le 19 novembre, l’écart de rendement ajusté des options du crédit américain à haut rendement était de 3,52 points de pourcentage, contre 3,43 le 17. Cela donne une mesure du surcoût relatif exigé pour détenir cette dette, sans isoler le risque d’un émetteur. La série affichée ne couvre pas encore la séance du 20.",
+      "observation_date": "2026-11-19",
+      "source_url": "https://fred.stlouisfed.org/series/BAMLH0A0HYM2"
     },
     {
-      "series_id": "NFCI",
-      "title": "Conditions financières : un point de repère antérieur au repli",
-      "observation_date": "2026-11-13",
-      "explanation": "Pour la semaine terminée le 13 novembre, l’indice de la Fed de Chicago s’établissait à −0,478, contre −0,473 la semaine précédente. Sous zéro, les conditions sont plus souples que leur moyenne historique selon cet indice. La lecture précède toutefois la dernière semaine de baisse boursière et ne permet pas de juger de son effet sur le crédit.",
-      "source_url": "https://fred.stlouisfed.org/series/NFCI"
+      "series_id": "RRSFS",
+      "title": "Les ventes au détail américaines en volume marquent le pas",
+      "explanation": "Pour octobre 2026, la série des ventes réelles au détail et de la restauration affiche 221 711 millions de dollars américains constants, contre 222 016 millions en septembre, soit environ −0,14 %. Elle renseigne sur les volumes plutôt que sur les prix; une grande partie des dépenses de services se trouve hors de cet indicateur.",
+      "observation_date": "2026-10-01",
+      "source_url": "https://fred.stlouisfed.org/series/RRSFS"
+    },
+    {
+      "series_id": "DCOILWTICO",
+      "title": "Le WTI au comptant et ses contrats ne portent pas la même date",
+      "explanation": "Le 17 novembre, la dernière observation du WTI au comptant à Cushing affichée par SAVY était de 89,53 $ US le baril. Le contrat à terme coté lundi donne un signal plus récent, mais pour un instrument différent : l’écart entre ces deux chiffres ne mesure pas une variation quotidienne du comptant.",
+      "observation_date": "2026-11-17",
+      "source_url": "https://fred.stlouisfed.org/series/DCOILWTICO"
     }
   ],
   "audio_script": {
-    "edition_date": "2026-11-22",
-    "source_generated_at": "2026-11-22T10:10:34.450119+00:00",
-    "intro": "Bonjour. C’est le briefing de dimanche, préparé un peu après cinq heures, heure de Montréal. Les chiffres américains qu’on attend mercredi n’ont pas encore été publiés. On regarde pourquoi ils comptent, puis le coût du financement de SpaceX, les droits sur l’auto canadienne et ce que le nouveau projet à la conférence sur le climat changerait, s’il était adopté.",
+    "edition_date": "2026-11-23",
+    "source_generated_at": "2026-11-23T10:05:24.330873+00:00",
+    "intro": "Bonjour. On est lundi le vingt-trois novembre, il est 5 h 05 à Montréal. Les marchés nord-américains ne sont pas encore ouverts. On regarde le rebond des contrats américains, le pétrole, puis ce que les premiers chiffres d’octobre peuvent nous dire sur le Canada. Et on garde en tête le rendez-vous de mercredi matin aux États-Unis. Les prix des dépenses de consommation et la deuxième estimation du produit intérieur brut sont attendus à huit heures et demie. Ils ne sont pas encore sortis.",
     "stories": [
       {
-        "title": "L’inflation américaine sera publiée avant la pause de Thanksgiving",
-        "text": "On commence par l’inflation américaine. Mercredi, à huit heures et demie du matin à Montréal, on aura deux publications en même temps. D’abord, les revenus, les dépenses et les prix à la consommation pour octobre. Ensuite, la deuxième lecture du produit intérieur brut de l’été. La première indiquait une croissance d’un peu plus de trois pour cent en rythme annualisé. Pour les prix des dépenses de consommation personnelle, U.S. Bank s’attend à trois dixièmes de hausse sur le mois, sans les aliments ni l’énergie. C’est sa prévision. Le rapport n’est pas sorti. Et il sera suivi d’une journée de fermeture à New York, puis d’une séance écourtée vendredi.\n\nMa lecture : vendredi, le marché des swaps de taux accordait déjà beaucoup de poids à une hausse en décembre. Avec un chiffre plus fort que prévu, je surveillerais surtout si le marché prolonge ses attentes de hausse au-delà de décembre. Si les rendements courts remontent, le dollar peut se raffermir et les valorisations deviennent plus sensibles. Si les prix surprennent à la baisse et que les gens continuent d’acheter en volume, c’est plus favorable pour les obligations et pour les profits. Si les prix ralentissent parce que les ventes réelles faiblissent, il faut surveiller les profits en même temps que les taux."
+        "title": "Le rebond des contrats américains se heurte encore à la nervosité sur l’IA",
+        "text": "Premier point : les contrats sur les grands indices américains remontaient ce matin, avant la cloche à New York. C’est un signe que la pression de vente se calme par endroits. En Asie, le tableau reste partagé. Taïwan a resserré les règles sur la vente à découvert. En Corée du Sud, les actions perdaient encore du terrain en fin de séance. Et à New York, vendredi, Anthropic a perdu huit et demi pour cent en clôture, pour sa première journée complète au Nasdaq. Ma lecture : il faut distinguer le prix des actions de ce que les entreprises gagnent sur leurs investissements. Un fabricant peut livrer ses puces et encaisser sa vente. Son client doit encore rentabiliser le centre de données et rembourser le financement. Si les livraisons se traduisent en marges et en argent réellement encaissé, et si le crédit se stabilise, le rebond gagne en crédibilité. En attendant, il vaut mieux garder séparés le rebond d’un matin et le changement de fond."
       },
       {
-        "title": "SpaceX obtient le financement de ses puces, à plus de 8 % sur la plus grosse tranche",
-        "text": "Passons au financement des centres de calcul. Apollo et Goldman Sachs ont annoncé vendredi avoir fixé le prix d’un montage d’environ quarante-quatre milliards de dollars américains pour du matériel de SpaceX. Il s’agit d’équipement pour des installations au sol, dont des puces de Nvidia. Les arrangeurs ont pu augmenter la taille de l’opération parce que les investisseurs en demandaient plus. Mais le plus gros bloc de dette se place à un rendement de plus de huit pour cent. Les loyers devraient commencer avec les livraisons, attendues au premier semestre de l’année prochaine. En Bourse, SpaceX a fini vendredi en baisse de près de huit pour cent au Nasdaq. Il y avait aussi un repli plus large, donc le mouvement ne nous dit pas, à lui seul, ce que les investisseurs ont pensé du financement.\n\nMa lecture : Nvidia a de l’équipement à livrer. Pour SpaceX, le défi, c’est ensuite de louer assez d’heures de calcul, à des tarifs qui couvrent les coûts fixes du montage. S’il y a des retards ou si les clients négocient leurs prix à la baisse, cette marge de manœuvre diminue. J’accorderais plus de poids aux encaissements que promettent les contrats avec les clients et au prix de la prochaine émission comparable. Ce sont de meilleurs tests de la rentabilité que la taille de l’annonce."
+        "title": "Le Brent recule malgré de nouvelles attaques signalées près d’Ormuz",
+        "text": "Passons au pétrole. Vers quatre heures, heure de Montréal, le Brent tournait autour de quatre-vingt-douze dollars américains le baril. Le brut américain, lui, avoisinait quatre-vingt-trois dollars. Les deux contrats reculaient, même si des attaques contre des navires ont été signalées en fin de semaine près du détroit d’Ormuz. La réunion des pays producteurs et de leurs partenaires dimanche prochain est le prochain rendez-vous sur la production de l’an prochain. Ma lecture : j’accorderais plus de poids aux cargaisons qui se rendent à destination qu’à une seule dépêche sur les tensions dans le Golfe. Si les volumes tiennent, un brut moins cher donne de l’air aux transporteurs et aux ménages. C’est moins favorable aux recettes des producteurs. Si les cargaisons n’arrivent plus normalement ou que les primes d’assurance montent durablement, le calcul change. Pour le Canada, le prix local du baril et la vigueur générale du dollar américain peuvent amplifier ou atténuer ce mouvement."
       },
       {
-        "title": "Ottawa cherche toujours un répit pour l’auto et l’acier",
-        "text": "Au Canada, je reviens sur un dossier qui n’a pas trouvé de solution avant la fin de semaine. Le ministre Dominic LeBlanc a fait le point jeudi sur les discussions avec Washington. Ottawa cherche un allègement provisoire, mais selon les personnes à qui Reuters a parlé, le mouvement est limité. Le ministre a aussi dit à CBC qu’une partie des tarifs sur l’acier et l’auto pourrait rester même avec un accord. Reuters rappelle que le taux visé sur l’auto canadienne doit passer de vingt-cinq à cinquante pour cent en janvier si rien ne change. Vendredi, Donald Trump a dit qu’il restait du travail. Il n’a pas annoncé de réduction.\n\nMa lecture : pour une entreprise qui assemble des véhicules, ce qui compte, c’est de savoir si la prochaine commande sera rentable à produire ici et à expédier aux États-Unis. L’entreprise peut absorber une partie du coût ou augmenter le prix payé par ses clients. Elle peut aussi décider de fabriquer les prochains modèles ailleurs. Cette décision a un effet plus durable sur l’emploi et sur les commandes aux sous-traitants. Pour revoir ce scénario, je chercherais un accord écrit qui précise les volumes visés et la date d’entrée en vigueur."
+        "title": "Les usines et les grossistes donnent les premiers repères sur octobre",
+        "text": "Au Canada, on devrait avoir deux premiers aperçus d’octobre : les ventes des usines aujourd’hui, et celles des grossistes mercredi. On part d’un mois de septembre plus faible. Les ventes des fabricants avaient baissé d’un et demi pour cent, et celles des grossistes avaient aussi reculé. Les interruptions de production automobile au sud de la frontière ont pesé sur nos importations de véhicules. À l’autre bout du spectre, la machinerie a mieux tenu, notamment grâce au matériel informatique. Ma lecture : si on reçoit enfin des autos qui devaient arriver en septembre, on aura un meilleur chiffre, mais ça ne voudra pas dire que la demande a remonté partout. Je regarderais combien d’industries se redressent et si elles vendent plus d’unités. Même chose pour les centres de données. L’achat d’un serveur importé gonfle les ventes du distributeur; le chantier et le raccordement au réseau font travailler des entreprises d’ici. C’est cette distinction qui aide à lire les prochains chiffres."
       },
       {
-        "title": "COP31 : l’électrification demeure dans le projet, sans accord sur les fossiles",
-        "text": "Enfin, à Antalya, le sommet sur le climat a débordé sur dimanche. Le projet présenté par la Turquie et l’Australie donne encore une place à l’électrification. Il propose que l’électricité fournisse trente-cinq pour cent de l’énergie consommée à l’échelle mondiale d’ici deux mille trente-cinq. Il ne dit pas que cette électricité doit venir de sources renouvelables, et les combustibles fossiles ne sont pas nommés directement. C’est une des raisons des objections européennes et de petits États insulaires. Un objectif de financement de l’adaptation a aussi été retiré. Au moment de préparer ce briefing, je parle du projet; il n’est pas adopté.\n\nMa lecture : les réseaux et leurs fournisseurs peuvent bénéficier d’une demande d’électricité plus grande, mais il leur faut des budgets, des permis et des commandes. On ne connaît pas le mélange des sources d’énergie qu’un accord produirait. Il serait donc prématuré d’en déduire une nouvelle trajectoire pour le pétrole ou le gaz. Ce qui changerait cette lecture, ce sont des engagements adoptés et assortis de dates et de financement."
+        "title": "La COP31 se termine sans accord politique d’ensemble",
+        "text": "Un dernier mot sur l’énergie, mais cette fois à plus long terme. Hier, la conférence de l’ONU sur le climat s’est terminée en Turquie sans entente politique d’ensemble. Le point de rupture portait notamment sur la place du charbon, du pétrole et du gaz dans le texte. Les engagements pris aux conférences précédentes tiennent toujours. Ma lecture : pour financer un parc énergétique ou une ligne électrique, je regarderais d’abord les permis, l’accès au réseau et le contrat qui garantit les revenus du projet. La conférence aurait pu donner une direction commune. Pour la banque qui prête, ce sont les décisions locales et les contrats signés qui déterminent combien le projet pourra emprunter. Des mesures communes, financées et confirmées par les pays, redonneraient de la visibilité. D’ici là, on peut avoir des conditions très différentes d’un marché à l’autre."
       }
     ],
-    "watch": "Quatre graphiques à surveiller. Le premier montre que les prix américains hors alimentation et énergie ont augmenté d’un peu plus de trois pour cent sur douze mois en septembre. Mercredi, regardez aussi la variation d’octobre sur un seul mois : les deux mesures ne racontent pas exactement la même chose. Le vingt novembre, le rendement réel à dix ans des obligations américaines indexées à l’inflation est descendu à deux virgule soixante-dix-sept pour cent. Du côté de l’emploi, les demandes de chômage ont peu bougé la semaine terminée le quatorze novembre. Ça renseigne sur les mises à pied, pas directement sur les embauches. Enfin, l’indice de conditions financières de la Fed de Chicago reste sous zéro au treize novembre. Ça correspond à des conditions plus souples que sa moyenne historique. La donnée précède le repli de la dernière semaine, alors on ne peut pas encore s’en servir pour mesurer l’effet du repli sur le crédit.",
-    "outro": "Les sources et les quatre graphiques se trouvent dans le briefing écrit. Mercredi, je surveillerais ensemble les prix du mois et les dépenses en volume : c’est leur combinaison qui guidera la lecture des taux et des bénéfices. Merci d’avoir écouté, et bon dimanche."
+    "watch": "Côté graphiques, le rendement du Trésor américain à dix ans a terminé le vingt novembre à quatre virgule quatre-vingt-douze pour cent. Le crédit à haut rendement, lui, demandait trois virgule cinquante-deux points de plus que le Trésor le dix-neuf, en hausse par rapport au dix-sept. Cette série ne couvre pas encore la séance du vendredi. Les ventes au détail et de restauration aux États-Unis ont très légèrement reculé en octobre, une fois les prix retirés. Ça ne couvre pas toutes les dépenses de services. Et le repère du pétrole américain au comptant affiche quatre-vingt-neuf dollars et cinquante-trois cents le dix-sept novembre. C’est une observation plus ancienne et différente du contrat dont on a parlé ce matin.",
+    "outro": "Voilà pour ce matin. Les sources, les dates des relevés et les graphiques sont dans le briefing écrit. Bonne journée."
   }
 }
