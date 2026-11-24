@@ -245,6 +245,7 @@ jobs:
       cancel-in-progress: false
     runs-on: ubuntu-latest
     permissions:
+      actions: read
       contents: read
       pages: write
       id-token: write
@@ -335,12 +336,49 @@ jobs:
           node scripts/build_report_archive.cjs
           cp -R css js data reports _site/
       - name: Upload site
+        id: site_artifact
         if: steps.current.outputs.publish == 'true'
         uses: actions/upload-pages-artifact@v3
         with:
           path: _site
-      - name: Deploy
+      - name: Wait for the uploaded Pages artifact
+        id: pages_ready
         if: steps.current.outputs.publish == 'true'
+        timeout-minutes: 2
+        uses: actions/github-script@v8
+        env:
+          ARTIFACT_ID: ${{ steps.site_artifact.outputs.artifact_id }}
+          SOURCE_SHA: ${{ needs.validate.outputs.source_sha }}
+        with:
+          script: |
+            const {setTimeout: delay} = require('node:timers/promises');
+            const artifact_id = Number(process.env.ARTIFACT_ID);
+            if (!Number.isSafeInteger(artifact_id) || artifact_id <= 0) {
+              throw new Error('The Pages upload did not return a valid artifact ID');
+            }
+            for (let attempt = 0; attempt < 8; attempt++) {
+              let artifact;
+              try {
+                ({data: artifact} = await github.rest.actions.getArtifact({...context.repo, artifact_id}));
+              } catch (error) {
+                if (error.status !== 404 && !(error.status >= 500 && error.status < 600)) throw error;
+              }
+              if (artifact) {
+                if (artifact.id !== artifact_id || artifact.workflow_run?.id !== context.runId ||
+                    artifact.name !== 'github-pages' || artifact.expired) {
+                  throw new Error('Unexpected Pages artifact metadata');
+                }
+                if (artifact.size_in_bytes > 0) {
+                  const {data: branch} = await github.rest.repos.getBranch({...context.repo, branch: 'main'});
+                  core.setOutput('publish', branch.commit.sha === process.env.SOURCE_SHA ? 'true' : 'false');
+                  return;
+                }
+              }
+              if (attempt < 7) await delay(4000);
+            }
+            throw new Error('The uploaded Pages artifact is still not visible');
+      - name: Deploy
+        if: steps.pages_ready.outputs.publish == 'true'
         id: deployment
         uses: actions/deploy-pages@v4
 

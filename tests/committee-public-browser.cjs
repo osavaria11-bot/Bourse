@@ -22,7 +22,11 @@ const root=path.resolve(__dirname,'..'),types={'.html':'text/html','.js':'text/j
     for(const [engine,type] of [['chromium',chromium],...(process.env.PORTAL_WEBKIT==='1'?[['webkit',webkit]]:[])]){
       const browser=await type.launch({headless:true});try{
         const context=await browser.newContext({viewport:{width:1280,height:900},acceptDownloads:true}),page=await context.newPage(),errors=[];
-        page.on('pageerror',e=>errors.push(e.message));await page.route('https://**',route=>route.abort());
+        page.on('pageerror',e=>errors.push(e.message));
+        await page.route('https://**',route=>route.request().url()==='https://biquote.io/api/USDCAD' ?
+          route.fulfill({contentType:'application/json',headers:{'Access-Control-Allow-Origin':'*'},
+            body:JSON.stringify({symbol:'USDCAD',mid:1.4,timestamp:new Date().toISOString(),marketState:'open'})}) :
+          route.abort());
         // Public reports must never ask the legacy access provider for a key.
         await page.addInitScript(()=>Object.defineProperty(window,'SavyCommitteeAccess',{configurable:false,get:()=>({get(){throw Error('Public report requested a private key');},error:()=>''}),set(){}}));
         await page.goto(origin+'/#view=portefeuilles&tab=analysis');
