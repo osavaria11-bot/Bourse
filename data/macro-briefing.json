@@ -1,12 +1,12 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-11-24T03:58:09.650726+00:00",
+  "generated_at": "2026-11-24T04:24:33.300872+00:00",
   "last_successful_update": "2026-11-24T03:58:09.650726+00:00",
   "update_status": "partial_data",
   "coverage": {
     "total": 42,
-    "fresh": 40,
-    "cached": 2,
+    "fresh": 38,
+    "cached": 4,
     "unavailable": 0
   },
   "data_provider": "FRED / Banque du Canada / Statistique Canada / Numerco / Fed de New York / U.S. Treasury",
@@ -123,7 +123,7 @@
       "previous_value": 1.9,
       "previous_date": "2026-09-01",
       "unit": "%",
-      "fetch_status": "fresh"
+      "fetch_status": "cached"
     },
     {
       "id": "V108785714",
