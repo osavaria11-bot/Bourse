@@ -244,6 +244,73 @@ class PermanentTracking(unittest.TestCase):
         self.assertEqual(revised["accounts"], days[-1]["accounts"])
         self.assertEqual(archive.read_bytes(), frozen)
 
+    def test_conflicting_fidelity_close_requires_two_dated_prices_and_preserves_ledger(self):
+        ticker, symbol = "FGRO", "FGRO.NE"
+        dates = [F.START, "2026-10-20", "2026-10-21"]
+        first, last = dates[0], dates[-1]
+        opening = self.quotes()
+        opening[ticker][first].update(symbol=symbol, price_source="Yahoo Finance")
+        self.run_day(quotes=opening)
+        archive = self.root / f"data/fnb-performance/days/{first}.json"
+        frozen = archive.read_bytes()
+        ends = [datetime.combine(date.fromisoformat(s), F.regular_close(date.fromisoformat(s)), F.TZ)
+                for s in dates]
+        identity = {"symbol": symbol, "currency": "CAD", "instrumentType": "ETF",
+                    "exchangeTimezoneName": "America/Toronto"}
+        prices = [100., 97., 101.]
+        daily_result = {"meta": identity, "timestamp": [int((end - timedelta(hours=6)).timestamp()) for end in ends],
+                        "indicators": {"quote": [{"close": [98., 98., 102.]}], "adjclose": [{"adjclose": [98., 98., 102.]}]}}
+        minute_result = {"meta": {**identity, "exchangeName": "NEO", "dataGranularity": "1m",
+                                  "tradingPeriods": [[{"end": int(end.timestamp())}] for end in ends]},
+                         "timestamp": [int((end - timedelta(minutes=1)).timestamp()) for end in ends],
+                         "indicators": {"quote": [{"close": list(prices)}]}}
+        rows = [{"asAtDate": date.fromisoformat(s).strftime("%d-%b-%Y"), "fundCode": ticker,
+                 "axisCode": ticker, "fundSeries": "L", "mktPrice": p, "currentValue": p-.25}
+                for s,p in zip(dates,prices,strict=True)]
+        config = {"funds": {ticker: {"quote_symbol": symbol, "provider": "fidelity"}}}
+        anchors = {ticker: {"date": first, "close": 100., "price_source": "Yahoo Finance"}}
+        official = {s: {"close": p, "adjusted_close": p, "source_url": "https://money.tmx.com/en/quote/FGRO%3ACC"}
+                    for s,p in zip(dates,[99.,96.,102.],strict=True)}
+
+        class Client:
+            def json(self, url):
+                if url.startswith(F.FIDELITY_HISTORY):
+                    return {"fundHistory": rows}
+                if url.startswith(F.FID):
+                    return {"axisCode": ticker, "etf": True, "series": {"L": {
+                        "axisCd": ticker, "currency": "CAD", "exchangeName": "Cboe CA",
+                        "etfMarketPrice": {"priceAmt": "$101", "priceAmtDt": last},
+                    }}}
+                return {"chart": {"result": [minute_result if "interval=1m" in url else daily_result]}}
+
+        def collect():
+            return F.collect(config, {ticker}, first, last, Client(), anchors=anchors)[ticker]
+
+        with patch.object(F, "tmx_closes", return_value=official):
+            minute_result["indicators"]["quote"][0]["close"][1] = 96.
+            with self.assertRaisesRegex(ValueError, "final regular Yahoo bar disagree"):
+                collect()
+            minute_result["indicators"]["quote"][0]["close"][1] = prices[1]
+            daily_result["events"] = {"dividends": {"x": {"date": daily_result["timestamp"][1], "amount": 1}}}
+            with self.assertRaisesRegex(ValueError, "Corporate actions"):
+                collect()
+            del daily_result["events"]
+            rows[0]["mktPrice"] = 99.
+            with self.assertRaisesRegex(ValueError, "archived price disagreement"):
+                collect()
+            rows[0]["mktPrice"] = prices[0]
+            confirmed = collect()
+
+        quotes = self.quotes(last)
+        quotes[ticker] = confirmed
+        snap = self.run_day(last, quotes)
+        self.assertEqual(snap["as_of"], last)
+        self.assertEqual(archive.read_bytes(), frozen)
+        _, ledger = F.load_state(self.root)
+        self.assertEqual([d["prices"][ticker]["close"] for d in ledger], prices)
+        self.assertEqual(ledger[-1]["prices"][ticker]["price_source"], F.FIDELITY_MARKET_SOURCE)
+        self.assertEqual(ledger[-1]["prices"][ticker]["close_confirmation"]["close"], prices[-1])
+
     def test_confirmed_revision_with_late_yahoo_session_uses_one_official_history(self):
         self.run_day(); q=self.quotes("2026-10-20")
         symbol="FEQT.NE";stamp=int(datetime.fromisoformat(F.START+"T13:30:00+00:00").timestamp())

@@ -28,6 +28,8 @@ BENCHMARKS = ["FEQT", "VEQT", "VGRO", "VBAL"]
 BASELINE = "data/fnb-history/2026-10.json"
 METHOD = "buy_hold_fractional_ex_date_close_v1"
 FIDELITY_MARKET_SOURCE = "Fidelity Investments Canada"
+FIDELITY_HISTORY = "https://fidcaapi.fidelity.ca/FidcaAPI/api/fund/historicalPrices/EN"
+YAHOO_CHART = "https://query1.finance.yahoo.com/v8/finance/chart/"
 
 
 def read(path):
@@ -64,10 +66,14 @@ def completed_session(now):
     return day
 
 
+def regular_close(day):
+    return time(13) if day.month == 12 and day.day == 24 else time(16)
+
+
 def publication_launch(published):
     published = datetime.fromisoformat(published.replace("Z", "+00:00")).astimezone(TZ)
     day = published.date()
-    close = time(13) if day.month == 12 and day.day == 24 else time(16)
+    close = regular_close(day)
     if not trading_day(day) or published.time() >= close: return next_session(day)
     return day
 
@@ -204,17 +210,111 @@ def fidelity_market_close(client, ticker, day):
     return {"source": FIDELITY_MARKET_SOURCE, "source_url": source_url, "date": day, "close": close}
 
 
+def fidelity_history_url(ticker, first, last):
+    params = {"locale": "EN", "historical_from": first, "historical_to": last, "fund_code": ticker}
+    return FIDELITY_HISTORY + "?" + urlencode(params)
+
+
+def yahoo_prices_url(symbol, first, last, interval="1d"):
+    params = {"period1": int(datetime.combine(date.fromisoformat(first), time(), TZ).timestamp()),
+              "period2": int(datetime.combine(date.fromisoformat(last) + timedelta(days=1), time(), TZ).timestamp()),
+              "interval": interval}
+    if interval == "1d":
+        params["events"] = "div,splits,capitalGains"
+    else:
+        params["includePrePost"] = "false"
+    return YAHOO_CHART + quote(symbol) + "?" + urlencode(params)
+
+
+def valid_fidelity_price(price, session):
+    evidence = price["close_confirmation"]
+    first, last = evidence["window"]
+    symbol = price["symbol"]
+    regular_minute = datetime.combine(date.fromisoformat(session), regular_close(date.fromisoformat(session)), TZ) - timedelta(minutes=1)
+    return (symbol.endswith(".NE") and first <= session <= last
+        and price["source_url"] == fidelity_history_url(symbol.removesuffix(".NE"), first, last)
+        and price["corporate_actions_source"] == evidence["source"] == "Yahoo Finance"
+        and price["split"] == 1 and price["distribution"] == 0 and price["adjusted_close"] == price["close"]
+        and evidence["source_url"] == yahoo_prices_url(symbol, first, last, "1m")
+        and evidence["regular_minute"] == regular_minute.isoformat()
+        and math.isfinite(evidence["close"]) and abs(evidence["close"] - price["close"]) <= .0001)
+
+
+def corroborated_fidelity_window(client, ticker, symbol, first, last, expected, anchor, daily, tmx=None):
+    """Use one dated market-price series for the full adjacent window.
+
+    This is a fallback only: the issuer's actual market price (not NAV) must
+    match the independent last regular one-minute bar on every session, and
+    the archived close must still agree. Never infer a missing close or use
+    this nominal-price fallback across a corporate action.
+    """
+    try:
+        if not expected or first != anchor["date"] or not set(expected).issubset(daily):
+            raise ValueError("Missing daily corporate-action data")
+        if (date.fromisoformat(last) - date.fromisoformat(first)).days >= 7:
+            raise ValueError("Window exceeds recent minute data")
+        for day in expected:
+            p = daily[day]
+            if p["split"] != 1 or p["distribution"] != 0 or not math.isclose(p["adjusted_close"], p["close"], abs_tol=.0001, rel_tol=0):
+                raise ValueError("Corporate actions require the normal adjusted-close path")
+        fund = client.json(FID + "fund/EN/" + quote(ticker))
+        listing = fund["series"]["L"]
+        if (symbol != ticker + ".NE" or fund.get("axisCode") != ticker or fund.get("etf") is not True
+                or listing.get("axisCd") != ticker or listing.get("currency") != "CAD" or listing.get("exchangeName") != "Cboe CA"):
+            raise ValueError("Unexpected Fidelity CAD Cboe listing")
+        source_url = fidelity_history_url(ticker, first, last)
+        market = {}
+        for row in client.json(source_url)["fundHistory"]:
+            day = datetime.strptime(row["asAtDate"], "%d-%b-%Y").date().isoformat()
+            close = row["mktPrice"]
+            if (day not in expected or day in market or row.get("axisCode") != ticker or row.get("fundCode") != ticker
+                    or row.get("fundSeries") != "L" or type(close) not in (float, int) or not math.isfinite(close) or close <= 0):
+                raise ValueError("Unexpected dated Fidelity market-price record")
+            market[day] = close
+        if set(market) != set(expected) or abs(market[first] - anchor["close"]) > .0001:
+            raise ValueError("Incomplete Fidelity history or archived price disagreement")
+
+        chart_url = yahoo_prices_url(symbol, first, last, "1m")
+        chart = client.json(chart_url)["chart"]
+        if chart.get("error") or len(chart["result"]) != 1:
+            raise ValueError("Missing regular Yahoo minute history")
+        d = chart["result"][0]; meta = d["meta"]
+        if (meta.get("symbol"), meta.get("currency"), meta.get("instrumentType"), meta.get("exchangeName"),
+                meta.get("exchangeTimezoneName"), meta.get("dataGranularity")) != (symbol, "CAD", "ETF", "NEO", "America/Toronto", "1m"):
+            raise ValueError("Unexpected Canadian minute history")
+        regular_ends = {p["end"] for group in meta["tradingPeriods"] for p in group}
+        bars = dict(zip(d["timestamp"], d["indicators"]["quote"][0]["close"], strict=True))
+        if len(bars) != len(d["timestamp"]):
+            raise ValueError("Duplicate minute timestamp")
+
+        out = {}
+        for day, close in market.items():
+            session = date.fromisoformat(day)
+            end = datetime.combine(session, regular_close(session), TZ)
+            minute = end - timedelta(minutes=1)
+            observed = bars.get(int(minute.timestamp()))
+            if (int(end.timestamp()) not in regular_ends or type(observed) not in (float, int)
+                    or not math.isfinite(observed) or abs(observed - close) > .0001):
+                raise ValueError("Fidelity and final regular Yahoo bar disagree: " + day)
+            comparison = {p["price_source"]: {"close": p["close"], "source_url": p["source_url"]}
+                          for p in (daily[day], (tmx or {}).get(day)) if p}
+            out[day] = {"close": close, "adjusted_close": close, "distribution": 0., "split": 1.,
+                        "symbol": symbol, "price_source": FIDELITY_MARKET_SOURCE, "source_url": source_url,
+                        "corporate_actions_source": "Yahoo Finance", "daily_close_candidates": comparison,
+                        "close_confirmation": {"source": "Yahoo Finance", "source_url": chart_url,
+                                               "regular_minute": minute.isoformat(), "close": observed, "window": [first, last]}}
+        return out
+    except (AttributeError, IndexError, KeyError, TypeError, ValueError) as exc:
+        raise ValueError(f"Unconfirmed historical close revision: {ticker}; {exc}") from exc
+
+
 def collect(config, tickers, first, last, client=None, preferred_tmx=(), anchors=None):
     client = client or Client()
     def one(ticker):
         fund = config["funds"][ticker]
         symbol = fund["quote_symbol"]
         # Request through NOW, even during catch-up: future splits alter vendor history.
-        params = {"period1": int(datetime.combine(date.fromisoformat(first), time(), TZ).timestamp()),
-                  "period2": int(datetime.combine(date.fromisoformat(last) + timedelta(days=1), time(), TZ).timestamp()),
-                  "interval": "1d", "events": "div,splits,capitalGains"}
-        url = "https://query1.finance.yahoo.com/v8/finance/chart/" + quote(symbol) + "?" + urlencode(params)
-        payload = client.json(url)
+        payload = client.json(yahoo_prices_url(symbol, first, last))
         yahoo = parse_prices(payload, symbol, first, last)
         parsed = yahoo
         expected = []; day = date.fromisoformat(first)
@@ -223,17 +323,28 @@ def collect(config, tickers, first, last, client=None, preferred_tmx=(), anchors
             day += timedelta(days=1)
         anchor = (anchors or {}).get(ticker)
         revised = anchor and anchor["date"] in yahoo and abs(yahoo[anchor["date"]]["close"] / anchor["close"] - 1) > .0001
+        fidelity_cboe = fund.get("provider") == "fidelity" and symbol == ticker + ".NE"
+        from_issuer = fidelity_cboe and anchor and anchor.get("price_source") == FIDELITY_MARKET_SOURCE
+        def corroborate(tmx=None):
+            return corroborated_fidelity_window(client, ticker, symbol, first, last, expected, anchor, yahoo, tmx)
         if ticker in preferred_tmx or revised or any(day not in parsed for day in expected):
             # TMX identifies Canadian Cboe listings with :CC, not the bare TSX symbol.
             market_symbol = ticker + ":CC" if symbol.endswith(".NE") else ticker
-            official = tmx_closes(client, market_symbol, first, last)
-            if any(day not in official for day in expected):
-                raise ValueError("Missing consistent TMX closing history: " + ticker)
+            try:
+                official = tmx_closes(client, market_symbol, first, last)
+                if any(day not in official for day in expected):
+                    raise ValueError("Missing consistent TMX closing history: " + ticker)
+            except ValueError:
+                if from_issuer:
+                    return ticker, corroborate()
+                raise
             # Use one source for both ends of each return. Mixing a newly
             # populated Yahoo anchor with an accepted TMX close can fabricate a
             # revision even when TMX still confirms the immutable ledger price.
             parsed = parse_prices(payload, symbol, first, last, official, prefer_fallback=True)
             if anchor and anchor["date"] in parsed and abs(parsed[anchor["date"]]["close"] / anchor["close"] - 1) > .0001:
+                if from_issuer:
+                    return ticker, corroborate(parsed)
                 revised_day = anchor["date"]
                 following = next_session(date.fromisoformat(revised_day)).isoformat()
                 if revised_day not in yahoo or following not in parsed:
@@ -247,16 +358,16 @@ def collect(config, tickers, first, last, client=None, preferred_tmx=(), anchors
                 # A published disagreement needs the dated market price for the same listing.
                 issuer = None
                 if following in yahoo and abs(yahoo[following]["close"] / tmx[following]["close"] - 1) > .0001:
-                    if fund.get("provider") != "fidelity" or not symbol.endswith(".NE"):
+                    if not fidelity_cboe:
                         raise ValueError("Unconfirmed historical close revision: " + ticker)
                     try:
                         issuer = fidelity_market_close(client, ticker, following)
-                    except (AttributeError, KeyError, TypeError, ValueError) as exc:
-                        raise ValueError(f"Unconfirmed historical close revision: {ticker}; {exc}") from exc
+                    except (AttributeError, KeyError, TypeError, ValueError):
+                        return ticker, corroborate(tmx)
                     confirmed = [history for history in (yahoo, tmx)
                                  if abs(history[following]["close"] / issuer["close"] - 1) <= .0001]
                     if len(confirmed) != 1 or not set(expected).issubset(confirmed[0]):
-                        raise ValueError("Unconfirmed historical close revision: " + ticker)
+                        return ticker, corroborate(tmx)
                     parsed = confirmed[0]
                 verification = {
                     "date": revised_day, "accepted_close": anchor["close"],
@@ -395,6 +506,8 @@ def validate(registry, days):
         for p in record["prices"].values():
             if not all(math.isfinite(p[k]) and p[k] > 0 for k in ["close", "adjusted_close", "split"]) or not math.isfinite(p["distribution"]) or p["distribution"] < 0:
                 raise ValueError("Invalid archived price or event")
+            if p.get("price_source") == FIDELITY_MARKET_SOURCE and not valid_fidelity_price(p, record["date"]):
+                raise ValueError("Uncorroborated Fidelity market price in ledger")
         active = [a for a in registry["accounts"] if a["launch_date"] <= record["date"]]
         if set(record["accounts"]) != {a["id"] for a in active}: raise ValueError("Incomplete daily account set")
         for a in active:
@@ -426,6 +539,8 @@ def snapshot(registry, days, config):
     if issuer_confirmation:
         revisions = "Une correction de cours historique exige l’accord de Yahoo et TMX sur le cours révisé. Si les fournisseurs divergent sur la nouvelle clôture d’un FNB Fidelity coté à Cboe Canada, le cours de marché daté de l’émetteur doit corroborer une seule des deux séries. Les deux clôtures adjacentes proviennent de la même série."
         source_changes = "Si les fournisseurs divergent sur une ancienne clôture, deux sources doivent corroborer le nouveau cours. Le registre signale séparément l’écart historique."
+    if any(p.get("close_confirmation") for record in days for p in record["prices"].values()):
+        revisions += " Si les séries quotidiennes ne concordent pas, l’historique de cours de marché Fidelity est utilisé sur une fenêtre sans distribution ni fractionnement, seulement si la dernière minute régulière Yahoo confirme chaque cours et que l’ancre archivée concorde."
     return {"schema_version": 1, "currency": "CAD", "capital": CAPITAL, "inception": START,
             "as_of": days[-1]["date"] if days else None, "updated_at": days[-1]["recorded_at"] if days else None,
             "ledger_sha256": days[-1]["sha256"] if days else None, "benchmarks": benchmark_ids(registry), "accounts": accounts,
