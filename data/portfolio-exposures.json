@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "portfolio_exposures",
-  "generated_at": "2026-11-25T10:54:39.799644+00:00",
+  "generated_at": "2026-11-25T20:41:10.284861+00:00",
   "benchmark": "FEQT",
   "methodology": "Pondérations par valeur de marché en CAD; FNB décomposés; secteurs GICS; pays de risque ou pays publié par l’émetteur. Aucun calcul selon les devises ou le chiffre d’affaires géographique. Solde non détaillé conservé explicitement. Arrondis de collecte harmonisés à 100 %.",
   "labels": {
@@ -5093,7 +5093,7 @@
       "source_url": "https://www.blackrock.com/ca/investors/en/products/239858/ishares-us-high-yield-bond-index-etf-cadhedged-fund",
       "note": "Secteurs GICS et pays des placements sous-jacents publiés par iShares.",
       "checked_at": "2026-11-18T19:37:34.248861+00:00",
-      "fetch_status": "fresh",
+      "fetch_status": "cached",
       "refresh": {
         "kind": "ishares",
         "download_url": "https://www.blackrock.com/ca/investors/en/products/239858/ishares-us-high-yield-bond-index-etf-cadhedged-fund/1464253357814.ajax?fileType=csv&fileName=XHY_holdings&dataType=fund"
