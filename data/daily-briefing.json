@@ -3,100 +3,113 @@
   "kind": "news_digest",
   "language": "fr",
   "timezone": "America/Toronto",
-  "edition_date": "2026-11-24",
-  "generated_at": "2026-11-24T10:02:48.367251+00:00",
-  "editorial_note": "Préparé à 5 h 02, heure de Montréal. Les cours américains de lundi sont des clôtures; les cours asiatiques cités pour mardi correspondent aux relevés du matin. Mercredi 25 novembre à 8 h 30, le Bureau of Economic Analysis doit publier les dépenses et prix de consommation d’octobre et la deuxième estimation du PIB américain du troisième trimestre. Au Canada, l’estimation avancée des ventes de gros d’octobre est attendue mercredi.",
+  "edition_date": "2026-11-25",
+  "generated_at": "2026-11-25T10:07:32.353359+00:00",
+  "editorial_note": "Édition préparée avant les publications américaines de 8 h 30 : les résultats du PCE d’octobre et de la deuxième estimation du PIB du troisième trimestre ne sont pas encore connus. Les nouvelles relient la demande, le coût du capital et les bénéfices sans transformer les attentes de marché en résultats réalisés.",
   "stories": [
     {
-      "topic": "Actions américaines",
-      "title": "Le retour de Jensen Huang propulse Nvidia, mais l’enquête se poursuit",
-      "summary": "Le conseil de Nvidia a voté à l’unanimité lundi le retour immédiat de Jensen Huang à la direction et au conseil. Colette Kress reste directrice financière et le comité indépendant poursuit son enquête. Nvidia a gagné 31,5 % à la clôture du Nasdaq le 23 novembre; le S&P 500 a terminé en hausse de 4,7 %. En Asie mardi, l’indice taïwanais a bondi d’environ 9 % selon Reuters; TSMC et Foxconn approchaient leur limite de hausse quotidienne dans la séance. Les contrats indiciels américains étaient déjà en hausse avant l’annonce de Nvidia, un rappel que le rebond de lundi avait aussi d’autres ressorts.",
-      "impact": "Ma lecture : le retour du fondateur réduit à court terme l’incertitude sur les contrats, les produits et les relations avec les clients. La hausse du titre ne prouve toutefois pas une amélioration des marges ou du financement des projets. Les investisseurs devront distinguer les ventes à des clients qui paient sur leurs propres flux des engagements dont l’exécution dépend d’un financement lié à Nvidia ou d’un emprunt coûteux. Des encaissements solides et des commandes financées après le rebond rendraient le mouvement plus durable. De nouvelles restrictions à l’exportation ou des reports de projets changeraient cette lecture.",
-      "source_label": "Reuters, via Euronext",
-      "source_url": "https://live.euronext.com/en/financial-news/asian-stocks-rally-huangs-return-nvidia-revives-ai-trade",
+      "topic": "Macroéconomie américaine",
+      "title": "La confiance américaine bondit, mais le PCE doit confirmer la vigueur de la demande",
+      "summary": "L’indice de confiance du Conference Board a grimpé de 91,9 en octobre à 103,3 en novembre, son plus haut niveau depuis janvier 2025 et bien au-dessus du consensus de 92,5. La perception du marché du travail s’est nettement améliorée : 30,8 % des répondants jugent les emplois abondants, contre 26,2 % en octobre, tandis que les anticipations d’inflation à un an ont seulement fléchi de 4,7 % à 4,5 %. À 5 h 08, heure de Toronto, les dépenses et l’inflation PCE d’octobre ainsi que la deuxième estimation du PIB du troisième trimestre restent attendues à 8 h 30; aucun résultat de ces publications n’est encore connu.",
+      "impact": "Ma lecture : la surprise de confiance réduit le risque d’un ralentissement brutal de la consommation, mais elle ne prouve pas que les dépenses réelles ont accéléré. Si le PCE sous-jacent demeure ferme et que les revenus soutiennent les achats, le marché aura davantage de raisons de conserver des taux élevés et de comprimer les multiples sensibles aux rendements. Une inflation plus basse accompagnée de dépenses stables ferait l’inverse; une faiblesse simultanée des revenus et des dépenses invaliderait la lecture favorable sur la demande.",
+      "source_label": "Reuters",
+      "source_url": "https://www.reuters.com/world/us/us-consumer-confidence-surges-highest-level-nearly-two-years-2026-11-24/",
       "published_date": "2026-11-24"
     },
     {
-      "topic": "Taux américains",
-      "title": "John Williams réaffirme la priorité à l’inflation avant les chiffres de mercredi",
-      "summary": "Lundi, le président de la Fed de New York a décrit une économie et un emploi solides, avec une inflation encore autour de 3,5 % selon son appréciation, au-dessus de la cible de 2 %. Il a cependant relevé un ralentissement des prix des services de logement et peu de diffusion persistante des chocs tarifaires et énergétiques à l’ensemble des prix. Il a insisté sur les données à venir avant la réunion des 8 et 9 décembre. La cible est encore de 3,75 % à 4,00 %; les swaps SOFR OIS de BlueGamma, relevés le 24, intègrent déjà une hausse au prochain rendez-vous. L’inflation d’octobre mesurée par les dépenses de consommation et la deuxième estimation du PIB au troisième trimestre sont attendues mercredi à 8 h 30.",
-      "impact": "Ma lecture : puisque la hausse de décembre est déjà largement intégrée, une surprise haussière dans les prix sous-jacents ou dans la demande ferait surtout remonter les attentes pour les réunions suivantes. Ce serait un soutien au dollar américain et une pression sur les titres à multiples élevés ou très endettés. Une surprise baissière liée à des prix moins dynamiques et à des dépenses qui tiennent serait favorable aux obligations sans dégrader immédiatement les bénéfices. Si les prix ralentissent parce que les volumes fléchissent, l’avantage des taux peut être compensé par des révisions de profits. Il faudra regarder la variation mensuelle, puisque le taux annuel dépend aussi de la base de comparaison.",
-      "source_label": "Réserve fédérale de New York",
-      "source_url": "https://www.newyorkfed.org/newsevents/speeches/2026/wil261123",
-      "published_date": "2026-11-23"
+      "topic": "Intelligence artificielle",
+      "title": "Dell relève fortement ses prévisions grâce à un carnet de serveurs d’IA de 132,3 G$ US",
+      "summary": "Dell a porté sa prévision de revenus pour l’exercice 2027 à 202 G$ US, contre 192 G$ auparavant et 194,48 G$ au consensus LSEG. La cible de revenus des serveurs optimisés pour l’intelligence artificielle monte de 74 G$ à 78 G$, et le bénéfice ajusté attendu par action passe de 25,50 $ à 29,68 $. Au troisième trimestre, les revenus ont atteint 54,94 G$ contre 49,32 G$ attendus; l’infrastructure a presque triplé à 41,97 G$ et le carnet de serveurs d’IA a atteint 132,3 G$. Le titre gagnait environ 5 % après la clôture. La contrepartie est une activité PC dont la croissance a ralenti à 3 % et une pénurie de mémoire que Dell prévoit jusque dans 2027.",
+      "impact": "Ma lecture : le carnet et les nouvelles commandes confirment que la demande d’infrastructure d’IA s’élargit au-delà de quelques grands clients, ce qui soutient les fournisseurs de calcul, de réseau et d’énergie. La hausse du bénéfice attendu montre aussi que Dell transforme une partie du volume en profits malgré le coût des composants. Cette lecture serait affaiblie si les pénuries de mémoire comprimaient les marges, si le carnet se convertissait plus lentement en revenus ou si les clients reportaient des projets faute de capacité électrique.",
+      "source_label": "Reuters",
+      "source_url": "https://www.reuters.com/business/dell-lifts-annual-forecasts-after-record-quarter-surging-ai-server-demand-2026-11-24/",
+      "published_date": "2026-11-24"
     },
     {
-      "topic": "Économie canadienne",
-      "title": "Les ventes manufacturières d’octobre sont estimées en hausse de 2,3 %",
-      "summary": "Statistique Canada estime que les ventes des fabricants ont augmenté de 2,3 % en octobre par rapport à septembre, en dollars courants désaisonnalisés. Les produits du pétrole et du charbon ainsi que les métaux de première transformation affichent les plus fortes progressions. Dans le relevé complet publié le 13 novembre, les ventes de septembre étaient stables après une hausse de 1,8 % en août. L’estimation d’octobre repose sur un taux de réponse pondéré de 69,9 %, inférieur à la moyenne finale de 92,6 %; le relevé complet sortira le 14 décembre.",
-      "impact": "Ma lecture : les ventes en dollars peuvent accélérer avec les prix des produits raffinés et des métaux, même si la production reste modeste. Cela peut aider les revenus nominaux des fournisseurs sans améliorer automatiquement leurs marges. Si le détail en volume et l’estimation des ventes de gros mercredi montrent une progression dans plusieurs industries, le signal de demande intérieure sera plus solide; les taux courts canadiens pourraient alors rester plus élevés. Si le mouvement se limite aux prix et à ces deux branches, j’en tirerais peu de conclusions pour la Banque du Canada ou pour le dollar canadien.",
-      "source_label": "Statistique Canada",
-      "source_url": "https://www150.statcan.gc.ca/n1/daily-quotidien/261123/dq261123c-fra.htm",
-      "published_date": "2026-11-23"
+      "topic": "Résultats canadiens",
+      "title": "Couche‑Tard améliore son bénéfice ajusté malgré des volumes de carburant encore faibles",
+      "summary": "Au deuxième trimestre de l’exercice 2027, Couche‑Tard a dégagé un bénéfice ajusté de 0,84 $ US par action, en hausse de 7,7 % sur un an et supérieur à l’estimation de 0,79 $ du catalogue public. Les ventes comparables de marchandises ont progressé de 1,8 % aux États-Unis et de 1,3 % en Europe, mais reculé de 0,4 % au Canada. Les volumes comparables de carburant ont baissé de 2,4 % aux États-Unis et de 5,4 % en Europe. L’offre de 32 zlotys par action sur Żabka est maintenant inconditionnelle et doit clore le 7 décembre; la direction dit que ce prix ne sera pas relevé. Le titre n’avait pas encore ouvert après ces résultats au moment de la rédaction.",
+      "impact": "Ma lecture : l’amélioration des marges américaines et européennes compense une demande de carburant molle, mais la croissance n’est pas encore uniforme, particulièrement au Canada. Żabka peut ajouter une plateforme de croissance, tout en déplaçant le risque vers le financement et l’intégration. Une reprise des volumes et des ventes canadiennes renforcerait la thèse; une érosion des marges carburant ou des coûts d’intégration plus lourds l’affaiblirait.",
+      "source_label": "Alimentation Couche‑Tard",
+      "source_url": "https://corporate.couche-tard.com/2026-11-24-ALIMENTATION-COUCHE-TARD-ANNOUNCES-ITS-RESULTS-FOR-ITS-SECOND-QUARTER-OF-FISCAL-YEAR-2027",
+      "published_date": "2026-11-24"
+    },
+    {
+      "topic": "Canada · taux et devise",
+      "title": "Le dollar canadien atteint un sommet de onze jours après le message de Tiff Macklem",
+      "summary": "Le dollar canadien s’est apprécié mardi jusqu’à 1,42665 $ CA par dollar américain, son niveau intrajournalier le plus ferme depuis le 13 novembre. Le gouverneur Tiff Macklem a indiqué que la Banque du Canada peut ignorer des chocs d’offre temporaires, mais qu’elle pourrait devoir répondre plus tôt ou plus vigoureusement si ces chocs persistent, si la demande reste forte ou si les anticipations d’inflation montent. Après le discours, le marché évaluait à environ 80 % la probabilité d’une hausse le 9 décembre; le relevé CORRA OIS de SAVY, daté du 24 novembre, la place à 82 %.",
+      "impact": "Ma lecture : l’écart de taux attendu avec les États-Unis devient un soutien plus crédible pour le dollar canadien, mais la devise demeure exposée au pétrole et à la trajectoire américaine. Un PCE américain ferme peut relever les rendements des deux côtés et limiter l’avantage canadien. La lecture haussière sur le huard serait invalidée si les données canadiennes affaiblissaient la demande ou si la Banque jugeait le choc inflationniste assez temporaire pour maintenir le taux.",
+      "source_label": "Reuters via MarketScreener",
+      "source_url": "https://in.marketscreener.com/news/canadian-dollar-hits-11-day-high-as-investors-raise-boc-rate-hike-bets-ce7851dbdd8cf221",
+      "published_date": "2026-11-24"
     },
     {
       "topic": "Énergie",
-      "title": "Le Brent clôture sous 90 $ US alors que l’offre remonte",
-      "summary": "Le Brent a clôturé à 89,37 $ US le baril lundi, en baisse de 3,5 % et au plus bas depuis la fin d’août. Dans les échanges asiatiques de mardi, à 1 h 47 UTC, le Brent valait 88,97 $ US et le West Texas Intermediate, 79,94 $ US. Reuters relève que le retour de volumes du Moyen-Orient et le risque d’un excédent pèsent sur le brut, même si les risques pour les navires à Ormuz persistent. Ce sont des cours de contrats à terme, distincts du prix au comptant affiché dans les séries économiques.",
-      "impact": "Ma lecture : la baisse du brut peut calmer l’inflation globale et alléger les coûts du transport. Au Canada, le même mouvement réduit le prix de référence de plusieurs producteurs, mais le prix réalisé dépend aussi de l’écart entre le brut canadien et le brut américain. Un prix de l’essence plus faible ne suffit pas à établir que les services sous-jacents ralentissent aux États-Unis. Surveiller la régularité des livraisons et les stocks permet de départager un excédent durable d’une baisse de prix qui s’inverserait si les exportations étaient perturbées.",
-      "source_label": "Reuters, via Investing.com",
-      "source_url": "https://za.investing.com/news/commodities-news/oil-holds-near-threemonth-low-as-rising-supply-offsets-hormuz-threat-4593364",
-      "published_date": "2026-11-24"
+      "title": "Le Brent recule vers 90,58 $ US malgré les risques dans le détroit d’Ormuz",
+      "summary": "Le Brent perdait 0,9 % à 90,58 $ US mercredi à 8 h 45 GMT et le WTI 1,3 % à 80,96 $ US, effaçant une partie du gain de plus de 2 % de mardi. La reprise des exportations du Moyen-Orient et les craintes d’un surplus mondial ont repris le dessus, même après de nouveaux incidents visant des navires près du détroit d’Ormuz. Le marché attend aussi la réunion de l’OPEP+ du 29 novembre, où les capacités revendiquées par certains producteurs compliquent la politique de production pour 2027.",
+      "impact": "Ma lecture : près de 90 $ US, le Brent incorpore encore une prime géopolitique, mais cette prime ne suffit pas à neutraliser la perspective d’une offre excédentaire. Pour les producteurs canadiens, le prix reste favorable aux flux de trésorerie, avec une volatilité accrue autour de l’OPEP+ et du transport maritime. Une interruption durable des flux dans le détroit invaliderait rapidement la pression baissière; une hausse des quotas ou des stocks la renforcerait.",
+      "source_label": "Reuters",
+      "source_url": "https://www.reuters.com/business/energy/oil-prices-fall-supply-glut-concerns-offset-middle-east-disruption-fears-2026-11-25/",
+      "published_date": "2026-11-25"
     }
   ],
   "fred_watch": [
     {
+      "series_id": "DGS10",
+      "title": "Le taux américain à 10 ans reste très élevé",
+      "explanation": "Le 24 novembre, le rendement du Trésor à 10 ans s’établit à 4,91 %, contre 4,92 % la veille. Le petit recul ne change pas le coût d’actualisation élevé qui pèse sur les valorisations; le PCE publié ce matin décidera surtout si ce niveau peut se détendre durablement.",
+      "observation_date": "2026-11-24",
+      "source_url": "https://fred.stlouisfed.org/series/DGS10"
+    },
+    {
       "series_id": "DFII10",
-      "title": "Le taux réel américain à dix ans remonte légèrement",
-      "explanation": "Le 23 novembre, le rendement réel à dix ans des obligations américaines protégées contre l’inflation était de 2,79 %, contre 2,77 % le 20. C’est un repère de coût du capital en termes réels; un rebond des actions peut coexister avec un taux d’actualisation réel encore élevé.",
-      "observation_date": "2026-11-23",
+      "title": "Le taux réel à 10 ans demeure à 2,79 %",
+      "explanation": "Le taux réel américain à 10 ans est resté à 2,79 % le 24 novembre. Ce niveau signifie que le financement demeure restrictif même après inflation et oblige les projets d’investissement, notamment en IA, à produire des rendements élevés pour justifier leur coût.",
+      "observation_date": "2026-11-24",
       "source_url": "https://fred.stlouisfed.org/series/DFII10"
     },
     {
       "series_id": "BAMLH0A0HYM2",
-      "title": "Le crédit spéculatif s’était tendu avant le rebond",
-      "explanation": "Le 20 novembre, l’écart de rendement ajusté des options du crédit américain à haut rendement atteignait 3,76 points de pourcentage, contre 3,52 le 19. Cette hausse signale une rémunération relative plus élevée exigée ce jour-là; le graphique ne mesure pas la réaction du crédit au rebond du 23.",
-      "observation_date": "2026-11-20",
+      "title": "Les écarts de crédit se resserrent malgré la volatilité technologique",
+      "explanation": "L’écart du haut rendement américain a reculé de 3,76 % le 20 novembre à 3,63 % le 23 novembre. Le crédit ne signale donc pas encore une détérioration générale du financement; un élargissement conjoint avec la baisse des actions serait un avertissement plus sérieux.",
+      "observation_date": "2026-11-23",
       "source_url": "https://fred.stlouisfed.org/series/BAMLH0A0HYM2"
     },
     {
-      "series_id": "PAYEMS",
-      "title": "L’emploi salarié américain avait rebondi en octobre",
-      "explanation": "Pour octobre 2026, la variation mensuelle de l’emploi salarié non agricole aux États-Unis était de +165 000 emplois, après +60 000 en septembre, selon les données affichées. Cela aide à comprendre pourquoi la Fed peut rester concentrée sur les prix; un seul relevé ne suffit pas à établir une tendance.",
-      "observation_date": "2026-10-01",
-      "source_url": "https://fred.stlouisfed.org/series/PAYEMS"
-    },
-    {
-      "series_id": "PCEPILFE",
-      "title": "Le dernier repère de l’inflation sous-jacente avant mercredi",
-      "explanation": "Pour septembre 2026, l’indice des prix des dépenses de consommation hors alimentation et énergie progressait de 3,12 % sur douze mois, après 3,03 % en août. C’est le repère annuel disponible avant le relevé d’octobre; la variation sur un mois dira si le rythme récent se maintient.",
-      "observation_date": "2026-09-01",
-      "source_url": "https://fred.stlouisfed.org/series/PCEPILFE"
+      "series_id": "VIXCLS",
+      "title": "La volatilité baisse, mais reste au-dessus d’un régime calme",
+      "explanation": "Le VIX a reculé de 35,89 le 20 novembre à 26,62 le 23 novembre. La détente après le rebond de lundi est réelle, mais un niveau supérieur à 25 indique encore une forte demande de protection et des mouvements quotidiens potentiellement amples.",
+      "observation_date": "2026-11-23",
+      "source_url": "https://fred.stlouisfed.org/series/VIXCLS"
     }
   ],
   "audio_script": {
-    "edition_date": "2026-11-24",
-    "source_generated_at": "2026-11-24T10:02:48.367251+00:00",
-    "intro": "Bonjour. On est mardi le vingt-quatre novembre, il est 5 h 02 à Montréal. On revient sur le rebond de Nvidia et sur ce que les marchés vont surveiller après cette hausse. On parle aussi des taux américains, des usines canadiennes et du pétrole. Les chiffres de consommation et de croissance aux États-Unis n’arrivent que mercredi, à huit heures et demie. Ce matin, on parle de scénarios, en attendant les résultats.",
+    "edition_date": "2026-11-25",
+    "source_generated_at": "2026-11-25T10:07:32.353359+00:00",
+    "intro": "Bonjour. Voici les nouvelles qui comptent pour les marchés, préparées vers cinq heures huit, heure de Toronto, le mercredi 25 novembre. Deux publications américaines importantes restent à venir à huit heures trente : les dépenses et l’inflation selon l’indice des prix des dépenses personnelles pour octobre, puis la deuxième estimation du produit intérieur brut du troisième trimestre. Les chiffres ne sont donc pas encore connus. Ce matin, on relie la confiance des consommateurs, la demande pour les serveurs d’intelligence artificielle, les résultats de Couche‑Tard, le dollar canadien et le pétrole.",
     "stories": [
       {
-        "title": "Le retour de Jensen Huang propulse Nvidia, mais l’enquête se poursuit",
-        "text": "On commence par Nvidia. Le conseil a ramené Jensen Huang à la direction lundi, et Colette Kress reste responsable des finances. Le comité indépendant poursuit son enquête. Sur le Nasdaq, le titre a gagné un peu plus de trente et un pour cent en clôture. Le grand indice américain des cinq cents sociétés a aussi repris du terrain. Il faut préciser que les contrats sur les indices montaient déjà avant la nouvelle de Nvidia. En Asie, le rebond s’est poursuivi à Taïwan, notamment chez les grands fournisseurs du groupe. Ma lecture : le retour du fondateur donne plus de continuité aux clients qui préparent des investissements sur plusieurs années. On n’a pas pour autant une réponse sur le financement de tous ces projets. Une commande et un encaissement, ce sont deux choses différentes. Regardons si les clients trouvent l’argent nécessaire et si Nvidia transforme les livraisons en flux de trésorerie. Si les projets sont remis ou si de nouvelles restrictions à l’exportation arrivent, le marché devra revoir ce qu’il vient de racheter."
+        "title": "La confiance américaine bondit, mais le PCE doit confirmer la vigueur de la demande",
+        "text": "D’abord, la confiance des consommateurs américains a créé une vraie surprise. L’indice du Conference Board est passé d’environ quatre-vingt-douze en octobre à cent trois virgule trois en novembre. Le consensus attendait à peine quatre-vingt-douze virgule cinq. La perception de l’emploi s’est aussi améliorée : plus de répondants disent que les emplois sont abondants, et moins disent qu’ils sont difficiles à trouver. Il faut garder une nuance importante. La confiance et les dépenses ne bougent pas toujours ensemble. Les ménages restent préoccupés par les prix, et leurs anticipations d’inflation à un an se situent encore à quatre virgule cinq pour cent. À huit heures trente, le rapport sur les revenus, les dépenses et l’inflation donnera une mesure plus solide. Ma lecture est conditionnelle. Si l’inflation sous-jacente reste forte pendant que les dépenses tiennent, la Réserve fédérale aura davantage de raisons de garder les taux élevés. Si l’inflation ralentit sans chute de la demande, les obligations et les multiples boursiers pourraient respirer. Une faiblesse des revenus et des dépenses changerait le diagnostic vers un ralentissement."
       },
       {
-        "title": "John Williams réaffirme la priorité à l’inflation avant les chiffres de mercredi",
-        "text": "À la Réserve fédérale américaine, John Williams a rappelé lundi que l’inflation est encore trop élevée. Il voit une économie qui résiste et un marché de l’emploi stable. Il note aussi que les prix des services de logement décélèrent. Pour la suite, la décision dépend des chiffres. Mercredi matin sortiront les prix liés aux dépenses de consommation et la deuxième estimation du produit intérieur brut aux États-Unis. Le marché des swaps prend déjà largement en compte une hausse de taux en décembre. Alors, ma lecture : si les prix sous-jacents ou la demande surprennent à la hausse, l’effet pourrait porter surtout sur les réunions suivantes. Le dollar américain pourrait en profiter, et le financement rester plus coûteux pour les entreprises qui empruntent beaucoup. Si les prix ralentissent avec une demande qui tient, c’est plus favorable aux obligations. Mais si la baisse des prix vient de ventes plus faibles, on doit aussi tenir compte du risque pour les bénéfices."
+        "title": "Dell relève fortement ses prévisions grâce à un carnet de serveurs d’IA de 132,3 G$ US",
+        "text": "Ensuite, Dell donne un signal très fort sur l’infrastructure d’intelligence artificielle. L’entreprise relève sa prévision de revenus annuels à deux cent deux milliards de dollars américains. Elle vise maintenant soixante-dix-huit milliards de revenus pour ses serveurs spécialisés en intelligence artificielle. Le trimestre a dépassé les attentes, et le carnet de commandes de ces serveurs atteint cent trente-deux milliards. Ce n’est donc plus seulement une promesse lointaine : les commandes existent et la demande s’élargit à plus de sept mille cinq cents clients utilisant les solutions Dell AI Factory. Le titre gagnait environ cinq pour cent après la clôture. Le risque se trouve dans les composants. Dell prévoit que la pénurie de mémoire se prolongera en deux mille vingt-sept, pendant que son activité d’ordinateurs personnels ralentit. Ma lecture : la chaîne de calcul, de réseau et d’alimentation électrique garde un puissant moteur de revenus. Il faudra maintenant vérifier que les marges et les flux de trésorerie suivent le carnet, surtout si les coûts de mémoire montent."
       },
       {
-        "title": "Les ventes manufacturières d’octobre sont estimées en hausse de 2,3 %",
-        "text": "Au Canada, on a le premier chiffre des usines pour octobre. Statistique Canada estime que leurs ventes ont monté de deux virgule trois pour cent sur le mois. Le relevé complet de septembre indiquait des ventes stables. Ce sont surtout les produits du pétrole et du charbon et les métaux de première transformation qui ressortent en octobre. Le chiffre est préliminaire : environ sept entreprises sur dix, en données pondérées, ont répondu pour cette première lecture. Ma lecture : si la hausse se concentre dans les prix de quelques produits, elle peut soutenir les recettes, mais elle en dit moins sur la quantité produite. Les ventes de gros attendues mercredi vont fournir un autre repère. Si plusieurs industries montrent une vraie hausse des volumes, je prendrais le signal davantage au sérieux pour la demande et les taux canadiens. Pour l’instant, le relevé plus complet est attendu à la mi-décembre."
+        "title": "Couche‑Tard améliore son bénéfice ajusté malgré des volumes de carburant encore faibles",
+        "text": "Au Canada, Couche‑Tard a publié un bénéfice ajusté de quatre-vingt-quatre cents américains par action, en hausse de près de huit pour cent sur un an. La direction souligne une meilleure performance aux États-Unis et des marges carburant résistantes. Les ventes comparables de marchandises ont progressé aux États-Unis et en Europe, mais elles ont légèrement reculé au Canada. Les volumes de carburant restent aussi faibles aux États-Unis et en Europe. Le bénéfice déclaré est inférieur à celui de l’an dernier, surtout à cause des couvertures de change et des frais liés à l’offre sur Żabka. Cette offre est maintenant inconditionnelle, au prix final de trente-deux zlotys par action, avec une clôture prévue le sept décembre. Le titre n’avait pas encore ouvert après les résultats au moment de cette édition. Ma lecture : les marges compensent encore la faiblesse des volumes. Après la transaction, l’enjeu principal deviendra l’intégration de Żabka et la capacité de Couche‑Tard à transformer cette acquisition en croissance rentable sans alourdir excessivement le financement."
       },
       {
-        "title": "Le Brent clôture sous 90 $ US alors que l’offre remonte",
-        "text": "Terminons avec le pétrole. Le Brent a clôturé lundi juste sous les quatre-vingt-dix dollars américains le baril. Dans les échanges asiatiques de mardi, le brut américain s’est retrouvé près de quatre-vingts dollars. L’offre du Moyen-Orient revient, même si les risques de navigation près d’Ormuz restent présents. Ma lecture : à court terme, un baril moins cher soulage les ménages et les entreprises qui paient le carburant. Pour un producteur canadien, il faut regarder aussi ce qu’il reçoit réellement pour son brut, dont le prix ne suit pas toujours le Brent du même montant. Et pour la Réserve fédérale, une facture d’essence plus légère aide l’inflation totale, sans nous dire si les prix des services ralentissent. C’est pourquoi je surveillerais les volumes livrés et les stocks. Si les livraisons sont interrompues, on peut voir la pression s’inverser rapidement."
+        "title": "Le dollar canadien atteint un sommet de onze jours après le message de Tiff Macklem",
+        "text": "Le message de Tiff Macklem a renforcé le dollar canadien. Mardi, le huard a touché son meilleur niveau en onze jours, autour de un dollar quarante-deux virgule sept cents canadiens pour un dollar américain. Le gouverneur a expliqué que la Banque du Canada peut regarder au-delà d’un choc d’offre temporaire, mais qu’elle doit agir plus tôt ou plus fortement si le choc devient persistant, si la demande reste forte ou si les anticipations d’inflation montent. Le marché CORRA OIS suivi par SAVY attribue maintenant une probabilité de quatre-vingt-deux pour cent à une hausse le neuf décembre. Ma lecture : cette attente resserre l’écart de taux avec les États-Unis et soutient le huard. Ce soutien dépend toutefois des données. Un rapport américain d’inflation ferme pourrait relever encore les rendements américains. Des données canadiennes faibles, ou un signal plus prudent de la Banque, pourraient également renverser rapidement le mouvement."
+      },
+      {
+        "title": "Le Brent recule vers 90,58 $ US malgré les risques dans le détroit d’Ormuz",
+        "text": "Enfin, le pétrole reste partagé entre le risque géopolitique et la perspective d’un surplus. Le Brent reculait vers quatre-vingt-dix dollars et cinquante-huit cents mercredi matin. Les exportations du Moyen-Orient ont repris, ce qui a ramené l’attention vers une offre potentiellement supérieure à la demande. Mais des incidents visant des navires près du détroit d’Ormuz maintiennent une prime de risque. La réunion de l’Organisation des pays exportateurs de pétrole et de ses partenaires, dimanche, sera déterminante pour la politique de production de deux mille vingt-sept. Ma lecture : le niveau actuel reste favorable aux flux de trésorerie des producteurs canadiens, mais il peut bouger brutalement. Une interruption durable du transport dans le détroit ferait remonter la prime. Une hausse des quotas ou des stocks américains renforcerait plutôt la pression baissière."
       }
     ],
-    "watch": "Pour les graphiques, le taux réel américain à dix ans était de deux virgule soixante-dix-neuf pour cent le vingt-trois novembre, légèrement plus haut que vendredi. L’écart de crédit des emprunteurs américains à haut rendement s’était élargi à trois virgule soixante-seize points le vingt novembre. On n’a pas encore dans ce graphique la réaction au rebond de lundi. L’emploi salarié américain avait crû de cent soixante-cinq mille en octobre sur un mois, après soixante mille en septembre. Et le dernier chiffre des prix de consommation sans aliments ni énergie est encore celui de septembre : trois virgule douze pour cent sur un an. Mercredi, le chiffre d’octobre va permettre de regarder aussi la variation du dernier mois.",
-    "outro": "C’est tout pour ce matin. Vous trouverez les sources, les périodes de référence et les quatre graphiques dans l’édition écrite. Bonne journée."
+    "watch": "Dans les graphiques, le taux du Trésor américain à dix ans est à quatre virgule quatre-vingt-onze pour cent le 24 novembre, et le taux réel à dix ans reste à deux virgule soixante-dix-neuf pour cent. Le coût du capital demeure donc exigeant. L’écart de crédit du haut rendement a toutefois baissé à trois virgule soixante-trois pour cent le 23 novembre, ce qui ne montre pas encore une crise générale du financement. Le VIX est revenu à vingt-six virgule soixante-deux le 23 novembre après près de trente-six, mais ce niveau signale toujours une volatilité élevée. Ces observations sont datées; elles ne constituent pas les résultats du rapport économique attendu ce matin.",
+    "outro": "C’est tout pour cette édition. Les sources, les dates économiques exactes et les graphiques sont disponibles dans le briefing écrit de SAVY. On pourra comparer le scénario décrit ici avec les chiffres américains une fois leur publication réellement confirmée."
   }
 }

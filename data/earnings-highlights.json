@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "reviewed_earnings_highlights",
-  "reviewed_at": "2026-11-22T10:12:36.823194+00:00",
+  "reviewed_at": "2026-11-25T10:06:09.607231+00:00",
   "reports": {
     "NFLX:2026-10-20": {
       "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-20-netflix-inc-stock/",
@@ -956,6 +956,16 @@
         "Les ventes en ligne aux États-Unis ont crû de 23 %. Les magasins ont préparé et expédié plus de livraisons et la direction dit que les marges sur les ventes en ligne additionnelles demeurent à deux chiffres aux États-Unis. La publicité et les abonnements ont soutenu cette amélioration.",
         "Les flux d’exploitation sur neuf mois ont atteint 29,4 G$ US, en hausse de 2 G$, mais la trésorerie disponible a reculé de 2 G$ à 6,8 G$. Les investissements absorbent le gain de trésorerie opérationnelle; Walmart maintient la priorité à la chaîne d’approvisionnement, aux magasins et à la technologie.",
         "Les ventes comparables américaines hors essence ont crû de 2,9 %, contre 4,5 % un an plus tôt. Au T4, le directeur financier prévoit que la réglementation du prix de certains médicaments retranchera environ 125 points de base aux ventes comparables de Walmart aux États-Unis, dont environ 50 seraient compensés par les ventes de médicaments GLP-1."
+      ]
+    },
+    "ATD:2026-11-24": {
+      "source_url": "https://corporate.couche-tard.com/2026-11-24-ALIMENTATION-COUCHE-TARD-ANNOUNCES-ITS-RESULTS-FOR-ITS-SECOND-QUARTER-OF-FISCAL-YEAR-2027",
+      "report_url": null,
+      "messages": [
+        "Le bénéfice ajusté dilué par action a atteint 0,84 $ US, en hausse de 7,7 %, grâce surtout aux marges carburant et à l’amélioration américaine. Le bénéfice déclaré a toutefois reculé à 0,75 $ : les couvertures de change et les frais liés à l’offre sur Żabka ont pesé sur le résultat comptable.",
+        "Les ventes comparables de marchandises ont progressé de 1,8 % aux États-Unis et de 1,3 % en Europe, mais reculé de 0,4 % au Canada. La marge marchandises américaine a gagné 10 points de base à 34,8 %, tandis que celle du Canada a perdu 130 points de base à 32,9 %.",
+        "Les volumes de carburant comparables ont baissé de 2,4 % aux États-Unis et de 5,4 % en Europe, alors qu’ils ont augmenté de 1,2 % au Canada. La rentabilité repose donc encore sur la marge par litre et l’exécution en magasin plutôt que sur une reprise généralisée des volumes.",
+        "L’offre de 32 zlotys par action sur Żabka est devenue inconditionnelle après les autorisations réglementaires; elle doit clore le 7 décembre et le prix ne sera pas relevé. Le dividende trimestriel monte de 9,3 % à 0,235 $ CA, mais l’intégration de Żabka devient le prochain test d’allocation du capital."
       ]
     }
   }
