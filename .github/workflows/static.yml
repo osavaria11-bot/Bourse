@@ -285,18 +285,16 @@ jobs:
         timeout-minutes: 12
         run: |
           if ! python scripts/generate_briefing_audio.py --reuse-only; then
-            if ! command -v ffprobe >/dev/null || ! command -v ffmpeg >/dev/null; then
-              tools="$RUNNER_TEMP/savy-ffmpeg"
-              mkdir -p "$tools"
-              archive="$tools/ffmpeg.tar.xz"
-              release="https://github.com/FFmpeg-Builds/FFmpeg-Builds/releases/download/autobuild-2026-11-10-12-39/ffmpeg-n8.1.3-34-ga35157abb9-linux64-lgpl-8.1.tar.xz"
-              curl --fail --silent --show-error --location --retry 2 --max-time 90 --output "$archive" "$release"
-              printf '%s  %s\n' '054c1d790fec22672a92b63fa12ee9e08483b59d84291df469b0d820a56163c5' "$archive" | sha256sum --check --status
-              tar -xJf "$archive" -C "$tools" --wildcards --strip-components=2 '*/bin/ffmpeg' '*/bin/ffprobe'
-              "$tools/ffmpeg" -version
-              "$tools/ffprobe" -version
-              echo "$tools" >> "$GITHUB_PATH"
-            fi
+            tools="$RUNNER_TEMP/savy-ffmpeg"
+            mkdir -p "$tools"
+            archive="$tools/ffmpeg.tar.xz"
+            release="https://github.com/FFmpeg-Builds/FFmpeg-Builds/releases/download/autobuild-2026-11-10-12-39/ffmpeg-n8.1.3-34-ga35157abb9-linux64-lgpl-8.1.tar.xz"
+            curl --fail --silent --show-error --location --retry 2 --max-time 90 --output "$archive" "$release"
+            printf '%s  %s\n' '054c1d790fec22672a92b63fa12ee9e08483b59d84291df469b0d820a56163c5' "$archive" | sha256sum --check --status
+            tar -xJf "$archive" -C "$tools" --wildcards --strip-components=2 '*/bin/ffmpeg' '*/bin/ffprobe'
+            "$tools/ffmpeg" -version
+            "$tools/ffprobe" -version
+            echo "$tools" >> "$GITHUB_PATH"
             python -m pip install --disable-pip-version-check -r scripts/requirements-audio.txt
           fi
       - name: Generate or reuse natural Canadian French narration
