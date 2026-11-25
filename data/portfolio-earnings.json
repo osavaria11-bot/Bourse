@@ -501,12 +501,41 @@
             "currency": null,
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=ATD.TO&size=100"
           },
-          "messages": [],
+          "messages": [
+            {
+              "text": "Le bénéfice ajusté dilué par action a atteint 0,84 $ US, en hausse de 7,7 %, grâce surtout aux marges carburant et à l’amélioration américaine. Le bénéfice déclaré a toutefois reculé à 0,75 $ : les couvertures de change et les frais liés à l’offre sur Żabka ont pesé sur le résultat comptable.",
+              "language": "fr",
+              "source_url": "https://corporate.couche-tard.com/2026-11-24-ALIMENTATION-COUCHE-TARD-ANNOUNCES-ITS-RESULTS-FOR-ITS-SECOND-QUARTER-OF-FISCAL-YEAR-2027",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Les ventes comparables de marchandises ont progressé de 1,8 % aux États-Unis et de 1,3 % en Europe, mais reculé de 0,4 % au Canada. La marge marchandises américaine a gagné 10 points de base à 34,8 %, tandis que celle du Canada a perdu 130 points de base à 32,9 %.",
+              "language": "fr",
+              "source_url": "https://corporate.couche-tard.com/2026-11-24-ALIMENTATION-COUCHE-TARD-ANNOUNCES-ITS-RESULTS-FOR-ITS-SECOND-QUARTER-OF-FISCAL-YEAR-2027",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "Les volumes de carburant comparables ont baissé de 2,4 % aux États-Unis et de 5,4 % en Europe, alors qu’ils ont augmenté de 1,2 % au Canada. La rentabilité repose donc encore sur la marge par litre et l’exécution en magasin plutôt que sur une reprise généralisée des volumes.",
+              "language": "fr",
+              "source_url": "https://corporate.couche-tard.com/2026-11-24-ALIMENTATION-COUCHE-TARD-ANNOUNCES-ITS-RESULTS-FOR-ITS-SECOND-QUARTER-OF-FISCAL-YEAR-2027",
+              "kind": "reviewed_summary"
+            },
+            {
+              "text": "L’offre de 32 zlotys par action sur Żabka est devenue inconditionnelle après les autorisations réglementaires; elle doit clore le 7 décembre et le prix ne sera pas relevé. Le dividende trimestriel monte de 9,3 % à 0,235 $ CA, mais l’intégration de Żabka devient le prochain test d’allocation du capital.",
+              "language": "fr",
+              "source_url": "https://corporate.couche-tard.com/2026-11-24-ALIMENTATION-COUCHE-TARD-ANNOUNCES-ITS-RESULTS-FOR-ITS-SECOND-QUARTER-OF-FISCAL-YEAR-2027",
+              "kind": "reviewed_summary"
+            }
+          ],
           "report_url": null,
           "sources": [
             {
               "label": "Yahoo Finance · calendrier et BPA",
               "url": "https://finance.yahoo.com/calendar/earnings/?symbol=ATD.TO&size=100"
+            },
+            {
+              "label": "Source des messages clés",
+              "url": "https://corporate.couche-tard.com/2026-11-24-ALIMENTATION-COUCHE-TARD-ANNOUNCES-ITS-RESULTS-FOR-ITS-SECOND-QUARTER-OF-FISCAL-YEAR-2027"
             }
           ]
         }
@@ -973,7 +1002,7 @@
             "source_url": "https://finance.yahoo.com/calendar/earnings/?symbol=CLS&size=100"
           },
           "revenue": {
-            "actual": 5830000000.0,
+            "actual": 5830000000,
             "estimate": null,
             "currency": "USD",
             "source_url": "https://celestica.gcs-web.com/news-releases/news-release-details/celestica-announces-third-quarter-2026-financial-results-and",
@@ -6042,5 +6071,6 @@
       "source_warnings": []
     }
   },
-  "errors": {}
+  "errors": {},
+  "analysis_reviewed_at": "2026-11-25T10:53:34.629Z"
 }

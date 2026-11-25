@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "reviewed_earnings_highlights",
-  "reviewed_at": "2026-11-25T10:06:09.607231+00:00",
+  "reviewed_at": "2026-11-25T10:53:34.629Z",
   "reports": {
     "NFLX:2026-10-20": {
       "report_url": "https://www.marketbeat.com/earnings/reports/2026-10-20-netflix-inc-stock/",
@@ -347,7 +347,7 @@
       ],
       "verified_actuals": {
         "currency": "USD",
-        "revenue": 5830000000.0,
+        "revenue": 5830000000,
         "verified_at": "2026-10-27T09:29:55.474202+00:00",
         "reason": "Le communiqué officiel du 26 octobre 2026 donne 5,83 G$ US de revenus au T3; MarketBeat indiquait 5,74 G$. Consensus du fournisseur conservé."
       }
@@ -958,7 +958,7 @@
         "Les ventes comparables américaines hors essence ont crû de 2,9 %, contre 4,5 % un an plus tôt. Au T4, le directeur financier prévoit que la réglementation du prix de certains médicaments retranchera environ 125 points de base aux ventes comparables de Walmart aux États-Unis, dont environ 50 seraient compensés par les ventes de médicaments GLP-1."
       ]
     },
-    "ATD:2026-11-24": {
+    "ATD.TO:2026-11-24": {
       "source_url": "https://corporate.couche-tard.com/2026-11-24-ALIMENTATION-COUCHE-TARD-ANNOUNCES-ITS-RESULTS-FOR-ITS-SECOND-QUARTER-OF-FISCAL-YEAR-2027",
       "report_url": null,
       "messages": [
