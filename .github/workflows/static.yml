@@ -333,19 +333,31 @@ jobs:
           node scripts/build_monthly_fnb.cjs
           node scripts/build_report_archive.cjs
           cp -R css js data reports _site/
+      - name: Archive site for GitHub Pages
+        if: steps.current.outputs.publish == 'true'
+        run: |
+          tar --dereference --hard-dereference \
+            --directory _site \
+            -cvf "$RUNNER_TEMP/artifact.tar" \
+            --exclude=.git \
+            --exclude=.github \
+            .
       - name: Upload site
         id: site_artifact
         if: steps.current.outputs.publish == 'true'
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          path: _site
+          name: github-pages
+          path: ${{ runner.temp }}/artifact.tar
+          retention-days: 1
+          overwrite: true
       - name: Wait for the uploaded Pages artifact
         id: pages_ready
         if: steps.current.outputs.publish == 'true'
         timeout-minutes: 2
         uses: actions/github-script@v8
         env:
-          ARTIFACT_ID: ${{ steps.site_artifact.outputs.artifact_id }}
+          ARTIFACT_ID: ${{ steps.site_artifact.outputs.artifact-id }}
           SOURCE_SHA: ${{ needs.validate.outputs.source_sha }}
         with:
           script: |
