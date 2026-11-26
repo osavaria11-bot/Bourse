@@ -176,7 +176,7 @@ button,input,select,textarea {font-family:inherit}
 
 /* Keep the desktop overview compact when an edition has long headlines. */
 @media(min-width:1181px) {
-  .savy-portal #panel-accueil-overview .portal-ticker {margin-bottom:8px}
+  .savy-portal #panel-accueil-overview .portal-ticker {margin-bottom:4px}
   .savy-portal #panel-accueil-overview .portal-ticker-item {padding-top:10px;padding-bottom:10px}
   .savy-portal #panel-accueil-overview .portal-news {padding:8px 16px}
   .savy-portal #panel-accueil-overview .portal-headline:first-child p {-webkit-line-clamp:1}
