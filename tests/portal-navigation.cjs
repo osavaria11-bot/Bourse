@@ -20,6 +20,7 @@ async function componentPage(parent, options) {
       page: node.closest(".portal-page")?.dataset.page,
       market: node.closest(".market-card")?.dataset.id,
       macro: node.closest(".indicator-card")?.dataset.id,
+      portfolio: Boolean(node.closest("#portfolio")),
     }));
     if (target.page && await locate("#page-" + target.page).isHidden()) await locate('.portal-nav [data-page="' + target.page + '"]').click();
     if (target.panel) {
@@ -27,6 +28,10 @@ async function componentPage(parent, options) {
       if (await locate("#page-" + section).isHidden()) await locate('.portal-nav [data-page="' + section + '"]').click();
       if (await locate("#" + target.panel).isHidden()) await locate('#page-' + section + ' .portal-tabs [data-tab="' + tab + '"]').click();
     }
+    // The portfolio shell is shared across tabs. Its controls are intentionally hidden by
+    // the full-screen analysis tab, so selecting the page alone is insufficient there.
+    if (target.portfolio && !target.panel && await locator.first().isHidden())
+      await locate('.portal-nav [data-page="portefeuilles"]').click();
     if (target.market && await locate('.market-card[data-id="' + target.market + '"]').isHidden()) await locate("#marketSelect").selectOption(target.market);
     if (target.macro && await locate('.indicator-card[data-id="' + target.macro + '"]').isHidden()) {
       if (await locate("#macroCompare").getAttribute("aria-pressed") === "true") await locate("#macroCompare").click();
