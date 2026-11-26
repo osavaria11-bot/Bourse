@@ -32,6 +32,10 @@ async function componentPage(parent, options) {
       if (await locate("#macroCompare").getAttribute("aria-pressed") === "true") await locate("#macroCompare").click();
       await locate("#indicatorSelect").selectOption(target.macro);
     }
+    // Navigation and tab handlers render synchronously in production, but a busy CI browser
+    // can observe the destination between the route click and its visible layout. Wait for
+    // the real destination instead of retrying an action against the formerly hidden panel.
+    if (await locator.first().isHidden()) await locator.first().waitFor({state: "visible", timeout: 10000});
   }
   const actions = new Set(["click", "fill", "selectOption", "focus", "press", "hover", "scrollIntoViewIfNeeded", "boundingBox", "screenshot", "setInputFiles"]);
   const chains = new Set(["locator", "first", "last", "nth", "filter", "getByRole", "getByText", "getByLabel"]);
