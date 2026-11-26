@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
   "kind": "savy_finviz_performance",
-  "generated_at": "2026-11-19T03:12:16.701Z",
+  "generated_at": "2026-11-26T03:02:56.927Z",
   "currency": "USD",
   "return_basis": "price_return",
   "initial_capital": 10000,
   "launch_date": "2026-09-30",
-  "as_of": "2026-11-18",
-  "period_start": "2026-11-11",
+  "as_of": "2026-11-25",
+  "period_start": "2026-11-18",
   "dates": [
     "2026-09-30",
     "2026-10-01",
@@ -44,7 +44,12 @@
     "2026-11-13",
     "2026-11-16",
     "2026-11-17",
-    "2026-11-18"
+    "2026-11-18",
+    "2026-11-19",
+    "2026-11-20",
+    "2026-11-23",
+    "2026-11-24",
+    "2026-11-25"
   ],
   "values": {
     "top5": [
@@ -83,7 +88,12 @@
       7906.404844608262,
       7714.7559773453195,
       7577.791203444242,
-      7612.201161639064
+      7612.201161639064,
+      7453.172157740547,
+      7225.459456249911,
+      7500.499664763651,
+      7504.874704920545,
+      7518.034070368064
     ],
     "others": [
       10000,
@@ -121,7 +131,12 @@
       9768.241150309808,
       9477.09812927789,
       9386.148852746832,
-      9262.550919002044
+      9262.550919002044,
+      8843.561398568989,
+      8639.216650571285,
+      9066.668712202973,
+      9301.966588130708,
+      9406.57362680609
     ],
     "spy": [
       10000,
@@ -159,7 +174,12 @@
       9891.690597012968,
       9702.608079933914,
       9604.133065837956,
-      9574.761024349948
+      9574.761024349948,
+      9386.85863393782,
+      9045.14640126929,
+      9471.041002845415,
+      9425.016062835188,
+      9397.74202431061
     ]
   },
   "method_note": "Simulation en USD : 10 000 $ par portefeuille au 30 septembre 2026. Série de cours hors dividendes, sans frais ni impôts. Historique reconstitué jusqu’au 8 octobre; suivi enregistré ensuite. Les nouvelles pondérations s’appliquent après la clôture d’exécution, jamais à la période passée. Rééquilibrages du jeudi; valeurs actualisées lors de la livraison hebdomadaire, pas en intraday. Les clôtures et dates ci-dessus sont celles du dernier relevé enregistré, pas celles de la consultation."

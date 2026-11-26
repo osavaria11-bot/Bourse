@@ -823,6 +823,18 @@
       ],
       "source": "reports/stocks/2026-11-18.pdf",
       "note": "Sept titres individuels analysés. Clôtures régulières USD, dont ATAT, ADS Nasdaq de trois actions ordinaires."
+    },
+    {
+      "date": "2026-11-25",
+      "tickers": [
+        "ATAT",
+        "DXCM",
+        "MA",
+        "MSFT",
+        "WMG"
+      ],
+      "source": "reports/stocks/2026-11-25.pdf",
+      "note": "Cinq titres individuels analysés. Clôtures régulières USD, dont ATAT, ADS Nasdaq de trois actions ordinaires."
     }
   ]
 }

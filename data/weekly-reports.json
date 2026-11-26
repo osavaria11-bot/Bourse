@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "savy_weekly_reports",
-  "generated_at": "2026-11-19T03:28:59Z",
+  "generated_at": "2026-11-26T03:07:14Z",
   "reports": {
     "real_estate": {
       "title": "Débriefing immobilier",
@@ -34,85 +34,85 @@
     },
     "stocks": {
       "title": "Finviz · Recherche actions et portefeuilles simulés",
-      "edition_date": "2026-11-18",
-      "reference_date": "2026-11-18",
+      "edition_date": "2026-11-25",
+      "reference_date": "2026-11-25",
       "document_scope": "full",
-      "summary": "Sept admissibles, tous analysés sur 24 mois. Microsoft, Amphenol, Mastercard, Atour et Dexcom composent le Top 5. Les cours de référence sont les clôtures du 18 novembre à 16 h HE. Du 11 au 18 novembre, A −4,26 %, B −6,52 % et SPY −3,90 % en USD hors dividendes. L’instruction du 12 novembre a été exécutée aux cours historiques. Le nouveau classement vise la clôture du 19 novembre.",
+      "summary": "Cinq admissibles, tous analysés sur 24 mois. Microsoft, Mastercard, Atour, Warner Music et Dexcom composent le Top 5. Cours de clôture du 25 novembre à 16 h HE. Du 18 au 25 novembre, A −1,24 %, B +1,55 % et SPY −1,85 % en USD hors dividendes. L’instruction du 19 novembre a été exécutée aux cours historiques. La nouvelle vise le 27 novembre à 13 h HE et fera passer B en liquidités.",
       "highlights": [
-        "Sept titres sur sept et douze filtres Finviz vérifiés à 22 h 05 HE sur une page. Cinq sorties depuis le 11 novembre : ASX, GAU, LLY, MU et TSM.",
-        "Microsoft mène grâce aux renouvellements et à la distribution de Copilot. Amphenol suit avec un potentiel supérieur au centre et plus de sensibilité au carnet datacom.",
-        "Viking a vendu 68 % de sa capacité 2027 sur ses produits principaux. Global-e relève ses prévisions, avec un FCF T3 de 66,4 M$ contre 73,6 M$ un an plus tôt.",
-        "A · Top 5 pondéré au 18 nov. · 7 612,20 $ USD · −4,26 % du 11 au 18 nov. · −23,88 % depuis le 30 sept. · écart SPY −0,36 pt sur la période et −19,63 pt depuis le départ.",
-        "B · Autres équipondérés au 18 nov. · 9 262,55 $ USD · −6,52 % du 11 au 18 nov. · −7,37 % depuis le 30 sept. · écart SPY −2,63 pt sur la période et −3,12 pt depuis le départ.",
-        "SPY · Achat-conservation au 18 nov. · 9 574,76 $ USD · −3,90 % du 11 au 18 nov. · −4,25 % depuis le 30 sept."
+        "Cinq titres sur cinq et douze filtres Finviz vérifiés à 22 h HE. WMG revient. APH, GLBE et VIK sortent.",
+        "Microsoft reste premier après la mise à jour du risque opérationnel. Warner Music intègre le Top 5 après son T4 FY26.",
+        "Le jeudi de Thanksgiving est fermé. La nouvelle instruction vise le 27 novembre à 13 h HE, avec B à 100 % en liquidités après exécution.",
+        "A · Top 5 pondéré au 25 nov. · 7 518,03 $ USD · −1,24 % du 18 au 25 nov. · −24,82 % depuis le 30 sept. · écart SPY +0,61 pt sur la période et −18,80 pt depuis le départ.",
+        "B · Autres équipondérés au 25 nov. · 9 406,57 $ USD · +1,55 % du 18 au 25 nov. · −5,93 % depuis le 30 sept. · écart SPY +3,40 pt sur la période et +0,09 pt depuis le départ.",
+        "SPY · Achat-conservation au 25 nov. · 9 397,74 $ USD · −1,85 % du 18 au 25 nov. · −6,02 % depuis le 30 sept."
       ],
-      "method_note": "Finviz complet le 18 novembre à 22 h 05 HE, une page, 7 sur 7, avec les douze filtres dont le seuil de short float inférieur à 5 %. Pondération du rang selon qualité du modèle, gestion, exécution, valorisation, risque et momentum. Cibles externes à 12 mois, scénarios maison à 24 mois en USD et dividendes bruts en espèces. NAV du 18 novembre au 11 novembre pour la période, lancement le 30 septembre à 10 000 USD par portefeuille, hors dividendes, frais et impôts, comparées à SPY achat-conservation. Rééquilibrage à la clôture après publication.",
+      "method_note": "Finviz complet le 25 novembre à 22 h HE, 5 sur 5 sur une page, douze filtres dont short float inférieur à 5 %. Rang selon qualité du modèle, gestion, exécution, valorisation, risque et momentum. Cibles externes à 12 mois, scénarios maison à 24 mois en USD et dividendes bruts en espèces. NAV à la clôture du 25 novembre. Période depuis le 18, lancement le 30 septembre à 10 000 USD chacun. Cours seuls, hors frais et impôts. SPY achat-conservation. Thanksgiving reporte l’exécution à la clôture écourtée du 27 novembre.",
       "stocks": [
         {
           "rank": 1,
           "ticker": "MSFT",
           "company": "Microsoft",
-          "rating": 4.4,
+          "rating": 4.3,
           "decision": "BUY",
-          "conviction": "Élevée",
-          "price": 508.29,
+          "conviction": "Élevée, avec un risque d’exécution accru",
+          "price": 489.93,
           "currency": "USD",
-          "price_date": "2026-11-18",
-          "price_at": "2026-11-18T16:00:00-05:00",
-          "summary": "Ventes de logiciels d’entreprise par abonnement et facturation d’Azure à l’usage. Ignite ouvre une voie concrète pour facturer l’activité des agents dans Copilot.",
-          "risk": "Une capacité IA payée avant d’être utilisée, et des contrats cloud concentrés, pourraient comprimer durablement le FCF.",
-          "central_label": "Scénario central 24 mois +28,3 % USD · +13,3 %/an",
-          "target_price": 643.9567567567567,
+          "price_date": "2026-11-25",
+          "price_at": "2026-11-25T16:00:00-05:00",
+          "summary": "Les abonnements d’entreprise et Azure financent une extension vers les agents IA. Le programme de fiabilité lancé après la panne relève le risque d’exécution.",
+          "risk": "Le rétablissement de la fiabilité et la construction de capacité IA peuvent absorber le cash avant que les agents financent leur coût.",
+          "central_label": "Scénario central 24 mois +28,8 % USD · +13,5 %/an",
+          "target_price": 622.7237837837838,
           "dividends_24m": 8.25,
           "dividend_basis": "modeled_gross_cash",
-          "central_return_24m": 0.2831390677698886,
-          "central_annualized_return": 0.13275728546316956,
-          "low_return_24m": -0.2679115924194885,
-          "high_return_24m": 0.8026178730664524,
+          "central_return_24m": 0.28788558321348723,
+          "central_annualized_return": 0.13485046733633022,
+          "low_return_24m": -0.27183373547005196,
+          "high_return_24m": 0.8701705115035763,
           "scenarios_24m": {
             "downside": {
               "sales_fy2027": 371,
-              "sales_fy2028": 407,
+              "sales_fy2028": 405,
               "operating_currency": "USD",
               "sales_growth_fy2027": 0.11800867888138877,
-              "sales_growth_fy2028": 0.09703504043126676,
-              "eps_fy2027": 17.726110363391655,
-              "eps_fy2028": 19.172274562584118,
-              "eps_growth_fy2028": 0.08158384267871388,
-              "net_margin_fy2027": 0.355,
-              "net_margin_fy2028": 0.35,
+              "sales_growth_fy2028": 0.09164420485175206,
+              "eps_fy2027": 17.626244952893675,
+              "eps_fy2028": 18.860026917900402,
+              "eps_growth_fy2028": 0.06999686934477656,
+              "net_margin_fy2027": 0.353,
+              "net_margin_fy2028": 0.346,
               "diluted_shares_bn_fy2027": 7.43,
               "diluted_shares_bn_fy2028": 7.43,
               "currency": "USD",
               "operating_currency_per_usd": 1,
               "ordinary_shares_per_quote": 1,
-              "exit_pe": 19,
-              "target_price": 364.27321668909826,
+              "exit_pe": 18.5,
+              "target_price": 348.91049798115745,
               "dividends_24m": 7.84,
-              "return": -0.2679115924194885,
-              "annualized_return": -0.14437835021517165
+              "return": -0.27183373547005196,
+              "annualized_return": -0.14667341273698264
             },
             "central": {
               "sales_fy2027": 393,
-              "sales_fy2028": 464,
+              "sales_fy2028": 461,
               "operating_currency": "USD",
               "sales_growth_fy2027": 0.18430568948891035,
-              "sales_growth_fy2028": 0.1806615776081424,
-              "eps_fy2027": 20.099596231493944,
-              "eps_fy2028": 24.767567567567568,
-              "eps_growth_fy2028": 0.23224204517896752,
-              "net_margin_fy2027": 0.38,
-              "net_margin_fy2028": 0.395,
+              "sales_growth_fy2028": 0.17302798982188294,
+              "eps_fy2027": 19.993808882907135,
+              "eps_fy2028": 24.420540540540543,
+              "eps_growth_fy2028": 0.22140512013285552,
+              "net_margin_fy2027": 0.378,
+              "net_margin_fy2028": 0.392,
               "diluted_shares_bn_fy2027": 7.43,
               "diluted_shares_bn_fy2028": 7.4,
               "currency": "USD",
               "operating_currency_per_usd": 1,
               "ordinary_shares_per_quote": 1,
-              "exit_pe": 26,
-              "target_price": 643.9567567567567,
+              "exit_pe": 25.5,
+              "target_price": 622.7237837837838,
               "dividends_24m": 8.25,
-              "return": 0.2831390677698886,
-              "annualized_return": 0.13275728546316956
+              "return": 0.28788558321348723,
+              "annualized_return": 0.13485046733633022
             },
             "upside": {
               "sales_fy2027": 411,
@@ -133,8 +133,8 @@
               "exit_pe": 31,
               "target_price": 907.4526387009472,
               "dividends_24m": 8.8,
-              "return": 0.8026178730664524,
-              "annualized_return": 0.3426160557160236
+              "return": 0.8701705115035763,
+              "annualized_return": 0.3675417768768807
             }
           },
           "earnings": {
@@ -144,22 +144,22 @@
             "url": "https://www.wallstreethorizon.com/microsoft-earnings-calendar"
           },
           "basis": "BPA dilué normalisé hors variations de valeur de la participation OpenAI, exercice clos en juin.",
-          "catalyst": "Copilotforce en bêta depuis le 17 novembre, et livraison des capacités décalées au T2 FY27.",
-          "previous_edition_change": "Rang 1 conservé. Ignite renforce la distribution des agents. Le coût de la capacité et l’appréciation relative maintiennent une cible plus prudente que le 11 novembre.",
-          "reason_for_rank": "Distribution B2B et renouvellements protègent mieux le scénario central que le carnet industriel d’APH.",
-          "model_date": "2026-11-18",
+          "catalyst": "Suivi du programme de fiabilité signalé le 24 novembre et prochaine publication FY27 T2.",
+          "previous_edition_change": "Rang 1 conservé. La note passe de 4,4 à 4,3. Le cours de 489,93 $ et l’incident opérationnel rendent le prix d’entrée plus bas et le critère de fiabilité plus exigeant.",
+          "reason_for_rank": "Les renouvellements logiciels et l’adoption d’Azure laissent une croissance plus élevée et une meilleure marge de sécurité qu’au cours de Mastercard.",
+          "model_date": "2026-11-25",
           "consensus_12m": {
             "rating": "Strong Buy",
-            "analyst_count": 59,
-            "buy": 54,
-            "hold": 5,
+            "analyst_count": 58,
+            "buy": 55,
+            "hold": 3,
             "sell": 0,
             "horizon_months": 12,
             "target_low": 440.0,
             "target_median": 631.0,
-            "target_mean": 636.12,
+            "target_mean": 637.36,
             "target_high": 870.0,
-            "target_mean_price_return": 0.25149029097562403,
+            "target_mean_price_return": 0.3009205396689323,
             "currency": "USD",
             "source": "https://stockanalysis.com/stocks/msft/forecast/",
             "eps_trends": {
@@ -167,12 +167,12 @@
               "basis": "USD",
               "current_year": 2027,
               "next_year": 2028,
-              "current_eps": 20.01,
-              "next_eps": 24.2,
-              "current_30": 0.011627906976744207,
-              "current_90": 0.014191586416624435,
-              "next_30": 0.02023608768971341,
-              "next_90": 0.026728892660161208,
+              "current_eps": 20.03,
+              "next_eps": 24.23,
+              "current_30": 0.013663967611335925,
+              "current_90": 0.014177215189873582,
+              "next_30": 0.022362869198312207,
+              "next_90": 0.028001697072549847,
               "count_revisions": {
                 "Up Last 7 Days": [
                   1.0,
@@ -195,11 +195,11 @@
             }
           },
           "momentum": {
-            "week": -0.024638765759023573,
-            "six": 0.20009916418756202,
-            "twelve_one": 0.07140687336722085,
-            "six_month_gap_to_spy": 0.21153895299146097,
-            "twelve_one_gap_to_spy": -0.0848923630889662
+            "week": -0.03612111196364287,
+            "six": 0.17048522349905637,
+            "twelve_one": 0.09962473007819872,
+            "six_month_gap_to_spy": 0.20929751897676674,
+            "twelve_one_gap_to_spy": -0.026223392940378565
           },
           "latest_earnings_price_reaction": {
             "from": "2026-10-28",
@@ -216,191 +216,25 @@
         },
         {
           "rank": 2,
-          "ticker": "APH",
-          "company": "Amphenol",
-          "rating": 4.2,
-          "decision": "BUY",
-          "conviction": "Élevée, cyclique",
-          "price": 76.33,
-          "currency": "USD",
-          "price_date": "2026-11-18",
-          "price_at": "2026-11-18T16:00:00-05:00",
-          "summary": "Connecteurs, câbles et capteurs qualifiés chez les fabricants. Le carnet et CommScope soutiennent la croissance, avec un risque d’inflexion des dépenses IA.",
-          "risk": "Une correction des commandes datacom ou une intégration plus coûteuse de CommScope peut réduire simultanément BPA et multiple.",
-          "central_label": "Scénario central 24 mois +42,9 % USD · +19,6 %/an",
-          "target_price": 107.84959514170039,
-          "dividends_24m": 1.26,
-          "dividend_basis": "modeled_gross_cash",
-          "central_return_24m": 0.4294457636800786,
-          "central_annualized_return": 0.19559431400457838,
-          "low_return_24m": -0.31464819565300073,
-          "high_return_24m": 1.186973762833397,
-          "scenarios_24m": {
-            "downside": {
-              "sales_fy2027": 40.0,
-              "sales_fy2028": 42.0,
-              "operating_currency": "USD",
-              "sales_growth_fy2027": 0.08108108108108114,
-              "sales_growth_fy2028": 0.050000000000000044,
-              "eps_fy2027": 2.7903225806451615,
-              "eps_fy2028": 2.8451612903225807,
-              "eps_growth_fy2028": 0.01965317919075149,
-              "net_margin_fy2027": 0.173,
-              "net_margin_fy2028": 0.168,
-              "diluted_shares_bn_fy2027": 2.48,
-              "diluted_shares_bn_fy2028": 2.48,
-              "currency": "USD",
-              "operating_currency_per_usd": 1,
-              "ordinary_shares_per_quote": 1,
-              "exit_pe": 18,
-              "target_price": 51.21290322580645,
-              "dividends_24m": 1.1,
-              "return": -0.31464819565300073,
-              "annualized_return": -0.1721402266404054
-            },
-            "central": {
-              "sales_fy2027": 45.5,
-              "sales_fy2028": 52.4,
-              "operating_currency": "USD",
-              "sales_growth_fy2027": 0.22972972972972983,
-              "sales_growth_fy2028": 0.15164835164835155,
-              "eps_fy2027": 3.7060483870967746,
-              "eps_fy2028": 4.402024291497975,
-              "eps_growth_fy2028": 0.18779460808562476,
-              "net_margin_fy2027": 0.202,
-              "net_margin_fy2028": 0.2075,
-              "diluted_shares_bn_fy2027": 2.48,
-              "diluted_shares_bn_fy2028": 2.47,
-              "currency": "USD",
-              "operating_currency_per_usd": 1,
-              "ordinary_shares_per_quote": 1,
-              "exit_pe": 24.5,
-              "target_price": 107.84959514170039,
-              "dividends_24m": 1.26,
-              "return": 0.4294457636800786,
-              "annualized_return": 0.19559431400457838
-            },
-            "upside": {
-              "sales_fy2027": 49.0,
-              "sales_fy2028": 60.8,
-              "operating_currency": "USD",
-              "sales_growth_fy2027": 0.32432432432432434,
-              "sales_growth_fy2028": 0.24081632653061225,
-              "eps_fy2027": 4.267741935483871,
-              "eps_fy2028": 5.8081300813008125,
-              "eps_growth_fy2028": 0.3609375096018532,
-              "net_margin_fy2027": 0.216,
-              "net_margin_fy2028": 0.235,
-              "diluted_shares_bn_fy2027": 2.48,
-              "diluted_shares_bn_fy2028": 2.46,
-              "currency": "USD",
-              "operating_currency_per_usd": 1,
-              "ordinary_shares_per_quote": 1,
-              "exit_pe": 28.5,
-              "target_price": 165.53170731707317,
-              "dividends_24m": 1.4,
-              "return": 1.186973762833397,
-              "annualized_return": 0.47884203444228524
-            }
-          },
-          "earnings": {
-            "date": "2027-01-27",
-            "status": "estimated",
-            "timing": "avant Bourse, horaire estimé",
-            "url": "https://www.tipranks.com/stocks/aph/earnings"
-          },
-          "basis": "BPA dilué ajusté, fin d’exercice en décembre.",
-          "catalyst": "Intégration des acquisitions AdvancedPCB et Humanetics Sensors, clôtures attendues au T4 2026 sous conditions.",
-          "previous_edition_change": "Rang 3 → 2 après la sortie de TSM. Les résultats de NVIDIA confortent le contexte des commandes datacom. Maintien du BUY, avec surveillance accrue des stocks.",
-          "reason_for_rank": "Meilleure asymétrie du modèle que MA, avec un carnet solide, une prime justifiable et un bilan plus cyclique que MSFT.",
-          "model_date": "2026-11-18",
-          "consensus_12m": {
-            "rating": "Strong Buy",
-            "analyst_count": 19,
-            "buy": 17,
-            "hold": 2,
-            "sell": 0,
-            "horizon_months": 12,
-            "target_low": 85.0,
-            "target_median": 107.0,
-            "target_mean": 106.97,
-            "target_high": 130.0,
-            "target_mean_price_return": 0.40141490894798904,
-            "currency": "USD",
-            "source": "https://stockanalysis.com/stocks/aph/forecast/",
-            "eps_trends": {
-              "source": "https://finance.yahoo.com/quote/APH/analysis/",
-              "basis": "USD",
-              "current_year": 2026,
-              "next_year": 2027,
-              "current_eps": 2.84,
-              "next_eps": 3.62,
-              "current_30": 0.055762081784386686,
-              "current_90": 0.06766917293233066,
-              "next_30": 0.08708708708708701,
-              "next_90": 0.12422360248447206,
-              "count_revisions": {
-                "Up Last 7 Days": [
-                  16.0,
-                  16.0
-                ],
-                "Up Last 30 Days": [
-                  16.0,
-                  16.0
-                ],
-                "Down Last 7 Days": [
-                  null,
-                  null
-                ],
-                "Down Last 30 Days": [
-                  null,
-                  null
-                ]
-              },
-              "description": "Yahoo Finance, panel d’estimations BPA."
-            }
-          },
-          "momentum": {
-            "week": -0.03757407640902788,
-            "six": 0.25418994413407825,
-            "twelve_one": 0.19827846572032604,
-            "six_month_gap_to_spy": 0.2656297329379772,
-            "twelve_one_gap_to_spy": 0.041979229264138995
-          },
-          "latest_earnings_price_reaction": {
-            "from": "2026-10-27",
-            "to": "2026-10-28",
-            "return": 0.035161744022503605
-          },
-          "sources": {
-            "issuer": "https://investors.amphenol.com/news-and-events/news-details/2026/Amphenol-Reports-Record-Third-Quarter-2026-Results-and-Announces-Dividend-Increase-and-New-Stock-Repurchase-Program/default.aspx",
-            "quote": "https://stockanalysis.com/stocks/aph/history/",
-            "quote_check": "https://finance.yahoo.com/quote/APH/history/",
-            "analysts": "https://stockanalysis.com/stocks/aph/forecast/",
-            "eps_trend": "https://finance.yahoo.com/quote/APH/analysis/"
-          }
-        },
-        {
-          "rank": 3,
           "ticker": "MA",
           "company": "Mastercard",
           "rating": 4.0,
           "decision": "HOLD",
           "conviction": "Élevée sur le modèle, moyenne au cours",
-          "price": 643.37,
+          "price": 659.97,
           "currency": "USD",
-          "price_date": "2026-11-18",
-          "price_at": "2026-11-18T16:00:00-05:00",
-          "summary": "Réseau de paiement mondial et services de sécurité, d’analyse et de marketing. La croissance des services amortit le risque des commissions et du routage.",
+          "price_date": "2026-11-25",
+          "price_at": "2026-11-25T16:00:00-05:00",
+          "summary": "Réseau de paiements mondial et services à marge élevée. Le cours intègre déjà une grande partie de la progression attendue du BPA.",
           "risk": "Les rabais aux émetteurs et un changement du routage marchand peuvent éroder le rendement par transaction.",
-          "central_label": "Scénario central 24 mois +20,2 % USD · +9,6 %/an",
+          "central_label": "Scénario central 24 mois +17,1 % USD · +8,2 %/an",
           "target_price": 765.1994011976049,
           "dividends_24m": 7.95,
           "dividend_basis": "modeled_gross_cash",
-          "central_return_24m": 0.2017181422783234,
-          "central_annualized_return": 0.09622905557110806,
-          "low_return_24m": -0.2502890880302746,
-          "high_return_24m": 0.49371651410798223,
+          "central_return_24m": 0.17149173628741443,
+          "central_annualized_return": 0.08235471832824492,
+          "low_return_24m": -0.2691463105384151,
+          "high_return_24m": 0.45614557280126733,
           "scenarios_24m": {
             "downside": {
               "sales_fy2027": 40.0,
@@ -421,8 +255,8 @@
               "exit_pe": 22,
               "target_price": 475.2415094339622,
               "dividends_24m": 7.1,
-              "return": -0.2502890880302746,
-              "annualized_return": -0.1341415173541779
+              "return": -0.2691463105384151,
+              "annualized_return": -0.1451001874713126
             },
             "central": {
               "sales_fy2027": 42.0,
@@ -443,8 +277,8 @@
               "exit_pe": 28.5,
               "target_price": 765.1994011976049,
               "dividends_24m": 7.95,
-              "return": 0.2017181422783234,
-              "annualized_return": 0.09622905557110806
+              "return": 0.17149173628741443,
+              "annualized_return": 0.08235471832824492
             },
             "upside": {
               "sales_fy2027": 43.5,
@@ -465,8 +299,8 @@
               "exit_pe": 32,
               "target_price": 952.6123936816525,
               "dividends_24m": 8.4,
-              "return": 0.49371651410798223,
-              "annualized_return": 0.22217695695344464
+              "return": 0.45614557280126733,
+              "annualized_return": 0.20670856995434783
             }
           },
           "earnings": {
@@ -476,22 +310,22 @@
             "url": "https://www.tipranks.com/stocks/ma/earnings"
           },
           "basis": "BPA ajusté dilué, fin d’exercice en décembre.",
-          "catalyst": "Audience du 16 novembre sur l’entente commerçants et premiers usages réels d’Agent Pay.",
-          "previous_edition_change": "Rang 4 → 3, HOLD conservé. L’audience donne un point de suivi concret, et le test Travelport confirme un paiement agentique en production à petite échelle.",
-          "reason_for_rank": "Moat et cash supérieurs à ATAT, mais le multiple limite le potentiel au cours actuel.",
-          "model_date": "2026-11-18",
+          "catalyst": "Suivi de l’audience américaine du 16 novembre, puis résultats T4 et révisions sur les incitatifs.",
+          "previous_edition_change": "Rang 3 → 2 après la sortie d’APH. Le cours a avancé de 2,6 % sur la période. Le dossier opérationnel tient et le prix réduit l’écart face au scénario de l’indice.",
+          "reason_for_rank": "Récurrence des paiements et conversion du bénéfice en FCF plus prévisibles que la rentabilité des franchises et du retail d’Atour.",
+          "model_date": "2026-11-25",
           "consensus_12m": {
-            "rating": "Buy",
-            "analyst_count": 40,
-            "buy": 35,
+            "rating": "Strong Buy",
+            "analyst_count": 42,
+            "buy": 37,
             "hold": 4,
             "sell": 1,
             "horizon_months": 12,
             "target_low": 550.0,
-            "target_median": 726.0,
-            "target_mean": 720.69,
+            "target_median": 731.0,
+            "target_mean": 722.73,
             "target_high": 800.0,
-            "target_mean_price_return": 0.12017967887840597,
+            "target_mean_price_return": 0.0950952316014364,
             "currency": "USD",
             "source": "https://stockanalysis.com/stocks/ma/forecast/",
             "eps_trends": {
@@ -500,11 +334,11 @@
               "current_year": 2026,
               "next_year": 2027,
               "current_eps": 20.06,
-              "next_eps": 23.16,
-              "current_30": 0.006018054162487241,
-              "current_90": 0.007028112449799062,
-              "next_30": 0.0039011703511053764,
-              "next_90": 0.005644811115935733,
+              "next_eps": 23.18,
+              "current_30": 0.005513784461152804,
+              "current_90": 0.006522829904666239,
+              "next_30": 0.004768097095795287,
+              "next_90": 0.0065132435953103585,
               "count_revisions": {
                 "Up Last 7 Days": [
                   5.0,
@@ -527,11 +361,11 @@
             }
           },
           "momentum": {
-            "week": -0.026273969700180144,
-            "six": 0.2720101227782281,
-            "twelve_one": 0.1702869706963872,
-            "six_month_gap_to_spy": 0.28344991158212707,
-            "twelve_one_gap_to_spy": 0.013987734240200167
+            "week": 0.02580163824859727,
+            "six": 0.32380551209531827,
+            "twelve_one": 0.14114224019616817,
+            "six_month_gap_to_spy": 0.36261780757302864,
+            "twelve_one_gap_to_spy": 0.015294117177590882
           },
           "latest_earnings_price_reaction": {
             "from": "2026-10-28",
@@ -547,26 +381,26 @@
           }
         },
         {
-          "rank": 4,
+          "rank": 3,
           "ticker": "ATAT",
           "company": "Atour Lifestyle Holdings",
           "rating": 3.9,
           "decision": "BUY",
           "conviction": "Moyenne, risque Chine",
-          "price": 39.21,
+          "price": 39.85,
           "currency": "USD",
-          "price_date": "2026-11-18",
-          "price_at": "2026-11-18T16:00:00-05:00",
+          "price_date": "2026-11-25",
+          "price_at": "2026-11-25T16:00:00-05:00",
           "summary": "Hôtels majoritairement franchisés et vente de literie Atour Planet. Le réseau distribue les produits, tandis que les ventes en ligne tirent la croissance.",
           "risk": "Faiblesse durable du RevPAR, hausse des dépenses numériques ou baisse du RMB contre USD.",
-          "central_label": "Scénario central 24 mois +40,9 % USD · +18,7 %/an",
+          "central_label": "Scénario central 24 mois +37,4 % USD · +17,2 %/an",
           "target_price": 53.60121951219513,
-          "dividends_24m": 1.65,
+          "dividends_24m": 1.14,
           "dividend_basis": "modeled_gross_cash",
-          "central_return_24m": 0.4091104185716685,
-          "central_annualized_return": 0.1870595682490701,
-          "low_return_24m": -0.49278774837579054,
-          "high_return_24m": 1.2649789901353876,
+          "central_return_24m": 0.3736817945343822,
+          "central_annualized_return": 0.17204172047516386,
+          "low_return_24m": -0.5137316841609724,
+          "high_return_24m": 1.215804923543502,
           "scenarios_24m": {
             "downside": {
               "sales_fy2027": 14.05,
@@ -586,9 +420,9 @@
               "ordinary_shares_per_quote": 3,
               "exit_pe": 11.5,
               "target_price": 18.997792386185253,
-              "dividends_24m": 0.89,
-              "return": -0.49278774837579054,
-              "annualized_return": -0.28781164596420883
+              "dividends_24m": 0.38,
+              "return": -0.5137316841609724,
+              "annualized_return": -0.3026705829817391
             },
             "central": {
               "sales_fy2027": 15.6,
@@ -608,9 +442,9 @@
               "ordinary_shares_per_quote": 3,
               "exit_pe": 17,
               "target_price": 53.60121951219513,
-              "dividends_24m": 1.65,
-              "return": 0.4091104185716685,
-              "annualized_return": 0.1870595682490701
+              "dividends_24m": 1.14,
+              "return": 0.3736817945343822,
+              "annualized_return": 0.17204172047516386
             },
             "upside": {
               "sales_fy2027": 16.6,
@@ -630,9 +464,9 @@
               "ordinary_shares_per_quote": 3,
               "exit_pe": 21,
               "target_price": 86.80982620320856,
-              "dividends_24m": 2.0,
-              "return": 1.2649789901353876,
-              "annualized_return": 0.5049847142530677
+              "dividends_24m": 1.49,
+              "return": 1.215804923543502,
+              "annualized_return": 0.4885580014038762
             }
           },
           "earnings": {
@@ -642,10 +476,10 @@
             "url": "https://finabase.io/symbol/atat/earnings"
           },
           "basis": "BPA GAAP dilué. Un ADS cotant en USD vaut trois actions de classe A. Fin d’exercice en décembre.",
-          "catalyst": "Dividende de 0,51 USD par ADS payable vers le 9 décembre 2026 et conversion du pipeline hôtelier.",
-          "previous_edition_change": "Rang 5 → 4. Le rebond de cours réduit l’asymétrie. Le BPA de consensus demeure exprimé en RMB par ADS.",
+          "catalyst": "Prochaine publication estimée mi-mars, avec suivi des ouvertures franchisées et du levier du retail.",
+          "previous_edition_change": "Rang 4 → 3. Le passage ex-dividende du 23 exclut 0,51 USD du rendement d’un achat au 25. La progression du cours et cette échéance réduisent le rendement modélisé, avec levier hôtelier et retail similaires.",
           "reason_for_rank": "Décote face au comparable chinois et croissance efficace en capital, avec risque Chine et écart GAAP.",
-          "model_date": "2026-11-18",
+          "model_date": "2026-11-25",
           "consensus_12m": {
             "rating": "Strong Buy",
             "analyst_count": 21,
@@ -653,11 +487,11 @@
             "hold": 0,
             "sell": 0,
             "horizon_months": 12,
-            "target_low": 42.87,
-            "target_median": 47.18,
-            "target_mean": 49.47,
-            "target_high": 60.52,
-            "target_mean_price_return": 0.2616679418515684,
+            "target_low": 42.81,
+            "target_median": 47.11,
+            "target_mean": 49.4,
+            "target_high": 60.44,
+            "target_mean_price_return": 0.23964868255959848,
             "currency": "USD",
             "source": "https://stockanalysis.com/stocks/atat/forecast/",
             "eps_trends": {
@@ -691,14 +525,14 @@
               },
               "description": "Yahoo Finance, panel d’estimations BPA."
             },
-            "targets_date": "2026-10-07"
+            "post_earnings_full_integration": "unverified"
           },
           "momentum": {
-            "week": 0.04198777571086887,
-            "six": 0.06030286641427818,
-            "twelve_one": -0.11794195250659623,
-            "six_month_gap_to_spy": 0.07174265521817713,
-            "twelve_one_gap_to_spy": -0.27424118896278327
+            "week": 0.016322366743177774,
+            "six": 0.17760047281323876,
+            "twelve_one": -0.15204520990312154,
+            "six_month_gap_to_spy": 0.21641276829094913,
+            "twelve_one_gap_to_spy": -0.2778933329216988
           },
           "latest_earnings_price_reaction": {
             "from": "2026-11-09",
@@ -714,26 +548,193 @@
           }
         },
         {
+          "rank": 4,
+          "ticker": "WMG",
+          "company": "Warner Music Group",
+          "rating": 3.8,
+          "decision": "BUY",
+          "conviction": "Moyenne",
+          "price": 32.46,
+          "currency": "USD",
+          "price_date": "2026-11-25",
+          "price_at": "2026-11-25T16:00:00-05:00",
+          "summary": "Catalogues de musique enregistrée et d’édition. Les minima par abonné soutiennent le streaming, avec un potentiel additionnel lié aux licences IA.",
+          "risk": "Spotify et les autres plateformes dominantes peuvent renégocier les conditions. Les avances et achats de catalogues peuvent absorber le FCF.",
+          "central_label": "Scénario central 24 mois +32,7 % USD · +15,2 %/an",
+          "target_price": 41.43193548387096,
+          "dividends_24m": 1.64,
+          "dividend_basis": "modeled_gross_cash",
+          "central_return_24m": 0.3269234591457473,
+          "central_annualized_return": 0.15192163758901023,
+          "low_return_24m": -0.35723087756359484,
+          "high_return_24m": 1.0991777678628338,
+          "scenarios_24m": {
+            "downside": {
+              "sales_fy2027": 7.38,
+              "sales_fy2028": 7.6,
+              "operating_currency": "USD",
+              "sales_growth_fy2027": -0.008064516129032362,
+              "sales_growth_fy2028": 0.02981029810298108,
+              "eps_fy2027": 1.674102079395085,
+              "eps_fy2028": 1.557142857142857,
+              "eps_growth_fy2028": -0.06986385340043877,
+              "net_margin_fy2027": 0.12,
+              "net_margin_fy2028": 0.109,
+              "diluted_shares_bn_fy2027": 0.529,
+              "diluted_shares_bn_fy2028": 0.532,
+              "currency": "USD",
+              "operating_currency_per_usd": 1,
+              "ordinary_shares_per_quote": 1,
+              "exit_pe": 12.5,
+              "target_price": 19.46428571428571,
+              "dividends_24m": 1.4,
+              "return": -0.35723087756359484,
+              "annualized_return": -0.19827116651800203
+            },
+            "central": {
+              "sales_fy2027": 7.87,
+              "sales_fy2028": 8.52,
+              "operating_currency": "USD",
+              "sales_growth_fy2027": 0.05779569892473124,
+              "sales_growth_fy2028": 0.08259212198221078,
+              "eps_fy2027": 2.229334600760456,
+              "eps_fy2028": 2.473548387096774,
+              "eps_growth_fy2028": 0.10954559546737075,
+              "net_margin_fy2027": 0.149,
+              "net_margin_fy2028": 0.153,
+              "diluted_shares_bn_fy2027": 0.526,
+              "diluted_shares_bn_fy2028": 0.527,
+              "currency": "USD",
+              "operating_currency_per_usd": 1,
+              "ordinary_shares_per_quote": 1,
+              "exit_pe": 16.75,
+              "target_price": 41.43193548387096,
+              "dividends_24m": 1.64,
+              "return": 0.3269234591457473,
+              "annualized_return": 0.15192163758901023
+            },
+            "upside": {
+              "sales_fy2027": 8.05,
+              "sales_fy2028": 9.0,
+              "operating_currency": "USD",
+              "sales_growth_fy2027": 0.081989247311828,
+              "sales_growth_fy2028": 0.11801242236024834,
+              "eps_fy2027": 2.376666666666667,
+              "eps_fy2028": 3.0172413793103448,
+              "eps_growth_fy2028": 0.269526527059051,
+              "net_margin_fy2027": 0.155,
+              "net_margin_fy2028": 0.175,
+              "diluted_shares_bn_fy2027": 0.525,
+              "diluted_shares_bn_fy2028": 0.522,
+              "currency": "USD",
+              "operating_currency_per_usd": 1,
+              "ordinary_shares_per_quote": 1,
+              "exit_pe": 22,
+              "target_price": 66.37931034482759,
+              "dividends_24m": 1.76,
+              "return": 1.0991777678628338,
+              "annualized_return": 0.4488539498040629
+            }
+          },
+          "earnings": {
+            "date": "2027-02-11",
+            "status": "estimated",
+            "timing": "avant Bourse selon l’historique",
+            "url": "https://www.tipranks.com/stocks/wmg/earnings"
+          },
+          "basis": "BPA ajusté dilué et exercice clos en septembre. Base ventes FY26 de 7,44 G$ publiée. Le calcul FY27 est sur base publiée, donc affecté par la sortie d’EMP.",
+          "catalyst": "Discours de Robert Kyncl au CES 2027 en janvier. Première lecture FY27 du streaming et des royalties IA au T1.",
+          "previous_edition_change": "WMG revient dans l’univers après son absence du 18 novembre. Le T4 FY26 et le cadre de marge FY27 donnent la base de cette réintégration dans la recherche.",
+          "reason_for_rank": "Le changement de contrats streaming et le meilleur point d’entrée offrent plus d’asymétrie que DXCM, avec plus de dette qu’Atour.",
+          "model_date": "2026-11-25",
+          "consensus_12m": {
+            "rating": "Buy",
+            "analyst_count": 17,
+            "buy": 14,
+            "hold": 3,
+            "sell": 0,
+            "horizon_months": 12,
+            "target_low": 32.0,
+            "target_median": 40.0,
+            "target_mean": 39.47,
+            "target_high": 46.0,
+            "target_mean_price_return": 0.21595810227972878,
+            "currency": "USD",
+            "source": "https://stockanalysis.com/stocks/wmg/forecast/",
+            "eps_trends": {
+              "source": "https://finance.yahoo.com/quote/WMG/analysis/",
+              "basis": "USD",
+              "current_year": 2027,
+              "next_year": 2028,
+              "current_eps": 2.11,
+              "next_eps": 2.42,
+              "current_30": 0.07106598984771573,
+              "current_90": 0.07106598984771573,
+              "next_30": 0.06607929515418509,
+              "next_90": 0.06140350877192979,
+              "count_revisions": {
+                "Up Last 7 Days": [
+                  null,
+                  null
+                ],
+                "Up Last 30 Days": [
+                  null,
+                  null
+                ],
+                "Down Last 7 Days": [
+                  1.0,
+                  1.0
+                ],
+                "Down Last 30 Days": [
+                  2.0,
+                  2.0
+                ]
+              },
+              "description": "Yahoo Finance, panel d’estimations BPA."
+            },
+            "post_earnings_individual_updates_verified": true
+          },
+          "momentum": {
+            "week": -0.015169902912621325,
+            "six": -0.06509216589861744,
+            "twelve_one": 0.08853615520282188,
+            "six_month_gap_to_spy": -0.02627987042090707,
+            "twelve_one_gap_to_spy": -0.03731196781575541
+          },
+          "latest_earnings_price_reaction": {
+            "from": "2026-11-18",
+            "to": "2026-11-19",
+            "return": -0.0060679611650485965
+          },
+          "sources": {
+            "issuer": "https://investors.wmg.com/news-events/news-releases/news-details/2026/Warner-Music-Group-Corp--Reports-Results-for-Fiscal-Fourth-Quarter-and-Full-Year-Ended-September-30-2026/default.aspx",
+            "quote": "https://stockanalysis.com/stocks/wmg/history/",
+            "quote_check": "https://finance.yahoo.com/quote/WMG/history/",
+            "analysts": "https://stockanalysis.com/stocks/wmg/forecast/",
+            "eps_trend": "https://finance.yahoo.com/quote/WMG/analysis/"
+          }
+        },
+        {
           "rank": 5,
           "ticker": "DXCM",
           "company": "Dexcom",
           "rating": 3.6,
           "decision": "HOLD",
           "conviction": "Moyenne",
-          "price": 82.52,
+          "price": 84.84,
           "currency": "USD",
-          "price_date": "2026-11-18",
-          "price_at": "2026-11-18T16:00:00-05:00",
+          "price_date": "2026-11-25",
+          "price_at": "2026-11-25T16:00:00-05:00",
           "summary": "Capteurs de glucose réachetés régulièrement. La croissance dépend de la couverture du diabète de type 2 et du déploiement du G7 de 15 jours.",
           "risk": "Couverture publique retardée ou tarifs en baisse face à Abbott, avec sensibilité élevée du multiple.",
-          "central_label": "Scénario central 24 mois +23,5 % USD · +11,1 %/an",
+          "central_label": "Scénario central 24 mois +20,1 % USD · +9,6 %/an",
           "target_price": 101.9249591280654,
           "dividends_24m": 0,
           "dividend_basis": "none_modeled",
-          "central_return_24m": 0.23515461861446196,
-          "central_annualized_return": 0.11137510257089267,
-          "low_return_24m": -0.301049208012134,
-          "high_return_24m": 0.700193892389724,
+          "central_return_24m": 0.2013785847249574,
+          "central_annualized_return": 0.09607416935395263,
+          "low_return_24m": -0.3201624309896428,
+          "high_return_24m": 0.6537010843941538,
           "scenarios_24m": {
             "downside": {
               "sales_fy2027": 5.55,
@@ -754,8 +755,8 @@
               "exit_pe": 20,
               "target_price": 57.677419354838705,
               "dividends_24m": 0,
-              "return": -0.301049208012134,
-              "annualized_return": -0.16396723031458504
+              "return": -0.3201624309896428,
+              "annualized_return": -0.17547736901261635
             },
             "central": {
               "sales_fy2027": 5.87,
@@ -776,8 +777,8 @@
               "exit_pe": 26,
               "target_price": 101.9249591280654,
               "dividends_24m": 0,
-              "return": 0.23515461861446196,
-              "annualized_return": 0.11137510257089267
+              "return": 0.2013785847249574,
+              "annualized_return": 0.09607416935395263
             },
             "upside": {
               "sales_fy2027": 6.12,
@@ -798,8 +799,8 @@
               "exit_pe": 30.5,
               "target_price": 140.3,
               "dividends_24m": 0,
-              "return": 0.700193892389724,
-              "annualized_return": 0.303914833257803
+              "return": 0.6537010843941538,
+              "annualized_return": 0.2859630960467543
             }
           },
           "earnings": {
@@ -810,9 +811,9 @@
           },
           "basis": "BPA dilué ajusté, fin d’exercice en décembre.",
           "catalyst": "Décision CMS attendue par la direction d’ici la fin de 2026, sans date de décision confirmée.",
-          "previous_edition_change": "Rang 8 → 5, HOLD conservé. Les propos du 17 novembre affinent le calendrier CMS, avec un jalon vérifiable d’ici la fin de l’année.",
-          "reason_for_rank": "Le renouvellement des capteurs et la preuve clinique offrent une meilleure visibilité que le commerce transfrontalier de GLBE.",
-          "model_date": "2026-11-18",
+          "previous_edition_change": "Rang 5 et HOLD maintenus. Le cours gagne 2,8 % depuis la dernière édition. Les attentes de couverture évoquées à Jefferies restent conditionnelles.",
+          "reason_for_rank": "Revenus de remplacement récurrents, avec une prime plus élevée que les comparables et une couverture CMS encore incertaine.",
+          "model_date": "2026-11-25",
           "consensus_12m": {
             "rating": "Strong Buy",
             "analyst_count": 29,
@@ -824,7 +825,7 @@
             "target_median": 96.5,
             "target_mean": 98.58,
             "target_high": 120.0,
-            "target_mean_price_return": 0.19461948618516733,
+            "target_mean_price_return": 0.16195190947666194,
             "currency": "USD",
             "source": "https://stockanalysis.com/stocks/dxcm/forecast/",
             "eps_trends": {
@@ -833,11 +834,11 @@
               "current_year": 2026,
               "next_year": 2027,
               "current_eps": 2.7,
-              "next_eps": 3.13,
+              "next_eps": 3.14,
               "current_30": 0.011235955056179803,
               "current_90": 0.015037593984962516,
-              "next_30": 0.0,
-              "next_90": 0.0,
+              "next_30": 0.0031948881789138905,
+              "next_90": 0.0031948881789138905,
               "count_revisions": {
                 "Up Last 7 Days": [
                   23.0,
@@ -860,11 +861,11 @@
             }
           },
           "momentum": {
-            "week": 0.027006845052893524,
-            "six": 0.267783069595944,
-            "twelve_one": 0.4299484793086257,
-            "six_month_gap_to_spy": 0.27922285839984295,
-            "twelve_one_gap_to_spy": 0.27364924285243863
+            "week": 0.02811439650993708,
+            "six": 0.17669902912621382,
+            "twelve_one": 0.2634138434106015,
+            "six_month_gap_to_spy": 0.2155113246039242,
+            "twelve_one_gap_to_spy": 0.1375657203920242
           },
           "latest_earnings_price_reaction": {
             "from": "2026-10-29",
@@ -885,67 +886,67 @@
           "rank": 1,
           "ticker": "MSFT",
           "company": "Microsoft",
-          "rating": 4.4,
+          "rating": 4.3,
           "decision": "BUY",
-          "conviction": "Élevée",
-          "price": 508.29,
+          "conviction": "Élevée, avec un risque d’exécution accru",
+          "price": 489.93,
           "currency": "USD",
-          "price_date": "2026-11-18",
-          "price_at": "2026-11-18T16:00:00-05:00",
-          "summary": "Ventes de logiciels d’entreprise par abonnement et facturation d’Azure à l’usage. Ignite ouvre une voie concrète pour facturer l’activité des agents dans Copilot.",
-          "risk": "Une capacité IA payée avant d’être utilisée, et des contrats cloud concentrés, pourraient comprimer durablement le FCF.",
-          "central_label": "Scénario central 24 mois +28,3 % USD · +13,3 %/an",
-          "target_price": 643.9567567567567,
+          "price_date": "2026-11-25",
+          "price_at": "2026-11-25T16:00:00-05:00",
+          "summary": "Les abonnements d’entreprise et Azure financent une extension vers les agents IA. Le programme de fiabilité lancé après la panne relève le risque d’exécution.",
+          "risk": "Le rétablissement de la fiabilité et la construction de capacité IA peuvent absorber le cash avant que les agents financent leur coût.",
+          "central_label": "Scénario central 24 mois +28,8 % USD · +13,5 %/an",
+          "target_price": 622.7237837837838,
           "dividends_24m": 8.25,
           "dividend_basis": "modeled_gross_cash",
-          "central_return_24m": 0.2831390677698886,
-          "central_annualized_return": 0.13275728546316956,
-          "low_return_24m": -0.2679115924194885,
-          "high_return_24m": 0.8026178730664524,
+          "central_return_24m": 0.28788558321348723,
+          "central_annualized_return": 0.13485046733633022,
+          "low_return_24m": -0.27183373547005196,
+          "high_return_24m": 0.8701705115035763,
           "scenarios_24m": {
             "downside": {
               "sales_fy2027": 371,
-              "sales_fy2028": 407,
+              "sales_fy2028": 405,
               "operating_currency": "USD",
               "sales_growth_fy2027": 0.11800867888138877,
-              "sales_growth_fy2028": 0.09703504043126676,
-              "eps_fy2027": 17.726110363391655,
-              "eps_fy2028": 19.172274562584118,
-              "eps_growth_fy2028": 0.08158384267871388,
-              "net_margin_fy2027": 0.355,
-              "net_margin_fy2028": 0.35,
+              "sales_growth_fy2028": 0.09164420485175206,
+              "eps_fy2027": 17.626244952893675,
+              "eps_fy2028": 18.860026917900402,
+              "eps_growth_fy2028": 0.06999686934477656,
+              "net_margin_fy2027": 0.353,
+              "net_margin_fy2028": 0.346,
               "diluted_shares_bn_fy2027": 7.43,
               "diluted_shares_bn_fy2028": 7.43,
               "currency": "USD",
               "operating_currency_per_usd": 1,
               "ordinary_shares_per_quote": 1,
-              "exit_pe": 19,
-              "target_price": 364.27321668909826,
+              "exit_pe": 18.5,
+              "target_price": 348.91049798115745,
               "dividends_24m": 7.84,
-              "return": -0.2679115924194885,
-              "annualized_return": -0.14437835021517165
+              "return": -0.27183373547005196,
+              "annualized_return": -0.14667341273698264
             },
             "central": {
               "sales_fy2027": 393,
-              "sales_fy2028": 464,
+              "sales_fy2028": 461,
               "operating_currency": "USD",
               "sales_growth_fy2027": 0.18430568948891035,
-              "sales_growth_fy2028": 0.1806615776081424,
-              "eps_fy2027": 20.099596231493944,
-              "eps_fy2028": 24.767567567567568,
-              "eps_growth_fy2028": 0.23224204517896752,
-              "net_margin_fy2027": 0.38,
-              "net_margin_fy2028": 0.395,
+              "sales_growth_fy2028": 0.17302798982188294,
+              "eps_fy2027": 19.993808882907135,
+              "eps_fy2028": 24.420540540540543,
+              "eps_growth_fy2028": 0.22140512013285552,
+              "net_margin_fy2027": 0.378,
+              "net_margin_fy2028": 0.392,
               "diluted_shares_bn_fy2027": 7.43,
               "diluted_shares_bn_fy2028": 7.4,
               "currency": "USD",
               "operating_currency_per_usd": 1,
               "ordinary_shares_per_quote": 1,
-              "exit_pe": 26,
-              "target_price": 643.9567567567567,
+              "exit_pe": 25.5,
+              "target_price": 622.7237837837838,
               "dividends_24m": 8.25,
-              "return": 0.2831390677698886,
-              "annualized_return": 0.13275728546316956
+              "return": 0.28788558321348723,
+              "annualized_return": 0.13485046733633022
             },
             "upside": {
               "sales_fy2027": 411,
@@ -966,8 +967,8 @@
               "exit_pe": 31,
               "target_price": 907.4526387009472,
               "dividends_24m": 8.8,
-              "return": 0.8026178730664524,
-              "annualized_return": 0.3426160557160236
+              "return": 0.8701705115035763,
+              "annualized_return": 0.3675417768768807
             }
           },
           "earnings": {
@@ -977,22 +978,22 @@
             "url": "https://www.wallstreethorizon.com/microsoft-earnings-calendar"
           },
           "basis": "BPA dilué normalisé hors variations de valeur de la participation OpenAI, exercice clos en juin.",
-          "catalyst": "Copilotforce en bêta depuis le 17 novembre, et livraison des capacités décalées au T2 FY27.",
-          "previous_edition_change": "Rang 1 conservé. Ignite renforce la distribution des agents. Le coût de la capacité et l’appréciation relative maintiennent une cible plus prudente que le 11 novembre.",
-          "reason_for_rank": "Distribution B2B et renouvellements protègent mieux le scénario central que le carnet industriel d’APH.",
-          "model_date": "2026-11-18",
+          "catalyst": "Suivi du programme de fiabilité signalé le 24 novembre et prochaine publication FY27 T2.",
+          "previous_edition_change": "Rang 1 conservé. La note passe de 4,4 à 4,3. Le cours de 489,93 $ et l’incident opérationnel rendent le prix d’entrée plus bas et le critère de fiabilité plus exigeant.",
+          "reason_for_rank": "Les renouvellements logiciels et l’adoption d’Azure laissent une croissance plus élevée et une meilleure marge de sécurité qu’au cours de Mastercard.",
+          "model_date": "2026-11-25",
           "consensus_12m": {
             "rating": "Strong Buy",
-            "analyst_count": 59,
-            "buy": 54,
-            "hold": 5,
+            "analyst_count": 58,
+            "buy": 55,
+            "hold": 3,
             "sell": 0,
             "horizon_months": 12,
             "target_low": 440.0,
             "target_median": 631.0,
-            "target_mean": 636.12,
+            "target_mean": 637.36,
             "target_high": 870.0,
-            "target_mean_price_return": 0.25149029097562403,
+            "target_mean_price_return": 0.3009205396689323,
             "currency": "USD",
             "source": "https://stockanalysis.com/stocks/msft/forecast/",
             "eps_trends": {
@@ -1000,12 +1001,12 @@
               "basis": "USD",
               "current_year": 2027,
               "next_year": 2028,
-              "current_eps": 20.01,
-              "next_eps": 24.2,
-              "current_30": 0.011627906976744207,
-              "current_90": 0.014191586416624435,
-              "next_30": 0.02023608768971341,
-              "next_90": 0.026728892660161208,
+              "current_eps": 20.03,
+              "next_eps": 24.23,
+              "current_30": 0.013663967611335925,
+              "current_90": 0.014177215189873582,
+              "next_30": 0.022362869198312207,
+              "next_90": 0.028001697072549847,
               "count_revisions": {
                 "Up Last 7 Days": [
                   1.0,
@@ -1028,11 +1029,11 @@
             }
           },
           "momentum": {
-            "week": -0.024638765759023573,
-            "six": 0.20009916418756202,
-            "twelve_one": 0.07140687336722085,
-            "six_month_gap_to_spy": 0.21153895299146097,
-            "twelve_one_gap_to_spy": -0.0848923630889662
+            "week": -0.03612111196364287,
+            "six": 0.17048522349905637,
+            "twelve_one": 0.09962473007819872,
+            "six_month_gap_to_spy": 0.20929751897676674,
+            "twelve_one_gap_to_spy": -0.026223392940378565
           },
           "latest_earnings_price_reaction": {
             "from": "2026-10-28",
@@ -1049,191 +1050,25 @@
         },
         {
           "rank": 2,
-          "ticker": "APH",
-          "company": "Amphenol",
-          "rating": 4.2,
-          "decision": "BUY",
-          "conviction": "Élevée, cyclique",
-          "price": 76.33,
-          "currency": "USD",
-          "price_date": "2026-11-18",
-          "price_at": "2026-11-18T16:00:00-05:00",
-          "summary": "Connecteurs, câbles et capteurs qualifiés chez les fabricants. Le carnet et CommScope soutiennent la croissance, avec un risque d’inflexion des dépenses IA.",
-          "risk": "Une correction des commandes datacom ou une intégration plus coûteuse de CommScope peut réduire simultanément BPA et multiple.",
-          "central_label": "Scénario central 24 mois +42,9 % USD · +19,6 %/an",
-          "target_price": 107.84959514170039,
-          "dividends_24m": 1.26,
-          "dividend_basis": "modeled_gross_cash",
-          "central_return_24m": 0.4294457636800786,
-          "central_annualized_return": 0.19559431400457838,
-          "low_return_24m": -0.31464819565300073,
-          "high_return_24m": 1.186973762833397,
-          "scenarios_24m": {
-            "downside": {
-              "sales_fy2027": 40.0,
-              "sales_fy2028": 42.0,
-              "operating_currency": "USD",
-              "sales_growth_fy2027": 0.08108108108108114,
-              "sales_growth_fy2028": 0.050000000000000044,
-              "eps_fy2027": 2.7903225806451615,
-              "eps_fy2028": 2.8451612903225807,
-              "eps_growth_fy2028": 0.01965317919075149,
-              "net_margin_fy2027": 0.173,
-              "net_margin_fy2028": 0.168,
-              "diluted_shares_bn_fy2027": 2.48,
-              "diluted_shares_bn_fy2028": 2.48,
-              "currency": "USD",
-              "operating_currency_per_usd": 1,
-              "ordinary_shares_per_quote": 1,
-              "exit_pe": 18,
-              "target_price": 51.21290322580645,
-              "dividends_24m": 1.1,
-              "return": -0.31464819565300073,
-              "annualized_return": -0.1721402266404054
-            },
-            "central": {
-              "sales_fy2027": 45.5,
-              "sales_fy2028": 52.4,
-              "operating_currency": "USD",
-              "sales_growth_fy2027": 0.22972972972972983,
-              "sales_growth_fy2028": 0.15164835164835155,
-              "eps_fy2027": 3.7060483870967746,
-              "eps_fy2028": 4.402024291497975,
-              "eps_growth_fy2028": 0.18779460808562476,
-              "net_margin_fy2027": 0.202,
-              "net_margin_fy2028": 0.2075,
-              "diluted_shares_bn_fy2027": 2.48,
-              "diluted_shares_bn_fy2028": 2.47,
-              "currency": "USD",
-              "operating_currency_per_usd": 1,
-              "ordinary_shares_per_quote": 1,
-              "exit_pe": 24.5,
-              "target_price": 107.84959514170039,
-              "dividends_24m": 1.26,
-              "return": 0.4294457636800786,
-              "annualized_return": 0.19559431400457838
-            },
-            "upside": {
-              "sales_fy2027": 49.0,
-              "sales_fy2028": 60.8,
-              "operating_currency": "USD",
-              "sales_growth_fy2027": 0.32432432432432434,
-              "sales_growth_fy2028": 0.24081632653061225,
-              "eps_fy2027": 4.267741935483871,
-              "eps_fy2028": 5.8081300813008125,
-              "eps_growth_fy2028": 0.3609375096018532,
-              "net_margin_fy2027": 0.216,
-              "net_margin_fy2028": 0.235,
-              "diluted_shares_bn_fy2027": 2.48,
-              "diluted_shares_bn_fy2028": 2.46,
-              "currency": "USD",
-              "operating_currency_per_usd": 1,
-              "ordinary_shares_per_quote": 1,
-              "exit_pe": 28.5,
-              "target_price": 165.53170731707317,
-              "dividends_24m": 1.4,
-              "return": 1.186973762833397,
-              "annualized_return": 0.47884203444228524
-            }
-          },
-          "earnings": {
-            "date": "2027-01-27",
-            "status": "estimated",
-            "timing": "avant Bourse, horaire estimé",
-            "url": "https://www.tipranks.com/stocks/aph/earnings"
-          },
-          "basis": "BPA dilué ajusté, fin d’exercice en décembre.",
-          "catalyst": "Intégration des acquisitions AdvancedPCB et Humanetics Sensors, clôtures attendues au T4 2026 sous conditions.",
-          "previous_edition_change": "Rang 3 → 2 après la sortie de TSM. Les résultats de NVIDIA confortent le contexte des commandes datacom. Maintien du BUY, avec surveillance accrue des stocks.",
-          "reason_for_rank": "Meilleure asymétrie du modèle que MA, avec un carnet solide, une prime justifiable et un bilan plus cyclique que MSFT.",
-          "model_date": "2026-11-18",
-          "consensus_12m": {
-            "rating": "Strong Buy",
-            "analyst_count": 19,
-            "buy": 17,
-            "hold": 2,
-            "sell": 0,
-            "horizon_months": 12,
-            "target_low": 85.0,
-            "target_median": 107.0,
-            "target_mean": 106.97,
-            "target_high": 130.0,
-            "target_mean_price_return": 0.40141490894798904,
-            "currency": "USD",
-            "source": "https://stockanalysis.com/stocks/aph/forecast/",
-            "eps_trends": {
-              "source": "https://finance.yahoo.com/quote/APH/analysis/",
-              "basis": "USD",
-              "current_year": 2026,
-              "next_year": 2027,
-              "current_eps": 2.84,
-              "next_eps": 3.62,
-              "current_30": 0.055762081784386686,
-              "current_90": 0.06766917293233066,
-              "next_30": 0.08708708708708701,
-              "next_90": 0.12422360248447206,
-              "count_revisions": {
-                "Up Last 7 Days": [
-                  16.0,
-                  16.0
-                ],
-                "Up Last 30 Days": [
-                  16.0,
-                  16.0
-                ],
-                "Down Last 7 Days": [
-                  null,
-                  null
-                ],
-                "Down Last 30 Days": [
-                  null,
-                  null
-                ]
-              },
-              "description": "Yahoo Finance, panel d’estimations BPA."
-            }
-          },
-          "momentum": {
-            "week": -0.03757407640902788,
-            "six": 0.25418994413407825,
-            "twelve_one": 0.19827846572032604,
-            "six_month_gap_to_spy": 0.2656297329379772,
-            "twelve_one_gap_to_spy": 0.041979229264138995
-          },
-          "latest_earnings_price_reaction": {
-            "from": "2026-10-27",
-            "to": "2026-10-28",
-            "return": 0.035161744022503605
-          },
-          "sources": {
-            "issuer": "https://investors.amphenol.com/news-and-events/news-details/2026/Amphenol-Reports-Record-Third-Quarter-2026-Results-and-Announces-Dividend-Increase-and-New-Stock-Repurchase-Program/default.aspx",
-            "quote": "https://stockanalysis.com/stocks/aph/history/",
-            "quote_check": "https://finance.yahoo.com/quote/APH/history/",
-            "analysts": "https://stockanalysis.com/stocks/aph/forecast/",
-            "eps_trend": "https://finance.yahoo.com/quote/APH/analysis/"
-          }
-        },
-        {
-          "rank": 3,
           "ticker": "MA",
           "company": "Mastercard",
           "rating": 4.0,
           "decision": "HOLD",
           "conviction": "Élevée sur le modèle, moyenne au cours",
-          "price": 643.37,
+          "price": 659.97,
           "currency": "USD",
-          "price_date": "2026-11-18",
-          "price_at": "2026-11-18T16:00:00-05:00",
-          "summary": "Réseau de paiement mondial et services de sécurité, d’analyse et de marketing. La croissance des services amortit le risque des commissions et du routage.",
+          "price_date": "2026-11-25",
+          "price_at": "2026-11-25T16:00:00-05:00",
+          "summary": "Réseau de paiements mondial et services à marge élevée. Le cours intègre déjà une grande partie de la progression attendue du BPA.",
           "risk": "Les rabais aux émetteurs et un changement du routage marchand peuvent éroder le rendement par transaction.",
-          "central_label": "Scénario central 24 mois +20,2 % USD · +9,6 %/an",
+          "central_label": "Scénario central 24 mois +17,1 % USD · +8,2 %/an",
           "target_price": 765.1994011976049,
           "dividends_24m": 7.95,
           "dividend_basis": "modeled_gross_cash",
-          "central_return_24m": 0.2017181422783234,
-          "central_annualized_return": 0.09622905557110806,
-          "low_return_24m": -0.2502890880302746,
-          "high_return_24m": 0.49371651410798223,
+          "central_return_24m": 0.17149173628741443,
+          "central_annualized_return": 0.08235471832824492,
+          "low_return_24m": -0.2691463105384151,
+          "high_return_24m": 0.45614557280126733,
           "scenarios_24m": {
             "downside": {
               "sales_fy2027": 40.0,
@@ -1254,8 +1089,8 @@
               "exit_pe": 22,
               "target_price": 475.2415094339622,
               "dividends_24m": 7.1,
-              "return": -0.2502890880302746,
-              "annualized_return": -0.1341415173541779
+              "return": -0.2691463105384151,
+              "annualized_return": -0.1451001874713126
             },
             "central": {
               "sales_fy2027": 42.0,
@@ -1276,8 +1111,8 @@
               "exit_pe": 28.5,
               "target_price": 765.1994011976049,
               "dividends_24m": 7.95,
-              "return": 0.2017181422783234,
-              "annualized_return": 0.09622905557110806
+              "return": 0.17149173628741443,
+              "annualized_return": 0.08235471832824492
             },
             "upside": {
               "sales_fy2027": 43.5,
@@ -1298,8 +1133,8 @@
               "exit_pe": 32,
               "target_price": 952.6123936816525,
               "dividends_24m": 8.4,
-              "return": 0.49371651410798223,
-              "annualized_return": 0.22217695695344464
+              "return": 0.45614557280126733,
+              "annualized_return": 0.20670856995434783
             }
           },
           "earnings": {
@@ -1309,22 +1144,22 @@
             "url": "https://www.tipranks.com/stocks/ma/earnings"
           },
           "basis": "BPA ajusté dilué, fin d’exercice en décembre.",
-          "catalyst": "Audience du 16 novembre sur l’entente commerçants et premiers usages réels d’Agent Pay.",
-          "previous_edition_change": "Rang 4 → 3, HOLD conservé. L’audience donne un point de suivi concret, et le test Travelport confirme un paiement agentique en production à petite échelle.",
-          "reason_for_rank": "Moat et cash supérieurs à ATAT, mais le multiple limite le potentiel au cours actuel.",
-          "model_date": "2026-11-18",
+          "catalyst": "Suivi de l’audience américaine du 16 novembre, puis résultats T4 et révisions sur les incitatifs.",
+          "previous_edition_change": "Rang 3 → 2 après la sortie d’APH. Le cours a avancé de 2,6 % sur la période. Le dossier opérationnel tient et le prix réduit l’écart face au scénario de l’indice.",
+          "reason_for_rank": "Récurrence des paiements et conversion du bénéfice en FCF plus prévisibles que la rentabilité des franchises et du retail d’Atour.",
+          "model_date": "2026-11-25",
           "consensus_12m": {
-            "rating": "Buy",
-            "analyst_count": 40,
-            "buy": 35,
+            "rating": "Strong Buy",
+            "analyst_count": 42,
+            "buy": 37,
             "hold": 4,
             "sell": 1,
             "horizon_months": 12,
             "target_low": 550.0,
-            "target_median": 726.0,
-            "target_mean": 720.69,
+            "target_median": 731.0,
+            "target_mean": 722.73,
             "target_high": 800.0,
-            "target_mean_price_return": 0.12017967887840597,
+            "target_mean_price_return": 0.0950952316014364,
             "currency": "USD",
             "source": "https://stockanalysis.com/stocks/ma/forecast/",
             "eps_trends": {
@@ -1333,11 +1168,11 @@
               "current_year": 2026,
               "next_year": 2027,
               "current_eps": 20.06,
-              "next_eps": 23.16,
-              "current_30": 0.006018054162487241,
-              "current_90": 0.007028112449799062,
-              "next_30": 0.0039011703511053764,
-              "next_90": 0.005644811115935733,
+              "next_eps": 23.18,
+              "current_30": 0.005513784461152804,
+              "current_90": 0.006522829904666239,
+              "next_30": 0.004768097095795287,
+              "next_90": 0.0065132435953103585,
               "count_revisions": {
                 "Up Last 7 Days": [
                   5.0,
@@ -1360,11 +1195,11 @@
             }
           },
           "momentum": {
-            "week": -0.026273969700180144,
-            "six": 0.2720101227782281,
-            "twelve_one": 0.1702869706963872,
-            "six_month_gap_to_spy": 0.28344991158212707,
-            "twelve_one_gap_to_spy": 0.013987734240200167
+            "week": 0.02580163824859727,
+            "six": 0.32380551209531827,
+            "twelve_one": 0.14114224019616817,
+            "six_month_gap_to_spy": 0.36261780757302864,
+            "twelve_one_gap_to_spy": 0.015294117177590882
           },
           "latest_earnings_price_reaction": {
             "from": "2026-10-28",
@@ -1380,26 +1215,26 @@
           }
         },
         {
-          "rank": 4,
+          "rank": 3,
           "ticker": "ATAT",
           "company": "Atour Lifestyle Holdings",
           "rating": 3.9,
           "decision": "BUY",
           "conviction": "Moyenne, risque Chine",
-          "price": 39.21,
+          "price": 39.85,
           "currency": "USD",
-          "price_date": "2026-11-18",
-          "price_at": "2026-11-18T16:00:00-05:00",
+          "price_date": "2026-11-25",
+          "price_at": "2026-11-25T16:00:00-05:00",
           "summary": "Hôtels majoritairement franchisés et vente de literie Atour Planet. Le réseau distribue les produits, tandis que les ventes en ligne tirent la croissance.",
           "risk": "Faiblesse durable du RevPAR, hausse des dépenses numériques ou baisse du RMB contre USD.",
-          "central_label": "Scénario central 24 mois +40,9 % USD · +18,7 %/an",
+          "central_label": "Scénario central 24 mois +37,4 % USD · +17,2 %/an",
           "target_price": 53.60121951219513,
-          "dividends_24m": 1.65,
+          "dividends_24m": 1.14,
           "dividend_basis": "modeled_gross_cash",
-          "central_return_24m": 0.4091104185716685,
-          "central_annualized_return": 0.1870595682490701,
-          "low_return_24m": -0.49278774837579054,
-          "high_return_24m": 1.2649789901353876,
+          "central_return_24m": 0.3736817945343822,
+          "central_annualized_return": 0.17204172047516386,
+          "low_return_24m": -0.5137316841609724,
+          "high_return_24m": 1.215804923543502,
           "scenarios_24m": {
             "downside": {
               "sales_fy2027": 14.05,
@@ -1419,9 +1254,9 @@
               "ordinary_shares_per_quote": 3,
               "exit_pe": 11.5,
               "target_price": 18.997792386185253,
-              "dividends_24m": 0.89,
-              "return": -0.49278774837579054,
-              "annualized_return": -0.28781164596420883
+              "dividends_24m": 0.38,
+              "return": -0.5137316841609724,
+              "annualized_return": -0.3026705829817391
             },
             "central": {
               "sales_fy2027": 15.6,
@@ -1441,9 +1276,9 @@
               "ordinary_shares_per_quote": 3,
               "exit_pe": 17,
               "target_price": 53.60121951219513,
-              "dividends_24m": 1.65,
-              "return": 0.4091104185716685,
-              "annualized_return": 0.1870595682490701
+              "dividends_24m": 1.14,
+              "return": 0.3736817945343822,
+              "annualized_return": 0.17204172047516386
             },
             "upside": {
               "sales_fy2027": 16.6,
@@ -1463,9 +1298,9 @@
               "ordinary_shares_per_quote": 3,
               "exit_pe": 21,
               "target_price": 86.80982620320856,
-              "dividends_24m": 2.0,
-              "return": 1.2649789901353876,
-              "annualized_return": 0.5049847142530677
+              "dividends_24m": 1.49,
+              "return": 1.215804923543502,
+              "annualized_return": 0.4885580014038762
             }
           },
           "earnings": {
@@ -1475,10 +1310,10 @@
             "url": "https://finabase.io/symbol/atat/earnings"
           },
           "basis": "BPA GAAP dilué. Un ADS cotant en USD vaut trois actions de classe A. Fin d’exercice en décembre.",
-          "catalyst": "Dividende de 0,51 USD par ADS payable vers le 9 décembre 2026 et conversion du pipeline hôtelier.",
-          "previous_edition_change": "Rang 5 → 4. Le rebond de cours réduit l’asymétrie. Le BPA de consensus demeure exprimé en RMB par ADS.",
+          "catalyst": "Prochaine publication estimée mi-mars, avec suivi des ouvertures franchisées et du levier du retail.",
+          "previous_edition_change": "Rang 4 → 3. Le passage ex-dividende du 23 exclut 0,51 USD du rendement d’un achat au 25. La progression du cours et cette échéance réduisent le rendement modélisé, avec levier hôtelier et retail similaires.",
           "reason_for_rank": "Décote face au comparable chinois et croissance efficace en capital, avec risque Chine et écart GAAP.",
-          "model_date": "2026-11-18",
+          "model_date": "2026-11-25",
           "consensus_12m": {
             "rating": "Strong Buy",
             "analyst_count": 21,
@@ -1486,11 +1321,11 @@
             "hold": 0,
             "sell": 0,
             "horizon_months": 12,
-            "target_low": 42.87,
-            "target_median": 47.18,
-            "target_mean": 49.47,
-            "target_high": 60.52,
-            "target_mean_price_return": 0.2616679418515684,
+            "target_low": 42.81,
+            "target_median": 47.11,
+            "target_mean": 49.4,
+            "target_high": 60.44,
+            "target_mean_price_return": 0.23964868255959848,
             "currency": "USD",
             "source": "https://stockanalysis.com/stocks/atat/forecast/",
             "eps_trends": {
@@ -1524,14 +1359,14 @@
               },
               "description": "Yahoo Finance, panel d’estimations BPA."
             },
-            "targets_date": "2026-10-07"
+            "post_earnings_full_integration": "unverified"
           },
           "momentum": {
-            "week": 0.04198777571086887,
-            "six": 0.06030286641427818,
-            "twelve_one": -0.11794195250659623,
-            "six_month_gap_to_spy": 0.07174265521817713,
-            "twelve_one_gap_to_spy": -0.27424118896278327
+            "week": 0.016322366743177774,
+            "six": 0.17760047281323876,
+            "twelve_one": -0.15204520990312154,
+            "six_month_gap_to_spy": 0.21641276829094913,
+            "twelve_one_gap_to_spy": -0.2778933329216988
           },
           "latest_earnings_price_reaction": {
             "from": "2026-11-09",
@@ -1547,26 +1382,193 @@
           }
         },
         {
+          "rank": 4,
+          "ticker": "WMG",
+          "company": "Warner Music Group",
+          "rating": 3.8,
+          "decision": "BUY",
+          "conviction": "Moyenne",
+          "price": 32.46,
+          "currency": "USD",
+          "price_date": "2026-11-25",
+          "price_at": "2026-11-25T16:00:00-05:00",
+          "summary": "Catalogues de musique enregistrée et d’édition. Les minima par abonné soutiennent le streaming, avec un potentiel additionnel lié aux licences IA.",
+          "risk": "Spotify et les autres plateformes dominantes peuvent renégocier les conditions. Les avances et achats de catalogues peuvent absorber le FCF.",
+          "central_label": "Scénario central 24 mois +32,7 % USD · +15,2 %/an",
+          "target_price": 41.43193548387096,
+          "dividends_24m": 1.64,
+          "dividend_basis": "modeled_gross_cash",
+          "central_return_24m": 0.3269234591457473,
+          "central_annualized_return": 0.15192163758901023,
+          "low_return_24m": -0.35723087756359484,
+          "high_return_24m": 1.0991777678628338,
+          "scenarios_24m": {
+            "downside": {
+              "sales_fy2027": 7.38,
+              "sales_fy2028": 7.6,
+              "operating_currency": "USD",
+              "sales_growth_fy2027": -0.008064516129032362,
+              "sales_growth_fy2028": 0.02981029810298108,
+              "eps_fy2027": 1.674102079395085,
+              "eps_fy2028": 1.557142857142857,
+              "eps_growth_fy2028": -0.06986385340043877,
+              "net_margin_fy2027": 0.12,
+              "net_margin_fy2028": 0.109,
+              "diluted_shares_bn_fy2027": 0.529,
+              "diluted_shares_bn_fy2028": 0.532,
+              "currency": "USD",
+              "operating_currency_per_usd": 1,
+              "ordinary_shares_per_quote": 1,
+              "exit_pe": 12.5,
+              "target_price": 19.46428571428571,
+              "dividends_24m": 1.4,
+              "return": -0.35723087756359484,
+              "annualized_return": -0.19827116651800203
+            },
+            "central": {
+              "sales_fy2027": 7.87,
+              "sales_fy2028": 8.52,
+              "operating_currency": "USD",
+              "sales_growth_fy2027": 0.05779569892473124,
+              "sales_growth_fy2028": 0.08259212198221078,
+              "eps_fy2027": 2.229334600760456,
+              "eps_fy2028": 2.473548387096774,
+              "eps_growth_fy2028": 0.10954559546737075,
+              "net_margin_fy2027": 0.149,
+              "net_margin_fy2028": 0.153,
+              "diluted_shares_bn_fy2027": 0.526,
+              "diluted_shares_bn_fy2028": 0.527,
+              "currency": "USD",
+              "operating_currency_per_usd": 1,
+              "ordinary_shares_per_quote": 1,
+              "exit_pe": 16.75,
+              "target_price": 41.43193548387096,
+              "dividends_24m": 1.64,
+              "return": 0.3269234591457473,
+              "annualized_return": 0.15192163758901023
+            },
+            "upside": {
+              "sales_fy2027": 8.05,
+              "sales_fy2028": 9.0,
+              "operating_currency": "USD",
+              "sales_growth_fy2027": 0.081989247311828,
+              "sales_growth_fy2028": 0.11801242236024834,
+              "eps_fy2027": 2.376666666666667,
+              "eps_fy2028": 3.0172413793103448,
+              "eps_growth_fy2028": 0.269526527059051,
+              "net_margin_fy2027": 0.155,
+              "net_margin_fy2028": 0.175,
+              "diluted_shares_bn_fy2027": 0.525,
+              "diluted_shares_bn_fy2028": 0.522,
+              "currency": "USD",
+              "operating_currency_per_usd": 1,
+              "ordinary_shares_per_quote": 1,
+              "exit_pe": 22,
+              "target_price": 66.37931034482759,
+              "dividends_24m": 1.76,
+              "return": 1.0991777678628338,
+              "annualized_return": 0.4488539498040629
+            }
+          },
+          "earnings": {
+            "date": "2027-02-11",
+            "status": "estimated",
+            "timing": "avant Bourse selon l’historique",
+            "url": "https://www.tipranks.com/stocks/wmg/earnings"
+          },
+          "basis": "BPA ajusté dilué et exercice clos en septembre. Base ventes FY26 de 7,44 G$ publiée. Le calcul FY27 est sur base publiée, donc affecté par la sortie d’EMP.",
+          "catalyst": "Discours de Robert Kyncl au CES 2027 en janvier. Première lecture FY27 du streaming et des royalties IA au T1.",
+          "previous_edition_change": "WMG revient dans l’univers après son absence du 18 novembre. Le T4 FY26 et le cadre de marge FY27 donnent la base de cette réintégration dans la recherche.",
+          "reason_for_rank": "Le changement de contrats streaming et le meilleur point d’entrée offrent plus d’asymétrie que DXCM, avec plus de dette qu’Atour.",
+          "model_date": "2026-11-25",
+          "consensus_12m": {
+            "rating": "Buy",
+            "analyst_count": 17,
+            "buy": 14,
+            "hold": 3,
+            "sell": 0,
+            "horizon_months": 12,
+            "target_low": 32.0,
+            "target_median": 40.0,
+            "target_mean": 39.47,
+            "target_high": 46.0,
+            "target_mean_price_return": 0.21595810227972878,
+            "currency": "USD",
+            "source": "https://stockanalysis.com/stocks/wmg/forecast/",
+            "eps_trends": {
+              "source": "https://finance.yahoo.com/quote/WMG/analysis/",
+              "basis": "USD",
+              "current_year": 2027,
+              "next_year": 2028,
+              "current_eps": 2.11,
+              "next_eps": 2.42,
+              "current_30": 0.07106598984771573,
+              "current_90": 0.07106598984771573,
+              "next_30": 0.06607929515418509,
+              "next_90": 0.06140350877192979,
+              "count_revisions": {
+                "Up Last 7 Days": [
+                  null,
+                  null
+                ],
+                "Up Last 30 Days": [
+                  null,
+                  null
+                ],
+                "Down Last 7 Days": [
+                  1.0,
+                  1.0
+                ],
+                "Down Last 30 Days": [
+                  2.0,
+                  2.0
+                ]
+              },
+              "description": "Yahoo Finance, panel d’estimations BPA."
+            },
+            "post_earnings_individual_updates_verified": true
+          },
+          "momentum": {
+            "week": -0.015169902912621325,
+            "six": -0.06509216589861744,
+            "twelve_one": 0.08853615520282188,
+            "six_month_gap_to_spy": -0.02627987042090707,
+            "twelve_one_gap_to_spy": -0.03731196781575541
+          },
+          "latest_earnings_price_reaction": {
+            "from": "2026-11-18",
+            "to": "2026-11-19",
+            "return": -0.0060679611650485965
+          },
+          "sources": {
+            "issuer": "https://investors.wmg.com/news-events/news-releases/news-details/2026/Warner-Music-Group-Corp--Reports-Results-for-Fiscal-Fourth-Quarter-and-Full-Year-Ended-September-30-2026/default.aspx",
+            "quote": "https://stockanalysis.com/stocks/wmg/history/",
+            "quote_check": "https://finance.yahoo.com/quote/WMG/history/",
+            "analysts": "https://stockanalysis.com/stocks/wmg/forecast/",
+            "eps_trend": "https://finance.yahoo.com/quote/WMG/analysis/"
+          }
+        },
+        {
           "rank": 5,
           "ticker": "DXCM",
           "company": "Dexcom",
           "rating": 3.6,
           "decision": "HOLD",
           "conviction": "Moyenne",
-          "price": 82.52,
+          "price": 84.84,
           "currency": "USD",
-          "price_date": "2026-11-18",
-          "price_at": "2026-11-18T16:00:00-05:00",
+          "price_date": "2026-11-25",
+          "price_at": "2026-11-25T16:00:00-05:00",
           "summary": "Capteurs de glucose réachetés régulièrement. La croissance dépend de la couverture du diabète de type 2 et du déploiement du G7 de 15 jours.",
           "risk": "Couverture publique retardée ou tarifs en baisse face à Abbott, avec sensibilité élevée du multiple.",
-          "central_label": "Scénario central 24 mois +23,5 % USD · +11,1 %/an",
+          "central_label": "Scénario central 24 mois +20,1 % USD · +9,6 %/an",
           "target_price": 101.9249591280654,
           "dividends_24m": 0,
           "dividend_basis": "none_modeled",
-          "central_return_24m": 0.23515461861446196,
-          "central_annualized_return": 0.11137510257089267,
-          "low_return_24m": -0.301049208012134,
-          "high_return_24m": 0.700193892389724,
+          "central_return_24m": 0.2013785847249574,
+          "central_annualized_return": 0.09607416935395263,
+          "low_return_24m": -0.3201624309896428,
+          "high_return_24m": 0.6537010843941538,
           "scenarios_24m": {
             "downside": {
               "sales_fy2027": 5.55,
@@ -1587,8 +1589,8 @@
               "exit_pe": 20,
               "target_price": 57.677419354838705,
               "dividends_24m": 0,
-              "return": -0.301049208012134,
-              "annualized_return": -0.16396723031458504
+              "return": -0.3201624309896428,
+              "annualized_return": -0.17547736901261635
             },
             "central": {
               "sales_fy2027": 5.87,
@@ -1609,8 +1611,8 @@
               "exit_pe": 26,
               "target_price": 101.9249591280654,
               "dividends_24m": 0,
-              "return": 0.23515461861446196,
-              "annualized_return": 0.11137510257089267
+              "return": 0.2013785847249574,
+              "annualized_return": 0.09607416935395263
             },
             "upside": {
               "sales_fy2027": 6.12,
@@ -1631,8 +1633,8 @@
               "exit_pe": 30.5,
               "target_price": 140.3,
               "dividends_24m": 0,
-              "return": 0.700193892389724,
-              "annualized_return": 0.303914833257803
+              "return": 0.6537010843941538,
+              "annualized_return": 0.2859630960467543
             }
           },
           "earnings": {
@@ -1643,9 +1645,9 @@
           },
           "basis": "BPA dilué ajusté, fin d’exercice en décembre.",
           "catalyst": "Décision CMS attendue par la direction d’ici la fin de 2026, sans date de décision confirmée.",
-          "previous_edition_change": "Rang 8 → 5, HOLD conservé. Les propos du 17 novembre affinent le calendrier CMS, avec un jalon vérifiable d’ici la fin de l’année.",
-          "reason_for_rank": "Le renouvellement des capteurs et la preuve clinique offrent une meilleure visibilité que le commerce transfrontalier de GLBE.",
-          "model_date": "2026-11-18",
+          "previous_edition_change": "Rang 5 et HOLD maintenus. Le cours gagne 2,8 % depuis la dernière édition. Les attentes de couverture évoquées à Jefferies restent conditionnelles.",
+          "reason_for_rank": "Revenus de remplacement récurrents, avec une prime plus élevée que les comparables et une couverture CMS encore incertaine.",
+          "model_date": "2026-11-25",
           "consensus_12m": {
             "rating": "Strong Buy",
             "analyst_count": 29,
@@ -1657,7 +1659,7 @@
             "target_median": 96.5,
             "target_mean": 98.58,
             "target_high": 120.0,
-            "target_mean_price_return": 0.19461948618516733,
+            "target_mean_price_return": 0.16195190947666194,
             "currency": "USD",
             "source": "https://stockanalysis.com/stocks/dxcm/forecast/",
             "eps_trends": {
@@ -1666,11 +1668,11 @@
               "current_year": 2026,
               "next_year": 2027,
               "current_eps": 2.7,
-              "next_eps": 3.13,
+              "next_eps": 3.14,
               "current_30": 0.011235955056179803,
               "current_90": 0.015037593984962516,
-              "next_30": 0.0,
-              "next_90": 0.0,
+              "next_30": 0.0031948881789138905,
+              "next_90": 0.0031948881789138905,
               "count_revisions": {
                 "Up Last 7 Days": [
                   23.0,
@@ -1693,11 +1695,11 @@
             }
           },
           "momentum": {
-            "week": 0.027006845052893524,
-            "six": 0.267783069595944,
-            "twelve_one": 0.4299484793086257,
-            "six_month_gap_to_spy": 0.27922285839984295,
-            "twelve_one_gap_to_spy": 0.27364924285243863
+            "week": 0.02811439650993708,
+            "six": 0.17669902912621382,
+            "twelve_one": 0.2634138434106015,
+            "six_month_gap_to_spy": 0.2155113246039242,
+            "twelve_one_gap_to_spy": 0.1375657203920242
           },
           "latest_earnings_price_reaction": {
             "from": "2026-10-29",
@@ -1711,332 +1713,13 @@
             "analysts": "https://stockanalysis.com/stocks/dxcm/forecast/",
             "eps_trend": "https://finance.yahoo.com/quote/DXCM/analysis/"
           }
-        },
-        {
-          "rank": 6,
-          "ticker": "GLBE",
-          "company": "Global-e Online",
-          "rating": 3.5,
-          "decision": "HOLD",
-          "conviction": "Moyenne à faible",
-          "price": 38.03,
-          "currency": "USD",
-          "price_date": "2026-11-18",
-          "price_at": "2026-11-18T16:00:00-05:00",
-          "summary": "Infrastructure de commerce électronique transfrontalier. L’ajout de Passport augmente les ventes et la complexité, avec un FCF trimestriel en recul.",
-          "risk": "Décélération des marchands existants, baisse de marge de logistique ou modifications de l’entente Shopify.",
-          "central_label": "Scénario central 24 mois +31,7 % USD · +14,7 %/an",
-          "target_price": 50.072254335260126,
-          "dividends_24m": 0,
-          "dividend_basis": "none_modeled",
-          "central_return_24m": 0.3166514418948232,
-          "central_annualized_return": 0.1474543310715346,
-          "low_return_24m": -0.538634271986231,
-          "high_return_24m": 1.1336096889452598,
-          "scenarios_24m": {
-            "downside": {
-              "sales_fy2027": 1.53,
-              "sales_fy2028": 1.73,
-              "operating_currency": "USD",
-              "sales_growth_fy2027": 0.14093959731543637,
-              "sales_growth_fy2028": 0.130718954248366,
-              "eps_fy2027": 0.8793103448275864,
-              "eps_fy2028": 1.0321022727272726,
-              "eps_growth_fy2028": 0.17376336898395683,
-              "net_margin_fy2027": 0.1,
-              "net_margin_fy2028": 0.105,
-              "diluted_shares_bn_fy2027": 0.174,
-              "diluted_shares_bn_fy2028": 0.176,
-              "currency": "USD",
-              "operating_currency_per_usd": 1,
-              "ordinary_shares_per_quote": 1,
-              "exit_pe": 17,
-              "target_price": 17.545738636363634,
-              "dividends_24m": 0,
-              "return": -0.538634271986231,
-              "annualized_return": -0.3207609198420861
-            },
-            "central": {
-              "sales_fy2027": 1.7,
-              "sales_fy2028": 2.1,
-              "operating_currency": "USD",
-              "sales_growth_fy2027": 0.267710663683818,
-              "sales_growth_fy2028": 0.23529411764705888,
-              "eps_fy2027": 1.4248554913294798,
-              "eps_fy2028": 2.002890173410405,
-              "eps_growth_fy2028": 0.4056795131845845,
-              "net_margin_fy2027": 0.145,
-              "net_margin_fy2028": 0.165,
-              "diluted_shares_bn_fy2027": 0.173,
-              "diluted_shares_bn_fy2028": 0.173,
-              "currency": "USD",
-              "operating_currency_per_usd": 1,
-              "ordinary_shares_per_quote": 1,
-              "exit_pe": 25,
-              "target_price": 50.072254335260126,
-              "dividends_24m": 0,
-              "return": 0.3166514418948232,
-              "annualized_return": 0.1474543310715346
-            },
-            "upside": {
-              "sales_fy2027": 1.83,
-              "sales_fy2028": 2.42,
-              "operating_currency": "USD",
-              "sales_growth_fy2027": 0.3646532438478749,
-              "sales_growth_fy2028": 0.32240437158469937,
-              "eps_fy2027": 1.8192982456140352,
-              "eps_fy2028": 2.704705882352941,
-              "eps_growth_fy2028": 0.48667536445629356,
-              "net_margin_fy2027": 0.17,
-              "net_margin_fy2028": 0.19,
-              "diluted_shares_bn_fy2027": 0.171,
-              "diluted_shares_bn_fy2028": 0.17,
-              "currency": "USD",
-              "operating_currency_per_usd": 1,
-              "ordinary_shares_per_quote": 1,
-              "exit_pe": 30,
-              "target_price": 81.14117647058823,
-              "dividends_24m": 0,
-              "return": 1.1336096889452598,
-              "annualized_return": 0.4606880874934456
-            }
-          },
-          "earnings": {
-            "date": "2027-02-24",
-            "status": "estimated",
-            "timing": "avant Bourse selon l’historique",
-            "url": "https://www.tipranks.com/stocks/glbe/earnings"
-          },
-          "basis": "BPA GAAP dilué normalisé, rémunération en actions incluse et bénéfices fiscaux ponctuels exclus. Décembre.",
-          "catalyst": "Prochaine cohorte Passport au début 2027 et résultats du pic de ventes du T4.",
-          "previous_edition_change": "Rang 9 → 6. Le T3 valide le GMV et le levier d’exploitation, mais la baisse du FCF et l’avantage fiscal ponctuel empêchent une hausse de la décision.",
-          "reason_for_rank": "Rétention et croissance fortes. Mix à marge plus faible et dépendance à Shopify modèrent le dossier.",
-          "model_date": "2026-11-18",
-          "consensus_12m": {
-            "rating": "Strong Buy",
-            "analyst_count": 13,
-            "buy": 13,
-            "hold": 0,
-            "sell": 0,
-            "horizon_months": 12,
-            "target_low": 45.0,
-            "target_median": 50.0,
-            "target_mean": 51.23,
-            "target_high": 64.0,
-            "target_mean_price_return": 0.3470943991585589,
-            "currency": "USD",
-            "source": "https://stockanalysis.com/stocks/glbe/forecast/",
-            "eps_trends": {
-              "source": "https://finance.yahoo.com/quote/GLBE/analysis/",
-              "basis": "USD",
-              "current_year": 2026,
-              "next_year": 2027,
-              "current_eps": 1.55,
-              "next_eps": 1.95,
-              "current_30": -0.01273885350318471,
-              "current_90": -0.02515723270440251,
-              "next_30": -0.02010050251256279,
-              "next_90": -0.025000000000000022,
-              "count_revisions": {
-                "Up Last 7 Days": [
-                  null,
-                  null
-                ],
-                "Up Last 30 Days": [
-                  null,
-                  null
-                ],
-                "Down Last 7 Days": [
-                  null,
-                  null
-                ],
-                "Down Last 30 Days": [
-                  1.0,
-                  1.0
-                ]
-              },
-              "description": "Yahoo Finance, panel d’estimations BPA."
-            },
-            "post_earnings_full_integration": "unverified"
-          },
-          "momentum": {
-            "week": -0.09902866619284534,
-            "six": 0.3172843782473156,
-            "twelve_one": 0.048905701161848114,
-            "six_month_gap_to_spy": 0.32872416705121454,
-            "twelve_one_gap_to_spy": -0.10739353529433893
-          },
-          "latest_earnings_price_reaction": {
-            "from": "2026-11-17",
-            "to": "2026-11-18",
-            "return": -0.04471238382316001
-          },
-          "sources": {
-            "issuer": "https://investors.global-e.com/news-releases/news-release-details/global-e-continues-gmv-revenue-and-profit-growth-third-quarter",
-            "quote": "https://stockanalysis.com/stocks/glbe/history/",
-            "quote_check": "https://finance.yahoo.com/quote/GLBE/history/",
-            "analysts": "https://stockanalysis.com/stocks/glbe/forecast/",
-            "eps_trend": "https://finance.yahoo.com/quote/GLBE/analysis/"
-          }
-        },
-        {
-          "rank": 7,
-          "ticker": "VIK",
-          "company": "Viking Holdings",
-          "rating": 3.2,
-          "decision": "SELL",
-          "conviction": "Moyenne sur la réduction",
-          "price": 100.37,
-          "currency": "USD",
-          "price_date": "2026-11-18",
-          "price_at": "2026-11-18T16:00:00-05:00",
-          "summary": "Croisières culturelles haut de gamme vendues d’avance. Les réservations progressent, mais les vouchers et la flotte rendent la marge fragile au prix actuel.",
-          "risk": "Les bas niveaux d’eau, les annulations et une flotte en expansion peuvent grever durablement le cash.",
-          "central_label": "Scénario central 24 mois +7,5 % USD · +3,7 %/an",
-          "target_price": 107.89556043956046,
-          "dividends_24m": 0,
-          "dividend_basis": "none_modeled",
-          "central_return_24m": 0.07497818511069498,
-          "central_annualized_return": 0.03681154753923099,
-          "low_return_24m": -0.5461218653671223,
-          "high_return_24m": 0.46300288930955436,
-          "scenarios_24m": {
-            "downside": {
-              "sales_fy2027": 8.05,
-              "sales_fy2028": 8.6,
-              "operating_currency": "USD",
-              "sales_growth_fy2027": 0.10576923076923084,
-              "sales_growth_fy2028": 0.06832298136645942,
-              "eps_fy2027": 2.7128854625550662,
-              "eps_fy2028": 2.7609544468546634,
-              "eps_growth_fy2028": 0.017718766591171997,
-              "net_margin_fy2027": 0.153,
-              "net_margin_fy2028": 0.148,
-              "diluted_shares_bn_fy2027": 0.454,
-              "diluted_shares_bn_fy2028": 0.461,
-              "currency": "USD",
-              "operating_currency_per_usd": 1,
-              "ordinary_shares_per_quote": 1,
-              "exit_pe": 16.5,
-              "target_price": 45.55574837310195,
-              "dividends_24m": 0,
-              "return": -0.5461218653671223,
-              "annualized_return": -0.3262952170031166
-            },
-            "central": {
-              "sales_fy2027": 8.45,
-              "sales_fy2028": 9.47,
-              "operating_currency": "USD",
-              "sales_growth_fy2027": 0.1607142857142856,
-              "sales_growth_fy2028": 0.12071005917159772,
-              "eps_fy2027": 3.7659645232815966,
-              "eps_fy2028": 4.495648351648352,
-              "eps_growth_fy2028": 0.1937574886475355,
-              "net_margin_fy2027": 0.201,
-              "net_margin_fy2028": 0.216,
-              "diluted_shares_bn_fy2027": 0.451,
-              "diluted_shares_bn_fy2028": 0.455,
-              "currency": "USD",
-              "operating_currency_per_usd": 1,
-              "ordinary_shares_per_quote": 1,
-              "exit_pe": 24,
-              "target_price": 107.89556043956046,
-              "dividends_24m": 0,
-              "return": 0.07497818511069498,
-              "annualized_return": 0.03681154753923099
-            },
-            "upside": {
-              "sales_fy2027": 8.74,
-              "sales_fy2028": 10.24,
-              "operating_currency": "USD",
-              "sales_growth_fy2027": 0.2005494505494505,
-              "sales_growth_fy2028": 0.17162471395881007,
-              "eps_fy2027": 4.360310421286031,
-              "eps_fy2028": 5.438577777777777,
-              "eps_growth_fy2028": 0.24729142017685102,
-              "net_margin_fy2027": 0.225,
-              "net_margin_fy2028": 0.239,
-              "diluted_shares_bn_fy2027": 0.451,
-              "diluted_shares_bn_fy2028": 0.45,
-              "currency": "USD",
-              "operating_currency_per_usd": 1,
-              "ordinary_shares_per_quote": 1,
-              "exit_pe": 27,
-              "target_price": 146.84159999999997,
-              "dividends_24m": 0,
-              "return": 0.46300288930955436,
-              "annualized_return": 0.2095465635144247
-            }
-          },
-          "earnings": {
-            "date": "2027-03-16",
-            "status": "estimated",
-            "timing": "horaire N/D",
-            "url": "https://www.tipranks.com/stocks/vik/earnings"
-          },
-          "basis": "BPA dilué ajusté, avec référence à la base IFRS publiée. Fin d’exercice en décembre.",
-          "catalyst": "Réservations 2027 après bons de voyage, puis point de la direction sur la saison fluviale lors du T4.",
-          "previous_edition_change": "Rang 11 → 7 dans un univers plus petit. La progression de cours et la nouvelle cible de rendement net justifient le SELL malgré un carnet en hausse.",
-          "reason_for_rank": "Prix exigeant pour une demande saisonnière, une flotte engagée et des bons à absorber en 2027.",
-          "model_date": "2026-11-18",
-          "consensus_12m": {
-            "rating": "Strong Buy",
-            "analyst_count": 23,
-            "buy": 22,
-            "hold": 1,
-            "sell": 0,
-            "horizon_months": 12,
-            "target_low": 98.0,
-            "target_median": 109.5,
-            "target_mean": 110.27,
-            "target_high": 122.0,
-            "target_mean_price_return": 0.09863505031383868,
-            "currency": "USD",
-            "source": "https://stockanalysis.com/stocks/vik/forecast/",
-            "eps_trends": {
-              "source": "https://www.qddresearch.com/int/vik/",
-              "basis": "USD",
-              "before_earnings_uncertain": true,
-              "current_year": 2026,
-              "next_year": 2027,
-              "current_eps": 3.17,
-              "next_eps": 4.3,
-              "fy28_eps": 5.27,
-              "current_30": -0.009,
-              "current_90": -0.033,
-              "next_30": -0.011,
-              "next_90": -0.021,
-              "count_revisions": {},
-              "description": "QDD, panel distinct, intégration intégrale du T3 non établie."
-            },
-            "post_earnings_full_integration": "unverified"
-          },
-          "momentum": {
-            "week": 0.11447923606484567,
-            "six": 0.16627933999535216,
-            "twelve_one": 0.4316114638750643,
-            "six_month_gap_to_spy": 0.1777191287992511,
-            "twelve_one_gap_to_spy": 0.2753122274188773
-          },
-          "latest_earnings_price_reaction": {
-            "from": "2026-11-16",
-            "to": "2026-11-17",
-            "return": 0.04430660168365086
-          },
-          "sources": {
-            "issuer": "https://ir.viking.com/news-events/press-releases/detail/253/viking-reports-third-quarter-2026-financial-results",
-            "quote": "https://stockanalysis.com/stocks/vik/history/",
-            "quote_check": "https://finance.yahoo.com/quote/VIK/history/",
-            "analysts": "https://stockanalysis.com/stocks/vik/forecast/",
-            "eps_trend": "https://www.qddresearch.com/int/vik/"
-          }
         }
       ],
       "universe_snapshot": {
         "source_url": "https://finviz.com/screener/stocks?v=111&f=an_recom_strongbuy%2Cfa_epsyoy_o15%2Cfa_epsyoy1_o15%2Cfa_estltgrowth_o10%2Cfa_fpe_u30%2Cfa_pfcf_u80%2Cfa_roe_o15%2Cfa_roi_o10%2Cfa_salesyoyttm_o10%2Csh_avgvol_o400%2Csh_short_u5%2Cta_sma200_pa&ft=4&preset=s154498620",
-        "observed_at": "2026-11-18T22:05:53-05:00",
-        "quote_asof": "2026-11-18T16:00:00-05:00",
-        "total_count": 7,
+        "observed_at": "2026-11-25T22:00:14-05:00",
+        "quote_asof": "2026-11-25T16:00:00-05:00",
+        "total_count": 5,
         "page_count": 1,
         "complete": true,
         "filters": [
@@ -2054,49 +1737,47 @@
           "ta_sma200_pa"
         ],
         "tickers": [
-          "APH",
           "ATAT",
           "DXCM",
-          "GLBE",
           "MA",
           "MSFT",
-          "VIK"
+          "WMG"
         ],
-        "observation": "7 lignes sur 7 dans le tableau Finviz et dans ses données, page 1 de 1, 12 filtres du lien vérifiés."
+        "observation": "5 lignes sur 5 dans le tableau Finviz et dans ses données, page 1 de 1, 12 filtres du lien vérifiés."
       },
       "benchmark_scenarios_24m": {
         "downside": {
           "eps_growth_annual": -0.02,
-          "initial_pe": 18.3,
-          "exit_pe": 15.5,
+          "initial_pe": 17.1,
+          "exit_pe": 14.5,
           "cash_dividend_return": 0.02,
-          "return": -0.16654644808743183,
-          "annualized_return": -0.0870632267716629
+          "return": -0.16562573099415215,
+          "annualized_return": -0.08655910480981421
         },
         "central": {
           "eps_growth_annual": 0.08,
-          "initial_pe": 18.3,
-          "exit_pe": 18,
+          "initial_pe": 17.1,
+          "exit_pe": 17,
           "cash_dividend_return": 0.02,
-          "return": 0.16727868852459024,
-          "annualized_return": 0.0804067236576187
+          "return": 0.17957894736842103,
+          "annualized_return": 0.08608422664562299
         },
         "upside": {
           "eps_growth_annual": 0.12,
-          "initial_pe": 18.3,
-          "exit_pe": 20,
+          "initial_pe": 17.1,
+          "exit_pe": 19.5,
           "cash_dividend_return": 0.02,
-          "return": 0.390928961748634,
-          "annualized_return": 0.17937651398891008
+          "return": 0.45045614035087733,
+          "annualized_return": 0.20434884495767136
         }
       },
       "document": {
-        "path": "reports/stocks/2026-11-18.pdf",
-        "label": "Rapport complet · 18 novembre 2026",
+        "path": "reports/stocks/2026-11-25.pdf",
+        "label": "Rapport complet · 25 novembre 2026",
         "mime_type": "application/pdf",
-        "pages": 18,
-        "size_bytes": 139505,
-        "sha256": "edf6f6b96680a35afab71fa2b0dc2c4ffe34584028946c7f015ee479eaa7ca60"
+        "pages": 14,
+        "size_bytes": 120406,
+        "sha256": "54c4ffacbc2306478c1f3f2a745a423e27ae42ee31f7cde9ea9a21489960ffe1"
       }
     }
   }
