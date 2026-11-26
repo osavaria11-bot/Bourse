@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "kind": "portfolio_exposures",
-  "generated_at": "2026-11-26T01:47:46.030763+00:00",
+  "generated_at": "2026-11-26T20:34:24.050480+00:00",
   "benchmark": "FEQT",
   "methodology": "Pondérations par valeur de marché en CAD; FNB décomposés; secteurs GICS; pays de risque ou pays publié par l’émetteur. Aucun calcul selon les devises ou le chiffre d’affaires géographique. Solde non détaillé conservé explicitement. Arrondis de collecte harmonisés à 100 %.",
   "labels": {
@@ -4993,107 +4993,107 @@
     {
       "id": "XHY",
       "title": "iShares U.S. High Yield Bond Index ETF (CAD Hedged)",
-      "as_of": "2026-11-17",
+      "as_of": "2026-11-25",
       "sectors": [
         {
           "id": "bonds",
-          "weight": 99.94526802
+          "weight": 99.31802301
         },
         {
           "id": "other_assets",
-          "weight": 0.05026812
+          "weight": 0.67755728
         },
         {
           "id": "unclassified",
-          "weight": 0.00446386
+          "weight": 0.00441971
         }
       ],
       "geography": [
         {
           "id": "australia",
-          "weight": 0.65207549
+          "weight": 0.72418859
         },
         {
           "id": "canada",
-          "weight": 2.28522602
+          "weight": 3.73417946
         },
         {
           "id": "denmark",
-          "weight": 0.21463713
+          "weight": 0.2134948
         },
         {
           "id": "european_union",
-          "weight": 4.441e-05
+          "weight": 4.381e-05
         },
         {
           "id": "france",
-          "weight": 0.97814388
+          "weight": 0.96885849
         },
         {
           "id": "germany",
-          "weight": 0.45733981
+          "weight": 0.51123413
         },
         {
           "id": "ireland",
-          "weight": 0.13991203
+          "weight": 0.13901086
         },
         {
           "id": "israel",
-          "weight": 0.16044073
+          "weight": 0.15851737
         },
         {
           "id": "italy",
-          "weight": 0.2079502
+          "weight": 0.30536004
         },
         {
           "id": "japan",
-          "weight": 1.60737055
+          "weight": 1.5527319
         },
         {
           "id": "jersey",
-          "weight": 0.03351646
+          "weight": 0.03315354
         },
         {
           "id": "luxembourg",
-          "weight": 0.59877953
+          "weight": 0.59210862
         },
         {
           "id": "macau",
-          "weight": 0.7836802
+          "weight": 0.76160585
         },
         {
           "id": "malaysia",
-          "weight": 0.06547183
+          "weight": 0.06220819
         },
         {
           "id": "netherlands",
-          "weight": 0.49257876
+          "weight": 0.4902733
         },
         {
           "id": "spain",
-          "weight": 0.08619035
+          "weight": 0.08544573
         },
         {
           "id": "sweden",
-          "weight": 0.10053136
+          "weight": 0.09957422
         },
         {
           "id": "switzerland",
-          "weight": 0.16339082
+          "weight": 0.15929862
         },
         {
           "id": "united_kingdom",
-          "weight": 1.60932654
+          "weight": 1.57067131
         },
         {
           "id": "united_states",
-          "weight": 89.3633939
+          "weight": 87.83804117
         }
       ],
       "source_url": "https://www.blackrock.com/ca/investors/en/products/239858/ishares-us-high-yield-bond-index-etf-cadhedged-fund",
       "note": "Secteurs GICS et pays des placements sous-jacents publiés par iShares.",
-      "checked_at": "2026-11-18T19:37:34.248861+00:00",
-      "fetch_status": "cached",
+      "checked_at": "2026-11-26T20:34:24.050480+00:00",
+      "fetch_status": "fresh",
       "refresh": {
         "kind": "ishares",
         "download_url": "https://www.blackrock.com/ca/investors/en/products/239858/ishares-us-high-yield-bond-index-etf-cadhedged-fund/1464253357814.ajax?fileType=csv&fileName=XHY_holdings&dataType=fund"
