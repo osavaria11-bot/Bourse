@@ -2,6 +2,14 @@
   "schema_version": 2,
   "editions": [
     {
+      "date": "2026-11-26",
+      "visibility": "public",
+      "path": "data/committee/2026-11-26.json",
+      "pdf_path": "reports/committee/2026-11-26-comite-investissement.pdf",
+      "sha256": "Kp74dVHG1A9edOYIAcsoj5CKmzLYjbqn43McHo19uaU",
+      "pdf_sha256": "gHbRIcbLtPaKiIj4TQQGkPkG6BcwyoHR7_P8ukekzhs"
+    },
+    {
       "date": "2026-11-19",
       "visibility": "public",
       "path": "data/committee/2026-11-19.json",
