@@ -4,8 +4,8 @@
   "currency": "CAD",
   "capital": 10000.0,
   "inception": "2026-10-19",
-  "as_of": "2026-11-25",
-  "updated_at": "2026-11-25T16:57:27-05:00",
+  "as_of": "2026-11-26",
+  "updated_at": "2026-11-27T05:11:15-05:00",
   "benchmarks": [
     "FEQT",
     "VEQT",
@@ -149,6 +149,10 @@
         {
           "date": "2026-11-25",
           "value": 9545.187372825447
+        },
+        {
+          "date": "2026-11-26",
+          "value": 9628.812001765738
         }
       ],
       "initial_positions": [
@@ -326,6 +330,10 @@
         {
           "date": "2026-11-25",
           "value": 9821.144655731552
+        },
+        {
+          "date": "2026-11-26",
+          "value": 9921.554074115169
         }
       ],
       "initial_positions": [
@@ -516,6 +524,10 @@
         {
           "date": "2026-11-25",
           "value": 9898.399827020525
+        },
+        {
+          "date": "2026-11-26",
+          "value": 10013.853314026892
         }
       ],
       "initial_positions": [
@@ -702,6 +714,10 @@
         {
           "date": "2026-11-25",
           "value": 9788.448610055839
+        },
+        {
+          "date": "2026-11-26",
+          "value": 9880.895587032714
         }
       ],
       "initial_positions": [
@@ -909,6 +925,10 @@
         {
           "date": "2026-11-25",
           "value": 9656.760383912351
+        },
+        {
+          "date": "2026-11-26",
+          "value": 9747.017527186938
         }
       ],
       "initial_positions": [
@@ -1115,6 +1135,10 @@
         {
           "date": "2026-11-25",
           "value": 9593.759133493913
+        },
+        {
+          "date": "2026-11-26",
+          "value": 9678.062938048355
         }
       ],
       "initial_positions": [
@@ -1314,6 +1338,10 @@
         {
           "date": "2026-11-25",
           "value": 9583.723327602804
+        },
+        {
+          "date": "2026-11-26",
+          "value": 9674.499280369682
         }
       ],
       "initial_positions": [
@@ -1511,6 +1539,10 @@
         {
           "date": "2026-11-25",
           "value": 9364.732968878014
+        },
+        {
+          "date": "2026-11-26",
+          "value": 9449.573298263747
         }
       ],
       "initial_positions": [
@@ -1694,6 +1726,10 @@
         {
           "date": "2026-11-25",
           "value": 9252.72044760572
+        },
+        {
+          "date": "2026-11-26",
+          "value": 9338.046813221988
         }
       ],
       "initial_positions": [
@@ -1876,6 +1912,10 @@
         {
           "date": "2026-11-25",
           "value": 9590.469755849688
+        },
+        {
+          "date": "2026-11-26",
+          "value": 9671.06004659852
         }
       ],
       "initial_positions": [
@@ -2051,6 +2091,10 @@
         {
           "date": "2026-11-25",
           "value": 9612.21626197703
+        },
+        {
+          "date": "2026-11-26",
+          "value": 9694.99327510659
         }
       ],
       "initial_positions": [
@@ -2222,6 +2266,10 @@
         {
           "date": "2026-11-25",
           "value": 9582.681234684374
+        },
+        {
+          "date": "2026-11-26",
+          "value": 9681.794431994662
         }
       ],
       "initial_positions": [
@@ -2365,6 +2413,10 @@
         {
           "date": "2026-11-25",
           "value": 9465.093517104584
+        },
+        {
+          "date": "2026-11-26",
+          "value": 9563.671506733268
         }
       ],
       "initial_positions": [
@@ -2508,6 +2560,10 @@
         {
           "date": "2026-11-25",
           "value": 9597.131437764312
+        },
+        {
+          "date": "2026-11-26",
+          "value": 9679.392435634729
         }
       ],
       "initial_positions": [
@@ -2651,6 +2707,10 @@
         {
           "date": "2026-11-25",
           "value": 9730.485297751997
+        },
+        {
+          "date": "2026-11-26",
+          "value": 9944.062748420873
         }
       ],
       "initial_positions": [
@@ -2801,6 +2861,10 @@
         {
           "date": "2026-11-25",
           "value": 9843.684350647345
+        },
+        {
+          "date": "2026-11-26",
+          "value": 9936.320306123554
         }
       ],
       "initial_positions": [
@@ -2999,6 +3063,10 @@
         {
           "date": "2026-11-25",
           "value": 9581.87307062441
+        },
+        {
+          "date": "2026-11-26",
+          "value": 9654.056099956933
         }
       ],
       "initial_positions": [
@@ -3194,6 +3262,10 @@
         {
           "date": "2026-11-25",
           "value": 9541.383526930886
+        },
+        {
+          "date": "2026-11-26",
+          "value": 9615.199967844783
         }
       ],
       "initial_positions": [
@@ -3417,6 +3489,10 @@
         {
           "date": "2026-11-25",
           "value": 9514.39049780187
+        },
+        {
+          "date": "2026-11-26",
+          "value": 9589.295879770018
         }
       ],
       "initial_positions": [
@@ -3635,6 +3711,10 @@
         {
           "date": "2026-11-25",
           "value": 9364.382759906828
+        },
+        {
+          "date": "2026-11-26",
+          "value": 9441.38168731397
         }
       ],
       "initial_positions": [
@@ -3820,6 +3900,10 @@
         {
           "date": "2026-11-25",
           "value": 9369.311041974353
+        },
+        {
+          "date": "2026-11-26",
+          "value": 9445.388828943343
         }
       ],
       "initial_positions": [
@@ -4019,6 +4103,10 @@
         {
           "date": "2026-11-25",
           "value": 9311.693401219136
+        },
+        {
+          "date": "2026-11-26",
+          "value": 9396.86743640326
         }
       ],
       "initial_positions": [
@@ -4211,6 +4299,10 @@
         {
           "date": "2026-11-25",
           "value": 9418.181976714692
+        },
+        {
+          "date": "2026-11-26",
+          "value": 9516.882958350243
         }
       ],
       "initial_positions": [
@@ -4361,6 +4453,10 @@
         {
           "date": "2026-11-25",
           "value": 9341.281709000961
+        },
+        {
+          "date": "2026-11-26",
+          "value": 9410.335954208016
         }
       ],
       "initial_positions": [
@@ -4561,6 +4657,10 @@
         {
           "date": "2026-11-25",
           "value": 9468.11600397142
+        },
+        {
+          "date": "2026-11-26",
+          "value": 9547.291291971807
         }
       ],
       "initial_positions": [
@@ -4770,6 +4870,10 @@
         {
           "date": "2026-11-25",
           "value": 9478.066614184421
+        },
+        {
+          "date": "2026-11-26",
+          "value": 9553.135313354931
         }
       ],
       "initial_positions": [
@@ -4989,6 +5093,10 @@
         {
           "date": "2026-11-25",
           "value": 9644.100496780125
+        },
+        {
+          "date": "2026-11-26",
+          "value": 9712.543836591267
         }
       ],
       "initial_positions": [
@@ -5183,6 +5291,10 @@
         {
           "date": "2026-11-25",
           "value": 9007.42489848404
+        },
+        {
+          "date": "2026-11-26",
+          "value": 9109.816197369462
         }
       ],
       "initial_positions": [
@@ -5398,6 +5510,10 @@
         {
           "date": "2026-11-25",
           "value": 9009.3245457181
+        },
+        {
+          "date": "2026-11-26",
+          "value": 9092.719187971703
         }
       ],
       "initial_positions": [
@@ -5474,7 +5590,7 @@
       ]
     }
   ],
-  "source_ledger_sha256": "4411b306e9ff9c2de493aa003f6434f8fd9a465b6a446bf2fe1dd639031c59e3",
+  "source_ledger_sha256": "6ad5871afc65c3f3121c6dfb1d14977a6505db6eb5687a63bba589816a380cf9",
   "source_registry_sha256": "aaf162ca44e1258d08415d91c63d7d92a3b4706a627c6d954346fe20a81ac10b",
   "supplemental_sha256": "9108b0216c33e90bf8b5a229a5dce790d7dcb9f5c7d910e5e4ad8e0b59f319e8",
   "price_revisions": [
@@ -6046,6 +6162,162 @@
       "accepted_source": "TMX Money",
       "historical_close_confirmed": false,
       "comparison_close": 18.9,
+      "confirmation": "New adjacent close confirmed by Yahoo and TMX. Historical sources disagree; accepted historical value and units retained."
+    },
+    {
+      "ticker": "FBAL",
+      "recorded_on": "2026-11-26",
+      "date": "2026-11-25",
+      "accepted_close": 15.27,
+      "next_date": "2026-11-26",
+      "next_close": 15.4,
+      "evidence": [
+        {
+          "source": "Yahoo Finance",
+          "source_url": "https://finance.yahoo.com/quote/FBAL.NE/history/",
+          "close": 15.34000015258789,
+          "next_close": 15.399999618530273
+        },
+        {
+          "source": "TMX Money",
+          "source_url": "https://money.tmx.com/en/quote/FBAL%3ACC",
+          "close": 15.28,
+          "next_close": 15.4
+        }
+      ],
+      "accepted_source": "TMX Money",
+      "historical_close_confirmed": false,
+      "comparison_close": 15.28,
+      "confirmation": "New adjacent close confirmed by Yahoo and TMX. Historical sources disagree; accepted historical value and units retained."
+    },
+    {
+      "ticker": "FCMO",
+      "recorded_on": "2026-11-26",
+      "date": "2026-11-25",
+      "accepted_close": 21.44,
+      "next_date": "2026-11-26",
+      "next_close": 21.5,
+      "evidence": [
+        {
+          "source": "Yahoo Finance",
+          "source_url": "https://finance.yahoo.com/quote/FCMO.NE/history/",
+          "close": 21.68000030517578,
+          "next_close": 21.5
+        },
+        {
+          "source": "TMX Money",
+          "source_url": "https://money.tmx.com/en/quote/FCMO%3ACC",
+          "close": 21.27,
+          "next_close": 21.5
+        }
+      ],
+      "accepted_source": "TMX Money",
+      "historical_close_confirmed": false,
+      "comparison_close": 21.27,
+      "confirmation": "New adjacent close confirmed by Yahoo and TMX. Historical sources disagree; accepted historical value and units retained."
+    },
+    {
+      "ticker": "FCUL",
+      "recorded_on": "2026-11-26",
+      "date": "2026-11-25",
+      "accepted_close": 59.2,
+      "next_date": "2026-11-26",
+      "next_close": 60.23,
+      "evidence": [
+        {
+          "source": "Yahoo Finance",
+          "source_url": "https://finance.yahoo.com/quote/FCUL.NE/history/",
+          "close": 59.2400016784668,
+          "next_close": 60.22999954223633
+        },
+        {
+          "source": "TMX Money",
+          "source_url": "https://money.tmx.com/en/quote/FCUL%3ACC",
+          "close": 59.34,
+          "next_close": 60.23
+        }
+      ],
+      "accepted_source": "TMX Money",
+      "historical_close_confirmed": false,
+      "comparison_close": 59.34,
+      "confirmation": "New adjacent close confirmed by Yahoo and TMX. Historical sources disagree; accepted historical value and units retained."
+    },
+    {
+      "ticker": "FEQT",
+      "recorded_on": "2026-11-26",
+      "date": "2026-11-25",
+      "accepted_close": 18.37,
+      "next_date": "2026-11-26",
+      "next_close": 18.56,
+      "evidence": [
+        {
+          "source": "Yahoo Finance",
+          "source_url": "https://finance.yahoo.com/quote/FEQT.NE/history/",
+          "close": 18.5,
+          "next_close": 18.559999465942383
+        },
+        {
+          "source": "TMX Money",
+          "source_url": "https://money.tmx.com/en/quote/FEQT%3ACC",
+          "close": 18.38,
+          "next_close": 18.56
+        }
+      ],
+      "accepted_source": "TMX Money",
+      "historical_close_confirmed": false,
+      "comparison_close": 18.38,
+      "confirmation": "New adjacent close confirmed by Yahoo and TMX. Historical sources disagree; accepted historical value and units retained."
+    },
+    {
+      "ticker": "FGRO",
+      "recorded_on": "2026-11-26",
+      "date": "2026-11-25",
+      "accepted_close": 18.58,
+      "next_date": "2026-11-26",
+      "next_close": 18.76,
+      "evidence": [
+        {
+          "source": "Yahoo Finance",
+          "source_url": "https://finance.yahoo.com/quote/FGRO.NE/history/",
+          "close": 18.690000534057617,
+          "next_close": 18.760000228881836
+        },
+        {
+          "source": "TMX Money",
+          "source_url": "https://money.tmx.com/en/quote/FGRO%3ACC",
+          "close": 18.59,
+          "next_close": 18.76
+        }
+      ],
+      "accepted_source": "TMX Money",
+      "historical_close_confirmed": false,
+      "comparison_close": 18.59,
+      "confirmation": "New adjacent close confirmed by Yahoo and TMX. Historical sources disagree; accepted historical value and units retained."
+    },
+    {
+      "ticker": "FINN",
+      "recorded_on": "2026-11-26",
+      "date": "2026-11-25",
+      "accepted_close": 30.98,
+      "next_date": "2026-11-26",
+      "next_close": 31.32,
+      "evidence": [
+        {
+          "source": "Yahoo Finance",
+          "source_url": "https://finance.yahoo.com/quote/FINN.NE/history/",
+          "close": 31.110000610351562,
+          "next_close": 31.31999969482422
+        },
+        {
+          "source": "TMX Money",
+          "source_url": "https://money.tmx.com/en/quote/FINN%3ACC",
+          "close": 30.83,
+          "next_close": 31.32
+        }
+      ],
+      "accepted_source": "TMX Money",
+      "historical_close_confirmed": false,
+      "comparison_close": 30.83,
       "confirmation": "New adjacent close confirmed by Yahoo and TMX. Historical sources disagree; accepted historical value and units retained."
     }
   ],

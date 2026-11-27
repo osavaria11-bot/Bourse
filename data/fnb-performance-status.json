@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "status": "retrying",
-  "checked_at": "2026-11-27T00:18:28-05:00",
+  "status": "current",
+  "checked_at": "2026-11-27T05:07:47-05:00",
+  "as_of": "2026-11-26",
   "expected_session": "2026-11-26",
-  "message": "Clôtures incomplètes : dernier historique validé conservé. Reprise automatique.",
-  "error": "Unconfirmed historical close revision: FBAL"
+  "added_sessions": 1
 }
