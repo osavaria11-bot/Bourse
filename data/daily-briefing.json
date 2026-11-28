@@ -3,100 +3,100 @@
   "kind": "news_digest",
   "language": "fr",
   "timezone": "America/Toronto",
-  "edition_date": "2026-11-27",
-  "generated_at": "2026-11-27T10:13:01.991253Z",
-  "editorial_note": "Édition préparée vers 5 h 15, heure de Toronto, avant l’ouverture nord-américaine. Les mouvements américains cités sont des contrats à terme; la séance du 27 novembre ferme plus tôt aux États-Unis. Les tarifs restent des propositions et le PIB canadien du troisième trimestre est attendu lundi.",
+  "edition_date": "2026-11-28",
+  "generated_at": "2026-11-28T10:11:17.417227Z",
+  "editorial_note": "Édition de fin de semaine préparée à 5 h à Montréal après les clôtures du 27 novembre. Les mouvements cités sont des clôtures; la réunion de l’OPEP+ de dimanche et les données américaines de la semaine prochaine restent à venir.",
   "stories": [
     {
-      "topic": "Marchés mondiaux",
-      "title": "Les actions rebondissent fortement, mais le coût du capital reste près de 5 %",
-      "summary": "Les contrats à terme sur le Nasdaq 100 gagnaient 2,8 % et ceux sur le S&P 500 2,0 % tôt vendredi, après la fermeture de Thanksgiving. Le Nikkei a avancé de 2,1 %, les actions européennes de 1 % et les grandes capitalisations chinoises de 4,2 % après de nouvelles mesures de soutien aux marchés. Ce rebond intervient toutefois après un mois très difficile : l’indice mondial MSCI perd encore 5 % en novembre et le Nasdaq 100 se situait mercredi environ 20 % sous son sommet d’octobre. Le rendement du Trésor américain à 10 ans remontait de 7 points de base à 4,92 %, pendant que le dollar se dirigeait vers un troisième gain mensuel.",
-      "impact": "Ma lecture : le rebond réduit la pression technique, mais ne règle pas le conflit entre valorisations de croissance et taux élevés. À près de 5 %, le 10 ans exige que les dépenses d’intelligence artificielle se convertissent rapidement en bénéfices et en trésorerie. Les bilans solides et les projets autofinancés devraient mieux résister que les modèles dépendants du crédit. Une détente durable des taux accompagnée de prévisions stables validerait la reprise; une inflation ferme ou de nouvelles baisses de bénéfices relancerait la compression des multiples.",
+      "topic": "Actions et coût du capital",
+      "title": "Le rebond efface la semaine de panique, mais pas la correction technologique",
+      "summary": "Wall Street a terminé la séance écourtée de vendredi en forte hausse : le S&P 500 a gagné 1,60 %, le Nasdaq 2,31 % et le Dow 1,18 %. Sur la semaine, les gains atteignent respectivement 5,6 %, 6,68 % et 5,46 %, le meilleur résultat hebdomadaire du S&P 500 depuis avril 2025. Les semi-conducteurs ont mené le rattrapage, avec l’indice sectoriel en hausse de 4,7 %, après le désendettement rapide des positions liées à l’intelligence artificielle. Le mouvement reste toutefois un rebond à l’intérieur d’un mois difficile : le S&P 500 et le Nasdaq se dirigent encore vers leur pire novembre depuis 2008. Le dix ans américain a clôturé la semaine à 4,94 %, soit neuf points de base de plus que mercredi, et les marchés intègrent presque entièrement une hausse de la Fed en décembre.",
+      "impact": "Ma lecture : la remontée très large montre que le risque de liquidation forcée a diminué à court terme, mais elle ne résout ni le coût du financement ni le doute sur le rendement des investissements en IA. Un taux réel à dix ans de 2,79 % continue d’exiger une croissance élevée des flux de trésorerie pour justifier les multiples. Les entreprises capables d’autofinancer leurs centres de données devraient mieux résister que celles qui dépendent du crédit. Un resserrement durable des écarts de crédit, des contrats confirmés et une conversion visible des dépenses en revenus valideraient le rebond; une nouvelle hausse des taux ou des révisions de bénéfices l’affaiblirait.",
       "source_label": "Reuters",
-      "source_url": "https://www.reuters.com/world/china/global-markets-global-markets-2026-11-27/",
+      "source_url": "https://www.reuters.com/business/wall-st-futures-surge-investors-return-holiday-2026-11-27/",
       "published_date": "2026-11-27"
     },
     {
-      "topic": "Commerce mondial",
-      "title": "Les tarifs américains sur 14 partenaires passent au stade de proposition, avec un risque pour les chaînes industrielles",
-      "summary": "Washington propose de nouveaux droits visant la Chine, l’Union européenne, le Japon, la Corée du Sud, l’Inde, Taïwan et sept autres partenaires après une enquête sur les surcapacités industrielles. Pour la Chine, le taux proposé de 20 % s’ajouterait aux droits d’environ 25 % hérités du premier mandat, tout en respectant pour l’instant le plafond de la trêve qui expire le 10 janvier. Les plafonds négociés seraient de 15 % pour l’Union européenne, le Japon, la Corée et Taïwan, et de 19 % pour la Malaisie. Le Canada n’est pas visé par cette annonce. Les mesures doivent encore passer par une consultation et une audience, ce qui peut reporter leur application à janvier.",
-      "impact": "Ma lecture : le choc n’est pas encore réalisé, mais l’incertitude suffit à retarder certains achats et investissements. Les importateurs américains et les fabricants utilisant des composantes asiatiques risquent une pression sur les marges, tandis que les producteurs domestiques protégés gagnent du pouvoir de prix. Le scénario devient plus inflationniste si les taux finaux s’approchent des plafonds et provoquent des représailles. Des exemptions, des accords avant l’audience ou le maintien de la trêve chinoise réduiraient ce risque.",
-      "source_label": "Reuters",
-      "source_url": "https://www.investing.com/news/world-news/us-proposes-new-tariffs-on-14-trading-partners-to-fight-excess-factory-capacity-5050714",
-      "published_date": "2026-11-25"
+      "topic": "Commerce et investissement américain",
+      "title": "Le déficit commercial américain bondit à 149,5 G$ sous l’effet des importations liées à l’IA",
+      "summary": "Le déficit américain du commerce de biens a augmenté de 14,4 G$ US en octobre pour atteindre 149,5 G$, son plus haut niveau depuis mars 2025 et bien au-dessus des 133 G$ attendus dans le sondage Reuters. Les importations ont progressé de 6,1 % à un record de 365,3 G$, tandis que les exportations ont augmenté de 3,2 % à 215,8 G$. Les biens d’équipement ont mené la hausse des importations avec une progression mensuelle de 8,5 % et annuelle de 80 %, en grande partie associée aux infrastructures d’intelligence artificielle. Les stocks de gros et de détail ont aussi augmenté de 0,9 % et 0,8 %. Goldman Sachs a réduit de 0,2 point son estimation de croissance annualisée du quatrième trimestre, à 2,2 %, après avoir intégré le commerce et les stocks.",
+      "impact": "Ma lecture : la dépense en IA demeure forte, mais une part importante de la valeur des équipements est produite à l’étranger. Cela soutient les fournisseurs mondiaux de puces, d’équipements électriques et de serveurs, tout en réduisant la contribution comptable du cycle d’investissement au PIB américain. La demande intérieure reste robuste, ce qui entretient simultanément le risque d’inflation et de taux élevés. Les tarifs proposés cette semaine peuvent déplacer les chaînes d’approvisionnement ou relever les coûts sans réduire rapidement le déficit. Une accélération des exportations américaines ou une production domestique plus élevée invaliderait une partie de ce diagnostic; un ralentissement des commandes d’équipement signalerait plutôt que le cycle d’investissement atteint sa limite.",
+      "source_label": "Reuters; U.S. Census Bureau",
+      "source_url": "https://www.reuters.com/business/us-goods-trade-deficit-widens-sharply-october-2026-11-27/",
+      "published_date": "2026-11-27"
     },
     {
-      "topic": "Énergie",
-      "title": "Le Brent monte à 97,30 $ après des attaques contre des navires et des infrastructures saoudiennes",
-      "summary": "Le Brent avançait de 0,8 % à 97,30 $ US vendredi matin, son plus haut niveau depuis le 9 novembre, et se dirigeait vers une première hausse hebdomadaire en quatre semaines. Le WTI gagnait 2,6 % à 85,85 $, sans règlement jeudi aux États-Unis. Les attaques contre des navires dans le détroit d’Ormuz et contre des installations saoudiennes ont ravivé le risque sur l’offre; la raffinerie de Jazan a suspendu temporairement une partie de ses activités après avoir été frappée jeudi. L’OPEP+ aurait parallèlement un accord de principe pour maintenir ses objectifs de production au premier trimestre de 2027.",
-      "impact": "Ma lecture : une prime de risque plus durable soutient les producteurs d’énergie canadiens et le dollar canadien, mais elle complique la baisse de l’inflation et peut maintenir les taux élevés. Le maintien des objectifs de l’OPEP+ limite aussi le coussin d’offre. La thèse haussière serait affaiblie par une reprise vérifiable des installations et des passages dans le Golfe, ou par des stocks mondiaux démontrant que l’offre livrable reste abondante malgré les attaques.",
+      "topic": "Énergie et OPEP+",
+      "title": "Le Brent gagne 3 % sur la semaine avant une réunion de l’OPEP+ dominée par le risque d’Ormuz",
+      "summary": "Le Brent a reculé de 1,2 % vendredi pour terminer à 95,44 $ US le baril, mais il a gagné environ 3 % sur la semaine et interrompu trois semaines de baisse. Le WTI a clos à 83,08 $, en recul de 0,7 % par rapport à mercredi. Les attaques contre des pétroliers dans le détroit d’Ormuz et contre des installations saoudiennes ont ravivé le risque physique : la raffinerie de Jazan a temporairement interrompu une partie de ses opérations après avoir été frappée. L’OPEP+ se réunit dimanche; les sources de Reuters s’attendent au maintien des objectifs de production du premier trimestre 2027, mais l’Irak cherche à relever son plafond et la capacité réellement livrable demeure incertaine.",
+      "impact": "Ma lecture : le prix reflète deux forces opposées, soit une offre globale encore abondante et un risque de rupture concentré sur des infrastructures essentielles. Pour les producteurs canadiens, 95 $ le Brent soutient les flux de trésorerie, tandis que les raffineurs et transporteurs restent exposés aux coûts d’assurance et aux détours. Le maintien des quotas dimanche serait moins important que la preuve des volumes effectivement exportés. Une réouverture durable d’Ormuz et une baisse des attaques réduiraient la prime; des dommages persistants ou une baisse de la capacité saoudienne pourraient pousser le Brent au-dessus de 100 $ et compliquer la trajectoire d’inflation.",
       "source_label": "Reuters",
       "source_url": "https://www.reuters.com/business/energy/brent-trades-near-months-high-mideast-conflict-threatens-supply-2026-11-27/",
       "published_date": "2026-11-27"
     },
     {
-      "topic": "Canada",
-      "title": "L’emploi salarié stagne, mais les postes vacants remontent pour la première fois depuis décembre 2025",
-      "summary": "Statistique Canada estime que l’emploi salarié a peu changé en septembre, avec 9 700 postes de plus après une baisse cumulée de 31 400 en juillet et août. Les postes vacants ont augmenté de 17 300, ou 3,4 %, à 528 100, leur première hausse mensuelle depuis décembre 2025; le ratio chômeurs-poste vacant a reculé de 2,9 à 2,8. Le salaire hebdomadaire moyen a progressé de 0,5 % sur le mois et de 3,3 % sur un an. La hausse des vacances vient surtout du commerce de détail et des services administratifs, tandis que la demande totale de travail manufacturier demeure inférieure à novembre 2023.",
-      "impact": "Ma lecture : ces données ne décrivent ni une reprise franche ni un effondrement. La remontée des postes vacants et des salaires peut rendre la Banque du Canada prudente, mais l’emploi salarié presque stable et la faiblesse manufacturière limitent la preuve d’une surchauffe généralisée. Le PIB du troisième trimestre attendu lundi et l’emploi de novembre seront plus décisifs. Une accélération de ces deux indicateurs renforcerait les attentes de hausse; une demande intérieure faible les réduirait.",
+      "topic": "Canada, capitaux et dollar",
+      "title": "Le surplus courant canadien recule à 4,5 G$ malgré des entrées d’investissement direct",
+      "summary": "Le surplus du compte courant canadien, désaisonnalisé, est passé de 6,1 G$ au deuxième trimestre à 4,5 G$ au troisième. Le surplus des biens est resté stable à 10,7 G$, mais les déficits des services et des revenus de placement se sont creusés. Les importations d’équipements électroniques et électriques ont progressé de 7,9 %, notamment en raison des centres de données. Les paiements d’intérêts plus élevés sur les obligations canadiennes détenues à l’étranger ont porté le déficit des revenus de placement à 1,8 G$. En parallèle, l’investissement direct étranger au Canada a atteint 33,7 G$, dont 20,7 G$ dans l’énergie et les mines, et les investissements directs ont produit une entrée nette de 2,1 G$.",
+      "impact": "Ma lecture : deux surplus consécutifs soutiennent la position extérieure du Canada, mais la qualité du troisième trimestre est moins forte que le chiffre principal. Les coûts de financement versés aux détenteurs étrangers et le déficit des services absorbent une partie du surplus des ressources. Les entrées directes dans l’énergie et les mines peuvent financer de nouvelles capacités et ont accompagné le rebond du TSX, mais elles restent sensibles aux prix des matières premières. Une progression des exportations hors énergie et des revenus de services rendrait le surplus plus durable; une baisse du pétrole ou une nouvelle hausse des paiements d’intérêts pourrait peser sur le dollar canadien, qui valait environ 1,4245 $ CA par dollar américain à la clôture du 27 novembre.",
       "source_label": "Statistique Canada",
-      "source_url": "https://www150.statcan.gc.ca/n1/daily-quotidien/261126/dq261126a-eng.htm",
-      "published_date": "2026-11-26"
+      "source_url": "https://www150.statcan.gc.ca/n1/daily-quotidien/261127/dq261127a-eng.htm",
+      "published_date": "2026-11-27"
     }
   ],
   "fred_watch": [
     {
       "series_id": "DGS10",
-      "title": "Le 10 ans américain reste près de 5 %",
-      "explanation": "Le rendement du Trésor à 10 ans a reculé de 4,91 % le 24 novembre à 4,85 % le 25 novembre. Le mouvement allège légèrement le taux d’actualisation, mais le niveau demeure élevé; la remontée observée sur les marchés le 27 novembre montre que la détente n’est pas acquise.",
-      "observation_date": "2026-11-25",
+      "title": "Le dix ans américain remonte à 4,94 %",
+      "explanation": "Au 27 novembre, le rendement nominal à dix ans atteint 4,94 %, contre 4,85 % le 25 novembre. La hausse de neuf points de base accompagne le retour vers les actions, mais elle maintient un coût du capital élevé et limite l’expansion des multiples.",
+      "observation_date": "2026-11-27",
       "source_url": "https://fred.stlouisfed.org/series/DGS10"
     },
     {
       "series_id": "DFII10",
-      "title": "Le taux réel demeure exigeant pour la croissance",
-      "explanation": "Le taux réel américain à 10 ans est passé de 2,79 % le 24 novembre à 2,73 % le 25 novembre. Même après ce recul, un taux réel supérieur à 2,7 % pénalise les projets dont les flux de trésorerie sont éloignés, particulièrement lorsque leur financement dépend de la dette.",
-      "observation_date": "2026-11-25",
+      "title": "Le taux réel à dix ans atteint 2,79 %",
+      "explanation": "Au 27 novembre, le rendement réel des TIPS à dix ans monte à 2,79 %, contre 2,73 % le 25 novembre. Ce niveau augmente le taux d’actualisation réel appliqué aux bénéfices futurs, particulièrement pour les actions de croissance.",
+      "observation_date": "2026-11-27",
       "source_url": "https://fred.stlouisfed.org/series/DFII10"
     },
     {
       "series_id": "BAMLH0A0HYM2",
-      "title": "Le crédit risqué se renchérit modestement",
-      "explanation": "L’écart du haut rendement américain s’est élargi de 3,63 % le 23 novembre à 3,72 % le 24 novembre. Ce n’est pas un signal de crise, mais le mouvement augmente le coût marginal du financement pour les émetteurs fragiles et mérite d’être comparé au rebond des actions.",
-      "observation_date": "2026-11-24",
+      "title": "Le crédit à haut rendement reste écarté à 3,77 %",
+      "explanation": "Au 26 novembre, l’écart ajusté pour les options des obligations américaines à haut rendement est stable à 3,77 %. Il demeure plus exigeant qu’avant la correction et indique que le rebond boursier n’a pas encore effacé la prudence des prêteurs.",
+      "observation_date": "2026-11-26",
       "source_url": "https://fred.stlouisfed.org/series/BAMLH0A0HYM2"
     },
     {
       "series_id": "ICSA",
-      "title": "Les demandes de chômage demeurent faibles",
-      "explanation": "Les nouvelles demandes d’assurance-chômage ont diminué de 202 000 à 189 000 pour la semaine terminée le 21 novembre. Cette mesure hebdomadaire non transformée indique peu de licenciements et soutient les revenus, mais elle réduit aussi l’urgence d’un assouplissement monétaire.",
+      "title": "Les demandes initiales reculent à 189 000",
+      "explanation": "Pour la semaine terminée le 21 novembre, les demandes initiales d’assurance-chômage baissent de 13 000 à 189 000. Le signal reste compatible avec peu de licenciements; une semaine isolée doit toutefois être confirmée par la moyenne mobile et le rapport d’emploi de novembre.",
       "observation_date": "2026-11-21",
       "source_url": "https://fred.stlouisfed.org/series/ICSA"
     }
   ],
   "audio_script": {
-    "edition_date": "2026-11-27",
-    "source_generated_at": "2026-11-27T10:13:01.991253Z",
-    "intro": "Bonjour. Voici les nouvelles qui comptent pour les marchés, préparées vers cinq heures quinze, heure de Toronto, le vendredi 27 novembre. Les États-Unis reprennent après Thanksgiving avec une séance écourtée. Ce matin, on relie le rebond des actions, les taux toujours élevés, les tarifs proposés, le pétrole et le marché du travail canadien.",
+    "edition_date": "2026-11-28",
+    "source_generated_at": "2026-11-28T10:11:17.417227Z",
+    "intro": "Bonjour. Voici le briefing SAVY du samedi 28 novembre, préparé à cinq heures à Montréal après les clôtures de vendredi. Le rebond des actions est maintenant confirmé en clôture, mais les taux réels, le commerce et l’énergie montrent pourquoi le risque n’a pas disparu.",
     "stories": [
       {
-        "title": "Les actions rebondissent fortement, mais le coût du capital reste près de 5 %",
-        "text": "Commençons par le rebond mondial. Tôt vendredi, les contrats à terme du Nasdaq cent gagnaient environ deux virgule huit pour cent et ceux du S et P cinq cents deux pour cent. Le Japon, l’Europe et la Chine avançaient aussi. Ce mouvement arrive après un mois brutal : l’indice mondial est encore en baisse d’environ cinq pour cent en novembre, et le Nasdaq cent se trouvait mercredi près de vingt pour cent sous son sommet d’octobre. Le rendement américain à dix ans remontait vers quatre virgule quatre-vingt-douze pour cent. Ma lecture est simple : la pression technique diminue, mais le coût du capital demeure très élevé. Pour les titres liés à l’intelligence artificielle, le marché exige maintenant une conversion rapide des investissements en marges et en trésorerie. Une baisse durable des taux, sans réduction des bénéfices attendus, confirmerait la reprise. Une inflation ferme ou de nouvelles déceptions la fragiliserait."
+        "title": "Le rebond efface la semaine de panique, mais pas la correction technologique",
+        "text": "On commence avec le rebond des marchés. Vendredi, dans une séance écourtée après l’Action de grâce américaine, le S&P 500 a gagné un virgule six pour cent et le Nasdaq un peu plus de deux virgule trois pour cent. Sur la semaine, le Nasdaq reprend près de six virgule sept pour cent. Les semi-conducteurs ont mené le mouvement après une liquidation très rapide des positions liées à l’intelligence artificielle. C’est un vrai soulagement, mais il faut garder la perspective : novembre demeure l’un des pires mois depuis 2008 pour les grands indices américains. Et le coût du capital n’a pas baissé. Le rendement des obligations américaines à dix ans termine à quatre virgule quatre-vingt-quatorze pour cent, tandis que le taux réel approche deux virgule huit pour cent. Ma lecture, c’est que le risque de ventes forcées diminue, mais que le test fondamental reste entier. Les entreprises doivent maintenant montrer que les dépenses massives en centres de données deviennent des revenus et des flux de trésorerie. Si le crédit se détend et que les contrats restent fermes, le rebond peut durer. Si les taux remontent encore ou que les bénéfices sont révisés à la baisse, la volatilité risque de revenir."
       },
       {
-        "title": "Les tarifs américains sur 14 partenaires passent au stade de proposition, avec un risque pour les chaînes industrielles",
-        "text": "Le deuxième sujet est commercial. Washington propose de nouveaux droits sur quatorze partenaires, dont la Chine, l’Union européenne, le Japon, la Corée du Sud, l’Inde et Taïwan. Pour la Chine, le taux proposé de vingt pour cent viendrait s’ajouter à des droits plus anciens. Les accords existants limiteraient plusieurs partenaires à quinze ou dix-neuf pour cent. Le Canada n’est pas visé dans cette annonce. Il faut conserver la chronologie : les mesures sont proposées et doivent encore passer par une consultation et une audience. Elles pourraient donc entrer en vigueur seulement en janvier. Ma lecture : l’incertitude peut déjà retarder des commandes, mais l’effet sur les prix dépendra des taux finaux, des exemptions et des représailles. Les importateurs et fabricants américains utilisant des composantes asiatiques sont les plus exposés. De nouveaux accords avant l’audience réduiraient nettement le choc."
+        "title": "Le déficit commercial américain bondit à 149,5 G$ sous l’effet des importations liées à l’IA",
+        "text": "Le deuxième sujet donne justement une mesure de l’ampleur des investissements. Le déficit américain du commerce de biens a atteint près de cent cinquante milliards de dollars en octobre, beaucoup plus que prévu. Les importations ont bondi à un record. Les biens d’équipement progressent particulièrement vite, en grande partie pour construire l’infrastructure d’intelligence artificielle. Cela confirme que les entreprises investissent encore fortement. Mais une bonne partie de la valeur vient de l’étranger. En comptabilité nationale, les importations retirent de la croissance américaine, même lorsque les machines servent à augmenter la capacité future. Ma lecture : le cycle reste positif pour les fournisseurs mondiaux de puces, de serveurs et d’équipement électrique, mais il contribue moins au produit intérieur brut que les montants dépensés pourraient le laisser croire. Les nouveaux tarifs peuvent aussi augmenter les coûts ou déplacer les fournisseurs sans réduire rapidement le déficit. La prochaine preuve utile sera la conversion de ces équipements en production et en revenus, pas seulement la croissance des commandes."
       },
       {
-        "title": "Le Brent monte à 97,30 $ après des attaques contre des navires et des infrastructures saoudiennes",
-        "text": "Troisième sujet : le pétrole. Le Brent se négociait autour de quatre-vingt-dix-sept dollars trente vendredi matin, son meilleur niveau depuis le neuf novembre. Des attaques contre des navires dans le détroit d’Ormuz et contre des installations saoudiennes ont ravivé le risque sur l’offre. La raffinerie de Jazan a dû suspendre temporairement une partie de ses activités. En même temps, l’OPEP et ses partenaires semblent vouloir maintenir leurs objectifs de production au premier trimestre de deux mille vingt-sept. Ma lecture : cette prime de risque aide les producteurs canadiens, mais elle complique la baisse de l’inflation et peut soutenir les taux. Le scénario serait moins haussier si les installations et le trafic maritime revenaient rapidement à la normale, ou si les stocks montraient que l’offre livrable reste abondante."
+        "title": "Le Brent gagne 3 % sur la semaine avant une réunion de l’OPEP+ dominée par le risque d’Ormuz",
+        "text": "Troisième dossier : l’énergie. Le Brent termine vendredi autour de quatre-vingt-quinze dollars le baril. Il recule sur la séance, mais gagne environ trois pour cent sur la semaine. Les attaques contre des navires dans le détroit d’Ormuz et contre des installations saoudiennes ramènent le risque physique au premier plan. Une partie de la raffinerie de Jazan a temporairement interrompu ses opérations après une frappe. L’Organisation des pays exportateurs de pétrole et ses partenaires se réunissent dimanche. Le scénario attendu est un maintien des quotas du premier trimestre, mais l’Irak veut relever son plafond et le vrai enjeu demeure la quantité de pétrole qui peut effectivement sortir de la région. Ma lecture : l’offre mondiale semble encore suffisante, mais elle dépend de quelques routes et installations critiques. Pour les producteurs canadiens, le niveau actuel soutient les flux de trésorerie. Pour les consommateurs et les transporteurs, une nouvelle interruption ferait remonter l’inflation. Une réouverture durable d’Ormuz ferait baisser la prime; de nouveaux dommages pourraient au contraire pousser le Brent au-dessus de cent dollars."
       },
       {
-        "title": "L’emploi salarié stagne, mais les postes vacants remontent pour la première fois depuis décembre 2025",
-        "text": "Au Canada, l’emploi salarié a peu changé en septembre après deux mois de baisse. Les postes vacants ont toutefois augmenté de trois virgule quatre pour cent, leur première hausse mensuelle depuis décembre dernier. Le salaire hebdomadaire moyen gagne trois virgule trois pour cent sur un an. Le détail est partagé : le commerce de détail et certains services recrutent davantage, alors que la demande de travail manufacturière reste inférieure à son niveau de novembre deux mille vingt-trois. Ma lecture : ce n’est pas une surchauffe généralisée, mais ce n’est pas non plus un marché du travail qui s’effondre. Le produit intérieur brut du troisième trimestre lundi et le prochain rapport d’emploi seront plus décisifs pour la Banque du Canada. Une accélération des deux renforcerait les attentes de hausse de taux; une demande intérieure faible les réduirait."
+        "title": "Le surplus courant canadien recule à 4,5 G$ malgré des entrées d’investissement direct",
+        "text": "Enfin, le Canada conserve un surplus de son compte courant, mais celui-ci diminue. Il passe de six virgule un à quatre virgule cinq milliards de dollars au troisième trimestre. Le surplus du commerce des biens reste solide. Par contre, les déficits des services et des revenus de placement se creusent. Le Canada verse davantage d’intérêts aux détenteurs étrangers d’obligations, ce qui montre le coût concret des rendements plus élevés. En même temps, les investissements directs étrangers atteignent près de trente-quatre milliards, avec une forte concentration dans l’énergie et les mines. Les importations d’équipements électroniques montent aussi avec les centres de données. Ma lecture : la position extérieure reste favorable, mais elle dépend encore beaucoup des ressources et du financement. Des exportations hors énergie et des revenus de services plus forts rendraient le surplus plus durable. Une baisse du pétrole ou une nouvelle hausse des paiements d’intérêts pourrait peser sur le dollar canadien, qui termine vendredi autour de un dollar quarante-deux cents canadiens pour un dollar américain."
       }
     ],
-    "watch": "Du côté des graphiques, le taux américain à dix ans est passé de quatre virgule quatre-vingt-onze pour cent le 24 novembre à quatre virgule quatre-vingt-cinq le 25. Le taux réel à dix ans a reculé à deux virgule soixante-treize, un niveau encore exigeant. L’écart du crédit à haut rendement s’est élargi à trois virgule soixante-douze pour cent le 24 novembre, sans signaler une crise. Enfin, les nouvelles demandes de chômage ont baissé à cent quatre-vingt-neuf mille pour la semaine terminée le 21 novembre. Ensemble, ces données décrivent une économie résiliente avec un financement toujours coûteux.",
-    "outro": "C’est tout pour ce matin. Les chiffres, les dates économiques et les liens directs se trouvent dans le briefing écrit. La séance américaine sera plus courte, alors il faut interpréter les mouvements avec prudence et surveiller surtout les taux et la liquidité."
+    "watch": "Dans les graphiques, le dix ans américain remonte à quatre virgule quatre-vingt-quatorze pour cent au 27 novembre et le taux réel à dix ans atteint deux virgule soixante-dix-neuf pour cent. L’écart du crédit à haut rendement reste à trois virgule soixante-dix-sept pour cent au 26 novembre. Enfin, les demandes initiales d’assurance-chômage reculent à cent quatre-vingt-neuf mille pour la semaine terminée le 21 novembre. Ensemble, ces données décrivent une économie encore ferme, avec un financement coûteux et un crédit qui reste prudent.",
+    "outro": "C’est tout pour cette édition de fin de semaine. La réunion de l’OPEP+ dimanche et le rapport d’emploi américain de vendredi prochain seront les prochains tests. Les sources et les graphiques datés sont disponibles dans le briefing écrit."
   }
 }

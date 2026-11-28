@@ -556,7 +556,8 @@ def collect(catalog: dict, previous: dict | None, now: datetime, fetcher=fetch_t
     return {"schema_version": 1, "kind": "portfolio_earnings", "generated_at": now.isoformat(), "timezone": "America/Toronto",
             "window": {"start": start.isoformat(), "end": end.isoformat()}, "coverage": {"total": len(definitions), **coverage},
             "methodology": METHODOLOGY,
-            "instruments": dict(sorted(instruments.items())), "errors": errors}
+            "instruments": dict(sorted(instruments.items())), "errors": errors,
+            "analysis_reviewed_at": (highlights or {}).get("reviewed_at")}
 
 
 def main():

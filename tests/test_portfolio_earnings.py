@@ -75,7 +75,12 @@ class EarningsTests(unittest.TestCase):
         self.assertEqual(cdr['events'], data['instruments']['MSFT']['events'])
         self.assertEqual(cdr['events'][1]['eps']['currency'], 'USD')
         self.assertEqual(data['coverage']['not_applicable'], 4)
+        self.assertIsNone(data['analysis_reviewed_at'])
         self.assertEqual(earnings.source_for({'id': 'DIS', 'quote_symbol': 'DIS'})[1], 'https://www.marketbeat.com/stocks/NYSE/DIS/earnings/')
+
+        reviewed = {"reviewed_at": NOW.isoformat(), "reports": {}}
+        refreshed = earnings.collect({'series': definitions}, data, NOW, fetch, highlights=reviewed)
+        self.assertEqual(refreshed['analysis_reviewed_at'], NOW.isoformat())
 
     def test_metrics_keep_bases_currencies_and_dates_separate(self):
         events = earnings.parse_marketbeat(sample(), "MSFT", URL, NOW)
